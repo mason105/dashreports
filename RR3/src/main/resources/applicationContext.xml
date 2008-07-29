@@ -69,7 +69,7 @@
 					<prop
 					key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
 				-->
-				<prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.CloudscapeDelegate</prop>
+				<prop key="org.quartz.jobStore.driverDelegateClass">${quartz.JDBCDelegate}</prop>
 				<prop key="org.quartz.jobStore.useProperties">false</prop>
 				<prop key="org.quartz.jobStore.selectWithLockSQL">SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME
 					= ?</prop>

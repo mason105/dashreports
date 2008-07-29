@@ -3,7 +3,6 @@ package binky.reportrunner.scheduler;
 import java.util.List;
 
 import binky.reportrunner.data.RunnerJob;
-import binky.reportrunner.data.RunnerResult;
 
 public interface Scheduler {
 
@@ -19,7 +18,7 @@ public interface Scheduler {
 	
 	public void resumeJob(RunnerJob job) throws SchedulerException;
 
-	public RunnerResult invokeJob(RunnerJob job) throws SchedulerException;
+	public void invokeJob(RunnerJob job) throws SchedulerException;
 
 	public List<RunnerJob> listJobs();
 }

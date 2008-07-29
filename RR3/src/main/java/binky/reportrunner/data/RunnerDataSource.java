@@ -1,25 +1,16 @@
 package binky.reportrunner.data;
 
-import javax.persistence.Id;
 
-import org.hibernate.annotations.Entity;
-
-@Entity
 public class RunnerDataSource {
 
-	@Id
-	private String datasourceName;
-	
+
+	private String jndiName;
+	private String jdbcClass;
 	private String jdbcUrl;
 	private String username;
 	private String password;
 	
-	public String getDatasourceName() {
-		return datasourceName;
-	}
-	public void setDatasourceName(String datasourceName) {
-		this.datasourceName = datasourceName;
-	}
+
 	public String getJdbcUrl() {
 		return jdbcUrl;
 	}
@@ -38,6 +29,16 @@ public class RunnerDataSource {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
+	public String getJdbcClass() {
+		return jdbcClass;
+	}
+	public void setJdbcClass(String jdbcClass) {
+		this.jdbcClass = jdbcClass;
+	}
+	public String getJndiName() {
+		return jndiName;
+	}
+	public void setJndiName(String jndiName) {
+		this.jndiName = jndiName;
+	}	
 }

@@ -2,20 +2,84 @@
 <!DOCTYPE beans PUBLIC 
 	"-//SPRING//DTD BEAN//EN" 
 	"http://www.springframework.org/dtd/spring-beans.dtd">
-	
 <beans>
 	<!-- Example of SAF2 action instantiated by Spring -->
-    <bean id="helloWorldAction" class="binky.HelloWorldAction" singleton="false" />
+	<bean id="helloWorldAction" class="binky.HelloWorldAction"
+		singleton="false" />
+		
+	<!--  properties file -->
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:application.properties</value>
+				<!--  <value>classpath:application-override.properties</value> -->
+			</list>
+		</property>
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+	</bean>
+    
+    <!--  our main data source -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>  
     
     <!--  setup our scheduler singleton and the quartz bean -->
-     <bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl" singleton="true" >
-     	<property name="quartzFactory" ref="quartz"/>
-     	<property name="runnerDataSourceDao" ref="runnerDataSourceDao"/>
-     </bean>
-     
-     <bean id="quartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"/>
-     
-      <bean id="runnerDataSourceDao" class="bink.reportrunner.dao.impl.RunnerDataSourceDaoImpl"/>
-     
-</beans>
+	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
+		singleton="true">
+		<property name="quartzFactory" ref="quartz" />
+	</bean>
+	<bean id="quartz"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="overwriteExistingJobs">
+			<value>false</value>
+		</property>
+		<property name="autoStartup">
+			<value>false</value>
+		</property>
+		<property name="applicationContextSchedulerContextKey">
+			<value>applicationContext</value>
+		</property>
+		<property name="waitForJobsToCompleteOnShutdown">
+			<value>true</value>
+		</property>
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="globalJobListeners">
+			<list>
+				<ref local="runnerJobListener" />
+			</list>
+		</property>
+		<property name="quartzProperties">
+			<props> 
+			<!-- ThreadPool -->
+				<prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
+				<prop key="org.quartz.threadPool.threadCount">10</prop>
+				<prop key="org.quartz.threadPool.threadPriority">5</prop> 
 
+			<!-- Job store -->
+				<prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+				<prop key="org.quartz.jobStore.class">org.springframework.scheduling.quartz.LocalDataSourceJobStore</prop>
+				<prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
+				<prop key="org.quartz.jobStore.useProperties">false</prop>
+				<prop key="org.quartz.jobStore.selectWithLockSQL">SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME
+					= ?</prop>
+					
+			<!-- history plugin -->
+				<prop key="org.quartz.plugin.triggHistory.class">org.quartz.plugins.history.LoggingJobHistoryPlugin</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
+		<property name="runnerHistoryDao" ref="runnerHistoryDao"/>
+	</bean>
+	
+	<bean id="runnerHistoryDao" class="binky.reportrunner.dao.impl.RunnerHistoryDaoImpl"/>
+	
+</beans>

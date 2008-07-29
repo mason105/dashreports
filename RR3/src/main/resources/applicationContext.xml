@@ -6,5 +6,16 @@
 <beans>
 	<!-- Example of SAF2 action instantiated by Spring -->
     <bean id="helloWorldAction" class="binky.HelloWorldAction" singleton="false" />
+    
+    <!--  setup our scheduler singleton and the quartz bean -->
+     <bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl" singleton="true" >
+     	<property name="quartzFactory" ref="quartz"/>
+     	<property name="runnerDataSourceDao" ref="runnerDataSourceDao"/>
+     </bean>
+     
+     <bean id="quartz" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"/>
+     
+      <bean id="runnerDataSourceDao" class="bink.reportrunner.dao.impl.RunnerDataSourceDaoImpl"/>
+     
 </beans>
 

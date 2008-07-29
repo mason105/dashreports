@@ -12,7 +12,6 @@ import binky.reportrunner.data.RunnerJob;
  * @author Daniel Grout
  **/
 public abstract class RunnerEngineAbstract implements Job {
-	
 	public final void execute(JobExecutionContext context) throws JobExecutionException {
 		
 		//Grab the elements of the job from the context to pass on

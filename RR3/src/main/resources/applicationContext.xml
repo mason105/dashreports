@@ -31,15 +31,15 @@
     <!--  setup our scheduler singleton and the quartz bean -->
 	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
 		singleton="true">
-		<property name="quartzFactory" ref="quartz" />
+		<property name="quartzScheduler" ref="quartzFactory" />
 	</bean>
-	<bean id="quartz"
+	<bean id="quartzFactory"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="overwriteExistingJobs">
 			<value>false</value>
 		</property>
 		<property name="autoStartup">
-			<value>false</value>
+			<value>true</value>
 		</property>
 		<property name="applicationContextSchedulerContextKey">
 			<value>applicationContext</value>
@@ -65,7 +65,11 @@
 			<!-- Job store -->
 				<prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
 				<prop key="org.quartz.jobStore.class">org.springframework.scheduling.quartz.LocalDataSourceJobStore</prop>
-				<prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
+				<!--
+					<prop
+					key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
+				-->
+				<prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.CloudscapeDelegate</prop>
 				<prop key="org.quartz.jobStore.useProperties">false</prop>
 				<prop key="org.quartz.jobStore.selectWithLockSQL">SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME
 					= ?</prop>
@@ -75,11 +79,8 @@
 			</props>
 		</property>
 	</bean>
-	
 	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
-		<property name="runnerHistoryDao" ref="runnerHistoryDao"/>
+		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
 	</bean>
-	
-	<bean id="runnerHistoryDao" class="binky.reportrunner.dao.impl.RunnerHistoryDaoImpl"/>
-	
+	<bean id="runnerHistoryDao" class="binky.reportrunner.dao.impl.RunnerHistoryDaoImpl" />
 </beans>

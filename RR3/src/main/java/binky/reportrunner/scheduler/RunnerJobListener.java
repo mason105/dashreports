@@ -9,15 +9,13 @@ import binky.reportrunner.dao.RunnerHistoryDao;
 public class RunnerJobListener implements JobListener {
 
 	private RunnerHistoryDao runnerHistoryDao;
-	
+
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "ReportRunnerCoreJobListener";
 	}
 
 	public void jobExecutionVetoed(JobExecutionContext arg0) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void jobToBeExecuted(JobExecutionContext arg0) {
@@ -28,7 +26,6 @@ public class RunnerJobListener implements JobListener {
 	public void jobWasExecuted(JobExecutionContext arg0,
 			JobExecutionException arg1) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public RunnerHistoryDao getRunnerHistoryDao() {
@@ -38,6 +35,5 @@ public class RunnerJobListener implements JobListener {
 	public void setRunnerHistoryDao(RunnerHistoryDao runnerHistoryDao) {
 		this.runnerHistoryDao = runnerHistoryDao;
 	}
-
 
 }

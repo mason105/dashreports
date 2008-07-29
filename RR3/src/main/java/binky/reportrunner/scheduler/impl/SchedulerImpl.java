@@ -2,7 +2,7 @@ package binky.reportrunner.scheduler.impl;
 
 import java.util.List;
 
-import org.quartz.SchedulerFactory;
+import org.quartz.impl.StdScheduler;
 
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.scheduler.Scheduler;
@@ -10,7 +10,7 @@ import binky.reportrunner.scheduler.SchedulerException;
 
 public class SchedulerImpl implements Scheduler {
 
-	private SchedulerFactory quartzFactory;
+	private StdScheduler quartzScheduler;
 
 	public void addJob(RunnerJob job) throws SchedulerException {
 		// TODO Auto-generated method stub
@@ -51,12 +51,13 @@ public class SchedulerImpl implements Scheduler {
 		return null;
 	}
 
-	public SchedulerFactory getQuartzFactory() {
-		return quartzFactory;
+	public StdScheduler getQuartzScheduler() {
+		return quartzScheduler;
 	}
 
-	public void setQuartzFactory(SchedulerFactory quartzFactory) {
-		this.quartzFactory = quartzFactory;
+	public void setQuartzScheduler(StdScheduler quartzScheduler) {
+		this.quartzScheduler = quartzScheduler;
 	}
+
 
 }

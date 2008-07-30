@@ -82,5 +82,47 @@
 	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
 		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
 	</bean>
-	<bean id="runnerHistoryDao" class="binky.reportrunner.dao.impl.RunnerHistoryDaoImpl" />
+	
+	<!--  hibernate plumbing -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.SingletonEhCacheProvider</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>binky.reportrunner.data.RunnerHistoryEvent</value>
+			</list>
+		</property>
+		<property name="annotatedPackages">
+			<list>
+				<value>binky.reportrunner.data</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor"
+		autowire="byName" />
+		
+	<bean id="runnerHistoryDaoTarget" class="binky.reportrunner.dao.impl.RunnerHistoryDaoImpl"
+		autowire="byName" />
+		
+	<bean id="runnerHistoryDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerHistoryDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerHistoryDaoTarget</value>
+			</list>
+		</property>
+	</bean>
 </beans>

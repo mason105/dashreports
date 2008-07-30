@@ -2,23 +2,26 @@ package binky.reportrunner.data;
 
 import java.util.Date;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.Entity;
+import javax.persistence.Entity;
 
 @Entity
 public class RunnerHistoryEvent {
 
 	@Id
-	private String eventId;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private Long eventId;
 	private Date timestamp;
 	private String jobName;
 	private String groupName;
 	private String message;
-	public String getEventId() {
+	public Long getEventId() {
 		return eventId;
 	}
-	public void setEventId(String eventId) {
+	public void setEventId(Long eventId) {
 		this.eventId = eventId;
 	}
 	public Date getTimestamp() {

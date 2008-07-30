@@ -12,4 +12,11 @@ public interface RunnerHistoryDao {
 			Date startTime, Date endTime);
 	public void saveEvent(RunnerHistoryEvent event);
 	
+	/**
+	 * 
+	 * Only really used to clean up after the test
+	 * 
+	 * @param eventId
+	 */
+	public void deleteAllEvents(String groupName, String jobName);
 }

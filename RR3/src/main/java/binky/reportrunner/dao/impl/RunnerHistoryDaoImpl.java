@@ -3,7 +3,6 @@ package binky.reportrunner.dao.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Property;
@@ -45,7 +44,7 @@ public class RunnerHistoryDaoImpl extends HibernateDaoSupport implements RunnerH
 	}
 
 	@SuppressWarnings("unchecked")
-	public void deleteAllEvents(String groupName, String jobName) {
+	public void deleteEvents(String groupName, String jobName) {
 		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerHistoryEvent.class)
 		.add(Property.forName("groupName").eq(groupName))
 		.add(Property.forName("jobName").eq(jobName));

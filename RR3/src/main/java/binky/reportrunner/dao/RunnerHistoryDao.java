@@ -18,5 +18,5 @@ public interface RunnerHistoryDao {
 	 * 
 	 * @param eventId
 	 */
-	public void deleteAllEvents(String groupName, String jobName);
+	public void deleteEvents(String groupName, String jobName);
 }

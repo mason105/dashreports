@@ -20,17 +20,19 @@ import binky.reportrunner.data.RunnerJob;
 /**
  * @author Daniel Grout
  **/
+
+@SuppressWarnings("unchecked")
 public abstract class RunnerEngineAbstract implements Job {
 	
 	private RunnerDataSource runnerDs;
 	
-	protected Map<String, Object> parameters;
-	protected Map<String, String> parameterNames;
+	protected Map<String, Object> parameterValues;
+	protected Map<String, Class> parameters;
 	
 	public final void execute(JobExecutionContext context) throws JobExecutionException {
 		
 		//Grab the elements of the job from the context to pass on
-		RunnerJob job = (RunnerJob)context.get("job");
+		RunnerJob job = (RunnerJob)context.getJobDetail().getJobDataMap().get("runnerJob");
 		this.runnerDs=job.getDatasource();
 		try {
 			 runReport();
@@ -73,7 +75,7 @@ public abstract class RunnerEngineAbstract implements Job {
 	}
 	
 	/**
-	 * @return A Map of Parameter ID, Boolean IsList,
+	 * @return A Map of Parameter ID, Class,
 	 * 
 	 *  This will determine what parameters the UI prompts for when creating a job
 	 *  this should be populated in the constructor/init of the implementing class
@@ -83,15 +85,15 @@ public abstract class RunnerEngineAbstract implements Job {
 	 *  It is up to the underlying implementation how it handles the parameter list passed in 
 	 *  
 	 */
-	public final Map<String,String> getParameterNames() {
-		return parameterNames;
+	public final Map<String,Class> getParameters() {
+		return parameters;
 	}
 	
 	/**
 	 * @param parameters
 	 */
-	public final void setParameters(Map<String,Object> parameters) {
-		this.parameters=parameters;
+	public final void setParameterValues(Map<String,Object> parameterValues) {
+		this.parameterValues=parameterValues;
 	}
 	
 	/**

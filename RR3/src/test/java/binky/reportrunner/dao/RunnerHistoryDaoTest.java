@@ -25,7 +25,7 @@ public class RunnerHistoryDaoTest extends TestCase {
 
 	@Override
 	protected void tearDown() throws Exception {
-		this.dao.deleteAllEvents("testgroup", "testjob");
+		this.dao.deleteEvents("testgroup", "testjob");
 	}
 
 	public void testGetEvents() {

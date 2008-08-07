@@ -1,9 +1,11 @@
 package binky.reportrunner.data;
 
+import java.io.Serializable;
 
-public class RunnerDataSource {
 
+public class RunnerDataSource implements Serializable {
 
+	private static final long serialVersionUID = 7230871954372088509L;
 	private String jndiName;
 	private String jdbcClass;
 	private String jdbcUrl;

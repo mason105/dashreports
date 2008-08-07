@@ -38,7 +38,7 @@ public class SchedulerImplTest extends TestCase {
 		job.setJobName("testJob1");
 		job.setGroupName("testGroup1");
 		job.setOutputUrl("file://testurl");
-		job.setRunnerEngine(" binky.reportrunner.engine.impl.TestEngine");
+		job.setRunnerEngine("binky.reportrunner.engine.impl.TestEngine");
 		Map<String, Object> engineParameters = new HashMap<String, Object>();
 		job.setEngineParameters(engineParameters);
 		job.setCronString("0 0 12 * * ?");
@@ -55,6 +55,7 @@ public class SchedulerImplTest extends TestCase {
 					.getGroupName()));
 			scheduler.removeJob(job.getJobName(), job.getGroupName());
 		} catch (SchedulerException e) {
+			e.printStackTrace();
 			fail("Scheduler error: " + e);
 		}
 
@@ -65,7 +66,7 @@ public class SchedulerImplTest extends TestCase {
 		job1.setJobName("testJob1");
 		job1.setGroupName("testGroup1");
 		job1.setOutputUrl("file://testurl");
-		job1.setRunnerEngine(" binky.reportrunner.engine.impl.TestEngine");
+		job1.setRunnerEngine("binky.reportrunner.engine.impl.TestEngine");
 		Map<String, Object> engineParameters = new HashMap<String, Object>();
 		job1.setEngineParameters(engineParameters);
 		job1.setCronString("0 0 12 * * ?");
@@ -76,7 +77,7 @@ public class SchedulerImplTest extends TestCase {
 		job2.setJobName("testJob2");
 		job2.setGroupName("testGroup2");
 		job2.setOutputUrl("file://testurl");
-		job2.setRunnerEngine(" binky.reportrunner.engine.impl.TestEngine");
+		job2.setRunnerEngine("binky.reportrunner.engine.impl.TestEngine");
 		job2.setEngineParameters(engineParameters);
 		job2.setCronString("0 0 12 * * ?");
 		job2.setDatasource(datasource);
@@ -93,6 +94,7 @@ public class SchedulerImplTest extends TestCase {
 			scheduler.removeJob(job1.getJobName(), job1.getGroupName());
 			scheduler.removeJob(job2.getJobName(), job2.getGroupName());
 		} catch (SchedulerException e) {
+			e.printStackTrace();		
 			fail("Scheduler error: " + e);
 		}
 	}
@@ -102,7 +104,7 @@ public class SchedulerImplTest extends TestCase {
 		job.setJobName("testJob1");
 		job.setGroupName("testGroup1");
 		job.setOutputUrl("file://testurl");
-		job.setRunnerEngine(" binky.reportrunner.engine.impl.TestEngine");
+		job.setRunnerEngine("binky.reportrunner.engine.impl.TestEngine");
 		Map<String, Object> engineParameters = new HashMap<String, Object>();
 		job.setEngineParameters(engineParameters);
 		job.setCronString("0 0 12 * * ?");
@@ -143,6 +145,7 @@ public class SchedulerImplTest extends TestCase {
 
 			scheduler.removeJob(job.getJobName(), job.getGroupName());
 		} catch (SchedulerException e) {
+			e.printStackTrace();
 			fail("Scheduler error: " + e);
 		}
 
@@ -153,7 +156,7 @@ public class SchedulerImplTest extends TestCase {
 		job.setJobName("testJob1");
 		job.setGroupName("testGroup1");
 		job.setOutputUrl("file://testurl");
-		job.setRunnerEngine(" binky.reportrunner.engine.impl.TestEngine");
+		job.setRunnerEngine("binky.reportrunner.engine.impl.TestEngine");
 		Map<String, Object> engineParameters = new HashMap<String, Object>();
 		job.setEngineParameters(engineParameters);
 		job.setCronString("0 0 12 * * ?");
@@ -168,6 +171,7 @@ public class SchedulerImplTest extends TestCase {
 			
 			scheduler.removeJob(job.getJobName(), job.getGroupName());
 		} catch (SchedulerException e) {
+			e.printStackTrace();
 			fail("Scheduler error: " + e);
 		}
 	}
@@ -177,7 +181,7 @@ public class SchedulerImplTest extends TestCase {
 		job1.setJobName("testJob1");
 		job1.setGroupName("testGroup");
 		job1.setOutputUrl("file://testurl");
-		job1.setRunnerEngine(" binky.reportrunner.engine.impl.TestEngine");
+		job1.setRunnerEngine("binky.reportrunner.engine.impl.TestEngine");
 		Map<String, Object> engineParameters = new HashMap<String, Object>();
 		job1.setEngineParameters(engineParameters);
 		job1.setCronString("0 0 12 * * ?");
@@ -205,6 +209,7 @@ public class SchedulerImplTest extends TestCase {
 			scheduler.removeJob(job1.getJobName(), job1.getGroupName());
 			scheduler.removeJob(job2.getJobName(), job2.getGroupName());
 		} catch (SchedulerException e) {
+			e.printStackTrace();
 			fail("Scheduler error: " + e);
 		}
 	}

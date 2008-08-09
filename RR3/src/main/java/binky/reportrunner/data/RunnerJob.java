@@ -14,8 +14,28 @@ public class RunnerJob implements Serializable {
 	private RunnerDataSource datasource;
 	private Map<String,Object> engineParameters;
 	private String cronString;
+	private Boolean isBurst;
+	private String burstQuery;
+	private String burstParameterName;	
 	
-	
+	public Boolean getIsBurst() {
+		return isBurst;
+	}
+	public void setIsBurst(Boolean isBurst) {
+		this.isBurst = isBurst;
+	}
+	public String getBurstQuery() {
+		return burstQuery;
+	}
+	public void setBurstQuery(String burstQuery) {
+		this.burstQuery = burstQuery;
+	}
+	public String getBurstParameterName() {
+		return burstParameterName;
+	}
+	public void setBurstParameterName(String burstParameterName) {
+		this.burstParameterName = burstParameterName;
+	}
 	public String getJobName() {
 		return jobName;
 	}

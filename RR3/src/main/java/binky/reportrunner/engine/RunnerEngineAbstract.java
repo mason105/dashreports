@@ -1,5 +1,7 @@
 package binky.reportrunner.engine;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -26,7 +28,6 @@ public abstract class RunnerEngineAbstract implements Job {
 	
 	private RunnerDataSource runnerDs;
 	
-	protected Map<String, Object> parameterValues;
 	protected Map<String, Class> parameters;
 	
 	public final void execute(JobExecutionContext context) throws JobExecutionException {
@@ -35,9 +36,17 @@ public abstract class RunnerEngineAbstract implements Job {
 		RunnerJob job = (RunnerJob)context.getJobDetail().getJobDataMap().get("runnerJob");
 		this.runnerDs=job.getDatasource();
 		try {
-			 runReport();
+		
+			if (job.getIsBurst()) {
+				processBurstedReport(job);
+			} else {
+				processSingleReport(job);
+			}
+			
 		} catch (RunnerException e) {
 			throw new JobExecutionException(e);
+		} catch (IOException ioe) {
+			throw new JobExecutionException(ioe);
 		}
 	}
 
@@ -74,6 +83,18 @@ public abstract class RunnerEngineAbstract implements Job {
 		}
 	}
 	
+	private void processBurstedReport(RunnerJob job) throws RunnerException,IOException {
+		
+	}
+	
+	private void processSingleReport(RunnerJob job) throws RunnerException,IOException {
+		runReport(job.getEngineParameters(), getOutputStreamForUrl(job.getOutputUrl()));
+	}
+	
+	private OutputStream getOutputStreamForUrl(String url) throws IOException {
+		return null;
+	}
+	
 	/**
 	 * @return A Map of Parameter ID, Class,
 	 * 
@@ -89,19 +110,14 @@ public abstract class RunnerEngineAbstract implements Job {
 		return parameters;
 	}
 	
-	/**
-	 * @param parameters
-	 */
-	public final void setParameterValues(Map<String,Object> parameterValues) {
-		this.parameterValues=parameterValues;
-	}
+
 	
 	/**
 	 * This is where all the logic to run the report goes
 	 * 
 	 * @throws RunnerException
 	 */
-	protected abstract void runReport() throws RunnerException;			
+	protected abstract void runReport(Map<String, Object> parameterValues,OutputStream os) throws RunnerException;			
 	
 	/**
 	 * @return the name of the runner engine

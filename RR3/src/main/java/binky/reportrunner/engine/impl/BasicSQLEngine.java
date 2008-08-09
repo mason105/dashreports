@@ -1,6 +1,8 @@
 package binky.reportrunner.engine.impl;
 
+import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.Map;
 
 import binky.reportrunner.engine.RunnerEngineAbstract;
 import binky.reportrunner.engine.RunnerException;
@@ -24,9 +26,12 @@ public class BasicSQLEngine extends RunnerEngineAbstract {
 	}
 
 	@Override
-	protected void runReport() throws RunnerException {
+	protected void runReport(Map<String, Object> parameterValues,
+			OutputStream os) throws RunnerException {
 		// TODO Auto-generated method stub
-
+		
 	}
+
+
 
 }

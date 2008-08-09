@@ -53,12 +53,18 @@ public class SchedulerImplTest extends TestCase {
 			assertEquals(job.getCronString(), jobTest.getCronString());
 			assertTrue(scheduler.isJobActive(job.getJobName(), job
 					.getGroupName()));
-			scheduler.removeJob(job.getJobName(), job.getGroupName());
+			
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 			fail("Scheduler error: " + e);
+		} finally {
+			try {
+				scheduler.removeJob(job.getJobName(), job.getGroupName());
+			} catch (SchedulerException e) {
+				e.printStackTrace();
+				fail("unable to remove job " + e);
+			}
 		}
-
 	}
 
 	public void testListGroups() {
@@ -96,6 +102,14 @@ public class SchedulerImplTest extends TestCase {
 		} catch (SchedulerException e) {
 			e.printStackTrace();		
 			fail("Scheduler error: " + e);
+		} finally {
+			try {
+				scheduler.removeJob(job1.getJobName(), job1.getGroupName());
+				scheduler.removeJob(job2.getJobName(), job2.getGroupName());
+			} catch (SchedulerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -116,15 +130,19 @@ public class SchedulerImplTest extends TestCase {
 
 			Date nextRunTime = scheduler.getNextRunTime(job.getJobName(), job
 					.getGroupName());
-			Calendar cal = Calendar.getInstance();
-			if ((cal.get(Calendar.HOUR) > 12)
-					|| ((cal.get(Calendar.HOUR) == 12) && (cal
-							.get(Calendar.MINUTE) > 0
-							|| cal.get(Calendar.SECOND) > 0 || cal
-							.get(Calendar.MILLISECOND) > 0))) {
+			Calendar cal = Calendar.getInstance();	
+			cal.set(Calendar.AM_PM, Calendar.AM);
+			//try and figure this out - 12 AM is actually 12 PM in Calendar land!!!!!
+			cal.set(Calendar.HOUR, 12);
+			cal.set(Calendar.MINUTE, 0);
+			cal.set(Calendar.SECOND, 0);
+			cal.set(Calendar.MILLISECOND, 0);					
+			
+			if (new Date().getTime()>cal.getTimeInMillis()) {
 				// past midday
 				Calendar timeToTest = Calendar.getInstance();
 				timeToTest.add(Calendar.DAY_OF_MONTH, 1);
+				timeToTest.set(Calendar.AM_PM, Calendar.AM);
 				timeToTest.set(Calendar.HOUR, 12);
 				timeToTest.set(Calendar.MINUTE, 0);
 				timeToTest.set(Calendar.SECOND, 0);
@@ -135,6 +153,7 @@ public class SchedulerImplTest extends TestCase {
 			} else {
 				// before midday
 				Calendar timeToTest = Calendar.getInstance();
+				timeToTest.set(Calendar.AM_PM, Calendar.AM);				
 				timeToTest.set(Calendar.HOUR, 12);
 				timeToTest.set(Calendar.MINUTE, 0);
 				timeToTest.set(Calendar.SECOND, 0);
@@ -143,10 +162,17 @@ public class SchedulerImplTest extends TestCase {
 						.getTime());
 			}
 
-			scheduler.removeJob(job.getJobName(), job.getGroupName());
+			
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 			fail("Scheduler error: " + e);
+		}finally {
+			try {
+				scheduler.removeJob(job.getJobName(), job.getGroupName());
+			} catch (SchedulerException e) {
+				e.printStackTrace();
+				fail("unable to remove job " + e);
+			}
 		}
 
 	}
@@ -168,12 +194,19 @@ public class SchedulerImplTest extends TestCase {
 
 			assertTrue(scheduler.isJobActive(job.getJobName(), job
 					.getGroupName()));
-			
-			scheduler.removeJob(job.getJobName(), job.getGroupName());
+						
 		} catch (SchedulerException e) {
 			e.printStackTrace();
 			fail("Scheduler error: " + e);
+		} finally {
+			try {
+				scheduler.removeJob(job.getJobName(), job.getGroupName());
+			} catch (SchedulerException e) {
+				e.printStackTrace();
+				fail("unable to remove job " + e);
+			}
 		}
+
 	}
 
 	public void testListJobs() {
@@ -192,7 +225,7 @@ public class SchedulerImplTest extends TestCase {
 		job2.setJobName("testJob2");
 		job2.setGroupName("testGroup");
 		job2.setOutputUrl("file://testurl");
-		job2.setRunnerEngine(" binky.reportrunner.engine.impl.TestEngine");
+		job2.setRunnerEngine("binky.reportrunner.engine.impl.TestEngine");
 		job2.setEngineParameters(engineParameters);
 		job2.setCronString("0 0 12 * * ?");
 		job2.setDatasource(datasource);
@@ -205,24 +238,29 @@ public class SchedulerImplTest extends TestCase {
 
 			assertTrue(jobs.contains("testJob1"));
 			assertTrue(jobs.contains("testJob2"));
-
-			scheduler.removeJob(job1.getJobName(), job1.getGroupName());
-			scheduler.removeJob(job2.getJobName(), job2.getGroupName());
+		
 		} catch (SchedulerException e) {
+			e.printStackTrace();
+			fail("Scheduler error: " + e);
+		} finally {
+			try {
+				scheduler.removeJob(job1.getJobName(), job1.getGroupName());
+				scheduler.removeJob(job2.getJobName(), job2.getGroupName());
+			} catch (SchedulerException e) {
+				e.printStackTrace();
+				fail("Unable to remove job");				
+			}
+		}
+	}
+
+	public void testIsSchedulerActive() {
+		try {
+			assertTrue(scheduler.isSchedulerActive());
+		} catch (SchedulerException e) {			
 			e.printStackTrace();
 			fail("Scheduler error: " + e);
 		}
 	}
 
-	public void testInvokeJob() {
-		fail("Not yet implemented");
-	}
-
-	public void testIsSchedulerActive() {
-		fail("Not yet implemented");
-	}
-
-	public void testRemoveJob() {
-		fail("Not yet implemented");
-	}
+	
 }

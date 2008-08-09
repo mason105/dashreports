@@ -3,13 +3,14 @@ package binky.reportrunner.scheduler;
 import java.util.Date;
 import java.util.List;
 
+import binky.reportrunner.data.RunnerActiveJob;
 import binky.reportrunner.data.RunnerJob;
 
 public interface Scheduler {
 
 	public void startScheduler() throws SchedulerException;
 
-	public void stopScheduler() throws SchedulerException;
+	public void stopScheduler(Boolean waitForJobsToComplete) throws SchedulerException;
 	
 	public Boolean isSchedulerActive()  throws SchedulerException;
 
@@ -32,4 +33,8 @@ public interface Scheduler {
 	public Date getNextRunTime(String jobName, String groupName)  throws SchedulerException;
 	
 	public Boolean isJobActive(String jobName, String groupName)  throws SchedulerException;
+	
+	public List<RunnerActiveJob> getRunningActiveJobs() throws SchedulerException;
+	
+	public void interruptRunningJob(String jobName, String groupName)  throws SchedulerException;
 }

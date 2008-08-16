@@ -1,4 +1,4 @@
-package binky.reportrunner.dao;
+package binky.reportrunner.dao.impl;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -9,9 +9,10 @@ import junit.framework.TestCase;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import binky.reportrunner.dao.RunnerHistoryDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 
-public class RunnerHistoryDaoTest extends TestCase {
+public class RunnerHistoryDaoImplTest extends TestCase {
 
 	ApplicationContext ctx = new ClassPathXmlApplicationContext(
 			new String[] { "applicationContext.xml" });

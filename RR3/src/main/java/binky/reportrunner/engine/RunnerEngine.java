@@ -24,7 +24,7 @@ import binky.reportrunner.data.RunnerJob;
  **/
 
 @SuppressWarnings("unchecked")
-public abstract class RunnerEngineAbstract implements Job {
+public class RunnerEngine implements Job {
 	
 	private RunnerDataSource runnerDs;
 	
@@ -84,14 +84,15 @@ public abstract class RunnerEngineAbstract implements Job {
 	}
 	
 	private void processBurstedReport(RunnerJob job) throws RunnerException,IOException {
-		
+		//TODO
 	}
 	
 	private void processSingleReport(RunnerJob job) throws RunnerException,IOException {
-		runReport(job.getEngineParameters(), getOutputStreamForUrl(job.getOutputUrl()));
+		runReport(job, getOutputStreamForUrl(job.getOutputUrl()));
 	}
 	
 	private OutputStream getOutputStreamForUrl(String url) throws IOException {
+		//TODO
 		return null;
 	}
 	
@@ -117,19 +118,10 @@ public abstract class RunnerEngineAbstract implements Job {
 	 * 
 	 * @throws RunnerException
 	 */
-	protected abstract void runReport(Map<String, Object> parameterValues,OutputStream os) throws RunnerException;			
+	protected  void runReport(RunnerJob job,OutputStream os) throws RunnerException {
+		
+	}
 	
-	/**
-	 * @return the name of the runner engine
-	 */
-	public abstract String getEngineName();	
-	
-	
-	/**
-	 * @return a block of text explaining about the engine and configuration for it 
-	 * this will be displayed in <pre> tags on the UI so you can include line spaces etc
-	 */
-	public abstract String getConfigMessage();
 
 	
 	

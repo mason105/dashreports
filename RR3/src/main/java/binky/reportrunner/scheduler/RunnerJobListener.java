@@ -5,10 +5,20 @@ import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
 import binky.reportrunner.dao.RunnerHistoryDao;
+import binky.reportrunner.dao.RunnerJobDao;
 
 public class RunnerJobListener implements JobListener {
 
 	private RunnerHistoryDao runnerHistoryDao;
+	private RunnerJobDao runnerJobDao;
+	
+	public RunnerJobDao getRunnerJobDao() {
+		return runnerJobDao;
+	}
+
+	public void setRunnerJobDao(RunnerJobDao runnerJobDao) {
+		this.runnerJobDao = runnerJobDao;
+	}
 
 	public String getName() {
 		return "ReportRunnerCoreJobListener";

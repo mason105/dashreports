@@ -81,6 +81,11 @@
 	</bean>
 	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
 		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
+		<property name="runnerJobDao" ref="runnerJobDao" />
+	</bean>
+	<bean id="runnerJobService" class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
+		<property name="scheduler" ref="scheduler" />
+		<property name="runnerJobDao" ref="runnerJobDao" />
 	</bean>
 	
 	<!--  hibernate plumbing -->
@@ -99,6 +104,9 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>binky.reportrunner.data.RunnerHistoryEvent</value>
+				<value>binky.reportrunner.data.RunnerJob</value>
+				<value>binky.reportrunner.data.RunnerGroup</value>
+				<value>binky.reportrunner.data.RunnerUser</value>
 			</list>
 		</property>
 		<property name="annotatedPackages">
@@ -107,13 +115,10 @@
 			</list>
 		</property>
 	</bean>
-	
 	<bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor"
 		autowire="byName" />
-		
 	<bean id="runnerHistoryDaoTarget" class="binky.reportrunner.dao.impl.RunnerHistoryDaoImpl"
 		autowire="byName" />
-		
 	<bean id="runnerHistoryDao" class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<value>binky.reportrunner.dao.RunnerHistoryDao</value>
@@ -122,6 +127,45 @@
 			<list>
 				<value>hibernateInterceptor</value>
 				<value>runnerHistoryDaoTarget</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="runnerJobDaoTarget" class="binky.reportrunner.dao.impl.RunnerJobDaoImpl"
+		autowire="byName" />
+	<bean id="runnerJobDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerJobDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerJobTarget</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="runnerGroupDaoTarget" class="binky.reportrunner.dao.impl.RunnerGroupDaoImpl"
+		autowire="byName" />
+	<bean id="runnerGroupDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerGroupDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerGroupDaoTarget</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="runnerUserDaoTarget" class="binky.reportrunner.dao.impl.RunnerUserDaoImpl"
+		autowire="byName" />
+	<bean id="runnerUserDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerUserDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerUserDaoTarget</value>
 			</list>
 		</property>
 	</bean>

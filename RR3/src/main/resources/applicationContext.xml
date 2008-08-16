@@ -169,4 +169,18 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="runnerDataSourceDaoTarget" class="binky.reportrunner.dao.impl.RunnerDataSourceDaoImpl"
+		autowire="byName" />
+	<bean id="runnerDataSourceDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerDataSourceDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerDataSourceDaoTarget</value>
+			</list>
+		</property>
+	</bean>	
 </beans>

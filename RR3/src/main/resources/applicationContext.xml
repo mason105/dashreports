@@ -105,8 +105,10 @@
 			<list>
 				<value>binky.reportrunner.data.RunnerHistoryEvent</value>
 				<value>binky.reportrunner.data.RunnerJob</value>
+				<value>binky.reportrunner.data.RunnerJobParameter</value>
 				<value>binky.reportrunner.data.RunnerGroup</value>
 				<value>binky.reportrunner.data.RunnerUser</value>
+				<value>binky.reportrunner.data.RunnerDataSource</value>
 			</list>
 		</property>
 		<property name="annotatedPackages">
@@ -139,7 +141,7 @@
 		<property name="interceptorNames">
 			<list>
 				<value>hibernateInterceptor</value>
-				<value>runnerJobTarget</value>
+				<value>runnerJobDaoTarget</value>
 			</list>
 		</property>
 	</bean>

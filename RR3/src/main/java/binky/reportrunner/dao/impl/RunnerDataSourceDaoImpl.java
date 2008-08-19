@@ -2,29 +2,34 @@ package binky.reportrunner.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
 import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.data.RunnerDataSource;
 
-public class RunnerDataSourceDaoImpl implements RunnerDataSourceDao {
+public class RunnerDataSourceDaoImpl extends HibernateDaoSupport implements
+		RunnerDataSourceDao {
 
-	public void addUpdateDataSource(RunnerDataSource dataSource) {
-		// TODO Auto-generated method stub
-
+	public void saveUpdateDataSource(RunnerDataSource dataSource) {
+		getHibernateTemplate().saveOrUpdate(dataSource);
 	}
 
 	public void deleteDataSource(String dataSourceName) {
-		// TODO Auto-generated method stub
-
+		getHibernateTemplate().delete((RunnerDataSource)
+				getHibernateTemplate().get(RunnerDataSource.class,
+						dataSourceName));
 	}
 
 	public RunnerDataSource getDataSource(String dataSourceName) {
-		// TODO Auto-generated method stub
-		return null;
+		return (RunnerDataSource) getHibernateTemplate().get(
+				RunnerDataSource.class, dataSourceName);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<RunnerDataSource> listDataSources() {
-		// TODO Auto-generated method stub
-		return null;
+		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerDataSource.class);
+		return getHibernateTemplate().findByCriteria(criteria);
 	}
 
 }

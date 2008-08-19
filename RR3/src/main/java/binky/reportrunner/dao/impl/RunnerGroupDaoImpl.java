@@ -2,6 +2,7 @@ package binky.reportrunner.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import binky.reportrunner.dao.RunnerGroupDao;
@@ -11,23 +12,24 @@ public class RunnerGroupDaoImpl extends HibernateDaoSupport implements
 		RunnerGroupDao {
 
 	public void deleteGroup(String groupName) {
-		// TODO Auto-generated method stub
-		
+		getHibernateTemplate().delete((RunnerGroup)
+				getHibernateTemplate().get(RunnerGroup.class,
+						groupName));
 	}
 
 	public RunnerGroup getGroup(String groupName) {
-		// TODO Auto-generated method stub
-		return null;
+		return (RunnerGroup) getHibernateTemplate().get(
+				RunnerGroup.class, groupName);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<RunnerGroup> listGroups() {
-		// TODO Auto-generated method stub
-		return null;
+		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerGroup.class);
+		return getHibernateTemplate().findByCriteria(criteria);
 	}
 
 	public void saveUpdateGroup(RunnerGroup group) {
-		// TODO Auto-generated method stub
-		
+		getHibernateTemplate().saveOrUpdate(group);
 	}
 
 }

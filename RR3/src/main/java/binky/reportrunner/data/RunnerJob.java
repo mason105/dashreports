@@ -2,11 +2,12 @@ package binky.reportrunner.data;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import net.sf.jasperreports.engine.JasperReport;
 
@@ -23,11 +24,7 @@ public class RunnerJob implements Serializable {
 	
 	@ManyToOne
 	private RunnerDataSource datasource;
-	
-	private Map<String,Object> parameterNames;
-	private Map<String, Object> parameterValues;
-	private Map<String, Integer> parameterBurstMappings;
-	
+
 	private String query;
 	
 	private Date startDate;
@@ -39,31 +36,23 @@ public class RunnerJob implements Serializable {
 	private String burstFileNameParameterName;	
 	private JasperReport jasperReport;
 	
+	@OneToMany(mappedBy="pk.runnerJob")
+	private List<RunnerJobParameter> parameters;
+	
+	
+	public List<RunnerJobParameter> getParameters() {
+		return parameters;
+	}
+	public void setParameters(List<RunnerJobParameter> parameters) {
+		this.parameters = parameters;
+	}
 	public RunnerJob_pk getPk() {
 		return pk;
 	}
 	public void setPk(RunnerJob_pk pk) {
 		this.pk = pk;
 	}
-	public Map<String, Object> getParameterNames() {
-		return parameterNames;
-	}
-	public void setParameterNames(Map<String, Object> parameterNames) {
-		this.parameterNames = parameterNames;
-	}
-	public Map<String, Object> getParameterValues() {
-		return parameterValues;
-	}
-	public void setParameterValues(Map<String, Object> parameterValues) {
-		this.parameterValues = parameterValues;
-	}
-	public Map<String, Integer> getParameterBurstMappings() {
-		return parameterBurstMappings;
-	}
-	public void setParameterBurstMappings(
-			Map<String, Integer> parameterBurstMappings) {
-		this.parameterBurstMappings = parameterBurstMappings;
-	}
+
 	public String getQuery() {
 		return query;
 	}

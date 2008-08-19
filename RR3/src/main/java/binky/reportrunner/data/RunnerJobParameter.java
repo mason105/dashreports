@@ -9,7 +9,13 @@ public class RunnerJobParameter {
 	@Id
 	private RunnerJobParameter_pk pk;
 	private String parameterValue;
-	private Boolean isBurstParameter;
+	private String parameterBurstColumn;
+	public String getParameterBurstColumn() {
+		return parameterBurstColumn;
+	}
+	public void setParameterBurstColumn(String parameterBurstColumn) {
+		this.parameterBurstColumn = parameterBurstColumn;
+	}
 	@SuppressWarnings("unchecked")
 	private Class parameterClass;
 	
@@ -33,12 +39,6 @@ public class RunnerJobParameter {
 	}
 	public void setParameterValue(String parameterValue) {
 		this.parameterValue = parameterValue;
-	}
-	public Boolean getIsBurstParameter() {
-		return isBurstParameter;
-	}
-	public void setIsBurstParameter(Boolean isBurstParameter) {
-		this.isBurstParameter = isBurstParameter;
 	}
 	
 }

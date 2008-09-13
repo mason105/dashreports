@@ -23,12 +23,14 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	public void addUpdateJob(RunnerJob job) throws SchedulerException {
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
-
-		if (runnerJobDao.getJob(jobName, groupName) != null) {
-			deleteJob(jobName, groupName);
+		RunnerJob job_comp = runnerJobDao.getJob(jobName, groupName);
+		if ((job_comp != null)
+				&& ((job_comp.getCronString() != null) && !job_comp.getCronString()
+						.isEmpty())) {
+			scheduler.removeJob(jobName, groupName);
 		}
 
-		if ((job.getCronString() != null) || !job.getCronString().isEmpty()) {
+		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			scheduler.addJob(jobName, groupName, job.getRunnerEngine(), job
 					.getCronString(), job.getStartDate(), job.getEndDate());
 		}
@@ -41,7 +43,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			throws SchedulerException {
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 
-		if ((job.getCronString() != null) || !job.getCronString().isEmpty()) {
+		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			scheduler.removeJob(jobName, groupName);
 		}
 

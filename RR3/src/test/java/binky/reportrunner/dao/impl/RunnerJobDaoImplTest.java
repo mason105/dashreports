@@ -1,31 +1,78 @@
 package binky.reportrunner.dao.impl;
 
+import java.util.Calendar;
+import java.util.List;
+
 import junit.framework.TestCase;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import binky.reportrunner.dao.RunnerGroupDao;
+import binky.reportrunner.dao.RunnerJobDao;
+import binky.reportrunner.data.RunnerGroup;
+import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.data.RunnerJob_pk;
 
 public class RunnerJobDaoImplTest extends TestCase {
 
+	ApplicationContext ctx = new ClassPathXmlApplicationContext(
+			new String[] { "applicationContext.xml" });
+
+	RunnerJobDao dao;
+	RunnerGroup testGroup;
+	
+	@Override
 	protected void setUp() throws Exception {
-		super.setUp();
+		this.dao = (RunnerJobDao) ctx.getBean("runnerJobDao");
+		RunnerGroupDao groupDao = (RunnerGroupDao)ctx.getBean("runnerGroupDao");
+		testGroup = RunnerGroupDaoImplTest.getDemoGroup("test"+Calendar.getInstance().getTimeInMillis());
+		groupDao.saveUpdateGroup(testGroup);
 	}
 
 	protected void tearDown() throws Exception {
-		super.tearDown();
+		RunnerGroupDao groupDao = (RunnerGroupDao)ctx.getBean("runnerGroupDao");
+		groupDao.deleteGroup(testGroup.getGroupName());
 	}
-
-	public void testDeleteJob() {
-		fail("Not yet implemented");
+	private RunnerJob getDemoJob(String jobName){
+		RunnerJob_pk pk = new RunnerJob_pk();
+		pk.setGroup(testGroup);
+		pk.setJobName(jobName);
+		RunnerJob runnerJob= new RunnerJob();
+		runnerJob.setPk(pk);
+		runnerJob.setOutputUrl("test");
+		return runnerJob;
 	}
-
-	public void testGetJob() {
-		fail("Not yet implemented");
-	}
-
+	
 	public void testListJobs() {
-		fail("Not yet implemented");
+		RunnerJob runnerJob1 = getDemoJob("test1");
+		dao.saveUpdateJob(runnerJob1);
+		RunnerJob runnerJob2 = getDemoJob("test2");
+		dao.saveUpdateJob(runnerJob2);
+		List<RunnerJob> jobs = dao.listJobs(testGroup.getGroupName()); 
+		dao.deleteJob("test1", testGroup.getGroupName());
+		dao.deleteJob("test2", testGroup.getGroupName());
+		assertEquals(2,jobs.size());
 	}
 
 	public void testSaveUpdateJob() {
-		fail("Not yet implemented");
+
+		RunnerJob runnerJob = getDemoJob("test1");
+		dao.saveUpdateJob(runnerJob);
+		RunnerJob compareJob = dao.getJob("test1", testGroup.getGroupName());
+		assertEquals(runnerJob.getPk().getJobName(), compareJob.getPk().getJobName());
+		assertEquals(runnerJob.getPk().getGroup().getGroupName(), compareJob.getPk().getGroup().getGroupName());
+		assertEquals(runnerJob.getOutputUrl(),compareJob.getOutputUrl());
+		dao.deleteJob("test1", testGroup.getGroupName());
+
 	}
 
+	public void testDeleteJob() {
+		
+		RunnerJob runnerJob = getDemoJob("test1");
+		dao.saveUpdateJob(runnerJob);
+		dao.deleteJob("test1", testGroup.getGroupName());
+		RunnerJob compareJob = dao.getJob("test1", testGroup.getGroupName());
+		assertNull(compareJob);		
+	}
 }

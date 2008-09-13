@@ -2,9 +2,13 @@ package binky.reportrunner.scheduler.impl;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
 import org.quartz.impl.StdScheduler;
 
@@ -45,8 +49,10 @@ public class SchedulerImpl implements Scheduler {
 		}
 
 		jobTrigger.setStartTime(startDate);
-		jobTrigger.setEndTime(endDate);
+		if (endDate!=null) jobTrigger.setEndTime(endDate);
 	
+		jobTrigger.setName(jobName+":"+groupName+":trigger");
+		jobTrigger.setGroup("RunnerTriggers");
 		// Bind the listener
 		jobDetail.addJobListener("ReportRunnerCoreJobListener");
 
@@ -66,16 +72,16 @@ public class SchedulerImpl implements Scheduler {
 		}
 	}
 
-	public void stopScheduler(Boolean waitForJobsToComplete)
+	public void stopScheduler()
 			throws SchedulerException {
-		this.quartzScheduler.shutdown(waitForJobsToComplete);
+		this.quartzScheduler.standby();
 	}
 
 	public Date getNextRunTime(String jobName, String groupName)
 			throws SchedulerException {
-		try {
-			return this.quartzScheduler.getTrigger(jobName + "Trigger",
-					groupName + "Trigger").getNextFireTime();
+		try {			
+			return this.quartzScheduler.getTrigger(jobName+":"+groupName+":trigger",
+					"RunnerTriggers").getNextFireTime();
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error next run time for " + jobName
 					+ "/" + groupName, e);
@@ -85,8 +91,8 @@ public class SchedulerImpl implements Scheduler {
 	public Boolean isJobActive(String jobName, String groupName)
 			throws SchedulerException {
 		try {
-			return !(this.quartzScheduler.getTriggerState(jobName + "Trigger",
-					groupName + "Trigger") == Trigger.STATE_PAUSED);
+			return !(this.quartzScheduler.getTriggerState(jobName+":"+groupName+":trigger",
+					"RunnerTriggers") == Trigger.STATE_PAUSED);
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error getting state for " + jobName
 					+ "/" + groupName, e);
@@ -106,7 +112,7 @@ public class SchedulerImpl implements Scheduler {
 	}
 
 	public Boolean isSchedulerActive() throws SchedulerException {
-		return !this.quartzScheduler.isShutdown();
+		return !this.quartzScheduler.isInStandbyMode();
 	}
 
 	public void pauseJob(String jobName, String groupName)
@@ -152,4 +158,17 @@ public class SchedulerImpl implements Scheduler {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public Map<String, String> getCurrentRunningJobs() {
+		Map<String,String> currentRunningJobs = new HashMap<String, String>();
+		
+		List<JobExecutionContext> cej = quartzScheduler.getCurrentlyExecutingJobs();
+		
+		for(JobExecutionContext je:cej) {
+			currentRunningJobs.put(je.getJobDetail().getGroup(),je.getJobDetail().getName());
+		}
+						
+		return currentRunningJobs;
+	}
+	
 }

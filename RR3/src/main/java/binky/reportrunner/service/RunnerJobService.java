@@ -10,5 +10,5 @@ public interface RunnerJobService {
 	public void addUpdateJob(RunnerJob job) throws SchedulerException;
 	public void deleteJob(String jobName, String groupName) throws SchedulerException;
 	public List<RunnerJob> listJobs(String groupName);
-	public RunnerJob getJob(String jobName, String groupName);	
+	public RunnerJob getJob(String jobName, String groupName);
 }

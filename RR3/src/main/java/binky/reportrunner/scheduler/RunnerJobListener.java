@@ -48,7 +48,7 @@ public class RunnerJobListener implements JobListener {
 	}
 
 	public void jobWasExecuted(JobExecutionContext ctx, JobExecutionException ex) {
-		Boolean success = ex == null;
+		Boolean success = (ex == null);
 
 		RunnerHistoryEvent event = new RunnerHistoryEvent();
 		event.setGroupName(ctx.getJobDetail().getGroup());

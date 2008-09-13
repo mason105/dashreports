@@ -96,23 +96,7 @@ public class RunnerEngine implements Job {
 		return null;
 	}
 	
-	/**
-	 * @return A Map of Parameter ID, Class,
-	 * 
-	 *  This will determine what parameters the UI prompts for when creating a job
-	 *  this should be populated in the constructor/init of the implementing class
-	 *  
-	 *  This first String is the name the second is the class name of the type
-	 *  
-	 *  It is up to the underlying implementation how it handles the parameter list passed in 
-	 *  
-	 */
-	public final Map<String,Class> getParameters() {
-		return parameters;
-	}
-	
-
-	
+		
 	/**
 	 * This is where all the logic to run the report goes
 	 * 

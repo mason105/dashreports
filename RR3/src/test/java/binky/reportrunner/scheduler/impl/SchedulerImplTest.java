@@ -17,7 +17,8 @@ public class SchedulerImplTest extends TestCase {
 			new String[] { "applicationContext.xml" });
 
 	Scheduler scheduler;
-	String testGroup = "testgroup"+ Calendar.getInstance().getTimeInMillis();
+	String testGroup = "testgroup" + Calendar.getInstance().getTimeInMillis();
+
 	@Override
 	protected void setUp() throws Exception {
 		this.scheduler = (Scheduler) ctx.getBean("scheduler");
@@ -39,8 +40,8 @@ public class SchedulerImplTest extends TestCase {
 	public void testAddJobGetStatus() {
 		try {
 			scheduler.addJob("test1", testGroup,
-					"binky.reportrunner.engine.RunnerEngine", "0 11 11 11 11 ?", new Date(),
-					null);
+					"binky.reportrunner.engine.RunnerEngine",
+					"0 11 11 11 11 ?", new Date(), null);
 			assertTrue(scheduler.isJobActive("test1", testGroup));
 			assertNotNull(scheduler.getNextRunTime("test1", testGroup));
 			scheduler.removeJob("test1", testGroup);
@@ -66,8 +67,8 @@ public class SchedulerImplTest extends TestCase {
 	public void testPauseResumeJob() {
 		try {
 			scheduler.addJob("test1", testGroup,
-					"binky.reportrunner.engine.RunnerEngine", "0 11 11 11 11 ?", new Date(),
-					null);
+					"binky.reportrunner.engine.RunnerEngine",
+					"0 11 11 11 11 ?", new Date(), null);
 			assertTrue(scheduler.isJobActive("test1", testGroup));
 			scheduler.pauseJob("test1", testGroup);
 			assertFalse(scheduler.isJobActive("test1", testGroup));

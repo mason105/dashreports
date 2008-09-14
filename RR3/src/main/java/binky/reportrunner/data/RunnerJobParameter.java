@@ -19,14 +19,15 @@ public class RunnerJobParameter {
 		this.parameterBurstColumn = parameterBurstColumn;
 	}
 
-	private String parameterClass;
+	//1=String 2=Timestamp 3=Boolean 4=Float 5=Long 6=Double 7=BigDecimal
+	private Integer parameterType;
 
-	public String getParameterClass() {
-		return parameterClass;
+	public Integer getParameterType() {
+		return parameterType;
 	}
 
-	public void setParameterClass(String parameterClass) {
-		this.parameterClass = parameterClass;
+	public void setParameterType(Integer parameterType) {
+		this.parameterType = parameterType;
 	}
 
 	public RunnerJobParameter_pk getPk() {

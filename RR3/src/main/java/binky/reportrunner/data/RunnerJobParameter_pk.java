@@ -12,19 +12,20 @@ public class RunnerJobParameter_pk implements Serializable {
 	
 	@ManyToOne
 	private RunnerJob runnerJob;
-	private String parameterName;
+	private Integer parameterIdx;
 	public RunnerJob getRunnerJob() {
 		return runnerJob;
 	}
 	public void setRunnerJob(RunnerJob runnerJob) {
 		this.runnerJob = runnerJob;
 	}
-	public String getParameterName() {
-		return parameterName;
+	public Integer getParameterIdx() {
+		return parameterIdx;
 	}
-	public void setParameterName(String parameterName) {
-		this.parameterName = parameterName;
+	public void setParameterIdx(Integer parameterIdx) {
+		this.parameterIdx = parameterIdx;
 	}
+
 	
 	
 }

@@ -3,110 +3,190 @@ package binky.reportrunner.engine;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.sql.DataSource;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperReport;
+
+import org.apache.commons.mail.EmailException;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.data.RunnerJobParameter;
 
 /**
  * @author Daniel Grout
  **/
 
-@SuppressWarnings("unchecked")
 public class RunnerEngine implements Job {
-	
-	private RunnerDataSource runnerDs;
-	
-	protected Map<String, Class> parameters;
-	
-	public final void execute(JobExecutionContext context) throws JobExecutionException {
-		
-		//Grab the elements of the job from the context to pass on
-		RunnerJob job = (RunnerJob)context.getJobDetail().getJobDataMap().get("runnerJob");
-		this.runnerDs=job.getDatasource();
+
+	DatasourceManager dsManager;
+	SQLProcessor sqlProcessor;
+	FileSystemHandler fs;
+
+	public RunnerEngine() throws IOException {
+		this.dsManager = new DatasourceManager();
+		this.sqlProcessor = new SQLProcessor();
+		this.fs = new FileSystemHandler();
+	}
+
+	public final void execute(JobExecutionContext context)
+			throws JobExecutionException {
+
+		// Grab the elements of the job from the context to pass on
+		RunnerJob job = (RunnerJob) context.getJobDetail().getJobDataMap().get(
+				"runnerJob");
+
 		try {
-		
+
 			if (job.getIsBurst()) {
 				processBurstedReport(job);
 			} else {
 				processSingleReport(job);
 			}
-			
-		} catch (RunnerException e) {
+		} catch (InstantiationException e) {
 			throw new JobExecutionException(e);
-		} catch (IOException ioe) {
-			throw new JobExecutionException(ioe);
+		} catch (IllegalAccessException e) {
+			throw new JobExecutionException(e);
+		} catch (ClassNotFoundException e) {
+			throw new JobExecutionException(e);
+		} catch (SQLException e) {
+			throw new JobExecutionException(e);
+		} catch (NamingException e) {
+			throw new JobExecutionException(e);
+		} catch (IOException e) {
+			throw new JobExecutionException(e);
+		} catch (JRException e) {
+			throw new JobExecutionException(e);
+		} catch (EmailException e) {
+			throw new JobExecutionException(e);
 		}
 	}
 
-	/**
-	 * @return a connection to the datasource for the job
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 * @throws NamingException
-	 */
-	protected final Connection getDataConnection() throws InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NamingException {
+	private void processBurstedReport(RunnerJob job) throws IOException,
+			InstantiationException, IllegalAccessException,
+			ClassNotFoundException, JRException, SQLException, NamingException,
+			EmailException {
+		List<String> fileUrls = new LinkedList<String>();
 
-		String jndiDataSource = runnerDs.getJndiName();
-		if (jndiDataSource == null) {
+		Connection conn;
 
-			String jdbcUser = runnerDs.getUsername();
-			String jdbcPassword = runnerDs.getPassword();
-			String jdbcUrl = runnerDs.getJdbcUrl();
-			String databaseDriver = runnerDs.getJdbcClass();
+		conn = dsManager.getDataConnection(job.getDatasource());
+		ResultSet burstResults = sqlProcessor.getResults(conn, job
+				.getBurstQuery());
 
-			Class.forName(databaseDriver).newInstance();
+		List<RunnerJobParameter> params = job.getParameters();
+		while (burstResults.next()) {
+			// populate the parameters
+			List<RunnerJobParameter> populatedParams = new LinkedList<RunnerJobParameter>();
+			for (RunnerJobParameter param : params) {
+				param.setParameterValue(""
+						+ burstResults.getObject(param
+								.getParameterBurstColumn()));
+				populatedParams.add(param);
+			}
+			String fileNameValue = ""
+					+ burstResults.getObject(job
+							.getBurstFileNameParameterName());
 
-			//logger.debug("Url = "+jdbcUrl);
+			// process the query with the results in
 
-			return DriverManager.getConnection(jdbcUrl, jdbcUser, jdbcPassword);
+			ResultSet results = sqlProcessor.getResults(conn, job.getQuery(),
+					populatedParams);
+
+			// if we are not outputting this anywhere (must be emailing) then
+			// dump this as a temp file
+			String outUrl = fs.getFinalUrl(job.getOutputUrl(), job.getPk()
+					.getJobName(), job.getPk().getGroup().getGroupName(), job
+					.getFileFormat().toString().toLowerCase());
+
+			int lastDot = outUrl.lastIndexOf(".");
+			// insert the bursted filename value into the url
+			outUrl = outUrl.substring(0, lastDot) + "_" + fileNameValue
+					+ outUrl.substring(lastDot);
+
+			doReport(results, outUrl, job.getJasperReport(), job
+					.getFileFormat().toString());
+
+			conn.close();
+			fileUrls.add(outUrl);
+
+			// send email if need be
+			if ((job.getTargetEmailAddress() != null)
+					&& (!job.getTargetEmailAddress().isEmpty())) {
+				EmailHandler email = new EmailHandler();
+				email.sendEmail(job.getTargetEmailAddress(), job
+						.getFromAddress(), job.getSmtpServer(), fileUrls, job
+						.getPk().getJobName(), job.getPk().getGroup()
+						.getGroupName());
+			}
+
+			// clean up any temp files
+			if ((job.getOutputUrl() == null) || (job.getOutputUrl().isEmpty())) {
+				for (String url : fileUrls) {
+					fs.deleteFile(url);
+				}
+			}
+		}
+
+	}
+
+	private void processSingleReport(RunnerJob job)
+			throws InstantiationException, IllegalAccessException,
+			ClassNotFoundException, SQLException, NamingException, IOException,
+			JRException, EmailException {
+
+		Connection conn = dsManager.getDataConnection(job.getDatasource());
+
+		ResultSet results = sqlProcessor.getResults(conn, job.getQuery(), job
+				.getParameters());
+		// if we are not outputting this anywhere (must be emailing) then
+		// dump this as a temp file
+		String outUrl = fs.getFinalUrl(job.getOutputUrl(), job.getPk()
+				.getJobName(), job.getPk().getGroup().getGroupName(), job
+				.getFileFormat().toString().toLowerCase());
+		doReport(results, outUrl, job.getJasperReport(), job.getFileFormat()
+				.toString());
+		conn.close();
+
+		// send email if need be
+		if ((job.getTargetEmailAddress() != null)
+				&& (!job.getTargetEmailAddress().isEmpty())) {
+			EmailHandler email = new EmailHandler();
+			email.sendEmail(job.getTargetEmailAddress(), job.getFromAddress(),
+					job.getSmtpServer(), outUrl, job.getPk().getJobName(), job
+							.getPk().getGroup().getGroupName());
+		}
+
+		// clean up any temp files
+		if ((job.getOutputUrl() == null) || (job.getOutputUrl().isEmpty())) {
+			fs.deleteFile(outUrl);
+		}
+
+	}
+
+	private void doReport(ResultSet results, String url, JasperReport jReport,
+			String fileFormat) throws IOException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException, JRException,
+			SQLException {
+
+		OutputStream os = fs.getOutputStreamForUrl(url);
+		boolean isJasperReport = jReport != null;
+		if (isJasperReport) {
+			JasperRenderer jr = new JasperRenderer();
+			jr.generateReport(jReport, results, os, fileFormat);
 		} else {
-			Context initContext = new InitialContext();
-			//logger.debug(jndiDataSource);
-			DataSource ds = (DataSource)initContext.lookup("java:/comp/env/"+jndiDataSource);
-			Connection conn = ds.getConnection();
-
-			return conn;
+			CSVRenderer csvR = new CSVRenderer();
+			csvR.generateReport(results, os);
 		}
+		os.close();
 	}
-	
-	private void processBurstedReport(RunnerJob job) throws RunnerException,IOException {
-		//TODO
-	}
-	
-	private void processSingleReport(RunnerJob job) throws RunnerException,IOException {
-		runReport(job, getOutputStreamForUrl(job.getOutputUrl()));
-	}
-	
-	private OutputStream getOutputStreamForUrl(String url) throws IOException {
-		//TODO
-		return null;
-	}
-	
-		
-	/**
-	 * This is where all the logic to run the report goes
-	 * 
-	 * @throws RunnerException
-	 */
-	protected  void runReport(RunnerJob job,OutputStream os) throws RunnerException {
-		
-	}
-	
 
-	
-	
 }

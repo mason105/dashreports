@@ -16,6 +16,10 @@ public class RunnerJob implements Serializable {
 
 	private static final long serialVersionUID = 2036013437864145537L;
 
+	public enum FileFormat {
+		PDF, XLS, RTF, HTML, CSV
+	};
+
 	@Id
 	private RunnerJob_pk pk;
 
@@ -34,7 +38,43 @@ public class RunnerJob implements Serializable {
 	private Boolean isBurst;
 	private String burstQuery;
 	private String burstFileNameParameterName;
+	private String targetEmailAddress;
 	private JasperReport jasperReport;
+	private FileFormat fileFormat;
+	private String fromAddress;
+	private String smtpServer;
+
+	public String getFromAddress() {
+		return fromAddress;
+	}
+
+	public void setFromAddress(String fromAddress) {
+		this.fromAddress = fromAddress;
+	}
+
+	public String getSmtpServer() {
+		return smtpServer;
+	}
+
+	public void setSmtpServer(String smtpServer) {
+		this.smtpServer = smtpServer;
+	}
+
+	public FileFormat getFileFormat() {
+		return fileFormat;
+	}
+
+	public void setFileFormat(FileFormat fileFormat) {
+		this.fileFormat = fileFormat;
+	}
+
+	public String getTargetEmailAddress() {
+		return targetEmailAddress;
+	}
+
+	public void setTargetEmailAddress(String targetEmailAddress) {
+		this.targetEmailAddress = targetEmailAddress;
+	}
 
 	@OneToMany(mappedBy = "pk.runnerJob")
 	private List<RunnerJobParameter> parameters;
@@ -95,9 +135,7 @@ public class RunnerJob implements Serializable {
 		this.jasperReport = jasperReport;
 	}
 
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
-	}
+	
 
 	public Boolean getIsBurst() {
 		return isBurst;

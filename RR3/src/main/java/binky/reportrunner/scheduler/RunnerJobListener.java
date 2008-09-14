@@ -2,6 +2,7 @@ package binky.reportrunner.scheduler;
 
 import java.util.Calendar;
 
+import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
@@ -13,6 +14,8 @@ import binky.reportrunner.data.RunnerJob;
 
 public class RunnerJobListener implements JobListener {
 
+	private static final Logger logger = Logger.getLogger(RunnerJobListener.class);
+	
 	private RunnerHistoryDao runnerHistoryDao;
 	private RunnerJobDao runnerJobDao;
 
@@ -36,6 +39,7 @@ public class RunnerJobListener implements JobListener {
 		event.setTimestamp(Calendar.getInstance().getTime());
 
 		runnerHistoryDao.saveEvent(event);
+		logger.warn("Job Execution Vetoed: " + ctx.getJobDetail().getName() + "/" + ctx.getJobDetail().getGroup());
 	}
 
 	public void jobToBeExecuted(JobExecutionContext ctx) {
@@ -45,6 +49,8 @@ public class RunnerJobListener implements JobListener {
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 		ctx.put("runnerJob", job);
 
+		logger.info("Job to be executed: " + ctx.getJobDetail().getName() + "/" + ctx.getJobDetail().getGroup());
+		
 	}
 
 	public void jobWasExecuted(JobExecutionContext ctx, JobExecutionException ex) {
@@ -58,6 +64,12 @@ public class RunnerJobListener implements JobListener {
 		event.setTimestamp(Calendar.getInstance().getTime());
 
 		runnerHistoryDao.saveEvent(event);
+		
+		if (success){
+			logger.info("Job was executed: " + ctx.getJobDetail().getName() + "/" + ctx.getJobDetail().getGroup());
+		} else{
+			logger.error("Job Failed : " + ctx.getJobDetail().getName() + "/" + ctx.getJobDetail().getGroup(),ex);
+		}
 	}
 
 	public RunnerHistoryDao getRunnerHistoryDao() {

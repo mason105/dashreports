@@ -6,7 +6,8 @@
 	<!-- Example of SAF2 action instantiated by Spring -->
 	<bean id="helloWorldAction" class="binky.HelloWorldAction"
 		singleton="false" />
-		
+			<bean id="indexAction" class="binky.IndexAction"
+		singleton="false" />
 	<!--  properties file -->
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -171,7 +172,6 @@
 			</list>
 		</property>
 	</bean>
-	
 	<bean id="runnerDataSourceDaoTarget" class="binky.reportrunner.dao.impl.RunnerDataSourceDaoImpl"
 		autowire="byName" />
 	<bean id="runnerDataSourceDao" class="org.springframework.aop.framework.ProxyFactoryBean">
@@ -184,5 +184,17 @@
 				<value>runnerDataSourceDaoTarget</value>
 			</list>
 		</property>
-	</bean>	
+	</bean>
+	<bean id="authenticationService"
+		class="binky.reportrunner.service.impl.AuthenticationServiceImpl">
+		<property name="userDao">
+			<ref local="runnerUserDao" />
+		</property>
+	</bean>
+	<bean id="loginInterceptor" 
+		class="binky.reportrunner.interceptors.AuthIntercept" singleton="true">
+		<property name="authService">
+			<ref local="authenticationService" />
+		</property>
+	</bean>
 </beans>

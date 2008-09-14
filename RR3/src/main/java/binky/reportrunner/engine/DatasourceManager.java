@@ -12,6 +12,10 @@ import javax.sql.DataSource;
 import binky.reportrunner.data.RunnerDataSource;
 
 public class DatasourceManager {
+	
+	//TODO:need to think about a datasource service that pre-loads all the stored connections
+	//and pools/manages them - v2?
+	
 	/**
 	 * @return a connection to the datasource for the job
 	 * @throws InstantiationException

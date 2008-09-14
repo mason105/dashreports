@@ -108,7 +108,7 @@ public class RunnerEngine implements Job {
 					.getFileFormat().toString().toLowerCase());
 
 			int lastDot = outUrl.lastIndexOf(".");
-			// insert the bursted filename value into the url
+			// insert the bursted filename value into the url - probably a better way to do this.
 			outUrl = outUrl.substring(0, lastDot) + "_" + fileNameValue
 					+ outUrl.substring(lastDot);
 

@@ -1,4 +1,4 @@
-package binky.reportrunner.engine;
+package binky.reportrunner.engine.renderers.exporters;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -7,11 +7,11 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-public class CSVRenderer {
+public class CSVExporter  extends AbstractExporter{
 
 	private static final String delimeter=",";
 	
-	public void generateReport(ResultSet resultSet, OutputStream outputStream) throws IOException, SQLException {
+	public void export(ResultSet resultSet, OutputStream outputStream) throws IOException, SQLException {
 		
 		ResultSetMetaData metaData = resultSet.getMetaData();
 		

@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperReport;
 
 import org.apache.commons.mail.EmailException;
@@ -20,6 +19,10 @@ import org.quartz.JobExecutionException;
 
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
+import binky.reportrunner.engine.renderers.AbstractRenderer;
+import binky.reportrunner.engine.renderers.JasperRenderer;
+import binky.reportrunner.engine.renderers.RenderException;
+import binky.reportrunner.engine.renderers.StandardRenderer;
 
 /**
  * @author Daniel Grout
@@ -63,17 +66,14 @@ public class RunnerEngine implements Job {
 			throw new JobExecutionException(e);
 		} catch (IOException e) {
 			throw new JobExecutionException(e);
-		} catch (JRException e) {
+		} catch (RenderException e) {
 			throw new JobExecutionException(e);
 		} catch (EmailException e) {
 			throw new JobExecutionException(e);
 		}
 	}
 
-	private void processBurstedReport(RunnerJob job) throws IOException,
-			InstantiationException, IllegalAccessException,
-			ClassNotFoundException, JRException, SQLException, NamingException,
-			EmailException {
+	private void processBurstedReport(RunnerJob job) throws IOException,RenderException,EmailException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NamingException {
 		List<String> fileUrls = new LinkedList<String>();
 
 		Connection conn;
@@ -139,9 +139,7 @@ public class RunnerEngine implements Job {
 	}
 
 	private void processSingleReport(RunnerJob job)
-			throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException, SQLException, NamingException, IOException,
-			JRException, EmailException {
+	throws IOException,RenderException,EmailException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NamingException {
 
 		Connection conn = dsManager.getDataConnection(job.getDatasource());
 
@@ -173,19 +171,15 @@ public class RunnerEngine implements Job {
 	}
 
 	private void doReport(ResultSet results, String url, JasperReport jReport,
-			String fileFormat) throws IOException, InstantiationException,
-			IllegalAccessException, ClassNotFoundException, JRException,
-			SQLException {
-
+			String fileFormat) throws RenderException,IOException {
 		OutputStream os = fs.getOutputStreamForUrl(url);
-		boolean isJasperReport = jReport != null;
-		if (isJasperReport) {
-			JasperRenderer jr = new JasperRenderer();
-			jr.generateReport(jReport, results, os, fileFormat);
+		AbstractRenderer renderer;
+		if (jReport != null) {
+			renderer = new JasperRenderer(jReport);			
 		} else {
-			CSVRenderer csvR = new CSVRenderer();
-			csvR.generateReport(results, os);
+			renderer = new StandardRenderer();			
 		}
+		renderer.generateReport(results, os, fileFormat);
 		os.close();
 	}
 

@@ -54,28 +54,19 @@ public class RunnerEngine implements Job {
 			} else {
 				processSingleReport(job);
 			}
-		} catch (InstantiationException e) {
-			throw new JobExecutionException(e);
-		} catch (IllegalAccessException e) {
-			throw new JobExecutionException(e);
-		} catch (ClassNotFoundException e) {
-			throw new JobExecutionException(e);
-		} catch (SQLException e) {
-			throw new JobExecutionException(e);
-		} catch (NamingException e) {
-			throw new JobExecutionException(e);
-		} catch (IOException e) {
-			throw new JobExecutionException(e);
-		} catch (RenderException e) {
-			throw new JobExecutionException(e);
-		} catch (EmailException e) {
+			
+		} catch (Exception e) {
 			throw new JobExecutionException(e);
 		}
 	}
 
-	private void processBurstedReport(RunnerJob job) throws IOException,RenderException,EmailException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NamingException {
+	private void processBurstedReport(RunnerJob job) throws IOException,
+			RenderException, EmailException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException, SQLException,
+			NamingException {
 		List<String> fileUrls = new LinkedList<String>();
-
+		String groupName = job.getPk().getGroup().getGroupName();
+		String jobName = job.getPk().getJobName();
 		Connection conn;
 
 		conn = dsManager.getDataConnection(job.getDatasource());
@@ -103,12 +94,12 @@ public class RunnerEngine implements Job {
 
 			// if we are not outputting this anywhere (must be emailing) then
 			// dump this as a temp file
-			String outUrl = fs.getFinalUrl(job.getOutputUrl(), job.getPk()
-					.getJobName(), job.getPk().getGroup().getGroupName(), job
-					.getFileFormat().toString().toLowerCase());
+			String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName,
+					groupName, job.getFileFormat().toString().toLowerCase());
 
 			int lastDot = outUrl.lastIndexOf(".");
-			// insert the bursted filename value into the url - probably a better way to do this.
+			// insert the bursted filename value into the url - probably a
+			// better way to do this.
 			outUrl = outUrl.substring(0, lastDot) + "_" + fileNameValue
 					+ outUrl.substring(lastDot);
 
@@ -123,9 +114,8 @@ public class RunnerEngine implements Job {
 					&& (!job.getTargetEmailAddress().isEmpty())) {
 				EmailHandler email = new EmailHandler();
 				email.sendEmail(job.getTargetEmailAddress(), job
-						.getFromAddress(), job.getSmtpServer(), fileUrls, job
-						.getPk().getJobName(), job.getPk().getGroup()
-						.getGroupName());
+						.getFromAddress(), job.getSmtpServer(), fileUrls,
+						jobName, groupName);
 			}
 
 			// clean up any temp files
@@ -138,18 +128,20 @@ public class RunnerEngine implements Job {
 
 	}
 
-	private void processSingleReport(RunnerJob job)
-	throws IOException,RenderException,EmailException, InstantiationException, IllegalAccessException, ClassNotFoundException, SQLException, NamingException {
-
+	private void processSingleReport(RunnerJob job) throws IOException,
+			RenderException, EmailException, InstantiationException,
+			IllegalAccessException, ClassNotFoundException, SQLException,
+			NamingException {
+		String groupName = job.getPk().getGroup().getGroupName();
+		String jobName = job.getPk().getJobName();
 		Connection conn = dsManager.getDataConnection(job.getDatasource());
 
 		ResultSet results = sqlProcessor.getResults(conn, job.getQuery(), job
 				.getParameters());
 		// if we are not outputting this anywhere (must be emailing) then
 		// dump this as a temp file
-		String outUrl = fs.getFinalUrl(job.getOutputUrl(), job.getPk()
-				.getJobName(), job.getPk().getGroup().getGroupName(), job
-				.getFileFormat().toString().toLowerCase());
+		String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName, groupName,
+				job.getFileFormat().toString().toLowerCase());
 		doReport(results, outUrl, job.getJasperReport(), job.getFileFormat()
 				.toString());
 		conn.close();
@@ -159,8 +151,7 @@ public class RunnerEngine implements Job {
 				&& (!job.getTargetEmailAddress().isEmpty())) {
 			EmailHandler email = new EmailHandler();
 			email.sendEmail(job.getTargetEmailAddress(), job.getFromAddress(),
-					job.getSmtpServer(), outUrl, job.getPk().getJobName(), job
-							.getPk().getGroup().getGroupName());
+					job.getSmtpServer(), outUrl, jobName, groupName);
 		}
 
 		// clean up any temp files
@@ -171,13 +162,13 @@ public class RunnerEngine implements Job {
 	}
 
 	private void doReport(ResultSet results, String url, JasperReport jReport,
-			String fileFormat) throws RenderException,IOException {
+			String fileFormat) throws RenderException, IOException {
 		OutputStream os = fs.getOutputStreamForUrl(url);
 		AbstractRenderer renderer;
 		if (jReport != null) {
-			renderer = new JasperRenderer(jReport);			
+			renderer = new JasperRenderer(jReport);
 		} else {
-			renderer = new StandardRenderer();			
+			renderer = new StandardRenderer();
 		}
 		renderer.generateReport(results, os, fileFormat);
 		os.close();

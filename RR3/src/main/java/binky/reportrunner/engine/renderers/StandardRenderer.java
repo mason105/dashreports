@@ -1,13 +1,12 @@
 package binky.reportrunner.engine.renderers;
 
-import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 import binky.reportrunner.engine.renderers.exporters.AbstractExporter;
+import binky.reportrunner.engine.renderers.exporters.ExportException;
 
 public class StandardRenderer extends AbstractRenderer {
 	protected Map<String, String> fileFormats;
@@ -45,9 +44,7 @@ public class StandardRenderer extends AbstractRenderer {
 			throw new RenderException(e.getMessage(), e);
 		} catch (ClassNotFoundException e) {
 			throw new RenderException(e.getMessage(), e);
-		} catch (IOException e) {
-			throw new RenderException(e.getMessage(), e);
-		} catch (SQLException e) {
+		} catch (ExportException e) {
 			throw new RenderException(e.getMessage(), e);
 		}
 	}

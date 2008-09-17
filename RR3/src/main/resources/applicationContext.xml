@@ -6,8 +6,20 @@
 	<!-- Example of SAF2 action instantiated by Spring -->
 	<bean id="helloWorldAction" class="binky.HelloWorldAction"
 		singleton="false" />
-			<bean id="indexAction" class="binky.IndexAction"
-		singleton="false" />
+	<bean id="indexAction" class="binky.IndexAction" singleton="false" />
+	<bean id="listJobsAction" class="binky.reportrunner.ui.actions.ListJobsAction"
+		singleton="false">
+		<property name="runnerJobDao">
+			<ref local="runnerJobDao" />
+		</property>
+	</bean>
+	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.ListGroupsAction"
+		singleton="false">
+		<property name="runnerGroupDao">
+			<ref local="runnerGroupDao" />
+		</property>
+	</bean>
+			
 	<!--  properties file -->
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -191,8 +203,8 @@
 			<ref local="runnerUserDao" />
 		</property>
 	</bean>
-	<bean id="loginInterceptor" 
-		class="binky.reportrunner.interceptors.AuthIntercept" singleton="true">
+	<bean id="loginInterceptor" class="binky.reportrunner.interceptors.AuthIntercept"
+		singleton="true">
 		<property name="authService">
 			<ref local="authenticationService" />
 		</property>

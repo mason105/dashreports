@@ -28,7 +28,7 @@ public class RunnerJob implements Serializable {
 
 	@ManyToOne
 	private RunnerDataSource datasource;
-
+	private String description;
 	private String query;
 
 	private Date startDate;
@@ -179,6 +179,14 @@ public class RunnerJob implements Serializable {
 
 	public void setCronString(String cronString) {
 		this.cronString = cronString;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

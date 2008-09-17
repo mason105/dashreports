@@ -29,12 +29,22 @@
 		<default-interceptor-ref name="defaultLoginStack" />
 		<default-action-ref name="index" />
 		<global-results>
-			<result name="login">/jsp/login.jsp</result>
-			<result name="login-success">/jsp/index.jsp</result>
+			<result name="login">/jsp/login/login.jsp</result>
+			<result name="login-success">/jsp/main/index.jsp</result>
 		</global-results>
 		<action name="index" class="indexAction">
-			<result>/jsp/index.jsp</result>
+			<result>/jsp/main/index.jsp</result>
 		</action>
+		<action name="listJobs" class="listJobsAction">
+			<result>/jsp/ajax/listJobs.jsp</result>
+		</action>
+		<action name="listGroups" class="listGroupsAction">
+			<result>/jsp/main/listGroups.jsp</result>
+		</action>
+		
+		
+		
+		
 		<action name="helloWorld" class="helloWorldAction">
 			<result name="input">/jsp/index.jsp</result>
 			<result>/jsp/helloWorld.jsp</result>

@@ -2,6 +2,7 @@ package binky.reportrunner.dao.impl;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
@@ -15,10 +16,10 @@ import binky.reportrunner.data.RunnerJob_pk;
 
 public class RunnerJobDaoImpl extends HibernateDaoSupport implements
 		RunnerJobDao {
-
+	private Logger logger = Logger.getLogger(RunnerJobDaoImpl.class);
 	@SuppressWarnings("unchecked")
 	public void deleteJob(String jobName, String groupName) {
-		
+		logger.debug("delete job for: " + jobName + " " + groupName);
 		RunnerGroup group = (RunnerGroup) getHibernateTemplate().get(
 				RunnerGroup.class, groupName);
 		
@@ -40,6 +41,7 @@ public class RunnerJobDaoImpl extends HibernateDaoSupport implements
 	}
 
 	public RunnerJob getJob(String jobName, String groupName) {
+		logger.debug("get job for: " + jobName + " " + groupName);		
 		RunnerGroup group = (RunnerGroup) getHibernateTemplate().get(
 				RunnerGroup.class, groupName);
 		
@@ -51,6 +53,7 @@ public class RunnerJobDaoImpl extends HibernateDaoSupport implements
 
 	@SuppressWarnings("unchecked")
 	public List<RunnerJob> listJobs(String groupName) {
+		logger.debug("list jobs");
 		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerJob.class);
 		criteria.add(Expression.eq("pk.group.groupName", groupName));
 		criteria.addOrder(Order.asc("pk.jobName"));
@@ -58,6 +61,7 @@ public class RunnerJobDaoImpl extends HibernateDaoSupport implements
 	}
 
 	public void saveUpdateJob(RunnerJob job) {
+		logger.debug("save or update job for: " + job.getPk().getJobName() + " " + job.getPk().getGroup().getGroupName());
 		getHibernateTemplate().saveOrUpdate(job);
 	}
 

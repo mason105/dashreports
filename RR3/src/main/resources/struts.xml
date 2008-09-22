@@ -7,10 +7,12 @@
 	<package name="myPackage" extends="struts-default">
 		<interceptors>
 			<interceptor name="login" class="loginInterceptor" />
+			<interceptor name="userSession" class="userSessionIntercept" />
 			<interceptor-stack name="defaultLoginStack">
 				<interceptor-ref name="servlet-config" />
 				<interceptor-ref name="params" />
 				<interceptor-ref name="login" /> <!-- Our LoginInterceptor -->
+				<interceptor-ref name="userSession" /> <!-- Our UserSessionIntercept -->				
 				<interceptor-ref name="prepare" />
 				<interceptor-ref name="chain" />
 				<interceptor-ref name="model-driven" />

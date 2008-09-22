@@ -3,35 +3,30 @@ package binky.reportrunner.ui.actions;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.dao.RunnerJobDao;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-import com.opensymphony.xwork2.ActionSupport;
-
-public class ListJobsAction extends ActionSupport {
+public class ListJobsAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 6919067344312363024L;
-	private RunnerJobDao runnerJobDao;
 	private String groupName;
+
+	private static Logger logger = Logger.getLogger(ListJobsAction.class);
+
 	private List<RunnerJob> jobs;
-	
-	
+	private RunnerJobDao jobDao;
 	@Override
 	public String execute() throws Exception {
-		if ((groupName!=null)&&(!groupName.isEmpty())){
-			jobs =runnerJobDao.listJobs(groupName);
+		if ((groupName != null) && (!groupName.isEmpty())) {
+			logger.debug("looking for group: " + groupName);
+			this.jobs=jobDao.listJobs(groupName);		
 		} else {
-			jobs = new LinkedList<RunnerJob>();
+			this.jobs = new LinkedList<RunnerJob>();
 		}
 		return SUCCESS;
-	}
-
-	public RunnerJobDao getRunnerJobDao() {
-		return runnerJobDao;
-	}
-
-	public void setRunnerJobDao(RunnerJobDao runnerJobDao) {
-		this.runnerJobDao = runnerJobDao;
 	}
 
 	public String getGroupName() {
@@ -45,6 +40,14 @@ public class ListJobsAction extends ActionSupport {
 	public List<RunnerJob> getJobs() {
 		return jobs;
 	}
-	
 
+	public final RunnerJobDao getJobDao() {
+		return jobDao;
+	}
+
+	public final void setJobDao(RunnerJobDao jobDao) {
+		this.jobDao = jobDao;
+	}
+
+	
 }

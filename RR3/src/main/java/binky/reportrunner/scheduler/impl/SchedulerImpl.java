@@ -16,9 +16,8 @@ import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 
 public class SchedulerImpl implements Scheduler {
-
 	private StdScheduler quartzScheduler;
-
+	
 	public StdScheduler getQuartzScheduler() {
 		return quartzScheduler;
 	}

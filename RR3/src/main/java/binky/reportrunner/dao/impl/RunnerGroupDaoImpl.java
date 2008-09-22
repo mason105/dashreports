@@ -39,4 +39,5 @@ public class RunnerGroupDaoImpl extends HibernateDaoSupport implements
 		getHibernateTemplate().saveOrUpdate(group);
 	}
 
+
 }

@@ -1,5 +1,5 @@
 /*
- * $Id: IndexActionTest.java,v 1.1 2008-07-28 22:39:20 danielgrout Exp $
+ * $Id: IndexActionTest.java,v 1.1 2008-11-01 17:51:22 danielgrout Exp $
  *
  * Copyright 2006 The Apache Software Foundation.
  *
@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package binky;
+package binky.reportrunner;
 
 import junit.framework.TestCase;
 

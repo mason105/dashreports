@@ -7,13 +7,15 @@ import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.RunnerJobDao;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ListJobsAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 6919067344312363024L;
 	private String groupName;
-
+	private String jobName="";
+	
 	private static Logger logger = Logger.getLogger(ListJobsAction.class);
 
 	private List<RunnerJob> jobs;
@@ -22,7 +24,13 @@ public class ListJobsAction extends StandardRunnerAction {
 	public String execute() throws Exception {
 		if ((groupName != null) && (!groupName.isEmpty())) {
 			logger.debug("looking for group: " + groupName);
-			this.jobs=jobDao.listJobs(groupName);		
+				if (super.getUser().getGroups().contains(groupName)) {			
+					this.jobs=jobDao.listJobs(groupName);		
+				} else {
+					SecurityException se = new SecurityException("Group " + groupName + " not valid for user " + super.getUser().getUserName());
+					logger.fatal(se.getMessage(),se);
+					throw se;
+				}
 		} else {
 			this.jobs = new LinkedList<RunnerJob>();
 		}
@@ -49,5 +57,12 @@ public class ListJobsAction extends StandardRunnerAction {
 		this.jobDao = jobDao;
 	}
 
-	
+	public final String getJobName() {
+		return jobName;
+	}
+
+	public final void setJobName(String jobName) {
+		this.jobName = jobName;
+	}
+
 }

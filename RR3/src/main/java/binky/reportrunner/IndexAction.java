@@ -1,5 +1,5 @@
 /*
- * $Id: IndexAction.java,v 1.1 2008-07-28 22:39:20 danielgrout Exp $
+ * $Id: IndexAction.java,v 1.1 2008-11-01 17:51:22 danielgrout Exp $
  *
  * Copyright 2006 The Apache Software Foundation.
  *
@@ -15,26 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package binky;
+package binky.reportrunner;
 
 import com.opensymphony.xwork2.ActionSupport;
-import java.util.Date;
-import com.opensymphony.xwork2.conversion.annotations.Conversion;
-import com.opensymphony.xwork2.conversion.annotations.TypeConversion;
 
 /**
  * 
  */
-@Conversion()
 public class IndexAction extends ActionSupport {
-    
-    private Date now = new Date(System.currentTimeMillis());
-    
-    @TypeConversion(converter = "com.fdar.apress.s2.DateConverter")
-    public Date getDateNow() { return now; }
-    
-    public String execute() throws Exception {
-        now = new Date(System.currentTimeMillis());
-        return SUCCESS;
-    }
+
+	private static final long serialVersionUID = 9093344521097271797L;
+
+	public String execute() throws Exception {
+		return SUCCESS;
+	}
 }

@@ -6,18 +6,20 @@ import javax.servlet.http.HttpSession;
 import org.apache.struts2.StrutsStatics;
 
 import binky.reportrunner.data.RunnerUser;
+import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.interceptor.Interceptor;
 
-public class UserSessionIntercept implements Interceptor,StrutsStatics {
+public class UserSessionIntercept implements Interceptor, StrutsStatics {
 
 	private static final long serialVersionUID = 1L;
-	private static final String USER_HANDLE="userHandle";
+	private static final String USER_HANDLE = "userHandle";
+
 	public void destroy() {
-		
+
 	}
 
 	public void init() {
@@ -25,16 +27,24 @@ public class UserSessionIntercept implements Interceptor,StrutsStatics {
 	}
 
 	public String intercept(ActionInvocation invocation) throws Exception {
-		StandardRunnerAction action = (StandardRunnerAction)invocation.getAction();
-		
-	    final ActionContext context = invocation.getInvocationContext ();
-	    HttpServletRequest request = (HttpServletRequest) context.get(HTTP_REQUEST);
-	    HttpSession session =  request.getSession (true);
-		RunnerUser user=(RunnerUser)session.getAttribute(USER_HANDLE);
+		StandardRunnerAction action = (StandardRunnerAction) invocation
+				.getAction();
+		String forward = invocation.invoke();
+		ActionContext context = invocation.getInvocationContext();
+		HttpServletRequest request = (HttpServletRequest) context
+				.get(HTTP_REQUEST);
+		HttpSession session = request.getSession(true);
+		RunnerUser user = (RunnerUser) session.getAttribute(USER_HANDLE);
 		action.setUser(user);
-		return invocation.invoke();
+		
+		// if this is an admin function action then check all is well
+		if (invocation.getAction().getClass().equals(AdminRunnerAction.class)) {
+			if (!user.getIsAdmin()) {
+				forward = "securityError";
+			}
+		}
+		
+		return forward;
 	}
-
-
 
 }

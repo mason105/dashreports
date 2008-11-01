@@ -20,6 +20,39 @@
 			<ref local="runnerGroupDao" />
 		</property>
 	</bean>
+	<bean id="deleteJobAction" class="binky.reportrunner.ui.actions.job.DeleteJob"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+	</bean>
+	<bean id="saveJobAction" class="binky.reportrunner.ui.actions.job.SaveJob"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+	</bean>
+	<bean id="setJobStatusAction" class="binky.reportrunner.ui.actions.job.SetJobStatus"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+	</bean>
+	<bean id="setupEditJobAction" class="binky.reportrunner.ui.actions.job.SetupEditJob"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+	</bean>
+	<bean id="viewJobDetailAction" class="binky.reportrunner.ui.actions.job.ViewJobDetail"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+		<property name="historyDao">
+			<ref local="runnerHistoryDao" />
+		</property>
+	</bean>
 
 			
 	<!--  properties file -->

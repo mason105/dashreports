@@ -6,7 +6,7 @@
 <struts>
 	<package name="myPackage" extends="struts-default">
 		<interceptors>
-			<interceptor name="login" class="loginInterceptor" />
+			<interceptor name="login" class="loginInterceptor" />			
 			<interceptor name="userSession" class="userSessionIntercept" />
 			<interceptor-stack name="defaultLoginStack">
 				<interceptor-ref name="servlet-config" />
@@ -33,6 +33,7 @@
 		<global-results>
 			<result name="login">/jsp/login/login.jsp</result>
 			<result name="login-success">/jsp/main/index.jsp</result>
+			<result name="securityError">/jsp/securityError.jsp</result>
 		</global-results>
 		<action name="index" class="indexAction">
 			<result>/jsp/main/index.jsp</result>
@@ -43,13 +44,37 @@
 		<action name="listGroups" class="listGroupsAction">
 			<result>/jsp/main/listGroups.jsp</result>
 		</action>
+			
+		<action name="deleteJob" class="deleteJobAction">
+			<result type="redirect-action">
+				<param name="actionName">listJobs</param>
+				<param name="jobName">${jobName}</param>
+				<param name="groupName">${groupName}</param>				
+			</result>
+		</action>				
 		
+		<action name="saveJob" class="saveJobAction">
+			<result type="redirect-action">
+				<param name="actionName">listJobs</param>
+				<param name="jobName">${jobName}</param>
+				<param name="groupName">${groupName}</param>				
+			</result>
+		</action>				
 		
+		<action name="setJobStatus" class="setJobStatusAction">
+			<result type="redirect-action">
+				<param name="actionName">listJobs</param>
+				<param name="jobName">${jobName}</param>
+				<param name="groupName">${groupName}</param>				
+			</result>
+		</action>				
 		
+		<action name="setupEditJob" class="setupEditJobAction">
+			<result>/jsp/main/editJob.jsp</result>
+		</action>				
 		
-		<action name="helloWorld" class="helloWorldAction">
-			<result name="input">/jsp/index.jsp</result>
-			<result>/jsp/helloWorld.jsp</result>
-		</action>
+		<action name="viewJobDetail" class="viewJobDetailAction">
+			<result>/jsp/main/viewJobDetail.jsp</result>
+		</action>				
 	</package>
 </struts>

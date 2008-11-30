@@ -3,11 +3,8 @@
 	"-//SPRING//DTD BEAN//EN" 
 	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
-	<!-- Example of SAF2 action instantiated by Spring -->
-	<bean id="helloWorldAction" class="binky.HelloWorldAction" scope="prototype" />
-		
 	<!--  actions -->
-	<bean id="indexAction" class="binky.IndexAction" scope="prototype" />
+	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction" scope="prototype" />
 	<bean id="listJobsAction" class="binky.reportrunner.ui.actions.ListJobsAction"
 		scope="prototype">
 		<property name="jobDao">

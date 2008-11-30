@@ -62,7 +62,7 @@ public class RunnerUserDaoImplTest extends TestCase {
 	}
 
 	/*public void testCreateAdminUser() {
-		RunnerUser user = getDemoUser("administrator");
+		RunnerUser user = getDemoUser("admin");
 		user.setFullName("Administration Account");
 		user.setIsAdmin(true);
 		dao.saveUpdateUser(user);

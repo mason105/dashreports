@@ -15,6 +15,8 @@ public class RunnerUser {
 	private String fullName;
 	private Boolean isAdmin;
 	
+	@OneToMany
+	private List<RunnerDataSource> dataSources;
 
 	public Boolean getIsAdmin() {
 		return isAdmin;
@@ -58,5 +60,15 @@ public class RunnerUser {
 	public void setGroups(List<RunnerGroup> groups) {
 		this.groups = groups;
 	}
+
+	public List<RunnerDataSource> getDataSources() {
+		return dataSources;
+	}
+
+	public void setDataSources(List<RunnerDataSource> dataSources) {
+		this.dataSources = dataSources;
+	}
+	
+	
 
 }

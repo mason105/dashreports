@@ -1,5 +1,5 @@
 /*
- * $Id: IndexActionTest.java,v 1.2 2008-11-30 17:36:40 danielgrout Exp $
+ * $Id: IndexAction.java,v 1.1 2008-11-30 17:36:39 danielgrout Exp $
  *
  * Copyright 2006 The Apache Software Foundation.
  *
@@ -15,21 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package binky.reportrunner;
+package binky.reportrunner.ui.actions;
 
-import junit.framework.TestCase;
-import binky.reportrunner.ui.actions.IndexAction;
-
-import com.opensymphony.xwork2.Action;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 /**
  * 
  */
-public class IndexActionTest extends TestCase {
-    
-    public void testIndexAction() throws Exception {
-        IndexAction action = new IndexAction();
-        String result = action.execute();
-        assertEquals(Action.SUCCESS, result);
-    }
+public class IndexAction extends StandardRunnerAction {
+
+	private static final long serialVersionUID = 9093344521097271797L;
+
+	public String execute() throws Exception {
+		return SUCCESS;
+	}
 }

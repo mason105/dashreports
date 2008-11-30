@@ -1,5 +1,6 @@
 package binky.reportrunner.ui.actions.user;
 
+import binky.reportrunner.dao.RunnerUserDao;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
 public class ListUsers extends AdminRunnerAction{
@@ -12,5 +13,14 @@ public class ListUsers extends AdminRunnerAction{
 		return null;
 	}
 
+	private RunnerUserDao userDao;
+
+	public RunnerUserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(RunnerUserDao userDao) {
+		this.userDao = userDao;
+	}
 
 }

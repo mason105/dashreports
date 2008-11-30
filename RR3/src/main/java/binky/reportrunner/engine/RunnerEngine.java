@@ -21,8 +21,8 @@ import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.renderers.AbstractRenderer;
 import binky.reportrunner.engine.renderers.JasperRenderer;
-import binky.reportrunner.engine.renderers.RenderException;
 import binky.reportrunner.engine.renderers.StandardRenderer;
+import binky.reportrunner.exceptions.RenderException;
 
 /**
  * @author Daniel Grout

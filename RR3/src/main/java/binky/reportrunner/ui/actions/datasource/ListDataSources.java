@@ -1,5 +1,29 @@
 package binky.reportrunner.ui.actions.datasource;
 
-public class ListDataSources {
+import binky.reportrunner.dao.RunnerDataSourceDao;
+import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
+public class ListDataSources  extends AdminRunnerAction{
+
+	private static final long serialVersionUID = 1L;
+
+	@Override
+	public String execute() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private RunnerDataSourceDao dao;
+
+
+	private RunnerDataSourceDao dataSourceDao;
+
+	public RunnerDataSourceDao getDataSourceDao() {
+		return dataSourceDao;
+	}
+
+	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
+		this.dataSourceDao = dataSourceDao;
+	}
+	
 }

@@ -1,4 +1,4 @@
-package binky.reportrunner.engine.renderers;
+package binky.reportrunner.exceptions;
 
 public class RenderException extends Exception {
 

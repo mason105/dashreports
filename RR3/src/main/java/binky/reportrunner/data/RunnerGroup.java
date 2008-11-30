@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -15,6 +16,17 @@ public class RunnerGroup {
 
 	@OneToMany
 	private List<RunnerJob> runnerJobs;
+	
+	@ManyToMany
+	private List<RunnerDataSource> dataSources;
+
+	public List<RunnerDataSource> getDataSources() {
+		return dataSources;
+	}
+
+	public void setDataSources(List<RunnerDataSource> dataSources) {
+		this.dataSources = dataSources;
+	}
 
 	public String getGroupName() {
 		return groupName;

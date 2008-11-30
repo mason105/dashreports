@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import binky.reportrunner.engine.renderers.exporters.AbstractExporter;
-import binky.reportrunner.engine.renderers.exporters.ExportException;
+import binky.reportrunner.exceptions.ExportException;
+import binky.reportrunner.exceptions.RenderException;
 
 public class StandardRenderer extends AbstractRenderer {
 	protected Map<String, String> fileFormats;

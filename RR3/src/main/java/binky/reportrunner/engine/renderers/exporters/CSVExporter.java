@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import binky.reportrunner.exceptions.ExportException;
+
 public class CSVExporter  extends AbstractExporter{
 
 	private static final String delimeter=",";

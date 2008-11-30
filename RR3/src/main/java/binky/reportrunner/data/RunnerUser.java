@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 @Entity
 public class RunnerUser {
@@ -14,9 +14,6 @@ public class RunnerUser {
 	private String password;
 	private String fullName;
 	private Boolean isAdmin;
-	
-	@OneToMany
-	private List<RunnerDataSource> dataSources;
 
 	public Boolean getIsAdmin() {
 		return isAdmin;
@@ -26,7 +23,7 @@ public class RunnerUser {
 		this.isAdmin = isAdmin;
 	}
 
-	@OneToMany
+	@ManyToMany
 	private List<RunnerGroup> groups;
 
 	public String getUserName() {
@@ -61,13 +58,7 @@ public class RunnerUser {
 		this.groups = groups;
 	}
 
-	public List<RunnerDataSource> getDataSources() {
-		return dataSources;
-	}
-
-	public void setDataSources(List<RunnerDataSource> dataSources) {
-		this.dataSources = dataSources;
-	}
+	
 	
 	
 

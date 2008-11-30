@@ -1,4 +1,4 @@
-package binky.reportrunner.engine.renderers.exporters;
+package binky.reportrunner.exceptions;
 
 public class ExportException extends Exception {
 

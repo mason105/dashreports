@@ -51,6 +51,78 @@
 		</property>
 	</bean>
 
+	<bean id="deleteDataSourceAction" class="binky.reportrunner.ui.actions.datasource.DeleteDataSource"
+		scope="prototype">
+		<property name="dataSourceDao">
+			<ref local="runnerDataSourceDao" />
+		</property>
+	</bean>
+
+	<bean id="listDataSourcesAction" class="binky.reportrunner.ui.actions.datasource.ListDataSourceAction"
+		scope="prototype">
+		<property name="dataSourceDao">
+			<ref local="runnerDataSourceDao" />
+		</property>
+	</bean>
+
+	<bean id="saveDataSourceAction" class="binky.reportrunner.ui.actions.datasource.SaveDataSource"
+		scope="prototype">
+		<property name="dataSourceDao">
+			<ref local="runnerDataSourceDao" />
+		</property>
+	</bean>
+
+	<bean id="setupEditDataSourceAction" class="binky.reportrunner.ui.actions.datasource.SetupEditDataSource"
+		scope="prototype">
+		<property name="dataSourceDao">
+			<ref local="runnerDataSourceDao" />
+		</property>
+		<property name="groupDao">
+			<ref local="runnerGroupDao" />
+		</property>				
+	</bean>
+
+	<bean id="setupEditUserAction" class="binky.reportrunner.ui.actions.user.SetupEditUser"
+		scope="prototype">
+		<property name="userDao">
+			<ref local="runnerUserDao" />
+		</property>
+		<property name="groupDao">
+			<ref local="runnerGroupDao" />
+		</property>				
+	</bean>
+
+	<bean id="changePasswordAction" class="binky.reportrunner.ui.actions.user.ChangePassword"
+		scope="prototype">
+		<property name="userDao">
+			<ref local="runnerUserDao" />
+		</property>
+	</bean>
+
+	<bean id="deleteUserAction" class="binky.reportrunner.ui.actions.user.DeleteUser"
+		scope="prototype">
+		<property name="userDao">
+			<ref local="runnerUserDao" />
+		</property>
+	</bean>
+
+	<bean id="listUsersAction" class="binky.reportrunner.ui.actions.user.ListUsers"
+		scope="prototype">
+		<property name="userDao">
+			<ref local="runnerUserDao" />
+		</property>
+	</bean>
+
+	<bean id="saveUserAction" class="binky.reportrunner.ui.actions.user.SaveUser"
+		scope="prototype">
+		<property name="userDao">
+			<ref local="runnerUserDao" />
+		</property>
+	</bean>
+
+	<bean id="manageServerAction" class="binky.reportrunner.ui.actions.ManageServerAction"
+		scope="prototype">
+	</bean>
 			
 	<!--  properties file -->
 	<bean id="placeholderConfig"

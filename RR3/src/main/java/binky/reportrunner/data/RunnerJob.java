@@ -43,6 +43,18 @@ public class RunnerJob implements Serializable {
 	private JasperReport jasperReport;
 	private FileFormat fileFormat;
 	
+	private boolean alertOnSuccess;
+	
+	
+	
+	public boolean isAlertOnSuccess() {
+		return alertOnSuccess;
+	}
+
+	public void setAlertOnSuccess(boolean alertOnSuccess) {
+		this.alertOnSuccess = alertOnSuccess;
+	}
+
 	public FileFormat getFileFormat() {
 		return fileFormat;
 	}

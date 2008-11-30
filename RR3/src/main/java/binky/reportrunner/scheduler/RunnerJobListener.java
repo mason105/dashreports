@@ -1,7 +1,10 @@
 package binky.reportrunner.scheduler;
 
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.Date;
 
+import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -11,6 +14,7 @@ import binky.reportrunner.dao.RunnerHistoryDao;
 import binky.reportrunner.dao.RunnerJobDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.engine.EmailHandler;
 
 public class RunnerJobListener implements JobListener {
 
@@ -75,21 +79,41 @@ public class RunnerJobListener implements JobListener {
 
 	public void jobWasExecuted(JobExecutionContext ctx, JobExecutionException ex) {
 		Boolean success = (ex == null);
-
+		String jobName = ctx.getJobDetail().getName();
+		String groupName = ctx.getJobDetail().getGroup();
 		RunnerHistoryEvent event = new RunnerHistoryEvent();
-		event.setGroupName(ctx.getJobDetail().getGroup());
-		event.setJobName(ctx.getJobDetail().getName());
+		event.setGroupName(groupName);
+		event.setJobName(jobName);
+		
+		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		
 		event.setMessage(success ? "Job Execution Success"
 				: "Job Execution Failure: " + ex.getMessage());
-		event.setTimestamp(Calendar.getInstance().getTime());
+		Date finishTime=Calendar.getInstance().getTime();
+		event.setTimestamp(finishTime);
 
 		runnerHistoryDao.saveEvent(event);
 		
 		if (success){
 			logger.info("Job was executed: " + ctx.getJobDetail().getName() + "/" + ctx.getJobDetail().getGroup());
 		} else{
-			logger.error("Job Failed : " + ctx.getJobDetail().getName() + "/" + ctx.getJobDetail().getGroup(),ex);
+			logger.error("Job Failed : " + ctx.getJobDetail().getName() + "/" + ctx.getJobDetail().getGroup(),ex);	
 		}
+		
+		if (job.getAlertEmailAddress()!=null){
+			sendEmailAlert(jobName,groupName,job.getAlertEmailAddress(),finishTime,success);
+		}
+	
+	}
+	
+	private void sendEmailAlert(String jobName, String groupName, String targetEmail, Date finishTime, boolean success){
+		EmailHandler email= new EmailHandler();
+		try {
+			email.sendAlertEmail(targetEmail, fromAddress, smtpServer, jobName, groupName, success, finishTime);
+		} catch (EmailException e) {
+			logger.error("Failed to send alert email!", e);
+		} catch (IOException e) {
+			logger.error("Failed to send alert email!", e);		}
 	}
 
 	public RunnerHistoryDao getRunnerHistoryDao() {

@@ -1,6 +1,7 @@
 package binky.reportrunner.engine;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -87,6 +88,36 @@ public class EmailHandler {
 		for (String url : tempFiles) {
 			fs.deleteFile(url);
 		}
+	}
+
+	public void sendAlertEmail(String destinationEmail, String fromEmail,
+			String smtpServer, String jobName, String groupName,
+			boolean success, Date finishTime) throws EmailException,
+			IOException {
+		// logger.debug("sending email to: " + to + " on host " + server);
+		MultiPartEmail email = new MultiPartEmail();
+		email.setHostName(smtpServer);
+		for (String toEmail : destinationEmail.split(",")) {
+			email.addTo(toEmail.trim());
+		}
+		email.setFrom(fromEmail);
+
+		if (success) {
+			email.setSubject("Success message for: " + jobName + " ["
+					+ groupName + "]");
+
+			email.setMsg("Job completed successfully at " + finishTime);
+
+		} else {
+			email.setSubject("Failure message for: " + jobName + " ["
+					+ groupName + "]");
+
+			email.setMsg("Job completed with error(s) at " + finishTime);
+
+		}
+
+		email.send();
+
 	}
 
 	private String copyToTemp(String url) throws IOException {

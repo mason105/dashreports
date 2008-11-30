@@ -13,9 +13,6 @@ public class ListDataSources  extends AdminRunnerAction{
 		return null;
 	}
 
-	private RunnerDataSourceDao dao;
-
-
 	private RunnerDataSourceDao dataSourceDao;
 
 	public RunnerDataSourceDao getDataSourceDao() {

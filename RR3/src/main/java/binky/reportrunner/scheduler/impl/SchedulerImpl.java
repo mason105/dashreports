@@ -16,8 +16,9 @@ import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 
 public class SchedulerImpl implements Scheduler {
+
 	private StdScheduler quartzScheduler;
-	
+
 	public StdScheduler getQuartzScheduler() {
 		return quartzScheduler;
 	}
@@ -26,14 +27,15 @@ public class SchedulerImpl implements Scheduler {
 		this.quartzScheduler = quartzScheduler;
 	}
 
-	public void addJob(String jobName, String groupName, String className,String cronString,
-			Date startDate, Date endDate) throws SchedulerException {
+	public void addJob(String jobName, String groupName, String className,
+			String cronString, Date startDate, Date endDate)
+			throws SchedulerException {
 
 		// Create our job with the specification RunnerJob
 		JobDetail jobDetail;
 		try {
-			jobDetail = new JobDetail(jobName, groupName,
-					Class.forName(className));
+			jobDetail = new JobDetail(jobName, groupName, Class
+					.forName(className));
 		} catch (ClassNotFoundException e) {
 			throw new SchedulerException(
 					"Error with RunnerEngine specification", e);
@@ -48,9 +50,10 @@ public class SchedulerImpl implements Scheduler {
 		}
 
 		jobTrigger.setStartTime(startDate);
-		if (endDate!=null) jobTrigger.setEndTime(endDate);
-	
-		jobTrigger.setName(jobName+":"+groupName+":trigger");
+		if (endDate != null)
+			jobTrigger.setEndTime(endDate);
+
+		jobTrigger.setName(jobName + ":" + groupName + ":trigger");
 		jobTrigger.setGroup("RunnerTriggers");
 		// Bind the listener
 		jobDetail.addJobListener("ReportRunnerCoreJobListener");
@@ -71,16 +74,16 @@ public class SchedulerImpl implements Scheduler {
 		}
 	}
 
-	public void stopScheduler()
-			throws SchedulerException {
+	public void stopScheduler() throws SchedulerException {
 		this.quartzScheduler.standby();
 	}
 
 	public Date getNextRunTime(String jobName, String groupName)
 			throws SchedulerException {
-		try {			
-			return this.quartzScheduler.getTrigger(jobName+":"+groupName+":trigger",
-					"RunnerTriggers").getNextFireTime();
+		try {
+			return this.quartzScheduler.getTrigger(
+					jobName + ":" + groupName + ":trigger", "RunnerTriggers")
+					.getNextFireTime();
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error next run time for " + jobName
 					+ "/" + groupName, e);
@@ -90,14 +93,13 @@ public class SchedulerImpl implements Scheduler {
 	public Boolean isJobActive(String jobName, String groupName)
 			throws SchedulerException {
 		try {
-			return !(this.quartzScheduler.getTriggerState(jobName+":"+groupName+":trigger",
-					"RunnerTriggers") == Trigger.STATE_PAUSED);
+			return !(this.quartzScheduler.getTriggerState(jobName + ":"
+					+ groupName + ":trigger", "RunnerTriggers") == Trigger.STATE_PAUSED);
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error getting state for " + jobName
 					+ "/" + groupName, e);
-		}		
+		}
 	}
-
 
 	public void invokeJob(String jobName, String groupName)
 			throws SchedulerException {
@@ -146,7 +148,6 @@ public class SchedulerImpl implements Scheduler {
 		}
 	}
 
-
 	public void interruptRunningJob(String jobName, String groupName)
 			throws SchedulerException {
 		try {
@@ -159,15 +160,17 @@ public class SchedulerImpl implements Scheduler {
 
 	@SuppressWarnings("unchecked")
 	public Map<String, String> getCurrentRunningJobs() {
-		Map<String,String> currentRunningJobs = new HashMap<String, String>();
-		
-		List<JobExecutionContext> cej = quartzScheduler.getCurrentlyExecutingJobs();
-		
-		for(JobExecutionContext je:cej) {
-			currentRunningJobs.put(je.getJobDetail().getGroup(),je.getJobDetail().getName());
+		Map<String, String> currentRunningJobs = new HashMap<String, String>();
+
+		List<JobExecutionContext> cej = quartzScheduler
+				.getCurrentlyExecutingJobs();
+
+		for (JobExecutionContext je : cej) {
+			currentRunningJobs.put(je.getJobDetail().getGroup(), je
+					.getJobDetail().getName());
 		}
-						
+
 		return currentRunningJobs;
 	}
-	
+
 }

@@ -148,7 +148,7 @@
     <!--  setup our scheduler singleton and the quartz bean -->
 	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
 		scope="singleton">
-		<property name="quartzScheduler" ref="quartzFactory" />
+		<property name="quartzScheduler" ref="quartzFactory" />	
 	</bean>
 	<bean id="quartzFactory"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -199,6 +199,8 @@
 	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
 		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
+		<property name="smtpServer" value="${reportrunner.smtpServer}" />
+		<property name="fromAddress" value="${reportrunner.fromAddress}" />			
 	</bean>
 	<bean id="runnerJobService" class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
 		<property name="scheduler" ref="scheduler" />

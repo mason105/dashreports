@@ -15,7 +15,24 @@ import binky.reportrunner.data.RunnerJob;
 public class RunnerJobListener implements JobListener {
 
 	private static final Logger logger = Logger.getLogger(RunnerJobListener.class);
-	
+
+	private String smtpServer;
+	private String fromAddress;
+	public String getSmtpServer() {
+		return smtpServer;
+	}
+
+	public void setSmtpServer(String smtpServer) {
+		this.smtpServer = smtpServer;
+	}
+
+	public String getFromAddress() {
+		return fromAddress;
+	}
+
+	public void setFromAddress(String fromAddress) {
+		this.fromAddress = fromAddress;
+	}
 	private RunnerHistoryDao runnerHistoryDao;
 	private RunnerJobDao runnerJobDao;
 
@@ -48,7 +65,10 @@ public class RunnerJobListener implements JobListener {
 
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 		ctx.put("runnerJob", job);
-
+		
+		ctx.put("smtpServer", this.smtpServer);
+		ctx.put("fromAddress", this.fromAddress);
+		
 		logger.info("Job to be executed: " + ctx.getJobDetail().getName() + "/" + ctx.getJobDetail().getGroup());
 		
 	}

@@ -33,6 +33,8 @@ public class RunnerEngine implements Job {
 	DatasourceManager dsManager;
 	SQLProcessor sqlProcessor;
 	FileSystemHandler fs;
+	String fromAddress;
+	String smtpServer;
 
 	public RunnerEngine() throws IOException {
 		this.dsManager = new DatasourceManager();
@@ -46,6 +48,10 @@ public class RunnerEngine implements Job {
 		// Grab the elements of the job from the context to pass on
 		RunnerJob job = (RunnerJob) context.getJobDetail().getJobDataMap().get(
 				"runnerJob");
+		this.smtpServer = (String) context.getJobDetail().getJobDataMap().get(
+				"smtpServer");
+		this.fromAddress = (String) context.getJobDetail().getJobDataMap().get(
+				"fromAddress");
 
 		try {
 
@@ -54,7 +60,7 @@ public class RunnerEngine implements Job {
 			} else {
 				processSingleReport(job);
 			}
-			
+
 		} catch (Exception e) {
 			throw new JobExecutionException(e);
 		}
@@ -113,9 +119,8 @@ public class RunnerEngine implements Job {
 			if ((job.getTargetEmailAddress() != null)
 					&& (!job.getTargetEmailAddress().isEmpty())) {
 				EmailHandler email = new EmailHandler();
-				email.sendEmail(job.getTargetEmailAddress(), job
-						.getFromAddress(), job.getSmtpServer(), fileUrls,
-						jobName, groupName);
+				email.sendEmail(job.getTargetEmailAddress(), fromAddress,
+						smtpServer, fileUrls, jobName, groupName);
 			}
 
 			// clean up any temp files
@@ -150,8 +155,8 @@ public class RunnerEngine implements Job {
 		if ((job.getTargetEmailAddress() != null)
 				&& (!job.getTargetEmailAddress().isEmpty())) {
 			EmailHandler email = new EmailHandler();
-			email.sendEmail(job.getTargetEmailAddress(), job.getFromAddress(),
-					job.getSmtpServer(), outUrl, jobName, groupName);
+			email.sendEmail(job.getTargetEmailAddress(), fromAddress,
+					smtpServer, outUrl, jobName, groupName);
 		}
 
 		// clean up any temp files

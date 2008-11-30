@@ -39,27 +39,10 @@ public class RunnerJob implements Serializable {
 	private String burstQuery;
 	private String burstFileNameParameterName;
 	private String targetEmailAddress;
+	private String alertEmailAddress;
 	private JasperReport jasperReport;
 	private FileFormat fileFormat;
-	private String fromAddress;
-	private String smtpServer;
-
-	public String getFromAddress() {
-		return fromAddress;
-	}
-
-	public void setFromAddress(String fromAddress) {
-		this.fromAddress = fromAddress;
-	}
-
-	public String getSmtpServer() {
-		return smtpServer;
-	}
-
-	public void setSmtpServer(String smtpServer) {
-		this.smtpServer = smtpServer;
-	}
-
+	
 	public FileFormat getFileFormat() {
 		return fileFormat;
 	}
@@ -189,4 +172,14 @@ public class RunnerJob implements Serializable {
 		this.description = description;
 	}
 
+	public String getAlertEmailAddress() {
+		return alertEmailAddress;
+	}
+
+	public void setAlertEmailAddress(String alertEmailAddress) {
+		this.alertEmailAddress = alertEmailAddress;
+	}
+
+	
+	
 }

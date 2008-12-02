@@ -3,7 +3,7 @@ package binky.reportrunner.ui.actions.datasource;
 import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
-public class DeleteDataSouce extends AdminRunnerAction{
+public class DeleteDataSource extends AdminRunnerAction{
 
 	private static final long serialVersionUID = 1L;
 

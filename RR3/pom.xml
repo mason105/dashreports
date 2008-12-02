@@ -6,9 +6,28 @@
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<name>Report Runner 3.0</name>
-	<url>http://reportrunner.binkysoftware.co.uk
-	</url>
+	<url>http://reportrunner.binkysoftware.co.uk</url>
+
 	<description>Report Runner 3.0</description>
+
+	<developers>
+		<developer>
+			<name>Daniel Grout</name>
+			<id>danielgrout</id>
+			<email>daniel AT binkysoftware.co.uk</email>
+			<organization>Binky Software</organization>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:cvs:pserver:anoncvs@reportrunner.cvs.sourceforge.net:/cvsroot:reportrunner</connection>
+		<developerConnection>scm:cvs:ext:developer@reportrunner.cvs.sourceforge.net:/cvsroot:reportrunner</developerConnection>
+		<url>http://reportrunner.cvs.sourceforge.net/reportrunner/</url>
+	</scm>
+	<organization>
+		<name>Binky Software</name>
+		<url>http://www.binkysoftware.co.uk
+		</url>
+	</organization>
 	<dependencies>
 		<!-- Junit -->
 		<dependency>
@@ -18,7 +37,7 @@
 			<scope>test</scope>
 		</dependency>
 
-	<!--  Struts 2 -->
+		<!--  Struts 2 -->
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-core</artifactId>
@@ -141,12 +160,12 @@
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>3.1-FINAL</version>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>itext</groupId>
 			<artifactId>itext</artifactId>
 			<version>1.3</version>
-		</dependency>				
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>reportrunner</finalName>
@@ -160,4 +179,29 @@
 			</plugin>
 		</plugins>
 	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<artifactId>maven-changes-plugin</artifactId>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>changes-report</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin
+				</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin
+				</artifactId>
+			</plugin>
+
+		</plugins>
+	</reporting>
 </project>

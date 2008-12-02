@@ -58,7 +58,7 @@
 		</property>
 	</bean>
 
-	<bean id="listDataSourcesAction" class="binky.reportrunner.ui.actions.datasource.ListDataSourceAction"
+	<bean id="listDataSourcesAction" class="binky.reportrunner.ui.actions.datasource.ListDataSources"
 		scope="prototype">
 		<property name="dataSourceDao">
 			<ref local="runnerDataSourceDao" />

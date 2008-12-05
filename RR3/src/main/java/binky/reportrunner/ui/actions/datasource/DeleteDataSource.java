@@ -3,16 +3,21 @@ package binky.reportrunner.ui.actions.datasource;
 import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
-public class DeleteDataSource extends AdminRunnerAction{
+public class DeleteDataSource extends AdminRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 
+	private String dataSourceName;
+
 	@Override
 	public String execute() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		dataSourceDao.deleteDataSource(dataSourceName);
+		return SUCCESS;
 	}
 
+	public void setDataSourceName(String dataSourceName) {
+		this.dataSourceName = dataSourceName;
+	}
 
 	private RunnerDataSourceDao dataSourceDao;
 

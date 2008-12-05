@@ -10,13 +10,27 @@ public class RunnerDataSource implements Serializable {
 
 	private static final long serialVersionUID = 7230871954372088509L;
 	@Id
+	
+	
 	private String dataSourceName;
+	public RunnerDataSource(){};
+	public RunnerDataSource(String dataSourceName, String jndiName,
+			String jdbcClass, String jdbcUrl, String username, String password) {
+		this.dataSourceName = dataSourceName;
+		this.jndiName = jndiName;
+		this.jdbcClass = jdbcClass;
+		this.jdbcUrl = jdbcUrl;
+		this.username = username;
+		this.password = password;
+	}
 	public String getDataSourceName() {
 		return dataSourceName;
 	}
 	public void setDataSourceName(String dataSourceName) {
 		this.dataSourceName = dataSourceName;
 	}
+	
+	
 	private String jndiName;
 	private String jdbcClass;
 	private String jdbcUrl;

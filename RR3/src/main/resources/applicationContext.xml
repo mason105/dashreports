@@ -20,7 +20,7 @@
 			<ref local="runnerGroupDao" />
 		</property>
 	</bean>
-	<bean id="changeAllGroupJobStatusAction" class="binky.reportrunner.ui.actions.group.changeAllGroupJobStatus"
+	<bean id="changeAllGroupJobStatusAction" class="binky.reportrunner.ui.actions.group.ChangeAllGroupJobStatus"
 		scope="prototype">
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
@@ -30,13 +30,13 @@
 		</property>		
 	</bean>
 	
-	<bean id="deleteGroupAction" class="binky.reportrunner.ui.actions.group.deleteGroup"
+	<bean id="deleteGroupAction" class="binky.reportrunner.ui.actions.group.DeleteGroup"
 		scope="prototype">
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
 		</property>
 	</bean>
-	<bean id="saveGroupAction" class="binky.reportrunner.ui.actions.group.saveGroup"
+	<bean id="saveGroupAction" class="binky.reportrunner.ui.actions.group.SaveGroup"
 		scope="prototype">
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
@@ -45,7 +45,7 @@
 			<ref local="runnerDataSourceDao" />
 		</property>				
 	</bean>
-	<bean id="setupEditGroupAction" class="binky.reportrunner.ui.actions.group.setupEditGroup"
+	<bean id="setupEditGroupAction" class="binky.reportrunner.ui.actions.group.SetupEditGroup"
 		scope="prototype">
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />

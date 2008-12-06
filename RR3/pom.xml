@@ -73,12 +73,12 @@
 	</developers>
 	<scm>
 		<connection>
-			scm:cvs:pserver:anoncvs@reportrunner.cvs.sourceforge.net:/cvsroot/reportrunner:reportrunner
+			scm:cvs:pserver:anonymous@reportrunner.cvs.sourceforge.net:/cvsroot/reportrunner:reportrunner
 		</connection>
 		<developerConnection>
 			scm:cvs:ext:developer@reportrunner.cvs.sourceforge.net:/cvsroot/reportrunner:reportrunner
 		</developerConnection>
-		<url>http://reportrunner.cvs.sourceforge.net/reportrunner/
+		<url>http://reportrunner.cvs.sourceforge.net/reportrunner/RR3/
 		</url>
 	</scm>
 	<organization>

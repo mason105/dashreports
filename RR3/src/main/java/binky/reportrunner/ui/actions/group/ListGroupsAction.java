@@ -1,4 +1,4 @@
-package binky.reportrunner.ui.actions;
+package binky.reportrunner.ui.actions.group;
 
 import java.util.List;
 

@@ -5,18 +5,56 @@
 <beans>
 	<!--  actions -->
 	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction" scope="prototype" />
-	<bean id="listJobsAction" class="binky.reportrunner.ui.actions.ListJobsAction"
+	<bean id="listJobsAction" class="binky.reportrunner.ui.actions.job.ListJobsAction"
 		scope="prototype">
 		<property name="jobDao">
 			<ref local="runnerJobDao" />
 		</property>
+		<property name="groupDao">
+			<ref local="runnerGroupDao" />
+		</property>		
 	</bean>
-	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.ListGroupsAction"
+	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.group.ListGroupsAction"
 		scope="prototype">
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
 		</property>
 	</bean>
+	<bean id="changeAllGroupJobStatusAction" class="binky.reportrunner.ui.actions.group.changeAllGroupJobStatus"
+		scope="prototype">
+		<property name="groupDao">
+			<ref local="runnerGroupDao" />
+		</property>
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>		
+	</bean>
+	
+	<bean id="deleteGroupAction" class="binky.reportrunner.ui.actions.group.deleteGroup"
+		scope="prototype">
+		<property name="groupDao">
+			<ref local="runnerGroupDao" />
+		</property>
+	</bean>
+	<bean id="saveGroupAction" class="binky.reportrunner.ui.actions.group.saveGroup"
+		scope="prototype">
+		<property name="groupDao">
+			<ref local="runnerGroupDao" />
+		</property>
+		<property name="dataSourceDao">
+			<ref local="runnerDataSourceDao" />
+		</property>				
+	</bean>
+	<bean id="setupEditGroupAction" class="binky.reportrunner.ui.actions.group.setupEditGroup"
+		scope="prototype">
+		<property name="groupDao">
+			<ref local="runnerGroupDao" />
+		</property>
+		<property name="dataSourceDao">
+			<ref local="runnerDataSourceDao" />
+		</property>		
+	</bean>
+
 	<bean id="deleteJobAction" class="binky.reportrunner.ui.actions.job.DeleteJob"
 		scope="prototype">
 		<property name="jobService">
@@ -77,9 +115,6 @@
 		<property name="dataSourceDao">
 			<ref local="runnerDataSourceDao" />
 		</property>
-		<property name="groupDao">
-			<ref local="runnerGroupDao" />
-		</property>				
 	</bean>
 
 	<bean id="setupEditUserAction" class="binky.reportrunner.ui.actions.user.SetupEditUser"

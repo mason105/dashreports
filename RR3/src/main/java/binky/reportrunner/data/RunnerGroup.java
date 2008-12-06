@@ -10,6 +10,15 @@ import javax.persistence.OneToMany;
 @Entity
 public class RunnerGroup {
 
+	public RunnerGroup(String groupName, String groupDescription,
+			List<RunnerJob> runnerJobs, List<RunnerDataSource> dataSources) {
+		super();
+		this.groupName = groupName;
+		this.groupDescription = groupDescription;
+		this.runnerJobs = runnerJobs;
+		this.dataSources = dataSources;
+	}
+	public RunnerGroup(){};
 	@Id
 	private String groupName;
 	private String groupDescription;

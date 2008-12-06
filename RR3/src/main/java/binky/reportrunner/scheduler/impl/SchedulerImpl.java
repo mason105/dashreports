@@ -2,9 +2,8 @@ package binky.reportrunner.scheduler.impl;
 
 import java.text.ParseException;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
@@ -159,18 +158,19 @@ public class SchedulerImpl implements Scheduler {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Map<String, String> getCurrentRunningJobs() {
-		Map<String, String> currentRunningJobs = new HashMap<String, String>();
+	public List<String> getCurrentRunningJobs() {
+		List<String> currentRunningJobs = new LinkedList<String>();
 
 		List<JobExecutionContext> cej = quartzScheduler
 				.getCurrentlyExecutingJobs();
 
 		for (JobExecutionContext je : cej) {
-			currentRunningJobs.put(je.getJobDetail().getGroup(), je
+			currentRunningJobs.add(je.getJobDetail().getGroup() + ":|:" + je
 					.getJobDetail().getName());
 		}
 
 		return currentRunningJobs;
 	}
+
 
 }

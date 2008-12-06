@@ -1,7 +1,7 @@
 package binky.reportrunner.scheduler;
 
 import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 public interface Scheduler {
 
@@ -28,5 +28,6 @@ public interface Scheduler {
 		
 	public void interruptRunningJob(String jobName, String groupName)  throws SchedulerException;
 	
-	public Map<String, String> getCurrentRunningJobs();
+	public List<String> getCurrentRunningJobs();
+	
 }

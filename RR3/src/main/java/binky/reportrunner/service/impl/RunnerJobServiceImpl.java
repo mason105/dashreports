@@ -1,5 +1,6 @@
 package binky.reportrunner.service.impl;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import binky.reportrunner.dao.RunnerJobDao;
@@ -65,6 +66,49 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
+	}
+
+	public Boolean isJobActive(String jobName, String groupName) throws SchedulerException {
+		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+			return this.scheduler.isJobActive(jobName, groupName);
+		} else {
+			return false;
+		}
+	}
+
+	public void pauseJob(String jobName, String groupName) throws SchedulerException {
+		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+			scheduler.pauseJob(jobName, groupName);
+		}
+	}
+	
+	public void resumeJob(String jobName, String groupName) throws SchedulerException {
+		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+			scheduler.resumeJob(jobName, groupName);
+		}
+	}
+	
+
+	public List<RunnerJob> getRunningJobs() throws SchedulerException {
+		List<String> runningJobs = scheduler.getCurrentRunningJobs();
+		List<RunnerJob> jobs = new LinkedList<RunnerJob>();
+		for (String string : runningJobs) {
+			String groupName=string.split(":|:")[0];
+			String jobName=string.split(":|:")[1];
+			RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+			jobs.add(job);
+		}
+		return jobs;
+	}
+
+	public void interruptRunningJob(String jobName, String groupName) {
+		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+			
+		}
 	}
 
 }

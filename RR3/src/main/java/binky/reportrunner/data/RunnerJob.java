@@ -25,7 +25,7 @@ public class RunnerJob implements Serializable {
 
 	private String outputUrl;
 	private static final String runnerEngine = "binky.reportrunner.engine.RunnerEngine";
-
+	
 	@ManyToOne
 	private RunnerDataSource datasource;
 	private String description;

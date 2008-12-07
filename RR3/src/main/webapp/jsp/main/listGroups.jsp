@@ -1,16 +1,18 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>  
-<html>  
+<html><!-- InstanceBegin template="/Templates/MainTemplate.dwt.jsp" codeOutsideHTMLIsLocked="false" -->  
   <head>  
     <s:head theme="ajax"/>  
-       
   </head>  
+  <!-- InstanceBeginEditable name="head" -->  
   <script>  
     function show_job_list(groupName) {   
       document.frm_groups.groupName.value = groupName;   
       dojo.event.topic.publish("show_jobs");   
     }   
-  </script>  
+  </script>       
+  <!-- InstanceEndEditable -->       
   <body>  
+  <!-- InstanceBeginEditable name="Body" -->  
     <s:form id="frm_groups" name="frm_groups">  
       <h1>Job</h1>  
       <s:if test="groups.size > 0">  
@@ -35,5 +37,6 @@
       <s:div  id="job_list" href="%{d_url}" theme="ajax" listenTopics="show_jobs" formId="frm_groups" >  
       </s:div>  
     </s:form>  
+  <!-- InstanceEndEditable -->
   </body>  
-</html>  
+<!-- InstanceEnd --></html>  

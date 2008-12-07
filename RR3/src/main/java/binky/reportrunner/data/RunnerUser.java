@@ -1,5 +1,6 @@
 package binky.reportrunner.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -7,8 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 @Entity
-public class RunnerUser {
+public class RunnerUser implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	@Id
 	private String userName;
 	private String password;

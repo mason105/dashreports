@@ -104,10 +104,10 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		return jobs;
 	}
 
-	public void interruptRunningJob(String jobName, String groupName) {
+	public void interruptRunningJob(String jobName, String groupName) throws SchedulerException {
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
-			
+			scheduler.interruptRunningJob(jobName, groupName);
 		}
 	}
 

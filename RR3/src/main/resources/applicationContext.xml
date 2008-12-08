@@ -4,7 +4,8 @@
 	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
 	<!--  actions -->
-	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction" scope="prototype" />
+	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction"
+		scope="prototype" />
 	<bean id="listJobsAction" class="binky.reportrunner.ui.actions.job.ListJobsAction"
 		scope="prototype">
 		<property name="jobDao">
@@ -12,7 +13,7 @@
 		</property>
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
-		</property>		
+		</property>
 	</bean>
 	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.group.ListGroupsAction"
 		scope="prototype">
@@ -20,16 +21,17 @@
 			<ref local="runnerGroupDao" />
 		</property>
 	</bean>
-	<bean id="changeAllGroupJobStatusAction" class="binky.reportrunner.ui.actions.group.ChangeAllGroupJobStatus"
+	<bean id="changeAllGroupJobStatusAction"
+		class="binky.reportrunner.ui.actions.group.ChangeAllGroupJobStatus"
 		scope="prototype">
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
 		</property>
 		<property name="jobService">
 			<ref local="runnerJobService" />
-		</property>		
+		</property>
 	</bean>
-	
+
 	<bean id="deleteGroupAction" class="binky.reportrunner.ui.actions.group.DeleteGroup"
 		scope="prototype">
 		<property name="groupDao">
@@ -43,7 +45,7 @@
 		</property>
 		<property name="dataSourceDao">
 			<ref local="runnerDataSourceDao" />
-		</property>				
+		</property>
 	</bean>
 	<bean id="setupEditGroupAction" class="binky.reportrunner.ui.actions.group.SetupEditGroup"
 		scope="prototype">
@@ -52,7 +54,7 @@
 		</property>
 		<property name="dataSourceDao">
 			<ref local="runnerDataSourceDao" />
-		</property>		
+		</property>
 	</bean>
 
 	<bean id="deleteJobAction" class="binky.reportrunner.ui.actions.job.DeleteJob"
@@ -61,10 +63,37 @@
 			<ref local="runnerJobService" />
 		</property>
 	</bean>
+	<bean id="saveParameterAction"
+		class="binky.reportrunner.ui.actions.job.parameter.SaveParameter"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+	</bean>
+
+	<bean id="setupEditParameterAction"
+		class="binky.reportrunner.ui.actions.job.parameter.SetupEditParameter"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+	</bean>
+
+	<bean id="deleteParameterAction"
+		class="binky.reportrunner.ui.actions.job.parameter.DeleteParameter"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+	</bean>
+
 	<bean id="saveJobAction" class="binky.reportrunner.ui.actions.job.SaveJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref local="runnerJobService" />
+		</property>
+		<property name="groupDao">
+			<ref local="runnerGroupDao" />
 		</property>
 	</bean>
 	<bean id="setJobStatusAction" class="binky.reportrunner.ui.actions.job.SetJobStatus"
@@ -89,14 +118,16 @@
 		</property>
 	</bean>
 
-	<bean id="deleteDataSourceAction" class="binky.reportrunner.ui.actions.datasource.DeleteDataSource"
+	<bean id="deleteDataSourceAction"
+		class="binky.reportrunner.ui.actions.datasource.DeleteDataSource"
 		scope="prototype">
 		<property name="dataSourceDao">
 			<ref local="runnerDataSourceDao" />
 		</property>
 	</bean>
 
-	<bean id="listDataSourcesAction" class="binky.reportrunner.ui.actions.datasource.ListDataSources"
+	<bean id="listDataSourcesAction"
+		class="binky.reportrunner.ui.actions.datasource.ListDataSources"
 		scope="prototype">
 		<property name="dataSourceDao">
 			<ref local="runnerDataSourceDao" />
@@ -110,7 +141,8 @@
 		</property>
 	</bean>
 
-	<bean id="setupEditDataSourceAction" class="binky.reportrunner.ui.actions.datasource.SetupEditDataSource"
+	<bean id="setupEditDataSourceAction"
+		class="binky.reportrunner.ui.actions.datasource.SetupEditDataSource"
 		scope="prototype">
 		<property name="dataSourceDao">
 			<ref local="runnerDataSourceDao" />
@@ -124,7 +156,7 @@
 		</property>
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
-		</property>				
+		</property>
 	</bean>
 
 	<bean id="changePasswordAction" class="binky.reportrunner.ui.actions.user.ChangePassword"
@@ -158,7 +190,7 @@
 	<bean id="manageServerAction" class="binky.reportrunner.ui.actions.ManageServerAction"
 		scope="prototype">
 	</bean>
-			
+
 	<!--  properties file -->
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -170,20 +202,20 @@
 		</property>
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 	</bean>
-    
-    <!--  our main data source -->
+
+	<!--  our main data source -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${jdbc.driver}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="user" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
-	</bean>  
-    
-    <!--  setup our scheduler singleton and the quartz bean -->
+	</bean>
+
+	<!--  setup our scheduler singleton and the quartz bean -->
 	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
 		scope="singleton">
-		<property name="quartzScheduler" ref="quartzFactory" />	
+		<property name="quartzScheduler" ref="quartzFactory" />
 	</bean>
 	<bean id="quartzFactory"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
@@ -208,13 +240,13 @@
 			</list>
 		</property>
 		<property name="quartzProperties">
-			<props> 
-			<!-- ThreadPool -->
+			<props>
+				<!-- ThreadPool -->
 				<prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
 				<prop key="org.quartz.threadPool.threadCount">10</prop>
-				<prop key="org.quartz.threadPool.threadPriority">5</prop> 
+				<prop key="org.quartz.threadPool.threadPriority">5</prop>
 
-			<!-- Job store -->
+				<!-- Job store -->
 				<prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
 				<prop key="org.quartz.jobStore.class">org.springframework.scheduling.quartz.LocalDataSourceJobStore</prop>
 				<!--
@@ -225,8 +257,8 @@
 				<prop key="org.quartz.jobStore.useProperties">false</prop>
 				<prop key="org.quartz.jobStore.selectWithLockSQL">SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME
 					= ?</prop>
-					
-			<!-- history plugin -->
+
+				<!-- history plugin -->
 				<prop key="org.quartz.plugin.triggHistory.class">org.quartz.plugins.history.LoggingJobHistoryPlugin</prop>
 			</props>
 		</property>
@@ -235,13 +267,13 @@
 		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
 		<property name="smtpServer" value="${reportrunner.smtpServer}" />
-		<property name="fromAddress" value="${reportrunner.fromAddress}" />			
+		<property name="fromAddress" value="${reportrunner.fromAddress}" />
 	</bean>
 	<bean id="runnerJobService" class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
 		<property name="scheduler" ref="scheduler" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
 	</bean>
-	
+
 	<!--  hibernate plumbing -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">

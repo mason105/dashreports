@@ -14,7 +14,7 @@ public class SetupEditGroup extends AdminRunnerAction {
 	private RunnerGroupDao groupDao;
 	private RunnerDataSourceDao dataSourceDao;
 	private String groupName;
-	private String groupDescription;
+	private RunnerGroup group;
 
 	private List<String> dataSources;
 
@@ -24,9 +24,6 @@ public class SetupEditGroup extends AdminRunnerAction {
 	public String execute() throws Exception {
 		RunnerGroup group = groupDao.getGroup(groupName);
 		if (group != null) {
-			groupName = group.getGroupName();
-			groupDescription = group.getGroupDescription();
-
 			dataSources = new LinkedList<String>();
 			for (RunnerDataSource ds : group.getDataSources()) {
 				dataSources.add(ds.getDataSourceName());
@@ -61,20 +58,12 @@ public class SetupEditGroup extends AdminRunnerAction {
 		this.groupName = groupName;
 	}
 
-	public String getGroupDescription() {
-		return groupDescription;
-	}
-
-	public void setGroupDescription(String groupDescription) {
-		this.groupDescription = groupDescription;
+	public RunnerGroup getGroup() {
+		return group;
 	}
 
 	public List<String> getDataSources() {
 		return dataSources;
-	}
-
-	public void setDataSources(List<String> dataSources) {
-		this.dataSources = dataSources;
 	}
 
 }

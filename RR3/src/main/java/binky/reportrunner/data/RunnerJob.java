@@ -19,12 +19,39 @@ public class RunnerJob implements Serializable {
 	public enum FileFormat {
 		PDF, XLS, RTF, HTML, CSV
 	};
+	public RunnerJob(){}
+	public RunnerJob(RunnerJob_pk pk, String outputUrl,
+			RunnerDataSource datasource, String description, String query,
+			Date startDate, Date endDate, String cronString, Boolean isBurst,
+			String burstQuery, String burstFileNameParameterName,
+			String targetEmailAddress, String alertEmailAddress,
+			JasperReport jasperReport, FileFormat fileFormat,
+			boolean alertOnSuccess, List<RunnerJobParameter> parameters) {
+		super();
+		this.pk = pk;
+		this.outputUrl = outputUrl;
+		this.datasource = datasource;
+		this.description = description;
+		this.query = query;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.cronString = cronString;
+		this.isBurst = isBurst;
+		this.burstQuery = burstQuery;
+		this.burstFileNameParameterName = burstFileNameParameterName;
+		this.targetEmailAddress = targetEmailAddress;
+		this.alertEmailAddress = alertEmailAddress;
+		this.jasperReport = jasperReport;
+		this.fileFormat = fileFormat;
+		this.alertOnSuccess = alertOnSuccess;
+		this.parameters = parameters;
+	}
 
 	@Id
 	private RunnerJob_pk pk;
 
-	private String outputUrl;
 	private static final String runnerEngine = "binky.reportrunner.engine.RunnerEngine";
+	private String outputUrl;
 	
 	@ManyToOne
 	private RunnerDataSource datasource;
@@ -45,6 +72,8 @@ public class RunnerJob implements Serializable {
 	
 	private boolean alertOnSuccess;
 	
+	@OneToMany(mappedBy = "pk.runnerJob")
+	private List<RunnerJobParameter> parameters;
 	
 	
 	public boolean isAlertOnSuccess() {
@@ -71,9 +100,7 @@ public class RunnerJob implements Serializable {
 		this.targetEmailAddress = targetEmailAddress;
 	}
 
-	@OneToMany(mappedBy = "pk.runnerJob")
-	private List<RunnerJobParameter> parameters;
-
+	
 	public List<RunnerJobParameter> getParameters() {
 		return parameters;
 	}

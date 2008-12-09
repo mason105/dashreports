@@ -7,6 +7,7 @@ import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
+import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
 public class SetupEditGroup extends AdminRunnerAction {
@@ -22,15 +23,25 @@ public class SetupEditGroup extends AdminRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
-		RunnerGroup group = groupDao.getGroup(groupName);
-		if (group != null) {
-			dataSources = new LinkedList<String>();
-			for (RunnerDataSource ds : group.getDataSources()) {
-				dataSources.add(ds.getDataSourceName());
+
+		if (super.getUser().getGroups().contains(groupName)
+				|| super.getUser().getIsAdmin()) {
+
+			RunnerGroup group = groupDao.getGroup(groupName);
+			if (group != null) {
+				dataSources = new LinkedList<String>();
+				for (RunnerDataSource ds : group.getDataSources()) {
+					dataSources.add(ds.getDataSourceName());
+				}
+			} else {
+				dataSources = new LinkedList<String>();
 			}
 		} else {
-			dataSources = new LinkedList<String>();
+			SecurityException se = new SecurityException("Group " + groupName
+					+ " not valid for user " + super.getUser().getUserName());
+			throw se;
 		}
+
 		return SUCCESS;
 	}
 

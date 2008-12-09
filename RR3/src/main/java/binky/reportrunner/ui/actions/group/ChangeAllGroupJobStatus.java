@@ -7,12 +7,13 @@ import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class ChangeAllGroupJobStatus  extends StandardRunnerAction {
+public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 
 	private RunnerGroupDao groupDao;
 	private RunnerJobService jobService;
 	private String groupName;
 	private Boolean status;
+
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
@@ -21,21 +22,33 @@ public class ChangeAllGroupJobStatus  extends StandardRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
-		RunnerGroup group = groupDao.getGroup(groupName);
-		if (super.getUser().getGroups().contains(group)) {			
-			for (RunnerJob job : group.getRunnerJobs()) {
-				if (status) {
-					jobService.resumeJob(job.getPk().getJobName(), groupName);
-					
-				} else {
-					jobService.pauseJob(job.getPk().getJobName(), groupName);
+		if (super.getUser().getGroups().contains(groupName)
+				|| super.getUser().getIsAdmin()) {
+
+			RunnerGroup group = groupDao.getGroup(groupName);
+			if (super.getUser().getGroups().contains(group)) {
+				for (RunnerJob job : group.getRunnerJobs()) {
+					if (status) {
+						jobService.resumeJob(job.getPk().getJobName(),
+								groupName);
+
+					} else {
+						jobService
+								.pauseJob(job.getPk().getJobName(), groupName);
+					}
 				}
+			} else {
+				SecurityException se = new SecurityException("Group "
+						+ groupName + " not valid for user "
+						+ super.getUser().getUserName());
+				// logger.fatal(se.getMessage(),se);
+				throw se;
 			}
 		} else {
-			SecurityException se = new SecurityException("Group " + groupName + " not valid for user " + super.getUser().getUserName());
-		//	logger.fatal(se.getMessage(),se);
+			SecurityException se = new SecurityException("Group " + groupName
+					+ " not valid for user " + super.getUser().getUserName());
 			throw se;
-		}		
+		}
 		return SUCCESS;
 	}
 
@@ -58,6 +71,5 @@ public class ChangeAllGroupJobStatus  extends StandardRunnerAction {
 	public void setJobService(RunnerJobService jobService) {
 		this.jobService = jobService;
 	}
-
 
 }

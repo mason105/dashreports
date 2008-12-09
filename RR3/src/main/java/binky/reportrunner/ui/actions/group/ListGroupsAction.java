@@ -23,6 +23,7 @@ public class ListGroupsAction extends StandardRunnerAction {
 			logger.debug("is not admin - restricting groups");
 			this.groups = super.getUser().getGroups();
 		}
+		
 		return SUCCESS;		
 	}
 

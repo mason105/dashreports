@@ -8,6 +8,7 @@ import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
 public class SaveGroup extends AdminRunnerAction {
@@ -20,26 +21,34 @@ public class SaveGroup extends AdminRunnerAction {
 
 	private List<String> dataSources;
 
-
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String execute() throws Exception {
-		List<RunnerDataSource> dsList = new LinkedList<RunnerDataSource>();
-		for (String dataSourceName : dataSources) {
-			RunnerDataSource ds = dataSourceDao.getDataSource(dataSourceName);
-			dsList.add(ds);
-		}
-		RunnerGroup group = groupDao.getGroup(groupName);
-		if (group != null) {
-			group.setGroupDescription(groupDescription);
-			group.setDataSources(dsList);
+		if (super.getUser().getGroups().contains(groupName)
+				|| super.getUser().getIsAdmin()) {
+
+			List<RunnerDataSource> dsList = new LinkedList<RunnerDataSource>();
+			for (String dataSourceName : dataSources) {
+				RunnerDataSource ds = dataSourceDao
+						.getDataSource(dataSourceName);
+				dsList.add(ds);
+			}
+			RunnerGroup group = groupDao.getGroup(groupName);
+			if (group != null) {
+				group.setGroupDescription(groupDescription);
+				group.setDataSources(dsList);
+			} else {
+				List<RunnerJob> runnerJobs = new LinkedList<RunnerJob>();
+				group = new RunnerGroup(groupName, groupDescription,
+						runnerJobs, dsList);
+			}
+			groupDao.saveUpdateGroup(group);
 		} else {
-			List<RunnerJob> runnerJobs = new LinkedList<RunnerJob>();
-			group = new RunnerGroup(groupName, groupDescription, runnerJobs,
-					dsList);
+			SecurityException se = new SecurityException("Group " + groupName
+					+ " not valid for user " + super.getUser().getUserName());
+			throw se;
 		}
-		groupDao.saveUpdateGroup(group);
 		return SUCCESS;
 	}
 
@@ -58,6 +67,7 @@ public class SaveGroup extends AdminRunnerAction {
 	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
 		this.dataSourceDao = dataSourceDao;
 	}
+
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}

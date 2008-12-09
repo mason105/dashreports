@@ -17,6 +17,19 @@ public class RunnerUser implements Serializable {
 	private String fullName;
 	private Boolean isAdmin;
 
+	public RunnerUser() {
+	}
+
+	public RunnerUser(String userName, String password, String fullName,
+			Boolean isAdmin, List<RunnerGroup> groups) {
+		super();
+		this.userName = userName;
+		this.password = password;
+		this.fullName = fullName;
+		this.isAdmin = isAdmin;
+		this.groups = groups;
+	}
+
 	public Boolean getIsAdmin() {
 		return isAdmin;
 	}
@@ -59,9 +72,5 @@ public class RunnerUser implements Serializable {
 	public void setGroups(List<RunnerGroup> groups) {
 		this.groups = groups;
 	}
-
-	
-	
-	
 
 }

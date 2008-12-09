@@ -3,6 +3,7 @@ package binky.reportrunner.ui.actions.group;
 import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
@@ -15,14 +16,22 @@ public class DeleteGroup extends AdminRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
-		RunnerGroup group = groupDao.getGroup(groupName);
-		if ((group.getRunnerJobs() != null)
-				&& (group.getRunnerJobs().size() > 0)) {
-			for (RunnerJob job : group.getRunnerJobs()) {
-				jobService.deleteJob(job.getPk().getJobName(), groupName);
+		if (super.getUser().getGroups().contains(groupName)
+				|| super.getUser().getIsAdmin()) {
+
+			RunnerGroup group = groupDao.getGroup(groupName);
+			if ((group.getRunnerJobs() != null)
+					&& (group.getRunnerJobs().size() > 0)) {
+				for (RunnerJob job : group.getRunnerJobs()) {
+					jobService.deleteJob(job.getPk().getJobName(), groupName);
+				}
 			}
+			groupDao.deleteGroup(groupName);
+		} else {
+			SecurityException se = new SecurityException("Group " + groupName
+					+ " not valid for user " + super.getUser().getUserName());
+			throw se;
 		}
-		groupDao.deleteGroup(groupName);
 		return SUCCESS;
 	}
 

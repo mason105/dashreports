@@ -28,7 +28,7 @@ public class ListJobsAction extends StandardRunnerAction {
 		if ((groupName != null) && (!groupName.isEmpty())) {
 			logger.debug("looking for group: " + groupName);
 				RunnerGroup group = groupDao.getGroup(groupName);
-				if (super.getUser().getGroups().contains(group)) {			
+				if (super.getUser().getGroups().contains(group) || super.getUser().getIsAdmin()) {			
 					this.jobs=jobDao.listJobs(groupName);		
 				} else {
 					SecurityException se = new SecurityException("Group " + groupName + " not valid for user " + super.getUser().getUserName());

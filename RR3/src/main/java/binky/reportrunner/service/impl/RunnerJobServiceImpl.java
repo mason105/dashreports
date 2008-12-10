@@ -1,5 +1,7 @@
 package binky.reportrunner.service.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -111,4 +113,21 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		}
 	}
 
+
+	public void invokeJob(String jobName, String groupName) throws SchedulerException {
+		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+			//if already in scheduler lets go
+			scheduler.invokeJob(jobName, groupName);
+		} else {
+			//schedule it then remove it
+			//TODO test this works
+			Date date = Calendar.getInstance().getTime();
+			scheduler.addJob(jobName, groupName, job.getRunnerEngine(), "0 0 0 ? * ? 2050", date, date);
+			scheduler.invokeJob(jobName, groupName);
+			scheduler.removeJob(jobName, groupName);
+		}
+		
+	}
+	
 }

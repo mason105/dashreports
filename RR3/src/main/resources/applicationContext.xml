@@ -71,6 +71,15 @@
 		</property>
 	</bean>
 
+	<bean id="invokeJob"
+		class="binky.reportrunner.ui.actions.job.InvokeJob"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+	</bean>
+
+
 	<bean id="setupEditParameterAction"
 		class="binky.reportrunner.ui.actions.job.parameter.SetupEditParameter"
 		scope="prototype">

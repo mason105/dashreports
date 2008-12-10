@@ -4,22 +4,13 @@ import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SetJobStatus extends StandardRunnerAction {
+public class InvokeJob extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 
 	private RunnerJobService jobService;
 	private String jobName;
 	private String groupName;
-	private Boolean jobStatus;
-
-	public Boolean getJobStatus() {
-		return jobStatus;
-	}
-
-	public void setJobStatus(Boolean jobStatus) {
-		this.jobStatus = jobStatus;
-	}
 
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
@@ -36,12 +27,9 @@ public class SetJobStatus extends StandardRunnerAction {
 			// security check
 			if (super.getUser().getGroups().contains(groupName)
 					|| super.getUser().getIsAdmin()) {
-				if (jobStatus) {
-					jobService.resumeJob(jobName, groupName);
-				} else {
-					jobService.pauseJob(jobName, groupName);
 
-				}
+				jobService.invokeJob(jobName, groupName);
+
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "

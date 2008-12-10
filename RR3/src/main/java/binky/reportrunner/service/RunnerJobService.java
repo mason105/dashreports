@@ -15,5 +15,9 @@ public interface RunnerJobService {
 	public void resumeJob(String jobName, String groupName) throws SchedulerException;	
 	public Boolean isJobActive(String jobName, String groupName) throws SchedulerException;
 	public List<RunnerJob> getRunningJobs() throws SchedulerException;
-	public void interruptRunningJob(String jobName, String groupName) throws SchedulerException;  
+	public void interruptRunningJob(String jobName, String groupName)
+			throws SchedulerException;
+
+	public void invokeJob(String jobName, String groupName) throws SchedulerException;
+	
 }

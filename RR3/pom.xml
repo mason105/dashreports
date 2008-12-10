@@ -313,11 +313,10 @@
 	</build>
 	<reporting>
 		<plugins>
-			<!-- <plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>changelog-maven-plugin
-				</artifactId>
-			</plugin>-->
+			<!--
+				<plugin> <groupId>org.codehaus.mojo</groupId>
+				<artifactId>changelog-maven-plugin </artifactId> </plugin>
+			-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>dashboard-maven-plugin
@@ -335,14 +334,11 @@
 				</artifactId>
 				<version>2.4.1</version>
 			</plugin>
-			<plugin>
-				<groupId>com.atlassian.maven.plugins
-				</groupId>
-				<artifactId>maven-clover2-plugin</artifactId>
-				<configuration>
-					<generateXml>true</generateXml>
-				</configuration>
-			</plugin>
+			<!--
+				<plugin> <groupId>com.atlassian.maven.plugins </groupId>
+				<artifactId>maven-clover2-plugin</artifactId> <configuration>
+				<generateXml>true</generateXml> </configuration> </plugin>
+			-->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>findbugs-maven-plugin</artifactId>
@@ -382,6 +378,5 @@
 			</url>
 		</site>
 	</distributionManagement>
-
 
 </project>

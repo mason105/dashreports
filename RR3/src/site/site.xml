@@ -14,6 +14,16 @@
 	</poweredBy>
 
 	<body>
+
+		<menu name="Main Menu">
+			<item name="Introduction" href="index.html" />
+			<item name="News" href="news.html" />
+			<item name="Features" href="features.html" />
+			<item name="Installation" href="installation.html" />
+			<item name="Configuration" href="configuration.html" />
+			<item name="FAQ" href="faq.html" />
+		</menu>
+
 		<menu ref="reports" />
 	</body>
 

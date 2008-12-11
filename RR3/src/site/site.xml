@@ -1,9 +1,4 @@
 <project>
-	<skin>
-		<groupId>org.apache.maven.skins</groupId>
-		<artifactId>maven-classic-skin</artifactId>
-	</skin>
-
 
 	<poweredBy>
 		<logo name="SourceForge" href="http://sourceforge.net/projects/reportrunner/"
@@ -20,8 +15,9 @@
 			<item name="News" href="news.html" />
 			<item name="Features" href="features.html" />
 			<item name="Installation" href="installation.html" />
-			<item name="Configuration" href="configuration.html" />
+			<item name="Download" href="download.html" />			
 			<item name="FAQ" href="faq.html" />
+			<item name="Support" href="support.html" />			
 		</menu>
 
 		<menu ref="reports" />

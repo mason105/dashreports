@@ -54,6 +54,8 @@ public class XLSExporter extends AbstractExporter {
 
 			// Write the output to the stream file
 			wb.write(outputStream);
+			outputStream.flush();
+			
 		} catch (SQLException e) {
 			throw new ExportException(e.getMessage(), e);
 		} catch (IOException e) {

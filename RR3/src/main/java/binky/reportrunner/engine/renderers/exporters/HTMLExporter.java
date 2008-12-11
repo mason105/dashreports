@@ -46,6 +46,7 @@ public class HTMLExporter extends AbstractExporter {
 
 			}
 			document.add(table);
+			document.close();
 		} catch (DocumentException e) {
 			throw new ExportException(e.getMessage(), e);
 		} catch (SQLException e) {

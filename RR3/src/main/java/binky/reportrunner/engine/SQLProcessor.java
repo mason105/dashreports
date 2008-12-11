@@ -9,13 +9,26 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.data.RunnerJobParameter;
 
 public class SQLProcessor {
 
+	private static final Logger logger = Logger.getLogger(SQLProcessor.class);
+	
 	public ResultSet getResults(Connection connection,String sql) throws SQLException{
-		Statement stmt = connection.createStatement();
-		return stmt.executeQuery(sql);
+		logger.debug("Executing sql: " + sql);
+
+		Statement stmt = connection.createStatement( ResultSet.TYPE_SCROLL_INSENSITIVE, 
+				   ResultSet.CONCUR_READ_ONLY);
+		ResultSet rs =stmt.executeQuery(sql);
+		rs.last();
+		int count = rs.getRow();
+		rs.beforeFirst();
+
+		logger.debug("got " + count + " row(s)");
+		return rs;
 	}
 	
 	public ResultSet getResults(Connection connection,String sql, List<RunnerJobParameter> parameters) throws SQLException, NumberFormatException{

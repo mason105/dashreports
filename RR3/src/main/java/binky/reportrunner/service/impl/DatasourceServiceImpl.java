@@ -37,7 +37,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, PropertyVetoException, NamingException {
 		final String jndiDataSource = runnerDs.getJndiName();
-		if (jndiDataSource == null) {
+		if ((jndiDataSource == null)||jndiDataSource.isEmpty()) {
 			logger.info("using c3p0 pooled connection for: "
 					+ runnerDs.getDataSourceName());
 			String jdbcUser = runnerDs.getUsername();

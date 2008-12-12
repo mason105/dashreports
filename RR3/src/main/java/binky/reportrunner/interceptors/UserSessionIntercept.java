@@ -38,13 +38,11 @@ public class UserSessionIntercept implements Interceptor, StrutsStatics {
 		action.setUser(user);
 
 		// if this is an admin function action then check all is well
-		if (invocation.getAction().getClass().equals(AdminRunnerAction.class)) {
-			if (!user.getIsAdmin()) {
+		if (invocation.getAction().getClass().equals(AdminRunnerAction.class) && !user.getIsAdmin() ) {
 				forward = "securityError";
-			}
 		}
+		
 
 		return forward;
 	}
-
 }

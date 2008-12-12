@@ -140,7 +140,7 @@ public class RunnerEngine implements Job {
 			NamingException {
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
-		Connection conn = ds.getConnection();;
+		Connection conn = ds.getConnection();
 
 		ResultSet results = sqlProcessor.getResults(conn, job.getQuery(), job
 				.getParameters());

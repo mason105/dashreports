@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.naming.NamingException;
+import javax.sql.DataSource;
 
 import net.sf.jasperreports.engine.JasperReport;
 
@@ -30,14 +31,13 @@ import binky.reportrunner.exceptions.RenderException;
 
 public class RunnerEngine implements Job {
 
-	DatasourceManager dsManager;
+
 	SQLProcessor sqlProcessor;
 	FileSystemHandler fs;
 	String fromAddress;
 	String smtpServer;
-
+	DataSource ds;
 	public RunnerEngine() throws IOException {
-		this.dsManager = new DatasourceManager();
 		this.sqlProcessor = new SQLProcessor();
 		this.fs = new FileSystemHandler();
 	}
@@ -52,7 +52,8 @@ public class RunnerEngine implements Job {
 				"smtpServer");
 		this.fromAddress = (String) context.getJobDetail().getJobDataMap().get(
 				"fromAddress");
-
+		this.ds = (DataSource)context.getJobDetail().getJobDataMap().get(
+		"dataSource");
 		try {
 
 			if (job.getIsBurst()) {
@@ -75,7 +76,7 @@ public class RunnerEngine implements Job {
 		String jobName = job.getPk().getJobName();
 		Connection conn;
 
-		conn = dsManager.getDataConnection(job.getDatasource());
+		conn = ds.getConnection();
 		ResultSet burstResults = sqlProcessor.getResults(conn, job
 				.getBurstQuery());
 
@@ -139,7 +140,7 @@ public class RunnerEngine implements Job {
 			NamingException {
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
-		Connection conn = dsManager.getDataConnection(job.getDatasource());
+		Connection conn = ds.getConnection();;
 
 		ResultSet results = sqlProcessor.getResults(conn, job.getQuery(), job
 				.getParameters());

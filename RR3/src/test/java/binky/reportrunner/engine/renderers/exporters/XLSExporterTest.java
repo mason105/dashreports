@@ -35,8 +35,7 @@ public class XLSExporterTest extends TestCase {
 			exp.export(res, os);
 			os.close();
 			File test = new File(System.getProperty("java.io.tmpdir")
-					+ File.separatorChar + "test.file");
-			System.out.println(test.getAbsolutePath());
+					+ File.separatorChar + "test.file");			
 			assertTrue(test.exists());
 			assertTrue(test.isFile());
 			assertTrue(test.length() > 0);

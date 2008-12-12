@@ -14,7 +14,7 @@ public class SetupEditDataSource extends AdminRunnerAction{
 		if ((dataSourceName !=null) && (!dataSourceName.isEmpty())){
 			dataSource=dataSourceDao.getDataSource(dataSourceName);
 		} else {
-			dataSource=new RunnerDataSource("","","","","","");
+			dataSource=new RunnerDataSource();
 		}
 		return SUCCESS;
 	}

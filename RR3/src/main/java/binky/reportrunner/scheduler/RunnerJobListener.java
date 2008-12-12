@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
@@ -15,6 +17,7 @@ import binky.reportrunner.dao.RunnerJobDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.engine.EmailHandler;
+import binky.reportrunner.service.DatasourceService;
 
 public class RunnerJobListener implements JobListener {
 
@@ -26,6 +29,7 @@ public class RunnerJobListener implements JobListener {
 
 	private RunnerHistoryDao runnerHistoryDao;
 	private RunnerJobDao runnerJobDao;
+	private DatasourceService datasourceService;
 
 	public void jobExecutionVetoed(JobExecutionContext ctx) {
 		RunnerHistoryEvent event = new RunnerHistoryEvent();
@@ -48,7 +52,8 @@ public class RunnerJobListener implements JobListener {
 
 		ctx.put("smtpServer", this.smtpServer);
 		ctx.put("fromAddress", this.fromAddress);
-
+		DataSource ds = datasourceService.getDataSource(job.getDatasource());
+		ctx.put("dataSource", ds);
 		logger.info("Job to be executed: " + ctx.getJobDetail().getName() + "/"
 				+ ctx.getJobDetail().getGroup());
 
@@ -65,7 +70,7 @@ public class RunnerJobListener implements JobListener {
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 
 		event.setMessage(success ? "Job Execution Success"
-				: "Job Execution Failure: " + ex.getMessage());
+				: "Job Execution Failure: " + getCustomStackTrace(ex));
 		Date finishTime = Calendar.getInstance().getTime();
 		event.setTimestamp(finishTime);
 
@@ -97,6 +102,22 @@ public class RunnerJobListener implements JobListener {
 		} catch (IOException e) {
 			logger.error("Failed to send alert email!", e);
 		}
+	}
+
+	/**
+	 * Defines a custom format for the stack trace as String.
+	 */
+	private String getCustomStackTrace(Throwable aThrowable) {
+		// add the class name and any message passed to constructor
+		final StringBuilder result = new StringBuilder();
+		result.append(aThrowable.toString());
+		final String NEW_LINE = System.getProperty("line.separator");
+		// add each element of the stack trace
+		for (StackTraceElement element : aThrowable.getStackTrace()) {
+			result.append(element);
+			result.append(NEW_LINE);
+		}
+		return result.toString();
 	}
 
 	public RunnerHistoryDao getRunnerHistoryDao() {
@@ -133,6 +154,14 @@ public class RunnerJobListener implements JobListener {
 
 	public String getName() {
 		return "ReportRunnerCoreJobListener";
+	}
+
+	public DatasourceService getDatasourceService() {
+		return datasourceService;
+	}
+
+	public void setDatasourceService(DatasourceService datasourceService) {
+		this.datasourceService = datasourceService;
 	}
 
 }

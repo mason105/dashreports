@@ -14,14 +14,25 @@ public class RunnerDataSource implements Serializable {
 	
 	private String dataSourceName;
 	public RunnerDataSource(){};
+
+	
+	
+	
 	public RunnerDataSource(String dataSourceName, String jndiName,
-			String jdbcClass, String jdbcUrl, String username, String password) {
+			String jdbcClass, String jdbcUrl, String username, String password,
+			String testConnectionTable, Integer intialPoolSize,
+			Integer minPoolSize, Integer maxPoolSize) {
+		super();
 		this.dataSourceName = dataSourceName;
 		this.jndiName = jndiName;
 		this.jdbcClass = jdbcClass;
 		this.jdbcUrl = jdbcUrl;
 		this.username = username;
 		this.password = password;
+		this.testConnectionTable = testConnectionTable;
+		this.intialPoolSize = intialPoolSize;
+		this.minPoolSize = minPoolSize;
+		this.maxPoolSize = maxPoolSize;
 	}
 	public String getDataSourceName() {
 		return dataSourceName;
@@ -36,7 +47,10 @@ public class RunnerDataSource implements Serializable {
 	private String jdbcUrl;
 	private String username;
 	private String password;
-	
+	private String testConnectionTable;
+	private Integer intialPoolSize;
+	private Integer minPoolSize;
+	private Integer maxPoolSize;
 
 	public String getJdbcUrl() {
 		return jdbcUrl;
@@ -67,5 +81,31 @@ public class RunnerDataSource implements Serializable {
 	}
 	public void setJndiName(String jndiName) {
 		this.jndiName = jndiName;
-	}	
+	}
+	public String getTestConnectionTable() {
+		return testConnectionTable;
+	}
+	public void setTestConnectionTable(String testConnectionTable) {
+		this.testConnectionTable = testConnectionTable;
+	}
+	public Integer getIntialPoolSize() {
+		return intialPoolSize;
+	}
+	public void setIntialPoolSize(Integer intialPoolSize) {
+		this.intialPoolSize = intialPoolSize;
+	}
+	public Integer getMinPoolSize() {
+		return minPoolSize;
+	}
+	public void setMinPoolSize(Integer minPoolSize) {
+		this.minPoolSize = minPoolSize;
+	}
+	public Integer getMaxPoolSize() {
+		return maxPoolSize;
+	}
+	public void setMaxPoolSize(Integer maxPoolSize) {
+		this.maxPoolSize = maxPoolSize;
+	}
+	
+	
 }

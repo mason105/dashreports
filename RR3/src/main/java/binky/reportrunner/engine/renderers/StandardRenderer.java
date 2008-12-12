@@ -18,19 +18,19 @@ public class StandardRenderer extends AbstractRenderer {
 
 		// CSV Renderer
 		fileFormats.put("CSV",
-				"binky.reportrunner.engine.renderers.exporter.CSVExporter");
+				"binky.reportrunner.engine.renderers.exporters.CSVExporter");
 		// excel renderer
 		fileFormats.put("XLS",
-				"binky.reportrunner.engine.renderers.exporter.XLSExporter");
+				"binky.reportrunner.engine.renderers.exporters.XLSExporter");
 		// pdf renderer
 		fileFormats.put("PDF",
-				"binky.reportrunner.engine.renderers.exporter.PDFExporter");
+				"binky.reportrunner.engine.renderers.exporters.PDFExporter");
 		// rtf renderer
 		fileFormats.put("RTF",
-				"binky.reportrunner.engine.renderers.exporter.RTFExporter");
+				"binky.reportrunner.engine.renderers.exporters.RTFExporter");
 		// html renderer
 		fileFormats.put("HTML",
-				"binky.reportrunner.engine.renderers.exporter.HTMLExporter");
+				"binky.reportrunner.engine.renderers.exporters.HTMLExporter");
 	}
 
 	public void generateReport(ResultSet resultSet, OutputStream outputStream,

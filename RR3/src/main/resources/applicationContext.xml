@@ -71,8 +71,7 @@
 		</property>
 	</bean>
 
-	<bean id="invokeJob"
-		class="binky.reportrunner.ui.actions.job.InvokeJob"
+	<bean id="invokeJob" class="binky.reportrunner.ui.actions.job.InvokeJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref local="runnerJobService" />
@@ -272,12 +271,7 @@
 			</props>
 		</property>
 	</bean>
-	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
-		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
-		<property name="runnerJobDao" ref="runnerJobDao" />
-		<property name="smtpServer" value="${reportrunner.smtpServer}" />
-		<property name="fromAddress" value="${reportrunner.fromAddress}" />
-	</bean>
+
 	<bean id="runnerJobService" class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
 		<property name="scheduler" ref="scheduler" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
@@ -393,4 +387,17 @@
 	</bean>
 	<bean id="userSessionIntercept" class="binky.reportrunner.interceptors.UserSessionIntercept"
 		scope="singleton" />
+	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
+		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
+		<property name="runnerJobDao" ref="runnerJobDao" />
+		<property name="smtpServer" value="${reportrunner.smtpServer}" />
+		<property name="fromAddress" value="${reportrunner.fromAddress}" />
+		<property name="datasourceService">
+			<ref local="runnerDatasourceService" />
+		</property>
+	</bean>
+	<bean id="runnerDatasourceService" class="binky.reportrunner.service.impl.DatasourceServiceImpl"
+		scope="singleton">		
+	</bean>
+
 </beans>

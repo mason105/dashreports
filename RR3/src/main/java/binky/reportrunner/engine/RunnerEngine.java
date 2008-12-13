@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import net.sf.jasperreports.engine.JasperReport;
 
 import org.apache.commons.mail.EmailException;
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -31,12 +32,14 @@ import binky.reportrunner.exceptions.RenderException;
 
 public class RunnerEngine implements Job {
 
-
 	SQLProcessor sqlProcessor;
 	FileSystemHandler fs;
 	String fromAddress;
 	String smtpServer;
 	DataSource ds;
+
+	private static final Logger logger = Logger.getLogger(RunnerEngine.class);
+	
 	public RunnerEngine() throws IOException {
 		this.sqlProcessor = new SQLProcessor();
 		this.fs = new FileSystemHandler();
@@ -52,8 +55,8 @@ public class RunnerEngine implements Job {
 				"smtpServer");
 		this.fromAddress = (String) context.getJobDetail().getJobDataMap().get(
 				"fromAddress");
-		this.ds = (DataSource)context.getJobDetail().getJobDataMap().get(
-		"dataSource");
+		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get(
+				"dataSource");
 		try {
 
 			if (job.getIsBurst()) {
@@ -67,7 +70,7 @@ public class RunnerEngine implements Job {
 		}
 	}
 
-	private void processBurstedReport(RunnerJob job) throws IOException,
+	List<String> processBurstedReport(RunnerJob job) throws IOException,
 			RenderException, EmailException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException,
 			NamingException {
@@ -89,6 +92,7 @@ public class RunnerEngine implements Job {
 						+ burstResults.getObject(param
 								.getParameterBurstColumn()));
 				populatedParams.add(param);
+				logger.debug("added populated param" + param.getPk().getParameterIdx() + " - value - " + param.getParameterValue());
 			}
 			String fileNameValue = ""
 					+ burstResults.getObject(job
@@ -104,37 +108,38 @@ public class RunnerEngine implements Job {
 			String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName,
 					groupName, job.getFileFormat().toString().toLowerCase());
 
-			int lastDot = outUrl.lastIndexOf(".");
+			
 			// insert the bursted filename value into the url - probably a
 			// better way to do this.
-			outUrl = outUrl.substring(0, lastDot) + "_" + fileNameValue
-					+ outUrl.substring(lastDot);
-
+			outUrl = outUrl + "_" + fileNameValue;				
+			logger.debug("bursted file being output to: " + outUrl);
 			doReport(results, outUrl, job.getJasperReport(), job
 					.getFileFormat().toString());
 
-			conn.close();
 			fileUrls.add(outUrl);
 
-			// send email if need be
-			if ((job.getTargetEmailAddress() != null)
-					&& (!job.getTargetEmailAddress().isEmpty())) {
-				EmailHandler email = new EmailHandler();
-				email.sendEmail(job.getTargetEmailAddress(), fromAddress,
-						smtpServer, fileUrls, jobName, groupName);
-			}
+		}
+		conn.close();
 
-			// clean up any temp files
-			if ((job.getOutputUrl() == null) || (job.getOutputUrl().isEmpty())) {
-				for (String url : fileUrls) {
-					fs.deleteFile(url);
-				}
+		// send email if need be
+		if ((job.getTargetEmailAddress() != null)
+				&& (!job.getTargetEmailAddress().isEmpty())) {
+			EmailHandler email = new EmailHandler();
+			email.sendEmail(job.getTargetEmailAddress(), fromAddress,
+					smtpServer, fileUrls, jobName, groupName);
+		}
+
+		// clean up any temp files
+		if ((job.getOutputUrl() == null) || (job.getOutputUrl().isEmpty())) {
+			for (String url : fileUrls) {
+				fs.deleteFile(url);
 			}
 		}
 
+		return fileUrls;
 	}
 
-	private void processSingleReport(RunnerJob job) throws IOException,
+	String processSingleReport(RunnerJob job) throws IOException,
 			RenderException, EmailException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException,
 			NamingException {
@@ -164,7 +169,7 @@ public class RunnerEngine implements Job {
 		if ((job.getOutputUrl() == null) || (job.getOutputUrl().isEmpty())) {
 			fs.deleteFile(outUrl);
 		}
-
+		return outUrl;
 	}
 
 	private void doReport(ResultSet results, String url, JasperReport jReport,

@@ -18,6 +18,10 @@ public class FileSystemHandler {
 		this.fsManager = VFS.getManager();
 	}
 
+	public FileObject getFileObjectForUrl(String url)throws IOException {
+		FileObject file = fsManager.resolveFile(url);
+		return file;
+	}
 	public OutputStream getOutputStreamForUrl(String url) throws IOException {
 
 		FileObject file = fsManager.resolveFile(url);
@@ -56,12 +60,12 @@ public class FileSystemHandler {
 		Calendar cal = Calendar.getInstance();
 		String dateFormatted = dateFormat.format(cal.getTime());
 		if ((url == null) || (url.isEmpty())) {
-			returnUrl = "file://" + System.getProperty("java.io.tmpdir") + "/"
+			returnUrl = "file://" + System.getProperty("java.io.tmpdir") 
 					+ dateFormatted + "_" + jobName.replace(" ", "_")
 					+ groupName.replace(" ", "_") + fileExt;
 		} else {
-			returnUrl = url + "/" + dateFormatted + "_"
-					+ jobName.replace(" ", "_") + groupName.replace(" ", "_")
+			returnUrl = url  + dateFormatted + "_"
+					+ jobName.replace(" ", "_") + "_"+ groupName.replace(" ", "_")
 					+ fileExt;
 		}
 

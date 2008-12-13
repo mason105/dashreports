@@ -19,7 +19,7 @@ public class RunnerGroupDaoImplTest extends TestCase {
 		dao = (RunnerGroupDao) ctx.getBean("runnerGroupDao");
 	}
 
-	static RunnerGroup getDemoGroup(String id) {
+	public static RunnerGroup getDemoGroup(String id) {
 		RunnerGroup group = new RunnerGroup();
 		group.setGroupName(id);
 		group.setGroupDescription("test group " + id);

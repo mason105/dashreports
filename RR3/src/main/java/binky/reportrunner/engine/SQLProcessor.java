@@ -43,7 +43,7 @@ public class SQLProcessor {
 			NumberFormatException {
 		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		// 1=String 2=Timestamp 3=Boolean 4=Float 5=Long 6=Double 7=BigDecimal
+		// 1=String 2=Timestamp 3=Boolean 4=int 5=Float 6=Long 7=Double 8=BigDecimal
 
 		for (RunnerJobParameter param : parameters) {
 			switch (param.getParameterType()) {
@@ -62,18 +62,21 @@ public class SQLProcessor {
 						.parseBoolean(param.getParameterValue()));
 				break;
 			case 4:
+				stmt.setInt(param.getPk().getParameterIdx(), Integer
+						.parseInt(param.getParameterValue()));
+			case 5:
 				stmt.setFloat(param.getPk().getParameterIdx(), Float
 						.parseFloat(param.getParameterValue()));
 				break;
-			case 5:
+			case 6:
 				stmt.setLong(param.getPk().getParameterIdx(), Long
 						.parseLong(param.getParameterValue()));
 				break;
-			case 6:
+			case 7:
 				stmt.setDouble(param.getPk().getParameterIdx(), Double
 						.parseDouble(param.getParameterValue()));
 				break;
-			case 7:
+			case 8:
 				stmt.setBigDecimal(param.getPk().getParameterIdx(),
 						new BigDecimal(Double.parseDouble(param
 								.getParameterValue())));

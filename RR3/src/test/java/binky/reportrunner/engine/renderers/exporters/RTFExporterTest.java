@@ -34,6 +34,7 @@ public class RTFExporterTest extends TestCase {
 			ResultSet res = proc.getResults(connection, sql);
 			exp.export(res, os);
 			os.close();
+			connection.close();			
 			File test = new File(System.getProperty("java.io.tmpdir")
 					+ File.separatorChar + "test.file");
 			assertTrue(test.exists());

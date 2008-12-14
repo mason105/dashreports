@@ -1,12 +1,12 @@
 package binky.reportrunner.engine;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -40,51 +40,59 @@ public class SQLProcessor {
 
 	public ResultSet getResults(Connection connection, String sql,
 			List<RunnerJobParameter> parameters) throws SQLException,
-			NumberFormatException {
+			NumberFormatException, ParseException {
 		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		// 1=String 2=Timestamp 3=Boolean 4=int 5=Float 6=Long 7=Double 8=BigDecimal
-
+		// 1=String 2=Date 3=Boolean 4=int 4=Float 5=Long 6=Double
+		//date format yyyy-MM-dd HH:mm:ss
+		logger.debug("executing sql: " + sql);
+		logger.debug("parsing " + parameters.size() + " parameters");
 		for (RunnerJobParameter param : parameters) {
 			switch (param.getParameterType()) {
 			case 1:
 				stmt.setString(param.getPk().getParameterIdx(), param
 						.getParameterValue());
+				logger.debug("param: " + param.getPk().getParameterIdx()
+						+ " type String value=" + param.getParameterValue());
 				break;
 			case 2:
-				stmt
-						.setTimestamp(param.getPk().getParameterIdx(),
-								new Timestamp(Long.parseLong(param
-										.getParameterValue())));
+				SimpleDateFormat sdf = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss");
+				java.util.Date date = sdf.parse(param.getParameterValue());
+				logger.debug("param: " + param.getPk().getParameterIdx()
+						+ " type Timestamp value=" +date);
+				stmt.setTimestamp(param.getPk().getParameterIdx(),
+						new java.sql.Timestamp(date.getTime()));
 				break;
 			case 3:
-				stmt.setBoolean(param.getPk().getParameterIdx(), Boolean
-						.parseBoolean(param.getParameterValue()));
+				boolean bool = Boolean.parseBoolean(param.getParameterValue());
+				stmt.setBoolean(param.getPk().getParameterIdx(), bool);
+				logger.debug("param: " + param.getPk().getParameterIdx()
+						+ " type Boolean value="
+						+ bool);
 				break;
 			case 4:
-				stmt.setInt(param.getPk().getParameterIdx(), Integer
-						.parseInt(param.getParameterValue()));
+				int intg = Integer.parseInt(param.getParameterValue());
+				stmt.setInt(param.getPk().getParameterIdx(), intg);
+				logger.debug("param: " + param.getPk().getParameterIdx()
+						+ " type Integer value=" + intg);
+				break;
 			case 5:
-				stmt.setFloat(param.getPk().getParameterIdx(), Float
-						.parseFloat(param.getParameterValue()));
+				long lng = Long.parseLong(param.getParameterValue());
+				stmt.setLong(param.getPk().getParameterIdx(), lng);
+				logger.debug("param: " + param.getPk().getParameterIdx()
+						+ " type Long value=" + lng);
 				break;
 			case 6:
-				stmt.setLong(param.getPk().getParameterIdx(), Long
-						.parseLong(param.getParameterValue()));
-				break;
-			case 7:
-				stmt.setDouble(param.getPk().getParameterIdx(), Double
-						.parseDouble(param.getParameterValue()));
-				break;
-			case 8:
-				stmt.setBigDecimal(param.getPk().getParameterIdx(),
-						new BigDecimal(Double.parseDouble(param
-								.getParameterValue())));
+				double dbl = Double.parseDouble(param.getParameterValue());
+				stmt.setDouble(param.getPk().getParameterIdx(), dbl);
+				logger.debug("param: " + param.getPk().getParameterIdx()
+						+ " type Double value=" + dbl);
 				break;
 			}
 		}
-
-		return stmt.executeQuery();
+		ResultSet rst = stmt.executeQuery();
+		return rst;
 	}
 
 }

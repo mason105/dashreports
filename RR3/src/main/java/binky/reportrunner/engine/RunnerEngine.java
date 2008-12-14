@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -73,7 +74,7 @@ public class RunnerEngine implements Job {
 	List<String> processBurstedReport(RunnerJob job) throws IOException,
 			RenderException, EmailException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException,
-			NamingException {
+			NamingException, NumberFormatException, ParseException {
 		List<String> fileUrls = new LinkedList<String>();
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
@@ -142,7 +143,7 @@ public class RunnerEngine implements Job {
 	String processSingleReport(RunnerJob job) throws IOException,
 			RenderException, EmailException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException,
-			NamingException {
+			NamingException, NumberFormatException, ParseException {
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
 		Connection conn = ds.getConnection();

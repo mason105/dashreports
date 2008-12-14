@@ -35,6 +35,7 @@ public class StandardRendererTest extends TestCase {
 			ResultSet res = proc.getResults(connection, sql);
 			render.generateReport(res, os, "CSV");
 			os.close();
+			connection.close();			
 			File test = new File(System.getProperty("java.io.tmpdir")
 					+ File.separatorChar + "test.file");
 			assertTrue(test.exists());

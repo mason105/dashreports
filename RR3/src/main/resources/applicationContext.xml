@@ -218,6 +218,12 @@
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="user" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
+<!--  <property name="acquireIncrement" value="1"/>  
+		<property name="maxPoolSize" value="15"/> 
+		<property name="maxStatements" value="0"/>
+		<property name="initialPoolSize" value="5"/>
+		<property name="minPoolSize" value="5"/>	
+		<property name="numHelperThreads" value="10"/>-->	
 	</bean>
 
 	<!--  setup our scheduler singleton and the quartz bean -->

@@ -6,13 +6,13 @@
 <struts>
 	<package name="myPackage" extends="struts-default">
 		<interceptors>
-			<interceptor name="login" class="loginInterceptor" />			
+			<interceptor name="login" class="loginInterceptor" />
 			<interceptor name="userSession" class="userSessionIntercept" />
 			<interceptor-stack name="defaultLoginStack">
 				<interceptor-ref name="servlet-config" />
 				<interceptor-ref name="params" />
 				<interceptor-ref name="login" /> <!-- Our LoginInterceptor -->
-				<interceptor-ref name="userSession" /> <!-- Our UserSessionIntercept -->				
+				<interceptor-ref name="userSession" /> <!-- Our UserSessionIntercept -->
 				<interceptor-ref name="prepare" />
 				<interceptor-ref name="chain" />
 				<interceptor-ref name="model-driven" />
@@ -29,49 +29,167 @@
 			unless otherwise configured.
 		-->
 		<default-interceptor-ref name="defaultLoginStack" />
+		
 		<default-action-ref name="index" />
+		
 		<global-results>
 			<result name="login">/jsp/login/login.jsp</result>
 			<result name="login-success">/jsp/main/index.jsp</result>
-			<result name="securityError">/jsp/securityError.jsp</result>
+			<result name="securityError">/jsp/securityError.jsp
+			</result>
 		</global-results>
+		
 		<action name="index" class="indexAction">
 			<result>/jsp/main/index.jsp</result>
 		</action>
+		
 		<action name="listJobs" class="listJobsAction">
 			<result>/jsp/ajax/listJobs.jsp</result>
 		</action>
+		
 		<action name="listGroups" class="listGroupsAction">
 			<result>/jsp/main/listGroups.jsp</result>
 		</action>
-			
+
 		<action name="deleteJob" class="deleteJobAction">
 			<result type="redirect-action">
 				<param name="actionName">listJobs</param>
-				<param name="groupName">${groupName}</param>				
+				<param name="groupName">${groupName}</param>
 			</result>
-		</action>				
-		
+		</action>
+
 		<action name="saveJob" class="saveJobAction">
 			<result type="redirect-action">
-				<param name="actionName">listJobs</param>			
-				<param name="groupName">${groupName}</param>				
+				<param name="actionName">listJobs</param>
+				<param name="groupName">${groupName}</param>
 			</result>
-		</action>				
-		
+		</action>
+
 		<action name="setJobStatus" class="setJobStatusAction">
 			<result type="redirect-action">
 				<param name="actionName">listJobs</param>
-				<param name="groupName">${groupName}</param>				
+				<param name="groupName">${groupName}</param>
 			</result>
-		</action>				
-		
+		</action>
+
 		<action name="setupEditJob" class="setupEditJobAction">
 			<result>/jsp/main/editJob.jsp</result>
-		</action>				
-		
+		</action>
+
 		<action name="viewJobDetail" class="viewJobDetailAction">
-			<result>/jsp/main/viewJobDetail.jsp</result>
-		</action>				
+			<result>/jsp/main/viewJobDetail.jsp
+			</result>
+		</action>
+		
+		<action name="changeAllGroupJobStatus" class="changeAllGroupJobStatusAction">
+			<result type="redirect-action">
+				<param name="actionName">listJobs</param>
+				<param name="groupName">${groupName}</param>
+			</result>
+		</action>
+
+		<action name="deleteGroup" class="deleteGroupAction">
+			<result type="redirect-action">
+				<param name="actionName">listGroups</param>
+			</result>
+		</action>
+
+		<action name="saveGroup" class="saveGroupAction">
+			<result type="redirect-action">
+				<param name="actionName">listGroups</param>
+			</result>
+		</action>
+
+		<action name="setupEditGroup" class="setupEditGroupAction">
+			<result>/jsp/main/editGroup.jsp</result>
+		</action>
+
+		<action name="saveParameter" class="saveParameterAction">
+			<result>/jsp/main/paramSaved.jsp</result>
+		</action>
+
+		<action name="deleteDataSource" class="deleteDataSourceAction">
+			<result type="redirect-action">
+				<param name="actionName">listDataSources</param>
+			</result>
+		</action>
+
+
+		<action name="listDataSources" class="listDataSourcesAction">
+			<result>/jsp/main/listDataSources.jsp
+			</result>
+		</action>
+
+
+		<action name="saveDataSource" class="saveDataSourceAction">
+			<result type="redirect-action">
+				<param name="actionName">listDataSources</param>
+			</result>
+		</action>
+
+
+		<action name="invokeJobAction" class="invokeJobAction">
+			<result type="redirect-action">
+				<param name="actionName">listJobs</param>
+				<param name="groupName">${groupName}</param>
+			</result>
+		</action>
+
+
+
+		<action name="setupEditParameter" class="setupEditParameterAction">
+			<result>/jsp/main/editParameter.jsp
+			</result>
+		</action>
+
+
+		<action name="deleteParameter" class="deleteParameterAction">
+			<result type="redirect-action">
+				<param name="actionName">setupEditJob</param>
+				<param name="groupName">${groupName}</param>
+				<param name="jobName">${jobName}</param>
+			</result>
+		</action>
+
+		<action name="setupEditUser" class="setupEditUserAction">
+			<result>/jsp/main/editUser.jsp</result>
+		</action>
+
+
+		<action name="changePassword" class="changePasswordAction">
+			<result type="redirect-action">
+				<param name="actionName">index</param>
+			</result>
+		</action>
+
+
+		<action name="deleteUser" class="deleteUserAction">
+			<result type="redirect-action">
+				<param name="actionName">listUsers</param>
+			</result>
+		</action>
+
+
+		<action name="listUsers" class="listUsersAction">
+			<result>/jsp/main/listUsers.jsp</result>
+		</action>
+
+
+		<action name="saveUser" class="saveUserAction">
+			<result type="redirect-action">
+				<param name="actionName">listUsers</param>
+			</result>
+		</action>
+
+
+		<action name="manageServer" class="manageServerAction">
+			<result>/jsp/main/manageServer.jsp</result>
+		</action>
+
+		<action name="setupEditDataSource" class="setupEditDataSourceAction">
+			<result>/jsp/main/editDataSource.jsp
+			</result>
+		</action>
+
 	</package>
 </struts>

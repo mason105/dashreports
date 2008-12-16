@@ -71,7 +71,7 @@
 		</property>
 	</bean>
 
-	<bean id="invokeJob" class="binky.reportrunner.ui.actions.job.InvokeJob"
+	<bean id="invokeJobAction" class="binky.reportrunner.ui.actions.job.InvokeJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref local="runnerJobService" />

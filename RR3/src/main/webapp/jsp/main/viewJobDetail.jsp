@@ -1,10 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>  
-<html><!-- InstanceBegin template="/Templates/MainTemplate.dwt.jsp" codeOutsideHTMLIsLocked="false" -->  
+<html>
   <head>  
-    <s:head theme="ajax"/>  
+    <s:head/>  
   </head>  
-  <!-- InstanceBeginEditable name="head" --><!--header--><!-- InstanceEndEditable -->       
   <body>  
-  <!-- InstanceBeginEditable name="Body" -->Body<!-- InstanceEndEditable -->
+	Body
   </body>  
-<!-- InstanceEnd --></html>  
+</html>  

@@ -70,6 +70,13 @@
 			<email>daniel AT binkysoftware.co.uk</email>
 			<organization>Binky Software</organization>
 		</developer>
+		<developer>
+			<name>John Cook</name>
+			<id>danielgrout</id>
+			<email>john AT binkysoftware.co.uk</email>
+			<organization>Binky Software</organization>
+		</developer>
+		
 	</developers>
 	<scm>
 		<connection>

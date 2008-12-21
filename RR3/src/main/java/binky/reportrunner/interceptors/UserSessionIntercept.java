@@ -7,7 +7,6 @@ import org.apache.struts2.StrutsStatics;
 
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -27,15 +26,15 @@ public class UserSessionIntercept implements Interceptor, StrutsStatics {
 	}
 
 	public String intercept(ActionInvocation invocation) throws Exception {
-		StandardRunnerAction action = (StandardRunnerAction) invocation
-				.getAction();
+		//StandardRunnerAction action = (StandardRunnerAction) invocation
+			//	.getAction();
 		String forward = invocation.invoke();
 		ActionContext context = invocation.getInvocationContext();
 		HttpServletRequest request = (HttpServletRequest) context
 				.get(HTTP_REQUEST);
 		HttpSession session = request.getSession(true);
 		RunnerUser user = (RunnerUser) session.getAttribute(USER_HANDLE);
-		action.setUser(user);
+//		action.setUser(user);
 
 		// if this is an admin function action then check all is well
 		if (invocation.getAction().getClass().equals(AdminRunnerAction.class) && !user.getIsAdmin() ) {

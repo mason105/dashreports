@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JasperReport;
+import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
@@ -26,7 +27,7 @@ public class SaveJob extends StandardRunnerAction {
 	private String jobName;
 	private String groupName;
 	private String outputUrl;
-	private RunnerDataSource datasource;
+	private String dataSourceName;
 	private String description;
 	private String query;
 	private Date startDate;
@@ -40,7 +41,39 @@ public class SaveJob extends StandardRunnerAction {
 	private JasperReport jasperReport;
 	private FileFormat fileFormat;
 	private boolean alertOnSuccess;
+	private List<RunnerJobParameter> parameters;
+	private RunnerDataSourceDao dataSourceDao;
 
+	@Override
+	public String execute() throws Exception {
+		RunnerJob_pk pk = new RunnerJob_pk();
+		RunnerGroup group = groupDao.getGroup(groupName);
+		pk.setGroup(group);
+		pk.setJobName(jobName);
+		RunnerDataSource ds= dataSourceDao.getDataSource(dataSourceName);
+	    if (parameters==null) parameters = new LinkedList<RunnerJobParameter>();
+		RunnerJob job = new RunnerJob(pk, outputUrl, ds, description,
+				query, startDate, endDate, cronString, isBurst, burstQuery,
+				burstFileNameParameterName, targetEmailAddress,
+				alertEmailAddress, jasperReport, fileFormat, alertOnSuccess,
+				parameters);
+		if (groupName != null && !groupName.isEmpty()
+				&& (jobName != null && !jobName.isEmpty())) {
+			// security check
+			if (super.getUser().getGroups().contains(groupName) || super.getUser().getIsAdmin()) {
+				jobService.addUpdateJob(job);
+			} else {
+				SecurityException se = new SecurityException("Group "
+						+ groupName + " not valid for user "
+						+ super.getUser().getUserName());
+				// logger.fatal(se.getMessage(), se);
+				throw se;
+			}
+
+		}		
+		return SUCCESS;
+	}
+	
 	public void setGroupDao(RunnerGroupDao groupDao) {
 		this.groupDao = groupDao;
 	}
@@ -57,8 +90,8 @@ public class SaveJob extends StandardRunnerAction {
 		this.outputUrl = outputUrl;
 	}
 
-	public void setDatasource(RunnerDataSource datasource) {
-		this.datasource = datasource;
+	public void setDataSourceName(String dataSourceName) {
+		this.dataSourceName = dataSourceName;
 	}
 
 	public void setDescription(String description) {
@@ -113,34 +146,6 @@ public class SaveJob extends StandardRunnerAction {
 		this.alertOnSuccess = alertOnSuccess;
 	}
 
-	@Override
-	public String execute() throws Exception {
-		RunnerJob_pk pk = new RunnerJob_pk();
-		RunnerGroup group = groupDao.getGroup(groupName);
-		pk.setGroup(group);
-		pk.setJobName(jobName);
-		List<RunnerJobParameter> jobParams = new LinkedList<RunnerJobParameter>();
-		RunnerJob job = new RunnerJob(pk, outputUrl, datasource, description,
-				query, startDate, endDate, cronString, isBurst, burstQuery,
-				burstFileNameParameterName, targetEmailAddress,
-				alertEmailAddress, jasperReport, fileFormat, alertOnSuccess,
-				jobParams);
-		if (groupName != null && !groupName.isEmpty()
-				&& (jobName != null && !jobName.isEmpty())) {
-			// security check
-			if (super.getUser().getGroups().contains(groupName) || super.getUser().getIsAdmin()) {
-				jobService.addUpdateJob(job);
-			} else {
-				SecurityException se = new SecurityException("Group "
-						+ groupName + " not valid for user "
-						+ super.getUser().getUserName());
-				// logger.fatal(se.getMessage(), se);
-				throw se;
-			}
-
-		}
-		return SUCCESS;
-	}
 
 	public final RunnerJobService getJobService() {
 		return jobService;
@@ -150,4 +155,16 @@ public class SaveJob extends StandardRunnerAction {
 		this.jobService = jobService;
 	}
 
+	public void setParameters(List<RunnerJobParameter> parameters) {
+		this.parameters = parameters;
+	}
+
+	public RunnerDataSourceDao getDataSourceDao() {
+		return dataSourceDao;
+	}
+
+	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
+		this.dataSourceDao = dataSourceDao;
+	}
+	
 }

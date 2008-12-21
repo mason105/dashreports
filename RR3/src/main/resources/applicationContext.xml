@@ -42,18 +42,12 @@
 		scope="prototype">
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
-		</property>
-		<property name="dataSourceDao">
-			<ref local="runnerDataSourceDao" />
-		</property>
+		</property>		
 	</bean>
 	<bean id="setupEditGroupAction" class="binky.reportrunner.ui.actions.group.SetupEditGroup"
 		scope="prototype">
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
-		</property>
-		<property name="dataSourceDao">
-			<ref local="runnerDataSourceDao" />
 		</property>
 	</bean>
 
@@ -103,6 +97,9 @@
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
 		</property>
+		<property name="dataSourceDao">
+			<ref local="runnerDataSourceDao" />
+		</property>		
 	</bean>
 	<bean id="setJobStatusAction" class="binky.reportrunner.ui.actions.job.SetJobStatus"
 		scope="prototype">
@@ -115,6 +112,10 @@
 		<property name="jobService">
 			<ref local="runnerJobService" />
 		</property>
+		<property name="dataSourceDao">
+			<ref local="runnerDataSourceDao" />
+		</property>
+		
 	</bean>
 	<bean id="viewJobDetailAction" class="binky.reportrunner.ui.actions.job.ViewJobDetail"
 		scope="prototype">

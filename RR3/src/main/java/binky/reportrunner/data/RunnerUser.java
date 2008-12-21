@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
@@ -38,7 +39,8 @@ public class RunnerUser implements Serializable {
 		this.isAdmin = isAdmin;
 	}
 
-	@ManyToMany
+	
+	@ManyToMany(fetch = FetchType.EAGER)
 	private List<RunnerGroup> groups;
 
 	public String getUserName() {

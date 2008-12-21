@@ -1,7 +1,11 @@
 package binky.reportrunner.ui.actions.job;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
+import binky.reportrunner.dao.RunnerDataSourceDao;
+import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
@@ -15,7 +19,8 @@ public class SetupEditJob extends StandardRunnerAction {
 	private RunnerJob job;
 	private static final Logger logger = Logger.getLogger(SetupEditJob.class);
 	private RunnerJobService jobService;
-
+	private List<RunnerDataSource> dataSources;
+	private RunnerDataSourceDao dataSourceDao;
 	@Override
 	public String execute() throws Exception {
 		if (groupName != null && !groupName.isEmpty()
@@ -23,6 +28,7 @@ public class SetupEditJob extends StandardRunnerAction {
 			// security check
 			if (super.getUser().getGroups().contains(groupName) || super.getUser().getIsAdmin()) {
 				job = jobService.getJob(jobName, groupName);
+				dataSources=dataSourceDao.listDataSources();
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
@@ -45,10 +51,6 @@ public class SetupEditJob extends StandardRunnerAction {
 		this.jobService = jobService;
 	}
 
-	public final String getJobName() {
-		return jobName;
-	}
-
 	public final void setJobName(String jobName) {
 		this.jobName = jobName;
 	}
@@ -65,8 +67,17 @@ public class SetupEditJob extends StandardRunnerAction {
 		return job;
 	}
 
-	public final void setJob(RunnerJob job) {
-		this.job = job;
+	public RunnerDataSourceDao getDataSourceDao() {
+		return dataSourceDao;
 	}
+
+	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
+		this.dataSourceDao = dataSourceDao;
+	}
+
+	public List<RunnerDataSource> getDataSources() {
+		return dataSources;
+	}
+
 
 }

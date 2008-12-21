@@ -16,6 +16,8 @@ public class ListGroupsAction extends StandardRunnerAction {
 	private List<RunnerGroup> groups;
 	@Override
 	public String execute() throws Exception{
+		logger.debug("listing groups for: " + super.getUser().getUserName());
+		logger.debug("is admin is null = " + super.getUser().getIsAdmin()==null);
 		if (super.getUser().getIsAdmin()) {
 			logger.debug("is admin - allowing all groups");
 			 this.groups=groupDao.listGroups();

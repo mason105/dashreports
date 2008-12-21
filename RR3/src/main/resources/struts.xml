@@ -44,7 +44,7 @@
 		</action>
 		
 		<action name="listJobs" class="listJobsAction">
-			<result>/jsp/ajax/listJobs.jsp</result>
+			<result>/jsp/main/listJobs.jsp</result>
 		</action>
 		
 		<action name="listGroups" class="listGroupsAction">

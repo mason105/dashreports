@@ -107,5 +107,8 @@ public class RunnerDataSource implements Serializable {
 		this.maxPoolSize = maxPoolSize;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return this.dataSourceName;
+	}
 }

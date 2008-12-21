@@ -4,19 +4,17 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
 public class RunnerGroup {
 
 	public RunnerGroup(String groupName, String groupDescription,
-			List<RunnerJob> runnerJobs, List<RunnerDataSource> dataSources) {
+			List<RunnerJob> runnerJobs) {
 		super();
 		this.groupName = groupName;
 		this.groupDescription = groupDescription;
 		this.runnerJobs = runnerJobs;
-		this.dataSources = dataSources;
 	}
 	public RunnerGroup(){};
 	@Id
@@ -26,17 +24,6 @@ public class RunnerGroup {
 	@OneToMany
 	private List<RunnerJob> runnerJobs;
 	
-	@ManyToMany
-	private List<RunnerDataSource> dataSources;
-
-	public List<RunnerDataSource> getDataSources() {
-		return dataSources;
-	}
-
-	public void setDataSources(List<RunnerDataSource> dataSources) {
-		this.dataSources = dataSources;
-	}
-
 	public String getGroupName() {
 		return groupName;
 	}

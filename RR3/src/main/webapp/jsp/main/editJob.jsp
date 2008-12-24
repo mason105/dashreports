@@ -25,7 +25,7 @@
   			<tr>
   				<td>
   					  <s:select label="Select Data Source" 
-    					name="dataSourceNaem" 
+    					name="dataSourceName" 
     					headerKey="1"
     					headervalue="-- Please Select --"
     					value="%{job.dataSource.dataSourceName}"

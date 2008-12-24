@@ -5,13 +5,14 @@
   </head>  
   <body>    
       <h1>Groups</h1>  
-      <s:if test="groups.size > 0">  
+  
         <table border="1">  
 	      <tr>
 	      <td colspan=3>
 	      <a href="setupEditGroup.action">Add Group</a>
 	      </td>
-	      </tr>	            
+	      </tr>
+	      <s:if test="groups.size > 0">	            
           <s:iterator value="groups">  
             <tr>  
               <td>  
@@ -27,8 +28,9 @@
                 <s:a href="deleteGroup.action?groupName=%{groupName}">Delete</s:a>  
               </td>  
             </tr>  
-          </s:iterator>  
+          </s:iterator>
+          </s:if>  
         </table>  
-      </s:if>    
+          
   </body>  
 </html>  

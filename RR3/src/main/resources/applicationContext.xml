@@ -156,6 +156,9 @@
 		<property name="dataSourceDao">
 			<ref local="runnerDataSourceDao" />
 		</property>
+		<property name="datasourceService">
+			<ref local="runnerDatasourceService" />
+		</property>		
 	</bean>
 
 	<bean id="setupEditUserAction" class="binky.reportrunner.ui.actions.user.SetupEditUser"

@@ -2,7 +2,10 @@ package binky.reportrunner.service.impl;
 
 import java.beans.PropertyVetoException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -14,6 +17,7 @@ import org.apache.log4j.Logger;
 import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.service.DatasourceService;
+import binky.reportrunner.util.JDBCDriverFinder;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -27,7 +31,10 @@ public class DatasourceServiceImpl implements DatasourceService {
 	 * @throws SQLException
 	 * @throws NamingException
 	 */
-
+	public DatasourceServiceImpl() {
+		//pre-cache jdbc drivers
+		JDBCDriverFinder.getInstance();
+	}
 	private RunnerDataSourceDao dataSourceDao;
 	private Map<String, DataSource> dataSources = new HashMap<String, DataSource>();;
 
@@ -98,4 +105,13 @@ public class DatasourceServiceImpl implements DatasourceService {
 		this.dataSourceDao = dataSourceDao;
 	}
 
+	public List<String> getAvailableDriverNames() {
+		JDBCDriverFinder jdf = JDBCDriverFinder.getInstance();
+		Vector<Class<?>> drivers = jdf.getDriverList();
+		List<String> jdbcDriverNames  = new LinkedList<String>();
+		for (Class<?> c:drivers) {
+			jdbcDriverNames.add(c.getName());
+		}
+		return jdbcDriverNames;
+	}
 }

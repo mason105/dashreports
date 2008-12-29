@@ -57,32 +57,9 @@
 			<ref local="runnerJobService" />
 		</property>
 	</bean>
-	<bean id="saveParameterAction"
-		class="binky.reportrunner.ui.actions.job.parameter.SaveParameter"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-	</bean>
+
 
 	<bean id="invokeJobAction" class="binky.reportrunner.ui.actions.job.InvokeJob"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-	</bean>
-
-
-	<bean id="setupEditParameterAction"
-		class="binky.reportrunner.ui.actions.job.parameter.SetupEditParameter"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-	</bean>
-
-	<bean id="deleteParameterAction"
-		class="binky.reportrunner.ui.actions.job.parameter.DeleteParameter"
 		scope="prototype">
 		<property name="jobService">
 			<ref local="runnerJobService" />

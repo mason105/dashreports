@@ -99,6 +99,7 @@
 			<result type="redirect-action">
 				<param name="actionName">listGroups</param>
 			</result>
+			<result name="input">/jsp/main/editGroup.jsp</result>			
 		</action>
 
 		<action name="setupEditGroup" class="setupEditGroupAction">
@@ -126,6 +127,7 @@
 			<result type="redirect-action">
 				<param name="actionName">listDataSources</param>
 			</result>
+			<result name="input">/jsp/main/editDataSource.jsp</result>
 		</action>
 
 
@@ -137,20 +139,6 @@
 		</action>
 
 
-
-		<action name="setupEditParameter" class="setupEditParameterAction">
-			<result>/jsp/main/editParameter.jsp
-			</result>
-		</action>
-
-
-		<action name="deleteParameter" class="deleteParameterAction">
-			<result type="redirect-action">
-				<param name="actionName">setupEditJob</param>
-				<param name="groupName">${groupName}</param>
-				<param name="jobName">${jobName}</param>
-			</result>
-		</action>
 
 		<action name="setupEditUser" class="setupEditUserAction">
 			<result>/jsp/main/editUser.jsp</result>

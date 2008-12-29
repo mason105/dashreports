@@ -1,10 +1,14 @@
 package binky.reportrunner.ui.actions.job;
 
+import java.io.File;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDataSource;
@@ -17,12 +21,16 @@ import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SaveJob extends StandardRunnerAction {
+import com.opensymphony.xwork2.Preparable;
+import com.opensymphony.xwork2.util.XWorkList;
+
+public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
 	private RunnerJobService jobService;
 	private RunnerGroupDao groupDao;
+	private List<RunnerDataSource> dataSources;
 
 	private String jobName;
 	private String groupName;
@@ -38,12 +46,21 @@ public class SaveJob extends StandardRunnerAction {
 	private String burstFileNameParameterName;
 	private String targetEmailAddress;
 	private String alertEmailAddress;
-	private JasperReport jasperReport;
+	private File upload;//The actual file
+    private String uploadContentType; //The content type of the file
+    private String uploadFileName; //The uploaded file name
+  
 	private FileFormat fileFormat;
 	private boolean alertOnSuccess;
-	private List<RunnerJobParameter> parameters;
+	
 	private RunnerDataSourceDao dataSourceDao;
+	private XWorkList parameterList;
 
+	public void prepare() throws Exception {
+		dataSources=dataSourceDao.listDataSources();
+	}
+
+	
 	@Override
 	public String execute() throws Exception {
 		RunnerJob_pk pk = new RunnerJob_pk();
@@ -51,7 +68,13 @@ public class SaveJob extends StandardRunnerAction {
 		pk.setGroup(group);
 		pk.setJobName(jobName);
 		RunnerDataSource ds= dataSourceDao.getDataSource(dataSourceName);
-	    if (parameters==null) parameters = new LinkedList<RunnerJobParameter>();
+		List<RunnerJobParameter> parameters = new LinkedList<RunnerJobParameter>();	 
+		if (parameterList!=null) {
+			parameters.addAll(parameterList);
+		}
+	    //Get the uploadedFileAndCompile
+	    JasperDesign jasperDesign = JRXmlLoader.load(upload);
+	    JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
 		RunnerJob job = new RunnerJob(pk, outputUrl, ds, description,
 				query, startDate, endDate, cronString, isBurst, burstQuery,
 				burstFileNameParameterName, targetEmailAddress,
@@ -74,6 +97,9 @@ public class SaveJob extends StandardRunnerAction {
 		return SUCCESS;
 	}
 	
+	public void setParameterList(XWorkList parameterList) {
+		this.parameterList = parameterList;
+	}	
 	public void setGroupDao(RunnerGroupDao groupDao) {
 		this.groupDao = groupDao;
 	}
@@ -134,8 +160,18 @@ public class SaveJob extends StandardRunnerAction {
 		this.alertEmailAddress = alertEmailAddress;
 	}
 
-	public void setJasperReport(JasperReport jasperReport) {
-		this.jasperReport = jasperReport;
+	
+	
+	public void setUpload(File upload) {
+		this.upload = upload;
+	}
+
+	public void setUploadContentType(String uploadContentType) {
+		this.uploadContentType = uploadContentType;
+	}
+
+	public void setUploadFileName(String uploadFileName) {
+		this.uploadFileName = uploadFileName;
 	}
 
 	public void setFileFormat(FileFormat fileFormat) {
@@ -155,16 +191,34 @@ public class SaveJob extends StandardRunnerAction {
 		this.jobService = jobService;
 	}
 
-	public void setParameters(List<RunnerJobParameter> parameters) {
-		this.parameters = parameters;
-	}
-
 	public RunnerDataSourceDao getDataSourceDao() {
 		return dataSourceDao;
 	}
 
 	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
 		this.dataSourceDao = dataSourceDao;
+	}
+	
+
+	public List<RunnerDataSource> getDataSources() {
+		return dataSources;
+	}
+
+	public void setDataSources(List<RunnerDataSource> dataSources) {
+		this.dataSources = dataSources;
+	}
+	public File getUpload() {
+		return upload;
+	}
+
+
+	public String getUploadContentType() {
+		return uploadContentType;
+	}
+
+
+	public String getUploadFileName() {
+		return uploadFileName;
 	}
 	
 }

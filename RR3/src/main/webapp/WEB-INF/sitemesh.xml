@@ -20,7 +20,7 @@
 
         <mapper class="com.opensymphony.module.sitemesh.mapper.AgentDecoratorMapper">
             <param name="match.MSIE" value="ie"/>
-            <param name="match.Mozilla [" value="ns"/>
+            <param name="match.Mozilla" value="ns"/>
             <param name="match.Opera" value="opera"/>
             <param name="match.Lynx" value="lynx"/>
         </mapper>

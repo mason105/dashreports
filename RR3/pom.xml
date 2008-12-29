@@ -72,7 +72,7 @@
 		</developer>
 		<developer>
 			<name>John Cook</name>
-			<id>danielgrout</id>
+			<id>john_cook</id>
 			<email>john AT binkysoftware.co.uk</email>
 			<organization>Binky Software</organization>
 		</developer>
@@ -112,20 +112,20 @@
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-core</artifactId>
-			<version>2.0.5</version>
+			<version>2.0.8</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-sitemesh-plugin
 			</artifactId>
-			<version>2.0.5</version>
+			<version>2.0.8</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-spring-plugin</artifactId>
-			<version>2.0.5</version>
+			<version>2.0.8</version>
 			<scope>compile</scope>
 		</dependency>
 

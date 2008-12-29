@@ -50,7 +50,7 @@
                 <ul class="clearfix">
                      <li><a href="index.action">Home</a></li>
                      <li><a href="listGroups.action">My Groups</a></li>
-                     <li><a href="manage.action">Manage Server</a></li>
+                     <li><a href="manageServer.action">Manage Server</a></li>
                      <li class="last"><a href="logout.action">Logout</a></li>                     
                 </ul>
                 </div>

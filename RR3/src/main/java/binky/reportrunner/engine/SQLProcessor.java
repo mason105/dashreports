@@ -43,7 +43,7 @@ public class SQLProcessor {
 			NumberFormatException, ParseException {
 		PreparedStatement stmt = connection.prepareStatement(sql);
 
-		// 1=String 2=Date 3=Boolean 4=int 4=Float 5=Long 6=Double
+		// 1=String 2=Date 3=Boolean 4=int 5=Long 6=Double
 		//date format yyyy-MM-dd HH:mm:ss
 		logger.debug("executing sql: " + sql);
 		logger.debug("parsing " + parameters.size() + " parameters");

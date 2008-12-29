@@ -13,8 +13,7 @@ public class SaveDataSource extends AdminRunnerAction {
 	private String jdbcUrl;
 	private String username;
 	private String password;
-	private String dataSourceName;
-	private String testConnectionTable;
+	private String dataSourceName;	
 	private Integer intialPoolSize;
 	private Integer minPoolSize;
 	private Integer maxPoolSize;
@@ -22,7 +21,7 @@ public class SaveDataSource extends AdminRunnerAction {
 	@Override
 	public String execute() throws Exception {
 		RunnerDataSource ds = new RunnerDataSource(dataSourceName, jndiName,
-				jdbcClass, jdbcUrl, username, password,testConnectionTable, intialPoolSize,minPoolSize,maxPoolSize);
+				jdbcClass, jdbcUrl, username, password,intialPoolSize,minPoolSize,maxPoolSize);
 
 		dataSourceDao.saveUpdateDataSource(ds);
 
@@ -63,10 +62,7 @@ public class SaveDataSource extends AdminRunnerAction {
 		this.dataSourceName = dataSourceName;
 	}
 
-	public void setTestConnectionTable(String testConnectionTable) {
-		this.testConnectionTable = testConnectionTable;
-	}
-
+	
 	public void setIntialPoolSize(Integer intialPoolSize) {
 		this.intialPoolSize = intialPoolSize;
 	}

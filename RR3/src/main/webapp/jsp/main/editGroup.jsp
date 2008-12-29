@@ -8,7 +8,7 @@
   		<table>
   			<tr>
   				<td>
-  					<s:if test="group.groupName != ''">
+  					<s:if test="group.groupName != null">
   					Group Name:<s:textfield size="32" value="%{group.groupName}" name="groupName"  readonly="true"/>
   					</s:if>
   					<s:else>

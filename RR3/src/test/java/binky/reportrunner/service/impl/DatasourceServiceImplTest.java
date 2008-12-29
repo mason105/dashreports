@@ -26,7 +26,6 @@ public class DatasourceServiceImplTest extends TestCase {
 		rds.setJdbcUrl("jdbc:mysql://localhost:3306/reportrunner");
 		rds.setPassword("dng50010");
 		rds.setUsername("reportrunner");
-		rds.setTestConnectionTable("ds_conn_test");
 		rds.setMaxPoolSize(5);
 		rds.setMinPoolSize(1);
 		rds.setIntialPoolSize(3);

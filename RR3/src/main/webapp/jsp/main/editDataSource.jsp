@@ -8,7 +8,7 @@
   		<table>
   			<tr>
   				<td>
-  					<s:if test="dataSource.dataSourceName != ''">
+  					<s:if test="dataSource.dataSourceName != null">
   					Data Source Name:<s:textfield size="32" value="%{dataSource.dataSourceName}" name="dataSourceName"  readonly="true"/>
   					</s:if>
   					<s:else>
@@ -28,15 +28,41 @@
   			</tr>
   			<tr>
   				<td>
-  					  <s:select label="Select JDBC Driver" 
-    					name="jdbcClass" 
-    					headerKey="1"
-    					headervalue="-- Please Select --"
-    					value="%{dataSource.jdbcClass}"
-    					list="jdbcDriverNames"
-    				   />
+  					JDBC Driver:<s:textfield size="60" value="%{dataSource.jdbcClass}" name="jdbcClass"/>
   				</td>
   			</tr>  			
+  			
+  			<tr>
+  				<td>
+  					JDBC URL:<s:textfield size="60" value="%{dataSource.jdbcUrl}" name="jdbcUrl"/>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td>
+  					Username:<s:textfield size="60" value="%{dataSource.username}" name="username"/>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td>
+  					Password:<s:textfield size="60" value="%{dataSource.password}" name="password"/>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td>
+  					Initial Pool Size:<s:textfield size="10" value="%{dataSource.jndiName}" name="initialPoolSize"/>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td>
+  					Min Pool Size:<s:textfield size="10" value="%{dataSource.jndiName}" name="minPoolSize"/>
+  				</td>
+  			</tr>
+  			<tr>
+  				<td>
+  					Max Pool Size:<s:textfield size="10" value="%{dataSource.maxPoolSize}" name="maxPoolSize"/>
+  				</td>
+  			</tr>
+  			
   			<tr>
   				<td>
   					<s:submit />

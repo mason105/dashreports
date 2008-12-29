@@ -19,7 +19,7 @@ public class RunnerJobParameter {
 		this.parameterBurstColumn = parameterBurstColumn;
 	}
 
-	//1=String 2=Timestamp 3=Boolean 4=Float 5=Long 6=Double 7=BigDecimal
+	//// 1=String 2=Date 3=Boolean 4=int 5=Long 6=Double
 	private Integer parameterType;
 
 	public Integer getParameterType() {

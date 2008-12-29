@@ -8,8 +8,7 @@ public class ManageServerAction extends AdminRunnerAction  {
 
 	@Override
 	public String execute() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return SUCCESS;
 	}
 
 }

@@ -63,6 +63,7 @@
 				<param name="actionName">listJobs</param>
 				<param name="groupName">${groupName}</param>
 			</result>
+			<result name="input">/jsp/main/editJob.jsp</result>			
 		</action>
 
 		<action name="setJobStatus" class="setJobStatusAction">

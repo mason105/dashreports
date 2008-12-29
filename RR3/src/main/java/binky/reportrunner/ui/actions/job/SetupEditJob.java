@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.opensymphony.xwork2.Preparable;
+
 import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
@@ -11,7 +13,7 @@ import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SetupEditJob extends StandardRunnerAction {
+public class SetupEditJob extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 	private String jobName;
@@ -19,8 +21,17 @@ public class SetupEditJob extends StandardRunnerAction {
 	private RunnerJob job;
 	private static final Logger logger = Logger.getLogger(SetupEditJob.class);
 	private RunnerJobService jobService;
-	private List<RunnerDataSource> dataSources;
+
 	private RunnerDataSourceDao dataSourceDao;
+	private Integer paramCount;
+	
+	private List<RunnerDataSource> dataSources;
+	public void prepare() throws Exception {
+		dataSources=dataSourceDao.listDataSources();
+		
+	}
+	
+	//TODO:clean up this mess
 	@Override
 	public String execute() throws Exception {
 		if (groupName != null && !groupName.isEmpty()
@@ -28,7 +39,12 @@ public class SetupEditJob extends StandardRunnerAction {
 			// security check
 			if (super.getUser().getGroups().contains(groupName) || super.getUser().getIsAdmin()) {
 				job = jobService.getJob(jobName, groupName);
-				dataSources=dataSourceDao.listDataSources();
+				if (job.getParameters()==null) {
+					paramCount=0; 
+				} else {
+					paramCount = job.getParameters().size();
+				}
+		
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
@@ -37,11 +53,16 @@ public class SetupEditJob extends StandardRunnerAction {
 				throw se;
 			}
 
-		} else {
+		} else if (groupName != null && !groupName.isEmpty() ) {
 			job = new RunnerJob();
+			paramCount=0; 			
+		} else {
+			SecurityException se = new SecurityException("Group not passed");
+			logger.fatal(se.getMessage(), se);
 		}
 		return SUCCESS;
 	}
+
 
 	public final RunnerJobService getJobService() {
 		return jobService;
@@ -78,6 +99,15 @@ public class SetupEditJob extends StandardRunnerAction {
 	public List<RunnerDataSource> getDataSources() {
 		return dataSources;
 	}
+
+
+	public Integer getParamCount() {
+		return paramCount;
+	}
+
+
+
+
 
 
 }

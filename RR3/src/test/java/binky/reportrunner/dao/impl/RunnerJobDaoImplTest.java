@@ -1,6 +1,7 @@
 package binky.reportrunner.dao.impl;
 
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -12,6 +13,8 @@ import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.dao.RunnerJobDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.data.RunnerJobParameter;
+import binky.reportrunner.data.RunnerJobParameter_pk;
 import binky.reportrunner.data.RunnerJob_pk;
 
 public class RunnerJobDaoImplTest extends TestCase {
@@ -58,11 +61,21 @@ public class RunnerJobDaoImplTest extends TestCase {
 	public void testSaveUpdateJob() {
 
 		RunnerJob runnerJob = getDemoJob("test1");
+		RunnerJobParameter p = new RunnerJobParameter();
+		RunnerJobParameter_pk ppk = new RunnerJobParameter_pk();
+		ppk.setParameterIdx(1);
+		p.setPk(ppk);
+		p.setParameterValue("10000");
+		List<RunnerJobParameter> params = new LinkedList<RunnerJobParameter>();
+		params.add(p);
+		runnerJob.setParameters(params);
 		dao.saveUpdateJob(runnerJob);
 		RunnerJob compareJob = dao.getJob("test1", testGroup.getGroupName());
+		
 		assertEquals(runnerJob.getPk().getJobName(), compareJob.getPk().getJobName());
 		assertEquals(runnerJob.getPk().getGroup().getGroupName(), compareJob.getPk().getGroup().getGroupName());
 		assertEquals(runnerJob.getOutputUrl(),compareJob.getOutputUrl());
+		assertTrue(runnerJob.getParameters().size()>0);
 		dao.deleteJob("test1", testGroup.getGroupName());
 
 	}

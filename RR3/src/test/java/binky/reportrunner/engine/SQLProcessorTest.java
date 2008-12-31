@@ -14,6 +14,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJobParameter_pk;
+import binky.reportrunner.data.RunnerJobParameter.DataType;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -72,12 +73,12 @@ public class SQLProcessorTest extends TestCase {
 			String sql = "select * from test_table where testString=? and testInteger=?  and testBoolean=? and testDate=?   and testLong=? and testDouble=?";
 			List<RunnerJobParameter> params = new LinkedList<RunnerJobParameter>();
 			// 1=String 2=Timestamp 3=Boolean 4=int 5=Long 6=Double			
-			params.add(getParam(1,"test",1));
-			params.add(getParam(2,"999",4));
-			params.add(getParam(3,"TRUE",3));
-			params.add(getParam(4,"2008-11-11 00:00:01",2));			
-			params.add(getParam(5,"1000000",5));
-			params.add(getParam(6,"2.2",6));
+			params.add(getParam(DataType.STRING,"test",1));
+			params.add(getParam(DataType.INTEGER,"999",2));
+			params.add(getParam(DataType.BOOLEAN,"TRUE",3));
+			params.add(getParam(DataType.DATE,"2008-11-11 00:00:01",4));			
+			params.add(getParam(DataType.LONG,"1000000",5));
+			params.add(getParam(DataType.DOUBLE,"2.2",6));
 			ResultSet res = proc.getResults(connection, sql, params);
 			assertTrue(res.last());
 			int rowCount = res.getRow();
@@ -90,7 +91,7 @@ public class SQLProcessorTest extends TestCase {
 	}
 
 	
-	private RunnerJobParameter getParam(Integer idx, String value, Integer paramType) {
+	private RunnerJobParameter getParam(DataType paramType, String value,Integer idx) {
 		RunnerJobParameter_pk pk = new RunnerJobParameter_pk();
 		pk.setParameterIdx(idx);
 		RunnerJobParameter param = new RunnerJobParameter();

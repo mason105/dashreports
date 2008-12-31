@@ -5,6 +5,23 @@ import javax.persistence.Id;
 
 @Entity
 public class RunnerJobParameter {
+	public enum DataType {
+		STRING("String"), DATE("Date"), BOOLEAN("Boolean"),INTEGER("Integer"),LONG("Long"),DOUBLE("Double");
+		
+		private String displayName;
+
+		DataType(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+	};
 
 	@Id
 	private RunnerJobParameter_pk pk;
@@ -19,14 +36,14 @@ public class RunnerJobParameter {
 		this.parameterBurstColumn = parameterBurstColumn;
 	}
 
-	//// 1=String 2=Date 3=Boolean 4=int 5=Long 6=Double
-	private Integer parameterType;
 
-	public Integer getParameterType() {
+	private DataType parameterType;
+
+	public DataType getParameterType() {
 		return parameterType;
 	}
 
-	public void setParameterType(Integer parameterType) {
+	public void setParameterType(DataType parameterType) {
 		this.parameterType = parameterType;
 	}
 

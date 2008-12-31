@@ -28,7 +28,7 @@ public class DatasourceServiceImplTest extends TestCase {
 		rds.setUsername("reportrunner");
 		rds.setMaxPoolSize(5);
 		rds.setMinPoolSize(1);
-		rds.setIntialPoolSize(3);
+		rds.setInitialPoolSize(3);
 		try {
 			DataSource ds = dsService.getDataSource(rds);
 			ResultSet rs = ds.getConnection().getMetaData().getCatalogs();

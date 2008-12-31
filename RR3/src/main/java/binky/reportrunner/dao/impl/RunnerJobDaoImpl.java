@@ -17,37 +17,40 @@ import binky.reportrunner.data.RunnerJob_pk;
 public class RunnerJobDaoImpl extends HibernateDaoSupport implements
 		RunnerJobDao {
 	private Logger logger = Logger.getLogger(RunnerJobDaoImpl.class);
+
 	@SuppressWarnings("unchecked")
 	public void deleteJob(String jobName, String groupName) {
 		logger.debug("delete job for: " + jobName + " " + groupName);
 		RunnerGroup group = (RunnerGroup) getHibernateTemplate().get(
 				RunnerGroup.class, groupName);
-		
+
 		RunnerJob_pk pk = new RunnerJob_pk();
 		pk.setGroup(group);
 		pk.setJobName(jobName);
-		
-		//delete any parameters first
-		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerJobParameter.class);
-		criteria.add(Expression.eq("pk.runnerJob.pk.jobName", jobName));
-		List<RunnerJobParameter> params= getHibernateTemplate().findByCriteria(criteria);
-		if (params.size()>0) getHibernateTemplate().deleteAll(params);
-		
+
+		// delete any parameters first
+		DetachedCriteria criteria = DetachedCriteria
+				.forClass(RunnerJobParameter.class);
+		criteria.add(Expression.eq("pk.runnerJob.pk.jobName", jobName)).add(
+				Expression.eq("pk.runnerJob.pk.group.groupName", groupName));
+		List<RunnerJobParameter> params = getHibernateTemplate()
+				.findByCriteria(criteria);
+		if (params.size() > 0)
+			getHibernateTemplate().deleteAll(params);
+
 		getHibernateTemplate().delete(
-				(RunnerJob) getHibernateTemplate()
-						.get(RunnerJob.class, pk));
-		
-		
+				(RunnerJob) getHibernateTemplate().get(RunnerJob.class, pk));
+
 	}
 
 	public RunnerJob getJob(String jobName, String groupName) {
-		logger.debug("get job for: " + jobName + " " + groupName);		
+		logger.debug("get job for: " + jobName + " " + groupName);
 		RunnerGroup group = (RunnerGroup) getHibernateTemplate().get(
 				RunnerGroup.class, groupName);
-		
+
 		RunnerJob_pk pk = new RunnerJob_pk();
 		pk.setGroup(group);
-		pk.setJobName(jobName);		
+		pk.setJobName(jobName);
 		return (RunnerJob) getHibernateTemplate().get(RunnerJob.class, pk);
 	}
 
@@ -61,7 +64,8 @@ public class RunnerJobDaoImpl extends HibernateDaoSupport implements
 	}
 
 	public void saveUpdateJob(RunnerJob job) {
-		logger.debug("save or update job for: " + job.getPk().getJobName() + " " + job.getPk().getGroup().getGroupName());
+		logger.debug("save or update job for: " + job.getPk().getJobName()
+				+ " " + job.getPk().getGroup().getGroupName());
 		getHibernateTemplate().saveOrUpdate(job);
 	}
 

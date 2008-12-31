@@ -20,7 +20,7 @@ public class RunnerDataSource implements Serializable {
 	
 	public RunnerDataSource(String dataSourceName, String jndiName,
 			String jdbcClass, String jdbcUrl, String username, String password,
-			Integer intialPoolSize,
+			Integer initialPoolSize,
 			Integer minPoolSize, Integer maxPoolSize) {
 		super();
 		this.dataSourceName = dataSourceName;
@@ -29,7 +29,7 @@ public class RunnerDataSource implements Serializable {
 		this.jdbcUrl = jdbcUrl;
 		this.username = username;
 		this.password = password;
-		this.intialPoolSize = intialPoolSize;
+		this.initialPoolSize = initialPoolSize;
 		this.minPoolSize = minPoolSize;
 		this.maxPoolSize = maxPoolSize;
 	}
@@ -46,7 +46,7 @@ public class RunnerDataSource implements Serializable {
 	private String jdbcUrl;
 	private String username;
 	private String password;
-	private Integer intialPoolSize;
+	private Integer initialPoolSize;
 	private Integer minPoolSize;
 	private Integer maxPoolSize;
 
@@ -80,11 +80,11 @@ public class RunnerDataSource implements Serializable {
 	public void setJndiName(String jndiName) {
 		this.jndiName = jndiName;
 	}
-	public Integer getIntialPoolSize() {
-		return intialPoolSize;
+	public Integer getInitialPoolSize() {
+		return initialPoolSize;
 	}
-	public void setIntialPoolSize(Integer intialPoolSize) {
-		this.intialPoolSize = intialPoolSize;
+	public void setInitialPoolSize(Integer intialPoolSize) {
+		this.initialPoolSize = intialPoolSize;
 	}
 	public Integer getMinPoolSize() {
 		return minPoolSize;

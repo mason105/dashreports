@@ -1,7 +1,9 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>  
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
+  
 <html>
   <head>  
-    <s:head/>  
+    <sx:head parseContent="true"/>  
   </head>  
   <body>  
   	<s:form action="saveDataSource">
@@ -9,16 +11,16 @@
   			<tr>
   				<td>
   					<s:if test="dataSource.dataSourceName != null">
-  					Data Source Name:<s:textfield size="32" value="%{dataSource.dataSourceName}" name="dataSourceName"  readonly="true"/>
+  					Data Source Name:<s:textfield size="32" value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName"  readonly="true"/>
   					</s:if>
   					<s:else>
-  					Data Source Name:<s:textfield size="32" value="%{dataSource.dataSourceName}" name="dataSourceName"/>
+  					Data Source Name:<s:textfield size="32" value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName"/>
   					</s:else>  					
   				</td>
   			</tr>
   			<tr>
   				<td>
-  					JNDI Name:<s:textfield size="60" value="%{dataSource.jndiName}" name="jndiName"/>
+  					JNDI Name:<s:textfield size="60" value="%{dataSource.jndiName}" name="dataSource.jndiName"/>
   				</td>
   			</tr>
   			<tr>
@@ -28,38 +30,38 @@
   			</tr>
   			<tr>
   				<td>
-  					JDBC Driver:<s:textfield size="60" value="%{dataSource.jdbcClass}" name="jdbcClass"/>
+  					JDBC Driver:<s:textfield size="60" value="%{dataSource.jdbcClass}" name="dataSource.jdbcClass"/>
   				</td>
   			</tr>  			
   			
   			<tr>
   				<td>
-  					JDBC URL:<s:textfield size="60" value="%{dataSource.jdbcUrl}" name="jdbcUrl"/>
+  					JDBC URL:<s:textfield size="60" value="%{dataSource.jdbcUrl}" name="dataSource.jdbcUrl"/>
   				</td>
   			</tr>
   			<tr>
   				<td>
-  					Username:<s:textfield size="60" value="%{dataSource.username}" name="username"/>
+  					Username:<s:textfield size="60" value="%{dataSource.username}" name="dataSource.username"/>
   				</td>
   			</tr>
   			<tr>
   				<td>
-  					Password:<s:textfield size="60" value="%{dataSource.password}" name="password"/>
+  					Password:<s:textfield size="60" value="%{dataSource.password}" name="dataSource.password"/>
   				</td>
   			</tr>
   			<tr>
   				<td>
-  					Initial Pool Size:<s:textfield size="10" value="%{dataSource.jndiName}" name="initialPoolSize"/>
+  					Initial Pool Size:<s:textfield size="10" value="%{dataSource.initialPoolSize}" name="dataSource.initialPoolSize"/>
   				</td>
   			</tr>
   			<tr>
   				<td>
-  					Min Pool Size:<s:textfield size="10" value="%{dataSource.jndiName}" name="minPoolSize"/>
+  					Min Pool Size:<s:textfield size="10" value="%{dataSource.minPoolSize}" name="dataSource.minPoolSize"/>
   				</td>
   			</tr>
   			<tr>
   				<td>
-  					Max Pool Size:<s:textfield size="10" value="%{dataSource.maxPoolSize}" name="maxPoolSize"/>
+  					Max Pool Size:<s:textfield size="10" value="%{dataSource.maxPoolSize}" name="dataSource.maxPoolSize"/>
   				</td>
   			</tr>
   			

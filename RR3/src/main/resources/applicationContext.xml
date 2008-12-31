@@ -8,8 +8,8 @@
 		scope="prototype" />
 	<bean id="listJobsAction" class="binky.reportrunner.ui.actions.job.ListJobsAction"
 		scope="prototype">
-		<property name="jobDao">
-			<ref local="runnerJobDao" />
+		<property name="jobService">
+			<ref local="runnerJobService" />
 		</property>
 		<property name="groupDao">
 			<ref local="runnerGroupDao" />
@@ -71,8 +71,8 @@
 		<property name="jobService">
 			<ref local="runnerJobService" />
 		</property>
-		<property name="groupDao">
-			<ref local="runnerGroupDao" />
+		<property name="parameterDao">
+			<ref local="runnerJobParameterDao" />
 		</property>
 		<property name="dataSourceDao">
 			<ref local="runnerDataSourceDao" />
@@ -292,6 +292,19 @@
 	</bean>
 	<bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor"
 		autowire="byName" />
+	<bean id="runnerJobParameterDaoTarget" class="binky.reportrunner.dao.impl.RunnerJobParameterDaoImpl"
+		autowire="byName" />
+	<bean id="runnerJobParameterDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerJobParameterDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerJobParameterDaoTarget</value>
+			</list>
+		</property>
+	</bean>		
 	<bean id="runnerHistoryDaoTarget" class="binky.reportrunner.dao.impl.RunnerHistoryDaoImpl"
 		autowire="byName" />
 	<bean id="runnerHistoryDao" class="org.springframework.aop.framework.ProxyFactoryBean">

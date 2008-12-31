@@ -6,22 +6,23 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.RunnerGroupDao;
-import binky.reportrunner.dao.RunnerJobDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
+import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.ui.actions.job.beans.DisplayJob;
 
 public class ListJobsAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 6919067344312363024L;
 	private String groupName;
-	private String jobName="";
+
 	
 	private static Logger logger = Logger.getLogger(ListJobsAction.class);
 
-	private List<RunnerJob> jobs;
-	private RunnerJobDao jobDao;
+	private List<DisplayJob> jobs;
+	private RunnerJobService jobService;
 	private RunnerGroupDao groupDao;
 	@Override
 	public String execute() throws Exception {
@@ -29,14 +30,27 @@ public class ListJobsAction extends StandardRunnerAction {
 			logger.debug("looking for group: " + groupName);
 				RunnerGroup group = groupDao.getGroup(groupName);
 				if (super.getUser().getGroups().contains(group) || super.getUser().getIsAdmin()) {			
-					this.jobs=jobDao.listJobs(groupName);		
+					List<DisplayJob> jobs = new LinkedList<DisplayJob>();
+					for (RunnerJob job : jobService.listJobs(groupName)) {
+						DisplayJob dJob = new DisplayJob();
+						String jobName=job.getPk().getJobName();
+						String groupName=job.getPk().getGroup().getGroupName();
+						dJob.setPreviousRunTime(jobService.getPreviousRunTime(jobName, groupName));
+						dJob.setNextRunTime(jobService.getNextRunTime(jobName, groupName));
+						dJob.setIsScheduled(jobService.isJobActive(jobName, groupName));
+						dJob.setGroupName(groupName);
+						dJob.setJobName(jobName);
+						dJob.setDescription(job.getDescription());
+						jobs.add(dJob);
+					}
+					this.jobs=jobs;		
 				} else {
 					SecurityException se = new SecurityException("Group " + groupName + " not valid for user " + super.getUser().getUserName());
 					logger.fatal(se.getMessage(),se);
 					throw se;
 				}
 		} else {
-			this.jobs = new LinkedList<RunnerJob>();
+			this.jobs = new LinkedList<DisplayJob>();
 		}
 		return SUCCESS;
 	}
@@ -49,25 +63,19 @@ public class ListJobsAction extends StandardRunnerAction {
 		this.groupName = groupName;
 	}
 
-	public List<RunnerJob> getJobs() {
+	public List<DisplayJob> getJobs() {
 		return jobs;
 	}
 
-	public final RunnerJobDao getJobDao() {
-		return jobDao;
+
+	public RunnerJobService getJobService() {
+		return jobService;
 	}
 
-	public final void setJobDao(RunnerJobDao jobDao) {
-		this.jobDao = jobDao;
+	public void setJobService(RunnerJobService jobService) {
+		this.jobService = jobService;
 	}
 
-	public final String getJobName() {
-		return jobName;
-	}
-
-	public final void setJobName(String jobName) {
-		this.jobName = jobName;
-	}
 
 	public RunnerGroupDao getGroupDao() {
 		return groupDao;

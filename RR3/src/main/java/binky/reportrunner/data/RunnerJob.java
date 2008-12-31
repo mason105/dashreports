@@ -17,9 +17,25 @@ public class RunnerJob implements Serializable {
 	private static final long serialVersionUID = 2036013437864145537L;
 
 	public enum FileFormat {
-		PDF, XLS, RTF, HTML, CSV
+		PDF("PDF"), XLS("XLS"), RTF("RTF"), HTML("HTML"), CSV("CSV");
+		private String displayName;
+
+		FileFormat(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
 	};
-	public RunnerJob(){}
+
+	public RunnerJob() {
+	}
+
 	public RunnerJob(RunnerJob_pk pk, String outputUrl,
 			RunnerDataSource datasource, String description, String query,
 			Date startDate, Date endDate, String cronString, Boolean isBurst,
@@ -52,7 +68,7 @@ public class RunnerJob implements Serializable {
 
 	private static final String runnerEngine = "binky.reportrunner.engine.RunnerEngine";
 	private String outputUrl;
-	
+
 	@ManyToOne
 	private RunnerDataSource datasource;
 	private String description;
@@ -69,13 +85,12 @@ public class RunnerJob implements Serializable {
 	private String alertEmailAddress;
 	private JasperReport jasperReport;
 	private FileFormat fileFormat;
-	
+
 	private boolean alertOnSuccess;
-	
+
 	@OneToMany(mappedBy = "pk.runnerJob")
 	private List<RunnerJobParameter> parameters;
-	
-	
+
 	public boolean isAlertOnSuccess() {
 		return alertOnSuccess;
 	}
@@ -100,7 +115,6 @@ public class RunnerJob implements Serializable {
 		this.targetEmailAddress = targetEmailAddress;
 	}
 
-	
 	public List<RunnerJobParameter> getParameters() {
 		return parameters;
 	}
@@ -156,8 +170,6 @@ public class RunnerJob implements Serializable {
 	public void setJasperReport(JasperReport jasperReport) {
 		this.jasperReport = jasperReport;
 	}
-
-	
 
 	public Boolean getIsBurst() {
 		return isBurst;
@@ -219,6 +231,4 @@ public class RunnerJob implements Serializable {
 		this.alertEmailAddress = alertEmailAddress;
 	}
 
-	
-	
 }

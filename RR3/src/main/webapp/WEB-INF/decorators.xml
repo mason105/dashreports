@@ -13,6 +13,6 @@
         <pattern>/dojo/*</pattern>
         <pattern>/struts/*</pattern>    
         <pattern>/login/*</pattern>   
-        <pattern>/login/*</pattern> 
+        <pattern>/jsp/login/*</pattern> 
 	</excludes>	
 </decorators>

@@ -1,5 +1,6 @@
 package binky.reportrunner.service;
 
+import java.util.Date;
 import java.util.List;
 
 import binky.reportrunner.data.RunnerJob;
@@ -19,5 +20,7 @@ public interface RunnerJobService {
 			throws SchedulerException;
 
 	public void invokeJob(String jobName, String groupName) throws SchedulerException;
+	public Date getNextRunTime(String jobName, String groupName) throws SchedulerException;
+	public Date getPreviousRunTime(String jobName, String groupName) throws SchedulerException;
 	
 }

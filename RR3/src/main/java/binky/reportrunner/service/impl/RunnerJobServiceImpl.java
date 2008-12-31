@@ -28,8 +28,8 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		String jobName = job.getPk().getJobName();
 		RunnerJob job_comp = runnerJobDao.getJob(jobName, groupName);
 		if ((job_comp != null)
-				&& ((job_comp.getCronString() != null) && !job_comp.getCronString()
-						.isEmpty())) {
+				&& ((job_comp.getCronString() != null) && !job_comp
+						.getCronString().isEmpty())) {
 			scheduler.removeJob(jobName, groupName);
 		}
 
@@ -70,7 +70,8 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		this.scheduler = scheduler;
 	}
 
-	public Boolean isJobActive(String jobName, String groupName) throws SchedulerException {
+	public Boolean isJobActive(String jobName, String groupName)
+			throws SchedulerException {
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			return this.scheduler.isJobActive(jobName, groupName);
@@ -79,55 +80,77 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		}
 	}
 
-	public void pauseJob(String jobName, String groupName) throws SchedulerException {
+	public void pauseJob(String jobName, String groupName)
+			throws SchedulerException {
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			scheduler.pauseJob(jobName, groupName);
 		}
 	}
-	
-	public void resumeJob(String jobName, String groupName) throws SchedulerException {
+
+	public void resumeJob(String jobName, String groupName)
+			throws SchedulerException {
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			scheduler.resumeJob(jobName, groupName);
 		}
 	}
-	
 
 	public List<RunnerJob> getRunningJobs() throws SchedulerException {
 		List<String> runningJobs = scheduler.getCurrentRunningJobs();
 		List<RunnerJob> jobs = new LinkedList<RunnerJob>();
 		for (String string : runningJobs) {
-			String groupName=string.split(":|:")[0];
-			String jobName=string.split(":|:")[1];
+			String groupName = string.split(":|:")[0];
+			String jobName = string.split(":|:")[1];
 			RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 			jobs.add(job);
 		}
 		return jobs;
 	}
 
-	public void interruptRunningJob(String jobName, String groupName) throws SchedulerException {
+	public void interruptRunningJob(String jobName, String groupName)
+			throws SchedulerException {
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			scheduler.interruptRunningJob(jobName, groupName);
 		}
 	}
 
-
-	public void invokeJob(String jobName, String groupName) throws SchedulerException {
+	public void invokeJob(String jobName, String groupName)
+			throws SchedulerException {
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
-			//if already in scheduler lets go
+			// if already in scheduler lets go
 			scheduler.invokeJob(jobName, groupName);
 		} else {
-			//schedule it then remove it
-			//TODO test this works
+			// schedule it then remove it
+			// TODO test this works
 			Date date = Calendar.getInstance().getTime();
-			scheduler.addJob(jobName, groupName, job.getRunnerEngine(), "0 0 0 ? * ? 2050", date, date);
+			scheduler.addJob(jobName, groupName, job.getRunnerEngine(),
+					"0 0 0 ? * ? 2050", date, date);
 			scheduler.invokeJob(jobName, groupName);
 			scheduler.removeJob(jobName, groupName);
 		}
-		
+
 	}
-	
+
+	public Date getPreviousRunTime(String jobName, String groupName)
+			throws SchedulerException {
+		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+			return scheduler.getPreviousRunTime(jobName, groupName);
+		} else {
+			return null;
+		}
+	}
+
+	public Date getNextRunTime(String jobName, String groupName)
+			throws SchedulerException {
+		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+			return scheduler.getNextRunTime(jobName, groupName);
+		} else {
+			return null;
+		}	}
+
 }

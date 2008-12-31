@@ -49,13 +49,13 @@ public class SQLProcessor {
 		logger.debug("parsing " + parameters.size() + " parameters");
 		for (RunnerJobParameter param : parameters) {
 			switch (param.getParameterType()) {
-			case 1:
+			case STRING:
 				stmt.setString(param.getPk().getParameterIdx(), param
 						.getParameterValue());
 				logger.debug("param: " + param.getPk().getParameterIdx()
 						+ " type String value=" + param.getParameterValue());
 				break;
-			case 2:
+			case DATE:
 				SimpleDateFormat sdf = new SimpleDateFormat(
 						"yyyy-MM-dd HH:mm:ss");
 				java.util.Date date = sdf.parse(param.getParameterValue());
@@ -64,26 +64,26 @@ public class SQLProcessor {
 				stmt.setTimestamp(param.getPk().getParameterIdx(),
 						new java.sql.Timestamp(date.getTime()));
 				break;
-			case 3:
+			case BOOLEAN:
 				boolean bool = Boolean.parseBoolean(param.getParameterValue());
 				stmt.setBoolean(param.getPk().getParameterIdx(), bool);
 				logger.debug("param: " + param.getPk().getParameterIdx()
 						+ " type Boolean value="
 						+ bool);
 				break;
-			case 4:
+			case INTEGER:
 				int intg = Integer.parseInt(param.getParameterValue());
 				stmt.setInt(param.getPk().getParameterIdx(), intg);
 				logger.debug("param: " + param.getPk().getParameterIdx()
 						+ " type Integer value=" + intg);
 				break;
-			case 5:
+			case LONG:
 				long lng = Long.parseLong(param.getParameterValue());
 				stmt.setLong(param.getPk().getParameterIdx(), lng);
 				logger.debug("param: " + param.getPk().getParameterIdx()
 						+ " type Long value=" + lng);
 				break;
-			case 6:
+			case DOUBLE:
 				double dbl = Double.parseDouble(param.getParameterValue());
 				stmt.setDouble(param.getPk().getParameterIdx(), dbl);
 				logger.debug("param: " + param.getPk().getParameterIdx()

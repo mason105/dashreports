@@ -56,7 +56,7 @@ public class SchedulerImpl implements Scheduler {
 		jobTrigger.setGroup("RunnerTriggers");
 		// Bind the listener
 		jobDetail.addJobListener("ReportRunnerCoreJobListener");
-
+		
 		// schedule the job
 		try {
 			this.quartzScheduler.scheduleJob(jobDetail, jobTrigger);
@@ -85,6 +85,18 @@ public class SchedulerImpl implements Scheduler {
 					.getNextFireTime();
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error next run time for " + jobName
+					+ "/" + groupName, e);
+		}
+	}
+
+	public Date getPreviousRunTime(String jobName, String groupName)
+			throws SchedulerException {
+		try {
+			return this.quartzScheduler.getTrigger(
+					jobName + ":" + groupName + ":trigger", "RunnerTriggers")
+					.getPreviousFireTime();
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException("Error last run time for " + jobName
 					+ "/" + groupName, e);
 		}
 	}
@@ -165,12 +177,11 @@ public class SchedulerImpl implements Scheduler {
 				.getCurrentlyExecutingJobs();
 
 		for (JobExecutionContext je : cej) {
-			currentRunningJobs.add(je.getJobDetail().getGroup() + ":|:" + je
-					.getJobDetail().getName());
+			currentRunningJobs.add(je.getJobDetail().getGroup() + ":|:"
+					+ je.getJobDetail().getName());
 		}
 
 		return currentRunningJobs;
 	}
-
 
 }

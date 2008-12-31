@@ -21,6 +21,7 @@ import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJobParameter_pk;
 import binky.reportrunner.data.RunnerJob_pk;
 import binky.reportrunner.data.RunnerJob.FileFormat;
+import binky.reportrunner.data.RunnerJobParameter.DataType;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -100,7 +101,7 @@ public class RunnerEngineTest extends TestCase {
 			pk.setRunnerJob(job);
 			pk.setParameterIdx(1);
 			param.setPk(pk);
-			param.setParameterType(1);
+			param.setParameterType(DataType.STRING);
 			param.setParameterBurstColumn("userName");
 			params.add(param);
 			job.setParameters(params);

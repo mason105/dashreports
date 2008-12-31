@@ -1,7 +1,6 @@
 package binky.reportrunner.service.impl;
 
 import java.beans.PropertyVetoException;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +51,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 			ds.setJdbcUrl(jdbcUrl);
 			ds.setUser(jdbcUser);
 			ds.setPassword(jdbcPassword);
-			ds.setInitialPoolSize(runnerDs.getIntialPoolSize());
+			ds.setInitialPoolSize(runnerDs.getInitialPoolSize());
 			ds.setMaxPoolSize(runnerDs.getMaxPoolSize());
 			ds.setMinPoolSize(runnerDs.getMinPoolSize());
 			ds.setDescription(runnerDs.getDataSourceName());

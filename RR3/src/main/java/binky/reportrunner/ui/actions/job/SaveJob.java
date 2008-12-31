@@ -1,194 +1,169 @@
 package binky.reportrunner.ui.actions.job;
 
 import java.io.File;
-import java.util.Date;
-import java.util.LinkedList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
+
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.dao.RunnerDataSourceDao;
-import binky.reportrunner.dao.RunnerGroupDao;
+import binky.reportrunner.dao.RunnerJobParameterDao;
 import binky.reportrunner.data.RunnerDataSource;
-import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
-import binky.reportrunner.data.RunnerJob_pk;
-import binky.reportrunner.data.RunnerJob.FileFormat;
+import binky.reportrunner.data.RunnerJobParameter.DataType;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
-import com.opensymphony.xwork2.util.XWorkList;
+import com.opensymphony.xwork2.validator.annotations.Validation;
 
+@Validation
 public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
 	private RunnerJobService jobService;
-	private RunnerGroupDao groupDao;
-	private List<RunnerDataSource> dataSources;
+	private RunnerJob job;
+	private File upload;// The actual file
+	private String uploadContentType; // The content type of the file
+	private String uploadFileName; // The uploaded file name
+	private RunnerJobParameterDao parameterDao;
 
-	private String jobName;
-	private String groupName;
-	private String outputUrl;
-	private String dataSourceName;
-	private String description;
-	private String query;
-	private Date startDate;
-	private Date endDate;
-	private String cronString;
-	private Boolean isBurst;
-	private String burstQuery;
-	private String burstFileNameParameterName;
-	private String targetEmailAddress;
-	private String alertEmailAddress;
-	private File upload;//The actual file
-    private String uploadContentType; //The content type of the file
-    private String uploadFileName; //The uploaded file name
-  
-	private FileFormat fileFormat;
-	private boolean alertOnSuccess;
-	
+	// private List<RunnerJobParameter> parameters = new XWorkList(new
+	// ObjectFactory(), new XWorkConverter(), null);
+	private List<RunnerJobParameter> parameters;
 	private RunnerDataSourceDao dataSourceDao;
-	private XWorkList parameterList;
+	private List<RunnerDataSource> dataSources;
+	private static Logger logger = Logger.getLogger(SaveJob.class);
 
 	public void prepare() throws Exception {
-		dataSources=dataSourceDao.listDataSources();
+		this.dataSources = dataSourceDao.listDataSources();
+		/*
+		 * ConfigurationManager configurationManager = new
+		 * ConfigurationManager(); configurationManager.addContainerProvider(new
+		 * XWorkConfigurationProvider()); Configuration config =
+		 * configurationManager.getConfiguration(); Container container =
+		 * config.getContainer(); XWorkConverter conv =
+		 * container.getInstance(XWorkConverter.class); ObjectFactory of =
+		 * container.getInstance(ObjectFactory.class); this.parameters = new
+		 * XWorkList(of, conv, RunnerJobParameter.class);
+		 */
 	}
 
-	
+	@SuppressWarnings("unchecked")
 	@Override
 	public String execute() throws Exception {
-		RunnerJob_pk pk = new RunnerJob_pk();
-		RunnerGroup group = groupDao.getGroup(groupName);
-		pk.setGroup(group);
-		pk.setJobName(jobName);
-		RunnerDataSource ds= dataSourceDao.getDataSource(dataSourceName);
-		List<RunnerJobParameter> parameters = new LinkedList<RunnerJobParameter>();	 
-		if (parameterList!=null) {
-			parameters.addAll(parameterList);
+
+		String groupName = job.getPk().getGroup().getGroupName();
+		String jobName = job.getPk().getJobName();
+		// Get the uploaded File And Compile into a jasper report
+		if ((upload != null) && upload.isFile() && upload.exists()) {
+			JasperDesign jasperDesign = JRXmlLoader.load(upload);
+			JasperReport jasperReport = JasperCompileManager
+					.compileReport(jasperDesign);
+			job.setJasperReport(jasperReport);
 		}
-	    //Get the uploadedFileAndCompile
-	    JasperDesign jasperDesign = JRXmlLoader.load(upload);
-	    JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-		RunnerJob job = new RunnerJob(pk, outputUrl, ds, description,
-				query, startDate, endDate, cronString, isBurst, burstQuery,
-				burstFileNameParameterName, targetEmailAddress,
-				alertEmailAddress, jasperReport, fileFormat, alertOnSuccess,
-				parameters);
+
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
-			if (super.getUser().getGroups().contains(groupName) || super.getUser().getIsAdmin()) {
+			if (super.getUser().getGroups().contains(groupName)
+					|| super.getUser().getIsAdmin()) {
+				//part of my hack work :(
+				job.setParameters(null);
 				jobService.addUpdateJob(job);
-			} else {
-				SecurityException se = new SecurityException("Group "
-						+ groupName + " not valid for user "
-						+ super.getUser().getUserName());
-				// logger.fatal(se.getMessage(), se);
-				throw se;
+				job = jobService.getJob(jobName, groupName);
+				
+				// hack to do the tabular stuff with parameters
+				if (parameters != null) {
+
+					logger.debug("parameter count:" + parameters.size());
+
+					Iterator it = parameters.iterator();
+					while (it.hasNext()) {
+						RunnerJobParameter p = (RunnerJobParameter) it.next();						
+						if (p != null) {
+							logger.debug(p.getParameterValue());
+							p.getPk().setRunnerJob(job);
+						} else {
+							logger.warn("null parameter");
+						}
+					}
+					parameterDao.updateParametersForJob(jobName, groupName,
+							parameters);
+
+				} else {
+					SecurityException se = new SecurityException("Group "
+							+ groupName + " not valid for user "
+							+ super.getUser().getUserName());
+					logger.fatal(se.getMessage(), se);
+					throw se;
+				}
+
 			}
 
-		}		
+		}
 		return SUCCESS;
 	}
-	
-	public void setParameterList(XWorkList parameterList) {
-		this.parameterList = parameterList;
-	}	
-	public void setGroupDao(RunnerGroupDao groupDao) {
-		this.groupDao = groupDao;
+
+	public RunnerJobService getJobService() {
+		return jobService;
 	}
 
-	public void setJobName(String jobName) {
-		this.jobName = jobName;
+	public void setJobService(RunnerJobService jobService) {
+		this.jobService = jobService;
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public RunnerJob getJob() {
+		return job;
 	}
 
-	public void setOutputUrl(String outputUrl) {
-		this.outputUrl = outputUrl;
+	public void setJob(RunnerJob job) {
+		this.job = job;
 	}
 
-	public void setDataSourceName(String dataSourceName) {
-		this.dataSourceName = dataSourceName;
+	public File getUpload() {
+		return upload;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-
-	public void setCronString(String cronString) {
-		this.cronString = cronString;
-	}
-
-	public void setIsBurst(Boolean isBurst) {
-		this.isBurst = isBurst;
-	}
-
-	public void setBurstQuery(String burstQuery) {
-		this.burstQuery = burstQuery;
-	}
-
-	public void setBurstFileNameParameterName(String burstFileNameParameterName) {
-		this.burstFileNameParameterName = burstFileNameParameterName;
-	}
-
-	public void setTargetEmailAddress(String targetEmailAddress) {
-		this.targetEmailAddress = targetEmailAddress;
-	}
-
-	public void setAlertEmailAddress(String alertEmailAddress) {
-		this.alertEmailAddress = alertEmailAddress;
-	}
-
-	
-	
 	public void setUpload(File upload) {
 		this.upload = upload;
+	}
+
+	public String getUploadContentType() {
+		return uploadContentType;
 	}
 
 	public void setUploadContentType(String uploadContentType) {
 		this.uploadContentType = uploadContentType;
 	}
 
+	public String getUploadFileName() {
+		return uploadFileName;
+	}
+
 	public void setUploadFileName(String uploadFileName) {
 		this.uploadFileName = uploadFileName;
 	}
 
-	public void setFileFormat(FileFormat fileFormat) {
-		this.fileFormat = fileFormat;
+	public List<RunnerJobParameter> getParameters() {
+		return parameters;
 	}
 
-	public void setAlertOnSuccess(boolean alertOnSuccess) {
-		this.alertOnSuccess = alertOnSuccess;
+	public void setParameters(List<RunnerJobParameter> parameters) {
+		this.parameters = parameters;
 	}
 
-
-	public final RunnerJobService getJobService() {
-		return jobService;
-	}
-
-	public final void setJobService(RunnerJobService jobService) {
-		this.jobService = jobService;
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
 	}
 
 	public RunnerDataSourceDao getDataSourceDao() {
@@ -198,27 +173,27 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
 		this.dataSourceDao = dataSourceDao;
 	}
-	
 
 	public List<RunnerDataSource> getDataSources() {
 		return dataSources;
+	}
+	public RunnerJobParameterDao getParameterDao() {
+		return parameterDao;
+	}
+
+	public void setParameterDao(RunnerJobParameterDao parameterDao) {
+		this.parameterDao = parameterDao;
 	}
 
 	public void setDataSources(List<RunnerDataSource> dataSources) {
 		this.dataSources = dataSources;
 	}
-	public File getUpload() {
-		return upload;
+
+	public List<RunnerJob.FileFormat> getFileFormats() {
+		return Arrays.asList(RunnerJob.FileFormat.values());
+	}
+	public List<DataType> getDataTypes() {
+		return Arrays.asList(RunnerJobParameter.DataType.values());
 	}
 
-
-	public String getUploadContentType() {
-		return uploadContentType;
-	}
-
-
-	public String getUploadFileName() {
-		return uploadFileName;
-	}
-	
 }

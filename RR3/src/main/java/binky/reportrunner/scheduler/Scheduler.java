@@ -24,6 +24,8 @@ public interface Scheduler {
 	
 	public Date getNextRunTime(String jobName, String groupName)  throws SchedulerException;
 	
+	public Date getPreviousRunTime(String jobName, String groupName)  throws SchedulerException;
+	
 	public Boolean isJobActive(String jobName, String groupName)  throws SchedulerException;
 		
 	public void interruptRunningJob(String jobName, String groupName)  throws SchedulerException;

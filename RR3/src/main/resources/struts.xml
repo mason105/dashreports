@@ -9,15 +9,15 @@
 			<interceptor name="login" class="loginInterceptor" />
 			<interceptor name="userSession" class="userSessionIntercept" />
 			<interceptor-stack name="defaultLoginStack">
-				<interceptor-ref name="servlet-config" />
+				<!-- <interceptor-ref name="servletConfig" />  -->
 				<interceptor-ref name="params" />
 				<interceptor-ref name="login" /> <!-- Our LoginInterceptor -->
 				<interceptor-ref name="userSession" /> <!-- Our UserSessionIntercept -->
 				<interceptor-ref name="prepare" />
 				<interceptor-ref name="chain" />
-				<interceptor-ref name="model-driven" />
+				<!-- <interceptor-ref name="model-driven" /> -->
 				<interceptor-ref name="fileUpload" />
-				<interceptor-ref name="static-params" />
+				<!-- <interceptor-ref name="static-params" />-->
 				<interceptor-ref name="params" />
 				<interceptor-ref name="conversionError" />
 				<interceptor-ref name="validation" />
@@ -52,14 +52,14 @@
 		</action>
 
 		<action name="deleteJob" class="deleteJobAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listJobs</param>
 				<param name="groupName">${groupName}</param>
 			</result>
 		</action>
 
 		<action name="saveJob" class="saveJobAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listJobs</param>
 				<param name="groupName">${groupName}</param>
 			</result>
@@ -67,7 +67,7 @@
 		</action>
 
 		<action name="setJobStatus" class="setJobStatusAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listJobs</param>
 				<param name="groupName">${groupName}</param>
 			</result>
@@ -83,20 +83,20 @@
 		</action>
 		
 		<action name="changeAllGroupJobStatus" class="changeAllGroupJobStatusAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listJobs</param>
 				<param name="groupName">${groupName}</param>
 			</result>
 		</action>
 
 		<action name="deleteGroup" class="deleteGroupAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listGroups</param>
 			</result>
 		</action>
 
 		<action name="saveGroup" class="saveGroupAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listGroups</param>
 			</result>
 			<result name="input">/jsp/main/editGroup.jsp</result>			
@@ -106,12 +106,8 @@
 			<result>/jsp/main/editGroup.jsp</result>
 		</action>
 
-		<action name="saveParameter" class="saveParameterAction">
-			<result>/jsp/main/paramSaved.jsp</result>
-		</action>
-
 		<action name="deleteDataSource" class="deleteDataSourceAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listDataSources</param>
 			</result>
 		</action>
@@ -124,7 +120,7 @@
 
 
 		<action name="saveDataSource" class="saveDataSourceAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listDataSources</param>
 			</result>
 			<result name="input">/jsp/main/editDataSource.jsp</result>
@@ -132,7 +128,7 @@
 
 
 		<action name="invokeJobAction" class="invokeJobAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listJobs</param>
 				<param name="groupName">${groupName}</param>
 			</result>
@@ -146,14 +142,14 @@
 
 
 		<action name="changePassword" class="changePasswordAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">index</param>
 			</result>
 		</action>
 
 
 		<action name="deleteUser" class="deleteUserAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listUsers</param>
 			</result>
 		</action>
@@ -165,7 +161,7 @@
 
 
 		<action name="saveUser" class="saveUserAction">
-			<result type="redirect-action">
+			<result type="redirectAction">
 				<param name="actionName">listUsers</param>
 			</result>
 		</action>

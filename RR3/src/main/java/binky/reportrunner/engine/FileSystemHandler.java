@@ -62,11 +62,11 @@ public class FileSystemHandler {
 		if ((url == null) || (url.isEmpty())) {
 			returnUrl = "file://" + System.getProperty("java.io.tmpdir") 
 					+ dateFormatted + "_" + jobName.replace(" ", "_")
-					+ groupName.replace(" ", "_") + fileExt;
+					+ groupName.replace(" ", "_") + "."+fileExt;
 		} else {
 			returnUrl = url  + dateFormatted + "_"
 					+ jobName.replace(" ", "_") + "_"+ groupName.replace(" ", "_")
-					+ fileExt;
+					+ "."+fileExt;
 		}
 
 		return returnUrl;

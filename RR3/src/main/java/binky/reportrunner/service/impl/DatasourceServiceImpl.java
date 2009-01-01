@@ -57,7 +57,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 			ds.setDescription(runnerDs.getDataSourceName());
 			ds.setIdleConnectionTestPeriod(600);
 			ds.setNumHelperThreads(5);
-			ds.setMaxStatements(5);			
+			ds.setMaxStatements(5);		
 			return ds;
 		} else {
 			logger.info("getting datasource from JNDI url: " + jndiDataSource

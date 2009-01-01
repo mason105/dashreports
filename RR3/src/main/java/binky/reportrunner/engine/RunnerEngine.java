@@ -59,8 +59,16 @@ public class RunnerEngine implements Job {
 		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get(
 				"dataSource");
 		try {
-
-			if (job.getIsBurst()) {
+			if (job==null) {
+				logger.fatal("job is null!");
+				throw new Exception("job is null!");
+			}
+			if (ds==null) {
+				logger.fatal("datasource is null!");
+				throw new Exception("datasource is null!");
+			}
+			
+			if ((job.getIsBurst()!=null) && job.getIsBurst()) {
 				processBurstedReport(job);
 			} else {
 				processSingleReport(job);
@@ -147,7 +155,7 @@ public class RunnerEngine implements Job {
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
 		Connection conn = ds.getConnection();
-
+		logger.debug("running single report for:" + groupName+"." + jobName);
 		ResultSet results = sqlProcessor.getResults(conn, job.getQuery(), job
 				.getParameters());
 		// if we are not outputting this anywhere (must be emailing) then

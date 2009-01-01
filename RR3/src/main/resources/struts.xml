@@ -127,7 +127,7 @@
 		</action>
 
 
-		<action name="invokeJobAction" class="invokeJobAction">
+		<action name="invokeJob" class="invokeJobAction">
 			<result type="redirectAction">
 				<param name="actionName">listJobs</param>
 				<param name="groupName">${groupName}</param>

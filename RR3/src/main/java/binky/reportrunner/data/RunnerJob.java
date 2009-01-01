@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -88,7 +89,7 @@ public class RunnerJob implements Serializable {
 
 	private boolean alertOnSuccess;
 
-	@OneToMany(mappedBy = "pk.runnerJob")
+	@OneToMany(mappedBy = "pk.runnerJob_pk", fetch = FetchType.EAGER)
 	private List<RunnerJobParameter> parameters;
 
 	public boolean isAlertOnSuccess() {

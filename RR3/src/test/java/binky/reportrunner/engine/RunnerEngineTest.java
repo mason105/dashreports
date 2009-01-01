@@ -98,7 +98,7 @@ public class RunnerEngineTest extends TestCase {
 			List<RunnerJobParameter> params = new LinkedList<RunnerJobParameter>();
 			RunnerJobParameter param = new RunnerJobParameter();
 			RunnerJobParameter_pk pk = new RunnerJobParameter_pk();
-			pk.setRunnerJob(job);
+			pk.setRunnerJob_pk(job.getPk());
 			pk.setParameterIdx(1);
 			param.setPk(pk);
 			param.setParameterType(DataType.STRING);

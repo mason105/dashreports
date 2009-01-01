@@ -31,8 +31,8 @@ public class RunnerJobDaoImpl extends HibernateDaoSupport implements
 		// delete any parameters first
 		DetachedCriteria criteria = DetachedCriteria
 				.forClass(RunnerJobParameter.class);
-		criteria.add(Expression.eq("pk.runnerJob.pk.jobName", jobName)).add(
-				Expression.eq("pk.runnerJob.pk.group.groupName", groupName));
+		criteria.add(Expression.eq("pk.runnerJob_pk.jobName", jobName)).add(				
+				Expression.eq("pk.runnerJob_pk.group.groupName", groupName));
 		List<RunnerJobParameter> params = getHibernateTemplate()
 				.findByCriteria(criteria);
 		if (params.size() > 0)

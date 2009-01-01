@@ -55,7 +55,7 @@ public class SchedulerImpl implements Scheduler {
 		jobTrigger.setName(jobName + ":" + groupName + ":trigger");
 		jobTrigger.setGroup("RunnerTriggers");
 		// Bind the listener
-		jobDetail.addJobListener("ReportRunnerCoreJobListener");
+		//jobDetail.addJobListener("ReportRunnerCoreJobListener");
 		
 		// schedule the job
 		try {

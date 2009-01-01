@@ -7,70 +7,27 @@
   </head>  
   <body>  
   	<s:form action="saveDataSource">
-  		<table>
-  			<tr>
-  				<td>
+
   					<s:if test="dataSource.dataSourceName != null">
-  					Data Source Name:<s:textfield size="32" value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName"  readonly="true"/>
+  					<s:textfield label="Data Source Name" size="32" value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName"  readonly="true"/>
   					</s:if>
   					<s:else>
-  					Data Source Name:<s:textfield size="32" value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName"/>
+  					<s:textfield label="Data Source Name"  size="32" value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName"/>
   					</s:else>  					
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					JNDI Name:<s:textfield size="60" value="%{dataSource.jndiName}" name="dataSource.jndiName"/>
-  				</td>
-  			</tr>
+  					<s:textfield label="JNDI Name"  size="60" value="%{dataSource.jndiName}" name="dataSource.jndiName"/>
   			<tr>
   				<td>
   					OR
   				</td>
   			</tr>
-  			<tr>
-  				<td>
-  					JDBC Driver:<s:textfield size="60" value="%{dataSource.jdbcClass}" name="dataSource.jdbcClass"/>
-  				</td>
-  			</tr>  			
-  			
-  			<tr>
-  				<td>
-  					JDBC URL:<s:textfield size="60" value="%{dataSource.jdbcUrl}" name="dataSource.jdbcUrl"/>
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					Username:<s:textfield size="60" value="%{dataSource.username}" name="dataSource.username"/>
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					Password:<s:textfield size="60" value="%{dataSource.password}" name="dataSource.password"/>
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					Initial Pool Size:<s:textfield size="10" value="%{dataSource.initialPoolSize}" name="dataSource.initialPoolSize"/>
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					Min Pool Size:<s:textfield size="10" value="%{dataSource.minPoolSize}" name="dataSource.minPoolSize"/>
-  				</td>
-  			</tr>
-  			<tr>
-  				<td>
-  					Max Pool Size:<s:textfield size="10" value="%{dataSource.maxPoolSize}" name="dataSource.maxPoolSize"/>
-  				</td>
-  			</tr>
-  			
-  			<tr>
-  				<td>
+  					<s:textfield label="JDBC Driver"  size="60" value="%{dataSource.jdbcClass}" name="dataSource.jdbcClass"/>
+  					<s:textfield label="JDBC URL"  size="60" value="%{dataSource.jdbcUrl}" name="dataSource.jdbcUrl"/>
+  					<s:textfield label="Username"  size="60" value="%{dataSource.username}" name="dataSource.username"/>
+  					<s:textfield label="Password"  size="60" value="%{dataSource.password}" name="dataSource.password"/>
+  					<s:textfield label="Initial Pool Size"  size="10" value="%{dataSource.initialPoolSize}" name="dataSource.initialPoolSize"/>
+  					<s:textfield label="Min Pool Size"  size="10" value="%{dataSource.minPoolSize}" name="dataSource.minPoolSize"/>
+  					<s:textfield label="Max Pool Size"  size="10" value="%{dataSource.maxPoolSize}" name="dataSource.maxPoolSize"/>
   					<s:submit />
-  				</td>
-  			</tr>  			
-  		</table>
   	 </s:form>
   	</body>
 </html>

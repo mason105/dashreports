@@ -1,5 +1,6 @@
 package binky.reportrunner.ui.actions.job;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -10,6 +11,7 @@ import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.ui.actions.job.beans.DisplayJob;
 
 public class ViewJobDetail extends StandardRunnerAction {
 
@@ -20,7 +22,7 @@ public class ViewJobDetail extends StandardRunnerAction {
 
 	private String jobName;
 	private String groupName;
-	private RunnerJob job;
+	private DisplayJob job;
 	private List<RunnerHistoryEvent> events;
 	private static final Logger logger = Logger.getLogger(SetupEditJob.class);
 	private RunnerJobService jobService;
@@ -31,7 +33,15 @@ public class ViewJobDetail extends StandardRunnerAction {
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
 			if (super.getUser().getGroups().contains(groupName) || super.getUser().getIsAdmin()) {
-				job = jobService.getJob(jobName, groupName);
+				RunnerJob job = jobService.getJob(jobName, groupName);
+				this.job=new DisplayJob();
+				this.job.setDescription(job.getDescription());
+				this.job.setGroupName(groupName);
+				this.job.setJobName(jobName);
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+				this.job.setNextRunTime(sdf.format(jobService.getNextRunTime(jobName, groupName)));
+				this.job.setPreviousRunTime(sdf.format(jobService.getPreviousRunTime(jobName, groupName)));
+				this.job.setIsScheduleActive(jobService.isJobActive(jobName, groupName));
 				events = historyDao.getEvents(groupName, jobName);
 			} else {
 				SecurityException se = new SecurityException("Group "
@@ -42,7 +52,7 @@ public class ViewJobDetail extends StandardRunnerAction {
 			}
 
 		} else {
-			job = new RunnerJob();
+			job = new DisplayJob();
 		}
 		return SUCCESS;
 	}
@@ -71,11 +81,11 @@ public class ViewJobDetail extends StandardRunnerAction {
 		this.groupName = groupName;
 	}
 
-	public final RunnerJob getJob() {
+	public final DisplayJob getJob() {
 		return job;
 	}
 
-	public final void setJob(RunnerJob job) {
+	public final void setJob(DisplayJob job) {
 		this.job = job;
 	}
 

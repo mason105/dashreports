@@ -9,7 +9,7 @@
 	<h1>Job List for Group: <s:property value="groupName" /></h1>
     <table>
       <tr>
-      <td colspan=5>
+      <td colspan='5'>
       <a href="setupEditJob.action?groupName=<s:property value="groupName" />">Add Job</a>
       </td>
       </tr>	    
@@ -34,7 +34,7 @@
           <s:iterator value="jobs">  
             <tr>  
               <td>  
-                <s:property value="jobName" />  
+                <s:a href="viewJobDetail.action?jobName=%{jobName}&groupName=%{groupName}"><s:property value="jobName" /></s:a>  
               </td>  
               <td>  
                 <s:property value="description" />  
@@ -46,12 +46,20 @@
                 <s:property value="previousRunTime" />  
               </td>  
               <td>  
-                <s:property value="isScheduled" />  
+                <s:property value="isScheduleActive" />  
               </td>                                            
-              <td>
-				 <s:a href="viewJobDetail.action?jobName=%{jobName}&groupName=%{groupName}">View Job</s:a>&nbsp;
-				 <s:a href="setupEditJob.action?jobName=%{jobName}&groupName=%{groupName}">Edit Job</s:a>&nbsp;
-				 <s:a href="deleteJob.action?jobName=%{jobName}&groupName=%{groupName}">Delete Job</s:a>				
+              <td>				 
+				 <s:a href="setupEditJob.action?jobName=%{jobName}&groupName=%{groupName}">Edit</s:a>&nbsp;
+				 <s:a href="deleteJob.action?jobName=%{jobName}&groupName=%{groupName}" onClick="return confirm('Really delete this job?');">Delete</s:a>
+				 <s:if test="isScheduled">				
+				 	<s:if test="isScheduleActive">
+				 		<s:a href="setJobStatus.action?jobName=%{jobName}&groupName=%{groupName}&jobStatus=false">Pause</s:a>
+				 	</s:if>
+				 	<s:else>
+				 		<s:a href="setJobStatus.action?jobName=%{jobName}&groupName=%{groupName}&jobStatus=true">Resume</s:a>				 	
+				 	</s:else>
+				 </s:if>	
+				 <s:a href="invokeJob.action?jobName=%{jobName}&groupName=%{groupName}">Invoke</s:a>&nbsp;			
               </td>
             </tr>  
           </s:iterator>

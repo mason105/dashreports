@@ -48,12 +48,12 @@ public class RunnerJobListener implements JobListener {
 		String groupName = ctx.getJobDetail().getGroup();
 
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
-		ctx.put("runnerJob", job);
+		ctx.getJobDetail().getJobDataMap().put("runnerJob", job);
 
-		ctx.put("smtpServer", this.smtpServer);
-		ctx.put("fromAddress", this.fromAddress);
+		ctx.getJobDetail().getJobDataMap().put("smtpServer", this.smtpServer);
+		ctx.getJobDetail().getJobDataMap().put("fromAddress", this.fromAddress);
 		DataSource ds = datasourceService.getDataSource(job.getDatasource());
-		ctx.put("dataSource", ds);
+		ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
 		logger.info("Job to be executed: " + ctx.getJobDetail().getName() + "/"
 				+ ctx.getJobDetail().getGroup());
 
@@ -84,7 +84,7 @@ public class RunnerJobListener implements JobListener {
 					+ ctx.getJobDetail().getGroup(), ex);
 		}
 
-		if (job.getAlertEmailAddress() != null) {
+		if ((job.getAlertEmailAddress() != null)&&!job.getAlertEmailAddress().isEmpty()) {
 			sendEmailAlert(jobName, groupName, job.getAlertEmailAddress(),
 					finishTime, success);
 		}

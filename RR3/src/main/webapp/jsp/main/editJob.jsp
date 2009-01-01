@@ -4,35 +4,7 @@
 <html>
 <head>
 <sx:head parseContent="true" />
-<script language="javascript" type="text/javascript">
-		var maxParamRow=<s:property value="paramCount" />;
-		function addParameter() {
-			var ni = document.getElementById('parameterArea');
-			var newdiv = document.createElement('div');				
-			var divIdName = 'my'+maxParamRow;
-			newdiv.setAttribute('id',divIdName);
-			var innerHtml='';
-				innerHtml=innerHtml+'';
-				innerHtml=innerHtml+'Index  <input readonly="true" type=\"text\" name=\"parameters[' + maxParamRow + '].pk.parameterIdx\" value=\"' + maxParamRow + '\">';
-				innerHtml=innerHtml+'Value  <input type=\"text\" name=\"parameters[' + maxParamRow + '].parameterValue\" value=\"\">';
-				innerHtml=innerHtml+'Burst Column  <input type=\"text\" name=\"parameters[' + maxParamRow + '].parameterBurstColumn\" value=\"\">';
-				innerHtml=innerHtml+'Data Type';  
-				innerHtml=innerHtml+'<select '; 
-				innerHtml=innerHtml+'name=\"parameters[' + maxParamRow + '].parameterType\">'; 
-				innerHtml=innerHtml+'<option value=\"1\">String</option><option value=\"2\">Date</option><option value=\"3\">Boolean</option><option value=\"4\">Integer</option><option value=\"5\">Long</option><option value=\"6\">Double</option>';
-				innerHtml=innerHtml+'value=\"\"></select>';
-				innerHtml=innerHtml+'<td>';				
-				innerHtml=innerHtml+'';
-			newdiv.innerHTML=innerHtml;
-			ni.appendChild(newdiv);
-			maxParamRow++;
-		}
-		function removeParameter(paramNum) {
-  			var d = document.getElementById('parameterArea');
-  			var olddiv = document.getElementById('param'+paramNum);
-  			d.removeChild(olddiv);		
-		}
-	</script>
+
 </head>
 <body>
 <s:actionerror />
@@ -64,7 +36,7 @@
 
 	</s:textfield>
 
-	<s:select label="File Format" name="fileFormat" list="fileFormats"
+	<s:select label="File Format" name="job.fileFormat" list="fileFormats"
 		listKey="name" listValue="displayName">
 
 	</s:select>
@@ -104,43 +76,38 @@
 	</s:textfield>
 
 	<tr>
-		<td colspan=2>
+		<td colspan="2">
 		<h3>Parameters</h3>
 		</td>
 	</tr>
 
-	<tr>
-		<td><s:a href="#" onClick="addParameter();">Add Parameter</s:a></td>
-	</tr>
 
-	<div id="parameterArea"><s:iterator value="job.parameters"
+	<s:submit name="dispatchSaveButton" value="Add Parameter"/>
+
+
+	<s:iterator value="job.parameters"
 		status="rowstatus">
-		<div id="params<s:property value="#rowstatus.index" />">
 		<tr>
-			<td colspan=2>
-			<h3>Parameter Index <s:property value="#rowstatus.index" /></h3>
+			<td colspan="2">
+			<h3>Parameter Index <s:property value="%{pk.parameterIdx}" /></h3>
 			</td>
 		</tr>
-		<s:hidden value="%{pk.parameterIdx}" name="pk.parameterIdx" />
+		<s:hidden value="%{pk.parameterIdx}" name="parameters[%{#rowstatus.index}].pk.parameterIdx" />
 		<s:textfield label="Value"
 			name="parameters[%{#rowstatus.index}].parameterValue"
 			value="%{parameterValue}">
-
-		</s:textfield> <s:textfield label="Burst Column"
+		</s:textfield> 
+		<s:textfield label="Burst Column"
 			name="parameters[%{#rowstatus.index}].parameterBurstColumn"
 			value="%{parameterBurstColumn}">
-
-		</s:textfield> <s:select label="Data Type"
+		</s:textfield> 
+		<s:select label="Data Type"
 			name="parameters[%{#rowstatus.index}].parameterType" list="dataTypes"
 			listKey="name" listValue="displayName">
 
 		</s:select>
-		<td><a href="#"
-			onClick="removeParameter(<s:property value="#rowstatus.index" />);">Delete
-		Parameter</a></td>
-		<td>&nbsp;</td>
-		</div>
-	</s:iterator></div>
+		<s:submit name="dispatchSaveButton" value="Delete Parameter %{pk.parameterIdx}"/>
+	</s:iterator>
 
 
 
@@ -157,7 +124,7 @@
 
 	</s:textarea>
 
-	<s:submit />
+	<s:submit name="dispatchSaveButton" value="Save" />
 </s:form>
 </body>
 </html>

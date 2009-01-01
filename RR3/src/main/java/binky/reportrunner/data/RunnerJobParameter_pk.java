@@ -3,21 +3,22 @@ package binky.reportrunner.data;
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
-import javax.persistence.ManyToOne;
 
 @Embeddable
 public class RunnerJobParameter_pk implements Serializable {
 
 	private static final long serialVersionUID = 5839942860917772506L;
 	
-	@ManyToOne
-	private RunnerJob runnerJob;
+	private RunnerJob_pk runnerJob_pk;
 	private Integer parameterIdx;
-	public RunnerJob getRunnerJob() {
-		return runnerJob;
+
+	
+	
+	public RunnerJob_pk getRunnerJob_pk() {
+		return runnerJob_pk;
 	}
-	public void setRunnerJob(RunnerJob runnerJob) {
-		this.runnerJob = runnerJob;
+	public void setRunnerJob_pk(RunnerJob_pk runnerJob_pk) {
+		this.runnerJob_pk = runnerJob_pk;
 	}
 	public Integer getParameterIdx() {
 		return parameterIdx;
@@ -26,6 +27,8 @@ public class RunnerJobParameter_pk implements Serializable {
 		this.parameterIdx = parameterIdx;
 	}
 
-	
+	public String toString() {
+		return this.runnerJob_pk.getGroup().getGroupName() + "." + this.runnerJob_pk.getJobName() +" - " + this.parameterIdx;
+	}
 	
 }

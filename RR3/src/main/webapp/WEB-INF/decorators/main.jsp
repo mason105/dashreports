@@ -58,13 +58,7 @@
             </div>
         </div>
         
-        <div id="footer" class="clearfix">
-            &copy; 2008 Daniel Grout
-        </div>
-        
     </div>
     
-    <div id="extra1">&nbsp;</div>
-    <div id="extra2">&nbsp;</div>
 </body>
 </html>

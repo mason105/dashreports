@@ -1,0 +1,173 @@
+/* Form Layout */
+div.wwgrp,div.formSubmit {
+	clear: both;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+div.wwgrp div.wwlbl {
+	float: left;
+	width: 175px;
+	text-align: right;
+}
+
+div.wwgrp div.wwctrl {
+	float: right;
+	width: 375px;
+	text-align: left;
+}
+
+div.wwgrp {
+width: 560px;
+}
+
+div.wwgrp br {
+	display: none;
+}
+
+textarea  {
+	overflow:auto;
+}
+
+
+
+div.wwgrp div.dateTimePicker {
+	width: 560px;
+}
+
+div.wwgrp div.dateTimePicker table tr td.tdLabel {
+	width: 175px;
+	text-align: right;
+}
+
+div.formSection {
+	clear: both;
+	width: 560px;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+	padding-top: 5px;
+}
+div.formSectionInner {
+	clear: both;
+	width: 550px;
+	border-style: dashed;
+	border-width: 1px;
+	border-color: #000000;
+	margin: 5px;
+}
+div.formSectionInner div.smallLabel {
+	width:inherit;
+	background-color:#666666;
+	font-size:12px;
+	color:#FFFFFF;
+	height:12px;
+	font-weight:bold;
+/*	vertical-align:middle;*/
+	padding:2px;
+}
+
+div.midLabel {
+	width:555px;
+	background-color:#333333;
+	font-size:14px;
+	color:#FFFFFF;
+	height:14px;
+	font-weight:bold;
+	padding:2px;
+}
+
+/*tabs for edit job*/
+div.formSection#main {
+	position:absolute;
+	top:30px;
+}
+
+div.formSection#params {
+	position:absolute;
+	visibility:hidden;	
+	top:30px;	
+}
+
+div.formSection#schedule {
+	position:absolute;
+	visibility:hidden;	
+	top:30px;		
+}
+
+div.formSection#output {
+	position:absolute;
+	visibility:hidden;	
+	top:30px;		
+}
+
+div.formSection#misc {
+	position:absolute;
+	visibility:hidden;	
+	top:30px;		
+}
+
+div.formSubmit#save {
+	right:0px;
+	position:absolute;	
+	top:0px;
+}
+
+div.tabButton {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+	position:relative;
+	width:99px;
+	height:29px;
+	text-align:left;
+	background-color:#EEEEEE;
+	float:left;
+	font-weight:bold;
+	color:#000000;
+}
+
+div.tabButtonSelected {
+	border-style: solid;
+	border-width: 1px;
+	border-color: #000000;
+	position:relative;
+	width:99px;
+	height:29px;
+	text-align:left;
+	background-color:#666666;
+	float:left;
+	font-weight:bold;
+	color:#FFFFFF;
+}
+div.tabButton:hover {
+	background-color:#CCCCCC;
+	cursor:pointer;
+	font-weight:bold;
+	color:#000000;	
+}
+/*
+div.tabButton#mainButton {
+	left:220px;
+}
+
+div.tabButton#paramsButton {
+	left:320px;
+}
+
+div.tabButton#scheduleButton {
+	left:420px;
+}
+
+div.tabButton#outputButton {
+	left:520px;
+}
+
+div.tabButton#miscButton {
+	left:620px;
+}
+*/
+/* General Styles */
+input.readOnly {
+	background-color: #CCC;
+}

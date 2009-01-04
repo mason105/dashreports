@@ -10,7 +10,7 @@
   
         <table border="1">  
 	      <tr>
-	      <td colspan=3>
+	      <td colspan="3">
 	      <a href="setupEditGroup.action">Add Group</a>
 	      </td>
 	      </tr>
@@ -22,13 +22,18 @@
               </td>  
               <td>  
                 <s:property value="groupDescription" />  
-              </td>  
+              </td> 
+              <s:if test="user.isAdmin == true"> 
               <td>  
                 <s:a href="setupEditGroup.action?groupName=%{groupName}">Edit</s:a>  
               </td>  
               <td>  
                 <s:a href="deleteGroup.action?groupName=%{groupName}">Delete</s:a>  
               </td>  
+              </s:if>
+              <s:else>
+              	<td></td><td></td>
+              </s:else>
             </tr>  
           </s:iterator>
           </s:if>  

@@ -8,7 +8,7 @@ import com.opensymphony.xwork2.ActionSupport;
 public abstract class StandardRunnerAction extends ActionSupport {
 
 	private static final long serialVersionUID = -5701712982967708713L;
-	private static final String USER_HANDLE="userHandle";
+	private static final String USER_HANDLE="user";
 	
 	public abstract String execute() throws Exception;
 

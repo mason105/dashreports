@@ -24,7 +24,7 @@ public class SetupEditJob extends StandardRunnerAction implements Preparable {
 	private RunnerJob job;
 	private static final Logger logger = Logger.getLogger(SetupEditJob.class);
 	private RunnerJobService jobService;
-
+	private String activeTab="report";
 	private RunnerDataSourceDao dataSourceDao;
 	private Integer paramCount;
 
@@ -114,4 +114,14 @@ public class SetupEditJob extends StandardRunnerAction implements Preparable {
 	public List<DataType> getDataTypes() {
 		return Arrays.asList(RunnerJobParameter.DataType.values());
 	}
+
+	public String getActiveTab() {
+		return activeTab;
+	}
+
+	public void setActiveTab(String activeTab) {
+		this.activeTab = activeTab;
+	}
+	
+	
 }

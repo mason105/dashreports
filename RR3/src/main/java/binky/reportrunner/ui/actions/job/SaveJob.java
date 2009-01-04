@@ -39,7 +39,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 	private String uploadContentType; // The content type of the file
 	private String uploadFileName; // The uploaded file name
 	private RunnerJobParameterDao parameterDao;
-
+	private String activeTab;
 	private List<RunnerJobParameter> parameters;
 
 	private RunnerDataSourceDao dataSourceDao;
@@ -102,7 +102,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		job.setParameters(parameters);	
 	}
 	private void doAddParameter() {
-		
+		this.activeTab="params";
 		if (parameters == null) {
 			logger.debug("parameters are null so creating new list");
 			parameters = new Vector<RunnerJobParameter>();
@@ -129,6 +129,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	private void doSaveJob(String jobName, String groupName)
 			throws JRException, SchedulerException {
+		this.activeTab="report";
 		// Get the uploaded File And Compile into a jasper report
 		if ((upload != null) && upload.isFile() && upload.exists()) {
 			JasperDesign jasperDesign = JRXmlLoader.load(upload);
@@ -254,6 +255,14 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+
+	public String getActiveTab() {
+		return activeTab;
+	}
+
+	public void setActiveTab(String activeTab) {
+		this.activeTab = activeTab;
 	}
 	
 	

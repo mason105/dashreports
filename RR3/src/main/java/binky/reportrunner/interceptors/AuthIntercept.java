@@ -18,7 +18,7 @@ public class AuthIntercept implements Interceptor,StrutsStatics {
 	private static final long serialVersionUID = -6151350585810759841L;
 	private static final String USERNAME="userName";
 	private static final String PASSWORD="password";
-	private static final String USER_HANDLE="userHandle";
+	private static final String USER_HANDLE="user";
 	private static final String LOGIN_ATTEMPT="loginAttempt";
 	
 	private AuthenticationService authService;

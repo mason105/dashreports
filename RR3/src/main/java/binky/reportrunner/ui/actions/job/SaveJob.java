@@ -99,10 +99,12 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 					
 		}*/
 		parameters.remove(paramIdx-1);
-		job.setParameters(parameters);	
-	}
-	private void doAddParameter() {
+		job.setParameters(parameters);
 		this.activeTab="params";
+	}
+
+	private void doAddParameter() {
+		this.activeTab = "params";
 		if (parameters == null) {
 			logger.debug("parameters are null so creating new list");
 			parameters = new Vector<RunnerJobParameter>();

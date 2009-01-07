@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<style>
+div.box {
+	border-width:1px;
+	border-color:#000000;
+	border-style:solid;
+}
+div.wwgrp div.wwlbl {
+	float: left;
+	width: 175px;
+	text-align: right;
+}
+div.wwgrp div.wwctrl {
+	float: right;
+	width: 375px;
+	text-align: left;
+}
+div.wwgrp {
+	clear: both;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+</style>
+</head>
+<body>
+<div class="box">
+  <div id="wwgrp_saveJob_job_burstQuery" class="wwgrp">
+    <div id="wwlbl_saveJob_job_burstQuery" class="wwlbl">
+      <label for="saveJob_job_burstQuery" class="label"> Burst Query: </label>
+    </div>
+    <br />
+    <div id="wwctrl_saveJob_job_burstQuery" class="wwctrl">
+      <textarea name="job.burstQuery" cols="20" rows="20" id="saveJob_job_burstQuery"></textarea>
+    </div>
+  </div>
+  <div id="wwgrp_saveJob_job_query" class="wwgrp">
+    <div id="wwlbl_saveJob_job_query" class="wwlbl">
+      <label for="saveJob_job_query" class="label"> Report Query: </label>
+    </div>
+    <br />
+    <div id="wwctrl_saveJob_job_query" class="wwctrl">
+      <textarea name="job.query" cols="20" rows="20" id="saveJob_job_query">select * from runneruser where username=?</textarea>
+    </div>
+  </div>
+</div>
+</body>
+</html>

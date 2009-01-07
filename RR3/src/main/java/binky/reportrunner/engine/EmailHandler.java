@@ -8,18 +8,20 @@ import java.util.List;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
+import org.apache.log4j.Logger;
 
 public class EmailHandler {
-
+	private static final boolean debug = true;
 	private static final String subject = "Report Runner Files for: ";
 	private static final String message = "Please find attached outputs for the above job.";
-
+	private static Logger logger = Logger.getLogger(EmailHandler.class);
 	public void sendEmail(String destinationEmail, String fromEmail,
 			String smtpServer, String fileUrl, String jobName, String groupName)
 			throws EmailException, IOException {
-		// logger.debug("sending email to: " + to + " on host " + server);
+		logger.debug("sending email to: " + destinationEmail + " on host " + smtpServer);
 		FileSystemHandler fs = new FileSystemHandler();
 		MultiPartEmail email = new MultiPartEmail();
+		email.setDebug(debug);
 		email.setHostName(smtpServer);
 		for (String toEmail : destinationEmail.split(",")) {
 			email.addTo(toEmail.trim());
@@ -40,8 +42,8 @@ public class EmailHandler {
 		// get the file name of the report from the complete path
 		String name = fs.getFileName(fileUrl);
 		attachment.setName(name);
-		// logger.debug("File: " + url);
-		// logger.debug("Name: " + name);
+		logger.debug("File: " + fileUrl);
+		logger.debug("Name: " + name);
 
 		email.attach(attachment);
 
@@ -57,6 +59,7 @@ public class EmailHandler {
 		// logger.debug("sending email to: " + to + " on host " + server);
 		FileSystemHandler fs = new FileSystemHandler();
 		MultiPartEmail email = new MultiPartEmail();
+		email.setDebug(debug);
 		email.setHostName(smtpServer);
 		for (String toEmail : destinationEmail.split(",")) {
 			email.addTo(toEmail.trim());
@@ -78,8 +81,8 @@ public class EmailHandler {
 			// get the file name of the report from the complete path
 			String name = fs.getFileName(url);
 			attachment.setName(name);
-			// logger.debug("File: " + url);
-			// logger.debug("Name: " + name);
+			 logger.debug("File: " + url);
+			logger.debug("Name: " + name);
 
 			email.attach(attachment);
 		}
@@ -94,9 +97,10 @@ public class EmailHandler {
 			String smtpServer, String jobName, String groupName,
 			boolean success, Date finishTime) throws EmailException,
 			IOException {
-		// logger.debug("sending email to: " + to + " on host " + server);
+	   logger.debug("sending email to: " + destinationEmail + " on host " + smtpServer);
 		MultiPartEmail email = new MultiPartEmail();
 		email.setHostName(smtpServer);
+		email.setDebug(debug);
 		for (String toEmail : destinationEmail.split(",")) {
 			email.addTo(toEmail.trim());
 		}
@@ -121,6 +125,7 @@ public class EmailHandler {
 	}
 
 	private String copyToTemp(String url) throws IOException {
+		logger.debug("copying file to temp to attach to email: " + url);
 		FileSystemHandler fs = new FileSystemHandler();
 		String tempDir = System.getProperty("java.io.tmpdir");
 

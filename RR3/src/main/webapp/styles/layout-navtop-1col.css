@@ -7,7 +7,7 @@
         position: relative;
         width: 701px;
         
-        margin: 0 auto 20px auto;
+        margin: 0 auto 5px auto;
         padding: 0;
         
         text-align: left;
@@ -23,7 +23,7 @@
     }
     div#nav {
         position: absolute;
-        top: -15px;
+        top: -25px;
         left: 0;
         width: 100%;
         

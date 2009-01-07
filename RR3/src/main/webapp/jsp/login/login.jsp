@@ -1,150 +1,92 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Login to Report Runner</title>
-<style>
-div.wwgrp {
-	clear: both;
-	padding-top: 2px;
-}
-
-div.wwgrp div.wwlbl {
-	float: left;
-	width: 100px;
-	text-align: right;
-}
-
-div.wwgrp div.wwctrl {
-	float: left;
-	/*width: 375px;*/
-	text-align: left;
-}
-
-div.wwgrp { /*width: 550px;*/
-	
-}
-
-div.wwgrp br {
-	display: none;
-}
-
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Report Runner - Login</title>
+<style type="text/css">
+<!--
 body {
-	margin: 0px;
-	width: 100%;
-	height: 100%;
-	background-color: #CCCCCC;
-	text-align: left;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size: 76%;
-	line-height: 1em;
-	color: #333;
+	background-color: #999999;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
 }
 
-div.midLabel { /*width:549px;*/
-	background-color: #333333;
-	font-size: 14px;
-	color: #FFFFFF;
-	height: 14px;
+.errorMessage {
+	color: #FF0000;
 	font-weight: bold;
-	padding: 2px;
 }
 
-div.formSection {
-	clear: both;
+.tableBorder {
+	border-color: #000000;
 	border-style: solid;
 	border-width: 1px;
-	border-color: #000000;
-	/*padding-top: 5px;*/
-	background-color: #FFFFFF;
-	margin: 0 auto;
-	/*width:500px;*/
-	text-align: left;
 }
 
-/* column container */
-.colmask {
-	position: relative; /* This fixes the IE7 overflow hidden bug */
-	clear: both;
-	float: left;
-	width: 100%; /* width of whole page */
-	overflow: hidden; /* This chops off any overhanging divs */
+.txt {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
 }
 
-/* common column settings */
-.colright,.colmid,.colleft {
-	float: left;
-	width: 100%; /* width of page */
-	position: relative;
+.blurb,a {
+	font-size: 9px;
+	color: #FFFFFF;
 }
 
-.col1,.col2,.col3 {
-	float: left;
-	position: relative;
-	padding: 0 0 1em 0;
-	/* no left and right padding on columns, we just make them narrower instead 
-						only padding top and bottom is included here, make it whatever value you need */
-	overflow: hidden;
+input {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	border: 1px solid #333333;
 }
-
-/* 3 Column settings */
-.threecol {
-	
-}
-
-.threecol .colmid {
-	right: 25%; /* width of the right column */
-}
-
-.threecol .colleft {
-	right: 50%; /* width of the middle column */
-}
-
-.threecol .col1 {
-	width: 46%;
-	/* width of center column content (column width minus padding on either side) */
-	left: 102%; /* 100% plus left padding of center column */
-}
-
-.threecol .col2 {
-	width: 21%;
-	/* Width of left column content (column width minus padding on either side) */
-	left: 31%;
-	/* width of (right column) plus (center column left and right padding) plus (left column left padding) */
-}
-
-.threecol .col3 {
-	width: 21%;
-	/* Width of right column content (column width minus padding on either side) */
-	left: 85%; /* Please make note of the brackets here:
-						(100% - left column width) plus (center column left and right padding) plus (left column left and right padding) plus (right column left padding) */
-}
+-->
 </style>
 </head>
+
 <body>
-<div>&nbsp;</div>
-<div class="colmask threecol">
-<div class="colmid">
-<div class="colleft">
-<div class="col1">
-
-<div class="formSection"><s:form namespace="/"
-	action="index.action" method="post">
-	<div class="midLabel">Login to Report Runner</div>
-	<s:actionerror />
+<div id="wrap">
+<div id="content"><s:form namespace="/" action="index.action"
+	method="post">
 	<s:hidden name="loginAttempt" value="%{'1'}" />
-	<s:textfield name="userName" label="Username" />
-	<s:password name="password" label="Password" />
-	<s:submit value="Login" align="center" />
+	<table width="500" height="250" border="0" align="center" cellpadding="2" cellspacing="0"
+		background="images/login_bg.png" class="tableBorder">
+		<tr>
+			<td height="50" colspan="3" align="left"><img
+				src="images/logo.png" width="250" height="50" /></td>
+		</tr>
+		<tr>
+			<td width="200" rowspan="4" valign="middle" align="center"><img
+				src="images/Keys.png" width="128" height="128" /></td>
+			<td colspan="2" class="blurb">
+			<p>Welcome to Report Runner - a java powered report generator,
+			scheduler and distrubution system.</p>
+			<p><s:actionerror /></p>
+			</td>
+		</tr>
+		<tr>
+		  <td width="75" height="15" class="txt">Username</td>
+		  <td height="15"><input type="text" name="userName" value=""
+				id="index_action_userName" style="width: 225px;" /></td>
+		</tr>
+		<tr>
+		  <td width="75" height="15" class="txt">Password</td>
+			<td height="15"><input type="password" name="password"
+				id="index_action_password" style="width: 225px;" /></td>
+		</tr>
+		<tr>
+			<td height="15" align="right">&nbsp;</td>
+		  <td height="40" align="right" valign="top"><input type="submit"
+				id="index_action_0" value="Login" style="width: 75px;" /></td>
+		</tr>
+		<tr>
+			<td height="15" colspan="3" align="center" class="blurb"><a
+				href="http://reportrunner.binkysoftware.co.uk" target="_blank">http://reportrunner.binkysoftware.co.uk</a></td>
+		</tr>
+	</table>
 </s:form></div>
-</div>
-<div class="col2"></div>
-<div class="col3"></div>
-</div>
-
-</div>
 </div>
 </body>
 </html>

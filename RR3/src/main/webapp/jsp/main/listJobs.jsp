@@ -7,7 +7,7 @@
   </head>  
   <body>  <%@ taglib prefix="s" uri="/struts-tags" %>  
   <span class="pageTitle"><img
-	src="<s:url value='/images/documentnotes.png'/>" align="middle" />Job List for Group: <s:property value="groupName" /></span>	
+	src="<s:url value='/images/documentnotes.png'/>" align="absmiddle" />Job List for Group: <s:property value="groupName" /></span>	
     <table border="0" width="100%">
       <tr class="rowHeader">
       <td colspan='9'  class="rowHeader">

@@ -73,7 +73,8 @@ public class RunnerJobListener implements JobListener {
 				: "Job Execution Failure: " + getCustomStackTrace(ex));
 		Date finishTime = Calendar.getInstance().getTime();
 		event.setTimestamp(finishTime);
-
+		event.setSuccess(success);
+		event.setRunTime(ctx.getJobRunTime());
 		runnerHistoryDao.saveEvent(event);
 
 		if (success) {
@@ -83,7 +84,7 @@ public class RunnerJobListener implements JobListener {
 			logger.error("Job Failed : " + ctx.getJobDetail().getName() + "/"
 					+ ctx.getJobDetail().getGroup(), ex);
 		}
-		event.setSuccess(success);
+		
 		if ((job.getAlertEmailAddress() != null)&&!job.getAlertEmailAddress().isEmpty()) {
 			sendEmailAlert(jobName, groupName, job.getAlertEmailAddress(),
 					finishTime, success);

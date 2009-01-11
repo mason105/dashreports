@@ -49,7 +49,7 @@ public class AuthIntercept implements Interceptor,StrutsStatics {
 	                // The login failed. Set an error if we can on the action.
 	                Object action = invocation.getAction ();
 	                if (action instanceof ValidationAware) {
-	                    ((ValidationAware) action).addActionError ("Username or password incorrect.");
+	                    ((ValidationAware) action).addActionError ("Username/password incorrect or user locked.");
 	                }
 	            }
 	        }

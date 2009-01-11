@@ -9,7 +9,7 @@
 </head>
 <body>
 <span class="pageTitle"><img
-	src="<s:url value='/images/view.png'/>" align="middle" />View Job
+	src="<s:url value='/images/view.png'/>" align="absmiddle" />View Job
 Detail</span>
 <br /><br />
 [<s:a href="listJobs.action?groupName=%{job.groupName}">Back</s:a>]
@@ -49,6 +49,7 @@ Detail</span>
     <display:setProperty name="export.xml.filename" value="history.xml"/>
     <display:setProperty name="export.pdf.filename" value="history.pdf"/>
 	<display:column property="eventId" title="ID"  sortable="true" headerClass="sortable" />
+	<display:column property="runTime" title="Time to Execute (ms)"  sortable="true" headerClass="sortable" />	
 	<display:column property="timestamp" title="Timestamp"  sortable="true" headerClass="sortable" />
 	<display:column property="success" title="Success"  sortable="true" headerClass="sortable" />
 	<display:column property="message" title="Message"  sortable="true" headerClass="sortable" />

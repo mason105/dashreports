@@ -19,6 +19,13 @@ public class RunnerHistoryEvent {
 	private String groupName;
 	private String message;
 	private Boolean success;
+	private Long runTime;
+	public Long getRunTime() {
+		return runTime;
+	}
+	public void setRunTime(Long runTime) {
+		this.runTime = runTime;
+	}
 	public Boolean getSuccess() {
 		return success;
 	}

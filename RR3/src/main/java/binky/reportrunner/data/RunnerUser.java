@@ -17,7 +17,7 @@ public class RunnerUser implements Serializable {
 	private String password;
 	private String fullName;
 	private Boolean isAdmin;
-
+	private Boolean isLocked;
 	public RunnerUser() {
 	}
 
@@ -73,6 +73,14 @@ public class RunnerUser implements Serializable {
 
 	public void setGroups(List<RunnerGroup> groups) {
 		this.groups = groups;
+	}
+
+	public Boolean getIsLocked() {
+		return isLocked;
+	}
+
+	public void setIsLocked(Boolean isLocked) {
+		this.isLocked = isLocked;
 	}
 
 }

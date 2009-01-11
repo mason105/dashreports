@@ -19,17 +19,16 @@
 	a,
 	a:link 
 	a:active {
-		color: blue;
+		color: black;
 		background-color: transparent;
 		text-decoration: none;
 	}
 	a:visited {
-		color: purple;
+		color: black;
 		background-color: transparent;
 	}
 	a:hover {
-        color: white;
-        background-color: black;
+        color: red;
 		text-decoration: none;
 	}
 /* END LINKS */

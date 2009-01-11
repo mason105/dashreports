@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.struts2.StrutsStatics;
 
 import binky.reportrunner.service.AuthenticationService;
+import binky.reportrunner.ui.Statics;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionInvocation;
@@ -16,10 +17,7 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
 public class AuthIntercept implements Interceptor,StrutsStatics {
 
 	private static final long serialVersionUID = -6151350585810759841L;
-	private static final String USERNAME="userName";
-	private static final String PASSWORD="password";
-	private static final String USER_HANDLE="user";
-	private static final String LOGIN_ATTEMPT="loginAttempt";
+
 	
 	private AuthenticationService authService;
 	
@@ -35,12 +33,12 @@ public class AuthIntercept implements Interceptor,StrutsStatics {
 	    HttpSession session =  request.getSession (true);
 
 	    // Is there a "user" object stored in the user's HttpSession?
-	    Object user = session.getAttribute (USER_HANDLE);
+	    Object user = session.getAttribute (Statics.USER_HANDLE);
 	    if (user == null) {
 	        // The user has not logged in yet.
 
 	        // Is the user attempting to log in right now?
-	        String loginAttempt = request.getParameter (LOGIN_ATTEMPT);
+	        String loginAttempt = request.getParameter (Statics.LOGIN_ATTEMPT);
 	        if (! StringUtils.isBlank (loginAttempt) ) { // The user is attempting to log in.
 
 	            // Process the user's login attempt.
@@ -70,8 +68,8 @@ public class AuthIntercept implements Interceptor,StrutsStatics {
 	 */
 	public boolean processLoginAttempt (HttpServletRequest request, HttpSession session) {
 	    // Get the username and password submitted by the user from the HttpRequest.
-	    String username = request.getParameter (USERNAME);
-	    String password = request.getParameter (PASSWORD);
+	    String username = request.getParameter (Statics.USERNAME);
+	    String password = request.getParameter (Statics.PASSWORD);
 
 	    // Use the security manager to validate the user's username and password.
 	    Object user = this.authService.authUser(username, password);
@@ -79,7 +77,7 @@ public class AuthIntercept implements Interceptor,StrutsStatics {
 	    if (user != null) {
 	        // The user has successfully logged in. Store their user object in 
 	        // their HttpSession. Then return true.
-	        session.setAttribute (USER_HANDLE, user);
+	        session.setAttribute (Statics.USER_HANDLE, user);
 	        return true;
 	    } else {
 	        // The user did not successfully log in. Return false.

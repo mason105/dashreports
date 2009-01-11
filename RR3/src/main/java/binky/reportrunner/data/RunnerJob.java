@@ -108,6 +108,25 @@ public class RunnerJob implements Serializable {
 		this.fileFormat = fileFormat;
 	}
 
+	public void setFileFormat(String fileFormat) {
+		if (fileFormat.equals(FileFormat.CSV.getDisplayName())) {
+			this.fileFormat = FileFormat.CSV;
+		}
+		if (fileFormat.equals(FileFormat.HTML.getDisplayName())) {
+			this.fileFormat = FileFormat.HTML;
+		}
+		if (fileFormat.equals(FileFormat.PDF.getDisplayName())) {
+			this.fileFormat = FileFormat.PDF;
+		}
+		if (fileFormat.equals(FileFormat.RTF.getDisplayName())) {
+			this.fileFormat = FileFormat.RTF;
+		}
+		if (fileFormat.equals(FileFormat.XLS.getDisplayName())) {
+			this.fileFormat = FileFormat.XLS;
+		}		
+
+	}
+
 	public String getTargetEmailAddress() {
 		return targetEmailAddress;
 	}

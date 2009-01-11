@@ -21,7 +21,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			logger.warn("Authentication failed - unknown user");			
 			return null;
 		} else {
-			if (user.getPassword().equals(password)) {
+			if (password.equals(user.getPassword())) {
 				// TODO:hashing
 				logger.info("Authenticated user: " + userName + " " + user.getFullName());
 				return user;

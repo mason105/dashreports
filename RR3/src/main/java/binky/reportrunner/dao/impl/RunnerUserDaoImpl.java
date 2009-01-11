@@ -33,7 +33,7 @@ public class RunnerUserDaoImpl extends HibernateDaoSupport implements
 	}
 
 	public void saveUpdateUser(RunnerUser user) {
-		logger.debug("delete user for: " + user.getUserName());
+		logger.debug("save update user for: " + user.getUserName());
 		getHibernateTemplate().saveOrUpdate(user);
 	}
 

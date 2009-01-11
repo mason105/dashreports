@@ -1,14 +1,16 @@
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+
 <html>
-  <head>  
-    <s:head/> 
+<head>
+<sx:head parseContent="true" />
   </head>  
   <body>  <%@ taglib prefix="s" uri="/struts-tags" %>  
   <span class="pageTitle"><img
 	src="<s:url value='/images/documentnotes.png'/>" align="middle" />Job List for Group: <s:property value="groupName" /></span>	
     <table border="0" width="100%">
       <tr class="rowHeader">
-      <td colspan='8'  class="rowHeader">
+      <td colspan='9'  class="rowHeader">
       <a href="setupEditJob.action?groupName=<s:property value="groupName" />"><img
 			src="<s:url value='/images/add_small.png'/>" align="absmiddle" />Add Job</a>
       </td>
@@ -26,7 +28,7 @@
       <td class="headerCell">
       	Previous Run Time
       </td>
-      <td class="headerCell" colspan="4">&nbsp;</td>
+      <td class="headerCell" colspan="5">&nbsp;</td>
       </tr>
 	  <s:if test="jobs.size > 0">	      
           
@@ -48,7 +50,7 @@
 				}
 			%>              
               <td>  
-                <s:a href="viewJobDetail.action?jobName=%{jobName}&groupName=%{groupName}"><s:property value="jobName" /></s:a>  
+                <s:property value="jobName" />  
               </td>  
               <td>  
                 <s:property value="description" />  
@@ -59,16 +61,16 @@
               <td>  
                 <s:property value="previousRunTime" />  
               </td>      
+              <td width="24">
+              <s:a href="viewJobDetail.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/view_small.png'/>" alt="View Detail/History"
+							align="absmiddle" /></s:a>
+              </td>
               <td width="24">	
 				 <s:a href="invokeJob.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/invoke_small.png'/>" alt="Invoke Now"
 							align="absmiddle" /></s:a>&nbsp;			
               </td>
               <td  width="24">				 
 				 <s:a href="setupEditJob.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/edit_small.png'/>" align="absmiddle" alt="Edit" /></s:a>&nbsp;
-			  </td>
-			  <td width="24">
-				 <a href="deleteJob.action?jobName=<s:property value="jobName" />&groupName=<s:property value="groupName" />" onClick="return confirm('Really delete this job?');"><img src="<s:url value='/images/delete_small.png'/>" alt="Delete"
-							align="absmiddle" /></a>
 			  </td>
 			  <td width="24">
 				 <s:if test="isScheduled">				
@@ -81,8 +83,11 @@
 							align="absmiddle" /></s:a>				 	
 				 	</s:else>
 				 </s:if>
+			  </td>			  
+			  <td width="24">
+				 <a href="deleteJob.action?jobName=<s:property value="jobName" />&groupName=<s:property value="groupName" />" onClick="return confirm('Really delete this job?');"><img src="<s:url value='/images/delete_small.png'/>" alt="Delete"
+							align="absmiddle" /></a>
 			  </td>
-
             </tr>  
           </s:iterator>
 	  </s:if>             

@@ -1,7 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+
 <html>
 <head>
-<s:head/>
+<sx:head parseContent="true" />
 </head>
 <body>
 <span class="pageTitle"><img
@@ -34,12 +36,12 @@
 				<td><s:a href="listJobs.action?groupName=%{groupName}">
 					<s:property value="groupName" />
 				</s:a></td>
-				<td><s:property value="groupDescription" /></td>
+				<td><s:property value="groupDescription" /></td>				
 				<s:if test="user.isAdmin == true">
 					<td width="24"><s:a href="setupEditGroup.action?groupName=%{groupName}">
 						<img src="<s:url value='/images/edit_small.png'/>" align="absmiddle" alt="Edit" />
 					</s:a></td>
-					<td width="24"><a href="deleteGroup.action?groupName= <s:property value="groupName" />"  onClick="return confirm('Really delete this group and all jobs within it?');">
+					<td width="24"><a href="deleteGroup.action?groupName=<s:property value="groupName" />"  onClick="return confirm('Really delete this group and all jobs within it?');">
 						<img src="<s:url value='/images/delete_small.png'/>" alt="Delete"
 							align="absmiddle" />
 					</a></td>

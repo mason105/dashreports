@@ -1,0 +1,1 @@
+Can't pause a job until it has run at least once

@@ -38,7 +38,7 @@
 			<result name="securityError">/jsp/securityError.jsp
 			</result>
 		</global-results>
-		
+		<action name="logout" class="logoutAction"/>
 		<action name="index" class="indexAction">
 			<result>/jsp/main/index.jsp</result>
 		</action>
@@ -149,7 +149,10 @@
 				<param name="actionName">index</param>
 			</result>
 		</action>
-
+		
+		<action name="setupChangePassword" class="setupChangePasswordAction">
+			<result>/jsp/main/changePassword.jsp</result>
+		</action>
 
 		<action name="deleteUser" class="deleteUserAction">
 			<result type="redirectAction">

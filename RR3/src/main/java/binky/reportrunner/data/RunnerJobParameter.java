@@ -46,7 +46,26 @@ public class RunnerJobParameter {
 	public void setParameterType(DataType parameterType) {
 		this.parameterType = parameterType;
 	}
-
+	public void setParameterType(String parameterTypeString) {
+		if (parameterType.equals(DataType.STRING.getDisplayName())) {
+			this.parameterType=DataType.STRING;
+		}
+		if (parameterType.equals(DataType.BOOLEAN.getDisplayName())) {
+			this.parameterType=DataType.BOOLEAN;
+		}
+		if (parameterType.equals(DataType.DATE.getDisplayName())) {
+			this.parameterType=DataType.DATE;
+		}
+		if (parameterType.equals(DataType.DOUBLE.getDisplayName())) {
+			this.parameterType=DataType.DOUBLE;
+		}
+		if (parameterType.equals(DataType.LONG.getDisplayName())) {
+			this.parameterType=DataType.LONG;
+		}	
+		if (parameterType.equals(DataType.INTEGER.getDisplayName())) {
+			this.parameterType=DataType.INTEGER;
+		}		
+	}
 	public RunnerJobParameter_pk getPk() {
 		return pk;
 	}

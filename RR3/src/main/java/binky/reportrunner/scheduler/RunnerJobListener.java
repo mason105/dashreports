@@ -66,7 +66,7 @@ public class RunnerJobListener implements JobListener {
 		RunnerHistoryEvent event = new RunnerHistoryEvent();
 		event.setGroupName(groupName);
 		event.setJobName(jobName);
-
+		
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 
 		event.setMessage(success ? "Job Execution Success"
@@ -83,7 +83,7 @@ public class RunnerJobListener implements JobListener {
 			logger.error("Job Failed : " + ctx.getJobDetail().getName() + "/"
 					+ ctx.getJobDetail().getGroup(), ex);
 		}
-
+		event.setSuccess(success);
 		if ((job.getAlertEmailAddress() != null)&&!job.getAlertEmailAddress().isEmpty()) {
 			sendEmailAlert(jobName, groupName, job.getAlertEmailAddress(),
 					finishTime, success);

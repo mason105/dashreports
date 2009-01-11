@@ -32,7 +32,7 @@
 	<li><a href="index.action">Home</a></li>
 	<li><a href="listGroups.action">My Groups</a></li>
 	<li><a href="manageServer.action">Manage Server</a></li>
-	<li><a href="changePassword.action">Change Password</a></li>	
+	<li><a href="setupChangePassword.action">Change Password</a></li>	
 	<li class="last"><a href="logout.action">Logout</a></li>
 </ul>
 </div>

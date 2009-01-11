@@ -1,14 +1,16 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
+
 <html>
-<head>   
-<s:head/>  
+<head>
+<sx:head parseContent="true" />
 </head>
 <body>
 <s:form action="saveGroup">
 
 	<s:if test="group.groupName != null">
 		<s:textfield label="Group Name" size="32" value="%{group.groupName}"
-			name="group.groupName" readonly="true" />
+			name="group.groupName" readonly="true" cssClass="readOnly"/>
 	</s:if>
 	<s:else>
 		<s:textfield label="Group Name" size="32" value="%{group.groupName}"

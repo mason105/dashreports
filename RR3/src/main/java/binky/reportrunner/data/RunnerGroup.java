@@ -14,7 +14,7 @@ public class RunnerGroup {
 		super();
 		this.groupName = groupName;
 		this.groupDescription = groupDescription;
-		this.runnerJobs = runnerJobs;
+		this.runnerJobs = runnerJobs;		
 	}
 	public RunnerGroup(){};
 	@Id

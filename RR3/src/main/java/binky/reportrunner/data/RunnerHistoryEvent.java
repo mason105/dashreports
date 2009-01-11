@@ -18,6 +18,13 @@ public class RunnerHistoryEvent {
 	private String jobName;
 	private String groupName;
 	private String message;
+	private Boolean success;
+	public Boolean getSuccess() {
+		return success;
+	}
+	public void setSuccess(Boolean success) {
+		this.success = success;
+	}
 	public Long getEventId() {
 		return eventId;
 	}

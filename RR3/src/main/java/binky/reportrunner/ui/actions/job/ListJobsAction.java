@@ -1,6 +1,7 @@
 package binky.reportrunner.ui.actions.job;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,15 +38,21 @@ public class ListJobsAction extends StandardRunnerAction {
 					DisplayJob dJob = new DisplayJob();
 					String jobName = job.getPk().getJobName();
 					String groupName = job.getPk().getGroup().getGroupName();
-					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-					dJob.setPreviousRunTime(sdf.format(jobService.getPreviousRunTime(
-							jobName, groupName)));
-					dJob.setNextRunTime(sdf.format(jobService.getNextRunTime(jobName,
-							groupName)));
-					dJob.setIsScheduled(((job.getCronString() != null) && !job
-							.getCronString().isEmpty()));
+					SimpleDateFormat sdf = new SimpleDateFormat(
+							"dd-MM-yyyy HH:mm:ss");
 					dJob.setIsScheduleActive(jobService.isJobActive(jobName,
 							groupName));
+					if (dJob.getIsScheduleActive()) {
+						Date prevRun = jobService.getPreviousRunTime(jobName, groupName);
+						if (prevRun!=null) {
+							dJob.setPreviousRunTime(sdf.format(prevRun)); 
+						}
+						dJob.setNextRunTime(sdf.format(jobService
+								.getNextRunTime(jobName, groupName)));
+					}
+					dJob.setIsScheduled(((job.getCronString() != null) && !job
+							.getCronString().isEmpty()));
+
 					dJob.setGroupName(groupName);
 					dJob.setJobName(jobName);
 					dJob.setDescription(job.getDescription());

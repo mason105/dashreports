@@ -1,9 +1,8 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 
 <html>
 <head>
-<sx:head parseContent="true" />
+<s:head/>
 
 <script language="javascript">
 	function changeTab(tabName) {
@@ -129,18 +128,18 @@
 		<div class="wwgrp">
 			<div class="dateTimePicker">
 				<table width="100%">
-					<sx:datetimepicker label="Start Date Time" value="%{job.startDate}"
+					<s:datetimepicker label="Start Date Time" value="%{job.startDate}"
 						name="job.startDate" displayFormat="dd-MM-yyyy HH:mm:ss">
-					</sx:datetimepicker>
+					</s:datetimepicker>
 				</table>
 			</div>
 		</div>
 		<div class="wwgrp">
 			<div class="dateTimePicker">
 				<table width="100%">
-					<sx:datetimepicker label="End Date/Time" value="%{job.endDate}"
+					<s:datetimepicker label="End Date/Time" value="%{job.endDate}"
 						name="job.endDate" displayFormat="dd-MM-yyyy HH:mm:ss">
-					</sx:datetimepicker>
+					</s:datetimepicker>
 				</table>
 			</div>
 		</div>

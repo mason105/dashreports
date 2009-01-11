@@ -1,5 +1,7 @@
 package binky.reportrunner.ui.actions.job;
 
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
@@ -7,7 +9,7 @@ import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 public class SetJobStatus extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger logger = Logger.getLogger(SetJobStatus.class);
 	private RunnerJobService jobService;
 	private String jobName;
 	private String groupName;
@@ -31,14 +33,17 @@ public class SetJobStatus extends StandardRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
+		logger.info("setting status of job: " + groupName + "." + jobName + " to " + jobStatus);
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
 			if (super.getUser().getGroups().contains(groupName)
 					|| super.getUser().getIsAdmin()) {
 				if (jobStatus) {
+					logger.debug("resume job");
 					jobService.resumeJob(jobName, groupName);
 				} else {
+					logger.debug("pause job");
 					jobService.pauseJob(jobName, groupName);
 
 				}
@@ -59,6 +64,10 @@ public class SetJobStatus extends StandardRunnerAction {
 
 	public final void setJobService(RunnerJobService jobService) {
 		this.jobService = jobService;
+	}
+
+	public String getGroupName() {
+		return groupName;
 	}
 
 }

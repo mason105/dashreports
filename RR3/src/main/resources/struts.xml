@@ -53,20 +53,26 @@
 
 		<action name="deleteJob" class="deleteJobAction">
 			<result type="redirectAction">
-				<param name="actionName">listGroups</param>
+				<param name="actionName">listJobs</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>				
 			</result>
 		</action>
 
 		<action name="saveJob" class="saveJobAction">
 			<result type="redirectAction">
-				<param name="actionName">listGroups</param>
+				<param name="actionName">listJobs</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>				
 			</result>
 			<result name="input">/jsp/main/editJob.jsp</result>			
 		</action>
 
 		<action name="setJobStatus" class="setJobStatusAction">
 			<result type="redirectAction">
-				<param name="actionName">listGroups</param>
+				<param name="actionName">listJobs</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>				
 			</result>
 		</action>
 
@@ -125,7 +131,9 @@
 
 		<action name="invokeJob" class="invokeJobAction">
 			<result type="redirectAction">
-				<param name="actionName">listGroups</param>
+				<param name="actionName">listJobs</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>				
 			</result>
 		</action>
 

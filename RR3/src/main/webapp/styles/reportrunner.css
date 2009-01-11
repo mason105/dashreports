@@ -171,3 +171,27 @@ div.tabButton#miscButton {
 input.readOnly {
 	background-color: #CCC;
 }
+.pageTitle{
+	font-size:18px;
+}
+.rowOdd {
+	background-color:#EEEEEE;
+}
+.rowEven {
+	background-color:#DFECFF;
+}
+.rowHeader {
+		background-color:#CCCCCC;
+}
+.headerCell {
+	font-weight:bold;
+		background-color:#333333;
+		color:#ffffff;
+		height:24px;
+	}
+.appLogo {
+	float:left;
+}
+.vendorLogo {
+	float:right;
+}

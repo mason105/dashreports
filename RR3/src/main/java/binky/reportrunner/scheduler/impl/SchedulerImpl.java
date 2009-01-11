@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -17,6 +18,7 @@ import binky.reportrunner.scheduler.SchedulerException;
 public class SchedulerImpl implements Scheduler {
 
 	private StdScheduler quartzScheduler;
+	private Logger logger = Logger.getLogger(SchedulerImpl.class);
 
 	public StdScheduler getQuartzScheduler() {
 		return quartzScheduler;
@@ -29,15 +31,21 @@ public class SchedulerImpl implements Scheduler {
 	public void addJob(String jobName, String groupName, String className,
 			String cronString, Date startDate, Date endDate)
 			throws SchedulerException {
-
+	
 		// Create our job with the specification RunnerJob
 		JobDetail jobDetail;
 		try {
+			if (this.quartzScheduler.getJobDetail(jobName, groupName) != null) {
+				removeJob(jobName,groupName);
+			}			
 			jobDetail = new JobDetail(jobName, groupName, Class
 					.forName(className));
 		} catch (ClassNotFoundException e) {
 			throw new SchedulerException(
 					"Error with RunnerEngine specification", e);
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException(
+					"Error with scheduler", e);
 		}
 
 		// Create the trigger
@@ -55,8 +63,8 @@ public class SchedulerImpl implements Scheduler {
 		jobTrigger.setName(jobName + ":" + groupName + ":trigger");
 		jobTrigger.setGroup("RunnerTriggers");
 		// Bind the listener
-		//jobDetail.addJobListener("ReportRunnerCoreJobListener");
-		
+		// jobDetail.addJobListener("ReportRunnerCoreJobListener");
+
 		// schedule the job
 		try {
 			this.quartzScheduler.scheduleJob(jobDetail, jobTrigger);
@@ -112,8 +120,20 @@ public class SchedulerImpl implements Scheduler {
 		}
 	}
 
+	public Boolean isScheduled(String jobName, String groupName)
+			throws SchedulerException {		
+		try {
+			return !(this.quartzScheduler.getTrigger(jobName + ":" + groupName
+					+ ":trigger", "RunnerTriggers") == null);
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException("Error getting state for " + jobName
+					+ "/" + groupName, e);
+		}		
+	}
+
 	public void invokeJob(String jobName, String groupName)
 			throws SchedulerException {
+		logger.debug("invoke job: " + groupName + "." + jobName);
 		try {
 
 			this.quartzScheduler.triggerJob(jobName, groupName);
@@ -129,6 +149,7 @@ public class SchedulerImpl implements Scheduler {
 
 	public void pauseJob(String jobName, String groupName)
 			throws SchedulerException {
+		logger.debug("pause job: " + groupName + "." + jobName);
 		try {
 			this.quartzScheduler.pauseJob(jobName, groupName);
 		} catch (org.quartz.SchedulerException e) {
@@ -140,6 +161,7 @@ public class SchedulerImpl implements Scheduler {
 
 	public void removeJob(String jobName, String groupName)
 			throws SchedulerException {
+		logger.debug("remove job: " + groupName + "." + jobName);
 		try {
 			this.quartzScheduler.deleteJob(jobName, groupName);
 		} catch (org.quartz.SchedulerException e) {
@@ -151,16 +173,18 @@ public class SchedulerImpl implements Scheduler {
 
 	public void resumeJob(String jobName, String groupName)
 			throws SchedulerException {
+		logger.debug("resume job: " + groupName + "." + jobName);
 		try {
 			this.quartzScheduler.resumeJob(jobName, groupName);
 		} catch (org.quartz.SchedulerException e) {
-			throw new SchedulerException("Error removing job " + jobName + "/"
+			throw new SchedulerException("Error resuming job " + jobName + "/"
 					+ groupName, e);
 		}
 	}
 
 	public void interruptRunningJob(String jobName, String groupName)
 			throws SchedulerException {
+		logger.debug("interrupt job: " + groupName + "." + jobName);
 		try {
 			this.quartzScheduler.interrupt(jobName, groupName);
 		} catch (org.quartz.SchedulerException e) {
@@ -182,6 +206,26 @@ public class SchedulerImpl implements Scheduler {
 		}
 
 		return currentRunningJobs;
+	}
+
+	public void pauseGroup(String groupName) throws SchedulerException {
+		logger.debug("pause group: " + groupName);
+		try {
+			this.quartzScheduler.pauseJobGroup(groupName);
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException("Error pausing group " 
+					+ groupName, e);
+		}	
+	}
+
+	public void resumeGroup(String groupName) throws SchedulerException {
+		logger.debug("resume group: " + groupName);
+		try {
+			this.quartzScheduler.resumeJobGroup(groupName);
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException("Error resuming group " 
+					+ groupName, e);
+		}			
 	}
 
 }

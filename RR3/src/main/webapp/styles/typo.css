@@ -20,8 +20,8 @@
 	a:link 
 	a:active {
 		color: blue;
-		background-color: white;
-		text-decoration: underline;
+		background-color: transparent;
+		text-decoration: none;
 	}
 	a:visited {
 		color: purple;

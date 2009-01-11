@@ -16,9 +16,7 @@ public class SaveGroup extends AdminRunnerAction {
 	public String execute() throws Exception {
 		String groupName = group.getGroupName();
 		if (super.getUser().getGroups().contains(groupName)
-				|| super.getUser().getIsAdmin()) {
-
-			RunnerGroup group = groupDao.getGroup(groupName);							
+				|| super.getUser().getIsAdmin()) {								
 			groupDao.saveUpdateGroup(group);
 		} else {
 			SecurityException se = new SecurityException("Group " + groupName
@@ -34,6 +32,14 @@ public class SaveGroup extends AdminRunnerAction {
 
 	public void setGroupDao(RunnerGroupDao groupDao) {
 		this.groupDao = groupDao;
+	}
+
+	public RunnerGroup getGroup() {
+		return group;
+	}
+
+	public void setGroup(RunnerGroup group) {
+		this.group = group;
 	}
 
 

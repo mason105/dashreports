@@ -54,8 +54,13 @@ input {
 	<table width="500" height="250" border="0" align="center" cellpadding="2" cellspacing="0"
 		background="images/login_bg.png" class="tableBorder">
 		<tr>
-			<td height="50" colspan="3" align="left"><img
-				src="images/logo.png" width="250" height="50" /></td>
+			<td height="50" colspan="3" align="left"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="250" height="75" align="left" valign="middle"><img
+				src="images/logo.png" alt="report runner" width="250" height="50" /></td>
+                <td align="right" valign="middle"><!--<img src="images/binky_logo.png" alt="binky software" width="200" height="75" />--></td>
+              </tr>
+            </table></td>
 		</tr>
 		<tr>
 			<td width="200" rowspan="4" valign="middle" align="center"><img

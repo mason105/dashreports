@@ -49,4 +49,8 @@ public class InvokeJob extends StandardRunnerAction {
 		this.jobService = jobService;
 	}
 
+	public String getGroupName() {
+		return groupName;
+	}
+
 }

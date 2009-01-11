@@ -1,9 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
-  
 <html>
   <head>  
-    <sx:head parseContent="true"/>  
+    <s:head/>  
   </head>  
   <body>    
       <h1>Data Sources</h1>  

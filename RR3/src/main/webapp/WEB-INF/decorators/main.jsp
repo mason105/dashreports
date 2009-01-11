@@ -17,8 +17,9 @@
 </head>
 <body id="page-home">
 <div id="page">
-<div id="header" class="clearfix"><img
-	src="<s:url value='/images/logo.png'/>" /></div>
+<div id="header" class="clearfix">
+<div class="appLogo"><img src="<s:url value='/images/logo.png'/>" /></div>
+</div>
 
 <div id="content" class="clearfix">
 <div id="main"><decorator:body /></div>

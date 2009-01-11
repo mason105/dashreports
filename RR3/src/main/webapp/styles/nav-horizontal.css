@@ -3,6 +3,7 @@
 /* NAV */
 	div#nav {
         font-size: 0.8em;
+        background: #ddd;
     }
     * html div#nav {
         /* hide ie/mac \*/

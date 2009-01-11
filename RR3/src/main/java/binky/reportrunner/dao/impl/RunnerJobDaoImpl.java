@@ -37,7 +37,7 @@ public class RunnerJobDaoImpl extends HibernateDaoSupport implements
 				.findByCriteria(criteria);
 		if (params.size() > 0)
 			getHibernateTemplate().deleteAll(params);
-
+		getHibernateTemplate().flush();
 		getHibernateTemplate().delete(
 				(RunnerJob) getHibernateTemplate().get(RunnerJob.class, pk));
 

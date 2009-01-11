@@ -32,4 +32,10 @@ public interface Scheduler {
 	
 	public List<String> getCurrentRunningJobs();
 	
+	public Boolean isScheduled(String jobName, String groupName)
+	throws SchedulerException;
+	
+	public void pauseGroup(String groupName) throws SchedulerException;
+	public void resumeGroup(String groupName) throws SchedulerException;	
+
 }

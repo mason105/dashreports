@@ -11,7 +11,7 @@ import org.apache.commons.mail.MultiPartEmail;
 import org.apache.log4j.Logger;
 
 public class EmailHandler {
-	private static final boolean debug = true;
+	private static final boolean debug = false;
 	private static final String subject = "Report Runner Files for: ";
 	private static final String message = "Please find attached outputs for the above job.";
 	private static Logger logger = Logger.getLogger(EmailHandler.class);

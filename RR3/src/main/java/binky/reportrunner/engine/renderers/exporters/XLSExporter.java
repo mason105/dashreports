@@ -31,6 +31,7 @@ public class XLSExporter extends AbstractExporter {
 			// logger.debug("writing header");
 			HSSFRow headerRow = sheet.createRow(rowCount);
 			for (int i = 1; i <= metaData.getColumnCount(); i++) {
+				//TODO:fix
 				HSSFCell cell = headerRow.createCell((short) (i - 1));
 				HSSFRichTextString string = new HSSFRichTextString(metaData
 						.getColumnName(i));
@@ -42,6 +43,7 @@ public class XLSExporter extends AbstractExporter {
 				rowCount++;
 				HSSFRow row = sheet.createRow(rowCount);
 				for (int i = 1; i <= metaData.getColumnCount(); i++) {
+					//TODO:fix
 					HSSFCell cell = row.createCell((short) (i - 1));
 
 					// TODO:make this better by using types

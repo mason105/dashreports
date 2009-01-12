@@ -26,9 +26,8 @@ import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
-import com.opensymphony.xwork2.validator.annotations.Validations;
 
-@Validations
+
 public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;

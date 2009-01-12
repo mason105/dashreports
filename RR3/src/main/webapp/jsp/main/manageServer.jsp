@@ -18,16 +18,20 @@
 		<td class="rowOdd"><a href="#">User Management</a></td>
 	</tr>
 	<tr>
+		<td width="24" class="rowOdd"><img src="<s:url value='/images/dashboard_small.png'/>"/></td>
+		<td class="rowEven"><a href="#">Dashboard Alerts</a></td>
+	</tr>	
+	<tr>
 		<td width="24" class="rowEven"><img src="<s:url value='/images/datasource_small.png'/>"/></td>	
-		<td class="rowEven"><a href="listDataSources.action">Data Source Management</a></td>
+		<td class="rowOdd"><a href="listDataSources.action">Datasource Management</a></td>
 	</tr>
 	<tr>
 		<td width="24" class="rowOdd"><img src="<s:url value='/images/executing_small.png'/>"/></td>
-		<td class="rowOdd"><a href="#">Current Executing Jobs</a></td>
+		<td class="rowEven"><a href="#">Current Executing Jobs</a></td>
 	</tr>
 	<tr>
 		<td width="24" class="rowEven"><img src="<s:url value='/images/stats_small.png'/>"/></td>
-		<td class="rowEven"><a href="#">Statistics and Warnings</a></td>
+		<td class="rowOdd"><a href="#">Statistics and Warnings</a></td>
 	</tr>	
 </table>
 

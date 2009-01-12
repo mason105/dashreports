@@ -31,7 +31,9 @@
 <ul class="clearfix">
 	<li><a href="index.action">Home</a></li>
 	<li><a href="listGroups.action">My Groups</a></li>
-	<li><a href="manageServer.action">Manage Server</a></li>
+	<s:if test="user.isAdmin == true">
+		<li><a href="manageServer.action">Manage Server</a></li>#
+	</s:if>
 	<li><a href="setupChangePassword.action">Change Password</a></li>	
 	<li class="last"><a href="logout.action">Logout</a></li>
 </ul>

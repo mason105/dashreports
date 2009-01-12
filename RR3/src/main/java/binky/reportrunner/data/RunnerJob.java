@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.UrlValidator;
+
 import net.sf.jasperreports.engine.JasperReport;
 
 @Entity
@@ -73,6 +76,8 @@ public class RunnerJob implements Serializable {
 	@ManyToOne
 	private RunnerDataSource datasource;
 	private String description;
+	
+	
 	private String query;
 
 	private Date startDate;
@@ -108,24 +113,6 @@ public class RunnerJob implements Serializable {
 		this.fileFormat = fileFormat;
 	}
 
-	public void setFileFormat(String fileFormat) {
-		if (fileFormat.equals(FileFormat.CSV.getDisplayName())) {
-			this.fileFormat = FileFormat.CSV;
-		}
-		if (fileFormat.equals(FileFormat.HTML.getDisplayName())) {
-			this.fileFormat = FileFormat.HTML;
-		}
-		if (fileFormat.equals(FileFormat.PDF.getDisplayName())) {
-			this.fileFormat = FileFormat.PDF;
-		}
-		if (fileFormat.equals(FileFormat.RTF.getDisplayName())) {
-			this.fileFormat = FileFormat.RTF;
-		}
-		if (fileFormat.equals(FileFormat.XLS.getDisplayName())) {
-			this.fileFormat = FileFormat.XLS;
-		}		
-
-	}
 
 	public String getTargetEmailAddress() {
 		return targetEmailAddress;
@@ -150,7 +137,8 @@ public class RunnerJob implements Serializable {
 	public void setPk(RunnerJob_pk pk) {
 		this.pk = pk;
 	}
-
+	
+	@RequiredStringValidator
 	public String getQuery() {
 		return query;
 	}
@@ -210,7 +198,7 @@ public class RunnerJob implements Serializable {
 	public String getRunnerEngine() {
 		return runnerEngine;
 	}
-
+	@UrlValidator
 	public String getOutputUrl() {
 		return outputUrl;
 	}

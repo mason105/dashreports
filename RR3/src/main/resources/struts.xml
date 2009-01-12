@@ -35,8 +35,7 @@
 		<global-results>
 			<result name="login">/jsp/login/login.jsp</result>
 			<result name="login-success">/jsp/main/index.jsp</result>
-			<result name="securityError">/jsp/securityError.jsp
-			</result>
+			<result name="securityError">/jsp/main/securityError.jsp</result>
 		</global-results>
 		<action name="logout" class="logoutAction"/>
 		<action name="index" class="indexAction">

@@ -3,6 +3,7 @@ package binky.reportrunner.interceptors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.StrutsStatics;
 
 import binky.reportrunner.data.RunnerUser;
@@ -16,7 +17,7 @@ import com.opensymphony.xwork2.interceptor.Interceptor;
 public class UserSessionIntercept implements Interceptor, StrutsStatics {
 
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger logger = Logger.getLogger(UserSessionIntercept.class);
 	public void destroy() {
 
 	}
@@ -26,22 +27,20 @@ public class UserSessionIntercept implements Interceptor, StrutsStatics {
 	}
 
 	public String intercept(ActionInvocation invocation) throws Exception {
-		//StandardRunnerAction action = (StandardRunnerAction) invocation
-			//	.getAction();
-		String forward = invocation.invoke();
 		ActionContext context = invocation.getInvocationContext();
 		HttpServletRequest request = (HttpServletRequest) context
 				.get(HTTP_REQUEST);
 		HttpSession session = request.getSession(true);
 		RunnerUser user = (RunnerUser) session.getAttribute(Statics.USER_HANDLE);
-//		action.setUser(user);
-
 		// if this is an admin function action then check all is well
-		if (invocation.getAction().getClass().equals(AdminRunnerAction.class) && !user.getIsAdmin() ) {
-				forward = "securityError";
+		logger.debug("class name is: " + invocation.getAction().getClass().getName());
+		logger.debug("(invocation.getAction() instanceof AdminRunnerAction)" + (invocation.getAction() instanceof AdminRunnerAction));
+		if ((invocation.getAction() instanceof AdminRunnerAction) && !user.getIsAdmin() ) {
+			logger.warn("access denied to " + invocation.getAction().getClass() + " for user: " + user.getUserName()) ;
+			return "securityError";			
+		} else {
+			return invocation.invoke();
 		}
 		
-
-		return forward;
 	}
 }

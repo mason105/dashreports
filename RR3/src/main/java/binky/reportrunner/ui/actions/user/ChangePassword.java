@@ -17,7 +17,7 @@ public class ChangePassword  extends StandardRunnerAction {
 
 		
 		if (newPassword1.equals(newPassword2)) {
-			if (oldPassword.equals(newPassword1)) {
+			if (oldPassword.equals(getSessionUser().getPassword())) {
 				RunnerUser currentUser = this.getSessionUser();
 				currentUser.setPassword(newPassword1);
 				userDao.saveUpdateUser(currentUser);

@@ -61,8 +61,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
-			if (super.getUser().getGroups().contains(groupName)
-					|| super.getUser().getIsAdmin()) {
+			if (doesUserHaveGroup(groupName)) {
 				if (dispatchSaveButton.equals("Add Parameter")) {
 					logger.debug("dispatching to add parameter");
 					this.doAddParameter();
@@ -80,7 +79,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
-						+ super.getUser().getUserName());
+						+ super.getSessionUser().getUserName());
 				logger.fatal(se.getMessage(), se);
 				throw se;
 			}

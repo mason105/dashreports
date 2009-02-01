@@ -15,12 +15,12 @@ public class SaveGroup extends AdminRunnerAction {
 	@Override
 	public String execute() throws Exception {
 		String groupName = group.getGroupName();
-		if (super.getUser().getGroups().contains(groupName)
-				|| super.getUser().getIsAdmin()) {								
+		if (super.getSessionUser().getGroups().contains(groupName)
+				|| super.getSessionUser().getIsAdmin()) {								
 			groupDao.saveUpdateGroup(group);
 		} else {
 			SecurityException se = new SecurityException("Group " + groupName
-					+ " not valid for user " + super.getUser().getUserName());
+					+ " not valid for user " + super.getSessionUser().getUserName());
 			throw se;
 		}
 		return SUCCESS;

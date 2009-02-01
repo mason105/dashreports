@@ -22,11 +22,11 @@ public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
-		if (super.getUser().getGroups().contains(groupName)
-				|| super.getUser().getIsAdmin()) {
+		if (super.getSessionUser().getGroups().contains(groupName)
+				|| super.getSessionUser().getIsAdmin()) {
 
 			RunnerGroup group = groupDao.getGroup(groupName);
-			if (super.getUser().getGroups().contains(group)) {
+			if (super.getSessionUser().getGroups().contains(group)) {
 				for (RunnerJob job : group.getRunnerJobs()) {
 					if (status) {
 						jobService.resumeJob(job.getPk().getJobName(),
@@ -40,13 +40,13 @@ public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
-						+ super.getUser().getUserName());
+						+ super.getSessionUser().getUserName());
 				// logger.fatal(se.getMessage(),se);
 				throw se;
 			}
 		} else {
 			SecurityException se = new SecurityException("Group " + groupName
-					+ " not valid for user " + super.getUser().getUserName());
+					+ " not valid for user " + super.getSessionUser().getUserName());
 			throw se;
 		}
 		return SUCCESS;

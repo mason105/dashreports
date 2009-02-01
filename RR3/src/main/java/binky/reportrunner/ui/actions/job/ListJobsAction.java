@@ -7,8 +7,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerGroupDao;
-import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
@@ -24,15 +22,13 @@ public class ListJobsAction extends StandardRunnerAction {
 
 	private List<DisplayJob> jobs;
 	private RunnerJobService jobService;
-	private RunnerGroupDao groupDao;
 
 	@Override
 	public String execute() throws Exception {
 		if ((groupName != null) && (!groupName.isEmpty())) {
 			logger.debug("looking for group: " + groupName);
-			RunnerGroup group = groupDao.getGroup(groupName);
-			if (super.getUser().getGroups().contains(group)
-					|| super.getUser().getIsAdmin()) {
+			
+			if (doesUserHaveGroup(groupName)) {
 				List<DisplayJob> jobs = new LinkedList<DisplayJob>();
 				for (RunnerJob job : jobService.listJobs(groupName)) {
 					DisplayJob dJob = new DisplayJob();
@@ -62,7 +58,7 @@ public class ListJobsAction extends StandardRunnerAction {
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
-						+ super.getUser().getUserName());
+						+ super.getSessionUser().getUserName());
 				logger.fatal(se.getMessage(), se);
 				throw se;
 			}
@@ -92,12 +88,5 @@ public class ListJobsAction extends StandardRunnerAction {
 		this.jobService = jobService;
 	}
 
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
-
-	public void setGroupDao(RunnerGroupDao groupDao) {
-		this.groupDao = groupDao;
-	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -21,6 +22,9 @@ public class RunnerGroup {
 	private String groupName;
 	private String groupDescription;
 
+	@ManyToMany
+	private List<RunnerUser> users;
+	
 	@OneToMany
 	private List<RunnerJob> runnerJobs;
 	
@@ -46,6 +50,16 @@ public class RunnerGroup {
 
 	public void setRunnerJobs(List<RunnerJob> runnerJobs) {
 		this.runnerJobs = runnerJobs;
+	}
+	
+	public String toString() {
+		return this.groupName;
+	}
+	public List<RunnerUser> getUsers() {
+		return users;
+	}
+	public void setUsers(List<RunnerUser> users) {
+		this.users = users;
 	}
 
 }

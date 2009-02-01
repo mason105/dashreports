@@ -12,7 +12,7 @@ public class ListUsers extends AdminRunnerAction{
 	private List<RunnerUser> users;
 	@Override
 	public String execute() throws Exception {
-		users=userDao.listUsers();
+		this.users=userDao.listUsers();
 		return SUCCESS;
 	}
 

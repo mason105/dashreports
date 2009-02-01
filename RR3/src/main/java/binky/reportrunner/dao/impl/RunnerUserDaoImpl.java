@@ -3,6 +3,7 @@ package binky.reportrunner.dao.impl;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -29,6 +30,7 @@ public class RunnerUserDaoImpl extends HibernateDaoSupport implements
 	public List<RunnerUser> listUsers() {
 		logger.debug("list users");
 		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerUser.class);
+		criteria=criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY) ;
 		return getHibernateTemplate().findByCriteria(criteria);
 	}
 

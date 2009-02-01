@@ -16,14 +16,14 @@ public class ListGroupsAction extends StandardRunnerAction {
 	private List<RunnerGroup> groups;
 	@Override
 	public String execute() throws Exception{
-		logger.debug("listing groups for: " + super.getUser().getUserName());
-		logger.debug("is admin is null = " + super.getUser().getIsAdmin()==null);
-		if (super.getUser().getIsAdmin()) {
+		logger.debug("listing groups for: " + super.getSessionUser().getUserName());
+		logger.debug("is admin is null = " + super.getSessionUser().getIsAdmin()==null);
+		if (super.getSessionUser().getIsAdmin()) {
 			logger.debug("is admin - allowing all groups");
 			 this.groups=groupDao.listGroups();
 		} else {
 			logger.debug("is not admin - restricting groups");
-			this.groups = super.getUser().getGroups();
+			this.groups = super.getSessionUser().getGroups();
 		}
 		
 		return SUCCESS;		

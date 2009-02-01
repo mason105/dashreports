@@ -7,22 +7,22 @@
 </head>
 <body>
 <span class="pageTitle"><img
-	src="<s:url value='/images/folders.png'/>" align="middle" />Groups</span>
+	src="<s:url value='/images/user.png'/>" align="middle" />Users</span>
 
 <table border="0" width="100%">
 	<s:if test="sessionUser.isAdmin == true">
 	<tr class="rowHeader"> 
 		
-		<td colspan="4" class="rowHeader"><a href="setupEditGroup.action"><img
+		<td colspan="4" class="rowHeader"><a href="setupEditUser.action"><img
 			src="<s:url value='/images/add_small.png'/>" align="absmiddle" />Add
-		Group</a></td>
+		User</a></td>
 	</tr>
 	</s:if>
-	<s:if test="groups.size > 0">
+	<s:if test="users.size > 0">
 		<%
 			boolean rowOdd = true;
 		%>
-		<s:iterator value="groups">
+		<s:iterator value="users">
 			<%
 				if (rowOdd) {
 							rowOdd = false;
@@ -36,15 +36,15 @@
 			<%
 				}
 			%>
-				<td><s:a href="listJobs.action?groupName=%{groupName}">
-					<s:property value="groupName" />
-				</s:a></td>
-				<td><s:property value="groupDescription" /></td>				
+				<td>
+					<s:property value="userName" />
+				</td>
+				<td><s:property value="fullName" /></td>				
 				<s:if test="sessionUser.isAdmin == true">
-					<td width="24"><s:a href="setupEditGroup.action?groupName=%{groupName}">
+					<td width="24"><s:a href="setupEditUser.action?userName=%{userName}">
 						<img src="<s:url value='/images/edit_small.png'/>" align="absmiddle" alt="Edit" />
 					</s:a></td>
-					<td width="24"><s:a href="deleteGroup.action?groupName=%{groupName}"  onClick="return confirm('Really delete this group and all jobs within it?');">
+					<td width="24"><s:a href="deleteUser.action?userName=%{userName}"  onClick="return confirm('Really delete this user?');">
 						<img src="<s:url value='/images/delete_small.png'/>" alt="Delete"
 							align="absmiddle" />
 					</s:a></td>

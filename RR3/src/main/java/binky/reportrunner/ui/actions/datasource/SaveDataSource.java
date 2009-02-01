@@ -27,6 +27,14 @@ public class SaveDataSource extends AdminRunnerAction {
 		this.dataSourceDao = dataSourceDao;
 	}
 
+	public RunnerDataSource getDataSource() {
+		return dataSource;
+	}
+
+	public void setDataSource(RunnerDataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
 	
 	
 }

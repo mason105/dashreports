@@ -15,9 +15,6 @@
 		<property name="jobService">
 			<ref local="runnerJobService" />
 		</property>
-		<property name="groupDao">
-			<ref local="runnerGroupDao" />
-		</property>
 	</bean>
 	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.group.ListGroupsAction"
 		scope="prototype">
@@ -177,6 +174,9 @@
 		<property name="userDao">
 			<ref local="runnerUserDao" />
 		</property>
+		<property name="groupDao">
+			<ref local="runnerGroupDao" />
+		</property>		
 	</bean>
 
 	<bean id="manageServerAction" class="binky.reportrunner.ui.actions.ManageServerAction"

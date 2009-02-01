@@ -29,7 +29,7 @@ public class SetupEditJob extends StandardRunnerAction implements Preparable {
 	private Integer paramCount;
 
 	private List<RunnerDataSource> dataSources;
-
+	
 	public void prepare() throws Exception {
 		dataSources = dataSourceDao.listDataSources();
 
@@ -41,8 +41,8 @@ public class SetupEditJob extends StandardRunnerAction implements Preparable {
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
-			if (super.getUser().getGroups().contains(groupName)
-					|| super.getUser().getIsAdmin()) {
+			if (super.getSessionUser().getGroups().contains(groupName)
+					|| super.getSessionUser().getIsAdmin()) {
 				job = jobService.getJob(jobName, groupName);
 				if (job.getParameters() == null) {
 					paramCount = 0;
@@ -53,7 +53,7 @@ public class SetupEditJob extends StandardRunnerAction implements Preparable {
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
-						+ super.getUser().getUserName());
+						+ super.getSessionUser().getUserName());
 				logger.fatal(se.getMessage(), se);
 				throw se;
 			}

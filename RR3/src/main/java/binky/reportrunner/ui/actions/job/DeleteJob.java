@@ -20,12 +20,12 @@ public class DeleteJob extends StandardRunnerAction {
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
-			if (super.getUser().getGroups().contains(groupName) || super.getUser().getIsAdmin()) {
+			if (doesUserHaveGroup(groupName)) {
 				jobService.deleteJob(jobName, groupName);
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
-						+ super.getUser().getUserName());
+						+ super.getSessionUser().getUserName());
 				logger.fatal(se.getMessage(), se);
 				throw se;
 			}

@@ -3,23 +3,23 @@ package binky.reportrunner.ui.actions.user;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.opensymphony.xwork2.Preparable;
+
 import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.dao.RunnerUserDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
-public class SaveUser extends AdminRunnerAction {
+public class SaveUser extends AdminRunnerAction  implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
 	private RunnerUserDao userDao;
 	private RunnerGroupDao groupDao;
-	private String userName;
-	private String password;
-	private String fullName;
-	private Boolean isAdmin;
-	private List<String> groupNames;
+	private RunnerUser runnerUser;
+	private String[] groupNames;
+	private List<RunnerGroup> groups;
 
 	@Override
 	public String execute() throws Exception {
@@ -30,13 +30,17 @@ public class SaveUser extends AdminRunnerAction {
 			groups.add(group);
 		}
 
-		RunnerUser user = new RunnerUser(userName, password, fullName, isAdmin,
-				groups);
-
-		userDao.saveUpdateUser(user);
+		runnerUser.setGroups(groups);
+		
+		userDao.saveUpdateUser(runnerUser);
 		return SUCCESS;
 	}
 
+	public void prepare() throws Exception {
+		this.groups=groupDao.listGroups();
+	}
+
+	
 	public RunnerGroupDao getGroupDao() {
 		return groupDao;
 	}
@@ -53,24 +57,32 @@ public class SaveUser extends AdminRunnerAction {
 		this.userDao = userDao;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public String[] getGroupNames() {
+		return groupNames;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
-	}
-
-	public void setIsAdmin(Boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
-
-	public void setGroupNames(List<String> groupNames) {
+	public void setGroupNames(String[] groupNames) {
 		this.groupNames = groupNames;
 	}
+
+
+	public RunnerUser getRunnerUser() {
+		return runnerUser;
+	}
+
+	public void setRunnerUser(RunnerUser runnerUser) {
+		this.runnerUser = runnerUser;
+	}
+
+	public List<RunnerGroup> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<RunnerGroup> groups) {
+		this.groups = groups;
+	}
+
+
+
 
 }

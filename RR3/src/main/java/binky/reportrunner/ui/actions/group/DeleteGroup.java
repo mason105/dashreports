@@ -16,8 +16,8 @@ public class DeleteGroup extends AdminRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
-		if (super.getUser().getGroups().contains(groupName)
-				|| super.getUser().getIsAdmin()) {
+		if (super.getSessionUser().getGroups().contains(groupName)
+				|| super.getSessionUser().getIsAdmin()) {
 
 			RunnerGroup group = groupDao.getGroup(groupName);
 			if ((group.getRunnerJobs() != null)
@@ -29,7 +29,7 @@ public class DeleteGroup extends AdminRunnerAction {
 			groupDao.deleteGroup(groupName);
 		} else {
 			SecurityException se = new SecurityException("Group " + groupName
-					+ " not valid for user " + super.getUser().getUserName());
+					+ " not valid for user " + super.getSessionUser().getUserName());
 			throw se;
 		}
 		return SUCCESS;

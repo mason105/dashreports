@@ -16,8 +16,8 @@ public class SetupEditGroup extends AdminRunnerAction {
 	@Override
 	public String execute() throws Exception {
 
-		if (super.getUser().getGroups().contains(groupName)
-				|| super.getUser().getIsAdmin()) {
+		if (super.getSessionUser().getGroups().contains(groupName)
+				|| super.getSessionUser().getIsAdmin()) {
 
 			if (groupName != null) {
 				this.group = groupDao.getGroup(groupName);
@@ -27,7 +27,7 @@ public class SetupEditGroup extends AdminRunnerAction {
 				
 		} else {
 			SecurityException se = new SecurityException("Group " + groupName
-					+ " not valid for user " + super.getUser().getUserName());
+					+ " not valid for user " + super.getSessionUser().getUserName());
 			throw se;
 		}
 

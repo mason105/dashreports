@@ -12,12 +12,18 @@ import javax.persistence.ManyToMany;
 public class RunnerUser implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
 	@Id
 	private String userName;
+
 	private String password;
+
 	private String fullName;
-	private Boolean isAdmin;
-	private Boolean isLocked;
+
+	private Boolean isAdmin = false;
+
+	private Boolean isLocked = false;
+
 	public RunnerUser() {
 	}
 
@@ -27,19 +33,24 @@ public class RunnerUser implements Serializable {
 		this.userName = userName;
 		this.password = password;
 		this.fullName = fullName;
-		this.isAdmin = isAdmin;
+
+		if (isAdmin == null) {
+			this.isAdmin = false;
+		} else {
+			this.isAdmin = isAdmin;
+		}
 		this.groups = groups;
+		this.isLocked = false;
 	}
 
 	public Boolean getIsAdmin() {
-		return isAdmin;
+		return isAdmin==null?false:isAdmin;
 	}
 
 	public void setIsAdmin(Boolean isAdmin) {
 		this.isAdmin = isAdmin;
 	}
 
-	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<RunnerGroup> groups;
 

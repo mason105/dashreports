@@ -15,7 +15,7 @@
 <table width="100%">
 	<tr>
 		<td width="24" class="rowOdd"><img src="<s:url value='/images/user_small.png'/>"/></td>
-		<td class="rowOdd"><a href="#">User Management</a></td>
+		<td class="rowOdd"><a href="listUsers.action">User Management</a></td>
 	</tr>
 	<tr>
 		<td width="24" class="rowOdd"><img src="<s:url value='/images/dashboard_small.png'/>"/></td>

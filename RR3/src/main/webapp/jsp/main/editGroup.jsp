@@ -10,7 +10,8 @@
 	src="<s:url value='/images/folders.png'/>" align="middle" />Edit Group</span>
 
 <s:form action="saveGroup">
-
+	<s:actionerror />
+	<s:actionmessage/>
 	<s:if test="group.groupName != null">
 		<s:textfield label="Group Name" size="32" value="%{group.groupName}"
 			name="group.groupName" readonly="true" cssClass="readOnly"/>

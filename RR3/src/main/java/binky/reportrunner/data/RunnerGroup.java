@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+
 @Entity
 public class RunnerGroup {
 
@@ -28,6 +30,7 @@ public class RunnerGroup {
 	@OneToMany
 	private List<RunnerJob> runnerJobs;
 	
+	@RequiredStringValidator
 	public String getGroupName() {
 		return groupName;
 	}

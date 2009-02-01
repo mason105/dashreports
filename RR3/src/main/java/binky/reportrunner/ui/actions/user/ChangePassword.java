@@ -1,6 +1,7 @@
 package binky.reportrunner.ui.actions.user;
 
 import binky.reportrunner.dao.RunnerUserDao;
+import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ChangePassword  extends StandardRunnerAction {
@@ -9,15 +10,27 @@ public class ChangePassword  extends StandardRunnerAction {
 	private String oldPassword;
 	private String newPassword1;
 	private String newPassword2;
-
 	private RunnerUserDao userDao;
 	
 	@Override
 	public String execute() throws Exception {
-		//RunnerUser currentUser = this.getUser();
-		//currentUser.setPassword(newPassword);
-		///userDao.saveUpdateUser(currentUser);
-		return SUCCESS;
+
+		
+		if (newPassword1.equals(newPassword2)) {
+			if (oldPassword.equals(newPassword1)) {
+				RunnerUser currentUser = this.getSessionUser();
+				currentUser.setPassword(newPassword1);
+				userDao.saveUpdateUser(currentUser);
+				return SUCCESS;
+			} else {
+				super.addActionError("Old password invalid!");
+				return INPUT;
+			}
+		} else {
+			super.addActionError("Passwords do not match!");
+			return INPUT;
+		}
+		
 	}
 	public String getOldPassword() {
 		return oldPassword;

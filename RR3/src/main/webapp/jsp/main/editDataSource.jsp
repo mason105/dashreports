@@ -9,7 +9,8 @@
 <span class="pageTitle"><img src="<s:url value='/images/datasource.png'/>" align="middle" />Edit Datasource</span>
 
 <s:form action="saveDataSource">
-
+	<s:actionerror />
+	<s:actionmessage/>
 	<s:if test="dataSource.dataSourceName != null">
 		<s:textfield label="Data Source Name" size="32"
 			value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName"

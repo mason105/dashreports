@@ -8,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+
 @Entity
 public class RunnerUser implements Serializable {
 
@@ -54,6 +56,7 @@ public class RunnerUser implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<RunnerGroup> groups;
 
+	@RequiredStringValidator
 	public String getUserName() {
 		return userName;
 	}
@@ -62,6 +65,7 @@ public class RunnerUser implements Serializable {
 		this.userName = userName;
 	}
 
+	@RequiredStringValidator
 	public String getPassword() {
 		return password;
 	}

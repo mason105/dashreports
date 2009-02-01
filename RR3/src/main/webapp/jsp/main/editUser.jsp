@@ -10,7 +10,8 @@
 	src="<s:url value='/images/user.png'/>" align="middle" />Edit User</span>
 
 <s:form action="saveUser">
-
+	<s:actionerror />
+	<s:actionmessage/>
 	<s:if test="runnerUser.userName != null">
 		<s:textfield label="User Name" size="32" value="%{runnerUser.userName}"
 			name="runnerUser.userName" readonly="true" cssClass="readOnly"/>

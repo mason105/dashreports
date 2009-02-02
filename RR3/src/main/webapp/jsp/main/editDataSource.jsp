@@ -23,7 +23,7 @@
 	<s:textfield label="JNDI Name" size="60" value="%{dataSource.jndiName}"	name="dataSource.jndiName" />
 		
 		<table align="center">
-		<tr><td>"
+		<tr><td>
 			<div class="wwlbl">
 				<div id="wwlbl_or" class="wwlbl">
 					OR

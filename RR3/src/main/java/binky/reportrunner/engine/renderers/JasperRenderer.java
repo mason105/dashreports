@@ -11,16 +11,19 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 public class JasperRenderer extends AbstractRenderer {
 
 	protected Map<String, String> fileFormats;
 	private JasperReport report;
 
-	public JasperRenderer(JasperReport report) {
+	public JasperRenderer(byte[] templateFile) throws JRException {
 		this.fileFormats = new HashMap<String, String>();
 		// TODO: this lot needs sticking in an xml config file
 
@@ -39,6 +42,12 @@ public class JasperRenderer extends AbstractRenderer {
 		// html renderer
 		fileFormats.put("HTML",
 				"net.sf.jasperreports.engine.export.JRHtmlExporter");
+		
+		JasperDesign jasperDesign = JRXmlLoader.load(new String(templateFile));
+		JasperReport report = JasperCompileManager
+				.compileReport(jasperDesign);
+	
+		
 		this.report = report;
 	}
 

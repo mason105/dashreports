@@ -13,12 +13,28 @@ import javax.persistence.OneToMany;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 
-import net.sf.jasperreports.engine.JasperReport;
-
 @Entity
 public class RunnerJob implements Serializable {
 
 	private static final long serialVersionUID = 2036013437864145537L;
+
+	public enum Template {
+		NONE("No Template"), JASPER("Jasper Reports");
+		private String displayName;
+
+		Template(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
 
 	public enum FileFormat {
 		PDF("PDF"), XLS("XLS"), RTF("RTF"), HTML("HTML"), CSV("CSV");
@@ -45,7 +61,7 @@ public class RunnerJob implements Serializable {
 			Date startDate, Date endDate, String cronString, Boolean isBurst,
 			String burstQuery, String burstFileNameParameterName,
 			String targetEmailAddress, String alertEmailAddress,
-			JasperReport jasperReport, FileFormat fileFormat,
+			byte[] templateFile, Template templateType, FileFormat fileFormat,
 			boolean alertOnSuccess, List<RunnerJobParameter> parameters) {
 		super();
 		this.pk = pk;
@@ -61,7 +77,8 @@ public class RunnerJob implements Serializable {
 		this.burstFileNameParameterName = burstFileNameParameterName;
 		this.targetEmailAddress = targetEmailAddress;
 		this.alertEmailAddress = alertEmailAddress;
-		this.jasperReport = jasperReport;
+		this.templateFile=templateFile;
+		this.templateType=templateType;
 		this.fileFormat = fileFormat;
 		this.alertOnSuccess = alertOnSuccess;
 		this.parameters = parameters;
@@ -71,25 +88,36 @@ public class RunnerJob implements Serializable {
 	private RunnerJob_pk pk;
 
 	private static final String runnerEngine = "binky.reportrunner.engine.RunnerEngine";
+
 	private String outputUrl;
 
 	@ManyToOne
 	private RunnerDataSource datasource;
+
 	private String description;
-	
-	
+
 	private String query;
 
 	private Date startDate;
+
 	private Date endDate;
 
 	private String cronString;
+
 	private Boolean isBurst;
+
 	private String burstQuery;
+
 	private String burstFileNameParameterName;
+
 	private String targetEmailAddress;
+
 	private String alertEmailAddress;
-	private JasperReport jasperReport;
+
+	private byte[] templateFile;
+	
+	private Template templateType;
+
 	private FileFormat fileFormat;
 
 	private boolean alertOnSuccess;
@@ -112,7 +140,6 @@ public class RunnerJob implements Serializable {
 	public void setFileFormat(FileFormat fileFormat) {
 		this.fileFormat = fileFormat;
 	}
-
 
 	public String getTargetEmailAddress() {
 		return targetEmailAddress;
@@ -137,7 +164,7 @@ public class RunnerJob implements Serializable {
 	public void setPk(RunnerJob_pk pk) {
 		this.pk = pk;
 	}
-	
+
 	@RequiredStringValidator
 	public String getQuery() {
 		return query;
@@ -171,14 +198,6 @@ public class RunnerJob implements Serializable {
 		this.burstFileNameParameterName = burstFileNameParameterName;
 	}
 
-	public JasperReport getJasperReport() {
-		return jasperReport;
-	}
-
-	public void setJasperReport(JasperReport jasperReport) {
-		this.jasperReport = jasperReport;
-	}
-
 	public Boolean getIsBurst() {
 		return isBurst;
 	}
@@ -198,6 +217,7 @@ public class RunnerJob implements Serializable {
 	public String getRunnerEngine() {
 		return runnerEngine;
 	}
+
 	@UrlValidator
 	public String getOutputUrl() {
 		return outputUrl;
@@ -237,6 +257,22 @@ public class RunnerJob implements Serializable {
 
 	public void setAlertEmailAddress(String alertEmailAddress) {
 		this.alertEmailAddress = alertEmailAddress;
+	}
+
+	public byte[] getTemplateFile() {
+		return templateFile;
+	}
+
+	public void setTemplateFile(byte[] templateFile) {
+		this.templateFile = templateFile;
+	}
+
+	public Template getTemplateType() {
+		return templateType;
+	}
+
+	public void setTemplateType(Template templateType) {
+		this.templateType = templateType;
 	}
 
 }

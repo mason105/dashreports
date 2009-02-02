@@ -12,7 +12,7 @@ import java.util.List;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.JRException;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Logger;
@@ -22,6 +22,7 @@ import org.quartz.JobExecutionException;
 
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
+import binky.reportrunner.data.RunnerJob.Template;
 import binky.reportrunner.engine.renderers.AbstractRenderer;
 import binky.reportrunner.engine.renderers.JasperRenderer;
 import binky.reportrunner.engine.renderers.StandardRenderer;
@@ -29,18 +30,22 @@ import binky.reportrunner.exceptions.RenderException;
 
 /**
  * @author Daniel Grout
- **/
+ */
 
 public class RunnerEngine implements Job {
 
 	SQLProcessor sqlProcessor;
+
 	FileSystemHandler fs;
+
 	String fromAddress;
+
 	String smtpServer;
+
 	DataSource ds;
 
 	private static final Logger logger = Logger.getLogger(RunnerEngine.class);
-	
+
 	public RunnerEngine() throws IOException {
 		this.sqlProcessor = new SQLProcessor();
 		this.fs = new FileSystemHandler();
@@ -59,16 +64,16 @@ public class RunnerEngine implements Job {
 		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get(
 				"dataSource");
 		try {
-			if (job==null) {
+			if (job == null) {
 				logger.fatal("job is null!");
 				throw new Exception("job is null!");
 			}
-			if (ds==null) {
+			if (ds == null) {
 				logger.fatal("datasource is null!");
 				throw new Exception("datasource is null!");
 			}
-			
-			if ((job.getIsBurst()!=null) && job.getIsBurst()) {
+
+			if ((job.getIsBurst() != null) && job.getIsBurst()) {
 				processBurstedReport(job);
 			} else {
 				processSingleReport(job);
@@ -101,7 +106,9 @@ public class RunnerEngine implements Job {
 						+ burstResults.getObject(param
 								.getParameterBurstColumn()));
 				populatedParams.add(param);
-				logger.debug("added populated param" + param.getPk().getParameterIdx() + " - value - " + param.getParameterValue());
+				logger.debug("added populated param"
+						+ param.getPk().getParameterIdx() + " - value - "
+						+ param.getParameterValue());
 			}
 			String fileNameValue = ""
 					+ burstResults.getObject(job
@@ -117,13 +124,12 @@ public class RunnerEngine implements Job {
 			String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName,
 					groupName, job.getFileFormat().toString().toLowerCase());
 
-			
 			// insert the bursted filename value into the url - probably a
 			// better way to do this.
-			outUrl = outUrl + "_" + fileNameValue;				
+			outUrl = outUrl + "_" + fileNameValue;
 			logger.debug("bursted file being output to: " + outUrl);
-			doReport(results, outUrl, job.getJasperReport(), job
-					.getFileFormat().toString());
+			doReport(results, outUrl, job.getTemplateFile(), job
+					.getTemplateType(), job.getFileFormat().toString());
 
 			fileUrls.add(outUrl);
 
@@ -155,15 +161,15 @@ public class RunnerEngine implements Job {
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
 		Connection conn = ds.getConnection();
-		logger.debug("running single report for:" + groupName+"." + jobName);
+		logger.debug("running single report for:" + groupName + "." + jobName);
 		ResultSet results = sqlProcessor.getResults(conn, job.getQuery(), job
 				.getParameters());
 		// if we are not outputting this anywhere (must be emailing) then
 		// dump this as a temp file
 		String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName, groupName,
 				job.getFileFormat().toString().toLowerCase());
-		doReport(results, outUrl, job.getJasperReport(), job.getFileFormat()
-				.toString());
+		doReport(results, outUrl, job.getTemplateFile(), job.getTemplateType(),
+				job.getFileFormat().toString());
 		conn.close();
 
 		// send email if need be
@@ -181,13 +187,23 @@ public class RunnerEngine implements Job {
 		return outUrl;
 	}
 
-	private void doReport(ResultSet results, String url, JasperReport jReport,
-			String fileFormat) throws RenderException, IOException {
+	private void doReport(ResultSet results, String url, byte[] templateFile,
+			Template templateType, String fileFormat) throws RenderException,
+			IOException {
 		OutputStream os = fs.getOutputStreamForUrl(url);
 		AbstractRenderer renderer;
-		if (jReport != null) {
-			renderer = new JasperRenderer(jReport);
-		} else {
+
+		switch (templateType) {
+		case JASPER:
+
+			try {
+				renderer = new JasperRenderer(templateFile);
+			} catch (JRException e) {
+				logger.error(e.getMessage(), e);
+				throw new RenderException(e.getMessage(), e);
+			}
+			break;
+		default:
 			renderer = new StandardRenderer();
 		}
 		renderer.generateReport(results, os, fileFormat);

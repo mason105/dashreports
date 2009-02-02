@@ -41,8 +41,7 @@ public class SetupEditJob extends StandardRunnerAction implements Preparable {
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
-			if (super.getSessionUser().getGroups().contains(groupName)
-					|| super.getSessionUser().getIsAdmin()) {
+			if (super.doesUserHaveGroup(groupName)) {
 				job = jobService.getJob(jobName, groupName);
 				if (job.getParameters() == null) {
 					paramCount = 0;
@@ -111,6 +110,12 @@ public class SetupEditJob extends StandardRunnerAction implements Preparable {
 	public List<RunnerJob.FileFormat> getFileFormats() {
 		return Arrays.asList(RunnerJob.FileFormat.values());
 	}
+	
+
+	public List<RunnerJob.Template> getTemplateTypes() {
+		return Arrays.asList(RunnerJob.Template.values());
+	}
+	
 	public List<DataType> getDataTypes() {
 		return Arrays.asList(RunnerJobParameter.DataType.values());
 	}

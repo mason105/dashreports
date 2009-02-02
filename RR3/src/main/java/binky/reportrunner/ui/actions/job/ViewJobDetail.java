@@ -1,6 +1,7 @@
 package binky.reportrunner.ui.actions.job;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -40,7 +41,10 @@ public class ViewJobDetail extends StandardRunnerAction {
 				this.job.setJobName(jobName);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 				this.job.setNextRunTime(sdf.format(jobService.getNextRunTime(jobName, groupName)));
-				this.job.setPreviousRunTime(sdf.format(jobService.getPreviousRunTime(jobName, groupName)));
+				Date prt = jobService.getPreviousRunTime(jobName, groupName);
+				if (prt!=null) {
+					this.job.setPreviousRunTime(sdf.format(prt));
+				}
 				this.job.setIsScheduleActive(jobService.isJobActive(jobName, groupName));
 				events = historyDao.getEvents(groupName, jobName);
 			} else {

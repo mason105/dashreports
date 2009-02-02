@@ -1,15 +1,14 @@
 package binky.reportrunner.ui.actions.job;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.apache.log4j.Logger;
 
@@ -27,29 +26,38 @@ import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
 
-
 public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
 	private RunnerJobService jobService;
+
 	private RunnerJob job;
+
 	private File upload;// The actual file
+
 	private String uploadContentType; // The content type of the file
+
 	private String uploadFileName; // The uploaded file name
+
 	private RunnerJobParameterDao parameterDao;
+
 	private String activeTab;
+
 	private List<RunnerJobParameter> parameters;
 
 	private RunnerDataSourceDao dataSourceDao;
+
 	private List<RunnerDataSource> dataSources;
 
 	private String dispatchSaveButton;
+
 	private String groupName;
+
 	private static Logger logger = Logger.getLogger(SaveJob.class);
 
 	public void prepare() throws Exception {
-		this.dataSources = dataSourceDao.listDataSources();		
+		this.dataSources = dataSourceDao.listDataSources();
 	}
 
 	@Override
@@ -68,14 +76,17 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 					return INPUT;
 				} else if (dispatchSaveButton.equals("Save")) {
 					logger.debug("dispatching to save job");
-					this.doSaveJob(jobName, groupName);
+					boolean ok = this.doSaveJob(jobName, groupName);
+					if (!ok) return INPUT;
 				} else if (dispatchSaveButton.startsWith("Delete Parameter")) {
-					logger.debug("dispatching to delete parameter " + dispatchSaveButton.substring(18));
-					int paramIdx = Integer.parseInt(dispatchSaveButton.substring(17));
+					logger.debug("dispatching to delete parameter "
+							+ dispatchSaveButton.substring(18));
+					int paramIdx = Integer.parseInt(dispatchSaveButton
+							.substring(17));
 					this.deleteParameter(paramIdx);
 					return INPUT;
 				}
-						
+
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
@@ -89,16 +100,17 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		}
 		return SUCCESS;
 	}
-	private void deleteParameter(int paramIdx){
-		/*for (RunnerJobParameter p : parameters) {
-			if (p.getPk().getParameterIdx().equals(paramIdx)) {
-				parameters.remove(p);
-			}
-					
-		}*/
-		parameters.remove(paramIdx-1);
+
+	private void deleteParameter(int paramIdx) {
+		/*
+		 * for (RunnerJobParameter p : parameters) { if
+		 * (p.getPk().getParameterIdx().equals(paramIdx)) {
+		 * parameters.remove(p); }
+		 *  }
+		 */
+		parameters.remove(paramIdx - 1);
 		job.setParameters(parameters);
-		this.activeTab="params";
+		this.activeTab = "params";
 	}
 
 	private void doAddParameter() {
@@ -107,35 +119,39 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 			logger.debug("parameters are null so creating new list");
 			parameters = new Vector<RunnerJobParameter>();
 		}
-		/*int maxIdx = 0;
-		for (RunnerJobParameter p : parameters) {
-			if (p.getPk().getParameterIdx() > maxIdx) {
-				maxIdx = p.getPk().getParameterIdx();
-			}
-		}	
-		maxIdx++;
-		*/
-		
+		/*
+		 * int maxIdx = 0; for (RunnerJobParameter p : parameters) { if
+		 * (p.getPk().getParameterIdx() > maxIdx) { maxIdx =
+		 * p.getPk().getParameterIdx(); } } maxIdx++;
+		 */
+
 		RunnerJobParameter parameter = new RunnerJobParameter();
 		RunnerJobParameter_pk pk = new RunnerJobParameter_pk();
-	
-		//pk.setParameterIdx(maxIdx);
-		pk.setParameterIdx(parameters.size()+1);
+
+		// pk.setParameterIdx(maxIdx);
+		pk.setParameterIdx(parameters.size() + 1);
 		parameter.setPk(pk);
-		logger.debug("created new parameter with index of: " + parameters.size()+1); 
+		logger.debug("created new parameter with index of: "
+				+ parameters.size() + 1);
 		parameters.add(parameter);
-		job.setParameters(parameters);		
+		job.setParameters(parameters);
 	}
 
-	private void doSaveJob(String jobName, String groupName)
+	private boolean doSaveJob(String jobName, String groupName)
 			throws JRException, SchedulerException {
-		this.activeTab="report";
+		this.activeTab = "report";
 		// Get the uploaded File And Compile into a jasper report
 		if ((upload != null) && upload.isFile() && upload.exists()) {
-			JasperDesign jasperDesign = JRXmlLoader.load(upload);
-			JasperReport jasperReport = JasperCompileManager
-					.compileReport(jasperDesign);
-			job.setJasperReport(jasperReport);
+			
+			try {
+				byte[] file = getBytesFromFile(upload);
+				job.setTemplateFile(file);
+			} catch (IOException e) {
+				logger.warn(e.getMessage(),e);
+				super.addActionError(e.getMessage());
+				return false;
+			}
+			
 		}
 		// part of my hack work :(
 		job.setParameters(null);
@@ -155,6 +171,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 			}
 			parameterDao.updateParametersForJob(jobName, groupName, parameters);
 		}
+		return true;
 	}
 
 	public RunnerJobService getJobService() {
@@ -264,6 +281,42 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 	public void setActiveTab(String activeTab) {
 		this.activeTab = activeTab;
 	}
-	
-	
+
+	// Returns the contents of the file in a byte array.
+	private byte[] getBytesFromFile(File file) throws IOException {
+		InputStream is = new FileInputStream(file);
+
+		// Get the size of the file
+		long length = file.length();
+
+		// You cannot create an array using a long type.
+		// It needs to be an int type.
+		// Before converting to an int type, check
+		// to ensure that file is not larger than Integer.MAX_VALUE.
+		if (length > Integer.MAX_VALUE) {
+			// File is too large
+		}
+
+		// Create the byte array to hold the data
+		byte[] bytes = new byte[(int) length];
+
+		// Read in the bytes
+		int offset = 0;
+		int numRead = 0;
+		while (offset < bytes.length
+				&& (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+			offset += numRead;
+		}
+
+		// Ensure all the bytes have been read in
+		if (offset < bytes.length) {
+			throw new IOException("Could not completely read file "
+					+ file.getName());
+		}
+
+		// Close the input stream and return bytes
+		is.close();
+		return bytes;
+	}
+
 }

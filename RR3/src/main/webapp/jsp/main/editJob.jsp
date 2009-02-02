@@ -96,7 +96,9 @@
 	</sx:div>
 	
 	<sx:div id="output" label="Output">		
-		<s:file label="Jasper Template File" name="job.upload"></s:file> 
+		<s:select label="Template Type" name="job.templateType" list="templateTypes"
+			listKey="name" listValue="displayName"></s:select>
+		<s:file label="Template File" name="job.upload"></s:file> 
 		<s:select label="File Format" name="job.fileFormat" list="fileFormats"
 			listKey="name" listValue="displayName"></s:select>
 		<s:textfield label="File Name from Burst Column" size="32"

@@ -43,11 +43,11 @@ public class RunnerDataSource implements Serializable {
 
 	private String password;
 
-	private Integer initialPoolSize;
+	private Integer initialPoolSize=3;
 
-	private Integer minPoolSize;
+	private Integer minPoolSize=2;
 
-	private Integer maxPoolSize;
+	private Integer maxPoolSize=5;
 
 	@RequiredStringValidator
 	public String getDataSourceName() {

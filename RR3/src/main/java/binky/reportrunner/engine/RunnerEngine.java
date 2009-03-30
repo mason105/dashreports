@@ -6,8 +6,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 import javax.sql.DataSource;
@@ -21,7 +23,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import binky.reportrunner.data.RunnerJob;
-import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJob.Template;
 import binky.reportrunner.engine.renderers.AbstractRenderer;
 import binky.reportrunner.engine.renderers.JasperRenderer;
@@ -84,6 +85,8 @@ public class RunnerEngine implements Job {
 		}
 	}
 
+	
+	
 	List<String> processBurstedReport(RunnerJob job) throws IOException,
 			RenderException, EmailException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException,
@@ -94,31 +97,14 @@ public class RunnerEngine implements Job {
 		Connection conn;
 
 		conn = ds.getConnection();
-		ResultSet burstResults = sqlProcessor.getResults(conn, job
-				.getBurstQuery());
-
-		List<RunnerJobParameter> params = job.getParameters();
-		while (burstResults.next()) {
-			// populate the parameters
-			List<RunnerJobParameter> populatedParams = new LinkedList<RunnerJobParameter>();
-			for (RunnerJobParameter param : params) {
-				param.setParameterValue(""
-						+ burstResults.getObject(param
-								.getParameterBurstColumn()));
-				populatedParams.add(param);
-				logger.debug("added populated param"
-						+ param.getPk().getParameterIdx() + " - value - "
-						+ param.getParameterValue());
-			}
-			String fileNameValue = ""
-					+ burstResults.getObject(job
-							.getBurstFileNameParameterName());
-
-			// process the query with the results in
-
-			ResultSet results = sqlProcessor.getResults(conn, job.getQuery(),
-					populatedParams);
-
+		
+		RunnerResultGenerator resultGenerator = new RunnerResultGenerator(conn);
+		
+		Map<String, ResultSet> results=new HashMap<String, ResultSet>();
+		resultGenerator.getResultsForJob(job,results);
+		
+		for (String fileNameValue : results.keySet()) {
+			ResultSet rs = results.get(fileNameValue);
 			// if we are not outputting this anywhere (must be emailing) then
 			// dump this as a temp file
 			String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName,
@@ -127,8 +113,10 @@ public class RunnerEngine implements Job {
 			// insert the bursted filename value into the url - probably a
 			// better way to do this.
 			outUrl = outUrl + "_" + fileNameValue;
+			
 			logger.debug("bursted file being output to: " + outUrl);
-			doReport(results, outUrl, job.getTemplateFile(), job
+			
+			doReport(rs, outUrl, job.getTemplateFile(), job
 					.getTemplateType(), job.getFileFormat().toString());
 
 			fileUrls.add(outUrl);

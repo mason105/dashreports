@@ -107,6 +107,15 @@
 			<result>/jsp/main/editGroup.jsp</result>
 		</action>
 
+		<action name="setupViewJob" class="setupJobViewAction">
+			<result>/jsp/main/jobViewerSetup.jsp</result>
+		</action>
+		
+		<action name="viewJobOutput" class="viewJobOutputAction">
+			<result>/jsp/main/jobViewerp.jsp</result>
+		</action>
+
+
 		<action name="deleteDataSource" class="deleteDataSourceAction">
 			<result type="redirectAction">
 				<param name="actionName">listDataSources</param>

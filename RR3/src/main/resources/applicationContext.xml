@@ -59,6 +59,19 @@
 		</property>
 	</bean>
 
+	<bean id="setupJobViewAction" class="binky.reportrunner.ui.actions.job.viewer.SetupJobViewAction"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+	</bean>
+	
+	<bean id="viewJobOutputAction" class="binky.reportrunner.ui.actions.job.viewer.ViewJobOutputAction"
+		scope="prototype">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>
+	</bean>
 
 	<bean id="invokeJobAction" class="binky.reportrunner.ui.actions.job.InvokeJob"
 		scope="prototype">
@@ -262,6 +275,9 @@
 	<bean id="runnerJobService" class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
 		<property name="scheduler" ref="scheduler" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
+		<property name="datasourceService">
+			<ref local="runnerDatasourceService" />
+		</property>			
 	</bean>
 
 	<!--  hibernate plumbing -->

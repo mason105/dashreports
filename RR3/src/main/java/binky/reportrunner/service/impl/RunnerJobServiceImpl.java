@@ -1,21 +1,38 @@
 package binky.reportrunner.service.impl;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import javax.sql.DataSource;
+
+import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.RunnerJobDao;
+import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.data.RunnerJobParameter;
+import binky.reportrunner.engine.RunnerResultGenerator;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
+import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.service.RunnerJobService;
 
 public class RunnerJobServiceImpl implements RunnerJobService {
 	private Scheduler scheduler;
+
 	private RunnerJobDao runnerJobDao;
+
+	private DatasourceService dataSourceService;
+
 	private static final Logger logger = Logger
 			.getLogger(RunnerJobServiceImpl.class);
 
@@ -174,6 +191,48 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	public void resumeGroup(String groupName) throws SchedulerException {
 		logger.debug("resume group: " + groupName);
 		this.scheduler.resumeGroup(groupName);
+	}
+
+	public Map<String, RowSetDynaClass> getResultsForJob(String jobName,
+			String groupName, List<RunnerJobParameter> parameters)
+			throws SQLException {
+		return getResultsForJob(jobName, groupName, null);
+	}
+
+	public Map<String, RowSetDynaClass> getResultsForJob(String jobName,
+			String groupName) throws SQLException, NumberFormatException,
+			ParseException {
+		Map<String, RowSetDynaClass> results = new HashMap<String, RowSetDynaClass>();
+		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		DataSource ds = dataSourceService
+				.getDataSource(job.getDatasource());
+		Connection conn = ds.getConnection();
+
+		try {
+			
+			// get all the results
+			logger.debug("going to get a set of results for job: "
+					+ job.getPk().getJobName() + "/"
+					+ job.getPk().getGroup().getGroupName());
+			RunnerResultGenerator res = new RunnerResultGenerator(conn);
+			Map<String, ResultSet> rs = new HashMap<String, ResultSet>();
+			res.getResultsForJob(job, rs);
+
+			logger.debug("converting to dynasets");
+			
+			for (String key : rs.keySet()) {
+				RowSetDynaClass dynaSet = new RowSetDynaClass(rs.get(key),
+						false);
+				results.put(key, dynaSet);
+			}
+		} finally {
+			conn.close();
+		}
+		return results;
+	}
+
+	public DataSource getDataSource(RunnerDataSource runnerDs) {
+		return dataSourceService.getDataSource(runnerDs);
 	}
 
 }

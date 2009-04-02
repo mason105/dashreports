@@ -13,7 +13,7 @@ import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 @Entity
 public class RunnerUser implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8376600609942516518L;
 
 	@Id
 	private String userName;
@@ -25,6 +25,16 @@ public class RunnerUser implements Serializable {
 	private Boolean isAdmin = false;
 
 	private Boolean isLocked = false;
+	
+	private Boolean isReadOnly = false;
+
+	public Boolean getIsReadOnly() {
+		return isReadOnly;
+	}
+
+	public void setIsReadOnly(Boolean isReadOnly) {
+		this.isReadOnly = isReadOnly;
+	}
 
 	public RunnerUser() {
 	}

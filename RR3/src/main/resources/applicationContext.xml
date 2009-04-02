@@ -59,7 +59,7 @@
 		</property>
 	</bean>
 
-	<bean id="setupJobViewAction" class="binky.reportrunner.ui.actions.job.viewer.SetupJobViewAction"
+	<bean id="setupViewJobAction" class="binky.reportrunner.ui.actions.job.viewer.SetupViewJobAction"
 		scope="prototype">
 		<property name="jobService">
 			<ref local="runnerJobService" />
@@ -275,7 +275,7 @@
 	<bean id="runnerJobService" class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
 		<property name="scheduler" ref="scheduler" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
-		<property name="datasourceService">
+		<property name="dataSourceService">
 			<ref local="runnerDatasourceService" />
 		</property>			
 	</bean>

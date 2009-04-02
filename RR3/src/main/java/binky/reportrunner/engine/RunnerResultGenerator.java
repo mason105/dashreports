@@ -27,7 +27,7 @@ public class RunnerResultGenerator {
 			NumberFormatException, ParseException {
 		SQLProcessor sqlProcessor = new SQLProcessor();
 
-		if (job.getIsBurst()) {
+		if ((job.getIsBurst()!=null) && (job.getIsBurst())) {
 
 			ResultSet burstResults = sqlProcessor.getResults(conn, job
 					.getBurstQuery());

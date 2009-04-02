@@ -28,7 +28,12 @@
 	<s:checkbox label="Is User an Administrator" value="%{runnerUser.isAdmin}"
 		name="runnerUser.isAdmin">
 	</s:checkbox>
-	
+
+	<s:checkbox label="Is User Read Only" value="%{runnerUser.isReadOnly}"
+		name="runnerUser.isReadOnly">
+	</s:checkbox>		
+
+
 	<s:checkbox label="Is Account Locked" value="%{runnerUser.isLocked}"
 		name="runnerUser.isLocked">
 	</s:checkbox>		

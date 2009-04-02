@@ -34,5 +34,13 @@ public abstract class StandardRunnerAction extends ActionSupport {
 			return false;
 		}
 	}
+	
+	protected final boolean isUserReadOnly() {
+		if (getSessionUser().getIsAdmin()) {
+			return true;
+		} else {
+			return getSessionUser().getIsReadOnly();
+		}	
+	}
 
 }

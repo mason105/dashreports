@@ -195,12 +195,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 
 	public Map<String, RowSetDynaClass> getResultsForJob(String jobName,
 			String groupName, List<RunnerJobParameter> parameters)
-			throws SQLException {
-		return getResultsForJob(jobName, groupName, null);
-	}
-
-	public Map<String, RowSetDynaClass> getResultsForJob(String jobName,
-			String groupName) throws SQLException, NumberFormatException,
+			throws  SQLException, NumberFormatException,
 			ParseException {
 		Map<String, RowSetDynaClass> results = new HashMap<String, RowSetDynaClass>();
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
@@ -208,31 +203,54 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 				.getDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 
-		try {
-			
 			// get all the results
 			logger.debug("going to get a set of results for job: "
 					+ job.getPk().getJobName() + "/"
 					+ job.getPk().getGroup().getGroupName());
 			RunnerResultGenerator res = new RunnerResultGenerator(conn);
 			Map<String, ResultSet> rs = new HashMap<String, ResultSet>();
+			if (parameters!=null) job.setParameters(parameters);
 			res.getResultsForJob(job, rs);
 
 			logger.debug("converting to dynasets");
 			
 			for (String key : rs.keySet()) {
-				RowSetDynaClass dynaSet = new RowSetDynaClass(rs.get(key),
-						false);
-				results.put(key, dynaSet);
+				ResultSet result = rs.get(key);
+				int lastRow=0;
+				if ((result!=null)) {
+						//&&(result.last())){
+					//lastRow=result.getRow();
+					//result.first();
+					RowSetDynaClass dynaSet = new RowSetDynaClass(result, false);					
+					result.close();
+					logger.debug(dynaSet.getRows().size());
+					results.put(key, dynaSet);
+
+				}
+				logger.debug("Tab name=" + key + " rows=" + lastRow);
 			}
-		} finally {
+	
 			conn.close();
-		}
 		return results;
+	}
+
+	public Map<String, RowSetDynaClass> getResultsForJob(String jobName,
+			String groupName) throws SQLException, NumberFormatException,
+			ParseException {
+		return getResultsForJob(jobName, groupName, null);	
 	}
 
 	public DataSource getDataSource(RunnerDataSource runnerDs) {
 		return dataSourceService.getDataSource(runnerDs);
 	}
 
+	public DatasourceService getDataSourceService() {
+		return dataSourceService;
+	}
+
+	public void setDataSourceService(DatasourceService dataSourceService) {
+		this.dataSourceService = dataSourceService;
+	}
+
+	
 }

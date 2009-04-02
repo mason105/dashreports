@@ -107,12 +107,12 @@
 			<result>/jsp/main/editGroup.jsp</result>
 		</action>
 
-		<action name="setupViewJob" class="setupJobViewAction">
+		<action name="setupViewJob" class="setupViewJobAction">
 			<result>/jsp/main/jobViewerSetup.jsp</result>
 		</action>
 		
 		<action name="viewJobOutput" class="viewJobOutputAction">
-			<result>/jsp/main/jobViewerp.jsp</result>
+			<result>/jsp/main/jobViewer.jsp</result>
 		</action>
 
 

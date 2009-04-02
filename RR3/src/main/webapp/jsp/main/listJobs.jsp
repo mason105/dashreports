@@ -50,7 +50,7 @@
 				}
 			%>              
               <td>  
-                <s:property value="jobName" />  
+                <s:a href="setupViewJob.action?jobName=%{jobName}&groupName=%{groupName}"><s:property value="jobName" /></s:a>
               </td>  
               <td>  
                 <s:property value="description" />  
@@ -70,7 +70,7 @@
 							align="absmiddle" /></s:a>&nbsp;			
               </td>
               <td  width="24">				 
-				 <s:a href="setupEditJob.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/edit_small.png'/>" align="absmiddle" alt="Edit" /></s:a>&nbsp;
+				 <s:a href="setupEditJob.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/edit_small.png'/>" align="absmiddle" alt="Edit" /></s:a>
 			  </td>
 			  <td width="24">
 				 <s:if test="isScheduled">				

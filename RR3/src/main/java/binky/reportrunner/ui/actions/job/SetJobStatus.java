@@ -37,7 +37,7 @@ public class SetJobStatus extends StandardRunnerAction {
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
-			if (doesUserHaveGroup(groupName)) {
+			if (doesUserHaveGroup(groupName) && isUserReadOnly()) {
 				if (jobStatus) {
 					logger.debug("resume job");
 					jobService.resumeJob(jobName, groupName);

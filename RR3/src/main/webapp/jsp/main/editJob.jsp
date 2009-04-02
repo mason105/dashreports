@@ -60,10 +60,12 @@
 			name="parameters[%{#rowstatus.index}].pk.parameterIdx" /> <s:textfield
 			label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
 			value="%{parameterValue}">
-		</s:textfield> <s:textfield label="Burst Column"
+		</s:textfield> 
+		<s:textfield label="Burst Column"
 			name="parameters[%{#rowstatus.index}].parameterBurstColumn"
 			value="%{parameterBurstColumn}">
-		</s:textfield> <s:select label="Data Type"
+		</s:textfield>
+		 <s:select label="Data Type"
 			name="parameters[%{#rowstatus.index}].parameterType" list="dataTypes"
 			listKey="name" listValue="displayName">
 

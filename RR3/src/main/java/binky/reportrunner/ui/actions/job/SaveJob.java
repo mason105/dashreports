@@ -69,7 +69,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
-			if (doesUserHaveGroup(groupName)) {
+			if (doesUserHaveGroup(groupName) && isUserReadOnly()) {
 				if (dispatchSaveButton.equals("Add Parameter")) {
 					logger.debug("dispatching to add parameter");
 					this.doAddParameter();

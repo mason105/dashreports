@@ -17,7 +17,8 @@
 			
 	<div class="smallLabel">Group Name <s:property
 			value="%{groupName}" /></div>
-
+	
+	<sx:tabbedpanel id="edit">
 	<s:iterator value="results" status="rowstatus">
 		<sx:div id="reportTab_%{key}" label="%{key}">	
 			<display:table name="value.rows"  pagesize="25" requestURI="viewJobOutput.action" export="true">
@@ -29,7 +30,7 @@
 			</display:table>
 		</sx:div>
 	</s:iterator>
-
+	</sx:tabbedpanel>
 </body>
 </html>
 	

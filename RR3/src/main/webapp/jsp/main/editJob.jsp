@@ -57,14 +57,23 @@
 		<div class="smallLabel">Parameter Index <s:property
 			value="%{pk.parameterIdx}" /></div>
 		<s:hidden value="%{pk.parameterIdx}"
-			name="parameters[%{#rowstatus.index}].pk.parameterIdx" /> <s:textfield
+			name="parameters[%{#rowstatus.index}].pk.parameterIdx" />
+		
+		<s:textfield
+			label="Description" name="parameters[%{#rowstatus.index}].description"
+			value="%{description}">
+		</s:textfield> 
+					
+		<s:textfield
 			label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
 			value="%{parameterValue}">
 		</s:textfield> 
+		
 		<s:textfield label="Burst Column"
 			name="parameters[%{#rowstatus.index}].parameterBurstColumn"
 			value="%{parameterBurstColumn}">
 		</s:textfield>
+		
 		 <s:select label="Data Type"
 			name="parameters[%{#rowstatus.index}].parameterType" list="dataTypes"
 			listKey="name" listValue="displayName">

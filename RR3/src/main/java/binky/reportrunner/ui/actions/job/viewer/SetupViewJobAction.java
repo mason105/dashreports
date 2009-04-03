@@ -1,6 +1,9 @@
 package binky.reportrunner.ui.actions.job.viewer;
 
-import binky.reportrunner.data.RunnerJob;
+import java.util.List;
+import java.util.Map;
+
+import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -10,12 +13,12 @@ public class SetupViewJobAction extends StandardRunnerAction {
 
 	private String jobName;
 	private String groupName;
-	private RunnerJob job;
+	private Map<RunnerJobParameter, List<Object>> parameters;
 	private RunnerJobService jobService;
 	
 	@Override
 	public String execute() throws Exception {
-		job = jobService.getJob(jobName, groupName);
+		parameters = jobService.getPossibleParameterValues(jobName, groupName);
 		return SUCCESS;
 	}
 
@@ -43,12 +46,12 @@ public class SetupViewJobAction extends StandardRunnerAction {
 		this.jobName = jobName;
 	}
 
-	public RunnerJob getJob() {
-		return job;
+	public Map<RunnerJobParameter, List<Object>> getParameters() {
+		return parameters;
 	}
 
-	public void setJob(RunnerJob job) {
-		this.job = job;
+	public void setParameters(Map<RunnerJobParameter, List<Object>> parameters) {
+		this.parameters = parameters;
 	}
 	
 }

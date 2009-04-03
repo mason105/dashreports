@@ -22,32 +22,34 @@
 			value="%{groupName}" /></div>
 
 	
-	<s:iterator value="job.parameters" status="rowstatus">
+	<s:iterator value="parameters" status="rowstatus">
 		<div class="formSectionInner">
 		<div class="smallLabel">Parameter Index <s:property
 			value="%{pk.parameterIdx}" /></div>
-		<s:hidden value="%{pk.parameterIdx}"
+		<s:hidden value="%{key.pk.parameterIdx}"
 			name="parameters[%{#rowstatus.index}].pk.parameterIdx" /> 
+
+		<div class="smallLabel">Description <s:property
+			value="%{pk.description}" /></div>
 		
-		<s:if test="parameters[%{#rowstatus.index}].parameterBurstColumn == null">
+		<s:if test="key.parameterBurstColumn == null">
 			<s:textfield
 				label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
-				value="%{parameterValue}">
+				value="%{key.parameterValue}">
 			</s:textfield> 
 		</s:if> <s:else>
-			<s:textfield
+			<s:select
 				label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
-				value="%{parameterValue}"  readonly="true" cssClass="readOnly">
-			</s:textfield> 
+				value="%{key.parameterValue}"  list="value">
+			</s:select> 
 		</s:else> 
 			
 		<s:textfield label="Burst Column"
 			name="parameters[%{#rowstatus.index}].parameterBurstColumn"
-			value="%{parameterBurstColumn}" readonly="true" cssClass="readOnly"></s:textfield> 
+			value="%{key.parameterBurstColumn}" readonly="true" cssClass="readOnly"></s:textfield> 
 
-		 <s:select label="Data Type"
-			name="parameters[%{#rowstatus.index}].parameterType" list="dataTypes"
-			listKey="name" listValue="displayName" readonly="true" cssClass="readOnly"></s:select> 
+		<s:hidden value="%{key.pk.parameterType}"
+			name="parameters[%{#rowstatus.index}].parameterType" /> 
 		</div>
 	</s:iterator>
 	

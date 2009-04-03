@@ -27,7 +27,7 @@ public class RunnerJobParameter {
 	private RunnerJobParameter_pk pk;
 	private String parameterValue;
 	private String parameterBurstColumn;
-
+	private String description;
 	public String getParameterBurstColumn() {
 		return parameterBurstColumn;
 	}
@@ -80,6 +80,14 @@ public class RunnerJobParameter {
 
 	public void setParameterValue(String parameterValue) {
 		this.parameterValue = parameterValue;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

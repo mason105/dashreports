@@ -36,5 +36,6 @@ public interface RunnerJobService {
 	public Map<String, RowSetDynaClass> getResultsForJob(String jobName, String groupName, List<RunnerJobParameter> parameters) throws SQLException, NumberFormatException, ParseException;
 	public Map<String, RowSetDynaClass> getResultsForJob(String jobName, String groupName) throws SQLException, NumberFormatException, ParseException;
 	
+	public Map<RunnerJobParameter, List<Object>> getPossibleParameterValues(String jobName, String groupName) throws SQLException,NumberFormatException, ParseException;
 	
 }

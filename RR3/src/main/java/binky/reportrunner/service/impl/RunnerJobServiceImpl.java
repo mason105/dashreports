@@ -21,6 +21,7 @@ import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.RunnerResultGenerator;
+import binky.reportrunner.engine.SQLProcessor;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DatasourceService;
@@ -195,49 +196,90 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 
 	public Map<String, RowSetDynaClass> getResultsForJob(String jobName,
 			String groupName, List<RunnerJobParameter> parameters)
-			throws  SQLException, NumberFormatException,
-			ParseException {
+			throws SQLException, NumberFormatException, ParseException {
 		Map<String, RowSetDynaClass> results = new HashMap<String, RowSetDynaClass>();
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
-		DataSource ds = dataSourceService
-				.getDataSource(job.getDatasource());
+		DataSource ds = dataSourceService.getDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 
-			// get all the results
-			logger.debug("going to get a set of results for job: "
-					+ job.getPk().getJobName() + "/"
-					+ job.getPk().getGroup().getGroupName());
-			RunnerResultGenerator res = new RunnerResultGenerator(conn);
-			Map<String, ResultSet> rs = new HashMap<String, ResultSet>();
-			if (parameters!=null) job.setParameters(parameters);
-			res.getResultsForJob(job, rs);
+		// get all the results
+		logger.debug("going to get a set of results for job: "
+				+ job.getPk().getJobName() + "/"
+				+ job.getPk().getGroup().getGroupName());
+		RunnerResultGenerator res = new RunnerResultGenerator(conn);
+		Map<String, ResultSet> rs = new HashMap<String, ResultSet>();
+		if (parameters != null)
+			job.setParameters(parameters);
+		res.getResultsForJob(job, rs);
 
-			logger.debug("converting to dynasets");
-			
-			for (String key : rs.keySet()) {
-				ResultSet result = rs.get(key);
-				int lastRow=0;
-				if ((result!=null)) {
-						//&&(result.last())){
-					//lastRow=result.getRow();
-					//result.first();
-					RowSetDynaClass dynaSet = new RowSetDynaClass(result, false);					
-					result.close();
-					logger.debug(dynaSet.getRows().size());
-					results.put(key, dynaSet);
+		logger.debug("converting to dynasets");
 
-				}
-				logger.debug("Tab name=" + key + " rows=" + lastRow);
+		for (String key : rs.keySet()) {
+			ResultSet result = rs.get(key);
+			int lastRow = 0;
+			if ((result != null)) {
+				// &&(result.last())){
+				// lastRow=result.getRow();
+				// result.first();
+				RowSetDynaClass dynaSet = new RowSetDynaClass(result, false);
+				result.close();
+				logger.debug(dynaSet.getRows().size());
+				results.put(key, dynaSet);
+
 			}
-	
-			conn.close();
+			logger.debug("Tab name=" + key + " rows=" + lastRow);
+		}
+
+		conn.close();
 		return results;
 	}
 
 	public Map<String, RowSetDynaClass> getResultsForJob(String jobName,
 			String groupName) throws SQLException, NumberFormatException,
 			ParseException {
-		return getResultsForJob(jobName, groupName, null);	
+		return getResultsForJob(jobName, groupName, null);
+	}
+
+	public Map<RunnerJobParameter, List<Object>> getPossibleParameterValues(
+			String jobName, String groupName) throws SQLException,
+			NumberFormatException, ParseException {
+		Map<RunnerJobParameter, List<Object>> paramValues = new HashMap<RunnerJobParameter, List<Object>>();
+		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		DataSource ds = dataSourceService.getDataSource(job.getDatasource());
+		Connection conn = ds.getConnection();
+		SQLProcessor sqlProcessor = new SQLProcessor();
+
+		logger.debug("getting burst result for " + jobName + "/" + groupName);
+		try {
+			ResultSet rs = sqlProcessor.getResults(conn, job.getBurstQuery());
+
+			for (RunnerJobParameter p : job.getParameters()) {
+
+				List<Object> values = new LinkedList<Object>();
+
+				if ((p.getParameterBurstColumn() != null)
+						&& (!p.getParameterBurstColumn().isEmpty())) {
+
+					rs.beforeFirst();
+					logger.debug("getting values for parameter: "
+							+ p.getDescription());
+					while (rs.next()) {
+						Object value = rs
+								.getObject(p.getParameterBurstColumn());
+						if (!values.contains(value)) {
+							logger.debug("found value: " + value);
+							values.add(value);
+						}
+					}
+
+				}
+				paramValues.put(p, values);
+
+			}
+		} finally {
+			conn.close();
+		}
+		return paramValues;
 	}
 
 	public DataSource getDataSource(RunnerDataSource runnerDs) {
@@ -252,5 +294,4 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		this.dataSourceService = dataSourceService;
 	}
 
-	
 }

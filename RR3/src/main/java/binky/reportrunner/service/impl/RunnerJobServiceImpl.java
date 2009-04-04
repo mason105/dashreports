@@ -57,7 +57,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		}
 
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
-			scheduler.addJob(jobName, groupName, job.getRunnerEngine(), job
+			scheduler.addJob(jobName, groupName, job
 					.getCronString(), job.getStartDate(), job.getEndDate());
 		}
 
@@ -157,7 +157,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			// schedule it then remove it
 			// TODO test this works as it is the mother of all hacks
 			Date date = Calendar.getInstance().getTime();
-			scheduler.addJob(jobName, groupName, job.getRunnerEngine(),
+			scheduler.addJob(jobName, groupName, 
 					"0/1 * * * * ?", date, new Date(date.getTime() + 1000));
 			scheduler.invokeJob(jobName, groupName);
 		}

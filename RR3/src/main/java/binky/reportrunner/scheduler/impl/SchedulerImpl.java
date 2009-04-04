@@ -12,6 +12,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
 import org.quartz.impl.StdScheduler;
 
+import binky.reportrunner.engine.RunnerEngine;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 
@@ -28,7 +29,7 @@ public class SchedulerImpl implements Scheduler {
 		this.quartzScheduler = quartzScheduler;
 	}
 
-	public void addJob(String jobName, String groupName, String className,
+	public void addJob(String jobName, String groupName, 
 			String cronString, Date startDate, Date endDate)
 			throws SchedulerException {
 	
@@ -38,11 +39,7 @@ public class SchedulerImpl implements Scheduler {
 			if (this.quartzScheduler.getJobDetail(jobName, groupName) != null) {
 				removeJob(jobName,groupName);
 			}			
-			jobDetail = new JobDetail(jobName, groupName, Class
-					.forName(className));
-		} catch (ClassNotFoundException e) {
-			throw new SchedulerException(
-					"Error with RunnerEngine specification", e);
+			jobDetail = new JobDetail(jobName, groupName,RunnerEngine.class);
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException(
 					"Error with scheduler", e);
@@ -226,6 +223,16 @@ public class SchedulerImpl implements Scheduler {
 			throw new SchedulerException("Error resuming group " 
 					+ groupName, e);
 		}			
+	}
+
+	public void addDashboardAlert(Integer alertId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void removedDashboardAlert(Integer alertId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

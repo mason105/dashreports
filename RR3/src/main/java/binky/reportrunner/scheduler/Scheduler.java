@@ -11,7 +11,7 @@ public interface Scheduler {
 	
 	public Boolean isSchedulerActive()  throws SchedulerException;
 
-	public void addJob(String jobName, String groupName, String className,String cronString,
+	public void addJob(String jobName, String groupName,String cronString,
 			Date startDate, Date endDate) throws SchedulerException;
 	
 	public void removeJob(String jobName, String groupName) throws SchedulerException;
@@ -38,4 +38,6 @@ public interface Scheduler {
 	public void pauseGroup(String groupName) throws SchedulerException;
 	public void resumeGroup(String groupName) throws SchedulerException;	
 
+	public void addDashboardAlert(Integer alertId);
+	public void removedDashboardAlert(Integer alertId);
 }

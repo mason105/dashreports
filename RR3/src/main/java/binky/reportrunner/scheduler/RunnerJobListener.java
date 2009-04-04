@@ -12,11 +12,14 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
+import binky.reportrunner.dao.RunnerDashboardAlertDao;
 import binky.reportrunner.dao.RunnerHistoryDao;
 import binky.reportrunner.dao.RunnerJobDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.engine.EmailHandler;
+import binky.reportrunner.engine.RunnerEngine;
+import binky.reportrunner.engine.dashboard.AlertProcessor;
 import binky.reportrunner.service.DatasourceService;
 
 public class RunnerJobListener implements JobListener {
@@ -25,12 +28,17 @@ public class RunnerJobListener implements JobListener {
 			.getLogger(RunnerJobListener.class);
 
 	private String smtpServer;
+
 	private String fromAddress;
 
 	private RunnerHistoryDao runnerHistoryDao;
+
 	private RunnerJobDao runnerJobDao;
+
 	private DatasourceService datasourceService;
 
+	private RunnerDashboardAlertDao dashboardDao;
+	
 	public void jobExecutionVetoed(JobExecutionContext ctx) {
 		RunnerHistoryEvent event = new RunnerHistoryEvent();
 		event.setGroupName(ctx.getJobDetail().getGroup());
@@ -44,50 +52,66 @@ public class RunnerJobListener implements JobListener {
 	}
 
 	public void jobToBeExecuted(JobExecutionContext ctx) {
-		String jobName = ctx.getJobDetail().getName();
-		String groupName = ctx.getJobDetail().getGroup();
 
-		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
-		ctx.getJobDetail().getJobDataMap().put("runnerJob", job);
+		if (ctx.getJobDetail().getJobClass().equals(RunnerEngine.class)) {
 
-		ctx.getJobDetail().getJobDataMap().put("smtpServer", this.smtpServer);
-		ctx.getJobDetail().getJobDataMap().put("fromAddress", this.fromAddress);
-		DataSource ds = datasourceService.getDataSource(job.getDatasource());
-		ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
-		logger.info("Job to be executed: " + ctx.getJobDetail().getName() + "/"
-				+ ctx.getJobDetail().getGroup());
+			String jobName = ctx.getJobDetail().getName();
+			String groupName = ctx.getJobDetail().getGroup();
 
+			RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+			ctx.getJobDetail().getJobDataMap().put("runnerJob", job);
+
+			ctx.getJobDetail().getJobDataMap().put("smtpServer",
+					this.smtpServer);
+			ctx.getJobDetail().getJobDataMap().put("fromAddress",
+					this.fromAddress);
+			DataSource ds = datasourceService
+					.getDataSource(job.getDatasource());
+			ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
+			logger.info("Job to be executed: " + ctx.getJobDetail().getName()
+					+ "/" + ctx.getJobDetail().getGroup());
+		} else if (ctx.getJobDetail().getJobClass()
+				.equals(AlertProcessor.class)) {
+			// stuff for the dashboards
+		}
 	}
 
 	public void jobWasExecuted(JobExecutionContext ctx, JobExecutionException ex) {
-		Boolean success = (ex == null);
-		String jobName = ctx.getJobDetail().getName();
-		String groupName = ctx.getJobDetail().getGroup();
-		RunnerHistoryEvent event = new RunnerHistoryEvent();
-		event.setGroupName(groupName);
-		event.setJobName(jobName);
-		
-		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		if (ctx.getJobDetail().getJobClass().equals(RunnerEngine.class)) {
 
-		event.setMessage(success ? "Job Execution Success"
-				: "Job Execution Failure: " + getCustomStackTrace(ex));
-		Date finishTime = Calendar.getInstance().getTime();
-		event.setTimestamp(finishTime);
-		event.setSuccess(success);
-		event.setRunTime(ctx.getJobRunTime());
-		runnerHistoryDao.saveEvent(event);
+			Boolean success = (ex == null);
+			String jobName = ctx.getJobDetail().getName();
+			String groupName = ctx.getJobDetail().getGroup();
+			RunnerHistoryEvent event = new RunnerHistoryEvent();
+			event.setGroupName(groupName);
+			event.setJobName(jobName);
 
-		if (success) {
-			logger.info("Job was executed: " + ctx.getJobDetail().getName()
-					+ "/" + ctx.getJobDetail().getGroup());
-		} else {
-			logger.error("Job Failed : " + ctx.getJobDetail().getName() + "/"
-					+ ctx.getJobDetail().getGroup(), ex);
-		}
-		
-		if ((job.getAlertEmailAddress() != null)&&!job.getAlertEmailAddress().isEmpty()) {
-			sendEmailAlert(jobName, groupName, job.getAlertEmailAddress(),
-					finishTime, success);
+			RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+
+			event.setMessage(success ? "Job Execution Success"
+					: "Job Execution Failure: " + getCustomStackTrace(ex));
+			Date finishTime = Calendar.getInstance().getTime();
+			event.setTimestamp(finishTime);
+			event.setSuccess(success);
+			event.setRunTime(ctx.getJobRunTime());
+			runnerHistoryDao.saveEvent(event);
+
+			if (success) {
+				logger.info("Job was executed: " + ctx.getJobDetail().getName()
+						+ "/" + ctx.getJobDetail().getGroup());
+			} else {
+				logger.error("Job Failed : " + ctx.getJobDetail().getName()
+						+ "/" + ctx.getJobDetail().getGroup(), ex);
+			}
+
+			if ((job.getAlertEmailAddress() != null)
+					&& !job.getAlertEmailAddress().isEmpty()) {
+				sendEmailAlert(jobName, groupName, job.getAlertEmailAddress(),
+						finishTime, success);
+			}
+		} else if (ctx.getJobDetail().getJobClass()
+				.equals(AlertProcessor.class)) {
+				//Dashboard stuff
 		}
 
 	}
@@ -163,6 +187,14 @@ public class RunnerJobListener implements JobListener {
 
 	public void setDatasourceService(DatasourceService datasourceService) {
 		this.datasourceService = datasourceService;
+	}
+
+	public RunnerDashboardAlertDao getDashboardDao() {
+		return dashboardDao;
+	}
+
+	public void setDashboardDao(RunnerDashboardAlertDao dashboardDao) {
+		this.dashboardDao = dashboardDao;
 	}
 
 }

@@ -87,8 +87,6 @@ public class RunnerJob implements Serializable {
 	@Id
 	private RunnerJob_pk pk;
 
-	private static final String runnerEngine = "binky.reportrunner.engine.RunnerEngine";
-
 	private String outputUrl;
 
 	@ManyToOne
@@ -212,10 +210,6 @@ public class RunnerJob implements Serializable {
 
 	public void setBurstQuery(String burstQuery) {
 		this.burstQuery = burstQuery;
-	}
-
-	public String getRunnerEngine() {
-		return runnerEngine;
 	}
 
 	@UrlValidator

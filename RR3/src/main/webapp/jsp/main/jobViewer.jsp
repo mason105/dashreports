@@ -22,11 +22,11 @@
 	<s:iterator value="results" status="rowstatus">
 		<sx:div id="reportTab_%{key}" label="%{key}">	
 			<display:table name="value.rows"  pagesize="25" requestURI="viewJobOutput.action" export="true">
-			    <display:setProperty name="export.rtf.filename" value="history.rtf"/>
-			    <display:setProperty name="export.csv.filename" value="history.csv"/>
+			    <display:setProperty name="export.rtf.filename" value="output.rtf"/>
+			    <display:setProperty name="export.csv.filename" value="output.csv"/>
 			    <display:setProperty name="export.xls" value="false" />
-			    <display:setProperty name="export.xml.filename" value="history.xml"/>
-			    <display:setProperty name="export.pdf.filename" value="history.pdf"/>		
+			    <display:setProperty name="export.xml.filename" value="output.xml"/>
+			    <display:setProperty name="export.pdf.filename" value="output.pdf"/>		
 			</display:table>
 		</sx:div>
 	</s:iterator>

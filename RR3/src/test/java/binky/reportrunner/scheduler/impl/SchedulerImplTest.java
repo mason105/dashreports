@@ -40,7 +40,6 @@ public class SchedulerImplTest extends TestCase {
 	public void testAddJobGetStatus() {
 		try {
 			scheduler.addJob("test1", testGroup,
-					"binky.reportrunner.engine.RunnerEngine",
 					"0 11 11 11 11 ?", new Date(), null);
 			assertTrue(scheduler.isJobActive("test1", testGroup));
 			assertNotNull(scheduler.getNextRunTime("test1", testGroup));
@@ -66,8 +65,7 @@ public class SchedulerImplTest extends TestCase {
 
 	public void testPauseResumeJob() {
 		try {
-			scheduler.addJob("test1", testGroup,
-					"binky.reportrunner.engine.RunnerEngine",
+			scheduler.addJob("test1", testGroup,					
 					"0 11 11 11 11 ?", new Date(), null);
 			assertTrue(scheduler.isJobActive("test1", testGroup));
 			scheduler.pauseJob("test1", testGroup);

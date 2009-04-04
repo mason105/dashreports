@@ -1,5 +1,6 @@
 package binky.reportrunner.data;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -10,7 +11,9 @@ import javax.persistence.OneToMany;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity
-public class RunnerGroup {
+public class RunnerGroup implements Serializable {
+
+	private static final long serialVersionUID = -5727491198024680384L;
 
 	public RunnerGroup(String groupName, String groupDescription,
 			List<RunnerJob> runnerJobs) {

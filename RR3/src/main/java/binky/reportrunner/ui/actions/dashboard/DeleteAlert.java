@@ -7,16 +7,20 @@ public class DeleteAlert extends AdminRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private DashboardService dashboardService;
+	private Integer id;
 	@Override
 	public String execute() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		dashboardService.deleteAlert(id);
+		return SUCCESS;
 	}
 	public DashboardService getDashboardService() {
 		return dashboardService;
 	}
 	public void setDashboardService(DashboardService dashboardService) {
 		this.dashboardService = dashboardService;
+	}
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 }

@@ -1,8 +1,10 @@
 package binky.reportrunner.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import binky.reportrunner.dao.RunnerDashboardAlertDao;
+import binky.reportrunner.data.DashboardAlertData;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
@@ -48,6 +50,12 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
+	}
+	public List<DashboardAlertData> getAlertDataForRange(Integer alertId, Date startDateTime, Date endDateTime) {
+		return dashboardDao.getAlertDataForRange(alertId, startDateTime, endDateTime);
+	}
+	public DashboardAlertData getLatestAlertData(Integer alertId) {
+		return dashboardDao.getLatestAlertData(alertId);
 	}
 
 }

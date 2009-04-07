@@ -35,6 +35,7 @@
 		<li><a href="manageServer.action">Manage Server</a></li>
 	</s:if>
 	<li><a href="setupChangePassword.action">Change Password</a></li>	
+	<li><a href="https://sourceforge.net/forum/forum.php?forum_id=848787">Help</a></li>
 	<li class="last"><a href="logout.action">Logout</a></li>
 </ul>
 </div>

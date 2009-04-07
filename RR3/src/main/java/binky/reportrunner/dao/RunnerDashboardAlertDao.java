@@ -1,5 +1,6 @@
 package binky.reportrunner.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import binky.reportrunner.data.DashboardAlertData;
@@ -13,5 +14,6 @@ public interface RunnerDashboardAlertDao {
 	public List<RunnerDashboardAlert> getAllAlerts();
 	public List<RunnerDashboardAlert> getAlertsForGroup(String groupName);
 	public void saveAlertData(DashboardAlertData data);
-	
+	public DashboardAlertData getLatestAlertData(Integer alertId);
+	public List<DashboardAlertData> getAlertDataForRange(Integer alertId, Date startDateTime, Date endDateTime);
 }

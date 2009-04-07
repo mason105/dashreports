@@ -1,5 +1,6 @@
 package binky.reportrunner.dao.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -50,6 +51,16 @@ public class RunnerDashboardAlertDaoImpl extends HibernateDaoSupport implements 
 	public void saveUpdateAlert(RunnerDashboardAlert alert) {
 		logger.debug("save or update for: " + alert.getAlertName());
 		getHibernateTemplate().saveOrUpdate(alert);	
+	}
+
+	public List<DashboardAlertData> getAlertDataForRange(Integer alertId, Date startDateTime, Date endDateTime) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public DashboardAlertData getLatestAlertData(Integer alertId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

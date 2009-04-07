@@ -13,6 +13,7 @@ import org.quartz.Trigger;
 import org.quartz.impl.StdScheduler;
 
 import binky.reportrunner.engine.RunnerEngine;
+import binky.reportrunner.engine.dashboard.AlertProcessor;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 
@@ -225,14 +226,51 @@ public class SchedulerImpl implements Scheduler {
 		}			
 	}
 
-	public void addDashboardAlert(Integer alertId) {
-		// TODO Auto-generated method stub
+	public void addDashboardAlert(Integer alertId, String cronTab) throws SchedulerException {
+		// Create our job with the specification RunnerJob
+		String jobName=alertId.toString(); 
+		String groupName="RR3DASHBOARDS";
+		JobDetail jobDetail;
+		try {
+			if (this.quartzScheduler.getJobDetail(jobName, groupName) != null) {
+				removeJob(jobName,groupName);
+			}			
+			jobDetail = new JobDetail(jobName, groupName,AlertProcessor.class);
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException(
+					"Error with scheduler", e);
+		}
+
+		// Create the trigger
+		CronTrigger jobTrigger = new CronTrigger();
+		try {
+			jobTrigger.setCronExpression(cronTab);
+		} catch (ParseException e) {
+			throw new SchedulerException("Error with cron configuration", e);
+		}
+
+		jobTrigger.setStartTime(new Date());
 		
+		jobTrigger.setName(jobName + ":" + groupName + ":trigger");
+		jobTrigger.setGroup("RunnerTriggers");
+		// Bind the listener
+		// jobDetail.addJobListener("ReportRunnerCoreJobListener");
+
+		// schedule the job
+		try {
+			this.quartzScheduler.scheduleJob(jobDetail, jobTrigger);
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException("Error dashboard alert scheduling with quartz", e);
+		}
 	}
 
-	public void removedDashboardAlert(Integer alertId) {
-		// TODO Auto-generated method stub
-		
+	public void removedDashboardAlert(Integer alertId) throws SchedulerException {
+		logger.debug("remove alert: " + alertId);
+		try {
+			this.quartzScheduler.deleteJob(alertId.toString(), "RR3DASHBOARDS");
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException("Error removing dashboard alert from scheduler: RR-DASHBOARD"+alertId+"/RR3DASHBOARDS", e);
+		}
 	}
 
 }

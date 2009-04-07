@@ -5,6 +5,7 @@ import java.util.List;
 import binky.reportrunner.dao.RunnerDashboardAlertDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.scheduler.Scheduler;
+import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DashboardService;
 
 public class DashboardServiceImpl implements DashboardService {
@@ -16,7 +17,7 @@ public class DashboardServiceImpl implements DashboardService {
 	public RunnerDashboardAlert getAlert(Integer id) {
 		return dashboardDao.getAlert(id);
 	}
-	public void deleteAlert(Integer id) {
+	public void deleteAlert(Integer id) throws SchedulerException {
 		dashboardDao.deleteAlert(id);
 		scheduler.removedDashboardAlert(id);		
 	}
@@ -29,12 +30,12 @@ public class DashboardServiceImpl implements DashboardService {
 		return dashboardDao.getAllAlerts();
 	}
 
-	public void saveUpdateAlert(RunnerDashboardAlert alert) {
+	public void saveUpdateAlert(RunnerDashboardAlert alert) throws SchedulerException {
 		if (alert.getId()!=null){
 			scheduler.removedDashboardAlert(alert.getId());
 		}
 		dashboardDao.saveUpdateAlert(alert);
-		scheduler.addDashboardAlert(alert.getId());		
+		scheduler.addDashboardAlert(alert.getId(),alert.getCronTab());		
 	}
 	public RunnerDashboardAlertDao getDashboardDao() {
 		return dashboardDao;

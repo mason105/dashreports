@@ -38,6 +38,6 @@ public interface Scheduler {
 	public void pauseGroup(String groupName) throws SchedulerException;
 	public void resumeGroup(String groupName) throws SchedulerException;	
 
-	public void addDashboardAlert(Integer alertId);
-	public void removedDashboardAlert(Integer alertId);
+	public void addDashboardAlert(Integer alertId, String cronTab) throws SchedulerException;
+	public void removedDashboardAlert(Integer alertId)throws SchedulerException;
 }

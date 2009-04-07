@@ -7,7 +7,7 @@ import binky.reportrunner.data.RunnerDashboardAlert;
 
 public interface RunnerDashboardAlertDao {
 
-	public void saveUpdateAlert();
+	public void saveUpdateAlert(RunnerDashboardAlert alert);
 	public void deleteAlert(Integer id);
 	public RunnerDashboardAlert getAlert(Integer id);
 	public List<RunnerDashboardAlert> getAllAlerts();

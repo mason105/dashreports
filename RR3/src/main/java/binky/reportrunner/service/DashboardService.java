@@ -9,6 +9,6 @@ public interface DashboardService {
 	public List<RunnerDashboardAlert> getAlertsForGroup(String groupName);
 	public List<RunnerDashboardAlert> getAllAlerts();
 	public void saveUpdateAlert(RunnerDashboardAlert alert);
-	public void deleteAlert(RunnerDashboardAlert alert);
+	public void deleteAlert(Integer id);
 	public RunnerDashboardAlert getAlert(Integer id);
 }

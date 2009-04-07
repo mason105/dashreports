@@ -2,8 +2,6 @@ package binky.reportrunner.service.impl;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import binky.reportrunner.dao.RunnerDashboardAlertDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.scheduler.Scheduler;
@@ -11,31 +9,32 @@ import binky.reportrunner.service.DashboardService;
 
 public class DashboardServiceImpl implements DashboardService {
 	
-	private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
+	//private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
 	
 	private RunnerDashboardAlertDao dashboardDao;
 	private Scheduler scheduler;
 	public RunnerDashboardAlert getAlert(Integer id) {
-		return null;
+		return dashboardDao.getAlert(id);
 	}
-	public void deleteAlert(RunnerDashboardAlert alert) {
-		// TODO Auto-generated method stub
-		
+	public void deleteAlert(Integer id) {
+		dashboardDao.deleteAlert(id);
+		scheduler.removedDashboardAlert(id);		
 	}
 
 	public List<RunnerDashboardAlert> getAlertsForGroup(String groupName) {
-		// TODO Auto-generated method stub
-		return null;
+		return dashboardDao.getAlertsForGroup(groupName);
 	}
 
 	public List<RunnerDashboardAlert> getAllAlerts() {
-		// TODO Auto-generated method stub
-		return null;
+		return dashboardDao.getAllAlerts();
 	}
 
 	public void saveUpdateAlert(RunnerDashboardAlert alert) {
-		// TODO Auto-generated method stub
-		
+		if (alert.getId()!=null){
+			scheduler.removedDashboardAlert(alert.getId());
+		}
+		dashboardDao.saveUpdateAlert(alert);
+		scheduler.addDashboardAlert(alert.getId());		
 	}
 	public RunnerDashboardAlertDao getDashboardDao() {
 		return dashboardDao;

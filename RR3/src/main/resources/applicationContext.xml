@@ -196,6 +196,36 @@
 		scope="prototype">
 	</bean>
 
+	<bean id="dashboardService" class="binky.reportrunner.service.DashboardService" scope="prototype">
+		<property="dashboardDao">
+			<ref local="dashboardDao" />
+		</property>
+	</bean>	
+	
+	<bean id="deleteAlertAction" class="binky.reportrunner.service.dashboard.DeleteAlert" scope="prototype">
+		<property="dashboardService">
+			<ref local="dashboardService" />
+		</property>		
+	</bean>
+
+	<bean id="setupEditAlertAction" class="binky.reportrunner.service.dashboard.SetupEditAlert" scope="prototype">
+		<property="dashboardService">
+			<ref local="dashboardService" />
+		</property>		
+	</bean>
+
+	<bean id="saveAlertAction" class="binky.reportrunner.service.dashboard.SaveAlert" scope="prototype">
+		<property="dashboardService">
+			<ref local="dashboardService" />
+		</property>		
+	</bean>
+
+	<bean id="listAlertsAction" class="binky.reportrunner.service.dashboard.ListAlerts" scope="prototype">
+		<property="dashboardService">
+			<ref local="dashboardService" />
+		</property>		
+	</bean>
+
 	<!--  properties file -->
 	<bean id="placeholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -296,6 +326,8 @@
 		</property>
 		<property name="annotatedClasses">
 			<list>
+				<value>binky.reportrunner.data.RunnerDashboardAlert</value>
+				<value>binky.reportrunner.data.DashboardAlertData</value>
 				<value>binky.reportrunner.data.RunnerHistoryEvent</value>
 				<value>binky.reportrunner.data.RunnerJob</value>
 				<value>binky.reportrunner.data.RunnerJobParameter</value>
@@ -377,6 +409,20 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="dashboardDaoTarget" class="binky.reportrunner.dao.impl.RunnerDashboardDaoImp"
+		autowire="byName" />
+	<bean id="dashboardDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerDashboardDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>dashboardDaoTarget</value>
+			</list>
+		</property>
+	</bean>
+	
 	<bean id="runnerDataSourceDaoTarget" class="binky.reportrunner.dao.impl.RunnerDataSourceDaoImpl"
 		autowire="byName" />
 	<bean id="runnerDataSourceDao" class="org.springframework.aop.framework.ProxyFactoryBean">
@@ -412,6 +458,9 @@
 		<property name="datasourceService">
 			<ref local="runnerDatasourceService" />
 		</property>
+		<property="dashboardDao">
+			<ref local="dashboardDao" />
+		</property>		
 	</bean>
 	<bean id="runnerDatasourceService" class="binky.reportrunner.service.impl.DatasourceServiceImpl"
 		scope="singleton">		

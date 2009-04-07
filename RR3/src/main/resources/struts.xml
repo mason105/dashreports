@@ -145,10 +145,32 @@
 			</result>
 		</action>
 
-
+		<action name="setupEditUser" class="setupEditUserAction">
+			<result>/jsp/main/editUser.jsp</result>
+		</action>
 
 		<action name="setupEditUser" class="setupEditUserAction">
 			<result>/jsp/main/editUser.jsp</result>
+		</action>
+
+		<action name="listAlerts" class="listAlerts">
+			<result>/jsp/main/listAlerts.jsp</result>
+		</action>
+		
+		<action name="setupEditAlert" class="setupEditAlertAction">
+			<result>/jsp/main/editAlert.jsp</result>
+		</action>
+		
+		<action name="saveAlert" class="saveAlertAction">
+			<result type="redirectAction">
+				<param name="actionName">listAlerts</param>
+			</result>
+		</action>
+
+		<action name="deleteAlert" class="deleteAlertAction">
+			<result type="redirectAction">
+				<param name="actionName">listAlerts</param>
+			</result>
 		</action>
 
 

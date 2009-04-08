@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -70,9 +72,25 @@ public class AlertProcessor implements Job {
 		
 		try {
 			ResultSet rs = conn.createStatement().executeQuery(sql);
+			int colCount = rs.getMetaData().getColumnCount();
+			List<String> colNames = new LinkedList<String>();
+			for (int i=1;i<=colCount;i++) {
+				colNames.add(rs.getMetaData().getColumnClassName(i));
+			}
+			
 			rs.first();
-			data.setValue(rs.getObject(0));
+			StringBuilder values= new StringBuilder();
+			
+			for (String colName:colNames) {
+				if (values.length()!=0) values.append("|");
+				values.append(colName);
+				values.append("|");
+				values.append(rs.getObject(colName));
+			
+			}
+			
 			dashboardDao.saveAlertData(data);
+			rs.close();
 		} finally {
 			conn.close();
 		}

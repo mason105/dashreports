@@ -15,5 +15,6 @@ public interface RunnerDashboardAlertDao {
 	public List<RunnerDashboardAlert> getAlertsForGroup(String groupName);
 	public void saveAlertData(DashboardAlertData data);
 	public DashboardAlertData getLatestAlertData(Integer alertId);
+	public List<DashboardAlertData> getLatestAlertData(Integer alertId, int count);
 	public List<DashboardAlertData> getAlertDataForRange(Integer alertId, Date startDateTime, Date endDateTime);
 }

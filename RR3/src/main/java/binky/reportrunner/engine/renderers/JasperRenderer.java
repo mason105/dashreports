@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.exceptions.RenderException;
 
 import net.sf.jasperreports.engine.JRException;
@@ -23,6 +25,8 @@ public class JasperRenderer extends AbstractRenderer {
 	protected Map<String, String> fileFormats;
 	private JasperReport report;
 
+	private Logger logger = Logger.getLogger(JasperRenderer.class);
+	
 	public JasperRenderer(byte[] templateFile) throws JRException {
 		this.fileFormats = new HashMap<String, String>();
 		// TODO: this lot needs sticking in an xml config file
@@ -54,19 +58,21 @@ public class JasperRenderer extends AbstractRenderer {
 	public void generateReport(ResultSet resultSet, OutputStream outputStream,
 			String extension) throws RenderException {
 
+		logger.debug("creating datasource from result set");
 		JRResultSetDataSource jrDs = new JRResultSetDataSource(resultSet);
 
 		JasperPrint jp;
 		try {
+			logger.debug("filling report");
 			jp = JasperFillManager.fillReport(report,
 					new HashMap<String, Object>(), jrDs);
 
-			// logger.debug("finished filling report");
+			logger.debug("finished filling report");
 
 			JRExporter exporter = (JRExporter) Class.forName(
 					fileFormats.get(extension)).newInstance();
 
-			// logger.debug(reportName + " :exporting report");
+			logger.debug("exporting report");
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
 					outputStream);
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);

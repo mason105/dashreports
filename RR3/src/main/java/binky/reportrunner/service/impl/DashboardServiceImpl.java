@@ -57,5 +57,8 @@ public class DashboardServiceImpl implements DashboardService {
 	public DashboardAlertData getLatestAlertData(Integer alertId) {
 		return dashboardDao.getLatestAlertData(alertId);
 	}
+	public List<DashboardAlertData> getLatestAlertData(Integer alertId, int count) {
+		return dashboardDao.getLatestAlertData(alertId,count);
+	}
 
 }

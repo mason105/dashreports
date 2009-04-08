@@ -34,6 +34,26 @@ public class RunnerDashboardAlert implements Serializable {
 
 	}
 
+	public enum DisplayType {
+
+		Basic("Basic"), Dial("Dial");
+		private String displayName;
+
+		DisplayType(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
+
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -42,10 +62,16 @@ public class RunnerDashboardAlert implements Serializable {
 
 	@ManyToOne
 	private RunnerGroup group;
+	
+	private String subGroupName;
 
+	//for use in line graphs on dash
+	private Integer historicValues;
+	
 	private String alertQuery;
 
 	private String cronTab;
+
 
 	@ManyToOne
 	private RunnerDataSource dataSource;
@@ -57,7 +83,11 @@ public class RunnerDashboardAlert implements Serializable {
 	private Integer upper;
 
 	private AlertType alertType;
-
+	
+	private DisplayType displayType;
+	
+	private char unit;
+	
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<DashboardAlertData> collectedValues;
 
@@ -147,6 +177,38 @@ public class RunnerDashboardAlert implements Serializable {
 
 	public void setUpper(Integer upper) {
 		this.upper = upper;
+	}
+
+	public Integer getHistoricValues() {
+		return historicValues;
+	}
+
+	public void setHistoricValues(Integer historicValues) {
+		this.historicValues = historicValues;
+	}
+
+	public DisplayType getDisplayType() {
+		return displayType;
+	}
+
+	public void setDisplayType(DisplayType displayType) {
+		this.displayType = displayType;
+	}
+
+	public char getUnit() {
+		return unit;
+	}
+
+	public void setUnit(char unit) {
+		this.unit = unit;
+	}
+
+	public String getSubGroupName() {
+		return subGroupName;
+	}
+
+	public void setSubGroupName(String subGroupName) {
+		this.subGroupName = subGroupName;
 	}
 
 }

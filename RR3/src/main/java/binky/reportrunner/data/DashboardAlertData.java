@@ -11,7 +11,7 @@ public class DashboardAlertData {
 	@Id
 	private DashboardAlertData_pk pk;
 	private Date timeDataCollected;
-	private Object value;
+	private String values;
 	public DashboardAlertData_pk getPk() {
 		return pk;
 	}
@@ -24,12 +24,11 @@ public class DashboardAlertData {
 	public void setTimeDataCollected(Date timeDataCollected) {
 		this.timeDataCollected = timeDataCollected;
 	}
-	public Object getValue() {
-		return value;
+	public String getValues() {
+		return values;
 	}
-	public void setValue(Object value) {
-		this.value = value;
-	}
-	
+	public void setValues(String values) {
+		this.values = values;
+	}	
 	
 }

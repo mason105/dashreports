@@ -16,5 +16,6 @@ public interface DashboardService {
 	public RunnerDashboardAlert getAlert(Integer id);
 	public DashboardAlertData getLatestAlertData(Integer alertId);
 	public List<DashboardAlertData> getAlertDataForRange(Integer alertId, Date startDateTime, Date endDateTime);
-	
+	public List<DashboardAlertData> getLatestAlertData(Integer alertId, int count);
+
 }

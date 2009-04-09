@@ -1,5 +1,7 @@
 package binky.reportrunner.engine;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,10 +10,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.jasperreports.engine.JRException;
+
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
+import binky.reportrunner.data.RunnerJob.Template;
+import binky.reportrunner.engine.renderers.AbstractRenderer;
+import binky.reportrunner.engine.renderers.JasperRenderer;
+import binky.reportrunner.engine.renderers.StandardRenderer;
+import binky.reportrunner.exceptions.RenderException;
 
 public class RunnerResultGenerator {
 	private Logger logger = Logger.getLogger(RunnerResultGenerator.class);
@@ -76,4 +85,28 @@ public class RunnerResultGenerator {
 		return true;
 	}
 
+	public void renderReport(ResultSet results, String url, byte[] templateFile,
+			Template templateType, String fileFormat) throws RenderException,
+			IOException {
+		FileSystemHandler fs = new FileSystemHandler();
+		OutputStream os = fs.getOutputStreamForUrl(url);
+		AbstractRenderer renderer;
+
+		switch (templateType) {
+		case JASPER:
+
+			try {
+				renderer = new JasperRenderer(templateFile);
+			} catch (JRException e) {
+				logger.error(e.getMessage(), e);
+				throw new RenderException(e.getMessage(), e);
+			}
+			break;
+		default:
+			renderer = new StandardRenderer();
+		}
+		renderer.generateReport(results, os, fileFormat);
+		os.close();
+	}
+	
 }

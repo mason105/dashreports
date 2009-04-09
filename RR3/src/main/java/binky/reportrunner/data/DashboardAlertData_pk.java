@@ -1,11 +1,15 @@
 package binky.reportrunner.data;
 
+import java.io.Serializable;
+
 import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.ManyToOne;
 
 @Embeddable
-public class DashboardAlertData_pk {
+public class DashboardAlertData_pk implements Serializable {
+
+	private static final long serialVersionUID = 819372468218173921L;
 
 	@GeneratedValue
 	private Integer id;

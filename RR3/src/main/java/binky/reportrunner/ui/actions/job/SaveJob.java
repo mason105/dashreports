@@ -253,7 +253,12 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 	public List<RunnerJob.FileFormat> getFileFormats() {
 		return Arrays.asList(RunnerJob.FileFormat.values());
 	}
+	
 
+	public List<RunnerJob.Template> getTemplateTypes() {
+		return Arrays.asList(RunnerJob.Template.values());
+	}
+	
 	public List<DataType> getDataTypes() {
 		return Arrays.asList(RunnerJobParameter.DataType.values());
 	}

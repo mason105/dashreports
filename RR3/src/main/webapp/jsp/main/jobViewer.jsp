@@ -20,13 +20,9 @@
 	
 	<sx:tabbedpanel id="edit">
 	<s:iterator value="results" status="rowstatus">
-		<sx:div id="reportTab_%{key}" label="%{key}">	
-			<display:table name="value.rows"  pagesize="25" requestURI="viewJobOutput.action" export="true">
-			    <display:setProperty name="export.rtf.filename" value="output.rtf"/>
-			    <display:setProperty name="export.csv.filename" value="output.csv"/>
-			    <display:setProperty name="export.xls" value="false" />
-			    <display:setProperty name="export.xml.filename" value="output.xml"/>
-			    <display:setProperty name="export.pdf.filename" value="output.pdf"/>		
+		<sx:div id="reportTab_%{key}" label="%{key}">
+			<a href="downloadReport.action?id=<s:property value="%{value.outputId}"/>&jobName=<s:property value="%{jobName}"/>&groupName=<s:property value="%{groupName}"/>" target="_blank">Download</a>	
+			<display:table name="value.rowSet.rows"  pagesize="25" requestURI="viewJobOutput.action" export="false">	
 			</display:table>
 		</sx:div>
 	</s:iterator>

@@ -4,6 +4,14 @@
 	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
 	<!--  actions -->
+
+	<bean id="downloadReportAction" class="binky.reportrunner.ui.actions.job.viewer.DownloadReportAction">
+		<property name="jobService">
+			<ref local="runnerJobService" />
+		</property>	
+	</bean>
+
+
 	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction"
 		scope="prototype" />
 	
@@ -197,31 +205,31 @@
 	</bean>
 
 	<bean id="dashboardService" class="binky.reportrunner.service.DashboardService" scope="prototype">
-		<property="dashboardDao">
+		<property name="dashboardDao">
 			<ref local="dashboardDao" />
 		</property>
 	</bean>	
 	
-	<bean id="deleteAlertAction" class="binky.reportrunner.service.dashboard.DeleteAlert" scope="prototype">
-		<property="dashboardService">
+	<bean id="deleteAlertAction" class="binky.reportrunner.ui.actions.dashboard.DeleteAlert" scope="prototype">
+		<property name="dashboardService">
 			<ref local="dashboardService" />
 		</property>		
 	</bean>
 
-	<bean id="setupEditAlertAction" class="binky.reportrunner.service.dashboard.SetupEditAlert" scope="prototype">
-		<property="dashboardService">
+	<bean id="setupEditAlertAction" class="binky.reportrunner.ui.actions.dashboard.SetupEditAlert" scope="prototype">
+		<property name="dashboardService">
 			<ref local="dashboardService" />
 		</property>		
 	</bean>
 
-	<bean id="saveAlertAction" class="binky.reportrunner.service.dashboard.SaveAlert" scope="prototype">
-		<property="dashboardService">
+	<bean id="saveAlertAction" class="binky.reportrunner.ui.actions.dashboard.SaveAlert" scope="prototype">
+		<property name="dashboardService">
 			<ref local="dashboardService" />
 		</property>		
 	</bean>
 
-	<bean id="listAlertsAction" class="binky.reportrunner.service.dashboard.ListAlerts" scope="prototype">
-		<property="dashboardService">
+	<bean id="listAlertsAction" class="binky.reportrunner.ui.actions.dashboard.ListAlerts" scope="prototype">
+		<property name="dashboardService">
 			<ref local="dashboardService" />
 		</property>		
 	</bean>
@@ -409,11 +417,11 @@
 			</list>
 		</property>
 	</bean>
-	<bean id="dashboardDaoTarget" class="binky.reportrunner.dao.impl.RunnerDashboardDaoImp"
+	<bean id="dashboardDaoTarget" class="binky.reportrunner.dao.impl.RunnerDashboardAlertDaoImpl"
 		autowire="byName" />
 	<bean id="dashboardDao" class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerDashboardDao</value>
+			<value>binky.reportrunner.dao.RunnerDashboardAlertDao</value>
 		</property>
 		<property name="interceptorNames">
 			<list>
@@ -422,7 +430,7 @@
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="runnerDataSourceDaoTarget" class="binky.reportrunner.dao.impl.RunnerDataSourceDaoImpl"
 		autowire="byName" />
 	<bean id="runnerDataSourceDao" class="org.springframework.aop.framework.ProxyFactoryBean">
@@ -458,7 +466,7 @@
 		<property name="datasourceService">
 			<ref local="runnerDatasourceService" />
 		</property>
-		<property="dashboardDao">
+		<property name="dashboardDao">
 			<ref local="dashboardDao" />
 		</property>		
 	</bean>

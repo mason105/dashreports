@@ -33,24 +33,31 @@
 			value="%{pk.description}" /></div>
 		
 		<s:if test="key.parameterBurstColumn == null">
+	
+
 			<s:textfield
 				label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
 				value="%{key.parameterValue}">
 			</s:textfield> 
-		</s:if> <s:else>
+
+		</s:if> <s:else> 
+		<!-- going to shelve this for a bit 
 			<s:select
 				label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
 				value="%{key.parameterValue}"  list="value">
 			</s:select> 
-		</s:else> 
-			
-		<s:textfield label="Burst Column"
-			name="parameters[%{#rowstatus.index}].parameterBurstColumn"
-			value="%{key.parameterBurstColumn}" readonly="true" cssClass="readOnly"></s:textfield> 
 
-		<s:hidden value="%{key.pk.parameterType}"
-			name="parameters[%{#rowstatus.index}].parameterType" /> 
-		</div>
+		-->						
+		</s:else> 
+		
+		<s:hidden
+		name="parameters[%{#rowstatus.index}].parameterBurstColumn"
+		value="%{key.parameterBurstColumn}" />
+		
+		<s:hidden value="%{key.parameterType}"
+				name="parameters[%{#rowstatus.index}].parameterType" /> 
+			</div>
+	
 	</s:iterator>
 	
 	<div class="formSubmit" id="save">

@@ -1,5 +1,6 @@
 package binky.reportrunner.service.impl;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.sql.DataSource;
 
@@ -22,6 +24,8 @@ import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.RunnerResultGenerator;
 import binky.reportrunner.engine.SQLProcessor;
+import binky.reportrunner.engine.ViewerResults;
+import binky.reportrunner.exceptions.RenderException;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DatasourceService;
@@ -194,10 +198,10 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		this.scheduler.resumeGroup(groupName);
 	}
 
-	public Map<String, RowSetDynaClass> getResultsForJob(String jobName,
+	public Map<String, ViewerResults> getResultsForJob(String jobName,
 			String groupName, List<RunnerJobParameter> parameters)
-			throws SQLException, NumberFormatException, ParseException {
-		Map<String, RowSetDynaClass> results = new HashMap<String, RowSetDynaClass>();
+			throws SQLException, NumberFormatException, ParseException, RenderException, IOException {
+		Map<String, ViewerResults> results = new HashMap<String, ViewerResults>();
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 		DataSource ds = dataSourceService.getDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
@@ -221,10 +225,16 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 				// &&(result.last())){
 				// lastRow=result.getRow();
 				// result.first();
+				
+				String id =UUID.randomUUID().toString();
+				
+				res.renderReport(result,"tmp://"+id+".tmp",job.getTemplateFile(),job.getTemplateType(),job.getFileFormat().toString());
+				result.beforeFirst();
 				RowSetDynaClass dynaSet = new RowSetDynaClass(result, false);
+				
 				result.close();
 				logger.debug(dynaSet.getRows().size());
-				results.put(key, dynaSet);
+				results.put(key, new ViewerResults(dynaSet,id));
 
 			}
 			logger.debug("Tab name=" + key + " rows=" + lastRow);
@@ -234,9 +244,9 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		return results;
 	}
 
-	public Map<String, RowSetDynaClass> getResultsForJob(String jobName,
+	public Map<String, ViewerResults> getResultsForJob(String jobName,
 			String groupName) throws SQLException, NumberFormatException,
-			ParseException {
+			ParseException,RenderException, IOException {
 		return getResultsForJob(jobName, groupName, null);
 	}
 
@@ -248,7 +258,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		DataSource ds = dataSourceService.getDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 		SQLProcessor sqlProcessor = new SQLProcessor();
-
+		if ((job.getIsBurst()==null)||(!job.getIsBurst())) return paramValues;
 		logger.debug("getting burst result for " + jobName + "/" + groupName);
 		try {
 			ResultSet rs = sqlProcessor.getResults(conn, job.getBurstQuery());
@@ -293,5 +303,8 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	public void setDataSourceService(DatasourceService dataSourceService) {
 		this.dataSourceService = dataSourceService;
 	}
+
+
+	
 
 }

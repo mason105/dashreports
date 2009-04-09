@@ -48,6 +48,11 @@
 		value="%{job.burstQuery}" name="job.burstQuery">
 	</s:textarea>		
 
+		<s:textfield label="Split on Burst Column (Name)" size="32"
+			value="%{job.burstFileNameParameterName}"
+			name="job.burstFileNameParameterName">
+		</s:textfield>
+
 	</sx:div>
 	
 	<sx:div id="parameters" label="Parameters">	
@@ -69,7 +74,7 @@
 			value="%{parameterValue}">
 		</s:textfield> 
 		
-		<s:textfield label="Burst Column"
+		<s:textfield label="Burst Column Name"
 			name="parameters[%{#rowstatus.index}].parameterBurstColumn"
 			value="%{parameterBurstColumn}">
 		</s:textfield>
@@ -86,11 +91,9 @@
 	<sx:div id="schedule" label="Schedule">	
 		<div class="wwgrp">
 			<div class="dateTimePicker">
-				<table width="100%">
 					<sx:datetimepicker label="Start Date Time" value="%{job.startDate}"
 						name="job.startDate">
 					</sx:datetimepicker>
-				</table>
 			</div>
 		</div>
 		<div class="wwgrp">
@@ -112,10 +115,7 @@
 		<s:file label="Template File" name="job.upload"></s:file> 
 		<s:select label="File Format" name="job.fileFormat" list="fileFormats"
 			listKey="name" listValue="displayName"></s:select>
-		<s:textfield label="File Name from Burst Column" size="32"
-			value="%{job.burstFileNameParameterName}"
-			name="job.burstFileNameParameterName">
-		</s:textfield>
+
 		<s:textfield label="Output URL" size="50" value="%{job.outputUrl}"
 			name="job.outputUrl">
 		</s:textfield>

@@ -64,7 +64,7 @@ public class RunnerDashboardAlert implements Serializable {
 	private RunnerGroup group;
 	
 	private String subGroupName;
-
+	
 	//for use in line graphs on dash
 	private Integer historicValues;
 	

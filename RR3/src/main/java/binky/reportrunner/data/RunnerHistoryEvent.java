@@ -64,5 +64,19 @@ public class RunnerHistoryEvent {
 	}
 	
 	
-	
+	public String toString() {
+		StringBuilder ret = new StringBuilder();
+		
+		ret.append("Job Name="+jobName);
+		ret.append(" ");
+		ret.append("Group Name="+groupName);
+		ret.append("");
+		ret.append("Timestamp=" + timestamp);
+		ret.append(" ");
+		ret.append("Elapsed Time="+runTime);
+		ret.append(" ");
+		ret.append("Message="+message);
+		
+		return ret.toString();
+	}
 }

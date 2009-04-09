@@ -43,8 +43,9 @@ public class RunnerHistoryDaoImpl extends HibernateDaoSupport implements RunnerH
 	}
 
 	public void saveEvent(RunnerHistoryEvent event) {
-		logger.debug("save event for: " + event.getGroupName() + " " + event.getJobName() + " " + event.getMessage());
+		logger.debug("save event");
 		getHibernateTemplate().save(event);		
+		logger.info("Event Recorded:" + event);
 	}
 
 	@SuppressWarnings("unchecked")

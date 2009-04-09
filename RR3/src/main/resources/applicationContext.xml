@@ -79,6 +79,9 @@
 		<property name="jobService">
 			<ref local="runnerJobService" />
 		</property>
+		<property name="historyDao">
+			<ref local="runnerHistoryDao" />
+		</property>		
 	</bean>
 
 	<bean id="invokeJobAction" class="binky.reportrunner.ui.actions.job.InvokeJob"

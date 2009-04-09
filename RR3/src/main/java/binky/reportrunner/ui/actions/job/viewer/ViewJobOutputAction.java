@@ -1,10 +1,13 @@
 package binky.reportrunner.ui.actions.job.viewer;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import binky.reportrunner.dao.RunnerHistoryDao;
+import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.ViewerResults;
@@ -22,12 +25,15 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 	private List<RunnerJobParameter> parameters;
 
 	private Map<String, ViewerResults> results;
-
+	
+	private RunnerHistoryDao historyDao;
+	
+	
 	private RunnerJobService jobService;
 	private static final Logger logger = Logger.getLogger(ViewJobOutputAction.class);
 	@Override
 	public String execute() throws Exception {
-
+		long startTime = (new Date()).getTime();
 		//TODO: NASTY HACK ALERT
 		if ((this.parameters != null) && (this.parameters.size() > 0)) {
 			RunnerJob job = jobService.getJob(jobName, groupName);
@@ -55,6 +61,18 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 				}
 			}
 		}
+		
+		long endTime = (new Date()).getTime();
+		
+		//create an event for this so we can track performance of bad queries
+		RunnerHistoryEvent event = new RunnerHistoryEvent();
+		event.setGroupName(groupName);
+		event.setJobName(jobName);
+		String message = "User: " + super.getSessionUser().getUserName() + " ran job viewer";
+		event.setMessage(message);
+		event.setRunTime(endTime-startTime);
+		event.setTimestamp(new Date());
+		historyDao.saveEvent(event);
 		
 		return SUCCESS;
 	}
@@ -97,6 +115,14 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 	public void setResults(Map<String, ViewerResults> results) {
 		this.results = results;
+	}
+
+	public RunnerHistoryDao getHistoryDao() {
+		return historyDao;
+	}
+
+	public void setHistoryDao(RunnerHistoryDao historyDao) {
+		this.historyDao = historyDao;
 	}
 
 

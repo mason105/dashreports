@@ -68,7 +68,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		RunnerHistoryEvent event = new RunnerHistoryEvent();
 		event.setGroupName(groupName);
 		event.setJobName(jobName);
-		String message = "User: " + super.getSessionUser().getUserName() + " ran job viewer";
+		String message = "User:" + super.getSessionUser().getUserName() + " ran job viewer";
 		event.setMessage(message);
 		event.setRunTime(endTime-startTime);
 		event.setTimestamp(new Date());

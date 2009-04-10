@@ -222,5 +222,19 @@
 			</result>
 		</action>
 
+		<action name="listCurrentExecutingJobs" class="listCurrentExecutingJobsAction">
+			<result>/jsp/main/currentRunningJobs.jsp</result>
+		</action>
+
+		<action name="interruptCurrentExecutingJob" class="interruptCurrentExecutingJobAction">
+			<result type="redirectAction">
+				<param name="actionName">listCurrentExecutingJobs</param>
+			</result>
+		</action>
+
+		<action name="jobStatistics" class="setupJobStatsAction">
+			<result>/jsp/main/jobStats.jsp</result>
+		</action>
+
 	</package>
 </struts>

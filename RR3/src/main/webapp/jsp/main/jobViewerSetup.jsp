@@ -21,34 +21,32 @@
 	<div class="smallLabel">Group Name <s:property
 			value="%{groupName}" /></div>
 
+
 	
 	<s:iterator value="parameters" status="rowstatus">
+
+	<s:if test="(key.parameterBurstColumn == null)||(key.parameterBurstColumn.isEmpty())">	
 		<div class="formSectionInner">
 		<div class="smallLabel">Parameter Index <s:property
 			value="%{pk.parameterIdx}" /></div>
-		<s:hidden value="%{key.pk.parameterIdx}"
-			name="parameters[%{#rowstatus.index}].pk.parameterIdx" /> 
 
-		<div class="smallLabel">Description <s:property
-			value="%{pk.description}" /></div>
-		
-		<s:if test="key.parameterBurstColumn == null">
-	
-
+		<div class="smallLabel"><s:property
+			value="%{description}" /></div>
+			
 			<s:textfield
 				label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
 				value="%{key.parameterValue}">
-			</s:textfield> 
+			</s:textfield> 	
+		
+	</s:if> <s:else> 
+		<s:hidden value="%{key.parameterValue}"
+				name="parameters[%{#rowstatus.index}].parameterValue" /> 
+			</div>
+	
+	</s:else>
 
-		</s:if> <s:else> 
-		<!-- going to shelve this for a bit 
-			<s:select
-				label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
-				value="%{key.parameterValue}"  list="value">
-			</s:select> 
-
-		-->						
-		</s:else> 
+		<s:hidden value="%{key.pk.parameterIdx}"
+			name="parameters[%{#rowstatus.index}].pk.parameterIdx" /> 
 		
 		<s:hidden
 		name="parameters[%{#rowstatus.index}].parameterBurstColumn"

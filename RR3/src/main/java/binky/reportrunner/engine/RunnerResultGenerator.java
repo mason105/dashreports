@@ -36,7 +36,7 @@ public class RunnerResultGenerator {
 			NumberFormatException, ParseException {
 		SQLProcessor sqlProcessor = new SQLProcessor();
 
-		if ((job.getIsBurst()!=null) && (job.getIsBurst())) {
+		if ((job.getIsBurst() != null) && (job.getIsBurst())) {
 
 			ResultSet burstResults = sqlProcessor.getResults(conn, job
 					.getBurstQuery());
@@ -46,13 +46,18 @@ public class RunnerResultGenerator {
 				// populate the parameters
 				List<RunnerJobParameter> populatedParams = new LinkedList<RunnerJobParameter>();
 				for (RunnerJobParameter param : params) {
-					param.setParameterValue(""
-							+ burstResults.getObject(param
-									.getParameterBurstColumn()));
-					populatedParams.add(param);
-					logger.debug("added populated param"
-							+ param.getPk().getParameterIdx() + " - value - "
-							+ param.getParameterValue());
+					if ((param.getParameterBurstColumn() != null)
+							&& (!param.getParameterBurstColumn().isEmpty())) {
+						param.setParameterValue(""
+								+ burstResults.getObject(param
+										.getParameterBurstColumn()));
+						populatedParams.add(param);
+						logger.debug("added populated param"
+								+ param.getPk().getParameterIdx()
+								+ " - value - " + param.getParameterValue());
+					} else {
+						populatedParams.add(param);						
+					}
 				}
 
 				String name = burstResults.getObject(
@@ -85,9 +90,9 @@ public class RunnerResultGenerator {
 		return true;
 	}
 
-	public void renderReport(ResultSet results, String url, byte[] templateFile,
-			Template templateType, String fileFormat) throws RenderException,
-			IOException {
+	public void renderReport(ResultSet results, String url,
+			byte[] templateFile, Template templateType, String fileFormat)
+			throws RenderException, IOException {
 		FileSystemHandler fs = new FileSystemHandler();
 		OutputStream os = fs.getOutputStreamForUrl(url);
 		AbstractRenderer renderer;
@@ -108,5 +113,5 @@ public class RunnerResultGenerator {
 		renderer.generateReport(results, os, fileFormat);
 		os.close();
 	}
-	
+
 }

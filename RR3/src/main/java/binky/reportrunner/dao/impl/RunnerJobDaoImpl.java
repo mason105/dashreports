@@ -59,6 +59,7 @@ public class RunnerJobDaoImpl extends HibernateDaoSupport implements
 		logger.debug("list jobs");
 		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerJob.class);
 		criteria.add(Expression.eq("pk.group.groupName", groupName));
+		criteria.setResultTransformer(DetachedCriteria.DISTINCT_ROOT_ENTITY);
 		criteria.addOrder(Order.asc("pk.jobName"));
 		return getHibernateTemplate().findByCriteria(criteria);
 	}

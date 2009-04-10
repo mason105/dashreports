@@ -9,6 +9,7 @@ public class RunnerJobParameter_pk implements Serializable {
 
 	private static final long serialVersionUID = 5839942860917772506L;
 	
+	//@ManyToOne
 	private RunnerJob_pk runnerJob_pk;
 	private Integer parameterIdx;
 

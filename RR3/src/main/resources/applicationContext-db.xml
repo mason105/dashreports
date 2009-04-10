@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC 
+	"-//SPRING//DTD BEAN//EN" 
+	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+<!--  our main data source -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="${jdbc.driver}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="breakAfterAcquireFailure" value="true" />
+		<property name="automaticTestTable" value="c3p0_test_table"/>
+		 <property name="idleConnectionTestPeriod" value="60"/>		 
+	</bean>
+
+	<!--  setup our scheduler singleton and the quartz bean -->
+	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
+		scope="singleton">
+		<property name="quartzScheduler" ref="quartzFactory" />
+	</bean>
+	
+		<!--  hibernate plumbing -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.SingletonEhCacheProvider</prop>
+				<prop key="hibernate.connection.autoReconnect">true</prop>
+				<prop key="hibernate.connection.autoReconnect">true</prop>
+				<prop key="hibernate.show.sql">${hibernate.showSql}</prop> 			
+			</props>
+		</property>
+		<property name="annotatedClasses">
+			<list>
+				<value>binky.reportrunner.data.RunnerDashboardAlert</value>
+				<value>binky.reportrunner.data.DashboardAlertData</value>
+				<value>binky.reportrunner.data.RunnerHistoryEvent</value>
+				<value>binky.reportrunner.data.RunnerJob</value>
+				<value>binky.reportrunner.data.RunnerJobParameter</value>
+				<value>binky.reportrunner.data.RunnerGroup</value>
+				<value>binky.reportrunner.data.RunnerUser</value>
+				<value>binky.reportrunner.data.RunnerDataSource</value>
+			</list>
+		</property>
+		<property name="annotatedPackages">
+			<list>
+				<value>binky.reportrunner.data</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor"
+		autowire="byName" />
+	<bean id="runnerJobParameterDaoTarget" class="binky.reportrunner.dao.impl.RunnerJobParameterDaoImpl"
+		autowire="byName" />
+	<bean id="runnerJobParameterDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerJobParameterDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerJobParameterDaoTarget</value>
+			</list>
+		</property>
+	</bean>		
+	<bean id="runnerHistoryDaoTarget" class="binky.reportrunner.dao.impl.RunnerHistoryDaoImpl"
+		autowire="byName" />
+	<bean id="runnerHistoryDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerHistoryDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerHistoryDaoTarget</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="runnerJobDaoTarget" class="binky.reportrunner.dao.impl.RunnerJobDaoImpl"
+		autowire="byName" />
+	<bean id="runnerJobDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerJobDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerJobDaoTarget</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="runnerGroupDaoTarget" class="binky.reportrunner.dao.impl.RunnerGroupDaoImpl"
+		autowire="byName" />
+	<bean id="runnerGroupDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerGroupDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerGroupDaoTarget</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="runnerUserDaoTarget" class="binky.reportrunner.dao.impl.RunnerUserDaoImpl"
+		autowire="byName" />
+	<bean id="runnerUserDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerUserDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerUserDaoTarget</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="dashboardDaoTarget" class="binky.reportrunner.dao.impl.RunnerDashboardAlertDaoImpl"
+		autowire="byName" />
+	<bean id="dashboardDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerDashboardAlertDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>dashboardDaoTarget</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="runnerDataSourceDaoTarget" class="binky.reportrunner.dao.impl.RunnerDataSourceDaoImpl"
+		autowire="byName" />
+	<bean id="runnerDataSourceDao" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>binky.reportrunner.dao.RunnerDataSourceDao</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>hibernateInterceptor</value>
+				<value>runnerDataSourceDaoTarget</value>
+			</list>
+		</property>
+	</bean>
+	
+
+</beans>

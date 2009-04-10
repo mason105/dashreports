@@ -3,239 +3,10 @@
 	"-//SPRING//DTD BEAN//EN" 
 	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
-	<!--  actions -->
 
-	<bean id="downloadReportAction" class="binky.reportrunner.ui.actions.job.viewer.DownloadReportAction">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>	
-	</bean>
-
-
-	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction"
-		scope="prototype" />
+	<import resource="applicationContext-db.xml"/>
+	<import resource="applicationContext-ui.xml"/>
 	
-	<bean id="logoutAction" class="binky.reportrunner.ui.actions.Logout"
-		scope="prototype" />		
-		
-	<bean id="listJobsAction" class="binky.reportrunner.ui.actions.job.ListJobsAction"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-	</bean>
-	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.group.ListGroupsAction"
-		scope="prototype">
-		<property name="groupDao">
-			<ref local="runnerGroupDao" />
-		</property>
-	</bean>
-	<bean id="changeAllGroupJobStatusAction"
-		class="binky.reportrunner.ui.actions.group.ChangeAllGroupJobStatus"
-		scope="prototype">
-		<property name="groupDao">
-			<ref local="runnerGroupDao" />
-		</property>
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-	</bean>
-
-	<bean id="deleteGroupAction" class="binky.reportrunner.ui.actions.group.DeleteGroup"
-		scope="prototype">
-		<property name="groupDao">
-			<ref local="runnerGroupDao" />
-		</property>
-	</bean>
-	<bean id="saveGroupAction" class="binky.reportrunner.ui.actions.group.SaveGroup"
-		scope="prototype">
-		<property name="groupDao">
-			<ref local="runnerGroupDao" />
-		</property>		
-	</bean>
-	<bean id="setupEditGroupAction" class="binky.reportrunner.ui.actions.group.SetupEditGroup"
-		scope="prototype">
-		<property name="groupDao">
-			<ref local="runnerGroupDao" />
-		</property>
-	</bean>
-
-	<bean id="deleteJobAction" class="binky.reportrunner.ui.actions.job.DeleteJob"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-	</bean>
-
-	<bean id="setupViewJobAction" class="binky.reportrunner.ui.actions.job.viewer.SetupViewJobAction"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-	</bean>
-	
-	<bean id="viewJobOutputAction" class="binky.reportrunner.ui.actions.job.viewer.ViewJobOutputAction"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-		<property name="historyDao">
-			<ref local="runnerHistoryDao" />
-		</property>		
-	</bean>
-
-	<bean id="invokeJobAction" class="binky.reportrunner.ui.actions.job.InvokeJob"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-	</bean>
-
-	<bean id="saveJobAction" class="binky.reportrunner.ui.actions.job.SaveJob"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-		<property name="parameterDao">
-			<ref local="runnerJobParameterDao" />
-		</property>
-		<property name="dataSourceDao">
-			<ref local="runnerDataSourceDao" />
-		</property>		
-	</bean>
-	<bean id="setJobStatusAction" class="binky.reportrunner.ui.actions.job.SetJobStatus"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-	</bean>
-	<bean id="setupEditJobAction" class="binky.reportrunner.ui.actions.job.SetupEditJob"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-		<property name="dataSourceDao">
-			<ref local="runnerDataSourceDao" />
-		</property>
-		
-	</bean>
-	<bean id="viewJobDetailAction" class="binky.reportrunner.ui.actions.job.ViewJobDetail"
-		scope="prototype">
-		<property name="jobService">
-			<ref local="runnerJobService" />
-		</property>
-		<property name="historyDao">
-			<ref local="runnerHistoryDao" />
-		</property>
-	</bean>
-
-	<bean id="deleteDataSourceAction"
-		class="binky.reportrunner.ui.actions.datasource.DeleteDataSource"
-		scope="prototype">
-		<property name="dataSourceDao">
-			<ref local="runnerDataSourceDao" />
-		</property>
-	</bean>
-
-	<bean id="listDataSourcesAction"
-		class="binky.reportrunner.ui.actions.datasource.ListDataSources"
-		scope="prototype">
-		<property name="dataSourceDao">
-			<ref local="runnerDataSourceDao" />
-		</property>
-	</bean>
-
-	<bean id="saveDataSourceAction" class="binky.reportrunner.ui.actions.datasource.SaveDataSource"
-		scope="prototype">
-		<property name="dataSourceDao">
-			<ref local="runnerDataSourceDao" />
-		</property>
-	</bean>
-
-	<bean id="setupEditDataSourceAction"
-		class="binky.reportrunner.ui.actions.datasource.SetupEditDataSource"
-		scope="prototype">
-		<property name="dataSourceDao">
-			<ref local="runnerDataSourceDao" />
-		</property>
-	</bean>
-
-	<bean id="setupEditUserAction" class="binky.reportrunner.ui.actions.user.SetupEditUser"
-		scope="prototype">
-		<property name="userDao">
-			<ref local="runnerUserDao" />
-		</property>
-		<property name="groupDao">
-			<ref local="runnerGroupDao" />
-		</property>
-	</bean>
-
-	<bean id="changePasswordAction" class="binky.reportrunner.ui.actions.user.ChangePassword"
-		scope="prototype">
-		<property name="userDao">
-			<ref local="runnerUserDao" />
-		</property>
-	</bean>
-	<bean id="setupChangePasswordAction" class="binky.reportrunner.ui.actions.user.SetupChangePassword"
-		scope="prototype"/>
-		
-	<bean id="deleteUserAction" class="binky.reportrunner.ui.actions.user.DeleteUser"
-		scope="prototype">
-		<property name="userDao">
-			<ref local="runnerUserDao" />
-		</property>
-	</bean>
-
-	<bean id="listUsersAction" class="binky.reportrunner.ui.actions.user.ListUsers"
-		scope="prototype">
-		<property name="userDao">
-			<ref local="runnerUserDao" />
-		</property>
-	</bean>
-
-	<bean id="saveUserAction" class="binky.reportrunner.ui.actions.user.SaveUser"
-		scope="prototype">
-		<property name="userDao">
-			<ref local="runnerUserDao" />
-		</property>
-		<property name="groupDao">
-			<ref local="runnerGroupDao" />
-		</property>		
-	</bean>
-
-	<bean id="manageServerAction" class="binky.reportrunner.ui.actions.ManageServerAction"
-		scope="prototype">
-	</bean>
-
-	<bean id="dashboardService" class="binky.reportrunner.service.DashboardService" scope="prototype">
-		<property name="dashboardDao">
-			<ref local="dashboardDao" />
-		</property>
-	</bean>	
-	
-	<bean id="deleteAlertAction" class="binky.reportrunner.ui.actions.dashboard.DeleteAlert" scope="prototype">
-		<property name="dashboardService">
-			<ref local="dashboardService" />
-		</property>		
-	</bean>
-
-	<bean id="setupEditAlertAction" class="binky.reportrunner.ui.actions.dashboard.SetupEditAlert" scope="prototype">
-		<property name="dashboardService">
-			<ref local="dashboardService" />
-		</property>		
-	</bean>
-
-	<bean id="saveAlertAction" class="binky.reportrunner.ui.actions.dashboard.SaveAlert" scope="prototype">
-		<property name="dashboardService">
-			<ref local="dashboardService" />
-		</property>		
-	</bean>
-
-	<bean id="listAlertsAction" class="binky.reportrunner.ui.actions.dashboard.ListAlerts" scope="prototype">
-		<property name="dashboardService">
-			<ref local="dashboardService" />
-		</property>		
-	</bean>
 
 	<!--  properties file -->
 	<bean id="placeholderConfig"
@@ -249,23 +20,7 @@
 		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 	</bean>
 
-	<!--  our main data source -->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		destroy-method="close">
-		<property name="driverClass" value="${jdbc.driver}" />
-		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-		<property name="breakAfterAcquireFailure" value="true" />
-		<property name="automaticTestTable" value="c3p0_test_table"/>
-		 <property name="idleConnectionTestPeriod" value="60"/>		 
-	</bean>
-
-	<!--  setup our scheduler singleton and the quartz bean -->
-	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
-		scope="singleton">
-		<property name="quartzScheduler" ref="quartzFactory" />
-	</bean>
+	
 	<bean id="quartzFactory"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="overwriteExistingJobs">
@@ -281,11 +36,11 @@
 			<value>true</value>
 		</property>
 		<property name="dataSource">
-			<ref local="dataSource" />
+			<ref bean="dataSource" />
 		</property>
 		<property name="globalJobListeners">
 			<list>
-				<ref local="runnerJobListener" />
+				<ref bean="runnerJobListener" />
 			</list>
 		</property>
 		<property name="quartzProperties">
@@ -317,146 +72,20 @@
 		<property name="scheduler" ref="scheduler" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
 		<property name="dataSourceService">
-			<ref local="runnerDatasourceService" />
+			<ref bean="runnerDatasourceService" />
 		</property>			
 	</bean>
 
-	<!--  hibernate plumbing -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource">
-			<ref local="dataSource" />
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-				<prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.SingletonEhCacheProvider</prop>
-				<prop key="hibernate.connection.autoReconnect">true</prop>
-			</props>
-		</property>
-		<property name="annotatedClasses">
-			<list>
-				<value>binky.reportrunner.data.RunnerDashboardAlert</value>
-				<value>binky.reportrunner.data.DashboardAlertData</value>
-				<value>binky.reportrunner.data.RunnerHistoryEvent</value>
-				<value>binky.reportrunner.data.RunnerJob</value>
-				<value>binky.reportrunner.data.RunnerJobParameter</value>
-				<value>binky.reportrunner.data.RunnerGroup</value>
-				<value>binky.reportrunner.data.RunnerUser</value>
-				<value>binky.reportrunner.data.RunnerDataSource</value>
-			</list>
-		</property>
-		<property name="annotatedPackages">
-			<list>
-				<value>binky.reportrunner.data</value>
-			</list>
-		</property>
-	</bean>
-	<bean id="hibernateInterceptor" class="org.springframework.orm.hibernate3.HibernateInterceptor"
-		autowire="byName" />
-	<bean id="runnerJobParameterDaoTarget" class="binky.reportrunner.dao.impl.RunnerJobParameterDaoImpl"
-		autowire="byName" />
-	<bean id="runnerJobParameterDao" class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerJobParameterDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerJobParameterDaoTarget</value>
-			</list>
-		</property>
-	</bean>		
-	<bean id="runnerHistoryDaoTarget" class="binky.reportrunner.dao.impl.RunnerHistoryDaoImpl"
-		autowire="byName" />
-	<bean id="runnerHistoryDao" class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerHistoryDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerHistoryDaoTarget</value>
-			</list>
-		</property>
-	</bean>
-	<bean id="runnerJobDaoTarget" class="binky.reportrunner.dao.impl.RunnerJobDaoImpl"
-		autowire="byName" />
-	<bean id="runnerJobDao" class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerJobDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerJobDaoTarget</value>
-			</list>
-		</property>
-	</bean>
-	<bean id="runnerGroupDaoTarget" class="binky.reportrunner.dao.impl.RunnerGroupDaoImpl"
-		autowire="byName" />
-	<bean id="runnerGroupDao" class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerGroupDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerGroupDaoTarget</value>
-			</list>
-		</property>
-	</bean>
-	<bean id="runnerUserDaoTarget" class="binky.reportrunner.dao.impl.RunnerUserDaoImpl"
-		autowire="byName" />
-	<bean id="runnerUserDao" class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerUserDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerUserDaoTarget</value>
-			</list>
-		</property>
-	</bean>
-	<bean id="dashboardDaoTarget" class="binky.reportrunner.dao.impl.RunnerDashboardAlertDaoImpl"
-		autowire="byName" />
-	<bean id="dashboardDao" class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerDashboardAlertDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>dashboardDaoTarget</value>
-			</list>
-		</property>
-	</bean>
-
-	<bean id="runnerDataSourceDaoTarget" class="binky.reportrunner.dao.impl.RunnerDataSourceDaoImpl"
-		autowire="byName" />
-	<bean id="runnerDataSourceDao" class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerDataSourceDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerDataSourceDaoTarget</value>
-			</list>
-		</property>
-	</bean>
 	<bean id="authenticationService"
 		class="binky.reportrunner.service.impl.AuthenticationServiceImpl">
 		<property name="userDao">
-			<ref local="runnerUserDao" />
+			<ref bean="runnerUserDao" />
 		</property>
 	</bean>
 	<bean id="loginInterceptor" class="binky.reportrunner.interceptors.AuthIntercept"
 		scope="singleton">
 		<property name="authService">
-			<ref local="authenticationService" />
+			<ref bean="authenticationService" />
 		</property>
 	</bean>
 	<bean id="userSessionIntercept" class="binky.reportrunner.interceptors.UserSessionIntercept"
@@ -467,10 +96,10 @@
 		<property name="smtpServer" value="${reportrunner.smtpServer}" />
 		<property name="fromAddress" value="${reportrunner.fromAddress}" />
 		<property name="datasourceService">
-			<ref local="runnerDatasourceService" />
+			<ref bean="runnerDatasourceService" />
 		</property>
 		<property name="dashboardDao">
-			<ref local="dashboardDao" />
+			<ref bean="dashboardDao" />
 		</property>		
 	</bean>
 	<bean id="runnerDatasourceService" class="binky.reportrunner.service.impl.DatasourceServiceImpl"

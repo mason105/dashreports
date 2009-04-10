@@ -10,7 +10,7 @@
 	src="<s:url value='/images/documentnotes.png'/>" align="absmiddle" />Job List for Group: <s:property value="groupName" /></span>	
     <table border="0" width="100%">
       <tr class="rowHeader">
-      <td colspan='9'  class="rowHeader">
+      <td colspan='7'  class="rowHeader">
       <a href="setupEditJob.action?groupName=<s:property value="groupName" />"><img
 			src="<s:url value='/images/add_small.png'/>" align="absmiddle" />Add Job</a>
       </td>
@@ -21,12 +21,6 @@
       </td>
       <td class="headerCell">
       	Description
-      </td>
-      <td class="headerCell">
-      	Next Run Time
-      </td>
-      <td class="headerCell">
-      	Previous Run Time
       </td>
       <td class="headerCell" colspan="5">&nbsp;</td>
       </tr>
@@ -55,12 +49,6 @@
               <td>  
                 <s:property value="description" />  
               </td>  
-              <td>  
-                <s:property value="nextRunTime" />  
-              </td>  
-              <td>  
-                <s:property value="previousRunTime" />  
-              </td>      
               <td width="24">
               <s:a href="viewJobDetail.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/view_small.png'/>" alt="View Detail/History"
 							align="absmiddle" /></s:a>

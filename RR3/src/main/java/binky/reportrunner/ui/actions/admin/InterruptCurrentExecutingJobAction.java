@@ -7,10 +7,11 @@ public class InterruptCurrentExecutingJobAction extends AdminRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private RunnerJobService jobService;
-
+	private String jobName;
+	private String groupName;
 	@Override
 	public String execute() throws Exception {
-		// TODO Auto-generated method stub
+		jobService.interruptRunningJob(jobName, groupName);
 		return SUCCESS;
 	}
 
@@ -20,6 +21,22 @@ public class InterruptCurrentExecutingJobAction extends AdminRunnerAction {
 
 	public void setJobService(RunnerJobService jobService) {
 		this.jobService = jobService;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	public String getJobName() {
+		return jobName;
+	}
+
+	public void setJobName(String jobName) {
+		this.jobName = jobName;
 	}
 
 }

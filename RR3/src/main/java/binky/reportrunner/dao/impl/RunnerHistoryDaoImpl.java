@@ -24,6 +24,7 @@ public class RunnerHistoryDaoImpl extends HibernateDaoSupport implements RunnerH
 		.addOrder(Order.desc("timestamp"));
 
 		List<RunnerHistoryEvent> findByCriteria = getHibernateTemplate().findByCriteria(criteria);
+		logger.debug("got " + findByCriteria.size());
 		return findByCriteria;
 	}
 
@@ -39,6 +40,7 @@ public class RunnerHistoryDaoImpl extends HibernateDaoSupport implements RunnerH
 		.addOrder(Order.desc("timestamp"));
 
 		List<RunnerHistoryEvent> findByCriteria = getHibernateTemplate().findByCriteria(criteria);
+		logger.debug("got " + findByCriteria.size());
 		return findByCriteria;
 	}
 
@@ -58,6 +60,36 @@ public class RunnerHistoryDaoImpl extends HibernateDaoSupport implements RunnerH
 		List<RunnerHistoryEvent> findByCriteria = getHibernateTemplate().findByCriteria(criteria);
 		getHibernateTemplate().deleteAll(findByCriteria);
 		
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<RunnerHistoryEvent> getSuccessEvents(int eventCount) {
+		logger.debug("get success events");
+		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerHistoryEvent.class)
+		.add(Property.forName("success").eq(true))
+		.addOrder(Order.desc("timestamp"));
+		List<RunnerHistoryEvent> findByCriteria = getHibernateTemplate().findByCriteria(criteria,0,eventCount);
+		logger.debug("got " + findByCriteria.size());
+		return findByCriteria;
+	}
+	@SuppressWarnings("unchecked")
+	public List<RunnerHistoryEvent> getFailEvents(int eventCount) {
+		logger.debug("get fail events");
+		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerHistoryEvent.class)
+		.add(Property.forName("success").eq(false))
+		.addOrder(Order.desc("timestamp"));
+		List<RunnerHistoryEvent> findByCriteria = getHibernateTemplate().findByCriteria(criteria,0,eventCount);
+		logger.debug("got " + findByCriteria.size());
+		return findByCriteria;
+	}
+	@SuppressWarnings("unchecked")
+	public List<RunnerHistoryEvent> getLongestRunningEvents(int eventCount) {
+		logger.debug("get longest events");
+		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerHistoryEvent.class)
+		.addOrder(Order.desc("runTime"));
+		List<RunnerHistoryEvent> findByCriteria = getHibernateTemplate().findByCriteria(criteria,0,eventCount);
+		logger.debug("got " + findByCriteria.size());
+		return findByCriteria;
 	}
 	
 	

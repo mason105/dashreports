@@ -11,6 +11,9 @@ public interface RunnerHistoryDao {
 	public List<RunnerHistoryEvent> getEvents(String groupName, String jobName, 
 			Date startTime, Date endTime);
 	public void saveEvent(RunnerHistoryEvent event);
+	public List<RunnerHistoryEvent> getLongestRunningEvents(int eventCount);
+	public List<RunnerHistoryEvent> getSuccessEvents(int eventCount);
+	public List<RunnerHistoryEvent> getFailEvents(int eventCount);
 	
 	/**
 	 * 

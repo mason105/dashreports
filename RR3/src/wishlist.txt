@@ -2,13 +2,14 @@ jPivot result screen
 bursting to different destinations
 conditional schedules
 dashboard email alerts - also bursted to destination
-auto parameter generation for jasper??
 copy/export job definition
 jobs can be more than just sql - could be commands with output
 secure datasources by group
-secure dashboard alerts by group
+x secure dashboard alerts by group
 more charts
 SOAP
 RSS for dashboard alerts??
 report versioning??
+sql preview/builder
+parameter population from pool?
 

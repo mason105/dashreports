@@ -35,12 +35,17 @@
 		label="Description" size="50" value="%{job.description}"
 		name="job.description">
 
-	</s:textfield> <s:select label="Select Data Source"
+	</s:textfield>
+	
+	 <s:select label="Select Data Source"
 		name="job.datasource.dataSourceName" value="%{job.dataSource}"
 		list="dataSources" listKey="dataSourceName" listValue="dataSourceName">
-	</s:select> <s:textarea label="Report Query" cols="30" rows="20"
+	</s:select> 
+	
+	<s:textarea label="Report Query" cols="30" rows="20"
 		value="%{job.query}" name="job.query"></s:textarea>
-<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
+		
+	<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
 		name="job.isBurst">
 	</s:checkbox>
 
@@ -83,7 +88,8 @@
 			name="parameters[%{#rowstatus.index}].parameterType" list="dataTypes"
 			listKey="name" listValue="displayName">
 
-		</s:select> <s:submit align="none" name="dispatchSaveButton"
+		</s:select> 
+		<s:submit align="none" name="dispatchSaveButton"
 			value="Delete Parameter %{pk.parameterIdx}" /></div>
 	</s:iterator>
 	</sx:div>

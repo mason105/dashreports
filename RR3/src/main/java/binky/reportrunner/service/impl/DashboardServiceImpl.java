@@ -1,18 +1,20 @@
 package binky.reportrunner.service.impl;
 
-import java.util.Date;
+import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.dao.RunnerDashboardAlertDao;
-import binky.reportrunner.data.DashboardAlertData;
 import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.engine.renderers.ChartRenderer;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DashboardService;
 
 public class DashboardServiceImpl implements DashboardService {
 	
-	//private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
+	private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
 	
 	private RunnerDashboardAlertDao dashboardDao;
 	private Scheduler scheduler;
@@ -33,6 +35,7 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	public void saveUpdateAlert(RunnerDashboardAlert alert) throws SchedulerException {
+		logger.debug("alert is null=" + (alert==null));
 		if (alert.getId()!=null){
 			scheduler.removedDashboardAlert(alert.getId());
 		}
@@ -51,14 +54,17 @@ public class DashboardServiceImpl implements DashboardService {
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
 	}
-	public List<DashboardAlertData> getAlertDataForRange(Integer alertId, Date startDateTime, Date endDateTime) {
-		return dashboardDao.getAlertDataForRange(alertId, startDateTime, endDateTime);
+	public String getChartForAlert(Integer id) throws NumberFormatException, IOException {
+		
+		RunnerDashboardAlert alert = dashboardDao.getAlert(id);
+		
+		ChartRenderer render = new ChartRenderer();
+		
+		String uid = render.renderChart(alert.getAlertName(), alert.getCurrentDataset(), 
+				alert.getXaxisColumn(), alert.getChartType());
+		
+		return uid;
 	}
-	public DashboardAlertData getLatestAlertData(Integer alertId) {
-		return dashboardDao.getLatestAlertData(alertId);
-	}
-	public List<DashboardAlertData> getLatestAlertData(Integer alertId, int count) {
-		return dashboardDao.getLatestAlertData(alertId,count);
-	}
+
 
 }

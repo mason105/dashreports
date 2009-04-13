@@ -3,20 +3,16 @@ package binky.reportrunner.engine.dashboard;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import binky.reportrunner.dao.RunnerDashboardAlertDao;
-import binky.reportrunner.data.DashboardAlertData;
-import binky.reportrunner.data.DashboardAlertData_pk;
 import binky.reportrunner.data.RunnerDashboardAlert;
 
 public class AlertProcessor implements Job {
@@ -63,33 +59,13 @@ public class AlertProcessor implements Job {
 	private void processAlert(RunnerDashboardAlert alert) throws SQLException {
 		
 		String sql = alert.getAlertQuery();
-		DashboardAlertData data = new DashboardAlertData();
-		DashboardAlertData_pk pk = new DashboardAlertData_pk();
-		pk.setParentAlert(alert);
-		data.setPk(pk);
-		data.setTimeDataCollected(Calendar.getInstance().getTime());
 		Connection conn = ds.getConnection();
 		
 		try {
 			ResultSet rs = conn.createStatement().executeQuery(sql);
-			int colCount = rs.getMetaData().getColumnCount();
-			List<String> colNames = new LinkedList<String>();
-			for (int i=1;i<=colCount;i++) {
-				colNames.add(rs.getMetaData().getColumnClassName(i));
-			}
+			alert.setCurrentDataset(new RowSetDynaClass(rs,false));
 			
-			rs.first();
-			StringBuilder values= new StringBuilder();
-			
-			for (String colName:colNames) {
-				if (values.length()!=0) values.append("|");
-				values.append(colName);
-				values.append("|");
-				values.append(rs.getObject(colName));
-			
-			}
-			
-			dashboardDao.saveAlertData(data);
+			dashboardDao.saveUpdateAlert(alert);
 			rs.close();
 		} finally {
 			conn.close();

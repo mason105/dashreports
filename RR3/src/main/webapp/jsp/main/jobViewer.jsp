@@ -18,7 +18,7 @@
 	<div class="smallLabel">Group Name <s:property
 			value="%{groupName}" /></div>
 	
-	<sx:tabbedpanel id="edit">
+	<sx:tabbedpanel id="viewer">
 	<s:iterator value="results" status="rowstatus">
 		<sx:div id="reportTab_%{key}" label="%{key}">
 			<a href="downloadReport.action?id=<s:property value="%{value.outputId}"/>&jobName=<s:property value="%{jobName}"/>&groupName=<s:property value="%{groupName}"/>" target="_blank">Download</a>	

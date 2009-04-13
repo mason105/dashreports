@@ -41,7 +41,6 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>binky.reportrunner.data.RunnerDashboardAlert</value>
-				<value>binky.reportrunner.data.DashboardAlertData</value>
 				<value>binky.reportrunner.data.RunnerHistoryEvent</value>
 				<value>binky.reportrunner.data.RunnerJob</value>
 				<value>binky.reportrunner.data.RunnerJobParameter</value>
@@ -136,6 +135,8 @@
 			</list>
 		</property>
 	</bean>
+
+		
 
 	<bean id="runnerDataSourceDaoTarget" class="binky.reportrunner.dao.impl.RunnerDataSourceDaoImpl"
 		autowire="byName" />

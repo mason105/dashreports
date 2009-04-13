@@ -75,7 +75,13 @@
 			<ref bean="runnerDatasourceService" />
 		</property>			
 	</bean>
-
+	<bean id="dashboardService" class="binky.reportrunner.service.impl.DashboardServiceImpl" scope="prototype">
+		<property name="dashboardDao">
+			<ref bean="dashboardDao" />
+		</property>
+		<property name="scheduler" ref="scheduler" />
+	</bean>	
+	
 	<bean id="authenticationService"
 		class="binky.reportrunner.service.impl.AuthenticationServiceImpl">
 		<property name="userDao">

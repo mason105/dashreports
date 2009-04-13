@@ -34,7 +34,9 @@
 		
 		<global-results>
 			<result name="login">/jsp/login/login.jsp</result>
-			<result name="login-success">/jsp/main/index.jsp</result>
+				<result type="redirectAction">
+					<param name="actionName">index</param>
+				</result>
 			<result name="securityError">/jsp/main/securityError.jsp</result>
 		</global-results>
 		<action name="logout" class="logoutAction"/>
@@ -188,7 +190,7 @@
 		<action name="deleteUser" class="deleteUserAction">
 			<result type="redirectAction">
 				<param name="actionName">listUsers</param>
-			</result>
+			</result>	
 		</action>
 
 
@@ -236,5 +238,13 @@
 			<result>/jsp/main/jobStats.jsp</result>
 		</action>
 
+		<action name="downloadChart" class="downloadChartAction">
+		    <result name="sendFile" type="stream">
+		  	  <param name="contentType">image/png</param>
+  			  <param name="inputName">inputStream</param>
+		  	  <param name="contentDisposition">${contentDisposition}</param>
+			  <param name="bufferSize">1024</param>
+			</result>
+		</action>
 	</package>
 </struts>

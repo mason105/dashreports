@@ -6,15 +6,24 @@
 
 	<!--  actions -->
 
-	<bean id="downloadReportAction" class="binky.reportrunner.ui.actions.job.viewer.DownloadReportAction">
+	<bean id="downloadReportAction" class="binky.reportrunner.ui.actions.job.viewer.DownloadReportAction" scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>	
 	</bean>
 
-
+	<bean id="downloadChartAction" class="binky.reportrunner.ui.actions.dashboard.DownloadChartAction" scope="prototype">
+	</bean>
+	
 	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction"
-		scope="prototype" />
+		scope="prototype" >
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>		
+		<property name="groupDao">
+			<ref bean="runnerGroupDao" />
+		</property>		
+	</bean>
 	
 	<bean id="logoutAction" class="binky.reportrunner.ui.actions.Logout"
 		scope="prototype" />		
@@ -207,11 +216,7 @@
 		scope="prototype">
 	</bean>
 
-	<bean id="dashboardService" class="binky.reportrunner.service.DashboardService" scope="prototype">
-		<property name="dashboardDao">
-			<ref bean="dashboardDao" />
-		</property>
-	</bean>	
+	
 	
 	<bean id="deleteAlertAction" class="binky.reportrunner.ui.actions.dashboard.DeleteAlert" scope="prototype">
 		<property name="dashboardService">
@@ -223,11 +228,23 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>		
+		<property name="groupDao">
+			<ref bean="runnerGroupDao" />
+		</property>		
+		<property name="dataSourceDao">
+			<ref bean="runnerDataSourceDao" />
+		</property>		
 	</bean>
 
 	<bean id="saveAlertAction" class="binky.reportrunner.ui.actions.dashboard.SaveAlert" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
+		</property>		
+		<property name="groupDao">
+			<ref bean="runnerGroupDao" />
+		</property>		
+		<property name="dataSourceDao">
+			<ref bean="runnerDataSourceDao" />
 		</property>		
 	</bean>
 
@@ -257,7 +274,5 @@
 			<ref bean="runnerHistoryDao" />
 		</property>		
 	</bean>
-
-
 
 </beans>

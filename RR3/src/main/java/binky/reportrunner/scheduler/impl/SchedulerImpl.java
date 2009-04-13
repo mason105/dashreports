@@ -231,6 +231,8 @@ public class SchedulerImpl implements Scheduler {
 		String jobName=alertId.toString(); 
 		String groupName="RR3DASHBOARDS";
 		JobDetail jobDetail;
+		
+		logger.debug("scheduling:" + alertId + "/"+groupName);
 		try {
 			if (this.quartzScheduler.getJobDetail(jobName, groupName) != null) {
 				removeJob(jobName,groupName);

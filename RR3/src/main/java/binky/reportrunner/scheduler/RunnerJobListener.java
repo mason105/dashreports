@@ -75,7 +75,7 @@ public class RunnerJobListener implements JobListener {
 			Integer alertId = Integer.parseInt(ctx.getJobDetail().getName());
 			RunnerDashboardAlert alert = dashboardDao.getAlert(alertId);
 			ctx.getJobDetail().getJobDataMap().put("alert", alert);
-			DataSource ds = datasourceService.getDataSource(alert.getDataSource());
+			DataSource ds = datasourceService.getDataSource(alert.getDatasource());
 			ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
 			ctx.getJobDetail().getJobDataMap().put("dashboardDao", dashboardDao);
 		}

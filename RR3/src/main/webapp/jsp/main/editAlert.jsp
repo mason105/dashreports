@@ -9,6 +9,47 @@
 <sx:head parseContent="true" />
 </head>
 <body>
+<span class="pageTitle"><img src="<s:url value='/images/dasboard_small.png'/>" align="middle" />Edit Dasboard Alert</span>
+
+<s:form action="saveAlert">
+	<s:actionerror />
+	<s:actionmessage/>
+	
+	<s:hidden name="dashboardAlert.id" value="%{dashboardAlert.id}"/>
+	
+	<s:textfield label="Name/Title" size="64" value="%{dashboardAlert.alertName}" name="dashboardAlert.alertName">
+	</s:textfield>
+	
+	<s:select label="Select Group"
+		name="dashboardAlert.group.groupName" value="%{dashboardAlert.group.groupName}"
+		list="groups" listKey="groupName" listValue="groupName">
+	</s:select>
+	
+	<s:select label="Display Type" name="dashboardAlert.displayType" list="displayTypes"
+			listKey="name" listValue="displayName"></s:select>
+
+	<s:select label="Chart Type" name="dashboardAlert.chartType" list="chartTypes"
+			listKey="name" listValue="displayName"></s:select>
+
+	<s:select label="Select Data Source"
+		name="dashboardAlert.datasource.dataSourceName" value="%{dashboardAlert.datasource}"
+		list="runnerDataSources" listKey="dataSourceName" listValue="dataSourceName">
+	</s:select>
+	
+	<s:textarea label="Query" cols="30" rows="20"
+		value="%{dashboardAlert.alertQuery}" name="dashboardAlert.alertQuery">
+	</s:textarea>	
+	
+	<s:textfield label="X-Axis Column Name" size="32" value="%{dashboardAlert.xaxisColumn}" name="dashboardAlert.xaxisColumn">
+	</s:textfield>
+	
+	
+	<s:textfield label="Cron String" size="32" value="%{dashboardAlert.cronTab}" name="dashboardAlert.cronTab">
+	</s:textfield>
+	
+	<s:submit />
+</s:form>
+
 </body>
 </html>
 	

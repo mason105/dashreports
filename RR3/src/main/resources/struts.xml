@@ -34,7 +34,7 @@
 		
 		<global-results>
 			<result name="login">/jsp/login/login.jsp</result>
-				<result type="redirectAction">
+				<result name="login-success" type="redirectAction">
 					<param name="actionName">index</param>
 				</result>
 			<result name="securityError">/jsp/main/securityError.jsp</result>

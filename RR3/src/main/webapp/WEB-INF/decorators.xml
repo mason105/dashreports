@@ -14,5 +14,6 @@
         <pattern>/struts/*</pattern>    
         <pattern>/login/*</pattern>   
         <pattern>/jsp/login/*</pattern> 
+        <pattern>/jsp/nostyle/*</pattern> 
 	</excludes>	
 </decorators>

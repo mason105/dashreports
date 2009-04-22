@@ -14,6 +14,13 @@
 
 	<bean id="downloadChartAction" class="binky.reportrunner.ui.actions.dashboard.DownloadChartAction" scope="prototype">
 	</bean>
+
+	<bean id="getDashboardChartDataAction" class="binky.reportrunner.ui.actions.dashboard.GetDashboardChartDataAction"
+		scope="prototype" >
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>		
+	</bean>
 	
 	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction"
 		scope="prototype" >

@@ -5,6 +5,7 @@ import org.apache.commons.beanutils.RowSetDynaClass;
 public class DashboardBean {
 
 	private String alertName;
+	private Integer alertId;
 	private boolean isChart;
 	private String chartUID;
 	private RowSetDynaClass data;
@@ -31,6 +32,12 @@ public class DashboardBean {
 	}
 	public void setChart(boolean isChart) {
 		this.isChart = isChart;
+	}
+	public Integer getAlertId() {
+		return alertId;
+	}
+	public void setAlertId(Integer alertId) {
+		this.alertId = alertId;
 	}
 	
 	

@@ -4,6 +4,8 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
+<%@ taglib prefix="m" uri="/connext" %>
+
 <html>
 <head>
 <sx:head parseContent="true" />
@@ -19,9 +21,16 @@
 				<s:iterator value="value" status="rowstatus">
 				<s:if test="(chart==true)">
 					<div class="chartBox">
-						<a href="downloadChart.action?id=<s:property value="chartUID"/>_large">
-							<img src="downloadChart.action?id=<s:property value="chartUID"/>_small"/>
-						</a>
+
+							<m:graph
+							  id="%{alertId}"
+							  width="300"
+							  height="300"
+							  align="middle"
+							  bgcolor="#FFFFFF"
+							  url="/getDashboardChartData.action?alertId=%{alertId}"
+							/>
+
 					</div>
 				</s:if><s:else>
 					<div class="dataBox">

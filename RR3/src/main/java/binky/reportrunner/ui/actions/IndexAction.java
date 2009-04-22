@@ -1,5 +1,5 @@
 /*
- * $Id: IndexAction.java,v 1.2 2009-04-13 01:11:11 danielgrout Exp $
+ * $Id: IndexAction.java,v 1.3 2009-04-22 22:11:47 danielgrout Exp $
  *
  * Copyright 2006 The Apache Software Foundation.
  *
@@ -58,9 +58,10 @@ public class IndexAction extends StandardRunnerAction {
 				bean.setAlertName(a.getAlertName());
 				switch (a.getDisplayType()) {
 				case CHART:
-					String chartUID = dashboardService.getChartForAlert(a.getId());
 					bean.setChart(true);
-					bean.setChartUID(chartUID);
+//					String chartUID = dashboardService.getChartForAlert(a.getId());			
+					//bean.setChartUID(chartUID);
+					bean.setAlertId(a.getId());
 					break;
 				case GRID:
 					bean.setChart(false);

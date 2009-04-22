@@ -238,6 +238,13 @@
 			<result>/jsp/main/jobStats.jsp</result>
 		</action>
 
+
+
+		<action name="getDashboardChartData" class="getDashboardChartDataAction">
+			<result>/jsp/nostyle/chartData.jsp</result>
+		</action>
+
+
 		<action name="downloadChart" class="downloadChartAction">
 		    <result name="sendFile" type="stream">
 		  	  <param name="contentType">image/png</param>

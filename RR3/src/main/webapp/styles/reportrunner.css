@@ -80,12 +80,6 @@ input.readOnly {
 		color:#ffffff;
 		height:24px;
 	}
-.appLogo {
-	float:left;
-}
-.vendorLogo {
-	float:right;
-}
 
 input {
 	font-family: Verdana, Arial, Helvetica, sans-serif;

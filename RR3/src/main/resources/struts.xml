@@ -244,6 +244,10 @@
 			<result>/jsp/nostyle/chartData.jsp</result>
 		</action>
 
+		<action name="leftNav" class="leftNavAction">
+			<result>/jsp/nostyle/leftNav.jsp</result>
+		</action>
+
 
 		<action name="downloadChart" class="downloadChartAction">
 		    <result name="sendFile" type="stream">

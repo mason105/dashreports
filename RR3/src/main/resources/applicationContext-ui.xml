@@ -6,6 +6,14 @@
 
 	<!--  actions -->
 
+	<bean id="leftNavAction" class="binky.reportrunner.ui.actions.navigation.LeftNavAction"
+		scope="prototype" >
+		<property name="groupDao">
+			<ref bean="runnerGroupDao" />
+		</property>		
+	</bean>
+	
+
 	<bean id="downloadReportAction" class="binky.reportrunner.ui.actions.job.viewer.DownloadReportAction" scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />

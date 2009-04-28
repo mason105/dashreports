@@ -29,13 +29,20 @@ window.onload=function(){
 <body>
  <sx:tree id="reportrunner" label="<a href='index.action' target='_top'>Report Runner</a>" showRootGrid="true">
 
-  <sx:treenode id="groups" label="<a href='listGroups.action' target='_top'>Groups</a>" >
+  <sx:treenode id="groups" label="Groups" >
   	  <s:iterator value="groups">
       	<sx:treenode id="group_%{groupName}" label="<a href='listJobs.action?groupName=%{groupName}' target='_top'>%{groupName}</a>" />
       </s:iterator>
   </sx:treenode>
   <s:if test="sessionUser.isAdmin == true">
-  	<sx:treenode id="manage" label="<a href='manageServer.action' target='_top'>Manage Server</a>" />
+  	<sx:treenode id="manage" label="Manage Server">
+		<sx:treenode id="mange_" label="<a href='listUsers.action' target='_top'>Users</a>" />  			
+		<sx:treenode id="mange_" label="<a href='listGroups.action' target='_top'>Groups</a>" />  			
+		<sx:treenode id="mange_" label="<a href='listAlerts.action' target='_top'>Dashboard Items</a>" />  			
+		<sx:treenode id="mange_" label="<a href='listDataSources.action' target='_top'>Data Sources</a>" />  			
+		<sx:treenode id="mange_" label="<a href='listCurrentExecutingJobs.action' target='_top'>Executing Jobs</a>" />  			
+		<sx:treenode id="mange_" label="<a href='jobStatistics.action' target='_top'>Server Stats</a>" />  			
+  	</sx:treenode>
   </s:if>
   <sx:treenode id="changepassword" label="<a href='setupChangePassword.action' target='_top'>Change Password</a>" />
   <sx:treenode id="help" label="<a href='https://sourceforge.net/forum/forum.php?forum_id=848787' target='_top'>Help</a>" />

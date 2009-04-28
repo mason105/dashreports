@@ -1,3 +1,86 @@
+/* main layout */
+
+
+
+.appLogo {
+	/*float:left;*/
+}
+
+.vendorLogo {
+	float:right;
+}
+
+
+body,html {
+padding:0px;
+margin:0px;
+}
+
+#container
+{
+left:10px;
+right:10px;
+position:absolute;
+background-color: #fff;
+border: 1px solid gray;
+bottom:10px;
+top:10px;
+}
+
+#top
+{
+background-color: #ddd;
+border-bottom: 1px solid gray;
+height:50px;
+}
+
+#top h1
+{
+padding: 0;
+margin: 0;
+}
+
+#leftnav
+{
+position:absolute;
+top:51px;
+float: left;
+width: 199px;
+margin: 0;
+bottom:20px;
+}
+
+#content
+{
+position:absolute;
+padding:5px;
+top:51px;
+left:200px;
+border-left: 1px solid gray;
+bottom:20px;
+right:11px;
+}
+
+#footer
+{
+position:absolute;
+color: #333;
+background-color: #ddd;
+border-top: 1px solid gray;
+height:20px;
+bottom:0px;
+left:0px;
+right:0px;
+}
+
+
+
+/* chart layout */
+
+.chartBox {
+}
+
+
 /* Form Layout */
 div.wwgrp,div.formSubmit {
 	clear: both;

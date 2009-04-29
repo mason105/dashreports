@@ -44,28 +44,36 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		Double max = 0d;
 		RowSetDynaClass data = alert.getCurrentDataset();
 		Map<String, List<Double>> dataMap = new HashMap<String, List<Double>>();
-		for (DynaProperty prop : data.getDynaProperties()) {
-			List<Double> d = new LinkedList<Double>();
-			String propName = prop.getName();
-			for (Object o : data.getRows()) {
-				DynaBean b = (DynaBean) o;
-				if (!propName.equalsIgnoreCase(alert.getXaxisColumn())) {
-					Double value = Double.parseDouble(b.get(propName)
-							.toString());
-					if (value > max)
-						max = value;
-					d.add(value);
-				}
+		
+		for (Object o: data.getRows()) {
+			DynaBean b =(DynaBean) o;
+			String seriesName="";
+			if ((alert.getSeriesNameColumn()==null)||(alert.getSeriesNameColumn().isEmpty())) {
+				seriesName="VALUE";
+			}else{
+				seriesName=(String)b.get(alert.getSeriesNameColumn());
 			}
-			if (!propName.equalsIgnoreCase(alert.getXaxisColumn())) {
-				dataMap.put(propName, d);
+			Double value = Double.parseDouble(b.get(alert.getValueColumn()).toString());
+			if (value>max) max=value;
+			List<Double> values = dataMap.get(seriesName);
+			
+			if (values==null) {
+				values = new LinkedList<Double>();				
 			}
+			values.add(value);
+			
+			dataMap.put(seriesName, values);
+			
 		}
+		
 
 		List<String> xLabels = new LinkedList<String>();
 		for (Object o : data.getRows()) {
 			DynaBean b = (DynaBean) o;
-			xLabels.add(b.get(alert.getXaxisColumn()).toString());
+			String label=b.get(alert.getXaxisColumn()).toString();
+			if (!xLabels.contains(label)) {
+				xLabels.add(label);
+			}
 		}
 
 		List<DefaultOFCGraphDataModel> models = new LinkedList<DefaultOFCGraphDataModel>();
@@ -96,16 +104,13 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				mainHex = "#" + mainHex1 + mainHex1 + "00" + mainHex1
 						+ mainHex1;
 				break;
-			case 6:
-				mainHex = "#" + mainHex1 + mainHex1 + mainHex1 + mainHex1
-						+ mainHex1 + mainHex1;
 			default:
 				y = 0;
 				c = c - 3;
 
 				y++;
 				if (c < 0) {
-					c = 16;
+					c = 15;
 				}
 			}
 			/* end hack */
@@ -163,8 +168,6 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 					case 5:
 						hex = "#" + hex1 + hex1 + "00" + hex1 + hex1;
 						break;
-					case 6:
-						hex = "#" + hex1 + hex1 + hex1 + hex1 + hex1 + hex1;
 					default:
 						x = 0;
 						a = a - 3;
@@ -173,7 +176,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 					x++;
 					if (a < 0) {
-						a = 16;
+						a = 15;
 
 					}
 

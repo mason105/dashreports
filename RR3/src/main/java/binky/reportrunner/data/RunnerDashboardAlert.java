@@ -61,7 +61,8 @@ public class RunnerDashboardAlert implements Serializable {
 
 	private ChartType chartType;
 
-
+	private Integer displayRow=1;
+	
 	private RowSetDynaClass currentDataset;
 
 
@@ -179,4 +180,18 @@ public class RunnerDashboardAlert implements Serializable {
 	public String toString() {
 		return id+alertName+alertQuery+cronTab;
 	}
+
+
+	public Integer getDisplayRow() {
+		return displayRow;
+	}
+
+
+	public void setDisplayRow(Integer displayRow) {
+		this.displayRow = displayRow;
+	}
+
+
+	
+	
 }

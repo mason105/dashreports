@@ -1,7 +1,8 @@
 package binky.reportrunner.ui.actions.group;
 
+import java.util.List;
+
 import binky.reportrunner.dao.RunnerGroupDao;
-import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
@@ -19,10 +20,10 @@ public class DeleteGroup extends AdminRunnerAction {
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
 
-			RunnerGroup group = groupDao.getGroup(groupName);
-			if ((group.getRunnerJobs() != null)
-					&& (group.getRunnerJobs().size() > 0)) {
-				for (RunnerJob job : group.getRunnerJobs()) {
+			List<RunnerJob> jobs = jobService.listJobs(groupName);
+			if ((jobs != null)
+					&& (jobs.size() > 0)) {
+				for (RunnerJob job : jobs) {
 					jobService.deleteJob(job.getPk().getJobName(), groupName);
 				}
 			}

@@ -18,8 +18,16 @@
 		<s:iterator value="dashboardBeans" status="rowstatus">
 			<sx:div id="group_%{key}" label="%{key}">
 			
+				<s:bean name="binky.reportrunner.ui.actions.dashboard.RowBean" id="rowStatus">
+					<s:param name="currRow">0</s:param>
+				</s:bean>
+			
 				<s:iterator value="value" status="rowstatus">
-				<s:if test="(chart==true)">
+				<s:if test="(rowStatus.currRow!=displayRow)">	
+					<s:set name="rowStatus.currRow" value="%{displayRow}" />
+					<div class="clearFix"></div>
+				</s:if>
+				<s:if test="(chart==true)">				
 					<div class="chartBox">
 
 							<m:graph
@@ -30,11 +38,12 @@
 							  bgcolor="#FFFFFF"
 							  url="/getDashboardChartData.action?alertId=%{alertId}"
 							/>
-
+					
 					</div>
 				</s:if><s:else>
 					<div class="dataBox">
-						<display:table name="data.rows"  pagesize="25" requestURI="index.action" export="false">	
+						<span class="dataBoxHeader"><s:property value="%{alertName}"/></span>
+						<display:table name="data.rows"  requestURI="index.action" export="false">	
 						</display:table>
 					</div>
 				</s:else>

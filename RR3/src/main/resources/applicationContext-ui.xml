@@ -71,6 +71,9 @@
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
 		</property>
+		<property name="jobService">
+			<ref bean="runnerJobService" />
+		</property>			
 	</bean>
 	<bean id="saveGroupAction" class="binky.reportrunner.ui.actions.group.SaveGroup"
 		scope="prototype">

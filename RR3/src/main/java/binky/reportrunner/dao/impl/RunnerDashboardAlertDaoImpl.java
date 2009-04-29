@@ -35,7 +35,7 @@ public class RunnerDashboardAlertDaoImpl extends HibernateDaoSupport implements
 		DetachedCriteria criteria = DetachedCriteria
 				.forClass(RunnerDashboardAlert.class);
 		criteria.add(Expression.eq("group.groupName", groupName));
-		criteria.addOrder(Order.asc("id"));
+		criteria.addOrder(Order.asc("displayRow"));
 		return getHibernateTemplate().findByCriteria(criteria);
 	}
 

@@ -1,5 +1,5 @@
 /*
- * $Id: IndexAction.java,v 1.3 2009-04-22 22:11:47 danielgrout Exp $
+ * $Id: IndexAction.java,v 1.4 2009-04-29 14:50:55 danielgrout Exp $
  *
  * Copyright 2006 The Apache Software Foundation.
  *
@@ -68,6 +68,7 @@ public class IndexAction extends StandardRunnerAction {
 					bean.setData(a.getCurrentDataset());
 					break;
 				}
+				bean.setDisplayRow(a.getDisplayRow());
 				beans.add(bean);
 			}
 			dashboardBeans.put(g.getGroupName(), beans);

@@ -59,6 +59,7 @@ left:200px;
 border-left: 1px solid gray;
 bottom:20px;
 right:11px;
+overflow: auto;
 }
 
 #footer
@@ -74,12 +75,36 @@ right:0px;
 }
 
 
-
-/* chart layout */
-
-.chartBox {
+.leftNavFrame {
+position:absolute;
+top:0px;
+width: 199px;
+height:100%;
+bottom:0px;
 }
 
+
+/* dashboard layout */
+
+.chartBox {
+	margin-left: 10px;
+	margin-top: 5px;
+	width:320px;
+	height:350px;
+	float:left;
+}
+
+.clearFix{
+clear:both;
+}
+.dataBox {
+clear:both;
+border: 1px solid gray;
+}
+
+.dataBoxHeader{
+
+}
 
 /* Form Layout */
 div.wwgrp,div.formSubmit {

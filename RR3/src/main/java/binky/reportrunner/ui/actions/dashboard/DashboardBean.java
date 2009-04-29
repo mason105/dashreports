@@ -9,6 +9,7 @@ public class DashboardBean {
 	private boolean isChart;
 	private String chartUID;
 	private RowSetDynaClass data;
+	private int displayRow;
 	public String getAlertName() {
 		return alertName;
 	}
@@ -38,6 +39,12 @@ public class DashboardBean {
 	}
 	public void setAlertId(Integer alertId) {
 		this.alertId = alertId;
+	}
+	public int getDisplayRow() {
+		return displayRow;
+	}
+	public void setDisplayRow(int displayRow) {
+		this.displayRow = displayRow;
 	}
 	
 	

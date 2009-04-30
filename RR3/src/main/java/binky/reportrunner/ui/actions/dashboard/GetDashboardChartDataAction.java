@@ -9,6 +9,7 @@ import java.util.Map;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.RowSetDynaClass;
+import org.apache.log4j.Logger;
 
 import za.co.connext.web.components.DefaultOFCGraphDataModel;
 import za.co.connext.web.components.DefaultOFCPieDataModel;
@@ -32,6 +33,8 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 	private String data;
 
+	private static final Logger logger = Logger.getLogger(GetDashboardChartDataAction.class);
+	
 	@Override
 	public String execute() throws Exception {
 		RunnerDashboardAlert alert = dashboardService.getAlert(alertId);
@@ -44,33 +47,35 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		Double max = 0d;
 		RowSetDynaClass data = alert.getCurrentDataset();
 		Map<String, List<Double>> dataMap = new HashMap<String, List<Double>>();
-		
-		for (Object o: data.getRows()) {
-			DynaBean b =(DynaBean) o;
-			String seriesName="";
-			if ((alert.getSeriesNameColumn()==null)||(alert.getSeriesNameColumn().isEmpty())) {
-				seriesName="VALUE";
-			}else{
-				seriesName=(String)b.get(alert.getSeriesNameColumn());
+
+		for (Object o : data.getRows()) {
+			DynaBean b = (DynaBean) o;
+			String seriesName = "";
+			if ((alert.getSeriesNameColumn() == null)
+					|| (alert.getSeriesNameColumn().isEmpty())) {
+				seriesName = "VALUE";
+			} else {
+				seriesName = (String) b.get(alert.getSeriesNameColumn());
 			}
-			Double value = Double.parseDouble(b.get(alert.getValueColumn()).toString());
-			if (value>max) max=value;
+			Double value = Double.parseDouble(b.get(alert.getValueColumn())
+					.toString());
+			if (value > max)
+				max = value;
 			List<Double> values = dataMap.get(seriesName);
-			
-			if (values==null) {
-				values = new LinkedList<Double>();				
+
+			if (values == null) {
+				values = new LinkedList<Double>();
 			}
 			values.add(value);
-			
+
 			dataMap.put(seriesName, values);
-			
+
 		}
-		
 
 		List<String> xLabels = new LinkedList<String>();
 		for (Object o : data.getRows()) {
 			DynaBean b = (DynaBean) o;
-			String label=b.get(alert.getXaxisColumn()).toString();
+			String label = b.get(alert.getXaxisColumn()).toString();
 			if (!xLabels.contains(label)) {
 				xLabels.add(label);
 			}
@@ -87,32 +92,33 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 			String mainHex = "";
 			switch (y) {
-			case 1:
-				mainHex = "#" + mainHex1 + mainHex1 + "0000";
-				break;
-			case 2:
-				mainHex = "#" + "00" + mainHex1 + mainHex1 + "00";
-				break;
-			case 3:
-				mainHex = "#" + "0000" + mainHex1 + mainHex1;
-				break;
-			case 4:
-				mainHex = "#" + mainHex1 + mainHex1 + mainHex1 + mainHex1
-						+ "00";
-				break;
-			case 5:
-				mainHex = "#" + mainHex1 + mainHex1 + "00" + mainHex1
-						+ mainHex1;
-				break;
-			default:
-				y = 0;
-				c = c - 3;
+				case 1:
+					mainHex = "#" + mainHex1 + mainHex1 + "0000";
+					break;
+				case 2:
+					mainHex = "#" + "00" + mainHex1 + mainHex1 + "00";
+					break;
+				case 3:
+					mainHex = "#" + "0000" + mainHex1 + mainHex1;
+					break;
+				case 4:
+					mainHex = "#" + mainHex1 + mainHex1 + mainHex1 + mainHex1
+							+ "00";
+					break;
+				case 5:
+					mainHex = "#" + mainHex1 + mainHex1 + "00" + mainHex1
+							+ mainHex1;
+					break;
+				default:
+					y = 0;
+					c = c - 3;
 			}
-			
+
 			y++;
 			if (c < 0) {
 				c = 15;
 			}
+			logger.debug("colouring series " + modName+ "  with: " + mainHex);
 			/* end hack */
 
 			switch (alert.getChartType()) {

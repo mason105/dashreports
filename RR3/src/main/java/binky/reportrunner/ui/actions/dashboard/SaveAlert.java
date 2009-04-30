@@ -10,6 +10,7 @@ import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
+import binky.reportrunner.data.RunnerDashboardAlert.ChartSize;
 import binky.reportrunner.data.RunnerDashboardAlert.DisplayType;
 import binky.reportrunner.engine.renderers.ChartRenderer.ChartType;
 import binky.reportrunner.service.DashboardService;
@@ -73,7 +74,10 @@ public class SaveAlert extends AdminRunnerAction implements Preparable {
 	public List<DisplayType> getDisplayTypes() {
 		return Arrays.asList(DisplayType.values());
 	}
-
+	public List<ChartSize> getChartSizes() {
+		return Arrays.asList(ChartSize.values());
+	}
+	
 	public RunnerDataSourceDao getDataSourceDao() {
 		return dataSourceDao;
 	}

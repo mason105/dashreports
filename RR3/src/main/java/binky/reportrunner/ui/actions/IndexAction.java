@@ -1,5 +1,5 @@
 /*
- * $Id: IndexAction.java,v 1.4 2009-04-29 14:50:55 danielgrout Exp $
+ * $Id: IndexAction.java,v 1.5 2009-04-30 15:57:50 danielgrout Exp $
  *
  * Copyright 2006 The Apache Software Foundation.
  *
@@ -27,7 +27,6 @@ import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
-import binky.reportrunner.ui.actions.dashboard.DashboardBean;
 
 /**
  * 
@@ -36,11 +35,11 @@ public class IndexAction extends StandardRunnerAction {
 
 	private DashboardService dashboardService;
 	private static final long serialVersionUID = 9093344521097271797L;
-	private Map<String,List<DashboardBean>> dashboardBeans;
+	private  Map<String, List<RunnerDashboardAlert>>  alerts;
 	private RunnerGroupDao groupDao;
 	public String execute() throws Exception {
 	
-		dashboardBeans = new HashMap<String, List<DashboardBean>>();
+		alerts = new  HashMap<String, List<RunnerDashboardAlert>>();
 		
 		List<RunnerGroup> groups;
 		
@@ -51,27 +50,8 @@ public class IndexAction extends StandardRunnerAction {
 		}
 		
 		for (RunnerGroup g: groups) {
-			List<RunnerDashboardAlert> alerts = dashboardService.getAlertsForGroup(g.getGroupName());
-			List<DashboardBean>beans=new LinkedList<DashboardBean>();
-			for (RunnerDashboardAlert a:alerts) {
-				DashboardBean bean = new DashboardBean();
-				bean.setAlertName(a.getAlertName());
-				switch (a.getDisplayType()) {
-				case CHART:
-					bean.setChart(true);
-//					String chartUID = dashboardService.getChartForAlert(a.getId());			
-					//bean.setChartUID(chartUID);
-					bean.setAlertId(a.getId());
-					break;
-				case GRID:
-					bean.setChart(false);
-					bean.setData(a.getCurrentDataset());
-					break;
-				}
-				bean.setDisplayRow(a.getDisplayRow());
-				beans.add(bean);
-			}
-			dashboardBeans.put(g.getGroupName(), beans);
+			List<RunnerDashboardAlert> a = dashboardService.getAlertsForGroup(g.getGroupName());		
+			alerts.put(g.getGroupName(), a);
 		}
 		
 		
@@ -80,6 +60,7 @@ public class IndexAction extends StandardRunnerAction {
 
 	public DashboardService getDashboardService() {
 		return dashboardService;
+		
 	}
 
 	public void setDashboardService(DashboardService dashboardService) {
@@ -94,12 +75,13 @@ public class IndexAction extends StandardRunnerAction {
 		this.groupDao = groupDao;
 	}
 
-	public Map<String, List<DashboardBean>> getDashboardBeans() {
-		return dashboardBeans;
+	public Map<String, List<RunnerDashboardAlert>> getAlerts() {
+		return alerts;
 	}
 
-	public void setDashboardBeans(Map<String, List<DashboardBean>> dashboardBeans) {
-		this.dashboardBeans = dashboardBeans;
+	public void setAlerts(Map<String, List<RunnerDashboardAlert>> alerts) {
+		this.alerts = alerts;
 	}
+
 	
 }

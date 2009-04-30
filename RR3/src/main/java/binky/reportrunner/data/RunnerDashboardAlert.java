@@ -37,6 +37,25 @@ public class RunnerDashboardAlert implements Serializable {
 
 	}
 
+	public enum ChartSize {
+
+		Small("Small"), Medium("Medium"), Large("Large");
+		private String displayName;
+
+		ChartSize(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -56,11 +75,13 @@ public class RunnerDashboardAlert implements Serializable {
 	private String seriesNameColumn;
 	private String xaxisColumn;
 
+	private ChartSize chartSize;
+	
 	@ManyToOne
 	private RunnerDataSource datasource;
 
 	private DisplayType displayType;
-
+	
 	private ChartType chartType;
 
 	private Integer displayRow=1;
@@ -211,6 +232,16 @@ public class RunnerDashboardAlert implements Serializable {
 
 	public void setSeriesNameColumn(String seriesNameColumn) {
 		this.seriesNameColumn = seriesNameColumn;
+	}
+
+
+	public ChartSize getChartSize() {
+		return chartSize;
+	}
+
+
+	public void setChartSize(ChartSize chartSize) {
+		this.chartSize = chartSize;
 	}
 
 

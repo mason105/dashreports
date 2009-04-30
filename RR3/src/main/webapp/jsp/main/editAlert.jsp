@@ -34,6 +34,11 @@
 	<s:select label="Chart Type" name="dashboardAlert.chartType" list="chartTypes"
 			listKey="name" listValue="displayName"></s:select>
 
+
+	<s:select label="Chart Size" name="dashboardAlert.chartSize" list="chartSizes"
+			listKey="name" listValue="displayName"></s:select>
+
+
 	<s:select label="Select Data Source"
 		name="dashboardAlert.datasource.dataSourceName" value="%{dashboardAlert.datasource}"
 		list="runnerDataSources" listKey="dataSourceName" listValue="dataSourceName">

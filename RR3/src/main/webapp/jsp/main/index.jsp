@@ -14,37 +14,45 @@
 </head>
 <body>
 
-<s:if test="dashboardBeans.size>0">
+<s:if test="alerts.size>0">
 	<sx:tabbedpanel id="groups">				
-		<s:iterator value="dashboardBeans" status="rowstatus">
+		<s:iterator value="alerts" status="rowstatus">
 			<s:if test="value.size>0">		
 			<sx:div id="group_%{key}" label="%{key}">			
-				<s:bean name="binky.reportrunner.ui.actions.dashboard.RowBean" id="rowStatus">
-					<s:param name="currRow">0</s:param>
-				</s:bean>
-			
+				
+				<s:set name="currRow" value="%{0}"/>
+				
 				<s:iterator value="value" status="rowstatus">
-				<s:if test="(rowStatus.currRow!=displayRow)">	
-					<s:set name="rowStatus.currRow" value="%{displayRow}" />
+				<s:if test="(currRow!=displayRow)">	
+					<s:set name="currRow" value="%{displayRow}" />
 					<div class="clearFix"></div>
 				</s:if>
-				<s:if test="(chart==true)">				
-					<div class="chartBox">
-
-							<m:graph
-							  id="%{alertId}"
-							  width="300"
-							  height="300"
-							  align="middle"
-							  bgcolor="#FFFFFF"
-							  url="/getDashboardChartData.action?alertId=%{alertId}"
-							/>
-					
-					</div>
+				<s:if test="(displayType.name=='CHART')">				
+					<s:if test="(chartSize.name=='Small')">		
+						<div class="chartBoxSmall">
+								<m:graph id="chart_%{id}" width="300" height="300" align="middle" bgcolor="#FFFFFF"
+								  url="/getDashboardChartData.action?alertId=%{id}"
+								/>					
+						</div>
+					</s:if><s:else>
+						<s:if test="(chartSize.name=='Medium')">
+							<div class="chartBoxMedium">
+									<m:graph id="chart_%{id}" width="450" height="350" align="middle" bgcolor="#FFFFFF"
+									  url="/getDashboardChartData.action?alertId=%{id}"
+									/>					
+							</div>						
+						</s:if><s:else>
+							<div class="chartBoxLarge">
+									<m:graph id="chart_%{id}" width="800" height="600" align="middle" bgcolor="#FFFFFF"
+									  url="/getDashboardChartData.action?alertId=%{id}"
+									/>					
+							</div>
+						</s:else>
+					</s:else>	
 				</s:if><s:else>
 					<div class="dataBox">
 						<span class="dataBoxHeader"><s:property value="%{alertName}"/></span>
-						<display:table name="data.rows"  requestURI="index.action" export="false">	
+						<display:table name="currentDataset.rows"  requestURI="index.action" export="false">	
 						</display:table>
 					</div>
 				</s:else>

@@ -47,6 +47,13 @@
 	</s:textfield>
 	
 	
+	<s:textfield label="Value Column Name" size="32" value="%{dashboardAlert.valueColumn}" name="dashboardAlert.valueColumn">
+	</s:textfield>
+	
+	<s:textfield label="Series Name Column Name" size="32" value="%{dashboardAlert.seriesNameColumn}" name="dashboardAlert.seriesNameColumn">
+	</s:textfield>
+	
+	
 	<s:textfield label="Cron String" size="32" value="%{dashboardAlert.cronTab}" name="dashboardAlert.cronTab">
 	</s:textfield>
 	

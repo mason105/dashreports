@@ -107,11 +107,11 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			default:
 				y = 0;
 				c = c - 3;
-
-				y++;
-				if (c < 0) {
-					c = 15;
-				}
+			}
+			
+			y++;
+			if (c < 0) {
+				c = 15;
 			}
 			/* end hack */
 

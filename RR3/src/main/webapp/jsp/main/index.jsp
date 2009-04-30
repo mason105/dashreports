@@ -14,10 +14,11 @@
 </head>
 <body>
 
-	<sx:tabbedpanel id="groups">
+<s:if test="dashboardBeans.size>0">
+	<sx:tabbedpanel id="groups">				
 		<s:iterator value="dashboardBeans" status="rowstatus">
-			<sx:div id="group_%{key}" label="%{key}">
-			
+			<s:if test="value.size>0">		
+			<sx:div id="group_%{key}" label="%{key}">			
 				<s:bean name="binky.reportrunner.ui.actions.dashboard.RowBean" id="rowStatus">
 					<s:param name="currRow">0</s:param>
 				</s:bean>
@@ -49,8 +50,10 @@
 				</s:else>
 				</s:iterator>
 			</sx:div>
+			</s:if>
 		</s:iterator>
 	</sx:tabbedpanel>
+</s:if>
 
 </body>
 </html>

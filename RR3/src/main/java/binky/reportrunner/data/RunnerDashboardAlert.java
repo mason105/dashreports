@@ -52,6 +52,8 @@ public class RunnerDashboardAlert implements Serializable {
 
 	private String cronTab;
 
+	private String valueColumn;
+	private String seriesNameColumn;
 	private String xaxisColumn;
 
 	@ManyToOne
@@ -189,6 +191,26 @@ public class RunnerDashboardAlert implements Serializable {
 
 	public void setDisplayRow(Integer displayRow) {
 		this.displayRow = displayRow;
+	}
+
+
+	public String getValueColumn() {
+		return valueColumn;
+	}
+
+
+	public void setValueColumn(String valueColumn) {
+		this.valueColumn = valueColumn;
+	}
+
+
+	public String getSeriesNameColumn() {
+		return seriesNameColumn;
+	}
+
+
+	public void setSeriesNameColumn(String seriesNameColumn) {
+		this.seriesNameColumn = seriesNameColumn;
 	}
 
 

@@ -6,6 +6,13 @@
 
 	<!--  actions -->
 
+	<bean id="popUpChartAction" class="binky.reportrunner.ui.actions.dashboard.PopUpChartAction"
+		scope="prototype" >
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>		
+	</bean>
+
 	<bean id="leftNavAction" class="binky.reportrunner.ui.actions.navigation.LeftNavAction"
 		scope="prototype" >
 		<property name="groupDao">

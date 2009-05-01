@@ -48,6 +48,9 @@
 		value="%{dashboardAlert.alertQuery}" name="dashboardAlert.alertQuery">
 	</s:textarea>	
 	
+ <s:textfield label="Y-Axis Label" size="64" value="%{dashboardAlert.yLabel}" name="dashboardAlert.yLabel">
+	</s:textfield>
+	
 	<s:textfield label="X-Axis Column Name" size="32" value="%{dashboardAlert.xaxisColumn}" name="dashboardAlert.xaxisColumn">
 	</s:textfield>
 	

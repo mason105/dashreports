@@ -248,7 +248,10 @@
 			<result>/jsp/nostyle/leftNav.jsp</result>
 		</action>
 
-
+		<action name="popupChart" class="popUpChartAction">
+			<result>/jsp/nostyle/popupChart.jsp</result>
+		</action>
+		
 		<action name="downloadChart" class="downloadChartAction">
 		    <result name="sendFile" type="stream">
 		  	  <param name="contentType">image/png</param>

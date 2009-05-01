@@ -70,7 +70,7 @@ public class RunnerDashboardAlert implements Serializable {
 	private String alertQuery;
 
 	private String cronTab;
-
+	private String yLabel;
 	private String valueColumn;
 	private String seriesNameColumn;
 	private String xaxisColumn;
@@ -242,6 +242,16 @@ public class RunnerDashboardAlert implements Serializable {
 
 	public void setChartSize(ChartSize chartSize) {
 		this.chartSize = chartSize;
+	}
+
+
+	public String getYLabel() {
+		return yLabel;
+	}
+
+
+	public void setYLabel(String label) {
+		yLabel = label;
 	}
 
 

@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import za.co.connext.web.components.DefaultOFCGraphDataModel;
 import za.co.connext.web.components.DefaultOFCPieDataModel;
+import za.co.connext.web.components.OFCBar3DSeriesType;
 import za.co.connext.web.components.OFCBarSeriesType;
 import za.co.connext.web.components.OFCGraphController;
 import za.co.connext.web.components.OFCLineAreaSeriesType;
@@ -48,30 +49,6 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		RowSetDynaClass data = alert.getCurrentDataset();
 		Map<String, List<Double>> dataMap = new HashMap<String, List<Double>>();
 
-		for (Object o : data.getRows()) {
-			DynaBean b = (DynaBean) o;
-			String seriesName = "";
-			if ((alert.getSeriesNameColumn() == null)
-					|| (alert.getSeriesNameColumn().isEmpty())) {
-				seriesName = "VALUE";
-			} else {
-				seriesName = (String) b.get(alert.getSeriesNameColumn());
-			}
-			Double value = Double.parseDouble(b.get(alert.getValueColumn())
-					.toString());
-			if (value > max)
-				max = value;
-			List<Double> values = dataMap.get(seriesName);
-
-			if (values == null) {
-				values = new LinkedList<Double>();
-			}
-			values.add(value);
-
-			dataMap.put(seriesName, values);
-
-		}
-
 		List<String> xLabels = new LinkedList<String>();
 		for (Object o : data.getRows()) {
 			DynaBean b = (DynaBean) o;
@@ -80,14 +57,83 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				xLabels.add(label);
 			}
 		}
+		
+		List<String> series = new LinkedList<String>();
+		for (Object o : data.getRows()) {
+			DynaBean b = (DynaBean) o;
+			String seriesName;
+			if ((alert.getSeriesNameColumn() == null)
+					|| (alert.getSeriesNameColumn().isEmpty())) {
+				seriesName = "VALUE";
+			} else {
+				seriesName = (String) b.get(alert.getSeriesNameColumn());
+			}
+			if (!series.contains(seriesName)) {
+			series.add(seriesName);
+			}
+		}
+		
+		
+		//hack to fill in the gaps in the x series
+		for (String s : series) {
+			for (String x : xLabels) {
+				boolean found=false;
+				for (Object o : data.getRows()) {
+					DynaBean b = (DynaBean) o;					
+					String label = b.get(alert.getXaxisColumn()).toString();
+					String seriesName;
+					if ((alert.getSeriesNameColumn() == null)
+							|| (alert.getSeriesNameColumn().isEmpty())) {
+						seriesName = "VALUE";
+					} else {
+						seriesName = (String) b.get(alert.getSeriesNameColumn());
+					}
+					Double value;
+					
+					if (label.equals(x) && (seriesName.equals(s)
+							|| (((alert.getSeriesNameColumn() == null)
+									|| (alert.getSeriesNameColumn().isEmpty()))		
+					))) {
+						value = Double.parseDouble(b.get(alert.getValueColumn())
+								.toString());
+						found=true;
+						if (value > max)
+							max = value;
+						List<Double> values = dataMap.get(s);
+		
+						if (values == null) {
+							values = new LinkedList<Double>();
+						}
+						values.add(value);
+		
+						dataMap.put(s, values);
+						break;
+					}
+				}
+				if (!found) {
+					List<Double> values = dataMap.get(s);
+					
+					if (values == null) {
+						values = new LinkedList<Double>();
+					}
+					values.add(0d);
+	
+					dataMap.put(s, values);
+				}
+			}
+		}
+		
+		
+		
 
+		int c = 15;
+		int y = 1;
 		List<DefaultOFCGraphDataModel> models = new LinkedList<DefaultOFCGraphDataModel>();
 		for (String modName : dataMap.keySet()) {
 			List<Double> d = dataMap.get(modName);
 
 			/* hack for colours */
-			int c = 15;
-			int y = 1;
+		
 			String mainHex1 = Integer.toHexString(c);
 
 			String mainHex = "";
@@ -134,7 +180,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				DefaultOFCGraphDataModel modelBar = new DefaultOFCGraphDataModel();
 				modelBar.setData(d);
 				modelBar.setFormat(new DecimalFormat("###0.000"));
-				modelBar.setSeriesType(new OFCBarSeriesType(50, mainHex,
+				modelBar.setSeriesType(new OFCBar3DSeriesType(50, mainHex,
 						modName));
 				models.add(modelBar);
 				break;
@@ -204,11 +250,11 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		case AREA:
 		case BAR:
 		case LINE:
-			OFCGraphController stdController = new OFCGraphController();
+			OFCGraphController stdController = new OFCGraphController();			
 			stdController.getTitle().setText(alert.getAlertName());
-			stdController.getTitle().setSize(10);
+			stdController.getTitle().setSize(14);
 			stdController.getLabels().setLabels(xLabels);
-			stdController.getYLegend().setText("");
+			stdController.getYLegend().setText(alert.getYLabel()==null?"Value":alert.getYLabel());
 			stdController.getYLegend().setColor("#8b0000");
 			stdController.getYLegend().setSize(10);
 			stdController.getXLegend().setText(alert.getXaxisColumn());
@@ -218,7 +264,9 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			stdController.getColor().getXAxisColor().setColor("#e3e3e3");
 			stdController.getColor().getYAxisColor().setColor("#e3e3e3");
 			stdController.getColor().getXGridColor().setColor("#e3e3e3");
-			stdController.getColor().getYGridColor().setColor("#e3e3e3");
+			stdController.getColor().getYGridColor().setColor("#e3e3e3");			
+			//*! 0=Hori 1=Verti 2=45 deg
+			stdController.getXLabelStyle().setOrientation(1);
 			for (DefaultOFCGraphDataModel m : models) {
 				stdController.add(m);
 			}

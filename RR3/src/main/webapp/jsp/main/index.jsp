@@ -52,7 +52,7 @@ function drawPanels() {
 		        		width:820	
 		        	</s:else>
 		        </s:else>
-		    }).addTo('panel_<s:property value="%{displayRow}"/>');
+		    }).addTo('panel_<s:property value="%{id}"/>');
 		</s:iterator>
 	</s:iterator>
 </s:if>	
@@ -67,12 +67,15 @@ function drawPanels() {
 		<s:iterator value="alerts" status="rowstatus">
 			<s:if test="value.size>0">		
 				<sx:div id="group_%{key}" label="%{key}">						
-					<s:set name="currentRow" value="0"/>								
+												
 					<s:iterator value="value" status="rowstatus">
-						<s:if test="(displayRow!=currentRow)">
-							<div id="panel_<s:property value="%{displayRow}"/>"></div>
-							<s:set name="currentRow" value="%{displayRow}"/>
-						</s:if>
+						<s:if test="(displayRow!=#currentRow)">
+							<div class="clearFix"></class>
+							<s:set name="currentRow" value="%{displayRow}"/>							
+						</s:if>			
+						<div class="widgetContainer">
+						<div id="panel_<s:property value="%{id}"/>"></div>
+						</div>			 
 						<s:if test="(displayType.name=='CHART')">							
 							<div id="alert_<s:property value="%{id}"/>" class="alertBox">
 						        <s:if test="(chartSize.name=='Small')">			

@@ -251,8 +251,8 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		case BAR:
 		case LINE:
 			OFCGraphController stdController = new OFCGraphController();			
-			stdController.getTitle().setText(alert.getAlertName());
-			stdController.getTitle().setSize(14);
+			stdController.getTitle().setText("");
+			stdController.getTitle().setSize(6);
 			stdController.getLabels().setLabels(xLabels);
 			stdController.getYLegend().setText(alert.getYLabel()==null?"Value":alert.getYLabel());
 			stdController.getYLegend().setColor("#8b0000");

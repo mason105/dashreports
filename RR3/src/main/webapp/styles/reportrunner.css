@@ -87,9 +87,18 @@ bottom:0px;
 /* dashboard layout */
 
  .alertBox {
- border: 1px solid gray;
- }
 
+ }
+ .widgetContainer {
+  border: 1px solid gray;
+ float:left;
+ margin-top:5px;
+ margin-left:10px;
+ margin-right:10px;
+ }
+.clearFix {
+clear:both; 
+}
 /* Form Layout */
 div.wwgrp,div.formSubmit {
 	clear: both;

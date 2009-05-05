@@ -1,5 +1,5 @@
 /*
- * $Id: IndexAction.java,v 1.5 2009-04-30 15:57:50 danielgrout Exp $
+ * $Id: IndexAction.java,v 1.6 2009-05-05 15:17:50 danielgrout Exp $
  *
  * Copyright 2006 The Apache Software Foundation.
  *
@@ -18,7 +18,6 @@
 package binky.reportrunner.ui.actions;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +36,7 @@ public class IndexAction extends StandardRunnerAction {
 	private static final long serialVersionUID = 9093344521097271797L;
 	private  Map<String, List<RunnerDashboardAlert>>  alerts;
 	private RunnerGroupDao groupDao;
+	private Integer currentRow;
 	public String execute() throws Exception {
 	
 		alerts = new  HashMap<String, List<RunnerDashboardAlert>>();
@@ -81,6 +81,14 @@ public class IndexAction extends StandardRunnerAction {
 
 	public void setAlerts(Map<String, List<RunnerDashboardAlert>> alerts) {
 		this.alerts = alerts;
+	}
+
+	public Integer getCurrentRow() {
+		return currentRow;
+	}
+
+	public void setCurrentRow(Integer currentRow) {
+		this.currentRow = currentRow;
 	}
 
 	

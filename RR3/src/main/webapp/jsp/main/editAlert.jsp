@@ -30,13 +30,15 @@
 	
 	<s:select label="Display Type" name="dashboardAlert.displayType" list="displayTypes"
 			listKey="name" listValue="displayName"></s:select>
+			
+	<s:select label="Display Size" name="dashboardAlert.chartSize" list="chartSizes"
+			listKey="name" listValue="displayName"></s:select>
+			
 
 	<s:select label="Chart Type" name="dashboardAlert.chartType" list="chartTypes"
 			listKey="name" listValue="displayName"></s:select>
 
 
-	<s:select label="Chart Size" name="dashboardAlert.chartSize" list="chartSizes"
-			listKey="name" listValue="displayName"></s:select>
 
 
 	<s:select label="Select Data Source"

@@ -70,7 +70,7 @@ function tree() {
     	}));
     </s:iterator>
     <s:if test="sessionUser.isAdmin == true">
-	    var manager = new Jx.TreeFolder({label: 'Manager Server'});
+	    var manager = new Jx.TreeFolder({label: 'Manage Server'});
 	    tree.append(manager);
 	    manager.append(new Jx.TreeItem({
 	        label: 'Users',

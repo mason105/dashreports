@@ -37,21 +37,62 @@ function drawPanels() {
 <s:if test="alerts.size>0">
 	<s:iterator value="alerts" status="rowstatus">
 		<s:iterator value="value" status="rowstatus">
-		    new Jx.Panel({
+			<s:if test="(displayType.name=='CHART')">
+			
+			  var popUp_<s:property value="%{id}"/> = new Jx.Dialog({
+			        label: '<s:property value="%{alertName}"/>',
+			        image: '<s:url value="/images/icons/chart_bar.png"/>',
+			        modal: true, 
+			        horizontal: '200 left', 
+			        vertical: '50 top', 
+					width: 850,
+			        height: 700,			       
+			        contentURL: '<s:url value="/popupChart.action?alertId="/><s:property value="%{id}"/>', 
+			        resize: false
+			    });
+				
+				var tbTop_<s:property value="%{id}"/> = new Jx.Toolbar({position: 'top'}).add(	        	
+        			<s:if test="(chartSize.name!='Large')">
+        				new Jx.Button({label:'Zoom',
+        				image: '<s:url value="/images/icons/zoom.png"/>',
+        				onClick: popUp_<s:property value="%{id}"/>.open.bind(popUp_<s:property value="%{id}"/>) 
+        				}),
+        				new Jx.Button({label:'Refresh',
+	        			image: '<s:url value="/images/icons/arrow_refresh.png"/>',
+	        			onClick: function(){alert('Refresh!');} 
+        			</s:if>        		        			       	
+	        		})
+	    		);
+	    		
+				  
+	    		
+	    			    	
+			</s:if><s:else>
+
+				/* possibilty implement jxGrid but it looks hard - might write a tag lib */
+							
+			</s:else>
+		    new Jx.Panel({		    	
 		        label: '<s:property value="%{alertName}"/>',
 		        content: 'alert_<s:property value="%{id}"/>',		       
 		        <s:if test="(chartSize.name=='Small')">			
-		       		 height: 335,
-		       		 width:320		       		 
+		       		 height: 345,
+		       		 width:340	       		 
 		        </s:if><s:else>
 		        	<s:if test="(chartSize.name=='Medium')">
-						height: 485,		        
-		        		width:520
+						height: 495,		        
+		        		width:530
 		        	</s:if><s:else>
-						height: 685,		        
-		        		width:820	
+						height: 695,		        
+		        		width:830	
 		        	</s:else>
 		        </s:else>
+		        <s:if test="(displayType.name=='CHART')">
+		        	,toolbars:[tbTop_<s:property value="%{id}"/>]
+		        	,image: '<s:url value="/images/icons/chart_bar.png"/>',
+		        </s:if><s:else>
+		        	 ,image: '<s:url value="/images/icons/page_white_text.png"/>'
+		        </s:else> 		       
 		    }).addTo('panel_<s:property value="%{id}"/>');
 		</s:iterator>
 	</s:iterator>
@@ -67,7 +108,7 @@ function drawPanels() {
 		<s:iterator value="alerts" status="rowstatus">
 			<s:if test="value.size>0">		
 				<sx:div id="group_%{key}" label="%{key}">						
-												
+					<div class="dashboard">							
 					<s:iterator value="value" status="rowstatus">
 						<s:if test="(displayRow!=#currentRow)">
 							<div class="clearFix"></class>
@@ -98,6 +139,7 @@ function drawPanels() {
 							</div>
 						</s:else>
 					</s:iterator>
+					</div>
 				</sx:div>
 			</s:if>
 		</s:iterator>

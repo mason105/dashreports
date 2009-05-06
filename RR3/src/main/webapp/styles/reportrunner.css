@@ -86,14 +86,18 @@ bottom:0px;
 
 /* dashboard layout */
 
- .alertBox {
+.dashboard {
+	margin-bottom:25px;
+}
 
+ .alertBox {
+height:100%;
  }
  .widgetContainer {
   border: 1px solid gray;
  float:left;
  margin-top:5px;
- margin-left:10px;
+  margin-left:10px;
  margin-right:10px;
  }
 .clearFix {

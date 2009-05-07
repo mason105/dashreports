@@ -9,7 +9,7 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-
+<table><tr><Td>
 <s:form action="viewJobOutput" method="post" enctype="multipart/form-data"
 	validate="true">
 	
@@ -55,14 +55,13 @@
 		<s:hidden value="%{key.parameterType}"
 				name="parameters[%{#rowstatus.index}].parameterType" /> 
 			</div>
-	
+	 
 	</s:iterator>
 	
-	<div class="formSubmit" id="save">
-		<s:submit name="dispatchRunButton" value="Get Report" align="none" />
-	</div>
-</s:form>
 
+		<s:submit name="dispatchRunButton" value="Get Report" align="none" />
+</s:form>
+</td></tr></table>
 </body>
 </html>
 	

@@ -1,5 +1,6 @@
 package binky.reportrunner.ui.actions.job.viewer;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,14 @@ public class SetupViewJobAction extends StandardRunnerAction {
 	
 	@Override
 	public String execute() throws Exception {
-		parameters = jobService.getPossibleParameterValues(jobName, groupName);
+		//parameters = jobService.getPossibleParameterValues(jobName, groupName);
+		
+		//temporary until i figure out what to do with this auto population
+		parameters= new HashMap<RunnerJobParameter, List<Object>>();
+		for (RunnerJobParameter p : jobService.getJob(jobName, groupName).getParameters()) {
+			parameters.put(p, null);
+		}
+		
 		return SUCCESS;
 	}
 

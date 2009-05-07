@@ -104,11 +104,11 @@ height:100%;
 clear:both; 
 }
 /* Form Layout */
-div.wwgrp,div.formSubmit {
-	clear: both;
+div.wwgrp,div.formSubmit {	
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
+
 
 div.wwgrp div.wwlbl {
 	float: left;

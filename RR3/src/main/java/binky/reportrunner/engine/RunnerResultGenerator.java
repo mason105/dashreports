@@ -48,14 +48,19 @@ public class RunnerResultGenerator {
 				for (RunnerJobParameter param : params) {
 					if ((param.getParameterBurstColumn() != null)
 							&& (!param.getParameterBurstColumn().isEmpty())) {
-						param.setParameterValue(""
-								+ burstResults.getObject(param
-										.getParameterBurstColumn()));
-						populatedParams.add(param);
-						logger.debug("added populated param"
-								+ param.getPk().getParameterIdx()
-								+ " - value - " + param.getParameterValue());
+						if (((param.getParameterValue()== null) || param.getParameterValue().isEmpty())) {
+							param.setParameterValue(burstResults.
+									getObject(param.getParameterBurstColumn()).toString());
+							populatedParams.add(param);
+							logger.debug("added populated param"
+									+ param.getPk().getParameterIdx()
+									+ " - value - " + param.getParameterValue());
+						} else {
+							logger.debug("using overide value" + param.getParameterValue());
+							populatedParams.add(param);
+						}
 					} else {
+						logger.debug("standard parameter");
 						populatedParams.add(param);						
 					}
 				}
@@ -64,11 +69,25 @@ public class RunnerResultGenerator {
 						job.getBurstFileNameParameterName()).toString();
 
 				// process the query with the results in
-
-				ResultSet rs = sqlProcessor.getResults(conn, job.getQuery(),
+				if (!results.containsKey(name)){
+					//hack to prevent it repeating its self on the viewer
+					boolean add=true;
+					
+					for (RunnerJobParameter p :params) {
+						if (p.getParameterBurstColumn().equalsIgnoreCase(job.getBurstFileNameParameterName())) {
+							if (((p.getParameterValue()!= null) && !p.getParameterValue().isEmpty())) {
+								if (!name.equals(p.getParameterValue())) add=false;
+							}
+						}
+					}
+					
+					if (add) {
+						ResultSet rs = sqlProcessor.getResults(conn, job.getQuery(),
 						populatedParams);
 
-				results.put(name, rs);
+						results.put(name, rs);
+					}
+				}
 
 			}
 

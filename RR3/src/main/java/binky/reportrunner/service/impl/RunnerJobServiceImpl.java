@@ -258,7 +258,12 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		DataSource ds = dataSourceService.getDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 		SQLProcessor sqlProcessor = new SQLProcessor();
-		if ((job.getIsBurst()==null)||(!job.getIsBurst())) return paramValues;
+		if ((job.getIsBurst()==null)||(!job.getIsBurst())) {
+			for (RunnerJobParameter p : job.getParameters()) {
+				paramValues.put(p, null);
+			}
+			return paramValues;
+		}
 		logger.debug("getting burst result for " + jobName + "/" + groupName);
 		try {
 			ResultSet rs = sqlProcessor.getResults(conn, job.getBurstQuery());

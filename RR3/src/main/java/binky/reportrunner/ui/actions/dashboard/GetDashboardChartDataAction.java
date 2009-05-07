@@ -7,14 +7,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 
 import za.co.connext.web.components.DefaultOFCGraphDataModel;
 import za.co.connext.web.components.DefaultOFCPieDataModel;
 import za.co.connext.web.components.OFCBar3DSeriesType;
-import za.co.connext.web.components.OFCBarSeriesType;
 import za.co.connext.web.components.OFCGraphController;
 import za.co.connext.web.components.OFCLineAreaSeriesType;
 import za.co.connext.web.components.OFCLineSeriesType;

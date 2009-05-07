@@ -55,14 +55,14 @@ function tree() {
     tree.append(root);
     
     /* add groups folder to the tree */
-    var groups = new Jx.TreeFolder({label: 'Groups'});
+    var groups = new Jx.TreeFolder({label: 'Report Groups'});
 
     tree.append(groups);
     
     <s:iterator value="groups">
 	    /* put items into the folder */
 	    groups.append(new Jx.TreeItem({
-        image: '<s:url value="/images/icons/report.png"/>',
+        image: '<s:url value="/images/icons/group.png"/>',
 	        label: '<s:property value="%{groupName}"/>',
 	        onClick: function() {
 	        	parent.window.location='listJobs.action?groupName=<s:property value="%{groupName}"/>';

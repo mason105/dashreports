@@ -53,10 +53,6 @@
 		value="%{job.burstQuery}" name="job.burstQuery">
 	</s:textarea>		
 
-		<s:textfield label="Split on Burst Column (Name)" size="32"
-			value="%{job.burstFileNameParameterName}"
-			name="job.burstFileNameParameterName">
-		</s:textfield>
 
 	</sx:div>
 	
@@ -128,6 +124,13 @@
 		<s:textarea label="Distribution Email Address(es)" cols="30" rows="20"
 			value="%{job.targetEmailAddress}" name="job.targetEmailAddress">
 		</s:textarea>
+
+		<s:textfield label="Split File on Burst Column (Name)" size="32"
+			value="%{job.burstFileNameParameterName}"
+			name="job.burstFileNameParameterName">
+		</s:textfield>
+
+
 	</sx:div>
 
 	<sx:div id="misc" label="Misc">		

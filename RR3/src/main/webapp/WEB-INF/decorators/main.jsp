@@ -34,7 +34,7 @@ function pageY(elem) {
 var buffer = 20; //scroll bar buffer
 function resizeIframe() {
     var height = document.documentElement.clientHeight;
-    height -= pageY(document.getElementById('leftNav'))+ buffer ;
+    height = pageY(document.getElementById('leftNav'))+ buffer ;
     height = (height < 0) ? 0 : height;
     document.getElementById('leftNav').style.height = height + 'px';
     resizeDebug();
@@ -63,13 +63,13 @@ window.onresize = resizeIframe;
 			<li><a href="https://sourceforge.net/forum/forum.php?forum_id=848787">Help</a></li>
 			<li class="last"><a href="logout.action">Logout</a></li></ul>-->
 			
-			 <iframe id="leftNav" src="<s:url value='/leftNav.action'/>" scrolling="auto" class="leftNavFrame" frameborder="0"></iframe>
+			 <iframe id="leftNav" src="<s:url value="/leftNav.action?actionName="/><s:property value="actionName"/>" scrolling="auto" class="leftNavFrame" frameborder="0"></iframe>
 </div>
 <div id="content">
 		<div class="body"><decorator:body /></div>
 </div>
 <div id="footer">
-Footer
+<strong>Current User:</strong><s:property value="sessionUser.fullName"/>
 </div>
 </div>
 

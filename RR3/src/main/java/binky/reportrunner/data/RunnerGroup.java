@@ -1,9 +1,11 @@
 package binky.reportrunner.data;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -30,8 +32,8 @@ public class RunnerGroup implements Serializable {
 	@ManyToMany
 	private List<RunnerUser> users;
 	
-	@OneToMany
-	private List<RunnerJob> runnerJobs;
+	@OneToMany()
+	private Collection<RunnerJob> runnerJobs;
 	
 	@RequiredStringValidator
 	public String getGroupName() {
@@ -50,14 +52,14 @@ public class RunnerGroup implements Serializable {
 		this.groupDescription = groupDescription;
 	}
 
-	public List<RunnerJob> getRunnerJobs() {
+	
+	
+	public Collection<RunnerJob> getRunnerJobs() {
 		return runnerJobs;
 	}
-
-	public void setRunnerJobs(List<RunnerJob> runnerJobs) {
+	public void setRunnerJobs(Collection<RunnerJob> runnerJobs) {
 		this.runnerJobs = runnerJobs;
 	}
-	
 	public String toString() {
 		return this.groupName;
 	}

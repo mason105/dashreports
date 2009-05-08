@@ -23,6 +23,10 @@ public abstract class StandardRunnerAction extends ActionSupport {
 				.get(Statics.USER_HANDLE);
 		return user;
 	}
+	
+	public final String getActionName() {
+		return this.getClass().getName();
+	}
 
 	protected final boolean doesUserHaveGroup(String groupName) {
 

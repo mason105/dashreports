@@ -72,6 +72,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		event.setMessage(message);
 		event.setRunTime(endTime-startTime);
 		event.setTimestamp(new Date());
+		event.setSuccess(true);
 		historyDao.saveEvent(event);
 		
 		return SUCCESS;

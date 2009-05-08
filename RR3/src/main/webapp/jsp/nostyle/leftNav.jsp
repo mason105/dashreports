@@ -69,6 +69,12 @@ function tree() {
 	        }
     	}));
     </s:iterator>
+
+	<s:if test="expandGroups==true">
+		groups.expand();
+	</s:if>
+
+
     <s:if test="sessionUser.isAdmin == true">
 	    var manager = new Jx.TreeFolder({label: 'Manage Server'});
 	    tree.append(manager);
@@ -125,6 +131,11 @@ function tree() {
 	        },
 	        contextMenu: cm
 	    }));
+	
+	<s:if test="expandAdmin==true">
+		manager.expand();
+	</s:if>
+	    
     </s:if>   
 
     tree.append(new Jx.TreeItem({
@@ -153,7 +164,9 @@ function tree() {
         },
         contextMenu: cm
     }));
-       
+
+	
+	       
     
 };
 

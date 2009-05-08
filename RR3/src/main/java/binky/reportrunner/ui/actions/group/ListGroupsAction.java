@@ -6,9 +6,9 @@ import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerGroup;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
-public class ListGroupsAction extends StandardRunnerAction {
+public class ListGroupsAction extends AdminRunnerAction {
 
 	private static final long serialVersionUID = -1335751757190312426L;
 	private static final Logger logger = Logger.getLogger(ListGroupsAction.class);

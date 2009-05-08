@@ -1,3 +1,4 @@
+
 package binky.reportrunner.service.impl;
 
 import java.io.IOException;
@@ -275,7 +276,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 				if ((p.getParameterBurstColumn() != null)
 						&& (!p.getParameterBurstColumn().isEmpty())) {
 
-					rs.beforeFirst();
+					//rs.beforeFirst();
 					logger.debug("getting values for parameter: "
 							+ p.getDescription());
 					while (rs.next()) {

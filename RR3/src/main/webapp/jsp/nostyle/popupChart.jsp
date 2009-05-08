@@ -3,8 +3,8 @@
 <html>
 <head>
 	<title><s:property value="%{alertName}"/></title>
-	<script language="text/javascript">
-	body.onload=function(){
+<script type="text/javascript">
+	window.onload=function(){
 		reload();
 	}
 		function reload()

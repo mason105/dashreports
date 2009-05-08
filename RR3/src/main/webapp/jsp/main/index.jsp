@@ -39,6 +39,7 @@ function drawPanels() {
 		<s:iterator value="value" status="rowstatus">
 			<s:if test="(displayType.name=='CHART')">
 			
+			
 			  var popUp_<s:property value="%{id}"/> = new Jx.Dialog({
 			        label: '<s:property value="%{alertName}"/>',
 			        image: '<s:url value="/images/icons/chart_bar.png"/>',
@@ -47,28 +48,26 @@ function drawPanels() {
 			        vertical: '50 top', 
 					width: 850,
 			        height: 700,			       
-			        contentURL: '<s:url value="/popupChart.action?alertId="/><s:property value="%{id}"/>', 
-			        resize: false
+			        content: 'popUpDiv_<s:property value="%{id}"/>',
+			        onContentLoaded: function() {   } , 
+			        resize: false			        
 			    });
 				
-				var tbTop_<s:property value="%{id}"/> = new Jx.Toolbar({position: 'top'}).add(	        	
-        			<s:if test="(chartSize.name!='Large')">
+				
+				var tbTop_<s:property value="%{id}"/> = new Jx.Toolbar({position: 'top'}).add(	        	        			
         				new Jx.Button({label:'Zoom',
         				image: '<s:url value="/images/icons/zoom.png"/>',
-        				onClick: popUp_<s:property value="%{id}"/>.open.bind(popUp_<s:property value="%{id}"/>) 
-        				}),
-        				new Jx.Button({label:'Refresh',
-	        			image: '<s:url value="/images/icons/arrow_refresh.png"/>',
-	        			onClick: function(){alert('Refresh!');} 
-        			</s:if>        		        			       	
-	        		})
+        				onClick: popUp_<s:property value="%{id}"/>.open.bind(popUp_<s:property value="%{id}"/>)        				
+        				})   		
 	    		);
-	    		
-				  
-	    		
+	    	  
+	    		 /*
+	    		 
+	    		 */
+				
 	    			    	
 			</s:if><s:else>
-
+ 
 				/* possibilty implement jxGrid but it looks hard - might write a tag lib */
 							
 			</s:else>
@@ -117,7 +116,12 @@ function drawPanels() {
 						<div class="widgetContainer">
 						<div id="panel_<s:property value="%{id}"/>"></div>
 						</div>			 
-						<s:if test="(displayType.name=='CHART')">							
+						<s:if test="(displayType.name=='CHART')">	
+							
+							<div id="popUpDiv_<s:property value="%{id}"/>">
+								<m:graph id="pop_chart_%{id}" width="800" height="600" align="middle" bgcolor="#FFFFFF"  url="getDashboardChartData.action?alertId=%{id}"/>
+							</div>
+											
 							<div id="alert_<s:property value="%{id}"/>" class="alertBox">
 						        <s:if test="(chartSize.name=='Small')">			
 									<m:graph id="chart_%{id}" width="300" height="250" align="middle" bgcolor="#FFFFFF"

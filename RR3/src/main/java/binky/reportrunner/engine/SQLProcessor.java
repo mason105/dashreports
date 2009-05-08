@@ -41,8 +41,8 @@ public class SQLProcessor {
 	public ResultSet getResults(Connection connection, String sql,
 			List<RunnerJobParameter> parameters) throws SQLException,
 			NumberFormatException, ParseException {
-		PreparedStatement stmt = connection.prepareStatement(sql);
-
+		PreparedStatement stmt = connection.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+		
 		// 1=String 2=Date 3=Boolean 4=int 5=Long 6=Double
 		//date format yyyy-MM-dd HH:mm:ss
 		logger.debug("executing sql: " + sql);

@@ -151,7 +151,7 @@ function tree() {
         label: 'Help',
         image: '<s:url value="/images/icons/help.png"/>',
         onClick: function() {
-            parent.window.location='https://sourceforge.net/forum/forum.php?forum_id=848787';
+            parent.window.location='http://code.google.com/p/reportrunner/w/list';
         },
         contextMenu: cm
     }));

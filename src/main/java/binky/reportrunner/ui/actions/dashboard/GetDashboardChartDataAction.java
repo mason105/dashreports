@@ -249,8 +249,8 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		case BAR:
 		case LINE:
 			OFCGraphController stdController = new OFCGraphController();			
-			stdController.getTitle().setText("");
-			stdController.getTitle().setSize(6);
+			stdController.getTitle().setText(" ");
+			stdController.getTitle().setSize(12);
 			stdController.getLabels().setLabels(xLabels);
 			stdController.getYLegend().setText(alert.getYLabel()==null?"Value":alert.getYLabel());
 			stdController.getYLegend().setColor("#8b0000");
@@ -273,8 +273,8 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			break;
 		case PIE:
 			OFCPieController pieController = new OFCPieController();
-			pieController.getTitle().setText(alert.getAlertName());
-			pieController.getTitle().setSize(10);
+			pieController.getTitle().setText(" ");
+			pieController.getTitle().setSize(12);
 			pieController.getLabels().setLabels(xLabels);
 			pieController.getColor().getBgColor().setColor("#FFFFFF");
 			for (DefaultOFCGraphDataModel m : models) {

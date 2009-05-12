@@ -49,7 +49,10 @@ function drawPanels() {
 					width: 850,
 			        height: 700,			       
 			        content: 'popUpDiv_<s:property value="%{id}"/>',
-			        onContentLoaded: function() {   } , 
+			        onOpen: function() { 
+			        	popUp_<s:property value="%{id}"/>.toggleCollapse();
+			        	popUp_<s:property value="%{id}"/>.toggleCollapse();
+			           } , 
 			        resize: false			        
 			    });
 				
@@ -57,7 +60,7 @@ function drawPanels() {
 				var tbTop_<s:property value="%{id}"/> = new Jx.Toolbar({position: 'top'}).add(	        	        			
         				new Jx.Button({label:'Zoom',
         				image: '<s:url value="/images/icons/zoom.png"/>',
-        				onClick: popUp_<s:property value="%{id}"/>.open.bind(popUp_<s:property value="%{id}"/>)        				
+        				onClick: popUp_<s:property value="%{id}"/>.open.bind(popUp_<s:property value="%{id}"/>)        				       			
         				})   		
 	    		);
 	    	  

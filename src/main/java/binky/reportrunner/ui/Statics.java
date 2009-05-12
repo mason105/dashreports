@@ -1,5 +1,11 @@
 package binky.reportrunner.ui;
 
+/**
+ * @author daniel.grout
+ *  
+ *  Provides some static variables for use in the web app
+ *  
+ */
 public interface Statics {
 	public static final String USER_HANDLE="user";
 	public static final String USERNAME="userName";

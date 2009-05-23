@@ -1,28 +1,4 @@
-DROP TABLE IF EXISTS `reportrunner`.`runnerdashboardalert`;
-CREATE TABLE  `reportrunner`.`runnerdashboardalert` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `alertName` varchar(255) DEFAULT NULL,
-  `alertQuery` text,
-  `chartType` int(11) DEFAULT NULL,
-  `cronTab` varchar(255) DEFAULT NULL,
-  `currentDataset` blob,
-  `displayType` int(11) DEFAULT NULL,
-  `lastUpdated` datetime DEFAULT NULL,
-  `xaxisColumn` varchar(255) DEFAULT NULL,
-  `datasource_dataSourceName` varchar(255) DEFAULT NULL,
-  `group_groupName` varchar(255) DEFAULT NULL,
-  `displayRow` int(11) DEFAULT NULL,
-  `seriesNameColumn` varchar(255) DEFAULT NULL,
-  `valueColumn` varchar(255) DEFAULT NULL,
-  `chartSize` int(11) DEFAULT NULL,
-  `yLabel` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK9F5B6981FB5A866` (`group_groupName`),
-  KEY `FK9F5B6986235B7F2` (`datasource_dataSourceName`),
-  CONSTRAINT `FK9F5B6981FB5A866` FOREIGN KEY (`group_groupName`) REFERENCES `runnergroup` (`groupName`),
-  CONSTRAINT `FK9F5B6986235B7F2` FOREIGN KEY (`datasource_dataSourceName`) REFERENCES `runnerdatasource` (`dataSourceName`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
+﻿
 DROP TABLE IF EXISTS `reportrunner`.`runnerdatasource`;
 CREATE TABLE  `reportrunner`.`runnerdatasource` (
   `dataSourceName` varchar(255) NOT NULL,
@@ -37,23 +13,22 @@ CREATE TABLE  `reportrunner`.`runnerdatasource` (
   PRIMARY KEY (`dataSourceName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `reportrunner`.`runneruser`;
+CREATE TABLE  `reportrunner`.`runneruser` (
+  `userName` varchar(255) NOT NULL,
+  `fullName` varchar(255) DEFAULT NULL,
+  `isAdmin` tinyint(3) unsigned zerofill DEFAULT NULL,
+  `isLocked` tinyint(3) unsigned zerofill DEFAULT NULL,
+  `isReadOnly` tinyint(3) unsigned zerofill DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`userName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 DROP TABLE IF EXISTS `reportrunner`.`runnergroup`;
 CREATE TABLE  `reportrunner`.`runnergroup` (
   `groupName` varchar(255) NOT NULL,
   `groupDescription` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`groupName`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE IF EXISTS `reportrunner`.`runnergroup_runnerjob`;
-CREATE TABLE  `reportrunner`.`runnergroup_runnerjob` (
-  `RunnerGroup_groupName` varchar(255) NOT NULL,
-  `runnerJobs_group_groupName` varchar(255) NOT NULL,
-  `runnerJobs_jobName` varchar(255) NOT NULL,
-  UNIQUE KEY `runnerJobs_group_groupName` (`runnerJobs_group_groupName`,`runnerJobs_jobName`),
-  KEY `FKB0FDD71DD93AB23A` (`runnerJobs_group_groupName`,`runnerJobs_jobName`),
-  KEY `FKB0FDD71DB4A88336` (`RunnerGroup_groupName`),
-  CONSTRAINT `FKB0FDD71DB4A88336` FOREIGN KEY (`RunnerGroup_groupName`) REFERENCES `runnergroup` (`groupName`),
-  CONSTRAINT `FKB0FDD71DD93AB23A` FOREIGN KEY (`runnerJobs_group_groupName`, `runnerJobs_jobName`) REFERENCES `runnerjob` (`group_groupName`, `jobName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `reportrunner`.`runnergroup_runneruser`;
@@ -121,15 +96,16 @@ CREATE TABLE  `reportrunner`.`runnerjobparameter` (
   CONSTRAINT `FKE8BCC3DCCFCF20AC` FOREIGN KEY (`group_groupName`, `jobName`) REFERENCES `runnerjob` (`group_groupName`, `jobName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE IF EXISTS `reportrunner`.`runneruser`;
-CREATE TABLE  `reportrunner`.`runneruser` (
-  `userName` varchar(255) NOT NULL,
-  `fullName` varchar(255) DEFAULT NULL,
-  `isAdmin` tinyint(3) unsigned zerofill DEFAULT NULL,
-  `isLocked` tinyint(3) unsigned zerofill DEFAULT NULL,
-  `isReadOnly` tinyint(3) unsigned zerofill DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`userName`)
+DROP TABLE IF EXISTS `reportrunner`.`runnergroup_runnerjob`;
+CREATE TABLE  `reportrunner`.`runnergroup_runnerjob` (
+  `RunnerGroup_groupName` varchar(255) NOT NULL,
+  `runnerJobs_group_groupName` varchar(255) NOT NULL,
+  `runnerJobs_jobName` varchar(255) NOT NULL,
+  UNIQUE KEY `runnerJobs_group_groupName` (`runnerJobs_group_groupName`,`runnerJobs_jobName`),
+  KEY `FKB0FDD71DD93AB23A` (`runnerJobs_group_groupName`,`runnerJobs_jobName`),
+  KEY `FKB0FDD71DB4A88336` (`RunnerGroup_groupName`),
+  CONSTRAINT `FKB0FDD71DB4A88336` FOREIGN KEY (`RunnerGroup_groupName`) REFERENCES `runnergroup` (`groupName`),
+  CONSTRAINT `FKB0FDD71DD93AB23A` FOREIGN KEY (`runnerJobs_group_groupName`, `runnerJobs_jobName`) REFERENCES `runnerjob` (`group_groupName`, `jobName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `reportrunner`.`runneruser_runnergroup`;
@@ -141,3 +117,28 @@ CREATE TABLE  `reportrunner`.`runneruser_runnergroup` (
   CONSTRAINT `FKFDED2E0B4782257B` FOREIGN KEY (`groups_groupName`) REFERENCES `runnergroup` (`groupName`),
   CONSTRAINT `FKFDED2E0BE5066BA8` FOREIGN KEY (`RunnerUser_userName`) REFERENCES `runneruser` (`userName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `reportrunner`.`runnerdashboardalert`;
+CREATE TABLE  `reportrunner`.`runnerdashboardalert` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alertName` varchar(255) DEFAULT NULL,
+  `alertQuery` text,
+  `chartType` int(11) DEFAULT NULL,
+  `cronTab` varchar(255) DEFAULT NULL,
+  `currentDataset` blob,
+  `displayType` int(11) DEFAULT NULL,
+  `lastUpdated` datetime DEFAULT NULL,
+  `xaxisColumn` varchar(255) DEFAULT NULL,
+  `datasource_dataSourceName` varchar(255) DEFAULT NULL,
+  `group_groupName` varchar(255) DEFAULT NULL,
+  `displayRow` int(11) DEFAULT NULL,
+  `seriesNameColumn` varchar(255) DEFAULT NULL,
+  `valueColumn` varchar(255) DEFAULT NULL,
+  `chartSize` int(11) DEFAULT NULL,
+  `yLabel` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK9F5B6981FB5A866` (`group_groupName`),
+  KEY `FK9F5B6986235B7F2` (`datasource_dataSourceName`),
+  CONSTRAINT `FK9F5B6981FB5A866` FOREIGN KEY (`group_groupName`) REFERENCES `runnergroup` (`groupName`),
+  CONSTRAINT `FK9F5B6986235B7F2` FOREIGN KEY (`datasource_dataSourceName`) REFERENCES `runnerdatasource` (`dataSourceName`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;

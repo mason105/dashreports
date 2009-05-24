@@ -31,6 +31,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 	
 	private RunnerJobService jobService;
 	private static final Logger logger = Logger.getLogger(ViewJobOutputAction.class);
+	@SuppressWarnings("unchecked")
 	@Override
 	public String execute() throws Exception {
 		long startTime = (new Date()).getTime();

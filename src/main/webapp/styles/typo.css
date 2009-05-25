@@ -144,26 +144,6 @@
 /* END LISTS */
 	
 	
-/* TABLE */
-	table {
-        font-size: 1em;
-		margin: 0 0 1.5em 0;
-        padding: 0;
-	}
-	table caption {
-		font-weight: bold;
-		margin: 0 0 0 0;
-		padding: 0 0 1.5em 0;
-	}
-	th {
-		font-weight: bold;
-		text-align: left;
-	}
-	td {
-		font-size: 1em;
-	}
-/* END TABLE */	
-	
 	hr {
 		display: none;
 	}

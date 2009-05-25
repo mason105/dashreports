@@ -10,7 +10,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import binky.reportrunner.dao.RunnerDashboardAlertDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
-import binky.reportrunner.data.RunnerDataSource;
 
 public class RunnerDashboardAlertDaoImpl extends HibernateDaoSupport implements
 		RunnerDashboardAlertDao {
@@ -19,7 +18,7 @@ public class RunnerDashboardAlertDaoImpl extends HibernateDaoSupport implements
 	public void deleteAlert(Integer id) {
 		logger.debug("delete: " + id);
 		getHibernateTemplate().delete(
-				(RunnerDataSource) getHibernateTemplate().get(
+				(RunnerDashboardAlert) getHibernateTemplate().get(
 						RunnerDashboardAlert.class, id));
 	}
 

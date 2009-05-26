@@ -186,7 +186,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				DefaultOFCGraphDataModel modelLine = new DefaultOFCGraphDataModel();
 				modelLine.setData(d);
 				modelLine.setFormat(new DecimalFormat("###0.000"));
-				modelLine.setSeriesType(new OFCLineSeriesType(3, mainHex,
+				modelLine.setSeriesType(new OFCLineSeriesType(1, mainHex,
 						modName));
 				models.add(modelLine);
 				break;

@@ -99,13 +99,9 @@ public class RunnerEngine implements Job {
 			// if we are not outputting this anywhere (must be emailing) then
 			// dump this as a temp file
 			String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName,
-					groupName, job.getFileFormat().toString().toLowerCase());
+					groupName, job.getFileFormat().toString().toLowerCase(),fileNameValue);
 
-			// insert the bursted filename value into the url - probably a
-			// better way to do this.
-			outUrl = outUrl + "_" + fileNameValue;
-
-			logger.debug("bursted file being output to: " + outUrl);
+			logger.info("bursted file being output to: " + outUrl);
 
 			resultGenerator.renderReport(rs, outUrl, job.getTemplateFile(), job.getTemplateType(),
 					job.getFileFormat().toString());
@@ -153,7 +149,7 @@ public class RunnerEngine implements Job {
 		resultGenerator.renderReport(results.get("Results"), outUrl, job.getTemplateFile(), job.getTemplateType(),
 				job.getFileFormat().toString());
 		conn.close();
-
+		logger.info("writing report to: " + outUrl);
 		// send email if need be
 		if ((job.getTargetEmailAddress() != null)
 				&& (!job.getTargetEmailAddress().isEmpty())) {
@@ -171,4 +167,5 @@ public class RunnerEngine implements Job {
 
 
 
+	
 }

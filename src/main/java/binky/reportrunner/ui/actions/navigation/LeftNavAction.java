@@ -27,10 +27,24 @@ public class LeftNavAction extends StandardRunnerAction {
 		if ((Class.forName(actionName).newInstance() instanceof AdminRunnerAction) 
 				&& getSessionUser().getIsAdmin() ){
 			expandAdmin=true;
+		} else {
+			expandAdmin=false;
 		}
 		
-		if (actionName.toLowerCase().contains("job")||actionName.toLowerCase().contains("group")) {
-			expandGroups=true;
+		if (actionName.toLowerCase().contains("setupViewJob")
+				||actionName.toLowerCase().contains("viewJobOutput")
+				||actionName.toLowerCase().contains("invokeJob")
+				||actionName.toLowerCase().contains("changeAllGroupJobStatus")
+				||actionName.toLowerCase().contains("viewJobDetail")
+				||actionName.toLowerCase().contains("setupEditJob")
+				||actionName.toLowerCase().contains("setJobStatus")
+				||actionName.toLowerCase().contains("saveJob")
+				||actionName.toLowerCase().contains("deleteJob")
+				||actionName.toLowerCase().contains("listJobs")
+			) {
+				expandGroups=true;			       
+		} else {
+			expandGroups=false;
 		}
 		
 		if (super.getSessionUser().getIsAdmin()) {

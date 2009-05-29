@@ -25,8 +25,12 @@
 		list="groups" listKey="groupName" listValue="groupName">
 	</s:select>
 	
+		<s:textfield label="Display Column" size="64" value="%{dashboardAlert.displayColumn}" name="dashboardAlert.displayColumn">
+	</s:textfield>
+	
 	<s:textfield label="Display Row" size="64" value="%{dashboardAlert.displayRow}" name="dashboardAlert.displayRow">
 	</s:textfield>
+	
 	
 	<s:select label="Display Type" name="dashboardAlert.displayType" list="displayTypes"
 			listKey="name" listValue="displayName"></s:select>

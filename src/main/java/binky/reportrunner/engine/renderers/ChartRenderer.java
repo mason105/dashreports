@@ -22,6 +22,7 @@ import binky.reportrunner.engine.FileSystemHandler;
 
 public class ChartRenderer {
 	private static final Logger logger = Logger.getLogger(ChartRenderer.class);
+	
 	public enum ChartType {
 
 		/*DIAL("Dial"),*/ 
@@ -43,7 +44,6 @@ public class ChartRenderer {
 		}
 
 	}
-
 	/**
 	 * @param title
 	 *            chart title
@@ -59,7 +59,7 @@ public class ChartRenderer {
 	 *             NumberFormatException
 	 */
 	public String renderChart(String title, RowSetDynaClass data,
-			String xAxisColumn, ChartType chartType) throws IOException,
+			String xAxisColumn, binky.reportrunner.data.RunnerDashboardAlert.ChartType chartType) throws IOException,
 			NumberFormatException {
 		JFreeChart chart;
 		switch (chartType) {

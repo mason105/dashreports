@@ -3,18 +3,18 @@ package binky.reportrunner.ui.actions.dashboard;
 import java.util.Arrays;
 import java.util.List;
 
-import com.opensymphony.xwork2.Preparable;
-
 import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerDashboardAlert.ChartSize;
+import binky.reportrunner.data.RunnerDashboardAlert.ChartType;
 import binky.reportrunner.data.RunnerDashboardAlert.DisplayType;
-import binky.reportrunner.engine.renderers.ChartRenderer.ChartType;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+
+import com.opensymphony.xwork2.Preparable;
 
 public class SetupEditAlert extends AdminRunnerAction implements Preparable {
 

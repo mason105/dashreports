@@ -35,6 +35,7 @@ public class RunnerDashboardAlertDaoImpl extends HibernateDaoSupport implements
 				.forClass(RunnerDashboardAlert.class);
 		criteria.add(Expression.eq("group.groupName", groupName));
 		criteria.addOrder(Order.asc("displayRow"));
+		criteria.addOrder(Order.asc("displayColumn"));
 		return getHibernateTemplate().findByCriteria(criteria);
 	}
 

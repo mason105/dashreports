@@ -10,8 +10,6 @@ import javax.persistence.ManyToOne;
 
 import org.apache.commons.beanutils.RowSetDynaClass;
 
-import binky.reportrunner.engine.renderers.ChartRenderer.ChartType;
-
 @Entity
 public class RunnerDashboardAlert implements Serializable {
 
@@ -55,7 +53,27 @@ public class RunnerDashboardAlert implements Serializable {
 		}
 
 	}
-	
+	public enum ChartType {
+
+		/*DIAL("Dial"),*/ 
+		LINE("Line Graph"), BAR("Bar Chart"), AREA("Area Graph"), PIE(
+				"Pie Chart");
+
+		private String displayName;
+
+		ChartType(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -85,7 +103,7 @@ public class RunnerDashboardAlert implements Serializable {
 	private ChartType chartType;
 
 	private Integer displayRow=1;
-	
+	private Integer displayColumn=1;
 	private RowSetDynaClass currentDataset;
 
 
@@ -252,6 +270,16 @@ public class RunnerDashboardAlert implements Serializable {
 
 	public void setYLabel(String label) {
 		yLabel = label;
+	}
+
+
+	public Integer getDisplayColumn() {
+		return displayColumn;
+	}
+
+
+	public void setDisplayColumn(Integer displayColumn) {
+		this.displayColumn = displayColumn;
 	}
 
 

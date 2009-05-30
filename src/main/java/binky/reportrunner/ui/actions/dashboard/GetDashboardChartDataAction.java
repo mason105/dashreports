@@ -171,7 +171,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				modelArea.setData(d);
 				modelArea.setFormat(new DecimalFormat("###0.000"));
 				modelArea.setSeriesType(new OFCLineAreaSeriesType(3, mainHex,
-						modName));
+						modName,10,0,""));
 				models.add(modelArea);
 				break;
 			case BAR:
@@ -179,7 +179,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				modelBar.setData(d);
 				modelBar.setFormat(new DecimalFormat("###0.000"));
 				modelBar.setSeriesType(new OFCBar3DSeriesType(50, mainHex,
-						modName));
+						modName,10));
 				models.add(modelBar);
 				break;
 			case LINE:
@@ -187,7 +187,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				modelLine.setData(d);
 				modelLine.setFormat(new DecimalFormat("###0.000"));
 				modelLine.setSeriesType(new OFCLineSeriesType(1, mainHex,
-						modName));
+						modName,10,10,1));
 				models.add(modelLine);
 				break;
 			case PIE:
@@ -198,7 +198,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				int a = 15;
 				int x = 1;
 				for (Double val : d) {
-
+					logger.trace("value: " + val);
 					String hex1 = Integer.toHexString(a);
 
 					String hex = "";
@@ -275,7 +275,6 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			OFCPieController pieController = new OFCPieController();
 			pieController.getTitle().setText(" ");
 			pieController.getTitle().setSize(12);
-			pieController.getLabels().setLabels(xLabels);
 			pieController.getColor().getBgColor().setColor("#FFFFFF");
 			for (DefaultOFCGraphDataModel m : models) {
 				pieController.set(m);

@@ -47,11 +47,11 @@
 			<props>
 				<!-- ThreadPool -->
 				<prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
-				<prop key="org.quartz.threadPool.threadCount">10</prop>
-				<prop key="org.quartz.threadPool.threadPriority">5</prop>
+				<prop key="org.quartz.threadPool.threadCount">${org.quartz.threadPool.threadCount}</prop>
+				<prop key="org.quartz.threadPool.threadPriority">${org.quartz.threadPool.threadPriority}</prop>
 
 				<!-- Job store -->
-				<prop key="org.quartz.jobStore.misfireThreshold">60000</prop>
+				<prop key="org.quartz.jobStore.misfireThreshold">${org.quartz.jobStore.misfireThreshold}</prop>
 				<prop key="org.quartz.jobStore.class">org.springframework.scheduling.quartz.LocalDataSourceJobStore</prop>
 				<!--
 					<prop
@@ -59,8 +59,7 @@
 				-->
 				<prop key="org.quartz.jobStore.driverDelegateClass">${quartz.JDBCDelegate}</prop>
 				<prop key="org.quartz.jobStore.useProperties">false</prop>
-				<prop key="org.quartz.jobStore.selectWithLockSQL">SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME
-					= ?</prop>
+				<prop key="org.quartz.jobStore.selectWithLockSQL">SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME = ?</prop>
 
 				<!-- history plugin -->
 				<prop key="org.quartz.plugin.triggHistory.class">org.quartz.plugins.history.LoggingJobHistoryPlugin</prop>

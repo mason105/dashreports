@@ -4,16 +4,16 @@
 	"http://www.springframework.org/dtd/spring-beans-2.0.dtd">
 <beans>
 
-<!--  our main data source -->
+	<!--  our main data source -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${jdbc.driver}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
 		<property name="user" value="${jdbc.username}" />
 		<property name="password" value="${jdbc.password}" />
-		<property name="breakAfterAcquireFailure" value="true" />
-		<property name="automaticTestTable" value="c3p0_test_table"/>
-		 <property name="idleConnectionTestPeriod" value="60"/>		 
+		<property name="breakAfterAcquireFailure" value="${c3p0.breakAfterAcquireFailure}" />
+		<property name="automaticTestTable" value="${c3p0.automaticTestTable}"/>
+		 <property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}"/>		 
 	</bean>
 
 	<!--  setup our scheduler singleton and the quartz bean -->
@@ -31,10 +31,9 @@
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 				<prop key="hibernate.cache.provider_class">net.sf.ehcache.hibernate.SingletonEhCacheProvider</prop>
-				<prop key="hibernate.connection.autoReconnect">true</prop>
-				<prop key="hibernate.connection.autoReconnect">true</prop>
+				<prop key="hibernate.connection.autoReconnect">${hibernate.connection.autoReconnect}</prop>
 				<prop key="hibernate.show.sql">${hibernate.showSql}</prop> 			
 			</props>
 		</property>

@@ -263,6 +263,24 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			stdController.getColor().getYAxisColor().setColor("#e3e3e3");
 			stdController.getColor().getXGridColor().setColor("#e3e3e3");
 			stdController.getColor().getYGridColor().setColor("#e3e3e3");			
+			
+			int tick=1;
+			switch (alert.getXAxisStep()) {
+			case Eight:
+				tick=8;
+			case Four:
+				tick=4;
+			case One:
+				tick=1;
+			case Sixteen:
+				tick=16;
+			case ThirtyTwo:
+				tick=32;
+			case Two:
+				tick=2;
+			}
+			
+			stdController.getXTicks().setSize(tick);
 			//*! 0=Hori 1=Verti 2=45 deg
 			stdController.getXLabelStyle().setOrientation(1);
 			for (DefaultOFCGraphDataModel m : models) {

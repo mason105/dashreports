@@ -35,6 +35,25 @@ public class RunnerDashboardAlert implements Serializable {
 
 	}
 
+	public enum XAxisStep {
+
+		One("One"), Two("Two"), Four("Four"), Eight("Eight"), Sixteen(""), ThirtyTwo("Thirty Two");
+		private String displayName;
+
+		XAxisStep(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
+	
 	public enum ChartSize {
 
 		Small("Small"), Medium("Medium"), Large("Large");
@@ -92,7 +111,7 @@ public class RunnerDashboardAlert implements Serializable {
 	private String valueColumn;
 	private String seriesNameColumn;
 	private String xaxisColumn;
-
+	private XAxisStep xAxisStep;
 	private ChartSize chartSize;
 	
 	@ManyToOne
@@ -280,6 +299,16 @@ public class RunnerDashboardAlert implements Serializable {
 
 	public void setDisplayColumn(Integer displayColumn) {
 		this.displayColumn = displayColumn;
+	}
+
+
+	public XAxisStep getXAxisStep() {
+		return xAxisStep;
+	}
+
+
+	public void setXAxisStep(XAxisStep axisStep) {
+		xAxisStep = axisStep;
 	}
 
 

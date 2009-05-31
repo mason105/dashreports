@@ -12,6 +12,7 @@ import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerDashboardAlert.ChartSize;
 import binky.reportrunner.data.RunnerDashboardAlert.DisplayType;
+import binky.reportrunner.data.RunnerDashboardAlert.XAxisStep;
 import binky.reportrunner.engine.renderers.ChartRenderer.ChartType;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
@@ -115,6 +116,8 @@ public class SaveAlert extends AdminRunnerAction implements Preparable {
 	public void setDashboardAlert(RunnerDashboardAlert dashboardAlert) {
 		this.dashboardAlert = dashboardAlert;
 	}
-	
+	public List<XAxisStep> getXAxisSteps() {
+		return Arrays.asList(XAxisStep.values());
+	}
 	
 }

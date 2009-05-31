@@ -43,7 +43,8 @@
 			listKey="name" listValue="displayName"></s:select>
 
 
-
+	<s:select label="X Axis Step Size" name="dashboardAlert.chartType" list="xAxisSteps"
+			listKey="name" listValue="xAxisStep"></s:select>
 
 	<s:select label="Select Data Source"
 		name="dashboardAlert.datasource.dataSourceName" value="%{dashboardAlert.datasource}"

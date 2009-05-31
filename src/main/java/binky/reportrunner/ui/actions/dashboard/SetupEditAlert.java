@@ -11,6 +11,7 @@ import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerDashboardAlert.ChartSize;
 import binky.reportrunner.data.RunnerDashboardAlert.ChartType;
 import binky.reportrunner.data.RunnerDashboardAlert.DisplayType;
+import binky.reportrunner.data.RunnerDashboardAlert.XAxisStep;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
@@ -82,7 +83,11 @@ public class SetupEditAlert extends AdminRunnerAction implements Preparable {
 		return Arrays.asList(ChartSize.values());
 	}
 	
-
+	public List<XAxisStep> getXAxisSteps() {
+		return Arrays.asList(XAxisStep.values());
+	}
+	
+	
 	public RunnerDataSourceDao getDataSourceDao() {
 		return dataSourceDao;
 	}

@@ -47,7 +47,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		RowSetDynaClass data = alert.getCurrentDataset();
 		Map<String, List<Double>> dataMap = new HashMap<String, List<Double>>();
 
-		List<String> xLabels = new LinkedList<String>();
+		List<Object> xLabels = new LinkedList<Object>();
 		for (Object o : data.getRows()) {
 			DynaBean b = (DynaBean) o;
 			String label = b.get(alert.getXaxisColumn()).toString();
@@ -74,7 +74,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		
 		//hack to fill in the gaps in the x series
 		for (String s : series) {
-			for (String x : xLabels) {
+			for (Object x : xLabels) {
 				boolean found=false;
 				for (Object o : data.getRows()) {
 					DynaBean b = (DynaBean) o;					

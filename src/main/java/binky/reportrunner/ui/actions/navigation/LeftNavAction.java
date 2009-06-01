@@ -33,15 +33,15 @@ public class LeftNavAction extends StandardRunnerAction {
 		logger.debug("admin section being accessed: " + expandAdmin);
 		logger.debug("action name is set to: " + actionName);
 		if (actionName.toLowerCase().contains("setupViewJob")
-				||actionName.toLowerCase().contains("viewJobOutput")
-				||actionName.toLowerCase().contains("invokeJob")
-				||actionName.toLowerCase().contains("changeAllGroupJobStatus")
-				||actionName.toLowerCase().contains("viewJobDetail")
-				||actionName.toLowerCase().contains("setupEditJob")
-				||actionName.toLowerCase().contains("setJobStatus")
-				||actionName.toLowerCase().contains("saveJob")
-				||actionName.toLowerCase().contains("deleteJob")
-				||actionName.toLowerCase().contains("listJobs")
+				||actionName.toLowerCase().contains("viewjoboutput")
+				||actionName.toLowerCase().contains("invokejob")
+				||actionName.toLowerCase().contains("changeallgroupjobstatus")
+				||actionName.toLowerCase().contains("viewjobdetail")
+				||actionName.toLowerCase().contains("setupeditjob")
+				||actionName.toLowerCase().contains("setjobstatus")
+				||actionName.toLowerCase().contains("savejob")
+				||actionName.toLowerCase().contains("deletejob")
+				||actionName.toLowerCase().contains("listjobs")
 			) {
 				expandGroups=true;			       
 		} else {

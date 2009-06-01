@@ -32,7 +32,7 @@ public class LeftNavAction extends StandardRunnerAction {
 		}
 		logger.debug("admin section being accessed: " + expandAdmin);
 		logger.debug("action name is set to: " + actionName);
-		if (actionName.toLowerCase().contains("setupViewJob")
+		if (actionName.toLowerCase().contains("setupviewjob")
 				||actionName.toLowerCase().contains("viewjoboutput")
 				||actionName.toLowerCase().contains("invokejob")
 				||actionName.toLowerCase().contains("changeallgroupjobstatus")

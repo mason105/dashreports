@@ -63,9 +63,24 @@
 
 				<!-- history plugin -->
 				<prop key="org.quartz.plugin.triggHistory.class">org.quartz.plugins.history.LoggingJobHistoryPlugin</prop>
+				
+				<!--  clustering -->
+				<prop key="org.quartz.jobStore.isClustered">${org.quartz.jobStore.isClustered}</prop>
+				<prop key="org.quartz.jobStore.clusterCheckinInterval">${org.quartz.jobStore.clusterCheckinInterval}</prop>
+				<prop key="org.quartz.scheduler.instanceId">${org.quartz.scheduler.instanceId}</prop>								
 			</props>
 		</property>
 	</bean>
+
+	<!--  setup our scheduler singleton and the quartz bean -->
+	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
+		scope="singleton">
+		<property name="quartzScheduler" ref="quartzFactory" />
+		<property name="clustered" value="${org.quartz.jobStore.isClustered}"/>
+	</bean>
+	
+	
+
 
 	<bean id="runnerJobService" class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
 		<property name="scheduler" ref="scheduler" />

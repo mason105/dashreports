@@ -16,13 +16,7 @@
 		 <property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}"/>		 
 	</bean>
 
-	<!--  setup our scheduler singleton and the quartz bean -->
-	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
-		scope="singleton">
-		<property name="quartzScheduler" ref="quartzFactory" />
-	</bean>
-	
-		<!--  hibernate plumbing -->
+	<!--  hibernate plumbing -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource">

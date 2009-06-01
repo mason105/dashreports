@@ -21,7 +21,8 @@ public class SchedulerImpl implements Scheduler {
 
 	private StdScheduler quartzScheduler;
 	private Logger logger = Logger.getLogger(SchedulerImpl.class);
-
+	private boolean clustered;
+	
 	public StdScheduler getQuartzScheduler() {
 		return quartzScheduler;
 	}
@@ -60,6 +61,9 @@ public class SchedulerImpl implements Scheduler {
 
 		jobTrigger.setName(jobName + ":" + groupName + ":trigger");
 		jobTrigger.setGroup("RunnerTriggers");
+		
+		//clusterting
+		if (clustered) jobDetail.setRequestsRecovery(true);
 		// Bind the listener
 		// jobDetail.addJobListener("ReportRunnerCoreJobListener");
 
@@ -255,6 +259,9 @@ public class SchedulerImpl implements Scheduler {
 		
 		jobTrigger.setName(jobName + ":" + groupName + ":trigger");
 		jobTrigger.setGroup("RunnerTriggers");
+		
+		//clusterting
+		if (clustered) jobDetail.setRequestsRecovery(true);
 		// Bind the listener
 		// jobDetail.addJobListener("ReportRunnerCoreJobListener");
 
@@ -275,4 +282,17 @@ public class SchedulerImpl implements Scheduler {
 		}
 	}
 
+	public boolean isClustered() {
+		return clustered;
+	}
+
+	
+	public boolean getClustered() {
+		return clustered;
+	}
+
+	public void setClustered(boolean clustered) {
+		this.clustered = clustered;
+	}
+	
 }

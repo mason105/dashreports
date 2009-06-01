@@ -32,8 +32,9 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 	private String data;
 
-	private static final Logger logger = Logger.getLogger(GetDashboardChartDataAction.class);
-	
+	private static final Logger logger = Logger
+			.getLogger(GetDashboardChartDataAction.class);
+
 	@Override
 	public String execute() throws Exception {
 		RunnerDashboardAlert alert = dashboardService.getAlert(alertId);
@@ -55,7 +56,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				xLabels.add(label);
 			}
 		}
-		
+
 		List<String> series = new LinkedList<String>();
 		for (Object o : data.getRows()) {
 			DynaBean b = (DynaBean) o;
@@ -67,62 +68,59 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				seriesName = (String) b.get(alert.getSeriesNameColumn());
 			}
 			if (!series.contains(seriesName)) {
-			series.add(seriesName);
+				series.add(seriesName);
 			}
 		}
-		
-		
-		//hack to fill in the gaps in the x series
+
+		// hack to fill in the gaps in the x series
 		for (String s : series) {
 			for (Object x : xLabels) {
-				boolean found=false;
+				boolean found = false;
 				for (Object o : data.getRows()) {
-					DynaBean b = (DynaBean) o;					
+					DynaBean b = (DynaBean) o;
 					String label = b.get(alert.getXaxisColumn()).toString();
 					String seriesName;
 					if ((alert.getSeriesNameColumn() == null)
 							|| (alert.getSeriesNameColumn().isEmpty())) {
 						seriesName = "VALUE";
 					} else {
-						seriesName = (String) b.get(alert.getSeriesNameColumn());
+						seriesName = (String) b
+								.get(alert.getSeriesNameColumn());
 					}
 					Double value;
-					
-					if (label.equals(x) && (seriesName.equals(s)
-							|| (((alert.getSeriesNameColumn() == null)
-									|| (alert.getSeriesNameColumn().isEmpty()))		
-					))) {
-						value = Double.parseDouble(b.get(alert.getValueColumn())
-								.toString());
-						found=true;
+
+					if (label.equals(x)
+							&& (seriesName.equals(s) || (((alert
+									.getSeriesNameColumn() == null) || (alert
+									.getSeriesNameColumn().isEmpty()))))) {
+						value = Double.parseDouble(b
+								.get(alert.getValueColumn()).toString());
+						found = true;
 						if (value > max)
 							max = value;
 						List<Double> values = dataMap.get(s);
-		
+
 						if (values == null) {
 							values = new LinkedList<Double>();
 						}
 						values.add(value);
-		
+
 						dataMap.put(s, values);
 						break;
 					}
 				}
 				if (!found) {
 					List<Double> values = dataMap.get(s);
-					
+
 					if (values == null) {
 						values = new LinkedList<Double>();
 					}
 					values.add(0d);
-	
+
 					dataMap.put(s, values);
 				}
 			}
 		}
-		
-		
-		
 
 		int c = 15;
 		int y = 1;
@@ -131,38 +129,38 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			List<Double> d = dataMap.get(modName);
 
 			/* hack for colours */
-		
+
 			String mainHex1 = Integer.toHexString(c);
 
 			String mainHex = "";
 			switch (y) {
-				case 1:
-					mainHex = "#" + mainHex1 + mainHex1 + "0000";
-					break;
-				case 2:
-					mainHex = "#" + "00" + mainHex1 + mainHex1 + "00";
-					break;
-				case 3:
-					mainHex = "#" + "0000" + mainHex1 + mainHex1;
-					break;
-				case 4:
-					mainHex = "#" + mainHex1 + mainHex1 + mainHex1 + mainHex1
-							+ "00";
-					break;
-				case 5:
-					mainHex = "#" + mainHex1 + mainHex1 + "00" + mainHex1
-							+ mainHex1;
-					break;
-				default:
-					y = 0;
-					c = c - 3;
+			case 1:
+				mainHex = "#" + mainHex1 + mainHex1 + "0000";
+				break;
+			case 2:
+				mainHex = "#" + "00" + mainHex1 + mainHex1 + "00";
+				break;
+			case 3:
+				mainHex = "#" + "0000" + mainHex1 + mainHex1;
+				break;
+			case 4:
+				mainHex = "#" + mainHex1 + mainHex1 + mainHex1 + mainHex1
+						+ "00";
+				break;
+			case 5:
+				mainHex = "#" + mainHex1 + mainHex1 + "00" + mainHex1
+						+ mainHex1;
+				break;
+			default:
+				y = 0;
+				c = c - 3;
 			}
 
 			y++;
 			if (c < 0) {
 				c = 15;
 			}
-			logger.debug("colouring series " + modName+ "  with: " + mainHex);
+			logger.debug("colouring series " + modName + "  with: " + mainHex);
 			/* end hack */
 
 			switch (alert.getChartType()) {
@@ -171,7 +169,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				modelArea.setData(d);
 				modelArea.setFormat(new DecimalFormat("###0.000"));
 				modelArea.setSeriesType(new OFCLineAreaSeriesType(3, mainHex,
-						modName,10,0,""));
+						modName, 10, 0, ""));
 				models.add(modelArea);
 				break;
 			case BAR:
@@ -179,7 +177,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				modelBar.setData(d);
 				modelBar.setFormat(new DecimalFormat("###0.000"));
 				modelBar.setSeriesType(new OFCBar3DSeriesType(50, mainHex,
-						modName,10));
+						modName, 10));
 				models.add(modelBar);
 				break;
 			case LINE:
@@ -187,7 +185,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				modelLine.setData(d);
 				modelLine.setFormat(new DecimalFormat("###0.000"));
 				modelLine.setSeriesType(new OFCLineSeriesType(1, mainHex,
-						modName,10,10,1));
+						modName, 10, 10, 1));
 				models.add(modelLine);
 				break;
 			case PIE:
@@ -248,11 +246,12 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		case AREA:
 		case BAR:
 		case LINE:
-			OFCGraphController stdController = new OFCGraphController();			
+			OFCGraphController stdController = new OFCGraphController();
 			stdController.getTitle().setText(" ");
 			stdController.getTitle().setSize(12);
 			stdController.getLabels().setLabels(xLabels);
-			stdController.getYLegend().setText(alert.getYLabel()==null?"Value":alert.getYLabel());
+			stdController.getYLegend().setText(
+					alert.getYLabel() == null ? "Value" : alert.getYLabel());
 			stdController.getYLegend().setColor("#8b0000");
 			stdController.getYLegend().setSize(10);
 			stdController.getXLegend().setText(alert.getXaxisColumn());
@@ -262,26 +261,27 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			stdController.getColor().getXAxisColor().setColor("#e3e3e3");
 			stdController.getColor().getYAxisColor().setColor("#e3e3e3");
 			stdController.getColor().getXGridColor().setColor("#e3e3e3");
-			stdController.getColor().getYGridColor().setColor("#e3e3e3");			
-			
-			int tick=1;
-			switch (alert.getXAxisStep()) {
-			case Eight:
-				tick=8;
-			case Four:
-				tick=4;
-			case One:
-				tick=1;
-			case Sixteen:
-				tick=16;
-			case ThirtyTwo:
-				tick=32;
-			case Two:
-				tick=2;
+			stdController.getColor().getYGridColor().setColor("#e3e3e3");
+
+			int tick = 0;
+			if (alert.getXAxisStep() != null) {
+				switch (alert.getXAxisStep()) {
+				case Eight:
+					tick = 8;
+				case Four:
+					tick = 4;
+				case One:
+					tick = 0;
+				case Sixteen:
+					tick = 16;
+				case ThirtyTwo:
+					tick = 32;
+				case Two:
+					tick = 2;
+				}
 			}
-			
 			stdController.getXTicks().setSize(tick);
-			//*! 0=Hori 1=Verti 2=45 deg
+			// *! 0=Hori 1=Verti 2=45 deg
 			stdController.getXLabelStyle().setOrientation(1);
 			for (DefaultOFCGraphDataModel m : models) {
 				stdController.add(m);

@@ -111,41 +111,43 @@ function drawPanels() {
 			<s:if test="value.size>0">		
 				<sx:div id="group_%{key}" label="%{key}">						
 					<div class="dashboard">							
-					<s:iterator value="value" status="rowstatus">
-						<s:if test="(displayRow!=#currentRow)">
-							<div class="clearFix"></class>
-							<s:set name="currentRow" value="%{displayRow}"/>							
-						</s:if>			
-						<div class="widgetContainer">
-						<div id="panel_<s:property value="%{id}"/>"></div>
-						</div>			 
-						<s:if test="(displayType.name=='CHART')">	
-							
-							<div id="popUpDiv_<s:property value="%{id}"/>">
-								<m:graph id="pop_chart_%{id}" width="800" height="600" align="middle" bgcolor="#FFFFFF"  url="getDashboardChartData.action?alertId=%{id}"/>
-							</div>
-											
-							<div id="alert_<s:property value="%{id}"/>" class="alertBox">
-						        <s:if test="(chartSize.name=='Small')">			
-									<m:graph id="chart_%{id}" width="300" height="250" align="middle" bgcolor="#FFFFFF"
-								 	url="/getDashboardChartData.action?alertId=%{id}" />							       		 	       		 
-						        </s:if><s:else>
-						        	<s:if test="(chartSize.name=='Medium')">
-										<m:graph id="chart_%{id}" width="500" height="400" align="middle" bgcolor="#FFFFFF"
-								 		url="/getDashboardChartData.action?alertId=%{id}" />											
-						        	</s:if><s:else>
-										<m:graph id="chart_%{id}" width="800" height="600" align="middle" bgcolor="#FFFFFF"
-								 		url="/getDashboardChartData.action?alertId=%{id}" />							        	
-						        	</s:else>
-						        </s:else>											
-							</div>
-						</s:if><s:else>					 
-							<div id="alert_<s:property value="%{id}"/>" class="alertBox">								
-								<display:table name="currentDataset.rows"  requestURI="index.action" export="false">	
-								</display:table>					
-							</div>
-						</s:else>
-					</s:iterator>
+						<s:iterator value="value" status="rowstatus">
+							<s:if test="(displayRow!=#currentRow)">
+								<div class="clearFix"></div>
+								<s:set name="currentRow" value="%{displayRow}"/>							
+							</s:if>			
+							<div class="widgetContainer">
+								<div id="panel_<s:property value="%{id}"/>"></div>
+							</div>			
+							 
+							<s:if test="(displayType.name=='CHART')">	
+								
+								<div id="popUpDiv_<s:property value="%{id}"/>">
+									<m:graph id="pop_chart_%{id}" width="800" height="600" align="middle" bgcolor="#FFFFFF"  url="getDashboardChartData.action?alertId=%{id}"/>
+								</div>
+												
+								<div id="alert_<s:property value="%{id}"/>" class="alertBox">
+							        <s:if test="(chartSize.name=='Small')">			
+										<m:graph id="chart_%{id}" width="300" height="250" align="middle" bgcolor="#FFFFFF"
+									 	url="/getDashboardChartData.action?alertId=%{id}" />							       		 	       		 
+							        </s:if><s:else>
+							        	<s:if test="(chartSize.name=='Medium')">
+											<m:graph id="chart_%{id}" width="500" height="400" align="middle" bgcolor="#FFFFFF"
+									 		url="/getDashboardChartData.action?alertId=%{id}" />											
+							        	</s:if><s:else>
+											<m:graph id="chart_%{id}" width="800" height="600" align="middle" bgcolor="#FFFFFF"
+									 		url="/getDashboardChartData.action?alertId=%{id}" />							        	
+							        	</s:else>
+							        </s:else>											
+								</div>
+								
+							</s:if><s:else>					 
+								<div id="alert_<s:property value="%{id}"/>" class="alertBox">								
+									<display:table name="currentDataset.rows"  requestURI="index.action" export="false">	
+									</display:table>					
+								</div>
+							</s:else>
+						</s:iterator>
 					</div>
 				</sx:div>
 			</s:if>

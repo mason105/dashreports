@@ -166,9 +166,9 @@ public class RunnerDashboardAlert implements Serializable {
 	private Integer displayColumn=1;
 	private RowSetDynaClass currentDataset;
 
-	private String numberFormat="";
+	private String numberFormat="###0.000";
 	
-	private String backGroundColour="";
+	private String backGroundColour="#FFFFFF";
 	
 
 	public String getAlertName() {
@@ -367,8 +367,12 @@ public class RunnerDashboardAlert implements Serializable {
 	}
 
 
-	public String getNumberFormat() {
-		return numberFormat;
+	public String getNumberFormat() {		
+		if ((numberFormat !=null) && (!numberFormat.isEmpty())) {
+			return numberFormat;
+		} else {
+			return "###0.000";
+		}
 	}
 
 
@@ -378,7 +382,11 @@ public class RunnerDashboardAlert implements Serializable {
 
 
 	public String getBackGroundColour() {
-		return backGroundColour;
+		if ((backGroundColour !=null) && (!backGroundColour.isEmpty())) {
+			return backGroundColour; 
+		} else {
+			return "#FFFFFF";
+		}
 	}
 
 

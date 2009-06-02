@@ -93,8 +93,8 @@ function drawPanels() {
 			        modal: true, 
 			        horizontal: '200 left', 
 			        vertical: '50 top', 
-					width: 850,
-			        height: 700,			       
+					width: 1024,
+			        height: 768,			       
 			        content: 'popUpDiv_<s:property value="%{id}"/>',
 			        onOpen: function() { 
 			        	popUp_<s:property value="%{id}"/>.toggleCollapse();
@@ -128,18 +128,18 @@ function drawPanels() {
 		       		 width:340,	       		 
 		        </s:if><s:else>
 		        	<s:if test="(width.name=='Medium')">		        
-		        		width:530,
+		        		width:750,
 		        	</s:if><s:else>        
-		        		width:830,	
+		        		width:1024,	
 		        	</s:else>
 		        </s:else>
-		        <s:if test="(width.name=='Small')">			
+		        <s:if test="(height.name=='Small')">			
 		       		 height: 345		       		 
 		        </s:if><s:else>
-		        	<s:if test="(width.name=='Medium')">		        
-		        		height: 495
+		        	<s:if test="(height.name=='Medium')">		        
+		        		height: 500
 		        	</s:if><s:else>        
-		        		height: 695	
+		        		height: 768	
 		        	</s:else>
 		        </s:else>		        
 		         
@@ -179,24 +179,24 @@ function drawPanels() {
 							<s:if test="(displayType.name=='CHART')">	
 								
 								<div id="popUpDiv_<s:property value="%{id}"/>">
-									<m:graph id="pop_chart_%{id}" width="800" height="600" align="middle" bgcolor="#FFFFFF"  url="getDashboardChartData.action?alertId=%{id}"/>
+									<m:graph id="pop_chart_%{id}" width="995" height="720" align="middle" bgcolor="#FFFFFF"  url="getDashboardChartData.action?alertId=%{id}"/>
 								</div>
 												
 								<div id="alert_<s:property value="%{id}"/>" class="alertBox">
 							        <s:if test="(width.name=='Small')">			
-							        	<s:set name="x" value="300"/>				       		 	       		 
+							        	<s:set name="x" value="340"/>				       		 	       		 
 							        </s:if><s:else>
 							        	<s:if test="(width.name=='Medium')">
-											<s:set name="x" value="500"/>			
+											<s:set name="x" value="745"/>			
 							        	</s:if><s:else>
-						        			<s:set name="x" value="800"/>
+						        			<s:set name="x" value="1020"/>
 							        	</s:else>
 							        </s:else>		
 						      	   <s:if test="(height.name=='Small')">			
-							        	<s:set name="y" value="250"/>															       		 	       		 
+							        	<s:set name="y" value="295"/>															       		 	       		 
 							        </s:if><s:else>
 							        	<s:if test="(height.name=='Medium')">
-										 	<s:set name="y" value="400"/>						
+										 	<s:set name="y" value="450"/>						
 							        	</s:if><s:else>
 						        			<s:set name="y" value="600"/>	
 							        	</s:else>

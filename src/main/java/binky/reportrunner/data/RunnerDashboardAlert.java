@@ -76,12 +76,30 @@ public class RunnerDashboardAlert implements Serializable {
 
 	}
 	
-	public enum ChartSize {
+	public enum Width {
 
 		Small("Small"), Medium("Medium"), Large("Large");
 		private String displayName;
 
-		ChartSize(String displayName) {
+		Width(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
+	public enum Height {
+
+		Small("Small"), Medium("Medium"), Large("Large");
+		private String displayName;
+
+		Height(String displayName) {
 			this.displayName = displayName;
 		}
 
@@ -134,7 +152,8 @@ public class RunnerDashboardAlert implements Serializable {
 	private String seriesNameColumn;
 	private String xaxisColumn;
 	private XAxisStep xAxisStep;
-	private ChartSize chartSize;
+	private Width width;
+	private Height height;
 	
 	@ManyToOne
 	private RunnerDataSource datasource;
@@ -147,6 +166,10 @@ public class RunnerDashboardAlert implements Serializable {
 	private Integer displayColumn=1;
 	private RowSetDynaClass currentDataset;
 
+	private String numberFormat="";
+	
+	private String backGroundColour="";
+	
 
 	public String getAlertName() {
 		return alertName;
@@ -294,16 +317,6 @@ public class RunnerDashboardAlert implements Serializable {
 	}
 
 
-	public ChartSize getChartSize() {
-		return chartSize;
-	}
-
-
-	public void setChartSize(ChartSize chartSize) {
-		this.chartSize = chartSize;
-	}
-
-
 	public String getYLabel() {
 		return yLabel;
 	}
@@ -334,6 +347,44 @@ public class RunnerDashboardAlert implements Serializable {
 	}
 
 
+	public Width getWidth() {
+		return width;
+	}
+
+
+	public void setWidth(Width width) {
+		this.width = width;
+	}
+
+
+	public Height getHeight() {
+		return height;
+	}
+
+
+	public void setHeight(Height height) {
+		this.height = height;
+	}
+
+
+	public String getNumberFormat() {
+		return numberFormat;
+	}
+
+
+	public void setNumberFormat(String numberFormat) {
+		this.numberFormat = numberFormat;
+	}
+
+
+	public String getBackGroundColour() {
+		return backGroundColour;
+	}
+
+
+	public void setBackGroundColour(String backGroundColour) {
+		this.backGroundColour = backGroundColour;
+	}
 	
 	
 }

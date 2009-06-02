@@ -124,18 +124,27 @@ function drawPanels() {
 		    new Jx.Panel({		    	
 		        label: '<s:property value="%{alertName}"/>',
 		        content: 'alert_<s:property value="%{id}"/>',		       
-		        <s:if test="(chartSize.name=='Small')">			
-		       		 height: 345,
-		       		 width:340	       		 
+		        <s:if test="(width.name=='Small')">			
+		       		 width:340,	       		 
 		        </s:if><s:else>
-		        	<s:if test="(chartSize.name=='Medium')">
-						height: 495,		        
-		        		width:530
-		        	</s:if><s:else>
-						height: 695,		        
-		        		width:830	
+		        	<s:if test="(width.name=='Medium')">		        
+		        		width:530,
+		        	</s:if><s:else>        
+		        		width:830,	
 		        	</s:else>
 		        </s:else>
+		        <s:if test="(width.name=='Small')">			
+		       		 height: 345		       		 
+		        </s:if><s:else>
+		        	<s:if test="(width.name=='Medium')">		        
+		        		height: 495
+		        	</s:if><s:else>        
+		        		height: 695	
+		        	</s:else>
+		        </s:else>		        
+		         
+		         
+		         
 		        <s:if test="(displayType.name=='CHART')">
 		        	,toolbars:[tbTop_<s:property value="%{id}"/>]
 		        	,image: '<s:url value="/images/icons/chart_bar.png"/>',
@@ -174,18 +183,26 @@ function drawPanels() {
 								</div>
 												
 								<div id="alert_<s:property value="%{id}"/>" class="alertBox">
-							        <s:if test="(chartSize.name=='Small')">			
-										<m:graph id="chart_%{id}" width="300" height="250" align="middle" bgcolor="#FFFFFF"
-									 	url="/getDashboardChartData.action?alertId=%{id}" />							       		 	       		 
+							        <s:if test="(width.name=='Small')">			
+							        	<s:set name="x" value="300"/>				       		 	       		 
 							        </s:if><s:else>
-							        	<s:if test="(chartSize.name=='Medium')">
-											<m:graph id="chart_%{id}" width="500" height="400" align="middle" bgcolor="#FFFFFF"
-									 		url="/getDashboardChartData.action?alertId=%{id}" />											
+							        	<s:if test="(width.name=='Medium')">
+											<s:set name="x" value="500"/>			
 							        	</s:if><s:else>
-											<m:graph id="chart_%{id}" width="800" height="600" align="middle" bgcolor="#FFFFFF"
-									 		url="/getDashboardChartData.action?alertId=%{id}" />							        	
+						        			<s:set name="x" value="800"/>
 							        	</s:else>
-							        </s:else>											
+							        </s:else>		
+						      	   <s:if test="(height.name=='Small')">			
+							        	<s:set name="y" value="250"/>															       		 	       		 
+							        </s:if><s:else>
+							        	<s:if test="(height.name=='Medium')">
+										 	<s:set name="y" value="400"/>						
+							        	</s:if><s:else>
+						        			<s:set name="y" value="600"/>	
+							        	</s:else>
+							        </s:else>								        
+							        <m:graph id="chart_%{id}" width="%{x}" height="%{y}" align="middle" bgcolor="#FFFFFF"
+									 	url="/getDashboardChartData.action?alertId=%{id}" />											
 								</div>
 								
 							</s:if><s:else>					 

@@ -189,7 +189,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			case AREA:
 				DefaultOFCGraphDataModel modelArea = new DefaultOFCGraphDataModel();
 				modelArea.setData(d);
-				modelArea.setFormat(new DecimalFormat("###0.000"));
+				modelArea.setFormat(new DecimalFormat(alert.getNumberFormat()));
 				modelArea.setSeriesType(new OFCLineAreaSeriesType(3, mainHex,
 						modName, 10, 0, ""));
 				models.add(modelArea);
@@ -197,17 +197,19 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			case BAR:
 				DefaultOFCGraphDataModel modelBar = new DefaultOFCGraphDataModel();
 				modelBar.setData(d);
-				modelBar.setFormat(new DecimalFormat("###0.000"));
-				//modelBar.setSeriesType(new OFCBar3DSeriesType(50, mainHex,modName, 10));
-				modelBar.setSeriesType(new OFCBarGlassSeriesType(50, mainHex, modName, 10));
-				
+				modelBar.setFormat(new DecimalFormat(alert.getNumberFormat()));
+				// modelBar.setSeriesType(new OFCBar3DSeriesType(50,
+				// mainHex,modName, 10));
+				modelBar.setSeriesType(new OFCBarGlassSeriesType(50, mainHex,
+						modName, 10));
+
 				models.add(modelBar);
-				
+
 				break;
 			case LINE:
 				DefaultOFCGraphDataModel modelLine = new DefaultOFCGraphDataModel();
 				modelLine.setData(d);
-				modelLine.setFormat(new DecimalFormat("###0.000"));
+				modelLine.setFormat(new DecimalFormat(alert.getNumberFormat()));
 				modelLine.setSeriesType(new OFCLineSeriesType(1, mainHex,
 						modName, 10, 10, 1));
 				models.add(modelLine);
@@ -256,7 +258,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				modelPie.setColors(colours);
 				modelPie.setSeriesType(new OFCPieSeriesType(70, "#FFFFFF",
 						"10px", "#404040"));
-				modelPie.setFormat(new DecimalFormat("###0.000"));
+				modelPie.setFormat(new DecimalFormat(alert.getNumberFormat()));
 				models.add(modelPie);
 				break;
 			}
@@ -281,7 +283,8 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			stdController.getXLegend().setText(alert.getXaxisColumn());
 			stdController.getXLegend().setColor("#8b0000");
 			stdController.getXLegend().setSize(10);
-			stdController.getColor().getBgColor().setColor("#FFFFFF");
+			stdController.getColor().getBgColor().setColor(
+					alert.getBackGroundColour());
 			stdController.getColor().getXAxisColor().setColor("#e3e3e3");
 			stdController.getColor().getYAxisColor().setColor("#e3e3e3");
 			stdController.getColor().getXGridColor().setColor("#e3e3e3");
@@ -317,7 +320,8 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			OFCPieController pieController = new OFCPieController();
 			pieController.getTitle().setText(" ");
 			pieController.getTitle().setSize(12);
-			pieController.getColor().getBgColor().setColor("#FFFFFF");
+			pieController.getColor().getBgColor().setColor(
+					alert.getBackGroundColour());
 			for (DefaultOFCGraphDataModel m : models) {
 				pieController.set(m);
 			}

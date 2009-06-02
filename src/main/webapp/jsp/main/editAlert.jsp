@@ -25,7 +25,7 @@
 		list="groups" listKey="groupName" listValue="groupName">
 	</s:select>
 	
-		<s:textfield label="Display Column" size="64" value="%{dashboardAlert.displayColumn}" name="dashboardAlert.displayColumn">
+	<s:textfield label="Display Column" size="64" value="%{dashboardAlert.displayColumn}" name="dashboardAlert.displayColumn">
 	</s:textfield>
 	
 	<s:textfield label="Display Row" size="64" value="%{dashboardAlert.displayRow}" name="dashboardAlert.displayRow">
@@ -35,10 +35,12 @@
 	<s:select label="Display Type" name="dashboardAlert.displayType" list="displayTypes"
 			listKey="name" listValue="displayName"></s:select>
 			
-	<s:select label="Display Size" name="dashboardAlert.chartSize" list="chartSizes"
+	<s:select label="Width" name="dashboardAlert.width" list="widths"
 			listKey="name" listValue="displayName"></s:select>
 			
-
+	<s:select label="Height" name="dashboardAlert.height" list="heights"
+			listKey="name" listValue="displayName"></s:select>
+			
 	<s:select label="Chart Type" name="dashboardAlert.chartType" list="chartTypes"
 			listKey="name" listValue="displayName"></s:select>
 
@@ -67,7 +69,6 @@
 	
 	<s:textfield label="Series Name Column Name" size="32" value="%{dashboardAlert.seriesNameColumn}" name="dashboardAlert.seriesNameColumn">
 	</s:textfield>
-	
 	
 	<s:textfield label="Cron String" size="32" value="%{dashboardAlert.cronTab}" name="dashboardAlert.cronTab">
 	</s:textfield>

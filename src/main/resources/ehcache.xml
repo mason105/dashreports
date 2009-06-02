@@ -1,4 +1,6 @@
-<!------------------------------------------------------------------------------
+
+<ehcache>
+<!--
   Copyright (c) 2009 Daniel Grout.
   
   GNU GENERAL PUBLIC LICENSE - Version 3
@@ -19,9 +21,7 @@
   along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
   
   Module: ehcache.xml
-------------------------------------------------------------------------------->
-<ehcache>
-
+-->
     <diskStore path="java.io.tmpdir"/>
 
     <defaultCache

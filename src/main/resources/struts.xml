@@ -1,4 +1,10 @@
-<!------------------------------------------------------------------------------
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC 
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<!--
   Copyright (c) 2009 Daniel Grout.
   
   GNU GENERAL PUBLIC LICENSE - Version 3
@@ -19,12 +25,8 @@
   along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
   
   Module: struts.xml
-------------------------------------------------------------------------------->
-<?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE struts PUBLIC 
-    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-    "http://struts.apache.org/dtds/struts-2.0.dtd">
+-->    
+    
 <struts>
 	<package name="myPackage" extends="struts-default">
 		<interceptors>

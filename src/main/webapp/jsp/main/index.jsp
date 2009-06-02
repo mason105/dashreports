@@ -24,6 +24,53 @@
   <![endif]-->	
 
 <script type="text/javascript">
+
+	var timerID = 0;
+	var reloadInterval=60000;
+	function reload()
+	{
+		
+		if (timerID)
+		{
+			clearTimeout(timerID);
+		}
+		<s:if test="alerts.size>0">
+			<s:iterator value="alerts" status="rowstatus"> 
+				<s:iterator value="value" status="rowstatus">
+					<s:if test="(displayType.name=='CHART')">
+
+						tmp = findSWF("chart_<s:property value="%{id}"/>");
+						x = tmp.reload("<s:url value="/getDashboardChartData.action?alertId=%{id}"/>", false);
+						
+						
+						/*
+						tmp2 = findSWF("pop_chart_<s:property value="%{id}"/>");
+						x = tmp2.reload("<s:url value="/getDashboardChartData.action?alertId=%{id}"/>", false);
+						*/
+						
+					</s:if>
+				</s:iterator>
+			</s:iterator>
+		</s:if>				
+ 		timerID = setTimeout("reload()", reloadInterval);
+	}
+
+
+	function findSWF(movieName)
+	{
+		if (navigator.appName.indexOf("Microsoft")!= -1)
+		{
+			return window[movieName];
+		}
+		else
+		{
+			return document[movieName];
+		}
+	}
+
+	timerID  = setTimeout("reload()", reloadInterval);
+
+
 window.onload=function(){
 	drawPanels();
 }

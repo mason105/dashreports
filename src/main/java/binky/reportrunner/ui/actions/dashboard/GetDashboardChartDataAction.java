@@ -34,7 +34,7 @@ import org.apache.log4j.Logger;
 
 import za.co.connext.web.components.DefaultOFCGraphDataModel;
 import za.co.connext.web.components.DefaultOFCPieDataModel;
-import za.co.connext.web.components.OFCBar3DSeriesType;
+import za.co.connext.web.components.OFCBarGlassSeriesType;
 import za.co.connext.web.components.OFCGraphController;
 import za.co.connext.web.components.OFCLineAreaSeriesType;
 import za.co.connext.web.components.OFCLineSeriesType;
@@ -198,9 +198,11 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				DefaultOFCGraphDataModel modelBar = new DefaultOFCGraphDataModel();
 				modelBar.setData(d);
 				modelBar.setFormat(new DecimalFormat("###0.000"));
-				modelBar.setSeriesType(new OFCBar3DSeriesType(50, mainHex,
-						modName, 10));
+				//modelBar.setSeriesType(new OFCBar3DSeriesType(50, mainHex,modName, 10));
+				modelBar.setSeriesType(new OFCBarGlassSeriesType(50, mainHex, modName, 10));
+				
 				models.add(modelBar);
+				
 				break;
 			case LINE:
 				DefaultOFCGraphDataModel modelLine = new DefaultOFCGraphDataModel();

@@ -128,7 +128,7 @@ function drawPanels() {
 		       		 width:340,	       		 
 		        </s:if><s:else>
 		        	<s:if test="(width.name=='Medium')">		        
-		        		width:750,
+		        		width:662,
 		        	</s:if><s:else>        
 		        		width:1024,	
 		        	</s:else>
@@ -187,7 +187,7 @@ function drawPanels() {
 							        	<s:set name="x" value="340"/>				       		 	       		 
 							        </s:if><s:else>
 							        	<s:if test="(width.name=='Medium')">
-											<s:set name="x" value="745"/>			
+											<s:set name="x" value="655"/>			
 							        	</s:if><s:else>
 						        			<s:set name="x" value="1020"/>
 							        	</s:else>

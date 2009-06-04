@@ -72,7 +72,8 @@
 
 
 window.onload=function(){
-	drawPanels();
+	drawPanels();	
+	drawTabs();	
 }
 function pop(id)
 {
@@ -81,9 +82,14 @@ function pop(id)
 }
 
 function drawPanels() {
+
 <s:if test="alerts.size>0">
 	<s:iterator value="alerts" status="rowstatus">
+
+	
 		<s:iterator value="value" status="rowstatus">
+		
+
 			<s:if test="(displayType.name=='CHART')">
 			
 			
@@ -121,7 +127,7 @@ function drawPanels() {
 				/* possibilty implement jxGrid but it looks hard - might write a tag lib */
 							
 			</s:else>
-		    new Jx.Panel({		    	
+		   var chart_<s:property value="%{id}"/>= new Jx.Panel({		    	
 		        label: '<s:property value="%{alertName}"/>',
 		        content: 'alert_<s:property value="%{id}"/>',		       
 		        <s:if test="(width.name=='Small')">			
@@ -151,21 +157,51 @@ function drawPanels() {
 		        </s:if><s:else>
 		        	 ,image: '<s:url value="/images/icons/page_white_text.png"/>'
 		        </s:else> 		       
-		    }).addTo('panel_<s:property value="%{id}"/>');
+		    });
+		    
+		    chart_<s:property value="%{id}"/>.addTo('panel_<s:property value="%{id}"/>');		    
+		    chart_<s:property value="%{id}"/>.toggleCollapse();
+		    chart_<s:property value="%{id}"/>.toggleCollapse();
+		    chart_<s:property value="%{id}"/>.maximize();
 		</s:iterator>
 	</s:iterator>
 </s:if>	
 }
 
+function drawTabs() {
+var tb = new Jx.Toolbar({parent: 'toolbar'});
+var tabSet = new Jx.TabSet('tabContentArea');
+
+<s:if test="alerts.size>0">
+	var i=0;
+	var tab = new Array();
+	<s:iterator value="alerts" status="rowstatus">
+			<s:if test="value.size>0">
+				i++;	
+				tab[i]= (new Jx.Button.Tab({
+            		image: '<s:url value="/images/icons/database_table.png"/>',
+            		label: '<s:property value="%{key}"/>',            
+            		content: 'group_<s:property value="%{key}"/>'
+        		}));
+        		tb.add(tab[i]); 
+        		tabSet.add(tab[i]);
+        		
+			</s:if>
+	</s:iterator>		
+</s:if>			
+}
+
 </script>
 </head>
 <body>
+<div id="toolbar"></div>
+<div id="tabContentArea"></div>
 
 <s:if test="alerts.size>0">
-	<sx:tabbedpanel id="groups">				
+					
 		<s:iterator value="alerts" status="rowstatus">
 			<s:if test="value.size>0">		
-				<sx:div id="group_%{key}" label="%{key}">						
+				<div id="group_<s:property value="%{key}"/>">						
 					<div class="dashboard">							
 						<s:iterator value="value" status="rowstatus">
 							<s:if test="(displayRow!=#currentRow)">
@@ -213,10 +249,10 @@ function drawPanels() {
 							</s:else>
 						</s:iterator>
 					</div>
-				</sx:div>
+				</div>
 			</s:if>
 		</s:iterator>
-	</sx:tabbedpanel>
+	
 </s:if>
 
 </body>

@@ -66,11 +66,7 @@ window.onresize = resizeIframe;
 			 <iframe id="leftNav" src="<s:url value="/leftNav.action?actionName="/><s:property value="actionName"/>" scrolling="auto" class="leftNavFrame" frameborder="0"></iframe>
 </div>
 <div id="content">
-		<div class="body">
-			<div id="mainBodyContent">
 				<decorator:body />
-			</div>
-		</div>
 </div>
 <div id="footer">
 <strong>Current User:</strong><s:property value="sessionUser.fullName"/>

@@ -50,28 +50,22 @@
 	<s:hidden value="%{jobName}" name="jobName" />
 	<s:hidden value="%{groupName}" name="groupName" />
 
-	<div class="smallLabel">Job Name <s:property
+	<div class="smallLabel"><strong>Job Name:</strong> <s:property
 			value="%{jobName}" /></div>
-	<div class="smallLabel">Group Name <s:property
+	<div class="smallLabel"><strong>Group Name:</strong> <s:property
 			value="%{groupName}" /></div>
 	
 	<s:iterator value="parameters" status="rowstatus">
-	<div class="formSectionInner">
-		<div class="smallLabel">Parameter Index <s:property
-			value="%{pk.parameterIdx}" /></div>
 
-		<div class="smallLabel"><s:property
-			value="%{description}" /></div>
-	
 	<s:if test="(key.parameterBurstColumn == null)||(key.parameterBurstColumn.isEmpty())">					
 			<s:textfield
-				label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
+				label="%{key.description}" name="parameters[%{#rowstatus.index}].parameterValue"
 				value="%{key.parameterValue}">
 			</s:textfield> 	
 		
 	</s:if> <s:else> 
 			<s:select
-				label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
+				label="%{key.description}" name="parameters[%{#rowstatus.index}].parameterValue"
 				value="%{key.parameterValue}"  list="value">
 			</s:select> 
 	</s:else>

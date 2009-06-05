@@ -63,7 +63,7 @@ Copyright (C) 2009  Daniel Grout (daniel@daniel-grout.co.uk)
 </tr>
 <tr>
 	<td> 
-		<strong>Lead Programmer</strong>   
+		<strong>Lead Developer</strong>   
 	</td>
 		<td>    
 		<a href="mailto:daniel@daniel-grout.co.uk">Daniel Grout</a>
@@ -82,7 +82,7 @@ Copyright (C) 2009  Daniel Grout (daniel@daniel-grout.co.uk)
 		<strong>Graphic Design</strong>   
 	</td>
 		<td>    
-		<a href="mailto:"></a>
+		<a href="mailto:geord@hotmail.co.uk">Andrew Hall</a>
 	</td>
 </tr>
 </table>

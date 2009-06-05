@@ -30,7 +30,7 @@ top:10px;
 
 #top
 {
-background-color: #ddd;
+background-color: #aaa;
 border-bottom: 1px solid gray;
 height:50px;
 }
@@ -66,7 +66,7 @@ overflow: auto;
 {
 position:absolute;
 color: #333;
-background-color: #ddd;
+background-color: #aaa;
 border-top: 1px solid gray;
 height:20px;
 bottom:0px;

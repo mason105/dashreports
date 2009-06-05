@@ -40,7 +40,9 @@
 					<s:if test="(displayType.name=='CHART')">
 
 						tmp = findSWF("chart_<s:property value="%{id}"/>");
-						x = tmp.reload("<s:url value="/getDashboardChartData.action?alertId=%{id}"/>", false);
+						if (tmp != null) {
+							x = tmp.reload("<s:url value="/getDashboardChartData.action?alertId=%{id}"/>", false);
+						}
 						
 						
 						/*

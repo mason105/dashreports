@@ -28,6 +28,12 @@
 
 	<!--  actions -->
 
+
+	<bean id="aboutAction" class="binky.reportrunner.ui.actions.About"
+		scope="prototype" >
+	</bean>
+
+
 	<bean id="popUpChartAction" class="binky.reportrunner.ui.actions.dashboard.PopUpChartAction"
 		scope="prototype" >
 		<property name="dashboardService">

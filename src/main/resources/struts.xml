@@ -287,5 +287,11 @@
 			  <param name="bufferSize">1024</param>
 			</result>
 		</action>
+		
+		<action name="about" class="aboutAction">
+			<result>/jsp/main/about.jsp
+			</result>
+		</action>
+		
 	</package>
 </struts>

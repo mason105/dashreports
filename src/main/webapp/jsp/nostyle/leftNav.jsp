@@ -155,7 +155,16 @@ function tree() {
         },
         contextMenu: cm
     }));
-       
+    
+     tree.append(new Jx.TreeItem({
+        label: 'About',
+        image: '<s:url value="/images/icons/information.png"/>',
+        onClick: function() {
+            parent.window.location='about.action';
+        },
+        contextMenu: cm
+    }));
+             
     tree.append(new Jx.TreeItem({
         label: 'Logout',
         image: '<s:url value="/images/icons/door_out.png"/>',

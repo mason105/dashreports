@@ -11,14 +11,17 @@
 <body>
 <table>
 <tr>
-<td colspan=2>
-<strong>Licence</strong>
+<td>
+<h4>License</h4>
 <td>
 </tr>
 <tr>
-<td colspan=2>
+<td align="center">
+<table border="1" cellpadding="2" cellspacing="2" style="border-collapse: collapse;"  width="450"> 
+<tr>
+<td> 
 <pre>
-Copyright (C) 2009  Daniel Grout (daniel@daniel-grout.co.uk)
+    Copyright (C) 2009  Daniel Grout (daniel@daniel-grout.co.uk)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -31,41 +34,26 @@ Copyright (C) 2009  Daniel Grout (daniel@daniel-grout.co.uk)
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see http://www.gnu.org/licenses/.
 </pre>
 </td>
 </tr>
-<tr>
-<td colspan=2>    
-<strong>Report Runner Uses the Following Technologies and Frameworks</strong>
+</table>
+</td>
+</tr> 
+<tr><td><hr/></td></tr>
+<tr><td>
+<h4>Credits</h4>
 </td>
 </tr>
 <tr>
-<td colspan=2>    
-<ul>
-	<li/>Struts 2
-	<li/>Maven 2
-	<li/>Hibernate 3
-	<li/>Spring 2
-	<li/>Display Tag
-	<li/>JxLib (ft. Moo Tools)
-	<li/>Commons VFS
-	<li/>Open Flash Charts
-	<li/>JFree Charts
-	<li/>Jasper Reports
-</ul>	
-</td>
-</tr>
+<td align="center">    
+<table border="1" cellpadding="2" cellspacing="2" style="border-collapse: collapse;"  width="450"> 
 <tr>
-<td colspan=2>    
-<strong>Credits</strong>
-</td>
-</tr>
-<tr>
-	<td> 
+	<td width="50%"> 
 		<strong>Lead Developer</strong>   
 	</td>
-		<td>    
+	<td>    
 		<a href="mailto:daniel@daniel-grout.co.uk">Daniel Grout</a>
 	</td>
 </tr>
@@ -84,6 +72,32 @@ Copyright (C) 2009  Daniel Grout (daniel@daniel-grout.co.uk)
 		<td>    
 		<a href="mailto:geord@hotmail.co.uk">Andrew Hall</a>
 	</td>
+</tr>
+</table></td></tr>
+<tr><td colspan=2><hr/></td></tr>
+<tr>
+<td colspan=2>    
+<h4>Report Runner Uses the Following Technologies and Frameworks</h4>
+</td>
+</tr>
+<tr>
+<td align="center">    
+<table border="1" cellpadding="2" cellspacing="2" style="border-collapse: collapse;" width="450">
+	<tr> 
+	<td width="33%" align="center"><a href="http://struts.apache.org/2.x/" target="_blank"><img src="<s:url value="/images/vendor/struts2.png"/>" border="0" align="middle"/></a></td>
+	<td width="34%" align="center"><a href="http://maven.apache.org/" target="_blank"><img src="<s:url value="/images/vendor/maven-feather.png"/>" border="0" align="middle"/></a></td>
+	<td width="33%" align="center"><a href="https://www.hibernate.org/" target="_blank"><img src="<s:url value="/images/vendor/site_logo.gif"/>" border="0" align="middle"/></a></td>
+	</tr><tr>
+	<td align="center"><a href="http://www.springsource.org/" target="_blank"><img src="<s:url value="/images/vendor/spring.png"/>" border="0" align="middle"/></a></td>
+	<td align="center"><a href="http://displaytag.sourceforge.net/1.2/" target="_blank"><img src="<s:url value="/images/vendor/displaytag.png"/>" border="0" align="middle"/></a></td>
+	<td align="center"><h4><a href="http://www.jxlib.org/" target="_blank">JxLib</a></h4></td>
+	</tr><tr>
+	<td align="center"><a href="http://commons.apache.org/vfs/" target="_blank"><img src="<s:url value="/images/vendor/vfs-logo-white.png"/>" border="0" align="middle"/></a></td>
+	<td align="center"><a href="http://teethgrinder.co.uk/open-flash-chart/" target="_blank"><img src="<s:url value="/images/vendor/openflashchart.png"/>" border="0" align="middle"/></a></td>
+	<td align="center"><a href="" target="_blank"><img src="<s:url value="/images/vendor/jasperreports.gif"/>" border="0" align="middle"/></a></td>
+	</tr>
+</table>	
+</td>
 </tr>
 </table>
 </body>

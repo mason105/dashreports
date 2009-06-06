@@ -138,7 +138,10 @@
 		</action>
 		
 		<action name="viewJobOutput" class="viewJobOutputAction">
-			<result>/jsp/main/jobViewer.jsp</result>
+   			 <interceptor-ref name="completeStack"/>
+   			 <interceptor-ref name="execAndWait"/>
+   			 <result name="wait">>/jsp/main/jobViewerWait.jsp</result>
+    		 <result name="success">/jsp/main/jobViewer.jsp</result>
 		</action>
 
 

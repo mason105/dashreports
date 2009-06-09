@@ -25,6 +25,7 @@ package binky.reportrunner.ui.actions.base;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.SessionAware;
 
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
@@ -33,16 +34,28 @@ import binky.reportrunner.ui.Statics;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-public abstract class StandardRunnerAction extends ActionSupport {
+public abstract class StandardRunnerAction extends ActionSupport implements SessionAware {
+
+	protected Map<String, Object> sessionData; 
+	
+	public void setSession(Map<String, Object> sessionData) {
+		this.sessionData=sessionData;		
+	}
 
 	private static final long serialVersionUID = -5701712982967708713L;
 	private static final Logger logger = Logger.getLogger(StandardRunnerAction.class);
 	public abstract String execute() throws Exception;
 
 	public final RunnerUser getSessionUser() {
-
-		RunnerUser user = (RunnerUser) ActionContext.getContext().getSession()
-				.get(Statics.USER_HANDLE);
+		//hack to deal with thread local issues
+		RunnerUser user;
+		if ((ActionContext.getContext()==null) || (ActionContext.getContext().getSession()==null)) {
+			user = (RunnerUser) sessionData.get(Statics.USER_HANDLE);
+		} else {		
+			user = (RunnerUser) ActionContext.getContext().getSession()
+			.get(Statics.USER_HANDLE);
+			sessionData.put(Statics.USER_HANDLE, user);
+		}
 		return user;
 	}
 	
@@ -50,7 +63,7 @@ public abstract class StandardRunnerAction extends ActionSupport {
 		return this.getClass().getName();
 	}
 
-	protected final boolean doesUserHaveGroup(String groupName) {
+	public final boolean doesUserHaveGroup(String groupName) {
 
 		if (getSessionUser().getIsAdmin()) {
 			return true;
@@ -65,7 +78,7 @@ public abstract class StandardRunnerAction extends ActionSupport {
 		}
 	}
 	
-	protected final boolean isUserReadOnly() {
+	public final boolean isUserReadOnly() {
 		if (getSessionUser().getIsAdmin()) {
 			return true;
 		} else {
@@ -73,7 +86,7 @@ public abstract class StandardRunnerAction extends ActionSupport {
 		}	
 	}
 
-	protected void listAllVars(String className) {
+	public void listAllVars(String className) {
 		Map<String, Object> params = ActionContext.getContext().getContextMap();
 		logger.debug("dumping context map for action class: " + className);
 		for (String key : params.keySet()) {			 

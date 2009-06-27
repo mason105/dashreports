@@ -38,18 +38,13 @@
 			<s:iterator value="alerts" status="rowstatus"> 
 				<s:iterator value="value" status="rowstatus">
 					<s:if test="(displayType.name=='CHART')">
-
-						tmp = findSWF("chart_<s:property value="%{id}"/>");
-						if (tmp != null) {
-							x = tmp.reload("<s:url value="/getDashboardChartData.action?alertId=%{id}"/>", false);
-						}
-						
-						
-						/*
-						tmp2 = findSWF("pop_chart_<s:property value="%{id}"/>");
-						x = tmp2.reload("<s:url value="/getDashboardChartData.action?alertId=%{id}"/>", false);
-						*/
-						
+						try {
+							tmp = findSWF("chart_<s:property value="%{id}"/>");
+							if (tmp != null) {
+								x = tmp.reload("<s:url value="/getDashboardChartData.action?alertId=%{id}"/>", false);
+							}
+						} catch(err) {
+						}			
 					</s:if>
 				</s:iterator>
 			</s:iterator>
@@ -72,9 +67,11 @@
 
 	timerID  = setTimeout("reload()", reloadInterval);
 
-
+window.onresize=function() {
+	window.location=window.location;
+}
 window.onload=function(){
-	drawPanels();	
+	drawPanels();	 
 	drawTabs();	
 }
 function pop(id)
@@ -196,9 +193,11 @@ var tabSet = new Jx.TabSet('tabContentArea');
 </script>
 </head>
 <body>
-<div id="toolbar"></div>
-<div id="tabContentArea"></div>
 
+<div id="toolbar"></div>
+<div id="tabContain">
+<div id="tabContentArea"></div>
+</div>
 <s:if test="alerts.size>0">
 					
 		<s:iterator value="alerts" status="rowstatus">

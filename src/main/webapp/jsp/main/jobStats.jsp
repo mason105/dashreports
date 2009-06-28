@@ -11,7 +11,7 @@
 	</head>
 <body>
 	<span class="pageTitle"><img
-	src="<s:url value='/images/stats.png'/>" align="middle" />Statistics and Warnings</span>
+	src="<s:url value='/images/icons/chart_curve.png'/>" align="absmiddle" />Statistics and Warnings</span>
 	
 	<sx:tabbedpanel id="stats">
 		<sx:div id="success" label="Latest Success">		

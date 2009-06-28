@@ -10,7 +10,7 @@
 </head>
 <body>
 	<span class="pageTitle"><img
-	src="<s:url value='/images/executing.png'/>" align="middle" />Current Executing Jobs</span>
+	src="<s:url value='/images/icons/application_lightning.png'/>" align="absmiddle" />Current Executing Jobs</span>
 
 <table border="0" width="100%">
 

@@ -7,7 +7,7 @@
 </head>
 <body>
 <span class="pageTitle"><img
-	src="<s:url value='/images/user.png'/>" align="middle" />Users</span>
+	src="<s:url value='/images/icons/user.png'/>" align="absmiddle" />Users</span>
 
 <table border="0" width="100%">
 	<s:if test="sessionUser.isAdmin == true">

@@ -7,7 +7,7 @@
 </head>
 <body>
 <span class="pageTitle"><img
-	src="<s:url value='/images/user.png'/>" align="middle" />Edit User</span>
+	src="<s:url value='/images/icons/user.png'/>" align="absmiddle" />Edit User</span>
 
 <s:form action="saveUser">
 	<s:actionerror />

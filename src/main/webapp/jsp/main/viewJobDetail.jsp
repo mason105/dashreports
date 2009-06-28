@@ -9,7 +9,7 @@
 </head>
 <body>
 <span class="pageTitle"><img
-	src="<s:url value='/images/view.png'/>" align="absmiddle" />View Job
+	src="<s:url value='/images/icons/magnifier.png'/>" align="absmiddle" />View Job
 Detail</span>
 <br /><br />
 [<s:a href="listJobs.action?groupName=%{job.groupName}">Back</s:a>]

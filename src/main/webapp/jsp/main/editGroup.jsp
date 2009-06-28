@@ -7,7 +7,7 @@
 </head>
 <body>
 <span class="pageTitle"><img
-	src="<s:url value='/images/folders.png'/>" align="middle" />Edit Group</span>
+	src="<s:url value='/images/icons/group.png'/>" align="middle" />Edit Group</span>
 
 <s:form action="saveGroup">
 	<s:actionerror />

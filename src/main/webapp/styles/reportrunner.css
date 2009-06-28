@@ -186,8 +186,18 @@ div.formSectionInner div.smallLabel {
 input.readOnly {
 	background-color: #CCC;
 }
+.pageTitle img {
+	padding-right:5px;
+}
 .pageTitle{
-	font-size:18px;
+	display:inline-table;
+	height:16px;
+	font-size:12px;
+	font-weight:bold;
+	width:100%;
+	background-color:#EEEEEE;
+	padding:5px;
+	border-bottom: 1px solid gray;
 }
 .rowOdd {
 	background-color:#EEEEEE;

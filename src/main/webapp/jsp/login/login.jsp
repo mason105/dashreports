@@ -42,64 +42,13 @@ input {
 	font-size: 11px;
 	border: 1px solid #333333;
 }
-* {margin:0;padding:0}
-/* mac hide \*/
-html,body{height:100%;width:100%;}
-/* end hide */
-body { 
-	text-align:center;
-}
-#xouter{
-	height:100%;
-	width:100%;
-	display:table;
-	vertical-align:middle;
-}
-#xcontainer {
-	text-align: center;
-	position:relative;
-	vertical-align:middle;
-	display:table-cell;
-}	
-#xinner {
-	background:#fff;
-	text-align: center;
-	margin-left:auto;
-	margin-right:auto;
-	width:500px;
-}
-/* not required for demo */
-p,h1{margin-bottom:1em}
-#header{margin-right:0}
-.maintxt{text-align:left;margin:1em;}
-/* - */
+-->
 </style>
-<!--[if lte IE 8]>
-<style type="text/css">
-#xouter{display:block}
-#xcontainer{top:50%;display:block}
-#xinner{top:-50%;position:relative}
-</style>
-<![endif]-->
-
-<!--[if IE 7]>
-<style type="text/css">
-#xouter{
-position:relative;
-overflow:hidden;
-}
-</style>
-<![endif]-->
-
-
 </head>
 
 <body>
-<div id="xouter">
-	<div id="xcontainer">
-		<div id="xinner">
-
-<s:form namespace="/" action="index.action"
+<div id="wrap">
+<div id="content"><s:form namespace="/" action="index.action"
 	method="post">
 	<s:hidden name="loginAttempt" value="%{'1'}" />
 	<table width="500" border="0" align="center" cellpadding="2" cellspacing="4" class="tableBorder" bgcolor=#FFFFFF>
@@ -126,10 +75,7 @@ overflow:hidden;
 				id="index_action_0" value="Login" style="width: 75px;" /></td>
 		</tr>
 	</table>
-</s:form>
-		</div>
-	</div>
+</s:form></div>
 </div>
-
 </body>
 </html>

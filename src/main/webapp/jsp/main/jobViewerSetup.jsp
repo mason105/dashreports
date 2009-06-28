@@ -7,41 +7,11 @@
 <html>
 <head>
 <sx:head parseContent="true" />
-
- <!-- include the jx library and the delicious skin -->
-  <script src="<s:url value='/jx/jxlib.js" type="text/javascript'/>" charset="utf-8"></script>
-  <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/jxtheme.css'/>" type="text/css" media="screen" charset="utf-8"/>
-  <!-- IE specific style sheets -->
-  <!--[if IE lte 6]>
-  <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie6.css'/>" type="text/css" media="screen" charset="utf-8"/>
-  <![endif]-->
-  <!--[if IE 7]>
-  <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie7.css'/>" type="text/css" media="screen" charset="utf-8"/>
-  <![endif]-->	
-  
-<script language="JavaScript" type="text/javascript">
-
-	window.onload=function(){
-		panel();
-	}
-	
-	function panel() {
-		new Jx.Panel({
-			 image: '<s:url value="/images/icons/group.png"/>',
-	        label: 'Groups',
-	        content: 'mainContent',
-	        minHeight: 400,
-	        right:0
-	    }).addTo('mainPanel');
-    	
-	}
-</script>
-
-
 </head>
 <body>
 
-<div id="mainPanel"></div>
+<span class="pageTitle"><img
+	src="<s:url value="/images/icons/group.png"/>" align="absmiddle" />View Job</span>	
 <div id="mainContent">
 <table><tr><Td>
 <s:form action="viewJobOutput" method="post" enctype="multipart/form-data"

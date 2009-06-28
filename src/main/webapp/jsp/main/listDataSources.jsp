@@ -7,7 +7,7 @@
   </head>  
   <body>    
 <span class="pageTitle"><img
-	src="<s:url value='/images/datasource.png'/>" align="middle" />Datasources</span>
+	src="<s:url value='/images/icons/database_link.png'/>" align="absmiddle" />Datasources</span>
        
 	 <table border="0" width="100%">
 		<tr class="rowHeader"> 

@@ -10,7 +10,7 @@
 </head>
 <body>
 <s:form action="changePassword">
-	<span class="pageTitle"><img src="<s:url value='/images/Keys_50.png'/>" align="middle" />Change Password</span>
+	<span class="pageTitle"><img src="<s:url value='/images/icons/key.png'/>" align="absmiddle" />Change Password</span>
 	
 	
 	<s:actionerror />

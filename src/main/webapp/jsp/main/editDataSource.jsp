@@ -6,7 +6,8 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-<span class="pageTitle"><img src="<s:url value='/images/datasource.png'/>" align="middle" />Edit Datasource</span>
+<span class="pageTitle"><img
+	src="<s:url value='/images/icons/database_link.png'/>" align="absmiddle" />Edit Datasource</span>
 
 <s:form action="saveDataSource">
 	<s:actionerror />

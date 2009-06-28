@@ -9,7 +9,7 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-<span class="pageTitle"><img src="<s:url value='/images/dasboard_small.png'/>" align="middle" />Edit Dasboard Alert</span>
+<span class="pageTitle"><img src="<s:url value='/images/icons/chart_bar.png'/>" align="absmiddle" />Edit Dasboard Alert</span>
 
 <s:form action="saveAlert">
 	<s:actionerror />

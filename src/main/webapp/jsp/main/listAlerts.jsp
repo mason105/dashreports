@@ -7,7 +7,7 @@
 </head>
 <body>
 <span class="pageTitle"><img
-	src="<s:url value='/images/dashboard_small.png'/>" align="middle" />Dashboard Alerts</span>
+	src="<s:url value='/images/icons/chart_bar.png'/>" align="absmiddle" />Dashboard Alerts</span>
 
 <table border="0" width="100%">
 	<tr class="rowHeader"> 

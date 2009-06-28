@@ -10,7 +10,7 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-<span class="pageTitle"><img src="<s:url value='/images/manage.png'/>" align="absmiddle" />Manage Server</span>
+<span class="pageTitle"><img src="<s:url value='/images/icons/server.png'/>" align="absmiddle" />Manage Server</span>
 <br/><br/>
 <table width="100%">
 	<tr>

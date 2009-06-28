@@ -269,6 +269,10 @@
 			<result>/jsp/nostyle/popupChart.jsp</result>
 		</action>
 		
+		<action name="popUpDashboard" class="popUpDashboardAction">
+			<result>/jsp/nostyle/popUpDashboard.jsp</result>
+		</action>
+		
 		<action name="downloadChart" class="downloadChartAction">
 		    <result name="sendFile" type="stream">
 		  	  <param name="contentType">image/png</param>

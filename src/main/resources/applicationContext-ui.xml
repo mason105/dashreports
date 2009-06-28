@@ -33,8 +33,15 @@
 		scope="prototype" >
 	</bean>
 
+	<bean id="popUpDashboardAction" class="binky.reportrunner.ui.actions.dashboard.popup.PopUpDashboardAction"
+		scope="prototype" >
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>		
+	</bean>
 
-	<bean id="popUpChartAction" class="binky.reportrunner.ui.actions.dashboard.PopUpChartAction"
+
+	<bean id="popUpChartAction" class="binky.reportrunner.ui.actions.dashboard.popup.PopUpChartAction"
 		scope="prototype" >
 		<property name="dashboardService">
 			<ref bean="dashboardService" />

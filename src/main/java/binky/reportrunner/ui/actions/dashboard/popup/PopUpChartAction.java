@@ -20,7 +20,7 @@
  * 
  * Module: PopUpChartAction.java
  ******************************************************************************/
-package binky.reportrunner.ui.actions.dashboard;
+package binky.reportrunner.ui.actions.dashboard.popup;
 
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.service.DashboardService;

@@ -152,7 +152,7 @@ function drawPanels() {
 		         
 		        <s:if test="(displayType.name=='CHART')">
 		        	,toolbars:[tbTop_<s:property value="%{id}"/>]
-		        	,image: '<s:url value="/images/icons/chart_bar.png"/>',
+		        	,image: '<s:url value="/images/icons/chart_bar.png"/>'
 		        </s:if><s:else>
 		        	 ,image: '<s:url value="/images/icons/page_white_text.png"/>'
 		        </s:else> 		       

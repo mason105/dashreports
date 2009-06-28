@@ -39,9 +39,6 @@ function resizeIframe() {
     document.getElementById('leftNav').style.height = height + 'px';
     resizeDebug();
 }
-document.getElementById('leftNav').onload=resizeIframe;
-window.onresize = resizeIframe;
-
 
 </script>	
 	

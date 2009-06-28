@@ -26,7 +26,7 @@ body {
 }
 
 .txt {
-	color: #FFFFFF;
+	color: #000000;
 	font-weight: bold;
 	font-family:Verdana, Arial, Helvetica, sans-serif;
 	font-size: 10px;
@@ -34,7 +34,7 @@ body {
 
 .blurb,a {
 	font-size: 9px;
-	color: #FFFFFF;
+	color: #000000;
 }
 
 input {
@@ -42,56 +42,94 @@ input {
 	font-size: 11px;
 	border: 1px solid #333333;
 }
--->
+* {margin:0;padding:0}
+/* mac hide \*/
+html,body{height:100%;width:100%;}
+/* end hide */
+body { 
+	text-align:center;
+}
+#xouter{
+	height:100%;
+	width:100%;
+	display:table;
+	vertical-align:middle;
+}
+#xcontainer {
+	text-align: center;
+	position:relative;
+	vertical-align:middle;
+	display:table-cell;
+}	
+#xinner {
+	background:#fff;
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+	width:500px;
+}
+/* not required for demo */
+p,h1{margin-bottom:1em}
+#header{margin-right:0}
+.maintxt{text-align:left;margin:1em;}
+/* - */
 </style>
+<!--[if lte IE 8]>
+<style type="text/css">
+#xouter{display:block}
+#xcontainer{top:50%;display:block}
+#xinner{top:-50%;position:relative}
+</style>
+<![endif]-->
+
+<!--[if IE 7]>
+<style type="text/css">
+#xouter{
+position:relative;
+overflow:hidden;
+}
+</style>
+<![endif]-->
+
+
 </head>
 
 <body>
-<div id="wrap">
-<div id="content"><s:form namespace="/" action="index.action"
+<div id="xouter">
+	<div id="xcontainer">
+		<div id="xinner">
+
+<s:form namespace="/" action="index.action"
 	method="post">
 	<s:hidden name="loginAttempt" value="%{'1'}" />
-	<table width="500" height="250" border="0" align="center" cellpadding="2" cellspacing="0"
-		background="images/login_bg.png" class="tableBorder">
+	<table width="500" border="0" align="center" cellpadding="2" cellspacing="4" class="tableBorder" bgcolor=#FFFFFF>
 		<tr>
-			<td height="50" colspan="3" align="left"><table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td width="250" height="75" align="left" valign="middle"><img
-				src="images/logo.png" alt="report runner" width="250" height="50" /></td>
-                <td align="right" valign="middle"><!--<img src="images/binky_logo.png" alt="binky software" width="200" height="75" />--></td>
-              </tr>
-            </table></td>
+		<td  colspan="2" valign="top" align="center"><img
+				src="images/logo.png" alt="report runner"  /></td>
 		</tr>
 		<tr>
-			<td width="200" rowspan="4" valign="middle" align="center"><img
-				src="images/Keys.png" width="128" height="128" /></td>
-			<td colspan="2" class="blurb">
-			<p>Welcome to Report Runner - a java powered report generator,
-			scheduler and distrubution system.</p>
-			<p><s:actionerror /></p>
-			</td>
+ 			<td class="txt" align="right">Username</td>
+		  <td  width=400><input type="text" name="userName" value=""
+				id="index_action_userName" style="width: 400px;" /></td>
 		</tr>
 		<tr>
-		  <td width="75" height="15" class="txt">Username</td>
-		  <td height="15"><input type="text" name="userName" value=""
-				id="index_action_userName" style="width: 225px;" /></td>
+		  <td class="txt" align="right">Password</td>
+			<td width=400><input type="password" name="password"
+				id="index_action_password" style="width: 400px;" /></td>
 		</tr>
 		<tr>
-		  <td width="75" height="15" class="txt">Password</td>
-			<td height="15"><input type="password" name="password"
-				id="index_action_password" style="width: 225px;" /></td>
+		<td align="middle" colspan=2><p><s:actionerror /></p></td>
 		</tr>
 		<tr>
-			<td height="15" align="right">&nbsp;</td>
-		  <td height="40" align="right" valign="top"><input type="submit"
+		  <td></td>
+		  <td  width=400 align="left" valign="top"><input type="submit"
 				id="index_action_0" value="Login" style="width: 75px;" /></td>
 		</tr>
-		<tr>
-			<td height="15" colspan="3" align="center" class="blurb"><a
-				href="http://reportrunner.binkysoftware.co.uk" target="_blank">http://reportrunner.binkysoftware.co.uk</a></td>
-		</tr>
 	</table>
-</s:form></div>
+</s:form>
+		</div>
+	</div>
 </div>
+
 </body>
 </html>

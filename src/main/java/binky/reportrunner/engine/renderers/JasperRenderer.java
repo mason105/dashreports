@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.engine.renderers;
 
+import java.io.ByteArrayInputStream;
 import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -69,7 +70,7 @@ public class JasperRenderer extends AbstractRenderer {
 		fileFormats.put("HTML",
 				"net.sf.jasperreports.engine.export.JRHtmlExporter");
 		
-		JasperDesign jasperDesign = JRXmlLoader.load(new String(templateFile));
+		JasperDesign jasperDesign = JRXmlLoader.load(new ByteArrayInputStream(templateFile));
 		JasperReport report = JasperCompileManager
 				.compileReport(jasperDesign);
 	

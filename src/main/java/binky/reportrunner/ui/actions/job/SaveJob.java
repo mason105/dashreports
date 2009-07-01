@@ -163,6 +163,17 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 			throws JRException, SchedulerException {
 		this.activeTab = "report";
 		// Get the uploaded File And Compile into a jasper report
+		if (logger.isDebugEnabled()) {
+			logger.debug("file uploaded is: " + uploadFileName);
+			if (uploadFileName!=null) {
+				logger.debug("file exists at uploaded file name: " + (new File(uploadFileName)).exists());
+				logger.debug("upload object is null: "+ (upload==null));
+				if (upload !=null){
+					logger.debug("upload object is file: " + upload.isFile());
+					logger.debug("upload object exists: " + upload.exists());
+				}
+			}
+		}
 		if ((upload != null) && upload.isFile() && upload.exists()) {
 			
 			try {
@@ -311,11 +322,19 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	// Returns the contents of the file in a byte array.
 	private byte[] getBytesFromFile(File file) throws IOException {
+		
+		//if the file is null then return a null byte array to show this
+		if (file==null) {
+			logger.warn("getBytesFromFile called with null file object");
+			return null;
+		}
+		
+		logger.debug("getBytesFromFile called for: " + file.getName());
 		InputStream is = new FileInputStream(file);
 
 		// Get the size of the file
 		long length = file.length();
-
+		logger.debug("file len: " + length);
 		// You cannot create an array using a long type.
 		// It needs to be an int type.
 		// Before converting to an int type, check
@@ -337,8 +356,10 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 		// Ensure all the bytes have been read in
 		if (offset < bytes.length) {
-			throw new IOException("Could not completely read file "
+			IOException e = new IOException("Could not completely read file "
 					+ file.getName());
+			logger.error("error reading file", e);
+			throw e;
 		}
 
 		// Close the input stream and return bytes

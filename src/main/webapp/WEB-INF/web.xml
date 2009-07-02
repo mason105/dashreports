@@ -25,6 +25,8 @@
   
   Module: web.xml
 -->
+	<distributable />
+
 	<display-name>Report Runner 3.0</display-name>
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

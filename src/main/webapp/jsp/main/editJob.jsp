@@ -114,7 +114,7 @@
 	<sx:div id="output" label="Output">		
 		<s:select label="Template Type" name="job.templateType" list="templateTypes"
 			listKey="name" listValue="displayName"></s:select>
-		<s:file label="Template File" name="job.upload"></s:file> 
+		<s:file label="Template File" name="template"></s:file> 
 		<s:select label="File Format" name="job.fileFormat" list="fileFormats"
 			listKey="name" listValue="displayName"></s:select>
 

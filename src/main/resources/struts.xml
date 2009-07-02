@@ -33,9 +33,9 @@
 			<interceptor name="login" class="loginInterceptor" />
 			<interceptor name="userSession" class="userSessionIntercept" />
 			<interceptor-stack name="defaultLoginStack">
+				<interceptor-ref name="defaultStack" />
 				<interceptor-ref name="login" /> <!-- Our LoginInterceptor -->
 				<interceptor-ref name="userSession" /> <!-- Our UserSessionIntercept -->
-				<interceptor-ref name="defaultStack" />
 			</interceptor-stack>
 		</interceptors>
 		<!--

@@ -28,11 +28,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import net.sf.jasperreports.engine.JRException;
 
 import org.apache.log4j.Logger;
+import org.apache.struts2.interceptor.ParameterAware;
 
 import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.dao.RunnerJobParameterDao;
@@ -56,11 +58,11 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	private RunnerJob job;
 
-	private File upload;// The actual file
+	private File template;// The actual file
 
-	private String uploadContentType; // The content type of the file
+	private String templateContentType; // The content type of the file
 
-	private String uploadFileName; // The uploaded file name
+	private String templateFileName; // The uploaded file name
 
 	private RunnerJobParameterDao parameterDao;
 
@@ -162,22 +164,22 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 	private boolean doSaveJob(String jobName, String groupName)
 			throws JRException, SchedulerException {
 		this.activeTab = "report";
-		// Get the uploaded File And Compile into a jasper report
+		// Get the uploaded File 
 		if (logger.isDebugEnabled()) {
-			logger.debug("file uploaded is: " + uploadFileName);
-			if (uploadFileName!=null) {
-				logger.debug("file exists at uploaded file name: " + (new File(uploadFileName)).exists());
-				logger.debug("upload object is null: "+ (upload==null));
-				if (upload !=null){
-					logger.debug("upload object is file: " + upload.isFile());
-					logger.debug("upload object exists: " + upload.exists());
-				}
+			logger.debug("file uploaded is: " + templateFileName);
+			if (templateFileName!=null) {
+				logger.debug("file exists at uploaded file name: " + (new File(templateFileName)).exists());
+			}
+			logger.debug("upload object is null: "+ (template==null));
+			if (template !=null){
+				logger.debug("upload object is file: " + template.isFile());
+				logger.debug("upload object exists: " + template.exists());
 			}
 		}
-		if ((upload != null) && upload.isFile() && upload.exists()) {
+		if ((template != null) && template.isFile() && template.exists()) {
 			
 			try {
-				byte[] file = getBytesFromFile(upload);
+				byte[] file = getBytesFromFile(template);
 				job.setTemplateFile(file);
 			} catch (IOException e) {
 				logger.warn(e.getMessage(),e);
@@ -221,30 +223,6 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	public void setJob(RunnerJob job) {
 		this.job = job;
-	}
-
-	public File getUpload() {
-		return upload;
-	}
-
-	public void setUpload(File upload) {
-		this.upload = upload;
-	}
-
-	public String getUploadContentType() {
-		return uploadContentType;
-	}
-
-	public void setUploadContentType(String uploadContentType) {
-		this.uploadContentType = uploadContentType;
-	}
-
-	public String getUploadFileName() {
-		return uploadFileName;
-	}
-
-	public void setUploadFileName(String uploadFileName) {
-		this.uploadFileName = uploadFileName;
 	}
 
 	public List<RunnerJobParameter> getParameters() {
@@ -320,6 +298,33 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		this.activeTab = activeTab;
 	}
 
+	
+	
+
+	public File getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(File template) {
+		this.template = template;
+	}
+
+	public String getTemplateContentType() {
+		return templateContentType;
+	}
+
+	public void setTemplateContentType(String templateContentType) {
+		this.templateContentType = templateContentType;
+	}
+
+	public String getTemplateFileName() {
+		return templateFileName;
+	}
+
+	public void setTemplateFileName(String templateFileName) {
+		this.templateFileName = templateFileName;
+	}
+
 	// Returns the contents of the file in a byte array.
 	private byte[] getBytesFromFile(File file) throws IOException {
 		
@@ -366,5 +371,5 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		is.close();
 		return bytes;
 	}
-
+	
 }

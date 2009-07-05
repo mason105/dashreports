@@ -20,7 +20,7 @@
  * 
  * Module: FileSystemHandler.java
  ******************************************************************************/
-package binky.reportrunner.engine;
+package binky.reportrunner.engine.utils.impl;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -34,20 +34,28 @@ import org.apache.commons.vfs.Selectors;
 import org.apache.commons.vfs.VFS;
 import org.apache.log4j.Logger;
 
-public class FileSystemHandler {
+import binky.reportrunner.engine.utils.FileSystemHandler;
+
+public class FileSystemHandlerImpl implements FileSystemHandler {
 	FileSystemManager fsManager;
 	private static final Logger logger = Logger
-			.getLogger(FileSystemHandler.class);
+			.getLogger(FileSystemHandlerImpl.class);
 
-	public FileSystemHandler() throws IOException {
+	public FileSystemHandlerImpl() throws IOException {
 		this.fsManager = VFS.getManager();
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.FileSystemHandler#getFileObjectForUrl(java.lang.String)
+	 */
 	public FileObject getFileObjectForUrl(String url) throws IOException {
 		FileObject file = fsManager.resolveFile(url);
 		return file;
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.FileSystemHandler#getOutputStreamForUrl(java.lang.String)
+	 */
 	public OutputStream getOutputStreamForUrl(String url) throws IOException {
 
 		FileObject file = fsManager.resolveFile(url);
@@ -56,22 +64,34 @@ public class FileSystemHandler {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.FileSystemHandler#deleteFile(java.lang.String)
+	 */
 	public void deleteFile(String url) throws IOException {
 
 		FileObject file = fsManager.resolveFile(url);
 		file.delete();
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.FileSystemHandler#getFileName(java.lang.String)
+	 */
 	public String getFileName(String url) throws IOException {
 		FileObject file = fsManager.resolveFile(url);
 		return file.getName().getBaseName();
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.FileSystemHandler#getURL(java.lang.String)
+	 */
 	public URL getURL(String url) throws IOException {
 		FileObject file = fsManager.resolveFile(url);
 		return file.getURL();
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.FileSystemHandler#copyFile(java.lang.String, java.lang.String)
+	 */
 	public void copyFile(String url, String destinationUrl) throws IOException {
 
 		FileObject dest = fsManager.resolveFile(destinationUrl);
@@ -79,6 +99,9 @@ public class FileSystemHandler {
 		dest.copyFrom(src, Selectors.SELECT_ALL);
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.FileSystemHandler#getFinalUrl(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public String getFinalUrl(String url, String jobName, String groupName,
 			String fileExt, String burstValue) {
 		String returnUrl = getFinalUrl(url, jobName, groupName, fileExt);
@@ -86,6 +109,9 @@ public class FileSystemHandler {
 		return returnUrl;
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.FileSystemHandler#getFinalUrl(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public String getFinalUrl(String url, String jobName, String groupName,
 			String fileExt) {
 		String returnUrl;

@@ -44,6 +44,8 @@ import binky.reportrunner.data.RunnerJobParameter_pk;
 import binky.reportrunner.data.RunnerJob_pk;
 import binky.reportrunner.data.RunnerJob.FileFormat;
 import binky.reportrunner.data.RunnerJobParameter.DataType;
+import binky.reportrunner.engine.utils.FileSystemHandler;
+import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -96,7 +98,7 @@ public class RunnerEngineTest extends TestCase {
 
 			String url = engine.processSingleReport(job);
 
-			FileSystemHandler fsh = new FileSystemHandler();
+			FileSystemHandler fsh = new FileSystemHandlerImpl();
 			FileObject fo = fsh.getFileObjectForUrl(url);
 
 			assertTrue(fo.exists());
@@ -138,7 +140,7 @@ public class RunnerEngineTest extends TestCase {
 			assertEquals(urls.size(), rowCount);
 
 			for (String url : urls) {
-				FileSystemHandler fsh = new FileSystemHandler();
+				FileSystemHandler fsh = new FileSystemHandlerImpl();
 				FileObject fo = fsh.getFileObjectForUrl(url);
 
 				assertTrue(fo.exists());

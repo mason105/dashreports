@@ -31,7 +31,7 @@ import java.util.Map;
 
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
-import binky.reportrunner.engine.ViewerResults;
+import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.exceptions.RenderException;
 import binky.reportrunner.scheduler.SchedulerException;
 

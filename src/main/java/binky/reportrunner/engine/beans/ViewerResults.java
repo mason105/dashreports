@@ -20,7 +20,7 @@
  * 
  * Module: ViewerResults.java
  ******************************************************************************/
-package binky.reportrunner.engine;
+package binky.reportrunner.engine.beans;
 
 import java.io.Serializable;
 

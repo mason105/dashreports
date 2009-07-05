@@ -40,9 +40,10 @@ import binky.reportrunner.dao.RunnerJobDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
-import binky.reportrunner.engine.EmailHandler;
 import binky.reportrunner.engine.RunnerEngine;
 import binky.reportrunner.engine.dashboard.AlertProcessor;
+import binky.reportrunner.engine.utils.EmailHandler;
+import binky.reportrunner.engine.utils.impl.EmailHandlerImpl;
 import binky.reportrunner.service.DatasourceService;
 
 public class RunnerJobListener implements JobListener {
@@ -146,7 +147,7 @@ public class RunnerJobListener implements JobListener {
 
 	private void sendEmailAlert(String jobName, String groupName,
 			String targetEmail, Date finishTime, boolean success) {
-		EmailHandler email = new EmailHandler();
+		EmailHandler email = new EmailHandlerImpl();
 		try {
 			email.sendAlertEmail(targetEmail, fromAddress, smtpServer, jobName,
 					groupName, success, finishTime);

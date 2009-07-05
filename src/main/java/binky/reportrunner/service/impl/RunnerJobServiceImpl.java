@@ -45,8 +45,10 @@ import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.RunnerResultGenerator;
-import binky.reportrunner.engine.SQLProcessor;
-import binky.reportrunner.engine.ViewerResults;
+import binky.reportrunner.engine.beans.ViewerResults;
+import binky.reportrunner.engine.impl.RunnerResultGeneratorImpl;
+import binky.reportrunner.engine.utils.SQLProcessor;
+import binky.reportrunner.engine.utils.impl.SQLProcessorImpl;
 import binky.reportrunner.exceptions.RenderException;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
@@ -232,7 +234,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		logger.debug("going to get a set of results for job: "
 				+ job.getPk().getJobName() + "/"
 				+ job.getPk().getGroup().getGroupName());
-		RunnerResultGenerator res = new RunnerResultGenerator(conn);
+		RunnerResultGenerator res = new RunnerResultGeneratorImpl(conn);
 		Map<String, ResultSet> rs = new HashMap<String, ResultSet>();
 		if (parameters != null)
 			job.setParameters(parameters);
@@ -279,7 +281,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 		DataSource ds = dataSourceService.getDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
-		SQLProcessor sqlProcessor = new SQLProcessor();
+		SQLProcessor sqlProcessor = new SQLProcessorImpl();
 		if ((job.getIsBurst()==null)||(!job.getIsBurst())) {
 			for (RunnerJobParameter p : job.getParameters()) {
 				paramValues.put(p, null);

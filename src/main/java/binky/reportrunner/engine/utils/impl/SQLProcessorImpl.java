@@ -20,7 +20,7 @@
  * 
  * Module: SQLProcessor.java
  ******************************************************************************/
-package binky.reportrunner.engine;
+package binky.reportrunner.engine.utils.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,11 +34,15 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.data.RunnerJobParameter;
+import binky.reportrunner.engine.utils.SQLProcessor;
 
-public class SQLProcessor {
+public class SQLProcessorImpl implements SQLProcessor {
 
-	private static final Logger logger = Logger.getLogger(SQLProcessor.class);
+	private static final Logger logger = Logger.getLogger(SQLProcessorImpl.class);
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.SQLProcessor#getResults(java.sql.Connection, java.lang.String)
+	 */
 	public ResultSet getResults(Connection connection, String sql)
 			throws SQLException {
 		logger.debug("Executing sql: " + sql);
@@ -60,6 +64,9 @@ public class SQLProcessor {
 		return rs;
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.SQLProcessor#getResults(java.sql.Connection, java.lang.String, java.util.List)
+	 */
 	public ResultSet getResults(Connection connection, String sql,
 			List<RunnerJobParameter> parameters) throws SQLException,
 			NumberFormatException, ParseException {

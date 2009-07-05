@@ -28,13 +28,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import net.sf.jasperreports.engine.JRException;
 
 import org.apache.log4j.Logger;
-import org.apache.struts2.interceptor.ParameterAware;
 
 import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.dao.RunnerJobParameterDao;

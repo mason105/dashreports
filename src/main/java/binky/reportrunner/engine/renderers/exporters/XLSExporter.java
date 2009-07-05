@@ -39,6 +39,7 @@ import binky.reportrunner.exceptions.ExportException;
 
 public class XLSExporter extends AbstractExporter {
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void export(ResultSet resultSet, OutputStream outputStream)
 			throws ExportException {

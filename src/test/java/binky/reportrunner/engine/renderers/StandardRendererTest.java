@@ -32,8 +32,10 @@ import junit.framework.TestCase;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import binky.reportrunner.engine.FileSystemHandler;
-import binky.reportrunner.engine.SQLProcessor;
+import binky.reportrunner.engine.utils.FileSystemHandler;
+import binky.reportrunner.engine.utils.SQLProcessor;
+import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
+import binky.reportrunner.engine.utils.impl.SQLProcessorImpl;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -46,10 +48,10 @@ public class StandardRendererTest extends TestCase {
 
 		try {
 			StandardRenderer render = new StandardRenderer();
-			FileSystemHandler fs = new FileSystemHandler();
+			FileSystemHandler fs = new FileSystemHandlerImpl();
 			OutputStream os = fs.getOutputStreamForUrl("file://"
 					+ System.getProperty("java.io.tmpdir") + "/test.file");
-			SQLProcessor proc = new SQLProcessor();
+			SQLProcessor proc = new SQLProcessorImpl();
 			ComboPooledDataSource ds = (ComboPooledDataSource) ctx
 					.getBean("dataSource");
 			Connection connection = ds.getConnection();

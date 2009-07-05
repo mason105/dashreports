@@ -37,6 +37,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJobParameter_pk;
 import binky.reportrunner.data.RunnerJobParameter.DataType;
+import binky.reportrunner.engine.utils.SQLProcessor;
+import binky.reportrunner.engine.utils.impl.SQLProcessorImpl;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -74,7 +76,7 @@ public class SQLProcessorTest extends TestCase {
 
 	public void testGetResultsConnectionString() {
 		try {
-			SQLProcessor proc = new SQLProcessor();
+			SQLProcessor proc = new SQLProcessorImpl();
 			Connection connection = ds.getConnection();
 			String sql = "select * from runneruser";
 			ResultSet res = proc.getResults(connection, sql);
@@ -90,7 +92,7 @@ public class SQLProcessorTest extends TestCase {
 
 	public void testGetResultsConnectionStringListOfRunnerJobParameter() {
 		try {
-			SQLProcessor proc = new SQLProcessor();
+			SQLProcessor proc = new SQLProcessorImpl();
 			Connection connection = ds.getConnection();
 			String sql = "select * from test_table where testString=? and testInteger=?  and testBoolean=? and testDate=?   and testLong=? and testDouble=?";
 			List<RunnerJobParameter> params = new LinkedList<RunnerJobParameter>();

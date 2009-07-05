@@ -25,7 +25,8 @@ package binky.reportrunner.ui.actions.job.viewer;
 import java.io.InputStream;
 
 import binky.reportrunner.data.RunnerJob;
-import binky.reportrunner.engine.FileSystemHandler;
+import binky.reportrunner.engine.utils.FileSystemHandler;
+import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -42,7 +43,7 @@ public class DownloadReportAction extends StandardRunnerAction {
 	private InputStream inputStream;
 	@Override
 	public String execute() throws Exception {
-		FileSystemHandler fs = new FileSystemHandler();
+		FileSystemHandler fs = new FileSystemHandlerImpl();
 		inputStream=fs.getFileObjectForUrl("tmp://"+id+".tmp").getContent().getInputStream();
 		RunnerJob job = jobService.getJob(jobName, groupName);
 		String fileName="output."+job.getFileFormat().toString();

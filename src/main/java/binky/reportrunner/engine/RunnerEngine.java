@@ -42,6 +42,13 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.engine.impl.RunnerResultGeneratorImpl;
+import binky.reportrunner.engine.utils.EmailHandler;
+import binky.reportrunner.engine.utils.FileSystemHandler;
+import binky.reportrunner.engine.utils.SQLProcessor;
+import binky.reportrunner.engine.utils.impl.EmailHandlerImpl;
+import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
+import binky.reportrunner.engine.utils.impl.SQLProcessorImpl;
 import binky.reportrunner.exceptions.RenderException;
 
 /**
@@ -63,8 +70,8 @@ public class RunnerEngine implements Job {
 	private static final Logger logger = Logger.getLogger(RunnerEngine.class);
 
 	public RunnerEngine() throws IOException {
-		this.sqlProcessor = new SQLProcessor();
-		this.fs = new FileSystemHandler();
+		this.sqlProcessor = new SQLProcessorImpl();
+		this.fs = new FileSystemHandlerImpl();
 	}
 
 	public final void execute(JobExecutionContext context)
@@ -111,7 +118,7 @@ public class RunnerEngine implements Job {
 
 		conn = ds.getConnection();
 
-		RunnerResultGenerator resultGenerator = new RunnerResultGenerator(conn);
+		RunnerResultGenerator resultGenerator = new RunnerResultGeneratorImpl(conn);
 
 		Map<String, ResultSet> results = new HashMap<String, ResultSet>();
 		resultGenerator.getResultsForJob(job, results);
@@ -136,7 +143,7 @@ public class RunnerEngine implements Job {
 		// send email if need be
 		if ((job.getTargetEmailAddress() != null)
 				&& (!job.getTargetEmailAddress().isEmpty())) {
-			EmailHandler email = new EmailHandler();
+			EmailHandler email = new EmailHandlerImpl();
 			email.sendEmail(job.getTargetEmailAddress(), fromAddress,
 					smtpServer, fileUrls, jobName, groupName);
 		}
@@ -159,7 +166,7 @@ public class RunnerEngine implements Job {
 		String jobName = job.getPk().getJobName();
 		Connection conn = ds.getConnection();
 		logger.debug("running single report for:" + groupName + "." + jobName);
-		RunnerResultGenerator resultGenerator = new RunnerResultGenerator(conn);
+		RunnerResultGenerator resultGenerator = new RunnerResultGeneratorImpl(conn);
 		
 		Map<String, ResultSet> results = new HashMap<String, ResultSet>();
 		resultGenerator.getResultsForJob(job, results);
@@ -175,7 +182,7 @@ public class RunnerEngine implements Job {
 		// send email if need be
 		if ((job.getTargetEmailAddress() != null)
 				&& (!job.getTargetEmailAddress().isEmpty())) {
-			EmailHandler email = new EmailHandler();
+			EmailHandler email = new EmailHandlerImpl();
 			email.sendEmail(job.getTargetEmailAddress(), fromAddress,
 					smtpServer, outUrl, jobName, groupName);
 		}

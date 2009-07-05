@@ -32,7 +32,6 @@ import java.util.UUID;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.RowSetDynaClass;
-import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -40,11 +39,11 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import binky.reportrunner.engine.FileSystemHandler;
+import binky.reportrunner.engine.utils.FileSystemHandler;
+import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
 
 public class ChartRenderer {
-	private static final Logger logger = Logger.getLogger(ChartRenderer.class);
-	
+
 	public enum ChartType {
 
 		/*DIAL("Dial"),*/ 
@@ -109,7 +108,7 @@ public class ChartRenderer {
 
 		String uid = UUID.randomUUID().toString();
 
-		FileSystemHandler fs = new FileSystemHandler();
+		FileSystemHandler fs = new FileSystemHandlerImpl();
 
 		OutputStream osSmall = fs.getOutputStreamForUrl("tmp://" + uid
 				+ "_small.tmp");

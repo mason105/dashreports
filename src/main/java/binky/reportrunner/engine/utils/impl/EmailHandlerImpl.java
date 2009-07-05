@@ -20,7 +20,7 @@
  * 
  * Module: EmailHandler.java
  ******************************************************************************/
-package binky.reportrunner.engine;
+package binky.reportrunner.engine.utils.impl;
 
 import java.io.IOException;
 import java.util.Date;
@@ -32,16 +32,22 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
 import org.apache.log4j.Logger;
 
-public class EmailHandler {
+import binky.reportrunner.engine.utils.EmailHandler;
+import binky.reportrunner.engine.utils.FileSystemHandler;
+
+public class EmailHandlerImpl implements EmailHandler {
 	private static final boolean debug = false;
 	private static final String subject = "Report Runner Files for: ";
 	private static final String message = "Please find attached outputs for the above job.";
-	private static Logger logger = Logger.getLogger(EmailHandler.class);
+	private static Logger logger = Logger.getLogger(EmailHandlerImpl.class);
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.EmailHandler#sendEmail(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public void sendEmail(String destinationEmail, String fromEmail,
 			String smtpServer, String fileUrl, String jobName, String groupName)
 			throws EmailException, IOException {
 		logger.debug("sending email to: " + destinationEmail + " on host " + smtpServer);
-		FileSystemHandler fs = new FileSystemHandler();
+		FileSystemHandler fs = new FileSystemHandlerImpl();
 		MultiPartEmail email = new MultiPartEmail();
 		email.setDebug(debug);
 		email.setHostName(smtpServer);
@@ -75,11 +81,14 @@ public class EmailHandler {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.EmailHandler#sendEmail(java.lang.String, java.lang.String, java.lang.String, java.util.List, java.lang.String, java.lang.String)
+	 */
 	public void sendEmail(String destinationEmail, String fromEmail,
 			String smtpServer, List<String> fileUrls, String jobName,
 			String groupName) throws EmailException, IOException {
 		// logger.debug("sending email to: " + to + " on host " + server);
-		FileSystemHandler fs = new FileSystemHandler();
+		FileSystemHandler fs = new FileSystemHandlerImpl();
 		MultiPartEmail email = new MultiPartEmail();
 		email.setDebug(debug);
 		email.setHostName(smtpServer);
@@ -115,6 +124,9 @@ public class EmailHandler {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see binky.reportrunner.engine.utils.EmailHandler#sendAlertEmail(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, boolean, java.util.Date)
+	 */
 	public void sendAlertEmail(String destinationEmail, String fromEmail,
 			String smtpServer, String jobName, String groupName,
 			boolean success, Date finishTime) throws EmailException,
@@ -148,7 +160,7 @@ public class EmailHandler {
 
 	private String copyToTemp(String url) throws IOException {
 		logger.debug("copying file to temp to attach to email: " + url);
-		FileSystemHandler fs = new FileSystemHandler();
+		FileSystemHandler fs = new FileSystemHandlerImpl();
 		String tempDir = System.getProperty("java.io.tmpdir");
 
 		String dest = "file://" + tempDir + "/email_" + fs.getFileName(url);

@@ -32,7 +32,7 @@ import binky.reportrunner.dao.RunnerHistoryDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
-import binky.reportrunner.engine.ViewerResults;
+import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 

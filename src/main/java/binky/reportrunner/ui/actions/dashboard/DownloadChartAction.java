@@ -24,7 +24,8 @@ package binky.reportrunner.ui.actions.dashboard;
 
 import java.io.InputStream;
 
-import binky.reportrunner.engine.FileSystemHandler;
+import binky.reportrunner.engine.utils.FileSystemHandler;
+import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class DownloadChartAction extends StandardRunnerAction {
@@ -39,7 +40,7 @@ public class DownloadChartAction extends StandardRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
-		FileSystemHandler fs = new FileSystemHandler();
+		FileSystemHandler fs = new FileSystemHandlerImpl();
 		inputStream = fs.getFileObjectForUrl("tmp://" + id + ".tmp")
 				.getContent().getInputStream();
 		String fileName = "chart_" + id + ".png";

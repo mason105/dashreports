@@ -11,22 +11,16 @@
 		<link href="<s:url value='/styles/displaytag.css'/>" rel="stylesheet" type="text/css" media="all" />
 	</head>
 <body>
+<span class="pageTitle"><img
+	src="<s:url value="/images/icons/application_form_magnify.png"/>" align="absmiddle" />View Report -  <s:property
+			value="%{jobName}" /> in Group <s:property
+			value="%{groupName}" /></span>	
 
-	<div class="smallLabel">Job Name <s:property
-			value="%{jobName}" /></div>
-			
-	<div class="smallLabel">Group Name <s:property
-			value="%{groupName}" /></div>
-	
-	<sx:tabbedpanel id="viewer">
 	<s:iterator value="results" status="rowstatus">
-		<sx:div id="reportTab_%{key}" label="%{key}">
-			<a href="downloadReport.action?id=<s:property value="%{value.outputId}"/>&jobName=<s:property value="%{jobName}"/>&groupName=<s:property value="%{groupName}"/>" target="_blank">Download</a>	
-			<display:table name="value.rowSet.rows"  pagesize="25" requestURI="viewJobOutput.action" export="false">	
-			</display:table>
-		</sx:div>
+			<img src="<s:url value="/images/icons/attach.png"/>" align="absmiddle"/><a href="downloadReport.action?id=<s:property value="%{value.outputId}"/>&jobName=<s:property value="%{jobName}"/>&groupName=<s:property value="%{groupName}"/>" target="_blank"><s:property value="%{key}"/></a>	
+
 	</s:iterator>
-	</sx:tabbedpanel>
+
 </body>
 </html>
 	

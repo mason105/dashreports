@@ -24,6 +24,7 @@ package binky.reportrunner.engine.renderers;
 
 import java.io.OutputStream;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public class StandardRenderer extends AbstractRenderer {
 	}
 
 	public void generateReport(ResultSet resultSet, OutputStream outputStream,
-			String extension) throws RenderException {
+			String extension) throws RenderException, SQLException {
 		try {
 			AbstractExporter exporter = (AbstractExporter) Class.forName(
 					fileFormats.get(extension)).newInstance();
@@ -69,6 +70,8 @@ public class StandardRenderer extends AbstractRenderer {
 			throw new RenderException(e.getMessage(), e);
 		} catch (ExportException e) {
 			throw new RenderException(e.getMessage(), e);
+		} finally {
+			resultSet.close();
 		}
 	}
 }

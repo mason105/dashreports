@@ -121,6 +121,7 @@ public class RunnerEngine implements Job {
 		RunnerResultGenerator resultGenerator = new RunnerResultGeneratorImpl(conn);
 
 		Map<String, ResultSet> results = new HashMap<String, ResultSet>();
+		
 		resultGenerator.getResultsForJob(job, results);
 
 		for (String fileNameValue : results.keySet()) {

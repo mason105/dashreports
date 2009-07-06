@@ -37,7 +37,6 @@ import java.util.UUID;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.RunnerJobDao;
@@ -222,6 +221,8 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		this.scheduler.resumeGroup(groupName);
 	}
 
+	
+	
 	public Map<String, ViewerResults> getResultsForJob(String jobName,
 			String groupName, List<RunnerJobParameter> parameters)
 			throws SQLException, NumberFormatException, ParseException, RenderException, IOException {
@@ -251,14 +252,8 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 				// result.first();
 				
 				String id =UUID.randomUUID().toString();
-				
 				res.renderReport(result,"tmp://"+id+".tmp",job.getTemplateFile(),job.getTemplateType(),job.getFileFormat().toString());
-				result.beforeFirst();
-				RowSetDynaClass dynaSet = new RowSetDynaClass(result, false);
-				
-				result.close();
-				logger.debug(dynaSet.getRows().size());
-				results.put(key, new ViewerResults(dynaSet,id));
+				results.put(key, new ViewerResults(id));
 
 			}
 			logger.debug("Tab name=" + key + " rows=" + lastRow);

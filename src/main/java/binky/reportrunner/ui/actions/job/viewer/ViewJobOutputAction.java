@@ -26,8 +26,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
-
 import binky.reportrunner.dao.RunnerHistoryDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
@@ -52,8 +50,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 	
 	
 	private RunnerJobService jobService;
-	private static final Logger logger = Logger.getLogger(ViewJobOutputAction.class);
-	@SuppressWarnings("unchecked")
+	//private static final Logger logger = Logger.getLogger(ViewJobOutputAction.class);
 	@Override
 	public String execute() throws Exception {
 		long startTime = (new Date()).getTime();
@@ -72,17 +69,6 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 					parameters);
 		} else {
 			results = jobService.getResultsForJob(jobName, groupName);
-		}
-		
-		if (logger.isDebugEnabled()) {
-			//Quick debuggering
-			for (String key:results.keySet()) {
-				List rows= results.get(key).getRowSet().getRows();
-				logger.debug("key="+key+" row count="+rows.size());
-				for (Object o:rows) {
-					logger.debug("key="+key+" row=" + o);
-				}
-			}
 		}
 		
 		long endTime = (new Date()).getTime();

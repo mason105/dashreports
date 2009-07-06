@@ -25,6 +25,7 @@ package binky.reportrunner.engine.renderers;
 import java.io.ByteArrayInputStream;
 import java.io.OutputStream;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,7 +80,7 @@ public class JasperRenderer extends AbstractRenderer {
 	}
 
 	public void generateReport(ResultSet resultSet, OutputStream outputStream,
-			String extension) throws RenderException {
+			String extension) throws RenderException, SQLException {
 
 		logger.debug("creating datasource from result set");
 		JRResultSetDataSource jrDs = new JRResultSetDataSource(resultSet);
@@ -108,6 +109,8 @@ public class JasperRenderer extends AbstractRenderer {
 			throw new RenderException(e.getMessage(), e);
 		} catch (ClassNotFoundException e) {
 			throw new RenderException(e.getMessage(), e);
+		} finally {
+			resultSet.close();	
 		}
 
 	}

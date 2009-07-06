@@ -11,11 +11,11 @@
 <body>
 
 <span class="pageTitle"><img
-	src="<s:url value="/images/icons/group.png"/>" align="absmiddle" />View Job</span>	
-<div id="mainContent">
-<table><tr><Td>
+	src="<s:url value="/images/icons/application_form_magnify.png"/>" align="absmiddle" />View Report</span>	
 <s:form action="viewJobOutput" method="post" enctype="multipart/form-data"
 	validate="true">
+<table><tr><Td>
+
 	
 	<s:hidden value="%{jobName}" name="jobName" />
 	<s:hidden value="%{groupName}" name="groupName" />
@@ -54,9 +54,9 @@
 	</s:iterator>
 	
 	<s:submit name="dispatchRunButton" value="Get Report" align="none" />
-</s:form>
+
 </td></tr></table>
-</div>
+</s:form>
 </body>
 </html>
 	

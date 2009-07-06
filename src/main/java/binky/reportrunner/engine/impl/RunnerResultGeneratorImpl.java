@@ -76,25 +76,35 @@ public class RunnerResultGeneratorImpl implements RunnerResultGenerator {
 				// populate the parameters
 				List<RunnerJobParameter> populatedParams = new LinkedList<RunnerJobParameter>();
 				for (RunnerJobParameter param : params) {
+					//is this parameter populated via the burst query
 					if ((param.getParameterBurstColumn() != null)
 							&& (!param.getParameterBurstColumn().isEmpty())) {
+						//Check that the parameter has not already been assigned a value by the user
 						if (((param.getParameterValue()== null) || param.getParameterValue().isEmpty())) {
+							//no value already assigned so pull from DB
 							param.setParameterValue(burstResults.
 									getObject(param.getParameterBurstColumn()).toString());
+							
 							populatedParams.add(param);
+		
 							logger.debug("added populated param"
 									+ param.getPk().getParameterIdx()
 									+ " - value - " + param.getParameterValue());
 						} else {
+							//value already assigned so carry on using that.
 							logger.debug("using overide value" + param.getParameterValue());
 							populatedParams.add(param);
 						}
 					} else {
+						//not populated via the bursting query
 						logger.debug("standard parameter");
 						populatedParams.add(param);						
 					}
 				}
-
+				
+				logger.debug("getting tab/file name using column " + job.getBurstFileNameParameterName());
+				
+				//grab the file/tab name as specified by the job
 				String name = burstResults.getObject(
 						job.getBurstFileNameParameterName()).toString();
 
@@ -111,11 +121,15 @@ public class RunnerResultGeneratorImpl implements RunnerResultGenerator {
 						}
 					}
 					
+					
+					
 					if (add) {
-						ResultSet rs = sqlProcessor.getResults(conn, job.getQuery(),
-						populatedParams);
-
-						results.put(name, rs);
+						ResultSet rs = sqlProcessor.getResults(conn, job.getQuery(), populatedParams);
+						if (rs.next()) {
+							rs.beforeFirst();
+							results.put(name, rs);
+						}
+						
 					}
 				}
 
@@ -144,7 +158,7 @@ public class RunnerResultGeneratorImpl implements RunnerResultGenerator {
 	 */
 	public void renderReport(ResultSet results, String url,
 			byte[] templateFile, Template templateType, String fileFormat)
-			throws RenderException, IOException {
+			throws RenderException, IOException, SQLException {
 		FileSystemHandler fs = new FileSystemHandlerImpl();
 		OutputStream os = fs.getOutputStreamForUrl(url);
 		AbstractRenderer renderer;

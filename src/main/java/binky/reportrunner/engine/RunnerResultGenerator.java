@@ -18,6 +18,6 @@ public interface RunnerResultGenerator {
 
 	public abstract void renderReport(ResultSet results, String url,
 			byte[] templateFile, Template templateType, String fileFormat)
-			throws RenderException, IOException;
+			throws RenderException, IOException, SQLException;
 
 }

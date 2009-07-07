@@ -115,7 +115,6 @@ public class RunnerEngineTest extends TestCase {
 		try {
 			RunnerJob job = getTestJob("testBurst", "file://"
 					+ System.getProperty("java.io.tmpdir")+"/test");
-			job.setBurstFileNameParameterName("userName");
 			String sql = "select userName from runnerUser";
 			job.setBurstQuery(sql);
 			job.setQuery("select * from runneruser where userName=?");

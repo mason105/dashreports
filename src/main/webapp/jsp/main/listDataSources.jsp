@@ -12,7 +12,7 @@
 	 <table border="0" width="100%">
 		<tr class="rowHeader"> 
 			<td colspan="4" class="rowHeader"><s:a href="setupEditDataSource.action"><img
-				src="<s:url value='/images/add_small.png'/>" align="absmiddle" />Add Datasource</s:a></td>
+				src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add Datasource</s:a></td>
 		 </tr>
 
 	      <s:if test="dataSources.size > 0">	            
@@ -37,11 +37,11 @@
               <td>  
                 <s:property value="dataSourceName" />
               </td>               
-              <td width="24">  
-                <s:a href="setupEditDataSource.action?dataSourceName=%{dataSourceName}"><img src="<s:url value='/images/edit_small.png'/>" align="absmiddle" alt="Edit" /></s:a>  
+              <td width="16">  
+                <s:a href="setupEditDataSource.action?dataSourceName=%{dataSourceName}"><img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>  
               </td>  
-              <td width="24">  
-                <s:a href="setupEditDataSource.action?dataSourceName=%{dataSourceName}"><img src="<s:url value='/images/delete_small.png'/>" alt="Delete"
+              <td width="16">  
+                <s:a href="setupEditDataSource.action?dataSourceName=%{dataSourceName}"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete"
 							align="absmiddle" /></s:a>  
               </td>  
             </tr>  

@@ -81,7 +81,7 @@ public class RunnerJob implements Serializable {
 	public RunnerJob(RunnerJob_pk pk, String outputUrl,
 			RunnerDataSource datasource, String description, String query,
 			Date startDate, Date endDate, String cronString, Boolean isBurst,
-			String burstQuery, String burstFileNameParameterName,
+			String burstQuery,
 			String targetEmailAddress, String alertEmailAddress,
 			byte[] templateFile, Template templateType, FileFormat fileFormat,
 			boolean alertOnSuccess, List<RunnerJobParameter> parameters) {
@@ -95,8 +95,7 @@ public class RunnerJob implements Serializable {
 		this.endDate = endDate;
 		this.cronString = cronString;
 		this.isBurst = isBurst;
-		this.burstQuery = burstQuery;
-		this.burstFileNameParameterName = burstFileNameParameterName;
+		this.burstQuery = burstQuery;	
 		this.targetEmailAddress = targetEmailAddress;
 		this.alertEmailAddress = alertEmailAddress;
 		this.templateFile=templateFile;
@@ -128,7 +127,6 @@ public class RunnerJob implements Serializable {
 
 	private String burstQuery;
 
-	private String burstFileNameParameterName;
 
 	private String targetEmailAddress;
 
@@ -210,13 +208,6 @@ public class RunnerJob implements Serializable {
 		this.endDate = endDate;
 	}
 
-	public String getBurstFileNameParameterName() {
-		return burstFileNameParameterName;
-	}
-
-	public void setBurstFileNameParameterName(String burstFileNameParameterName) {
-		this.burstFileNameParameterName = burstFileNameParameterName;
-	}
 
 	public Boolean getIsBurst() {
 		return isBurst;

@@ -14,7 +14,7 @@
 	<tr class="rowHeader"> 
 		
 		<td colspan="4" class="rowHeader"><a href="setupEditUser.action"><img
-			src="<s:url value='/images/add_small.png'/>" align="absmiddle" />Add
+			src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add
 		User</a></td>
 	</tr>
 	</s:if>
@@ -41,11 +41,11 @@
 				</td>
 				<td><s:property value="fullName" /></td>				
 				<s:if test="sessionUser.isAdmin == true">
-					<td width="24"><s:a href="setupEditUser.action?userName=%{userName}">
-						<img src="<s:url value='/images/edit_small.png'/>" align="absmiddle" alt="Edit" />
+					<td width="16"><s:a href="setupEditUser.action?userName=%{userName}">
+						<img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" />
 					</s:a></td>
-					<td width="24"><s:a href="deleteUser.action?userName=%{userName}"  onClick="return confirm('Really delete this user?');">
-						<img src="<s:url value='/images/delete_small.png'/>" alt="Delete"
+					<td width="16"><s:a href="deleteUser.action?userName=%{userName}"  onClick="return confirm('Really delete this user?');">
+						<img src="<s:url value='/images/icons/delete.png'/>" alt="Delete"
 							align="absmiddle" />
 					</s:a></td>
 				</s:if>

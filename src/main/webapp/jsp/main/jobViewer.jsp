@@ -17,7 +17,7 @@
 			value="%{groupName}" /></span>	
 
 	<s:iterator value="results" status="rowstatus">
-			<img src="<s:url value="/images/icons/attach.png"/>" align="absmiddle"/><a href="downloadReport.action?id=<s:property value="%{value.outputId}"/>&jobName=<s:property value="%{jobName}"/>&groupName=<s:property value="%{groupName}"/>" target="_blank"><s:property value="%{key}"/></a>	
+			<p><strong><img src="<s:url value="/images/icons/attach.png"/>" align="absmiddle"/><a href="downloadReport.action?id=<s:property value="%{value.outputId}"/>&jobName=<s:property value="%{jobName}"/>&groupName=<s:property value="%{groupName}"/>" target="_blank"><s:property value="%{key}"/></a></strong></p>	
 
 	</s:iterator>
 

@@ -75,17 +75,25 @@ public class RunnerResultGeneratorImpl implements RunnerResultGenerator {
 			while (burstResults.next()) {
 				// populate the parameters
 				List<RunnerJobParameter> populatedParams = new LinkedList<RunnerJobParameter>();
+				String name="";
 				for (RunnerJobParameter param : params) {
+					RunnerJobParameter paramNew = new RunnerJobParameter();
+					//copy the parameter
+					paramNew.setPk(param.getPk());
+					paramNew.setParameterBurstColumn(param.getParameterBurstColumn());
+					paramNew.setParameterType(param.getParameterType());
+					paramNew.setParameterValue(param.getParameterValue());
 					//is this parameter populated via the burst query
 					if ((param.getParameterBurstColumn() != null)
 							&& (!param.getParameterBurstColumn().isEmpty())) {
 						//Check that the parameter has not already been assigned a value by the user
 						if (((param.getParameterValue()== null) || param.getParameterValue().isEmpty())) {
 							//no value already assigned so pull from DB
-							param.setParameterValue(burstResults.
+							
+							paramNew.setParameterValue(burstResults.
 									getObject(param.getParameterBurstColumn()).toString());
 							
-							populatedParams.add(param);
+							populatedParams.add(paramNew);
 		
 							logger.debug("added populated param"
 									+ param.getPk().getParameterIdx()
@@ -93,44 +101,30 @@ public class RunnerResultGeneratorImpl implements RunnerResultGenerator {
 						} else {
 							//value already assigned so carry on using that.
 							logger.debug("using overide value" + param.getParameterValue());
-							populatedParams.add(param);
+							populatedParams.add(paramNew);
 						}
 					} else {
 						//not populated via the bursting query
 						logger.debug("standard parameter");
-						populatedParams.add(param);						
+						populatedParams.add(paramNew);						
 					}
+					if (!name.isEmpty()) {
+						name=name + "_";
+					}
+					name=name+paramNew.getParameterValue();
 				}
 				
-				logger.debug("getting tab/file name using column " + job.getBurstFileNameParameterName());
+				logger.debug("file/tab is called:" + name);
 				
-				//grab the file/tab name as specified by the job
-				String name = burstResults.getObject(
-						job.getBurstFileNameParameterName()).toString();
-
+				
 				// process the query with the results in
 				if (!results.containsKey(name)){
-					//hack to prevent it repeating its self on the viewer
-					boolean add=true;
-					
-					for (RunnerJobParameter p :params) {
-						if (p.getParameterBurstColumn().equalsIgnoreCase(job.getBurstFileNameParameterName())) {
-							if (((p.getParameterValue()!= null) && !p.getParameterValue().isEmpty())) {
-								if (!name.equals(p.getParameterValue())) add=false;
-							}
-						}
-					}
-					
-					
-					
-					if (add) {
+					//hack to prevent it repeating its self on the viewer				
 						ResultSet rs = sqlProcessor.getResults(conn, job.getQuery(), populatedParams);
 						if (rs.next()) {
 							rs.beforeFirst();
 							results.put(name, rs);
 						}
-						
-					}
 				}
 
 			}

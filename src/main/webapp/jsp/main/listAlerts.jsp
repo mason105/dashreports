@@ -13,7 +13,7 @@
 	<tr class="rowHeader"> 
 		
 		<td colspan="5" class="rowHeader"><a href="setupEditAlert.action"><img
-			src="<s:url value='/images/add_small.png'/>" align="absmiddle" />Add
+			src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add
 		New Alert</a></td>
 	</tr>
 	<s:if test="alerts.size > 0">
@@ -41,11 +41,11 @@
 					<s:property value="alertName" />
 				</td>
 				<td><s:property value="group.groupName" /></td>				
-				<td width="24"><s:a href="setupEditAlert.action?id=%{id}">
-					<img src="<s:url value='/images/edit_small.png'/>" align="absmiddle" alt="Edit" /></s:a>
+				<td width="16"><s:a href="setupEditAlert.action?id=%{id}">
+					<img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>
 				</td>
-				<td width="24"><s:a href="deleteAlert.action?id=%{id}"  onClick="return confirm('Really delete this alert?');">
-						<img src="<s:url value='/images/delete_small.png'/>" alt="Delete"
+				<td width="16"><s:a href="deleteAlert.action?id=%{id}"  onClick="return confirm('Really delete this alert?');">
+						<img src="<s:url value='/images/icons/delete.png'/>" alt="Delete"
 							align="absmiddle" /></s:a>
 				</td>
 			</tr>

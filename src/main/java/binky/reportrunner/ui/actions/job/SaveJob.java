@@ -191,8 +191,8 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		} else {
 			//hack to preserve template file
 			RunnerJob job2=jobService.getJob(jobName, groupName);
-			if (job2.getTemplateFile()!=null) {
-				job.setTemplateFile(job2.getTemplateFile().clone());
+			if ((job2!=null) && (job2.getTemplateFile()!=null)) {
+					job.setTemplateFile(job2.getTemplateFile().clone());				
 			}
 		}
 		// part of my hack work :(

@@ -82,10 +82,6 @@
 	input, select {
 		vertical-align:middle;
 	}
-	textarea {
-		width: 200px;
-		height: 8em;
-	}
 	
 	input.check {
 		border: none;

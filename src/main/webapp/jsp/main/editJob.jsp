@@ -42,14 +42,14 @@
 		list="dataSources" listKey="dataSourceName" listValue="dataSourceName">
 	</s:select> 
 	
-	<s:textarea label="Report Query" cols="30" rows="20"
+	<s:textarea label="Report Query" cols="120" rows="30"
 		value="%{job.query}" name="job.query"></s:textarea>
 		
 	<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
 		name="job.isBurst">
 	</s:checkbox>
 
-	<s:textarea label="Burst Query" cols="30" rows="20"
+	<s:textarea label="Burst Query" cols="120" rows="5"
 		value="%{job.burstQuery}" name="job.burstQuery">
 	</s:textarea>		
 

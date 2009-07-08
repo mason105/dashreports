@@ -50,16 +50,7 @@ function resizeIframe() {
 <div id="top">
 		<div class="appLogo"><img src="<s:url value='/images/logo.png'/>" /></div>
 </div>
-<div id="leftnav">
-			<!--<li><a href="index.action">Home</a></li>
-			<li><a href="listGroups.action">My Groups</a></li>
-			<s:if test="sessionUser.isAdmin == true">
-				<li><a href="manageServer.action">Manage Server</a></li>
-			</s:if>
-			<li><a href="setupChangePassword.action">Change Password</a></li>	
-			<li><a href="https://sourceforge.net/forum/forum.php?forum_id=848787">Help</a></li>
-			<li class="last"><a href="logout.action">Logout</a></li></ul>-->
-			
+<div id="leftnav">		
 			 <iframe id="leftNav" src="<s:url value="/leftNav.action?actionName="/><s:property value="actionName"/>" scrolling="auto" class="leftNavFrame" frameborder="0"></iframe>
 </div>
 <div id="content">

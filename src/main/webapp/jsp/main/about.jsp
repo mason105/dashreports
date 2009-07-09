@@ -42,6 +42,8 @@
 </td>
 </tr> 
 <tr><td><hr/></td></tr>
+<tr><td><Strong>Version: </strong><s:property value="versionId"/></td></tr>
+<tr><td><hr/></td></tr>
 <tr><td>
 <h4>Credits</h4>
 </td>

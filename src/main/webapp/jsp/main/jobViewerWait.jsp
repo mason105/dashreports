@@ -10,7 +10,7 @@
  <meta http-equiv="refresh" content="2;url=<s:url includeParams="all" />"/>
 </head>
 <body>
- <h3> Please wait while we process your request.</h3> 
-     <p>Click <a href="<s:url includeParams="all" />">here</a> if this page does not reload automatically.</p>
+ <h3> Please wait while we process your request....</h3> 
+     <!--<p>Click <a href="<s:url includeParams="all" />">here</a> if this page does not reload automatically.</p>-->
 </body>
 </html>	

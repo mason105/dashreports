@@ -261,6 +261,12 @@
 			<result>/jsp/nostyle/chartData.jsp</result>
 		</action>
 
+
+		<action name="getDashboardGridData" class="getDashboardGridDataAction">
+			<result>/jsp/nostyle/gridData.jsp</result>
+		</action>
+
+
 		<action name="leftNav" class="leftNavAction">
 			<result>/jsp/nostyle/leftNav.jsp</result>
 		</action>

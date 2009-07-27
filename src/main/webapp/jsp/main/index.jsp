@@ -16,10 +16,10 @@
   <script src="<s:url value='/jx/jxlib.js" type="text/javascript'/>" charset="utf-8"></script>
   <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/jxtheme.css'/>" type="text/css" media="screen" charset="utf-8"/>
   <!-- IE specific style sheets -->
-  <!--[if IE lte 6]>
+  <!--[if lte IE 6]>
   <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie6.css'/>" type="text/css" media="screen" charset="utf-8"/>
   <![endif]-->
-  <!--[if IE 7]>
+  <!--[if gte IE 6]>
   <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie7.css'/>" type="text/css" media="screen" charset="utf-8"/>
   <![endif]-->	
 
@@ -27,6 +27,7 @@
 
 	var timerID = 0;
 	var reloadInterval=60000;
+	
 	function reload()
 	{
 		
@@ -115,12 +116,7 @@ function drawPanels() {
         				onClick: popUp_<s:property value="%{id}"/>.open.bind(popUp_<s:property value="%{id}"/>)        				       			
         				})   		
 	    		);
-	    	  
-	    		 /*
-	    		 
-	    		 */
-				
-	    			    	
+
 			</s:if><s:else>
  
 				/* possibilty implement jxGrid but it looks hard - might write a tag lib */
@@ -147,8 +143,6 @@ function drawPanels() {
 		        		height: 768	
 		        	</s:else>
 		        </s:else>		        
-		         
-		         
 		         
 		        <s:if test="(displayType.name=='CHART')">
 		        	,toolbars:[tbTop_<s:property value="%{id}"/>]
@@ -194,10 +188,12 @@ var tabSet = new Jx.TabSet('tabContentArea');
 </head>
 <body>
 
+<!-- containing divs for jxlib -->
 <div id="toolbar"></div>
 <div id="tabContain">
 <div id="tabContentArea"></div>
 </div>
+
 <s:if test="alerts.size>0">
 					
 		<s:iterator value="alerts" status="rowstatus">

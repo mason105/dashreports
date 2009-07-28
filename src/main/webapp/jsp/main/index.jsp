@@ -4,7 +4,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="m" uri="/connext" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
-<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
 
 
 <html>
@@ -27,6 +26,8 @@
 
 	var timerID = 0;
 	var reloadInterval=60000;
+	var tryXML=true;
+	
 	
 	function reload()
 	{
@@ -56,12 +57,9 @@
 
 	function findSWF(movieName)
 	{
-		if (navigator.appName.indexOf("Microsoft")!= -1)
-		{
+		if (navigator.appName.indexOf("Microsoft")!= -1) {
 			return window[movieName];
-		}
-		else
-		{
+		} else {
 			return document[movieName];
 		}
 	}
@@ -241,8 +239,9 @@ var tabSet = new Jx.TabSet('tabContentArea');
 								
 							</s:if><s:else>					 
 								<div id="alert_<s:property value="%{id}"/>" class="alertBox">								
-									<display:table name="currentDataset.rows"  requestURI="index.action" export="false">	
-									</display:table>					
+									<sx:div theme="ajax" href="getDashboardGridData.action?alertId=%{id}" updateFreq="30000">
+										<sx:div theme="ajax" href="getDashboardGridData.action?alertId=%{id}"/>										
+									</sx:div>									
 								</div>
 							</s:else>
 						</s:iterator>

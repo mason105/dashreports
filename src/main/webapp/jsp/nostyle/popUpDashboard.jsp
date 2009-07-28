@@ -1,7 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="m" uri="/connext" %>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
-<%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
 <html>
 <head>
 	<title><s:property value="%{groupName}"/></title>
@@ -199,8 +198,9 @@ function drawPanels() {
 								
 							</s:if><s:else>					 
 								<div id="alert_<s:property value="%{id}"/>" class="alertBox">								
-									<display:table name="currentDataset.rows"  requestURI="index.action" export="false">	
-									</display:table>					
+									<sx:div theme="ajax" href="getDashboardGridData.action?alertId=%{id}" updateFreq="30000">
+										<sx:div theme="ajax" href="getDashboardGridData.action?alertId=%{id}"/>										
+									</sx:div>					
 								</div>
 							</s:else>
 						</s:iterator>

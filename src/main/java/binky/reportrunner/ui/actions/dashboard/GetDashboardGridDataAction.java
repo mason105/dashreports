@@ -3,24 +3,11 @@
  */
 package binky.reportrunner.ui.actions.dashboard;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.beanutils.DynaProperty;
-import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
+import org.apache.commons.beanutils.RowSetDynaClass;
 
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
-
-import com.sun.org.apache.xerces.internal.dom.DocumentImpl;
-import com.sun.org.apache.xml.internal.serialize.OutputFormat;
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 /**
  * @author Daniel Grout
@@ -37,7 +24,7 @@ public class GetDashboardGridDataAction extends StandardRunnerAction {
 
 	private Integer alertId;
 	private String gridData;
-
+	private RowSetDynaClass currentDataset;
 	
 	@Override
 	public String execute() throws Exception {
@@ -48,6 +35,14 @@ public class GetDashboardGridDataAction extends StandardRunnerAction {
 		if (!doesUserHaveGroup(alert.getGroup().getGroupName())) {
 			return ERROR;
 		}
+		
+		currentDataset=alert.getCurrentDataset();
+		
+		/**
+		 * Will implement the XML stuff somewhere else - has a place in some sort of soap interface
+		 */
+		
+		/*
 		//Quick hack to change the dynaset into something more useful...should probably extend the DynaSet to incorp this...but I'm lazy
 		List<Map<String, Object>> rows = new LinkedList<Map<String,Object>>();
 		for (Object o : alert.getCurrentDataset().getRows()) {
@@ -90,7 +85,7 @@ public class GetDashboardGridDataAction extends StandardRunnerAction {
 		serializer.asDOMSerializer();
 		serializer.serialize( doc.getDocumentElement() );
 		this.gridData=os.toString();
-		
+		*/
 		return SUCCESS;
 	}
 
@@ -122,6 +117,16 @@ public class GetDashboardGridDataAction extends StandardRunnerAction {
 
 	public void setGridData(String gridData) {
 		this.gridData = gridData;
+	}
+
+
+	public RowSetDynaClass getCurrentDataset() {
+		return currentDataset;
+	}
+
+
+	public void setCurrentDataset(RowSetDynaClass currentDataset) {
+		this.currentDataset = currentDataset;
 	}
 
 }

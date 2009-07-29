@@ -18,10 +18,10 @@
   <script src="<s:url value='/jx/jxlib.js" type="text/javascript'/>" charset="utf-8"></script>
   <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/jxtheme.css'/>" type="text/css" media="screen" charset="utf-8"/>
   <!-- IE specific style sheets -->
-  <!--[if IE lte 6]>
+  <!--[if  lte IE 6]>
   <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie6.css'/>" type="text/css" media="screen" charset="utf-8"/>
   <![endif]-->
-  <!--[if IE 7]>
+  <!--[if gt IE 6]>
   <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie7.css'/>" type="text/css" media="screen" charset="utf-8"/>
   <![endif]-->	
 <script id="treescript" language="javascript">

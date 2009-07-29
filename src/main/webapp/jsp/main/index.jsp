@@ -18,7 +18,7 @@
   <!--[if lte IE 6]>
   <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie6.css'/>" type="text/css" media="screen" charset="utf-8"/>
   <![endif]-->
-  <!--[if gte IE 6]>
+  <!--[if gt IE 6]>
   <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie7.css'/>" type="text/css" media="screen" charset="utf-8"/>
   <![endif]-->	
 

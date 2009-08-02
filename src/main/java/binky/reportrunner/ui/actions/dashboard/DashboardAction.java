@@ -1,4 +1,4 @@
-package binky.reportrunner.ui.actions.dashboard.popup;
+package binky.reportrunner.ui.actions.dashboard;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -7,7 +7,7 @@ import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class PopUpDashboardAction extends StandardRunnerAction {
+public class DashboardAction extends StandardRunnerAction {
 
 	private String groupName;
 	private DashboardService dashboardService;

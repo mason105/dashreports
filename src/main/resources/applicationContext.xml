@@ -131,7 +131,14 @@
 		</property>
 	</bean>
 	<bean id="userSessionIntercept" class="binky.reportrunner.interceptors.UserSessionIntercept"
-		scope="singleton" />
+		scope="singleton" >
+		<property name="userDao">
+			<ref bean="runnerUserDao" />
+		</property>
+		<property name="groupDao">
+			<ref bean="runnerGroupDao" />
+		</property>	
+	</bean>
 	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
 		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
 		<property name="runnerJobDao" ref="runnerJobDao" />

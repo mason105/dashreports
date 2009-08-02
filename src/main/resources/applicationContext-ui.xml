@@ -34,7 +34,7 @@
 		<property name="versionId" value="${reportrunner.versionId}" />
 	</bean>
 
-	<bean id="popUpDashboardAction" class="binky.reportrunner.ui.actions.dashboard.popup.PopUpDashboardAction"
+	<bean id="dashboardAction" class="binky.reportrunner.ui.actions.dashboard.DashboardAction"
 		scope="prototype" >
 		<property name="dashboardService">
 			<ref bean="dashboardService" />

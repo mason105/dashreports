@@ -8,6 +8,10 @@ th,td {
 	padding: 2px 4px 2px 4px !important;
 	text-align: left;
 	vertical-align: top;
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+		font-size: 76%;
+        line-height: 1em;
+		color: #333;	
 }
 
 thead tr {

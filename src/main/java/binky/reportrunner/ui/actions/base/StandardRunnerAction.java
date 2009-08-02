@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.base;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -94,5 +95,30 @@ public abstract class StandardRunnerAction extends ActionSupport implements Sess
 		}
 	
 		
+	}
+	
+	public Boolean getExpandAdmin() {
+		return (this instanceof AdminRunnerAction) ;
+	}
+	public Boolean getExpandGroups() {
+		String actionName=getActionName();
+		if (actionName.toLowerCase().contains("setupviewjob")
+				||actionName.toLowerCase().contains("viewjoboutput")
+				||actionName.toLowerCase().contains("invokejob")
+				||actionName.toLowerCase().contains("changeallgroupjobstatus")
+				||actionName.toLowerCase().contains("viewjobdetail")
+				||actionName.toLowerCase().contains("setupeditjob")
+				||actionName.toLowerCase().contains("setjobstatus")
+				||actionName.toLowerCase().contains("savejob")
+				||actionName.toLowerCase().contains("deletejob")
+				||actionName.toLowerCase().contains("listjobs")
+			) {
+				return true;			       
+		} else {
+			return false;
+		}
+	}
+	public List<RunnerGroup> getGroups() {
+		return getSessionUser().getGroups();
 	}
 }

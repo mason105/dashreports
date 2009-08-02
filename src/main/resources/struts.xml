@@ -275,8 +275,8 @@
 			<result>/jsp/nostyle/popupChart.jsp</result>
 		</action>
 		
-		<action name="popUpDashboard" class="popUpDashboardAction">
-			<result>/jsp/nostyle/popUpDashboard.jsp</result>
+		<action name="dashboard" class="dashboardAction">
+			<result>/jsp/nostyle/dashboard.jsp</result>
 		</action>
 		
 		<action name="downloadChart" class="downloadChartAction">

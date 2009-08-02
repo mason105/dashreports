@@ -42,7 +42,7 @@ public class AuthIntercept implements Interceptor,StrutsStatics {
 
 	
 	private AuthenticationService authService;
-	
+
 
 	/**
 	*http://www.vitarara.org/cms/struts_2_cookbook/creating_a_login_interceptor

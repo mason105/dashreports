@@ -11,9 +11,12 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
+
+
+
 <link href="<s:url value='/styles/main.css'/>" rel="stylesheet"
 	type="text/css" media="all" />
-	<sx:head parseContent="true" />
+	
  <!-- include the jx library and the delicious skin -->
   <script src="<s:url value='/jx/jxlib.js" type="text/javascript'/>" charset="utf-8"></script>
   <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/jxtheme.css'/>" type="text/css" media="screen" charset="utf-8"/>
@@ -25,11 +28,12 @@
   <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie7.css'/>" type="text/css" media="screen" charset="utf-8"/>
   <![endif]-->	
 <script id="treescript" language="javascript">
-	
-window.onload=function(){
 
+
+function bodyOnLoad(){
 	tree();
-} 	
+}
+
 
 function tree() {
   
@@ -177,9 +181,9 @@ function tree() {
 
 </script>
 </head>
-<body>
- 
+<body  onload="bodyOnLoad()">
+ <sx:head parseContent="true" />
 <div id="treeArea" class="treeBox"></div>
- 
+
 </body>
 </html>

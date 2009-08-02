@@ -28,6 +28,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.apache.struts2.StrutsStatics;
 
+import binky.reportrunner.dao.RunnerGroupDao;
+import binky.reportrunner.dao.RunnerUserDao;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.Statics;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
@@ -40,6 +42,8 @@ public class UserSessionIntercept implements Interceptor, StrutsStatics {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(UserSessionIntercept.class);
+	private RunnerGroupDao groupDao;
+	private RunnerUserDao userDao;
 	public void destroy() {
 
 	}
@@ -57,12 +61,39 @@ public class UserSessionIntercept implements Interceptor, StrutsStatics {
 		// if this is an admin function action then check all is well
 		logger.debug("class name is: " + invocation.getAction().getClass().getName());
 		logger.debug("(invocation.getAction() instanceof AdminRunnerAction)" + (invocation.getAction() instanceof AdminRunnerAction));
+		
+		//hack to keep sessions up to date for admins adding groups etc
+		if (user.getIsAdmin()) {
+			user.setGroups(groupDao.listGroups());
+		}	else {
+			user=userDao.getUser(user.getUserName());
+		}
+		
 		if ((invocation.getAction() instanceof AdminRunnerAction) && !user.getIsAdmin() ) {
 			logger.warn("access denied to " + invocation.getAction().getClass() + " for user: " + user.getUserName()) ;
 			return "securityError";			
 		} else {
 			return invocation.invoke();
 		}
+	
 		
 	}
+
+	public RunnerGroupDao getGroupDao() {
+		return groupDao;
+	}
+
+	public void setGroupDao(RunnerGroupDao groupDao) {
+		this.groupDao = groupDao;
+	}
+
+	public RunnerUserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(RunnerUserDao userDao) {
+		this.userDao = userDao;
+	}
+	
+	
 }

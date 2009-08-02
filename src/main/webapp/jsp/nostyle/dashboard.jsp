@@ -4,22 +4,21 @@
 <html>
 <head>
 	<title><s:property value="%{groupName}"/></title>
-	<sx:head parseContent="true" />
-	<link href="<s:url value='/styles/displaytag.css'/>" rel="stylesheet" type="text/css" media="all" />
+	<sx:head />
 <link href="<s:url value='/styles/main.css'/>" rel="stylesheet"
 	type="text/css" media="all" />
-
-   <!-- include the jx library and the delicious skin -->
+	<link href="<s:url value='/styles/displaytag.css'/>" rel="stylesheet"
+	type="text/css" media="all" />
+  <!-- include the jx library and the delicious skin -->
   <script src="<s:url value='/jx/jxlib.js" type="text/javascript'/>" charset="utf-8"></script>
-  <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/jxtheme.css'/>" type="text/css" media="screen" charset="utf-8"/>
+  <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/jxtheme.css'/>" type="text/css" media="screen" charset="utf-8">
   <!-- IE specific style sheets -->
-  <!--[if IE lte 6]>
-  <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie6.css'/>" type="text/css" media="screen" charset="utf-8"/>
+  <!--[if  lte IE 6]>
+  <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie6.css'/>" type="text/css" media="screen" charset="utf-8">
   <![endif]-->
-  <!--[if IE 7]>
-  <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie7.css'/>" type="text/css" media="screen" charset="utf-8"/>
-  <![endif]-->	
-
+  <!--[if gt IE 6]>
+  <link rel="stylesheet" href="<s:url value='/jx/themes/delicious/ie7.css'/>" type="text/css" media="screen" charset="utf-8">
+  <![endif]-->
 <script type="text/javascript">
 
 	var timerID = 0;
@@ -99,10 +98,13 @@ function drawPanels() {
 			    });
 				
 	    	  
-	    		 /*
-	    		 
-	    		 */
 				
+				var tbTop_<s:property value="%{id}"/> = new Jx.Toolbar({position: 'top'}).add(	        	        			
+        				new Jx.Button({label:'Zoom',
+        				image: '<s:url value="/images/icons/zoom.png"/>',
+        				onClick: popUp_<s:property value="%{id}"/>.open.bind(popUp_<s:property value="%{id}"/>)        				       			
+        				})   		
+	    		);
 	    			    	
 			</s:if><s:else>
  
@@ -132,7 +134,12 @@ function drawPanels() {
 		        	</s:else>
 		        </s:else>		        
 		         
-		         
+		        <s:if test="(displayType.name=='CHART')">
+		        	,toolbars:[tbTop_<s:property value="%{id}"/>]
+		        	,image: '<s:url value="/images/icons/chart_bar.png"/>'
+		        </s:if><s:else>
+		        	 ,image: '<s:url value="/images/icons/page_white_text.png"/>'
+		        </s:else> 		    
 		         
 		        <s:if test="(displayType.name=='CHART')">
 		        	,image: '<s:url value="/images/icons/chart_bar.png"/>'
@@ -166,7 +173,7 @@ function drawPanels() {
 							<div class="widgetContainer">
 								<div id="panel_<s:property value="%{id}"/>"></div>
 							</div>			
-							 
+							
 							<s:if test="(displayType.name=='CHART')">	
 								
 								<div id="popUpDiv_<s:property value="%{id}"/>">
@@ -207,6 +214,5 @@ function drawPanels() {
 					</div>
 
 </s:if>
-
 </body>
 </html>

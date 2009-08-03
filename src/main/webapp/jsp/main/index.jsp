@@ -68,7 +68,7 @@ var tabSet = new Jx.TabSet('tabContentArea');
 				<div id="group_<s:property value="%{key}"/>">		
 					<div id="bar_<s:property value="%{key}"/>" class="tabBar"></div>
 					<div class="dashFrameCont">				
-						<iframe src="<s:url value="dashboard.action?groupName=%{key}"/>" frameborder="0" class="dashFrame"/>
+						<iframe src="<s:url value="dashboard.action?groupName=%{key}"/>" frameborder="0" class="dashFrame"></iframe>
 					</div>
 				</div>
 			</s:if>

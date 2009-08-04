@@ -2,8 +2,11 @@
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
 <%@ taglib prefix="m" uri="/connext" %>
 <link href="<s:url value='/styles/displaytag.css'/>" rel="stylesheet" type="text/css" media="all" />
+
 <!--<s:property value="gridData" escape="false" />-->
-					
+	
+	<div class="widgetLabel"><s:property value="%{alert.alertName}"/></div>
+	
 	<s:if test="(alert.displayType.name=='CHART')">	
 		
 		<s:if test="(alert.width.name=='Small')">			

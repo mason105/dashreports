@@ -1,7 +1,5 @@
 /* main layout */
 
-
-
 .appLogo {
 	/*float:left;*/
 }
@@ -64,6 +62,17 @@ height:100%;
 width:100%;
 }
 .tabBar {;
+}
+
+.widgetLabel {
+width: 100%;
+font-weight:bold
+;
+background-color:#EEEEEE;
+border-bottom: 1px solid #666666;
+font-size:12px;
+height:15px;
+padding-top:2px;
 }
 
 #footer
@@ -231,4 +240,43 @@ input {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	border: 1px solid #333333;
+}
+
+
+/* DASHBOARD CONTAINER SIZES */
+.alertBox_Small_Small {
+	width:342px;
+	height:300px;
+}
+.alertBox_Small_Medium {
+	width:342px;
+	height:300px;
+}
+.alertBox_Small_Large {
+	width:342px;
+	height:605px;
+}
+.alertBox_Medium_Small {
+	width:655px;
+	height:300px;
+}
+.alertBox_Medium_Medium {
+	width:655px;
+	height:300px;
+}
+.alertBox_Medium_Large {
+	width:655px;
+	height:605px;
+}
+.alertBox_Large_Small {
+	width:1020px;
+	height:300px;
+}
+.alertBox_Large_Medium {
+	width:1020px;
+	height:300px;
+}
+.alertBox_Large_Large {
+	width:1020px;
+	height:605px
 }

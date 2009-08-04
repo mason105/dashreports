@@ -262,8 +262,8 @@
 		</action>
 
 
-		<action name="getDashboardGridData" class="getDashboardGridDataAction">
-			<result>/jsp/nostyle/gridData.jsp</result>
+		<action name="dashboardWidget" class="dashboardWidgetAction">
+			<result>/jsp/nostyle/dashboardWidget.jsp</result>
 		</action>
 
 

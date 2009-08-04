@@ -73,7 +73,7 @@
 		</property>		
 	</bean>
 	
-	<bean id="getDashboardGridDataAction" class="binky.reportrunner.ui.actions.dashboard.GetDashboardGridDataAction"
+	<bean id="dashboardWidgetAction" class="binky.reportrunner.ui.actions.dashboard.DashboardWidgetAction"
 		scope="prototype" >
 		<property name="dashboardService">
 			<ref bean="dashboardService" />

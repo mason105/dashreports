@@ -61,15 +61,13 @@ var tabSet = new Jx.TabSet('tabContentArea');
 <div id="tabContentArea"></div>
 </div>
 
-<s:if test="alerts.size>0">
-					
+<s:if test="alerts.size>0">					
 		<s:iterator value="alerts" status="rowstatus">
 			<s:if test="value.size>0">		
 				<div id="group_<s:property value="%{key}"/>">		
 					<div id="bar_<s:property value="%{key}"/>" class="tabBar"></div>
-					<div class="dashFrameCont">				
-						<iframe src="<s:url value="dashboard.action?groupName=%{key}"/>" frameborder="0" class="dashFrame"></iframe>
-					</div>
+					<!--<iframe src="<s:url value="dashboard.action?groupName=%{key}"/>" frameborder="0" class="dashFrame"></iframe>-->
+					<sx:div href="dashboard.action?groupName=%{key}" separateScripts="true"  executeScripts="true"/>
 				</div>
 			</s:if>
 		</s:iterator>

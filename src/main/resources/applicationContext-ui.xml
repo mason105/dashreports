@@ -327,6 +327,9 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>		
 	</bean>
 
 	<bean id="interruptCurrentExecutingJobAction" class="binky.reportrunner.ui.actions.admin.InterruptCurrentExecutingJobAction"
@@ -334,7 +337,16 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
+		
 	</bean>
+
+	<bean id="interruptCurrentExecutingDashboardAlertAction" class="binky.reportrunner.ui.actions.admin.InterruptCurrentExecutingDashboardAlertAction"
+		scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>		
+	</bean>
+
 
 	<bean id="setupJobStatsAction" class="binky.reportrunner.ui.actions.admin.SetupJobStatsAction"
 		scope="prototype">

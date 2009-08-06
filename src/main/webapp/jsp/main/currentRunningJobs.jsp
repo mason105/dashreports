@@ -10,11 +10,11 @@
 </head>
 <body>
 	<span class="pageTitle"><img
-	src="<s:url value='/images/icons/application_lightning.png'/>" align="absmiddle" />Current Executing Jobs</span>
-
-<table border="0" width="100%">
-
+	src="<s:url value='/images/icons/application_lightning.png'/>" align="absmiddle" />Current Executing Jobs and Dashboard Items</span>
 	<s:if test="jobs.size > 0">
+<table border="0" width="100%">
+			<span class="pageTitle">Current Executing Jobs</span>
+		
 		<%
 			boolean rowOdd = true;
 		%>
@@ -41,8 +41,41 @@
 					</s:a></td>
 			</tr>
 		</s:iterator>
+	</table>
 	</s:if>
-</table>
+	<s:if test="alerts.size > 0">
+	<table border="0" width="100%">
+<span class="pageTitle">Current Executing Dashboard Items</span>
+		<%
+			boolean rowOdd = true;
+		%>
+		<s:iterator value="alerts">
+			<%
+				if (rowOdd) {
+							rowOdd = false;
+			%>
+				<tr class="rowOdd">
+			<%
+				} else {
+							rowOdd = true;
+			%>			
+				<tr class="rowEven">
+			<%
+				}
+			%>
+				<td>
+					<s:property value="id" />
+				</td>
+				<td><s:property value="alertName" /></td>				
+					<td width="24"><s:a href="InterruptCurrentExecutingDashboardAlert.action?alertId=%{id}">
+						<img src="<s:url value='/images/delete_small.png'/>" align="absmiddle" alt="Halt Execution" />
+					</s:a></td>
+			</tr>
+		</s:iterator>
+	</table>
+	</s:if>	
+	
+
 </body>
 </html>
 	

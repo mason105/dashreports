@@ -45,7 +45,7 @@ margin: 0;
 position:absolute;
 top:51px;
 float: left;
-width: 199px;
+width: 150px;
 margin: 0;
 bottom:20px;
 }
@@ -81,7 +81,7 @@ position:absolute;
 color: #333;
 background-color: #aaa;
 border-top: 1px solid gray;
-height:20px;
+height:15px;
 bottom:0px;
 left:0px;
 right:0px;
@@ -91,7 +91,7 @@ right:0px;
 .leftNavFrame {
 position:absolute;
 top:0px;
-width: 199px; 
+width: 150px; 
 height:100%;
 bottom:0px;
 }
@@ -101,7 +101,7 @@ bottom:0px;
 	position:absolute;
 	padding:0px;
 	top:51px;
-	left:200px;
+	left:151px;
 	border-left: 1px solid gray;
 	bottom:20px;
 	right:0px;

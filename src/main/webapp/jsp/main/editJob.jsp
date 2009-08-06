@@ -38,7 +38,7 @@
 	</s:textfield>
 	
 	 <s:select label="Select Data Source"
-		name="job.datasource.dataSourceName" value="%{job.dataSource}"
+		name="job.datasource.dataSourceName" value="%{job.datasource}"
 		list="dataSources" listKey="dataSourceName" listValue="dataSourceName">
 	</s:select> 
 	
@@ -114,7 +114,9 @@
 	<sx:div id="output" label="Output">		
 		<s:select label="Template Type" name="job.templateType" list="templateTypes"
 			listKey="name" listValue="displayName"></s:select>
+			
 		<s:file label="Template File" name="template"></s:file> 
+		
 		<s:select label="File Format" name="job.fileFormat" list="fileFormats"
 			listKey="name" listValue="displayName"></s:select>
 

@@ -26,11 +26,66 @@
   <![endif]-->
 
 <script id="treescript" language="javascript">
+
 window.onload=function(){
-	tree();	 
+	tree();	 	
 }
+
+var hidden=false;
+
+function getElement(element) {
+	var elem;
+	if( document.getElementById ) // this is the way the standards work
+	  elem = document.getElementById( element );
+	 else if( document.all ) // this is the way old msie versions work
+	  elem = document.all[element];
+	 else if( document.layers ) // this is the way nn4 works
+	   elem = document.layers[element];
+	   
+    return elem;
+}						 
+
 function tree() {
-  
+
+    new Jx.Toolbar.Container().addTo('treeTool').add(
+        	new Jx.Toolbar().add(
+            	new Jx.Button({label: '',
+            	image: '<s:url value="/images/icons/tag.png"/>',
+				onClick: function() {
+					/* hide the tool bar */
+					if (hidden) {
+						
+						var leftNav=getElement('leftNav');
+						var treeArea=getElement('treeArea');
+						var content=getElement('content');
+						
+						treeArea.style.visibility = 'visible'; 
+						leftNav.style.width='150px';
+						content.style.left='151px';
+						content.style.right='0px';
+						/* set var to true to switch mode*/
+						hidden=false;
+					} else {
+																												
+						var leftNav=getElement('leftNav');
+						var treeArea=getElement('treeArea');
+						var content=getElement('content');
+						
+						treeArea.style.visibility = 'hidden'; 
+						leftNav.style.width='25px';
+						content.style.left='26px';
+						content.style.right='0px';
+						/* set var to true to switch mode*/
+						hidden=true;											
+						
+					}
+					
+				}			            
+            })
+        )
+    );
+    
+    
     var cm = new Jx.Menu.Context();
     var mi = new Jx.Menu.Item({label:'test'});
     cm.add(mi);
@@ -168,7 +223,7 @@ function tree() {
         contextMenu: cm
     }));
    
-};
+}
 
 </script>
 
@@ -180,6 +235,7 @@ function tree() {
 		<div class="appLogo"><img src="<s:url value='/images/logo.png'/>" /></div>
 </div>
 		<div id="leftNav"  class="leftnav">
+			<div id="treeTool" class="treeTool"></div>
 			<div id="treeArea" class="treeBox"></div>
 		</div>
 <div id="content">

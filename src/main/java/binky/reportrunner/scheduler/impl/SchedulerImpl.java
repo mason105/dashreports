@@ -254,16 +254,15 @@ public class SchedulerImpl implements Scheduler {
 
 	public void addDashboardAlert(Integer alertId, String cronTab) throws SchedulerException {
 		// Create our job with the specification RunnerJob
-		String jobName=alertId.toString(); 
-		String groupName="RR3DASHBOARDS";
+		String jobName=alertId.toString(); 		
 		JobDetail jobDetail;
 		
-		logger.debug("scheduling:" + alertId + "/"+groupName);
+		logger.debug("scheduling:" + alertId + "/"+dashboardSchedulerGroup);
 		try {
-			if (this.quartzScheduler.getJobDetail(jobName, groupName) != null) {
-				removeJob(jobName,groupName);
+			if (this.quartzScheduler.getJobDetail(jobName, dashboardSchedulerGroup) != null) {
+				removeJob(jobName,dashboardSchedulerGroup);
 			}			
-			jobDetail = new JobDetail(jobName, groupName,AlertProcessor.class);
+			jobDetail = new JobDetail(jobName, dashboardSchedulerGroup,AlertProcessor.class);
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException(
 					"Error with scheduler", e);
@@ -279,7 +278,7 @@ public class SchedulerImpl implements Scheduler {
 
 		jobTrigger.setStartTime(new Date());
 		
-		jobTrigger.setName(jobName + ":" + groupName + ":trigger");
+		jobTrigger.setName(jobName + ":" + dashboardSchedulerGroup + ":trigger");
 		jobTrigger.setGroup("RunnerTriggers");
 		
 		//clusterting
@@ -298,7 +297,7 @@ public class SchedulerImpl implements Scheduler {
 	public void removedDashboardAlert(Integer alertId) throws SchedulerException {
 		logger.debug("remove alert: " + alertId);
 		try {
-			this.quartzScheduler.deleteJob(alertId.toString(), "RR3DASHBOARDS");
+			this.quartzScheduler.deleteJob(alertId.toString(), dashboardSchedulerGroup);
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error removing dashboard alert from scheduler: RR-DASHBOARD"+alertId+"/RR3DASHBOARDS", e);
 		}
@@ -315,6 +314,11 @@ public class SchedulerImpl implements Scheduler {
 
 	public void setClustered(boolean clustered) {
 		this.clustered = clustered;
+	}
+
+	public void interruptRunningDashboardAlert(Integer alertId)
+			throws SchedulerException {
+		this.interruptRunningJob(""+alertId, dashboardSchedulerGroup);
 	}
 	
 }

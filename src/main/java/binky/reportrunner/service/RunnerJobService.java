@@ -29,6 +29,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.beans.ViewerResults;
@@ -49,6 +50,8 @@ public interface RunnerJobService {
 	public Boolean isJobActive(String jobName, String groupName) throws SchedulerException;
 	
 	public List<RunnerJob> getRunningJobs() throws SchedulerException;
+	
+	
 	public void interruptRunningJob(String jobName, String groupName)
 			throws SchedulerException;
 

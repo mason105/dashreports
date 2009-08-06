@@ -23,6 +23,7 @@
 package binky.reportrunner.service.impl;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -86,6 +87,24 @@ public class DashboardServiceImpl implements DashboardService {
 				alert.getXaxisColumn(), alert.getChartType());
 		
 		return uid;
+	}
+	public List<RunnerDashboardAlert> getRunningAlerts() {
+		List<String> runningJobs = scheduler.getCurrentRunningJobs();
+		List<RunnerDashboardAlert> alerts = new LinkedList<RunnerDashboardAlert>();
+		for (String string : runningJobs) {
+			String groupName = string.split(":|:")[0];
+			if (groupName.equals(Scheduler.dashboardSchedulerGroup));
+			Integer id = Integer.parseInt(string.split(":|:")[1]);
+			RunnerDashboardAlert alert = dashboardDao.getAlert(id);
+			alerts.add(alert);
+		}
+		return alerts;
+	}
+	
+	public void interruptRunningDashboardAlert(Integer alertId)
+	throws SchedulerException {
+		logger.debug("interrupt alert: " + alertId);		
+		scheduler.interruptRunningDashboardAlert(alertId);		
 	}
 
 

@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface Scheduler {
-
+	public static final String dashboardSchedulerGroup="RR3DASHBOARDS";
 	public void startScheduler() throws SchedulerException;
 
 	public void stopScheduler() throws SchedulerException;
@@ -51,6 +51,7 @@ public interface Scheduler {
 	public Boolean isJobActive(String jobName, String groupName)  throws SchedulerException;
 		
 	public void interruptRunningJob(String jobName, String groupName)  throws SchedulerException;
+	public void interruptRunningDashboardAlert(Integer alertId)  throws SchedulerException;
 	
 	public List<String> getCurrentRunningJobs();
 	

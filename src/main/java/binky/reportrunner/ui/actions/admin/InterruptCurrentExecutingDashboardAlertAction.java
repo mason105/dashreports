@@ -18,24 +18,34 @@
  * You should have received a copy of the GNU General Public License
  * along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
  * 
- * Module: DashboardService.java
+ * Module: InterruptCurrentExecutingJobAction.java
  ******************************************************************************/
-package binky.reportrunner.service;
+package binky.reportrunner.ui.actions.admin;
 
-import java.io.IOException;
-import java.util.List;
+import binky.reportrunner.service.DashboardService;
+import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
-import binky.reportrunner.data.RunnerDashboardAlert;
-import binky.reportrunner.scheduler.SchedulerException;
+public class InterruptCurrentExecutingDashboardAlertAction extends AdminRunnerAction {
 
-public interface DashboardService {
+	private static final long serialVersionUID = 1L;
+	private DashboardService dashboardService;
+	private Integer alertId;
+	@Override
+	public String execute() throws Exception {
+		dashboardService.interruptRunningDashboardAlert(alertId);
+		return SUCCESS;
+	}
+	public DashboardService getDashboardService() {
+		return dashboardService;
+	}
+	public void setDashboardService(DashboardService dashboardService) {
+		this.dashboardService = dashboardService;
+	}
+	public Integer getAlertId() {
+		return alertId;
+	}
+	public void setAlertId(Integer alertId) {
+		this.alertId = alertId;
+	}
 
-	public List<RunnerDashboardAlert> getAlertsForGroup(String groupName);
-	public List<RunnerDashboardAlert> getAllAlerts();
-	public void saveUpdateAlert(RunnerDashboardAlert alert) throws SchedulerException;
-	public void deleteAlert(Integer id) throws SchedulerException;
-	public RunnerDashboardAlert getAlert(Integer id);
-	public String getChartForAlert(Integer id) throws  NumberFormatException, IOException;
-	public List<RunnerDashboardAlert> getRunningAlerts() throws SchedulerException;
-	public void interruptRunningDashboardAlert(Integer alertId) throws SchedulerException;
 }

@@ -70,4 +70,12 @@ public class ListCurrentExecutingJobsAction extends AdminRunnerAction {
 		this.alerts = alerts;
 	}
 
+	public DashboardService getDashboardService() {
+		return dashboardService;
+	}
+
+	public void setDashboardService(DashboardService dashboardService) {
+		this.dashboardService = dashboardService;
+	}
+
 }

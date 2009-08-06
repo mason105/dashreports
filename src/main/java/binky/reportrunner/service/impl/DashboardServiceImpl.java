@@ -93,10 +93,12 @@ public class DashboardServiceImpl implements DashboardService {
 		List<RunnerDashboardAlert> alerts = new LinkedList<RunnerDashboardAlert>();
 		for (String string : runningJobs) {
 			String groupName = string.split(":|:")[0];
-			if (groupName.equals(Scheduler.dashboardSchedulerGroup));
-			Integer id = Integer.parseInt(string.split(":|:")[1]);
-			RunnerDashboardAlert alert = dashboardDao.getAlert(id);
-			alerts.add(alert);
+			if (groupName.equals(Scheduler.dashboardSchedulerGroup)) {
+				logger.debug("job name: " + string);
+				Integer id = Integer.parseInt(string.split(":|:")[1]);
+				RunnerDashboardAlert alert = dashboardDao.getAlert(id);
+				alerts.add(alert);
+			}			
 		}
 		return alerts;
 	}

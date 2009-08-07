@@ -157,9 +157,11 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		List<RunnerJob> jobs = new LinkedList<RunnerJob>();
 		for (String string : runningJobs) {
 			String groupName = string.split(":|:")[0];
-			String jobName = string.split(":|:")[1];
-			RunnerJob job = runnerJobDao.getJob(jobName, groupName);
-			jobs.add(job);
+			String jobName = string.split(":|:")[2];
+			if (!groupName.equals(Scheduler.dashboardSchedulerGroup)) {
+				RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+				jobs.add(job);
+			}
 		}
 		return jobs;
 	}

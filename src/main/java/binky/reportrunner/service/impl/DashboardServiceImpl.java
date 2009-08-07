@@ -95,7 +95,7 @@ public class DashboardServiceImpl implements DashboardService {
 			String groupName = string.split(":|:")[0];
 			if (groupName.equals(Scheduler.dashboardSchedulerGroup)) {
 				logger.debug("job name: " + string);
-				Integer id = Integer.parseInt(string.split(":|:")[1]);
+				Integer id = Integer.parseInt(string.split(":|:")[2]);
 				RunnerDashboardAlert alert = dashboardDao.getAlert(id);
 				alerts.add(alert);
 			}			

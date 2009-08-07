@@ -98,6 +98,7 @@ CREATE TABLE  `reportrunner`.`runnerjob` (
   `templateType` int(11) DEFAULT NULL,
   `group_groupName` varchar(255) NOT NULL DEFAULT '',
   `datasource_dataSourceName` varchar(255) DEFAULT NULL,
+  `templateFileName` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`group_groupName`,`jobName`),
   KEY `FK743BD64D1FB5A866` (`group_groupName`),
   KEY `FK743BD64D6235B7F2` (`datasource_dataSourceName`),

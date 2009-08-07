@@ -168,9 +168,6 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		// Get the uploaded File 
 		if (logger.isDebugEnabled()) {
 			logger.debug("file uploaded is: " + templateFileName);
-			if (templateFileName!=null) {
-				logger.debug("file exists at uploaded file name: " + (new File(templateFileName)).exists());
-			}
 			logger.debug("upload object is null: "+ (template==null));
 			if (template !=null){
 				logger.debug("upload object is file: " + template.isFile());
@@ -182,6 +179,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 			try {
 				byte[] file = getBytesFromFile(template);
 				job.setTemplateFile(file);
+				job.setTemplateFileName(templateFileName);
 			} catch (IOException e) {
 				logger.warn(e.getMessage(),e);
 				super.addActionError(e.getMessage());

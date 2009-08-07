@@ -114,7 +114,12 @@
 	<sx:div id="output" label="Output">		
 		<s:select label="Template Type" name="job.templateType" list="templateTypes"
 			listKey="name" listValue="displayName"></s:select>
-			
+		
+		<s:if test="job.templateFileName!=null">
+			<s:textfield size="40" label="Template File Name" value="%{job.templateFileName}"
+				name="job.templateFileName" readonly="true" cssClass="readOnly">		</s:textfield>
+		</s:if>	
+		
 		<s:file label="Template File" name="template"></s:file> 
 		
 		<s:select label="File Format" name="job.fileFormat" list="fileFormats"

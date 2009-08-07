@@ -136,6 +136,8 @@ public class RunnerJob implements Serializable {
 	
 	private Template templateType;
 
+	private String templateFileName;
+	
 	private FileFormat fileFormat;
 
 	private boolean alertOnSuccess;
@@ -280,6 +282,14 @@ public class RunnerJob implements Serializable {
 
 	public void setTemplateType(Template templateType) {
 		this.templateType = templateType;
+	}
+
+	public String getTemplateFileName() {
+		return templateFileName;
+	}
+
+	public void setTemplateFileName(String templateFileName) {
+		this.templateFileName = templateFileName;
 	}
 
 }

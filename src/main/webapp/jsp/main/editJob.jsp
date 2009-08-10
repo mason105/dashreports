@@ -109,8 +109,11 @@ function drawTabs() {
 	<s:actionerror />
 	<s:actionmessage/>
 	
-	<div id="report" label="Report">
-
+	
+	
+	<div id="report">
+		<div class="fromGroup">
+		<div class="formGroupHeader">Job Details</div>
 		<s:if test="job.pk.jobName != null">
 			<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
 				name="job.pk.jobName" readonly="true" cssClass="readOnly">
@@ -131,6 +134,10 @@ function drawTabs() {
 			name="job.datasource.dataSourceName" value="%{job.datasource}"
 			list="dataSources" listKey="dataSourceName" listValue="dataSourceName">
 		</s:select> 
+		</div>
+		
+		<div class="fromGroup">
+		<div class="formGroupHeader">Definition</div>
 
 		<s:textarea label="Report Query" cols="80" rows="30"
 			value="%{job.query}" name="job.query"></s:textarea>
@@ -142,15 +149,16 @@ function drawTabs() {
 		<s:textarea label="Burst Query" cols="80" rows="5"
 			value="%{job.burstQuery}" name="job.burstQuery">
 		</s:textarea>		
-
+		</div>
 
 	</div>
 	
 	<div id="parameters">	
 		<s:submit name="dispatchSaveButton" value="Add Parameter" align="none" />
 		<s:iterator value="job.parameters" status="rowstatus">
-			<div class="formSectionInner">
-				<div class="smallLabel">Parameter Index <s:property
+
+			<div class="formGroup">
+ 				<div class="formGroupHeader">Parameter Index <s:property
 					value="%{pk.parameterIdx}" /></div>
 				<s:hidden value="%{pk.parameterIdx}"
 					name="parameters[%{#rowstatus.index}].pk.parameterIdx" />
@@ -182,50 +190,71 @@ function drawTabs() {
 	</div>
 
 	<div id="schedule">	
+		<div class="formGroup">
+			<div class="formGroupHeader">Schedule Details</div>
+			<sx:datetimepicker label="Start Date Time" value="%{job.startDate}"
+				name="job.startDate">
+			</sx:datetimepicker>
 
-		<sx:datetimepicker label="Start Date Time" value="%{job.startDate}"
-			name="job.startDate">
-		</sx:datetimepicker>
-		
-		<!-- temp hack-->
-		<br/>
+			<!-- temp hack-->
+			<br/>
 
-		<sx:datetimepicker label="End Date/Time" value="%{job.endDate}"
-			name="job.endDate">
-		</sx:datetimepicker>
+			<sx:datetimepicker label="End Date/Time" value="%{job.endDate}"
+				name="job.endDate">
+			</sx:datetimepicker>
 
-		<s:textfield label="Cron String" size="32" value="%{job.cronString}" name="job.cronString">
-		</s:textfield>
+			<s:textfield label="Cron String" size="32" value="%{job.cronString}" name="job.cronString">
+			</s:textfield>
+		</div>
 	</div>
 	
-	<div id="output">		
-		<s:select label="Template Type" name="job.templateType" list="templateTypes"
-			listKey="name" listValue="displayName"></s:select>
+	<div id="output">	
+	
+		<div class="formGroup">
+		<div class="formGroupHeader">File</div>
 		
-		<s:if test="job.templateFileName!=null">
-			<s:textfield size="40" label="Template File Name" value="%{job.templateFileName}"
-				name="job.templateFileName" readonly="true" cssClass="readOnly">		</s:textfield>
-		</s:if>	
+			<s:textfield label="Output URL" size="50" value="%{job.outputUrl}"
+					name="job.outputUrl">
+			</s:textfield>
+		</div>
+		<div class="formGroup">
+		<div class="formGroupHeader">Template</div>				
 		
-		<s:file label="Template File" name="template"></s:file> 
-		
-		<s:select label="File Format" name="job.fileFormat" list="fileFormats"
+			<s:select label="File Format" name="job.fileFormat" list="fileFormats"
 			listKey="name" listValue="displayName"></s:select>
 
-		<s:textfield label="Output URL" size="50" value="%{job.outputUrl}"
-			name="job.outputUrl">
-		</s:textfield>
-		<s:textarea label="Distribution Email Address(es)" cols="30" rows="20"
-			value="%{job.targetEmailAddress}" name="job.targetEmailAddress">
-		</s:textarea>
+		
+			<s:select label="Template Type" name="job.templateType" list="templateTypes"
+			listKey="name" listValue="displayName"></s:select>
+			
+			<s:if test="job.templateFileName!=null">
+			<s:textfield size="40" label="Template File Name" value="%{job.templateFileName}"
+			name="job.templateFileName" readonly="true" cssClass="readOnly">		</s:textfield>
+			</s:if>	
+		
+			<s:file label="Template File" name="template"></s:file> 
+
+		</div>
+		
+		<div class="formGroup">
+			<div class="formGroupHeader">Email Distribution</div>				
+		
+			<s:textarea label="Distribution Email Address(es)" cols="30" rows="20"
+				value="%{job.targetEmailAddress}" name="job.targetEmailAddress">
+			</s:textarea>
+		</div>
 
 	</div>
 
-	<div id="misc" >		
-		<s:textarea label="Success/Fail Alert Email Address(es)" cols="30"
+	<div id="misc" >	
+		<div class="formGroup">
+			<div class="formGroupHeader">Alerting</div>				
+			
+			<s:textarea label="Success/Fail Alert Email Address(es)" cols="30"
 			rows="20" value="%{job.alertEmailAddress}"
 			name="job.alertEmailAddress">
-		</s:textarea>
+			</s:textarea>
+		</div>
 	</div>
 
 	

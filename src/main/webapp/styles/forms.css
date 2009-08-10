@@ -1,4 +1,17 @@
-/* A CSS Framework by Mike Stenhouse of Content with Style */
+
+.formGroup {
+}
+
+.formGroupHeader{
+font-weight:bold;
+text-size:11px;
+border-top: 1px solid black;
+clear:both;
+padding:5px;
+background-color:#eeeeee;
+}
+
+
  form br {
  display: none;
 

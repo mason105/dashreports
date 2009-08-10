@@ -16,7 +16,11 @@ window.onload=function(){
 }
 
 function drawTabs() {
-	var tb = new Jx.Toolbar({parent: 'toolbar'});
+	
+	
+	var tb = new Jx.Toolbar();
+	var tbButt = new Jx.Toolbar();
+	
 	var tabSet = new Jx.TabSet('tabContentArea');
 	
 		
@@ -61,18 +65,44 @@ function drawTabs() {
     tabSet.add(tabOutput);
     tb.add(tabMisc); 
     tabSet.add(tabMisc);
-
+    
+    
+	var submit=new Jx.Button({label: 'Save',
+            	image: '<s:url value="/images/icons/disk.png"/>',
+				onClick: function() {
+					document.saveJob.submit();
+				}
+			});
+	
+   tbButt.add(submit);
+   
+   tbButt.add(new Jx.Toolbar.Separator());
+   
+   
+   var cancel=new Jx.Button({label: 'Cancel',
+			onClick: function() {
+				window.location='<s:url value="listJobs.action?groupName=%{groupName}"/>';
+			}
+		});
+   
+   tbButt.add(cancel);
+   
+   new Jx.Toolbar.Container().addTo('toolbar1').add(tbButt);
+   new Jx.Toolbar.Container().addTo('toolbar2').add(tb);
+   
 }
 </script>
 </head>
 <body>
 
+<div id="toolbar1"></div>
 
-<div id="toolbar"><div style="float:right;margin-top:5px;"><s:submit name="dispatchSaveButton" value="Save" /></div></div>
 <div id="tabContain">
+<div id="toolbar2"></div>
 <div id="tabContentArea"></div>
 </div>
-
+<div id="toolbarButtons"></div>
+<div id="formBody" style="position:absolute;top:150px;>
 <s:form action="saveJob" method="post" enctype="multipart/form-data"
 	validate="true">
 
@@ -198,10 +228,9 @@ function drawTabs() {
 		</s:textarea>
 	</div>
 
-	<div class="formSubmit" id="save">
-		<s:submit name="dispatchSaveButton" value="Save" align="none" />
-	</div>
+	
 </s:form>
+</div>
 
 </body>
 </html>

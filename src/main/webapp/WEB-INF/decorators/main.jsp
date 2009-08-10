@@ -118,7 +118,7 @@ function tree() {
         image: '<s:url value="/images/icons/group.png"/>',
 	        label: '<s:property value="%{groupName}"/>',
 	        onClick: function() {
-	        	parent.window.location='listJobs.action?groupName=<s:property value="%{groupName}"/>';
+	        	parent.window.location='<s:url value="listJobs.action?groupName=%{groupName}"/>';
 	        }
     	}));
     </s:iterator>

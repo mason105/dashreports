@@ -45,7 +45,7 @@ function getElement(element) {
     return elem;
 }						 
 
-function tree() {
+function drawHideButton() {
 
     new Jx.Toolbar.Container().addTo('treeTool').add(
         	new Jx.Toolbar().add(
@@ -85,6 +85,10 @@ function tree() {
         )
     );
     
+}
+
+function tree() {
+	
     
     var cm = new Jx.Menu.Context();
     var mi = new Jx.Menu.Item({label:'test'});

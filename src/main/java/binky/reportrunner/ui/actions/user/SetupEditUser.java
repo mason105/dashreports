@@ -22,7 +22,6 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.user;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -52,16 +51,18 @@ public class SetupEditUser extends AdminRunnerAction implements Preparable {
 	@Override
 	public String execute() throws Exception {
 		if ((userName != null) && (!userName.isEmpty())) {
-			this.runnerUser = userDao.getUser(userName);
-			List<String> gn = new ArrayList<String>();
-			for (RunnerGroup g : runnerUser.getGroups()) {
-				gn.add(g.getGroupName());
+			this.runnerUser = userDao.getUser(userName);			
+			List<RunnerGroup> groups = runnerUser.getGroups();
+			this.groupNames = new String[groups.size()];
+			int i=0;
+			for (RunnerGroup g : groups) {				
+				groupNames[i]=g.getGroupName();
+				i++;
 				logger.debug("found group: " + g);
 			}
-			this.groupNames = gn.toArray(new String[0]);
+			
 		} else {
-			this.runnerUser=new RunnerUser();
-			this.groupNames = new String[0];
+			this.runnerUser=new RunnerUser();			
 		}
 		return SUCCESS;
 	}

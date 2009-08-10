@@ -33,12 +33,13 @@
 		name="runnerUser.isReadOnly">
 	</s:checkbox>		
 
-
+	
 	<s:checkbox label="Is Account Locked" value="%{runnerUser.isLocked}"
 		name="runnerUser.isLocked">
 	</s:checkbox>		
-	
+	<hr/>
 	 <s:checkboxlist name="groupNames" list="groups" />
+	<hr/>
 	
 	<s:submit />
 </s:form>

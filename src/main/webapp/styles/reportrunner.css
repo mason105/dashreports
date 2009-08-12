@@ -144,6 +144,8 @@ height:100%;
 .clearFix {
 clear:both; 
 }
+
+
 /* Form Layout */
 div.wwgrp,div.formSubmit {	
 	padding-top: 2px;
@@ -151,20 +153,14 @@ div.wwgrp,div.formSubmit {
 }
 
 
-div.wwgrp div.wwlbl {
-	float: left;
-	width: 175px;
-	text-align: right;
+div.wwgrp div.wwlbl {	
 }
 
 div.wwgrp div.wwctrl {
-	float: right;
-	width: 375px;
-	text-align: left;
 }
 
 div.wwgrp {
-width: 560px;
+
 }
 
 div.wwgrp br {
@@ -178,12 +174,9 @@ textarea  {
 
 
 div.wwgrp div.dateTimePicker {
-	width: 560px;
-}
 
+}
 div.wwgrp div.dateTimePicker table tr td.tdLabel {
-	width: 175px;
-	text-align: right;
 }
 
 div.formSectionInner {
@@ -205,9 +198,7 @@ div.formSectionInner div.smallLabel {
 }
 
 /* General Styles */
-input.readOnly {
-	background-color: #CCC;
-}
+
 .pageTitle img {
 	padding-right:5px;
 }
@@ -235,12 +226,6 @@ input.readOnly {
 		color:#ffffff;
 		height:24px;
 	}
-
-input {
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	border: 1px solid #333333;
-}
 
 
 /* DASHBOARD CONTAINER SIZES */

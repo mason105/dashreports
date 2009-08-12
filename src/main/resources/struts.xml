@@ -250,7 +250,7 @@
 				<param name="actionName">listCurrentExecutingJobs</param>
 			</result>
 		</action>
-		<action name="InterruptCurrentExecutingDashboardAlert" class="InterruptCurrentExecutingDashboardAlertAction">
+		<action name="InterruptCurrentExecutingDashboardAlert" class="interruptCurrentExecutingDashboardAlertAction">
 			<result type="redirectAction">
 				<param name="actionName">listCurrentExecutingJobs</param>
 			</result>

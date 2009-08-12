@@ -95,11 +95,8 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 				if (dispatchSaveButton.equals("Add Parameter")) {
 					logger.debug("dispatching to add parameter");
 					this.doAddParameter();
-					return INPUT;
-				} else if (dispatchSaveButton.equals("Save")) {
-					logger.debug("dispatching to save job");
-					boolean ok = this.doSaveJob(jobName, groupName);
-					if (!ok) return INPUT;
+					return INPUT;	
+				//OMFG I must have been drunk when I wrote this shit!
 				} else if (dispatchSaveButton.startsWith("Delete Parameter")) {
 					logger.debug("dispatching to delete parameter "
 							+ dispatchSaveButton.substring(18));
@@ -107,6 +104,10 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 							.substring(17));
 					this.deleteParameter(paramIdx);
 					return INPUT;
+				} else {
+					logger.debug("dispatching to save job");
+					boolean ok = this.doSaveJob(jobName, groupName);
+					if (!ok) return INPUT; else return SUCCESS;
 				}
 
 			} else {
@@ -119,8 +120,10 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 		} else {
 			logger.error("groupName or jobName missing");
+			super.addActionError("groupName or jobName missing");
+			return ERROR;
 		}
-		return SUCCESS;
+		
 	}
 
 	private void deleteParameter(int paramIdx) {

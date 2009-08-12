@@ -3,14 +3,14 @@
 
 <html>
 <head>
-<sx:head parseContent="true" />
 
-<script id="treescript" language="javascript">
+
+<script language="javascript">
 window.onresize=function() {
 	window.location=window.location;
 }
 
-window.onload=function(){ 
+window.onload=function(){ 	
 	tree();
 	drawTabs();	
 }
@@ -70,10 +70,13 @@ function drawTabs() {
 	var submit=new Jx.Button({label: 'Save',
             	image: '<s:url value="/images/icons/disk.png"/>',
 				onClick: function() {
+					document.saveJob.dispatchSaveButton.value='save';
 					document.saveJob.submit();
 				}
 			});
 	
+   tbButt.add(new Jx.Toolbar.Separator());
+   
    tbButt.add(submit);
    
    tbButt.add(new Jx.Toolbar.Separator());
@@ -87,10 +90,15 @@ function drawTabs() {
    
    tbButt.add(cancel);
    
-   new Jx.Toolbar.Container().addTo('toolbar1').add(tbButt);
-   new Jx.Toolbar.Container().addTo('toolbar2').add(tb);
+   var tbc=new Jx.Toolbar.Container().addTo('toolbar1');
+   tbc.add(tb);
+   tbc.add(tbButt);
+   
    
 }
+
+
+
 </script>
 </head>
 <body>
@@ -98,68 +106,84 @@ function drawTabs() {
 <div id="toolbar1"></div>
 
 <div id="tabContain">
-<div id="toolbar2"></div>
-<div id="tabContentArea"></div>
 </div>
 <div id="toolbarButtons"></div>
-<div id="formBody" style="position:absolute;top:150px;>
-<s:form action="saveJob" method="post" enctype="multipart/form-data"
-	validate="true">
+
+
+
+<s:form action="saveJob" method="post" enctype="multipart/form-data" validate="true">	
+
+<div id="tabContentArea"></div>
+<div id="formBody" style="position:absolute;top:150px;">
 
 	<s:actionerror />
 	<s:actionmessage/>
 	
-	
-	
-	<div id="report">
-		<div class="fromGroup">
-		<div class="formGroupHeader">Job Details</div>
-		<s:if test="job.pk.jobName != null">
-			<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
-				name="job.pk.jobName" readonly="true" cssClass="readOnly">
-
-			</s:textfield>
-		</s:if> <s:else>
-			<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
-				name="job.pk.jobName">
-
-			</s:textfield>
-		</s:else> <s:hidden value="%{groupName}" name="job.pk.group.groupName" /> <s:textfield
-			label="Description" size="50" value="%{job.description}"
-			name="job.description">
-
-		</s:textfield>
-
-		 <s:select label="Select Data Source"
-			name="job.datasource.dataSourceName" value="%{job.datasource}"
-			list="dataSources" listKey="dataSourceName" listValue="dataSourceName">
-		</s:select> 
-		</div>
 		
-		<div class="fromGroup">
-		<div class="formGroupHeader">Definition</div>
+	<div id="report">
+		<div class="formGroup">
+			<div class="formGroupHeader">Job Details</div>
+			<s:if test="job.pk.jobName != null">
+				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
+					name="job.pk.jobName" readonly="true" cssClass="readOnly">
 
-		<s:textarea label="Report Query" cols="80" rows="30"
-			value="%{job.query}" name="job.query"></s:textarea>
+				</s:textfield>
+			</s:if><s:else>
+				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
+					name="job.pk.jobName">
+				</s:textfield>
+			</s:else> 
+			
+			<s:hidden value="%{groupName}" name="job.pk.group.groupName" /> 
+			
+			<s:textfield label="Description" size="50" value="%{job.description}"
+				name="job.description">
 
-		<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
-			name="job.isBurst">
-		</s:checkbox>
+			</s:textfield>
 
-		<s:textarea label="Burst Query" cols="80" rows="5"
-			value="%{job.burstQuery}" name="job.burstQuery">
-		</s:textarea>		
+			 <s:select label="Select Data Source"
+				name="job.datasource.dataSourceName" value="%{job.datasource}"
+				list="dataSources" listKey="dataSourceName" listValue="dataSourceName">
+			</s:select> 
+		</div>
+
+		<div class="formGroup">
+			<div class="formGroupHeader">Definition</div>
+
+			<s:textarea label="Report Query" cols="80" rows="30"
+				value="%{job.query}" name="job.query"></s:textarea>
+
+			<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
+				name="job.isBurst">
+			</s:checkbox>
+
+			<s:textarea label="Burst Query" cols="80" rows="5"
+				value="%{job.burstQuery}" name="job.burstQuery">
+			</s:textarea>		
 		</div>
 
 	</div>
 	
+	
 	<div id="parameters">	
-		<s:submit name="dispatchSaveButton" value="Add Parameter" align="none" />
+		
+		<div id="param_button_add" style="margin:0 auto;"></div>
+		
+		<script language="javascript">
+			new Jx.Button({label: 'Add Parameter',
+				onClick: function() {
+					document.saveJob.dispatchSaveButton.value='Add Parameter';
+					document.saveJob.submit();
+				}
+			}).addTo('param_button_add');
+		</script>
+		
+				
 		<s:iterator value="job.parameters" status="rowstatus">
 
 			<div class="formGroup">
- 				<div class="formGroupHeader">Parameter Index <s:property
-					value="%{pk.parameterIdx}" /></div>
+ 				<div class="formGroupHeader">Parameter Index <s:property value="%{pk.parameterIdx}" /></div>
+				
 				<s:hidden value="%{pk.parameterIdx}"
 					name="parameters[%{#rowstatus.index}].pk.parameterIdx" />
 
@@ -183,8 +207,16 @@ function drawTabs() {
 					listKey="name" listValue="displayName">
 
 				</s:select> 
-				<s:submit align="none" name="dispatchSaveButton"
-					value="Delete Parameter %{pk.parameterIdx}" />
+				<div id="param_button_<s:property value="%{pk.parameterIdx}"/>"></div>
+				<script language="javascript">
+					new Jx.Button({label: 'Delete Parameter <s:property value="%{pk.parameterIdx}"/>',
+						onClick: function() {
+							document.saveJob.dispatchSaveButton.value='Delete Parameter <s:property value="%{pk.parameterIdx}"/>';
+							document.saveJob.submit();	
+						}
+					}).addTo('param_button_<s:property value="%{pk.parameterIdx}"/>');
+				</script>
+				
 			</div>
 		</s:iterator>
 	</div>
@@ -195,9 +227,6 @@ function drawTabs() {
 			<sx:datetimepicker label="Start Date Time" value="%{job.startDate}"
 				name="job.startDate">
 			</sx:datetimepicker>
-
-			<!-- temp hack-->
-			<br/>
 
 			<sx:datetimepicker label="End Date/Time" value="%{job.endDate}"
 				name="job.endDate">
@@ -218,7 +247,7 @@ function drawTabs() {
 			</s:textfield>
 		</div>
 		<div class="formGroup">
-		<div class="formGroupHeader">Template</div>				
+			<div class="formGroupHeader">Template</div>				
 		
 			<s:select label="File Format" name="job.fileFormat" list="fileFormats"
 			listKey="name" listValue="displayName"></s:select>
@@ -257,9 +286,12 @@ function drawTabs() {
 		</div>
 	</div>
 
-	
+	<s:hidden name="dispatchSaveButton" value=""/>
+</div>	
+
 </s:form>
-</div>
+		
+
 
 </body>
 </html>

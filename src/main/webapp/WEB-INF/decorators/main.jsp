@@ -11,8 +11,6 @@
 <head>
 <title><decorator:title default="Report Runner" /></title>
 
-<link href="<s:url value='/styles/main.css'/>" rel="stylesheet"
-	type="text/css" media="all" />
 
   <!-- include the jx library and the delicious skin -->
   <script src="<s:url value='/jx/jxlib.js" type="text/javascript'/>" charset="utf-8"></script>
@@ -232,6 +230,11 @@ function tree() {
 </script>
 
 <decorator:head />
+
+<link href="<s:url value='/styles/main.css'/>" rel="stylesheet"
+	type="text/css" media="all" />
+
+
 </head>
 <body id="page-home">
 <div id="container">

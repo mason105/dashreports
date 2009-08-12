@@ -1,99 +1,51 @@
 
 .formGroup {
+	width:600px;
+	margin-bottom:10px;
+	padding:2px;
+	margin: 0 auto;
 }
 
 .formGroupHeader{
-font-weight:bold;
-text-size:11px;
-border-top: 1px solid black;
-clear:both;
-padding:5px;
-background-color:#eeeeee;
+	font-weight:bold;
+	text-size:11px;
+	border-top: 1px solid black;
+	clear:both;
+	height:20px;
+	padding:2px;
+	text-align:top;
+	background-color:#eeeeee;
+	
 }
 
 
  form br {
- display: none;
+	 display: none;
 
  }
- 
+
+ label, .label {	
+ 	font-weight:bold;
+	font-style:normal;  
+	display: block;
+ }
  
 .wwgrp {
-    width: 33em;
-    clear: both;
-}
-
-.wwerr {
-    font-weight: bold;
-    color: red;
-    float: right;
-    clear: right;
-    margin-left: 1em;
-}
-
-.wwlbl {
-    width: 8em;
-    float: left;
-    clear: left;
-}
-
-.wwctrl {
-    float: left;
-    width: 11em;
+	margin-bottom:5px;
 }
  
 /* FORM ELEMENTS */
-	form {
-		margin:0;
-		padding:0;
-	}
-	form div,
-	form p {
-		font-size: 1em;
-		margin: 0 0 1em 0;
-		padding: 0;
-	}
-	label {
-		font-weight: bold;
-	}
-	fieldset {
-		border: 1px solid #eee;
-		padding: 5px 10px;
-		margin: 0 0 1.5em 0;
-	}
-	fieldset legend {
-		color: #666;
-		font-size: 1.1em;
-		font-weight: bold;
-		margin: 0 0 0 0px;
-		padding: 0;
-		background-color: white;
-	}
-	* html fieldset legend {
-		margin: 0 0 10px -10px;
-	}
-	fieldset ul {
-		list-style: none;
-		margin: 0 0 1.5em 0;
-		padding: 0;
-	}
-	fieldset ul li {
-		list-style: none;
-		margin: 0 0 0.5em 0;
-		padding: 0;
-	}
-     
 	
+	label {  
+	
+	}
+
 	input, select, textarea {
-		font-size:1em; 
-		font-family: arial, helvetica, verdana, sans-serif;
-        
-        margin: 0;
-		padding: 2px;
-	}
-	
-	input, select {
 		vertical-align:middle;
+		width:300px;
+		border: 1px solid #ccc;
+		font-size:12px;
+		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	}
 	
 	input.check {
@@ -108,18 +60,11 @@ background-color:#eeeeee;
 		height: auto;
 		margin: 0;
 	}
-	input.file {
-		height: auto;
-		width: 250px;
-	}
 	input.readonly {
-		background-color: transparent;
-		border: none;
+		background-color: #CCC;	
 	}
 	input.button {
-		width: 10em;
-		border:1px solid black;
-		background-color: #ddd;
+		width:auto;
 	}
 	input.image {
 		border: none;
@@ -127,11 +72,4 @@ background-color:#eeeeee;
 		height: auto; 
 	}
 	
-    form div.submit {
-		margin: 1em 0;
-	}
-    form div.submit input {
-		height: 2em;
-        width: 15em;
-	}
 /* END FORM ELEMENTS */

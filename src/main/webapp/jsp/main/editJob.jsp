@@ -6,10 +6,6 @@
 
 
 <script language="javascript">
-window.onresize=function() {
-	window.location=window.location;
-}
-
 window.onload=function(){ 	
 	tree();
 	drawTabs();	
@@ -150,7 +146,7 @@ function drawTabs() {
 		<div class="formGroup">
 			<div class="formGroupHeader">Definition</div>
 
-			<s:textarea label="Report Query" cols="80" rows="30"
+			<s:textarea label="Report Query" cols="80" rows="20"
 				value="%{job.query}" name="job.query"></s:textarea>
 
 			<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
@@ -167,7 +163,7 @@ function drawTabs() {
 	
 	<div id="parameters">	
 		
-		<div id="param_button_add" style="margin:0 auto;"></div>
+		<div style="margin: 0 auto;"><div id="param_button_add" style="margin:0 auto;"></div></div>
 		
 		<script language="javascript">
 			new Jx.Button({label: 'Add Parameter',
@@ -211,7 +207,9 @@ function drawTabs() {
 				<script language="javascript">
 					new Jx.Button({label: 'Delete Parameter <s:property value="%{pk.parameterIdx}"/>',
 						onClick: function() {
-							document.saveJob.dispatchSaveButton.value='Delete Parameter <s:property value="%{pk.parameterIdx}"/>';
+							document.saveJob.dispatchSaveButton.value='Delete Parameter <s:property 
+
+value="%{pk.parameterIdx}"/>';
 							document.saveJob.submit();	
 						}
 					}).addTo('param_button_<s:property value="%{pk.parameterIdx}"/>');

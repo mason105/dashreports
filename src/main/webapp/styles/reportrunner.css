@@ -66,13 +66,13 @@ width:100%;
 
 .widgetLabel {
 width: 100%;
-font-weight:bold
-;
-background-color:#EEEEEE;
-border-bottom: 1px solid #666666;
-font-size:12px;
-height:15px;
-padding-top:2px;
+	font-weight:bold;
+	font-size:11px;
+	background-image: url(../images/formheaderbg.png);
+	background-repeat: repeat-x; 	
+	height:18px;
+	padding-top:1px;
+	padding-bottom:1px;
 }
 
 #footer

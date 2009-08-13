@@ -6,9 +6,9 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-<span class="pageTitle"><img
-	src="<s:url value='/images/icons/user.png'/>" align="absmiddle" />Edit User</span>
-
+<div class="formGroup">
+	<div class="formGroupHeader">User Details</div>
+	
 <s:form action="saveUser">
 	<s:actionerror />
 	<s:actionmessage/>
@@ -41,7 +41,18 @@
 	 <s:checkboxlist name="groupNames" list="groups" />
 	<hr/>
 	
-	<s:submit />
 </s:form>
+</div>
+	
+	<div id="submit_button"></div>
+
+	<script language="javascript">
+		new Jx.Button({label: 'Save',
+			image:'<s:url value="/images/icons/disk.png"/>',
+			onClick: function() {
+				document.saveUser.submit();
+			}
+		}).addTo('submit_button');
+	</script>
 </body>
 </html>

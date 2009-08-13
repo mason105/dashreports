@@ -10,7 +10,8 @@
 </head>
 <body>
 <s:form action="changePassword">
-	<span class="pageTitle"><img src="<s:url value='/images/icons/key.png'/>" align="absmiddle" />Change Password</span>
+<div class="formGroup">
+	<div class="formGroupHeader">Change Password</div>
 	
 	
 	<s:actionerror />
@@ -20,9 +21,19 @@
 	<s:password label="New Password" name="newPassword1"/>	
 	<s:password label="Confirm New Password" name="newPassword2"/>	
 	
-	<s:submit />
-	
 </s:form>
+</div>
+	
+	<div id="submit_button"></div>
+
+	<script language="javascript">
+		new Jx.Button({label: 'Save',
+			image:'<s:url value="/images/icons/disk.png"/>',
+			onClick: function() {
+				document.changePassword.submit();
+			}
+		}).addTo('submit_button');
+	</script>
 </body>
 </html>
 	

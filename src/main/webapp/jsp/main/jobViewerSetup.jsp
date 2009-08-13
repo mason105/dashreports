@@ -14,16 +14,14 @@
 	src="<s:url value="/images/icons/application_form_magnify.png"/>" align="absmiddle" />View Report</span>	
 <s:form action="viewJobOutput" method="post" enctype="multipart/form-data"
 	validate="true">
-<table><tr><Td>
+
 
 	
 	<s:hidden value="%{jobName}" name="jobName" />
 	<s:hidden value="%{groupName}" name="groupName" />
 
-	<div class="smallLabel"><strong>Job Name:</strong> <s:property
-			value="%{jobName}" /></div>
-	<div class="smallLabel"><strong>Group Name:</strong> <s:property
-			value="%{groupName}" /></div>
+<div class="formGroup">
+	<div class="formGroupHeader"><s:property value="%{jobName}" />(<s:property value="%{groupName}" />)</div>
 	
 	<s:iterator value="parameters" status="rowstatus">
 
@@ -48,14 +46,26 @@
 		value="%{key.parameterBurstColumn}" />
 		
 		<s:hidden value="%{key.parameterType}"
-				name="parameters[%{#rowstatus.index}].parameterType" /> 
-			</div>
+				name="parameters[%{#rowstatus.index}].parameterType" /> 			
 	 
 	</s:iterator>
-	
-	<s:submit name="dispatchRunButton" value="Get Report" align="none" />
+		
 
-</td></tr></table>
+</div>
+
+
+	<div id="submit_button"></div>
+
+	<script language="javascript">
+		new Jx.Button({label: 'Get Report',
+			image:'<s:url value="/images/icons/report.png"/>',
+			onClick: function() {
+				document.viewJobOutput.submit();
+			}
+		}).addTo('submit_button');
+	</script>
+	
+
 </s:form>
 </body>
 </html>

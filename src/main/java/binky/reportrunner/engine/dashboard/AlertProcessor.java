@@ -30,14 +30,16 @@ import javax.sql.DataSource;
 
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
+import org.quartz.InterruptableJob;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.UnableToInterruptJobException;
 
 import binky.reportrunner.dao.RunnerDashboardAlertDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
 
-public class AlertProcessor implements Job {
+public class AlertProcessor implements Job, InterruptableJob {
 
 	DataSource ds;
 
@@ -93,6 +95,11 @@ public class AlertProcessor implements Job {
 			conn.close();
 		}
 		
+		
+	}
+
+	public void interrupt() throws UnableToInterruptJobException {
+		// TODO Auto-generated method stub
 		
 	}
 

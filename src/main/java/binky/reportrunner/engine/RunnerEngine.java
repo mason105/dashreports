@@ -37,9 +37,11 @@ import javax.sql.DataSource;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Logger;
+import org.quartz.InterruptableJob;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.UnableToInterruptJobException;
 
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.engine.impl.RunnerResultGeneratorImpl;
@@ -55,7 +57,7 @@ import binky.reportrunner.exceptions.RenderException;
  * @author Daniel Grout
  */
 
-public class RunnerEngine implements Job {
+public class RunnerEngine implements Job, InterruptableJob {
 
 	SQLProcessor sqlProcessor;
 
@@ -193,6 +195,11 @@ public class RunnerEngine implements Job {
 			fs.deleteFile(outUrl);
 		}
 		return outUrl;
+	}
+
+	public void interrupt() throws UnableToInterruptJobException {
+		// TODO Auto-generated method stub
+		
 	}
 
 

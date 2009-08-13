@@ -162,6 +162,29 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		job.setParameters(parameters);
 	}
 
+	private boolean validateJob(RunnerJob job) {
+		boolean valid=true;
+		
+		if (job.getPk()==null)  {
+			super.addActionError("Error with job definition - name and group were not set!");
+			valid=false;
+		};
+		if ((job.getPk().getJobName()==null)||(job.getPk().getJobName().trim().isEmpty()))  {
+			super.addActionError("Job name not set");
+			valid=false;
+		}		
+		if ((job.getPk().getGroup()==null)||(job.getPk().getGroup().getGroupName()==null)||(job.getPk().getGroup().getGroupName().trim().isEmpty()))  {
+			super.addActionError("Group name not set");
+			valid=false;
+		}
+		if ((job.getQuery()==null)||(job.getQuery().trim().isEmpty())) {
+			super.addActionError("Query not set");
+			valid=false;
+		}
+		
+		return valid;
+	}
+	
 	private boolean doSaveJob(String jobName, String groupName)
 			throws JRException, SchedulerException {
 		this.activeTab = "report";
@@ -214,7 +237,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 			}
 			parameterDao.updateParametersForJob(jobName, groupName, parameters);
 		}
-		return true;
+		return validateJob(job);
 	}
 
 	public RunnerJobService getJobService() {

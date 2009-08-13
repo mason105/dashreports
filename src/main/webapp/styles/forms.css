@@ -1,9 +1,25 @@
 
+.tipText {
+	color:#0000ff;
+	font-size:10px;
+	float:right;
+	margin-top:15px;
+	margin-right:5px;
+	visibility:hidden;
+	width:250px;
+}
+
+.formFooterText {
+	margin:5px;
+	font-style:italic;
+	font-size:10px
+	color:#666666;
+}
+
 .formGroup {
 	clear:both;
 	width:600px;;
-	margin: 0 auto;
-	margin-top:5px;
+	margin:5px;
 	border: 1px solid #ccc;;	
 }
 

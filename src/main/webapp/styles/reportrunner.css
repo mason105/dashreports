@@ -29,7 +29,7 @@ height:auto;
 
 #top
 {
-background-color: #aaa;
+background-color: #eee;
 border-bottom: 1px solid gray;
 height:50px;
 }
@@ -79,7 +79,7 @@ width: 100%;
 {
 position:absolute;
 color: #333;
-background-color: #aaa;
+background-color: #eee;
 border-top: 1px solid gray;
 height:15px;
 bottom:0px;
@@ -200,31 +200,53 @@ div.formSectionInner div.smallLabel {
 /* General Styles */
 
 .pageTitle img {
-	padding-right:5px;
+	padding-right:4px;
+	padding-left: 2px;
 }
 .pageTitle{
 	display:inline-table;
-	height:16px;
-	font-size:12px;
 	font-weight:bold;
+	font-size:14px;
 	width:100%;
-	background-color:#EEEEEE;
-	border-bottom: 1px solid gray;
+	height:20px;
+	padding-left:2px;
+	padding-top:4px;
+	background-image: url(../images/formheaderbg.png);
+	background-repeat: repeat-x; 	
 }
 .rowOdd {
 	background-color:#EEEEEE;
 }
 .rowEven {
-	background-color:#DFECFF;
+	background-color:#DFECFF;	
 }
+
+.rowOdd , .rowEven {
+	height:20px;
+}
+
+.rowOdd td , .rowEven td {
+	padding:2px;		
+	border-right: 1px solid white;	
+}
+
+.rowHeader img {
+	padding-right:4px;
+	padding-left:4px;
+	padding-bottom:4px;
+}
+
 .rowHeader {
-		background-color:#CCCCCC;
+	height:25px;
+	background-color:#CCCCCC;
 }
 .headerCell {
 	font-weight:bold;
-		background-color:#333333;
-		color:#ffffff;
+		background-color:#DFECFF;
+		color:#333333;		
 		height:24px;
+		padding:2px;		
+		border-right: 1px solid white;
 	}
 
 

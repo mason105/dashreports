@@ -61,11 +61,16 @@ public class ViewJobDetail extends StandardRunnerAction {
 				this.job.setDescription(job.getDescription());
 				this.job.setGroupName(groupName);
 				this.job.setJobName(jobName);
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-				this.job.setNextRunTime(sdf.format(jobService.getNextRunTime(jobName, groupName)));
-				Date prt = jobService.getPreviousRunTime(jobName, groupName);
-				if (prt!=null) {
-					this.job.setPreviousRunTime(sdf.format(prt));
+				
+				if ((job.getCronString()!=null)&&(!job.getCronString().trim().isEmpty())) {
+				
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+					this.job.setNextRunTime(sdf.format(jobService.getNextRunTime(jobName, groupName)));
+				
+					Date prt = jobService.getPreviousRunTime(jobName, groupName);
+					if (prt!=null) {
+						this.job.setPreviousRunTime(sdf.format(prt));
+					}
 				}
 				this.job.setIsScheduleActive(jobService.isJobActive(jobName, groupName));
 				events = historyDao.getEvents(groupName, jobName);

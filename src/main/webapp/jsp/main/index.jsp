@@ -29,7 +29,7 @@ var tabSet = new Jx.TabSet('tabContentArea');
 				tab[i]= (new Jx.Button.Tab({
             		image: '<s:url value="/images/icons/database_table.png"/>',
             		label: '<s:property value="%{key}"/>',            
-            		content: 'group_<s:property value="%{key}"/>',            	
+            		content: 'group_<s:property value="%{key}"/>'            	
         		}));
         		tb.add(tab[i]); 
         		tabSet.add(tab[i]);

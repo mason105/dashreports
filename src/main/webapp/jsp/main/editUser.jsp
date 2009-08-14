@@ -14,32 +14,38 @@
 	<s:actionmessage/>
 	<s:if test="runnerUser.userName != null">
 		<s:textfield label="User Name" size="32" value="%{runnerUser.userName}"
-			name="runnerUser.userName" readonly="true" cssClass="readOnly"/>
+			name="runnerUser.userName" readonly="true" cssClass="readOnly" cssClass="textbox"/>
 	</s:if>
 	<s:else>
 		<s:textfield label="User Name" size="32" value="%{runnerUser.userName}"
-			name="runnerUser.userName" />
+			name="runnerUser.userName"  cssClass="textbox"/>
 	</s:else>
 	<s:textfield label="Full Name" size="60"
-		value="%{runnerUser.fullName}" name="runnerUser.fullName" />
+		value="%{runnerUser.fullName}" name="runnerUser.fullName"  cssClass="textbox"/>
 	
-	<s:password label="Password" value="%{runnerUser.password}" name="runnerUser.password"/>	
+	<s:password label="Password" value="%{runnerUser.password}" name="runnerUser.password" cssClass="textbox"/>	
 		
 	<s:checkbox label="Is User an Administrator" value="%{runnerUser.isAdmin}"
-		name="runnerUser.isAdmin">
+		name="runnerUser.isAdmin" cssClass="checkbox">
 	</s:checkbox>
 
 	<s:checkbox label="Is User Read Only" value="%{runnerUser.isReadOnly}"
-		name="runnerUser.isReadOnly">
+		name="runnerUser.isReadOnly" cssClass="checkbox">
 	</s:checkbox>		
 
 	
 	<s:checkbox label="Is Account Locked" value="%{runnerUser.isLocked}"
-		name="runnerUser.isLocked">
+		name="runnerUser.isLocked" cssClass="checkbox">
 	</s:checkbox>		
-	<hr/>
-	 <s:checkboxlist name="groupNames" list="groups" />
-	<hr/>
+	<s:optiontransferselect 
+	label="User Groups"
+	name="availableGroups"
+	leftTitle="Available Groups"
+	rightTitle="User's Groups"
+	list="groups"
+        doubleName="groupNames"
+        doubleList="groupNames" />
+	
 	
 </s:form>
 </div>

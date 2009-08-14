@@ -106,8 +106,15 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 					return INPUT;
 				} else {
 					logger.debug("dispatching to save job");
-					boolean ok = this.doSaveJob(jobName, groupName);
-					if (!ok) return INPUT; else return SUCCESS;
+					
+					boolean ok = validateJob(job);
+											
+					if (!ok) {
+						return INPUT; 
+					} else {
+						doSaveJob(jobName, groupName);
+						return SUCCESS;
+					}
 				}
 
 			} else {
@@ -120,8 +127,8 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 		} else {
 			logger.error("groupName or jobName missing");
-			super.addActionError("groupName or jobName missing");
-			return ERROR;
+			super.addActionError("Job Name missing");
+			return INPUT;
 		}
 		
 	}
@@ -237,7 +244,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 			}
 			parameterDao.updateParametersForJob(jobName, groupName, parameters);
 		}
-		return validateJob(job);
+		return true;
 	}
 
 	public RunnerJobService getJobService() {

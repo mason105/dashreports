@@ -113,23 +113,28 @@ function drawTabs() {
 <div id="tabContentArea"></div>
 <div id="formBody" style="position:absolute;top:150px;">
 
-	<s:actionerror />
-	<s:actionmessage/>
 	
 		
 	<div id="report">
+
+		<s:actionerror />
+		<s:actionmessage/>
+
+
 		<div class="formGroup">
 			<div class="formGroupHeader">Job Details</div>
-			<s:if test="job.pk.jobName != null">
+			<s:if test="job.pk.jobName">
 				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
-					name="job.pk.jobName" readonly="true" cssClass="readOnly">
+					name="job.pk.jobName" readonly="true" cssClass="readOnly" required="true" cssClass="textbox">
 
 				</s:textfield>
 			</s:if><s:else>
 				<div id="jobNameTip" class="tipText">Please enter a unique name for this job</div>
-				<s:textfield size="32" label="Job Name *" value="%{job.pk.jobName}"
+				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
 					name="job.pk.jobName"
-					onfocus="document.getElementById('jobNameTip').style.visibility='visible';" onblur="document.getElementById('jobNameTip').style.visibility='hidden';">
+					onfocus="document.getElementById('jobNameTip').style.visibility='visible';" 
+					onblur="document.getElementById('jobNameTip').style.visibility='hidden';"
+					required="true" cssClass="textbox">
 				</s:textfield>
 				
 			</s:else> 
@@ -138,7 +143,7 @@ function drawTabs() {
 			<div id="jobDescriptionTip" class="tipText">Please enter a short description of this job</div>
 			<s:textfield label="Description" size="50" value="%{job.description}"
 				name="job.description"
-				onfocus="document.getElementById('jobDescriptionTip').style.visibility='visible';" onblur="document.getElementById('jobDescriptionTip').style.visibility='hidden';">
+				onfocus="document.getElementById('jobDescriptionTip').style.visibility='visible';" onblur="document.getElementById('jobDescriptionTip').style.visibility='hidden';" cssClass="textbox">
 
 			</s:textfield>
 
@@ -151,20 +156,21 @@ function drawTabs() {
 		<div class="formGroup">
 			<div class="formGroupHeader">Definition</div>
 			<div id="jobQueryTip" class="tipText">Please input the query to be used for this job.  This should be valid SQL to be used against the datasource selected above.</div>
-			<s:textarea label="Report Query *" cols="80" rows="20"
+			<s:textarea label="Report Query" cols="80" rows="20"
 				value="%{job.query}" name="job.query" 
 				onfocus="document.getElementById('jobQueryTip').style.visibility='visible';" 
-				onblur="document.getElementById('jobQueryTip').style.visibility='hidden';">
+				onblur="document.getElementById('jobQueryTip').style.visibility='hidden';"
+				 required="true" cssClass="textbox">
 				</s:textarea>
 
 			<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
-				name="job.isBurst">
+				name="job.isBurst" cssClass="checkbox">
 			</s:checkbox>
 			<div id="jobBurstQueryTip" class="tipText">Please enter an SQL query to be used to populate parameters to burst the report.  The above check box must be enabled for this query to be used.</div>
 			<s:textarea label="Burst Query" cols="80" rows="5"
 				value="%{job.burstQuery}" name="job.burstQuery"
 				onfocus="document.getElementById('jobBurstQueryTip').style.visibility='visible';" 
-				onblur="document.getElementById('jobBurstQueryTip').style.visibility='hidden';">
+				onblur="document.getElementById('jobBurstQueryTip').style.visibility='hidden';" cssClass="textbox">
 
 			</s:textarea>		
 		</div>
@@ -197,7 +203,7 @@ function drawTabs() {
 
 				<s:textfield
 					label="Description" name="parameters[%{#rowstatus.index}].description"
-					value="%{description}">
+					value="%{description}" cssClass="textbox">
 				</s:textfield> 
 
 				<div id="jobValueTip<s:property value="%{#rowstatus.index}"/>" class="tipText">Use this field to hard code the value. </div>
@@ -205,7 +211,7 @@ function drawTabs() {
 					label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
 					value="%{parameterValue}"
 					onfocus="document.getElementById('jobValueTip%{#rowstatus.index}').style.visibility='visible';" 
-					onblur="document.getElementById('jobValueTip%{#rowstatus.index}').style.visibility='hidden';">
+					onblur="document.getElementById('jobValueTip%{#rowstatus.index}').style.visibility='hidden';" cssClass="textbox">
 
 				</s:textfield> 
 				<div id="jobBurstColTip<s:property value="%{#rowstatus.index}"/>" class="tipText">Entry should match a column in the burst query.</div>
@@ -213,7 +219,7 @@ function drawTabs() {
 					name="parameters[%{#rowstatus.index}].parameterBurstColumn"
 					value="%{parameterBurstColumn}"	
 					onfocus="document.getElementById('jobBurstColTip%{#rowstatus.index}').style.visibility='visible';" 
-					onblur="document.getElementById('jobBurstColTip%{#rowstatus.index}').style.visibility='hidden';">
+					onblur="document.getElementById('jobBurstColTip%{#rowstatus.index}').style.visibility='hidden';" cssClass="textbox">
 
 				</s:textfield>
 
@@ -249,7 +255,7 @@ function drawTabs() {
 			<div id="jobCronTip" class="tipText">Please enter a valid cron string (see help).</div>
 			<s:textfield label="Cron String" size="32" value="%{job.cronString}" name="job.cronString"
 			onfocus="document.getElementById('jobCronTip').style.visibility='visible';" 
-			onblur="document.getElementById('jobCronTip').style.visibility='hidden';">
+			onblur="document.getElementById('jobCronTip').style.visibility='hidden';" cssClass="textbox">
 			</s:textfield>
 		</div>
 	</div>
@@ -261,7 +267,7 @@ function drawTabs() {
 			<div id="jobOutputTip" class="tipText">Please enter an output URL (see help).</div>
 			<s:textfield label="Output URL" size="50" value="%{job.outputUrl}" name="job.outputUrl"
 			onfocus="document.getElementById('jobOutputTip').style.visibility='visible';" 
-			onblur="document.getElementById('jobOutputTip').style.visibility='hidden';">			
+			onblur="document.getElementById('jobOutputTip').style.visibility='hidden';" cssClass="textbox">			
 			</s:textfield>
 		</div>
 		<div class="formGroup">
@@ -276,7 +282,7 @@ function drawTabs() {
 			
 			<s:if test="job.templateFileName!=null">
 			<s:textfield size="40" label="Template File Name" value="%{job.templateFileName}"
-			name="job.templateFileName" readonly="true" cssClass="readOnly"></s:textfield>
+			name="job.templateFileName" readonly="true" cssClass="readOnly" cssClass="textbox"></s:textfield>
 			</s:if>	
 		
 			<s:file label="Template File" name="template"></s:file> 
@@ -289,7 +295,7 @@ function drawTabs() {
 			<s:textarea label="Distribution Email Address(es)" cols="30" rows="20"
 				value="%{job.targetEmailAddress}" name="job.targetEmailAddress"
 				onfocus="document.getElementById('jobEmailTip').style.visibility='visible';" 
-				onblur="document.getElementById('jobEmailTip').style.visibility='hidden';">							
+				onblur="document.getElementById('jobEmailTip').style.visibility='hidden';" cssClass="textbox">							
 			</s:textarea>
 		</div>
 
@@ -303,7 +309,7 @@ function drawTabs() {
 			rows="20" value="%{job.alertEmailAddress}"
 			name="job.alertEmailAddress"
 			onfocus="document.getElementById('jobAlertEmailTip').style.visibility='visible';" 
-			onblur="document.getElementById('jobAlertEmailTip').style.visibility='hidden';">				
+			onblur="document.getElementById('jobAlertEmailTip').style.visibility='hidden';" cssClass="textbox">				
 			</s:textarea>
 		</div>
 	</div>

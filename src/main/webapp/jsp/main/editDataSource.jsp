@@ -44,7 +44,7 @@
 			name="dataSource.password"  cssClass="textbox"/>
 		<s:textfield label="Initial Pool Size" size="10"
 			value="%{dataSource.initialPoolSize}"
-			name="dataSource.initialPoolSize"  cssClass="textbox"/>
+			name="dataSource.initialPoolSize"/>
 		<s:textfield label="Min Pool Size" size="5"
 			value="%{dataSource.minPoolSize}" name="dataSource.minPoolSize" />
 		<s:textfield label="Max Pool Size" size="5"

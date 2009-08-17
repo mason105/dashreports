@@ -141,16 +141,17 @@ function drawTabs() {
 						
 				<s:select label="Height" name="dashboardAlert.height" list="heights"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
-						
-				<s:select label="Chart Type" name="dashboardAlert.chartType" list="chartTypes"
-						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
-		
+					
 			</div>
 		</div>
 		
 		<div id="chart">
 			<div class="formGroup">
 				<div class="formGroupHeader">Chart Configuration</div>
+				
+				<s:select label="Chart Type" name="dashboardAlert.chartType" list="chartTypes"
+				listKey="name" listValue="displayName" cssClass="textbox"></s:select>
+		
 				
 				<s:select label="X Axis Step Size" name="dashboardAlert.xAxisStep" list="xAxisSteps"
 				listKey="name" listValue="displayName"></s:select>

@@ -29,7 +29,7 @@ height:auto;
 
 #top
 {
-background-color: #eee;
+background-color: #ccc;
 border-bottom: 1px solid gray;
 height:50px;
 }
@@ -79,7 +79,7 @@ width: 100%;
 {
 position:absolute;
 color: #333;
-background-color: #eee;
+background-color: #ccc;
 border-top: 1px solid gray;
 height:15px;
 bottom:0px;
@@ -103,7 +103,7 @@ bottom:0px;
 	top:51px;
 	left:151px;
 	border-left: 1px solid gray;
-	bottom:20px;
+	bottom:15px;
 	right:0px;
 	overflow: auto;
 }
@@ -201,24 +201,24 @@ div.formSectionInner div.smallLabel {
 
 .pageTitle img {
 	padding-right:4px;
-	padding-left: 2px;
+	padding-left: 4px;
 }
 .pageTitle{
 	display:inline-table;
 	font-weight:bold;
 	font-size:14px;
 	width:100%;
-	height:20px;
-	padding-left:2px;
+	height:20px;	
 	padding-top:4px;
 	background-image: url(../images/formheaderbg.png);
 	background-repeat: repeat-x; 	
 }
 .rowOdd {
-	background-color:#EEEEEE;
+
+}
 }
 .rowEven {
-	background-color:#DFECFF;	
+
 }
 
 .rowOdd , .rowEven {
@@ -227,7 +227,8 @@ div.formSectionInner div.smallLabel {
 
 .rowOdd td , .rowEven td {
 	padding:2px;		
-	border-right: 1px solid white;	
+	border-right: 1px solid #666666;;	
+	border-bottom: 1px solid #666666
 }
 
 .rowHeader img {
@@ -239,14 +240,19 @@ div.formSectionInner div.smallLabel {
 .rowHeader {
 	height:25px;
 	background-color:#CCCCCC;
+	border-top: 1px solid #666666;	
+	border-bottom: 1px solid #666666;
+	padding-top:4px;
 }
 .headerCell {
 	font-weight:bold;
-		background-color:#DFECFF;
+	background-image: url(../images/formheaderbg.png);
+	background-repeat: repeat-x; 	
 		color:#333333;		
 		height:24px;
 		padding:2px;		
-		border-right: 1px solid white;
+	border-right: 1px solid #666666;;	
+	border-bottom: 1px solid #666666
 	}
 
 

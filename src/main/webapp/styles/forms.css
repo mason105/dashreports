@@ -24,6 +24,14 @@
 	padding:2px;
 }
 
+.formGroupFluid {
+	clear:both;
+	min-width:600px;;
+	margin:5px;
+	border: 1px solid #ccc;;	
+	padding:2px;
+}
+
 .formGroupHeader{
 	font-weight:bold;
 	font-size:11px;

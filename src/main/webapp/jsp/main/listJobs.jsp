@@ -9,12 +9,16 @@
   <span class="pageTitle"><img
 	src="<s:url value="/images/icons/group.png"/>" align="absmiddle" /><s:property value="groupName" /></span>	
     <table border="0" width="100%">
-      <tr class="rowHeader">
-      <td colspan='7'  class="rowHeader">
-      <a href="setupEditJob.action?groupName=<s:property value="groupName" />"><img
-			src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add Job</a>
-      </td>
-      </tr>	    
+	
+	      <tr class="rowHeader">
+      		<td colspan='7'  class="rowHeader">
+      		<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
+      		<a href="setupEditJob.action?groupName=<s:property value="groupName" />"><img
+				src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add Job</a>
+		</s:if>				
+	      </td>
+      	</tr>	    
+	
       <tr>
       <td class="headerCell">
       	Job Name
@@ -22,7 +26,9 @@
       <td class="headerCell">
       	Description
       </td>
+      <s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
       <td class="headerCell" colspan="5">&nbsp;</td>
+      </s:if>
       </tr>
 	  <s:if test="jobs.size > 0">	      
           
@@ -48,7 +54,8 @@
               </td>  
               <td>  
                 <s:property value="description" />  
-              </td>  
+              </td>
+              <s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
               <td width="16">
               <s:a href="viewJobDetail.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/icons/magnifier.png'/>" alt="View Detail/History"
 							align="absmiddle" /></s:a>
@@ -76,6 +83,7 @@
 				 <a href="deleteJob.action?jobName=<s:property value="jobName" />&groupName=<s:property value="groupName" />" onClick="return confirm('Really delete this job?');"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete"
 							align="absmiddle" /></a>
 			  </td>
+	    </s:if>             
             </tr>  
           </s:iterator>
 	  </s:if>             

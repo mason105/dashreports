@@ -13,46 +13,47 @@
 Detail</span>
 <br /><br />
 [<s:a href="listJobs.action?groupName=%{job.groupName}">Back</s:a>]
-<br />
+<br /><br />
+<div class="formGroup">
+<div class="formGroupHeader">Job Detail</div>
 <table width="100%">
-	<tr>
-		<td class="rowHeader"><b>Job Name</b></td>
-		<td class="rowHeader"><s:property value="%{job.jobName}" /></td>
+	<tr class="rowEven">
+		<td ><b>Job Name</b></td>
+		<td><s:property value="%{job.jobName}" /></td>
 	</tr>
-	<tr>
-		<td class="rowHeader"><b>Group Name</b></td>
-		<td class="rowHeader"><s:property value="%{job.groupName}" /></td>
+	<tr  class="rowOdd">
+		<td><b>Group Name</b></td>
+		<td><s:property value="%{job.groupName}" /></td>
 	</tr>
-	<tr>
-		<td class="rowHeader"><b>Job Description</b></td>
-		<td class="rowHeader"><s:property value="%{job.description}" /></td>
+	<tr class="rowEven"
+		<td><b>Job Description</b></td>
+		<td><s:property value="%{job.description}" /></td>
 	</tr>
-	<tr>
-		<td class="rowHeader"><b>Previous Run Time</b></td>
-		<td class="rowHeader"><s:property value="%{job.previousRunTime}" />
+	<tr  class="rowOdd">
+		<td><b>Previous Run Time</b></td>
+		<td><s:property value="%{job.previousRunTime}" />
 		</td>
 	</tr>
-	<tr>
-		<td class="rowHeader"><b>Next Run Time</b></td>
-		<td class="rowHeader"><s:property value="%{job.nextRunTime}" /></td>
+	<tr class="rowEven">
+		<td><b>Next Run Time</b></td>
+		<td><s:property value="%{job.nextRunTime}" /></td>
 	</tr>
-	<tr>
-		<td class="rowHeader"><b>Schedule Active</b></td>
-		<td class="rowHeader"><s:property value="%{job.isScheduleActive}" />
+	<tr  class="rowOdd">
+		<td><b>Schedule Active</b></td>
+		<td><s:property value="%{job.isScheduleActive}" />
 		</td>
 	</tr>
 </table>
-<display:table name="events"  pagesize="25" requestURI="viewJobDetail.action" export="true">
-    <display:setProperty name="export.rtf.filename" value="history.rtf"/>
-    <display:setProperty name="export.csv.filename" value="history.csv"/>
-    <display:setProperty name="export.xls" value="false" />
-    <display:setProperty name="export.xml.filename" value="history.xml"/>
-    <display:setProperty name="export.pdf.filename" value="history.pdf"/>
+</div>
+<div class="formGroupFluid">
+<div class="formGroupHeader">Job History</div>
+<display:table name="events"  pagesize="25" requestURI="viewJobDetail.action" export="false">    
 	<display:column property="eventId" title="ID"  sortable="true" headerClass="sortable" />
 	<display:column property="runTime" title="Time to Execute (ms)"  sortable="true" headerClass="sortable" />	
 	<display:column property="timestamp" title="Timestamp"  sortable="true" headerClass="sortable" />
 	<display:column property="success" title="Success"  sortable="true" headerClass="sortable" />
 	<display:column property="message" title="Message"  sortable="true" headerClass="sortable" />
 </display:table>
+</div>
 </body>
 </html>

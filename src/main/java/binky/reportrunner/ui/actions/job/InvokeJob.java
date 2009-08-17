@@ -47,7 +47,7 @@ public class InvokeJob extends StandardRunnerAction {
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
-			if (doesUserHaveGroup(groupName) && isUserReadOnly()) {
+			if (doesUserHaveGroup(groupName) && !isUserReadOnly()) {
 
 				jobService.invokeJob(jobName, groupName);
 

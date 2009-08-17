@@ -59,7 +59,7 @@ public class SetJobStatus extends StandardRunnerAction {
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
-			if (doesUserHaveGroup(groupName) && isUserReadOnly()) {
+			if (doesUserHaveGroup(groupName) && !isUserReadOnly()) {
 				if (jobStatus) {
 					logger.debug("resume job");
 					jobService.resumeJob(jobName, groupName);
@@ -72,7 +72,7 @@ public class SetJobStatus extends StandardRunnerAction {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
 						+ super.getSessionUser().getUserName());
-				// logger.fatal(se.getMessage(), se);
+				logger.fatal(se.getMessage(), se);
 				throw se;
 			}
 		}

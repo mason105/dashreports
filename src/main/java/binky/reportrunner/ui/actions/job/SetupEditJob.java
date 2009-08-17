@@ -63,7 +63,7 @@ public class SetupEditJob extends StandardRunnerAction implements Preparable {
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
-			if (super.doesUserHaveGroup(groupName) && isUserReadOnly()) {
+			if (super.doesUserHaveGroup(groupName) && !isUserReadOnly()) {
 				job = jobService.getJob(jobName, groupName);
 				if (job.getParameters() == null) {
 					paramCount = 0;

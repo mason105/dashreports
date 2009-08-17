@@ -17,9 +17,9 @@
 	<s:actionerror />
 	<s:actionmessage/>
 	
-	<s:password label="Old Password" name="oldPassword"/>	
-	<s:password label="New Password" name="newPassword1"/>	
-	<s:password label="Confirm New Password" name="newPassword2"/>	
+	<s:password label="Old Password" name="oldPassword"  cssClass="textbox"/>	
+	<s:password label="New Password" name="newPassword1"  cssClass="textbox"/>	
+	<s:password label="Confirm New Password" name="newPassword2"  cssClass="textbox"/>	
 	
 </s:form>
 </div>

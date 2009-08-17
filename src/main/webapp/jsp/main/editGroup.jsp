@@ -15,18 +15,18 @@
 		<s:actionmessage/>
 		<s:if test="group.groupName != null">
 			<s:textfield label="Group Name" size="32" value="%{group.groupName}"
-				name="group.groupName" readonly="true" cssClass="readOnly"/>
+				name="group.groupName" readonly="true" cssClass="readOnly, textbox" required="true"/>
 		</s:if>
 		<s:else>
 			<s:textfield label="Group Name" size="32" value="%{group.groupName}"
-				name="group.groupName" />
+				name="group.groupName"  cssClass="textbox" required="true"/>
 		</s:else>
 		<s:textfield label="Group Description" size="60"
-			value="%{group.groupDescription}" name="group.groupDescription" />
+			value="%{group.groupDescription}" name="group.groupDescription"  cssClass="textbox" />
 
 	</s:form>
 </div>
-	
+<div class="formFooterText">* required field</div>
 	<div id="submit_button"></div>
 
 	<script language="javascript">

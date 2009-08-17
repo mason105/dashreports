@@ -99,50 +99,51 @@ function drawTabs() {
 			<div class="formGroup">
 				<div class="formGroupHeader">Details</div>
 			
-				<s:textfield label="Item Name" size="64" value="%{dashboardAlert.alertName}" name="dashboardAlert.alertName">
+				<s:textfield label="Item Name" size="64" value="%{dashboardAlert.alertName}" name="dashboardAlert.alertName" cssClass="textbox" required="true">
 				</s:textfield>
 				<s:select label="Select Group"
 					name="dashboardAlert.group.groupName" value="%{dashboardAlert.group.groupName}"
-					list="groups" listKey="groupName" listValue="groupName">
+					list="groups" listKey="groupName" listValue="groupName" cssClass="textbox">
 				</s:select>
 				
 				<s:select label="Select Data Source"
 					name="dashboardAlert.datasource.dataSourceName" value="%{dashboardAlert.datasource}"
-					list="runnerDataSources" listKey="dataSourceName" listValue="dataSourceName">
+					list="runnerDataSources" listKey="dataSourceName" listValue="dataSourceName" cssClass="textbox">
 				</s:select>
 				
 				<s:textarea label="Query" cols="30" rows="20"
-					value="%{dashboardAlert.alertQuery}" name="dashboardAlert.alertQuery">
+					value="%{dashboardAlert.alertQuery}" name="dashboardAlert.alertQuery" cssClass="textbox" required="true">
 				</s:textarea>	
 			
-				<s:textfield label="Cron String" size="32" value="%{dashboardAlert.cronTab}" name="dashboardAlert.cronTab">
+				<s:textfield label="Cron String" size="32" value="%{dashboardAlert.cronTab}" name="dashboardAlert.cronTab" cssClass="textbox" required="true">
 				</s:textfield>
 				
 			</div>	
+			<div class="formFooterText">* required field</div>
 		</div>
 		
 		<div id="layout">
 			<div class="formGroup">
 				<div class="formGroupHeader">Layout/Type</div>
 				
-				<s:textfield label="Display Column" size="64" value="%{dashboardAlert.displayColumn}" name="dashboardAlert.displayColumn">
+				<s:textfield label="Display Column" size="64" value="%{dashboardAlert.displayColumn}" name="dashboardAlert.displayColumn" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="Display Row" size="64" value="%{dashboardAlert.displayRow}" name="dashboardAlert.displayRow">
+				<s:textfield label="Display Row" size="64" value="%{dashboardAlert.displayRow}" name="dashboardAlert.displayRow" cssClass="textbox">
 				</s:textfield>
 				
 				
 				<s:select label="Display Type" name="dashboardAlert.displayType" list="displayTypes"
-						listKey="name" listValue="displayName"></s:select>
+						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 						
 				<s:select label="Width" name="dashboardAlert.width" list="widths"
-						listKey="name" listValue="displayName"></s:select>
+						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 						
 				<s:select label="Height" name="dashboardAlert.height" list="heights"
-						listKey="name" listValue="displayName"></s:select>
+						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 						
 				<s:select label="Chart Type" name="dashboardAlert.chartType" list="chartTypes"
-						listKey="name" listValue="displayName"></s:select>
+						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 		
 			</div>
 		</div>
@@ -154,17 +155,17 @@ function drawTabs() {
 				<s:select label="X Axis Step Size" name="dashboardAlert.xAxisStep" list="xAxisSteps"
 				listKey="name" listValue="displayName"></s:select>
 			
-			 	<s:textfield label="Y-Axis Label" size="64" value="%{dashboardAlert.yLabel}" name="dashboardAlert.yLabel">
+			 	<s:textfield label="Y-Axis Label" size="64" value="%{dashboardAlert.yLabel}" name="dashboardAlert.yLabel" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="X-Axis Column Name" size="32" value="%{dashboardAlert.xaxisColumn}" name="dashboardAlert.xaxisColumn">
+				<s:textfield label="X-Axis Column Name" size="32" value="%{dashboardAlert.xaxisColumn}" name="dashboardAlert.xaxisColumn" cssClass="textbox">
 				</s:textfield>
 				
 				
-				<s:textfield label="Value Column Name" size="32" value="%{dashboardAlert.valueColumn}" name="dashboardAlert.valueColumn">
+				<s:textfield label="Value Column Name" size="32" value="%{dashboardAlert.valueColumn}" name="dashboardAlert.valueColumn" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="Series Name Column Name" size="32" value="%{dashboardAlert.seriesNameColumn}" name="dashboardAlert.seriesNameColumn">
+				<s:textfield label="Series Name Column Name" size="32" value="%{dashboardAlert.seriesNameColumn}" name="dashboardAlert.seriesNameColumn" cssClass="textbox">
 				</s:textfield>
 			
 			</div>

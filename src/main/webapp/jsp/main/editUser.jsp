@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<s:form action="saveUser" validate="true">
+<s:form action="saveUser" method="get" validate="true">
 <div class="formGroup">
 	<div class="formGroupHeader">User Details</div>
 	
@@ -15,7 +15,7 @@
 		<s:actionmessage/>
 		<s:if test="runnerUser.userName != null">
 			<s:textfield label="User Name" size="32" value="%{runnerUser.userName}"
-				name="runnerUser.userName" readonly="true" cssClass="readOnly" cssClass="textbox" required="true"/>
+				name="runnerUser.userName" readonly="true" cssClass="readOnly, textbox" required="true"/>
 		</s:if>
 		<s:else>
 			<s:textfield label="User Name" size="32" value="%{runnerUser.userName}"
@@ -44,7 +44,7 @@
 	       list="groups"
 	       multiple="true"
 	       listKey="groupName" 
-	       listValue="groupName"	       
+	       listValue="groupName"  cssClass="textbox"	       
 		/>
 
 	

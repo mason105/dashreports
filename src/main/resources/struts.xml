@@ -220,6 +220,7 @@
 			<result type="redirectAction">
 				<param name="actionName">listUsers</param>
 			</result>
+			<result name="input">/jsp/main/editUser.jsp</result>	
 		</action>
 
 

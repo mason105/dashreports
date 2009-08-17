@@ -25,13 +25,15 @@ package binky.reportrunner.ui.actions.user;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.opensymphony.xwork2.Preparable;
+import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.dao.RunnerUserDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+
+import com.opensymphony.xwork2.Preparable;
 
 public class SaveUser extends AdminRunnerAction  implements Preparable {
 
@@ -42,20 +44,30 @@ public class SaveUser extends AdminRunnerAction  implements Preparable {
 	private RunnerUser runnerUser;
 	private String[] groupNames;
 	private List<RunnerGroup> groups;
-
+	private List<String> userGroups;
+	
+	private static final Logger logger = Logger.getLogger(SaveUser.class);
+	
 	@Override
 	public String execute() throws Exception {
-		List<RunnerGroup> groups = new LinkedList<RunnerGroup>();
-
-		for (String groupName : groupNames) {
-			RunnerGroup group = groupDao.getGroup(groupName);
-			groups.add(group);
+		if (runnerUser!=null) {
+			
+			if (userGroups!=null) {
+				List<RunnerGroup> groups = new LinkedList<RunnerGroup>();
+				for (String g: userGroups) {
+					logger.debug("user now has group: " + g);
+					RunnerGroup group = groupDao.getGroup(g);
+					groups.add(group);
+				}
+				runnerUser.setGroups(groups);
+			}
+			
+			
+			userDao.saveUpdateUser(runnerUser);
+			return SUCCESS;
+		} else {
+			throw new Exception("USER WAS NULL!");
 		}
-
-		runnerUser.setGroups(groups);
-		
-		userDao.saveUpdateUser(runnerUser);
-		return SUCCESS;
 	}
 
 	public void prepare() throws Exception {
@@ -102,6 +114,14 @@ public class SaveUser extends AdminRunnerAction  implements Preparable {
 
 	public void setGroups(List<RunnerGroup> groups) {
 		this.groups = groups;
+	}
+
+	public List<String> getUserGroups() {
+		return userGroups;
+	}
+
+	public void setUserGroups(List<String> userGroups) {
+		this.userGroups = userGroups;
 	}
 
 

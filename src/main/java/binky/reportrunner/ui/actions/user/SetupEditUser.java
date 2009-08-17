@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.user;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -43,24 +44,20 @@ public class SetupEditUser extends AdminRunnerAction implements Preparable {
 	private RunnerUser runnerUser;
 
 	private List<RunnerGroup> groups;
-
-	private String[] groupNames;
-
+	private List<String> userGroups;
 	private static final Logger logger = Logger.getLogger(SetupEditUser.class);
 
 	@Override
 	public String execute() throws Exception {
 		if ((userName != null) && (!userName.isEmpty())) {
-			this.runnerUser = userDao.getUser(userName);			
-			List<RunnerGroup> groups = runnerUser.getGroups();
-			this.groupNames = new String[groups.size()];
-			int i=0;
-			for (RunnerGroup g : groups) {				
-				groupNames[i]=g.getGroupName();
-				i++;
-				logger.debug("found group: " + g);
-			}
-			
+			logger.debug("editing user: " + userName);
+			userGroups = new LinkedList<String>();
+			this.runnerUser = userDao.getUser(userName);
+			for (RunnerGroup group:runnerUser.getGroups()) {
+				userGroups.add(group.getGroupName());
+				logger.debug("found group: " + group.getGroupName());
+			}			
+								
 		} else {
 			this.runnerUser=new RunnerUser();			
 		}
@@ -103,14 +100,6 @@ public class SetupEditUser extends AdminRunnerAction implements Preparable {
 		return groups;
 	}
 
-	public String[] getGroupNames() {
-		return groupNames;
-	}
-
-	public void setGroupNames(String[] groupNames) {
-		this.groupNames = groupNames;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
@@ -121,6 +110,14 @@ public class SetupEditUser extends AdminRunnerAction implements Preparable {
 
 	public void setRunnerUser(RunnerUser runnerUser) {
 		this.runnerUser = runnerUser;
+	}
+
+	public List<String> getUserGroups() {
+		return userGroups;
+	}
+
+	public void setUserGroups(List<String> userGroups) {
+		this.userGroups = userGroups;
 	}
 
 }

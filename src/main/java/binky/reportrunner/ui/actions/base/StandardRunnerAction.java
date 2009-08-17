@@ -81,7 +81,7 @@ public abstract class StandardRunnerAction extends ActionSupport implements Sess
 	
 	public final boolean isUserReadOnly() {
 		if (getSessionUser().getIsAdmin()) {
-			return true;
+			return false;
 		} else {
 			return getSessionUser().getIsReadOnly();
 		}	

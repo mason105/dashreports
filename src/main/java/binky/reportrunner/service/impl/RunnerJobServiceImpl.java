@@ -79,7 +79,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		RunnerJob job_comp = runnerJobDao.getJob(jobName, groupName);
 		if ((job_comp != null)
 				&& ((job_comp.getCronString() != null) && !job_comp
-						.getCronString().isEmpty())) {
+						.getCronString().isEmpty()) && !job_comp.getCronString().equals(job.getCronString())) {
 			scheduler.removeJob(jobName, groupName);
 		}
 

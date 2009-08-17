@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<s:form action="saveUser" method="get" validate="true">
+<s:form action="saveUser" validate="true">
 <div class="formGroup">
 	<div class="formGroupHeader">User Details</div>
 	

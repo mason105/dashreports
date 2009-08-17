@@ -83,7 +83,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			scheduler.removeJob(jobName, groupName);
 		}
 
-		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+		if ((job.getCronString() != null) && !job.getCronString().isEmpty() && !scheduler.isScheduled(jobName, groupName)) {
 			scheduler.addJob(jobName, groupName, job
 					.getCronString(), job.getStartDate(), job.getEndDate());
 		}

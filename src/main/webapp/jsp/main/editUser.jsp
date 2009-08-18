@@ -21,10 +21,14 @@
 			<s:textfield label="User Name" size="32" value="%{runnerUser.userName}"
 				name="runnerUser.userName"  cssClass="textbox" required="true"/>
 		</s:else>
-		<s:textfield label="Full Name" size="60"
+		<s:if test="runnerUser.userName != null">
+			<s:textfield label="Full Name" size="60"
 			value="%{runnerUser.fullName}" name="runnerUser.fullName"  cssClass="textbox"/>
-
-		<s:password label="Password" name="runnerUser.password" cssClass="textbox"  required="true"/>	
+		<s:else>
+			<s:textfield label="Full Name" size="60"
+			value="%{runnerUser.fullName}" name="runnerUser.fullName"  cssClass="textbox" required="true"/>
+		</s:else>
+		<s:password label="Password" name="runnerUser.password" cssClass="textbox"  />	
 
 		<s:checkbox label="Is User an Administrator" value="%{runnerUser.isAdmin}"
 			name="runnerUser.isAdmin" cssClass="checkbox">

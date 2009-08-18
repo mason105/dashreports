@@ -51,6 +51,24 @@ public class SaveUser extends AdminRunnerAction  implements Preparable {
 	@Override
 	public String execute() throws Exception {
 		if (runnerUser!=null) {
+			boolean valid = true;
+			//quick validation
+			if ((runnerUser.getUserName()==null)||(runnerUser.getUserName().trim().isEmpty())) {
+				valid=false;
+				super.addActionError("Please enter a username");				
+			} else {
+				if ((runnerUser.getPassword()==null)||(runnerUser.getPassword().trim().isEmpty())) {
+				RunnerUser userCompare = userDao.getUser(runnerUser.getUserName());
+					if (userCompare==null) {
+						valid = false;
+						super.addActionError("Please enter a password");
+					} else {
+						//put the old password back in
+						runnerUser.setPassword(userCompare.getPassword());
+					}
+				}
+			}
+	
 			
 			if (userGroups!=null) {
 				List<RunnerGroup> groups = new LinkedList<RunnerGroup>();
@@ -62,9 +80,12 @@ public class SaveUser extends AdminRunnerAction  implements Preparable {
 				runnerUser.setGroups(groups);
 			}
 			
-			
-			userDao.saveUpdateUser(runnerUser);
-			return SUCCESS;
+			if (valid) {
+				userDao.saveUpdateUser(runnerUser);
+				return SUCCESS;
+			} else {
+				return INPUT;
+			}
 		} else {
 			throw new Exception("USER WAS NULL!");
 		}

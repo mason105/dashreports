@@ -58,15 +58,21 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		if ((this.parameters != null) && (this.parameters.size() > 0)) {
 			RunnerJob job = jobService.getJob(jobName, groupName);
 			
-			List<RunnerJobParameter> parameters = job.getParameters();
+			List<RunnerJobParameter> jobParameters = job.getParameters();
 			
-			for (int i=0;i<parameters.size();i++) {
-				RunnerJobParameter p = parameters.get(i);
-				p.setParameterValue(this.parameters.get(i).getParameterValue());
+			for (RunnerJobParameter p: this.parameters) {								
+				
+				for (RunnerJobParameter jp:jobParameters) {
+					if (jp.getPk().getParameterIdx().equals(p.getPk().getParameterIdx())) {
+						jp.setParameterValue(p.getParameterValue());
+						break;
+					}
+				}
+				
 			}
-			
+					
 			results = jobService.getResultsForJob(jobName, groupName,
-					parameters);
+					jobParameters);
 		} else {
 			results = jobService.getResultsForJob(jobName, groupName);
 		}

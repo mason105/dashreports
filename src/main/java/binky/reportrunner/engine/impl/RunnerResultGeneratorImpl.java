@@ -65,7 +65,9 @@ public class RunnerResultGeneratorImpl implements RunnerResultGenerator {
 			Map<String, ResultSet> results) throws SQLException,
 			NumberFormatException, ParseException {
 		SQLProcessor sqlProcessor = new SQLProcessorImpl();
-
+		
+		List<String> processed = new LinkedList<String>();
+		
 		if ((job.getIsBurst() != null) && (job.getIsBurst())) {
 
 			ResultSet burstResults = sqlProcessor.getResults(conn, job
@@ -118,13 +120,14 @@ public class RunnerResultGeneratorImpl implements RunnerResultGenerator {
 				
 				
 				// process the query with the results in
-				if (!results.containsKey(name)){
+				if (!processed.contains(name)){
 					//hack to prevent it repeating its self on the viewer				
 						ResultSet rs = sqlProcessor.getResults(conn, job.getQuery(), populatedParams);
 						if (rs.next()) {
 							rs.beforeFirst();
 							results.put(name, rs);
 						}
+					processed.add(name);
 				}
 
 			}

@@ -47,20 +47,8 @@ public class SQLProcessorImpl implements SQLProcessor {
 			throws SQLException {
 		logger.debug("Executing sql: " + sql);
 
-	Statement stmt = connection.createStatement();
-				//ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+	Statement stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 		ResultSet rs = stmt.executeQuery(sql);
-		//boolean last = rs.last();
-		//int count;
-		//if (last) {
-	//		count = rs.getRow();
-	//		rs.beforeFirst();
-	//	} else {
-	//		count = 0;
-
-		//}
-
-		//logger.debug("got " + count + " row(s)");
 		return rs;
 	}
 

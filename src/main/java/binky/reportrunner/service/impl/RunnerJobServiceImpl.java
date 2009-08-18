@@ -299,6 +299,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 					//rs.beforeFirst();
 					logger.debug("getting values for parameter: "
 							+ p.getDescription());
+					rs.first();
 					while (rs.next()) {
 						Object value = rs
 								.getObject(p.getParameterBurstColumn());

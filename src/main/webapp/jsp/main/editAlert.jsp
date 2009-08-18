@@ -87,9 +87,10 @@ function drawTabs() {
 <div id="tabContain">
 </div>
 <div id="toolbarButtons"></div>
+<s:form action="saveAlert">
 <div id="tabContentArea"></div>
 <div id="formBody" style="position:absolute;top:150px;">
-	<s:form action="saveAlert">
+	
 		<s:actionerror />
 		<s:actionmessage/>
 		
@@ -171,8 +172,9 @@ function drawTabs() {
 			
 			</div>
 		</div>
-	</s:form>
+	
 </div>
+</s:form>
 </body>
 </html>
 	

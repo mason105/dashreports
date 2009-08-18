@@ -24,6 +24,7 @@
 		<s:if test="runnerUser.userName != null">
 			<s:textfield label="Full Name" size="60"
 			value="%{runnerUser.fullName}" name="runnerUser.fullName"  cssClass="textbox"/>
+		</s:if>
 		<s:else>
 			<s:textfield label="Full Name" size="60"
 			value="%{runnerUser.fullName}" name="runnerUser.fullName"  cssClass="textbox" required="true"/>

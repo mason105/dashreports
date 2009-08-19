@@ -184,6 +184,7 @@
 			<result type="redirectAction">
 				<param name="actionName">listAlerts</param>
 			</result>
+			<result  name="input">/jsp/main/editAlert.jsp</result>
 		</action>
 
 		<action name="deleteAlert" class="deleteAlertAction">

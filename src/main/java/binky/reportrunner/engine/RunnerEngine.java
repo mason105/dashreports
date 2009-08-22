@@ -68,7 +68,7 @@ public class RunnerEngine implements Job, InterruptableJob {
 	String smtpServer;
 
 	DataSource ds;
-
+	Connection conn;
 	private static final Logger logger = Logger.getLogger(RunnerEngine.class);
 
 	public RunnerEngine() throws IOException {
@@ -116,7 +116,7 @@ public class RunnerEngine implements Job, InterruptableJob {
 		List<String> fileUrls = new LinkedList<String>();
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
-		Connection conn;
+		
 
 		conn = ds.getConnection();
 
@@ -198,8 +198,11 @@ public class RunnerEngine implements Job, InterruptableJob {
 	}
 
 	public void interrupt() throws UnableToInterruptJobException {
-		// TODO Auto-generated method stub
-		
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			throw new UnableToInterruptJobException(e);
+		}
 	}
 
 

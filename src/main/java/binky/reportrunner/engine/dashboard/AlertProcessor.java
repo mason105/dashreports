@@ -44,7 +44,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 	DataSource ds;
 
 	RunnerDashboardAlertDao dashboardDao;
-
+	Connection conn;
 	private static final Logger logger = Logger.getLogger(AlertProcessor.class);
 
 	public void execute(JobExecutionContext context)
@@ -56,6 +56,8 @@ public class AlertProcessor implements Job, InterruptableJob {
 
 		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get(
 				"dataSource");
+		
+		
 		this.dashboardDao = (RunnerDashboardAlertDao) context.getJobDetail()
 				.getJobDataMap().get("dashboardDao");
 		try {
@@ -83,7 +85,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 	private void processAlert(RunnerDashboardAlert alert) throws SQLException {
 		
 		String sql = alert.getAlertQuery();
-		Connection conn = ds.getConnection();
+		conn = ds.getConnection();
 		
 		try {
 			ResultSet rs = conn.createStatement().executeQuery(sql);
@@ -92,15 +94,18 @@ public class AlertProcessor implements Job, InterruptableJob {
 			dashboardDao.saveUpdateAlert(alert);
 			rs.close();
 		} finally {
-			conn.close();
+			if (!conn.isClosed()) conn.close();
 		}
 		
 		
 	}
 
 	public void interrupt() throws UnableToInterruptJobException {
-		// TODO Auto-generated method stub
-		
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			throw new UnableToInterruptJobException(e);
+		}
 	}
 
 }

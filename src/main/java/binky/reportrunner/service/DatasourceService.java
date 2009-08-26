@@ -22,10 +22,18 @@
  ******************************************************************************/
 package binky.reportrunner.service;
 
+import java.util.List;
+
 import javax.sql.DataSource;
 
 import binky.reportrunner.data.RunnerDataSource;
 
 public interface DatasourceService {
-	public DataSource getDataSource(RunnerDataSource runnerDs);
+
+	public DataSource getJDBCDataSource(RunnerDataSource runnerDs);
+	public void saveUpdateDataSource(RunnerDataSource dataSource);
+	public void deleteDataSource(String dataSourceName);
+	public RunnerDataSource getDataSource(String dataSourceName);
+	public List<RunnerDataSource> listDataSources();
+
 }

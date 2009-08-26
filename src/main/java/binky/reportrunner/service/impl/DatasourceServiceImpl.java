@@ -24,6 +24,7 @@ package binky.reportrunner.service.impl;
 
 import java.beans.PropertyVetoException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.naming.Context;
@@ -41,14 +42,6 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class DatasourceServiceImpl implements DatasourceService {
 
-	/**
-	 * @return a connection to the datasource for the job
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 * @throws NamingException
-	 */
 	private RunnerDataSourceDao dataSourceDao;
 	private Map<String, DataSource> dataSources = new HashMap<String, DataSource>();;
 
@@ -58,6 +51,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 			throws InstantiationException, IllegalAccessException,
 			ClassNotFoundException, PropertyVetoException, NamingException {
 		final String jndiDataSource = runnerDs.getJndiName();
+		
 		if ((jndiDataSource == null)||jndiDataSource.isEmpty()) {
 			logger.info("using c3p0 pooled connection for: "
 					+ runnerDs.getDataSourceName());
@@ -91,7 +85,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 		}
 	}
 
-	public DataSource getDataSource(RunnerDataSource runnerDs) {
+	public DataSource getJDBCDataSource(RunnerDataSource runnerDs) {
 
 		DataSource ds = dataSources.get(runnerDs.getDataSourceName());
 		if (ds == null) {
@@ -116,5 +110,29 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
 		this.dataSourceDao = dataSourceDao;
+	}
+
+	public void deleteDataSource(String dataSourceName) {
+		if (dataSources.get(dataSourceName)!=null) {		
+			dataSources.remove(dataSourceName);
+		}		
+		dataSourceDao.deleteDataSource(dataSourceName);
+		
+	}
+
+	public RunnerDataSource getDataSource(String dataSourceName) {
+		return dataSourceDao.getDataSource(dataSourceName);
+	}
+
+	public List<RunnerDataSource> listDataSources() {
+		return dataSourceDao.listDataSources();
+	}
+
+	public void saveUpdateDataSource(RunnerDataSource dataSource) {
+		if (dataSources.get(dataSource.getDataSourceName())!=null) {		
+			dataSources.remove(dataSource.getDataSourceName());
+		}		
+		dataSourceDao.saveUpdateDataSource(dataSource);
+		
 	}
 }

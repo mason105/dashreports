@@ -52,7 +52,7 @@ public class DatasourceServiceImplTest extends TestCase {
 		rds.setMinPoolSize(1);
 		rds.setInitialPoolSize(3);
 		try {
-			DataSource ds = dsService.getDataSource(rds);
+			DataSource ds = dsService.getJDBCDataSource(rds);
 			ResultSet rs = ds.getConnection().getMetaData().getCatalogs();
 			rs.last();
 			int c = rs.getRow();

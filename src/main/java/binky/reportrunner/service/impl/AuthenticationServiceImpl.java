@@ -40,7 +40,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 		RunnerUser user = userDao.getUser(userName);
 		if (user == null) {
-			logger.warn("Authentication failed - unknown user");			
+			logger.warn("Authentication failed - unknown user");
 			return null;
 		} else {
 			if (password.equals(user.getPassword())) {

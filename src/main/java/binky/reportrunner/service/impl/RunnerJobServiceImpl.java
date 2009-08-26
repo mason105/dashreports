@@ -230,7 +230,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			throws SQLException, NumberFormatException, ParseException, RenderException, IOException {
 		Map<String, ViewerResults> results = new HashMap<String, ViewerResults>();
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
-		DataSource ds = dataSourceService.getDataSource(job.getDatasource());
+		DataSource ds = dataSourceService.getJDBCDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 
 		// get all the results
@@ -276,7 +276,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			NumberFormatException, ParseException {
 		Map<RunnerJobParameter, List<Object>> paramValues = new HashMap<RunnerJobParameter, List<Object>>();
 		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
-		DataSource ds = dataSourceService.getDataSource(job.getDatasource());
+		DataSource ds = dataSourceService.getJDBCDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 		SQLProcessor sqlProcessor = new SQLProcessorImpl();
 		if ((job.getIsBurst()==null)||(!job.getIsBurst())) {
@@ -320,7 +320,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	}
 
 	public DataSource getDataSource(RunnerDataSource runnerDs) {
-		return dataSourceService.getDataSource(runnerDs);
+		return dataSourceService.getJDBCDataSource(runnerDs);
 	}
 
 	public DatasourceService getDataSourceService() {

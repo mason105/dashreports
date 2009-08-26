@@ -22,8 +22,8 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.datasource;
 
-import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.data.RunnerDataSource;
+import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
 public class SaveDataSource extends AdminRunnerAction {
@@ -34,19 +34,21 @@ public class SaveDataSource extends AdminRunnerAction {
 	@Override
 	public String execute() throws Exception {
 		
-		dataSourceDao.saveUpdateDataSource(dataSource);
+		dataSourceService.saveUpdateDataSource(dataSource);
 
 		return SUCCESS;
 	}
 
-	private RunnerDataSourceDao dataSourceDao;
+	private DatasourceService dataSourceService;
 
-	public RunnerDataSourceDao getDataSourceDao() {
-		return dataSourceDao;
+
+
+	public DatasourceService getDataSourceService() {
+		return dataSourceService;
 	}
 
-	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
-		this.dataSourceDao = dataSourceDao;
+	public void setDataSourceService(DatasourceService dataSourceService) {
+		this.dataSourceService = dataSourceService;
 	}
 
 	public RunnerDataSource getDataSource() {

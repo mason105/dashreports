@@ -209,9 +209,9 @@
 	<bean id="deleteDataSourceAction"
 		class="binky.reportrunner.ui.actions.datasource.DeleteDataSource"
 		scope="prototype">
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
-		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>		
 	</bean>
 
 	<bean id="listDataSourcesAction"
@@ -224,9 +224,9 @@
 
 	<bean id="saveDataSourceAction" class="binky.reportrunner.ui.actions.datasource.SaveDataSource"
 		scope="prototype">
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
-		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>		
 	</bean>
 
 	<bean id="setupEditDataSourceAction"

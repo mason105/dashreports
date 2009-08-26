@@ -90,7 +90,7 @@ public class RunnerJobListener implements JobListener {
 			ctx.getJobDetail().getJobDataMap().put("fromAddress",
 					this.fromAddress);
 			DataSource ds = datasourceService
-					.getDataSource(job.getDatasource());
+					.getJDBCDataSource(job.getDatasource());
 			ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
 		} else if (ctx.getJobDetail().getJobClass()
 				.equals(AlertProcessor.class)) {
@@ -98,7 +98,7 @@ public class RunnerJobListener implements JobListener {
 			Integer alertId = Integer.parseInt(ctx.getJobDetail().getName());
 			RunnerDashboardAlert alert = dashboardDao.getAlert(alertId);
 			ctx.getJobDetail().getJobDataMap().put("alert", alert);
-			DataSource ds = datasourceService.getDataSource(alert.getDatasource());
+			DataSource ds = datasourceService.getJDBCDataSource(alert.getDatasource());
 			ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
 			ctx.getJobDetail().getJobDataMap().put("dashboardDao", dashboardDao);
 		}

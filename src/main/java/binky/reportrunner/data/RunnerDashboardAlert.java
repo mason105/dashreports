@@ -155,6 +155,7 @@ public class RunnerDashboardAlert implements Serializable {
 	private Width width;
 	private Height height;
 	
+	
 	@ManyToOne
 	private RunnerDataSource datasource;
 

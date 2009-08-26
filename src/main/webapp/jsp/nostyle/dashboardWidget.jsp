@@ -13,9 +13,9 @@
 			<s:set name="x" value="340"/>				       		 	       		 
 		</s:if><s:else>
 			<s:if test="(alert.width.name=='Medium')">
-					<s:set name="x" value="655"/>			
+					<s:set name="x" value="705"/>			
 			</s:if><s:else>
-				<s:set name="x" value="1020"/>
+				<s:set name="x" value="1070"/>
 			</s:else>
 		</s:else>		
 	   

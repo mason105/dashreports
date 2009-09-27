@@ -22,9 +22,13 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.dashboard;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
@@ -32,10 +36,17 @@ public class ListAlerts  extends AdminRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private DashboardService dashboardService;
-	private List<RunnerDashboardAlert> alerts;
+	private RunnerGroupDao groupDao;
+	
+	private Map<RunnerGroup,List<RunnerDashboardAlert>> alerts;
 	@Override
 	public String execute() throws Exception {
-		alerts = dashboardService.getAllAlerts();
+		alerts=new HashMap<RunnerGroup, List<RunnerDashboardAlert>>();
+		List<RunnerGroup> groups = groupDao.listGroups();
+		for (RunnerGroup group:groups){
+			List<RunnerDashboardAlert> a = dashboardService.getAlertsForGroup(group.getGroupName());
+			alerts.put(group, a);
+		}
 		return SUCCESS;
 	}
 	public DashboardService getDashboardService() {
@@ -44,8 +55,18 @@ public class ListAlerts  extends AdminRunnerAction {
 	public void setDashboardService(DashboardService dashboardService) {
 		this.dashboardService = dashboardService;
 	}
-	public List<RunnerDashboardAlert> getAlerts() {
+	public RunnerGroupDao getGroupDao() {
+		return groupDao;
+	}
+	public void setGroupDao(RunnerGroupDao groupDao) {
+		this.groupDao = groupDao;
+	}
+	public Map<RunnerGroup, List<RunnerDashboardAlert>> getAlerts() {
 		return alerts;
 	}
+	public void setAlerts(Map<RunnerGroup, List<RunnerDashboardAlert>> alerts) {
+		this.alerts = alerts;
+	}
+
 	
 }

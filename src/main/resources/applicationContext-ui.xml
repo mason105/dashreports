@@ -320,6 +320,9 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>		
+		<property name="groupDao">
+			<ref bean="groupDao" />
+		</property>				
 	</bean>
 
 	<bean id="listCurrentExecutingJobsAction" class="binky.reportrunner.ui.actions.admin.ListCurrentExecutingJobsAction"

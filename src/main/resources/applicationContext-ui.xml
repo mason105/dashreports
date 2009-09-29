@@ -321,7 +321,7 @@
 			<ref bean="dashboardService" />
 		</property>		
 		<property name="groupDao">
-			<ref bean="groupDao" />
+			<ref bean="runnerGroupDao" />
 		</property>				
 	</bean>
 

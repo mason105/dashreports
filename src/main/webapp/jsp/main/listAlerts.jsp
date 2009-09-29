@@ -11,7 +11,7 @@
 <table border="0" width="100%">
 	<tr class="rowHeader"> 
 		
-		<td colspan="4" class="rowHeader"><a href="setupEditAlert.action"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add
+		<td colspan="3" class="rowHeader"><a href="setupEditAlert.action"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add
 		New Alert</a></td>
 	</tr>
 <s:if test="alerts.size>0">					
@@ -20,7 +20,7 @@
 		<%
 			boolean rowOdd = true;
 		%>
-		<tr class="rowHeader"><td colspan="4"><s:property value="%{key.groupName}"/></td>
+		<tr class="rowHeader"><td colspan="3"><s:property value="%{key.groupName}"/></td>
 		<s:iterator value="value">
 			<%
 				if (rowOdd) {
@@ -35,9 +35,6 @@
 			<%
 				}
 			%>
-				<td>
-					<s:property value="id" />
-				</td>
 				<td>
 					<s:property value="alertName" />
 				</td>		

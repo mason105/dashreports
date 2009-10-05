@@ -22,6 +22,8 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.datasource;
 
+import org.springframework.dao.DataIntegrityViolationException;
+
 import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
@@ -33,7 +35,12 @@ public class DeleteDataSource extends AdminRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
-		dataSourceService.deleteDataSource(dataSourceName);
+		try {
+			dataSourceService.deleteDataSource(dataSourceName);
+		} catch (DataIntegrityViolationException e) {
+			super.addActionError("Unable to delete - " + dataSourceName + " is being used by one or more jobs!");
+			return ERROR;
+		} 
 		return SUCCESS;
 	}
 

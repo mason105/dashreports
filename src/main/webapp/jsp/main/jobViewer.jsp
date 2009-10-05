@@ -9,10 +9,7 @@
 		<sx:head parseContent="true" />
 	</head>
 <body>
-	<span class="pageTitle"><img
-	src="<s:url value="/images/icons/application_form_magnify.png"/>" align="absmiddle" />View Report -  <s:property
-			value="%{jobName}" /> in Group <s:property
-			value="%{groupName}" /></span>	
+	<span class="pageTitle"><img src="<s:url value="/images/icons/application_form_magnify.png"/>" align="absmiddle" />View Report -  <s:property value="%{jobName}" /> in Group <s:property value="%{groupName}" /></span>	
 
 	<s:iterator value="results" status="rowstatus">
 		<div class="formGroup">

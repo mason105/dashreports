@@ -52,6 +52,9 @@
 					<param name="actionName">index</param>
 				</result>
 			<result name="securityError">/jsp/main/securityError.jsp</result>
+			<result  name="ERROR">
+				/jsp/main/errorPage.jsp
+			</result>			
 		</global-results>
 		<action name="logout" class="logoutAction"/>
 		<action name="index" class="indexAction">
@@ -139,6 +142,7 @@
 			<result type="redirectAction">
 				<param name="actionName">listDataSources</param>
 			</result>
+
 		</action>
 
 

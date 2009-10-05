@@ -6,15 +6,13 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-<span class="pageTitle"><img
-	src="<s:url value='/images/icons/group.png'/>" align="absmiddle" />Groups</span>
+<span class="pageTitle"><img src="<s:url value='/images/icons/group.png'/>" align="absmiddle" />Groups</span>
 
 <table border="0" width="100%">
 	<s:if test="sessionUser.isAdmin == true">
 	<tr class="rowHeader"> 
 		
-		<td colspan="4" class="rowHeader"><a href="setupEditGroup.action"><img
-			src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add
+		<td colspan="4" class="rowHeader"><a href="setupEditGroup.action"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add
 		Group</a></td>
 	</tr>
 	</s:if>

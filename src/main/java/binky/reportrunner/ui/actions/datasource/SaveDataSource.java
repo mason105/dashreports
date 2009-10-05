@@ -33,9 +33,12 @@ public class SaveDataSource extends AdminRunnerAction {
 	private RunnerDataSource dataSource;
 	@Override
 	public String execute() throws Exception {
-		
-		dataSourceService.saveUpdateDataSource(dataSource);
-
+		try {
+			dataSourceService.saveUpdateDataSource(dataSource);
+		} catch (Exception e) {
+			super.addActionError(e.getMessage());
+			return INPUT;
+		}
 		return SUCCESS;
 	}
 

@@ -153,6 +153,9 @@
 	</bean>
 	<bean id="runnerDatasourceService" class="binky.reportrunner.service.impl.DatasourceServiceImpl"
 		scope="singleton">		
+		<property name="dataSourceDao">
+			<ref bean="runnerDataSourceDao" />
+		</property>
 	</bean>
 
 </beans>

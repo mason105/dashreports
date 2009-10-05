@@ -162,7 +162,7 @@ function drawTabs() {
 				 <s:select label="Chart Background Colour" 
 				    name="dashboardAlert.backGroundColour" 
 				    list="#{'#FFFFFF':'White',
-				    #000000':'Black',
+				    '#000000':'Black',
 					'#150517':'Gray0',
 					'#250517':'Gray18',
 					'#2B1B17':'Gray21',

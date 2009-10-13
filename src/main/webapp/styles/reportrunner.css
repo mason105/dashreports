@@ -40,15 +40,29 @@ padding: 0;
 margin: 0;
 }
 
-#leftnav
+#leftNav
 {
 position:absolute;
 top:51px;
-float: left;
 width: 150px;
 margin: 0;
 bottom:20px;
+overflow: hidden;	
 }
+
+
+#content
+{
+	position:absolute;
+	padding:0px;
+	top:51px;
+	left:151px;
+	border-left: 1px solid gray;
+	bottom:15px;
+	right:0px;
+	overflow: auto;	
+}
+
 .dashFrameCont{
 position:absolute;
 border:1px solid gray;
@@ -64,49 +78,23 @@ width:100%;
 .tabBar {;
 }
 
-.widgetLabel {
-width: 100%;
-	font-weight:bold;
-	font-size:11px;
-	background-image: url(../images/formheaderbg.png);
-	background-repeat: repeat-x; 	
-	height:18px;
-	padding-top:1px;
-	padding-bottom:1px;
-}
+
+
 
 #footer
 {
-position:absolute;
-color: #333;
-background-color: #ccc;
-border-top: 1px solid gray;
-height:15px;
-bottom:0px;
-left:0px;
-right:0px;
-}
-
-
-.leftNavFrame {
-position:absolute;
-top:0px;
-width: 150px; 
-height:100%;
-bottom:0px;
-}
-
-#content
-{
 	position:absolute;
-	padding:0px;
-	top:51px;
-	left:151px;
-	border-left: 1px solid gray;
-	bottom:15px;
+	color: #333;
+	background-color: #ccc;
+	border-top: 1px solid gray;
+	height:15px;
+	bottom:0px;
+	left:0px;
 	right:0px;
-	overflow: auto;
 }
+
+
+
 /* dashboard layout */
 # toolbar {
 	position:absolute;
@@ -132,17 +120,13 @@ bottom:0px;
 }
 
  .alertBox {
-height:100%;
+	height:100%;
  }
- .widgetContainer {
-  border: 1px solid gray;
- float:left;
- margin-top:5px;
-  margin-left:10px;
- margin-right:10px;
+.widgetContainer {
+
  }
 .clearFix {
-clear:both; 
+	clear:both; 
 }
 
 
@@ -206,8 +190,7 @@ div.formSectionInner div.smallLabel {
 .pageTitle{
 	display:inline-table;
 	font-weight:bold;
-	font-size:14px;
-	width:100%;
+	font-size:14px;	
 	height:20px;	
 	padding-top:4px;
 	background-image: url(../images/formheaderbg.png);
@@ -257,45 +240,92 @@ div.formSectionInner div.smallLabel {
 
 
 /* DASHBOARD CONTAINER SIZES */
+
+
+
 .alertBox_Small_Small {
-	width:342px;
-	min-height:300px;
-
+	width:353px;
+	min-height:293px;
+	border: 1px solid gray;
+	float:left;
+	margin:3px;
 }
+
 .alertBox_Small_Medium {
-	width:342px;
-	min-height:450px;
+	width:353px;
+	min-height:594px;
+	border: 1px solid gray;	
+	float:left;
+	margin:3px;
 }
+
+
 .alertBox_Small_Large {
-	width:342px;
-	min-height:600px;
-
+	width:353px;
+	min-height:694px;
+	border: 1px solid gray;		
+	float:left;
+	margin:3px;
 }
+
 .alertBox_Medium_Small {
-	width:705px;
-	min-height:300px;
-
+	width:714px;
+	min-height:293px;
+	border: 1px solid gray;	
+	float:left;
+	margin:3px;
 }
+
 .alertBox_Medium_Medium {
-	width:705px;
-	min-height:450px;
-
+	width:716px;
+	min-height:594px;
+	border: 1px solid gray;	
+	float:left;
+	margin:3px;
 }
+
 .alertBox_Medium_Large {
-	width:705px;
-	min-height:600px;
+	border: 1px solid gray;	
+	width:716px;
+	min-height:895px;
+	float:left;
+	margin:3px;	
 }
+
 .alertBox_Large_Small {
-	width:1070px;
-	min-height:300px;
-
+	width:1075px;
+	min-height:293px;
+	float:left;
+	margin:3px;
+	border: 1px solid gray;	
+	
 }
+
 .alertBox_Large_Medium {
-	width:1020px;
-	min-height:450px;
-
+	width:1075px;
+	min-height:594px;
+	float:left;
+	margin:3px;	
+	border: 1px solid gray;	
+	
 }
+
 .alertBox_Large_Large {
-	width:1020px;
-	min-height:600px;
+	width:1075px;
+	min-height:895px;
+	float:left;
+	margin:3px;
+	border: 1px solid gray;	
+	
+}
+
+
+.widgetLabel {	
+	font-weight:bold;
+	font-size:11px;
+	background-image: url(../images/formheaderbg.png);
+	background-repeat: repeat-x; 	
+	height:18px;
+	padding-top:1px;
+	padding-bottom:1px;
 }

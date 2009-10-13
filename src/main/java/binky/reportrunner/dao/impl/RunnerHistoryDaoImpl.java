@@ -113,6 +113,13 @@ public class RunnerHistoryDaoImpl extends HibernateDaoSupport implements RunnerH
 		logger.debug("got " + findByCriteria.size());
 		return findByCriteria;
 	}
-	
+
+	public void deleteRangeOfEvents(Date oldset) {
+		logger.debug("delete events for: "  + oldset );
+		DetachedCriteria criteria = DetachedCriteria.forClass(RunnerHistoryEvent.class)
+		.add(Property.forName("timestamp").le(oldset));
+
+		getHibernateTemplate().deleteAll(getHibernateTemplate().findByCriteria(criteria));	
+	}	
 	
 }

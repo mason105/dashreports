@@ -36,7 +36,7 @@ public interface RunnerHistoryDao {
 	public List<RunnerHistoryEvent> getLongestRunningEvents(int eventCount);
 	public List<RunnerHistoryEvent> getSuccessEvents(int eventCount);
 	public List<RunnerHistoryEvent> getFailEvents(int eventCount);
-	
+	public void deleteRangeOfEvents(Date oldest);
 	/**
 	 * 
 	 * Only really used to clean up after the test

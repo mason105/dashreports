@@ -57,6 +57,8 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 	private static final Logger logger = Logger
 			.getLogger(GetDashboardChartDataAction.class);
 
+	private String seriesFilter;
+	
 	@Override
 	public String execute() throws Exception {
 		RunnerDashboardAlert alert = dashboardService.getAlert(alertId);
@@ -353,6 +355,14 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 	public void setData(String data) {
 		this.data = data;
+	}
+
+	public String getSeriesFilter() {
+		return seriesFilter;
+	}
+
+	public void setSeriesFilter(String seriesFilter) {
+		this.seriesFilter = seriesFilter;
 	}
 
 }

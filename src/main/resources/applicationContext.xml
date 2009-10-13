@@ -45,6 +45,11 @@
 	
 	<bean id="quartzFactory"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		  <property name="triggers">
+		    <list>
+		      <ref bean="pruneEventHistoryTrigger"/>		      
+		    </list>
+		  </property>
 		<property name="overwriteExistingJobs">
 			<value>true</value>
 		</property>
@@ -99,6 +104,7 @@
 		scope="singleton">
 		<property name="quartzScheduler" ref="quartzFactory" />
 		<property name="clustered" value="${org.quartz.jobStore.isClustered}"/>
+		
 	</bean>
 	
 	
@@ -158,4 +164,20 @@
 		</property>
 	</bean>
 
+	<bean name="pruneEventHistoryJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+	  <property name="jobClass" value="binky.reportunner.util.PruneEventHistory"/>
+	  <property name="jobDataAsMap">
+	    <map>
+	      <entry key="daysToKeep" value="${reportrunner.daysToKeep}"/>
+	      <entry key="historyDao" value-ref="runnerHistoryDao"/>
+	    </map>
+	  </property>
+	</bean>
+		
+	<bean id="pruneEventHistoryTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+	  <property name="jobDetail" ref="pruneEventHistoryJob"/>
+		<!-- run every morning at 6 AM -->
+	  <property name="cronExpression" value="0 0 6 * * ?"/>
+	</bean>
+		
 </beans>

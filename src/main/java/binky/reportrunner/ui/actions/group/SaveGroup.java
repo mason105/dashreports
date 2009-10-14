@@ -45,6 +45,10 @@ public class SaveGroup extends AdminRunnerAction {
 					+ " not valid for user " + super.getSessionUser().getUserName());
 			throw se;
 		}
+		
+		//hack to force group update
+		super.getSessionUser().setGroups(groupDao.listGroups());
+		
 		return SUCCESS;
 	}
 

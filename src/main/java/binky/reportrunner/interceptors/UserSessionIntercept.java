@@ -63,11 +63,15 @@ public class UserSessionIntercept implements Interceptor, StrutsStatics {
 		logger.debug("(invocation.getAction() instanceof AdminRunnerAction)" + (invocation.getAction() instanceof AdminRunnerAction));
 		
 		//hack to keep sessions up to date for admins adding groups etc
+		
+		//14/10/09 Removed due to excessive DB reads
+		/*
 		if (user.getIsAdmin()) {
 			user.setGroups(groupDao.listGroups());
 		}	else {
 			user=userDao.getUser(user.getUserName());
 		}
+		*/
 		
 		if ((invocation.getAction() instanceof AdminRunnerAction) && !user.getIsAdmin() ) {
 			logger.warn("access denied to " + invocation.getAction().getClass() + " for user: " + user.getUserName()) ;

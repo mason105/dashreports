@@ -188,6 +188,7 @@ div.formSectionInner div.smallLabel {
 	padding-left: 4px;
 }
 .pageTitle{
+	width:100%;
 	display:inline-table;
 	font-weight:bold;
 	font-size:14px;	

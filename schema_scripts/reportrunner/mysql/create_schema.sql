@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE IF EXISTS `reportrunner`.`runnergroup`;
 CREATE TABLE  `reportrunner`.`runnergroup` (
   `groupName` varchar(255) NOT NULL,
@@ -152,3 +154,8 @@ CREATE TABLE  `reportrunner`.`runnergroup_runneruser` (
   CONSTRAINT `FK6EC21C6B5001AF3B` FOREIGN KEY (`users_userName`) REFERENCES `runneruser` (`userName`),
   CONSTRAINT `FK6EC21C6BB4A88336` FOREIGN KEY (`RunnerGroup_groupName`) REFERENCES `runnergroup` (`groupName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+insert into RunnerUser values ('admin','admin',1,0,0,'password');
+commit;
+
+SET FOREIGN_KEY_CHECKS = 1;

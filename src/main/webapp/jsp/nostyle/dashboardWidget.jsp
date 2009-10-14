@@ -30,7 +30,7 @@
 		</s:else>								        
 	
 		<div id="alert_<s:property value="%{alert.id}"/>" class="alertBox_<s:property value="%{alert.width}"/>_<s:property value="%{alert.height}"/>">
-			<div class="widgetLabel"><s:property value="%{alert.alertName}"/></div>
+			<div class="widgetLabel"><s:property value="%{alert.alertName}"/> (Updated: <s:property value="%{alert.lastUpdated}"/> )</div>
 			<m:graph id="chart_%{id}" width="%{x}" height="%{y}" align="middle" bgcolor="#FFFFFF" url="/getDashboardChartData.action?alertId=%{alert.id}" />											
 		</div>
 

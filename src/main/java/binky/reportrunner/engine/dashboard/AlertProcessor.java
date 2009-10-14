@@ -25,6 +25,7 @@ package binky.reportrunner.engine.dashboard;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 
 import javax.sql.DataSource;
 
@@ -90,7 +91,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 		try {
 			ResultSet rs = conn.createStatement().executeQuery(sql);
 			alert.setCurrentDataset(new RowSetDynaClass(rs,false));
-			
+			alert.setLastUpdated(Calendar.getInstance().getTime());
 			dashboardDao.saveUpdateAlert(alert);
 			rs.close();
 		} finally {

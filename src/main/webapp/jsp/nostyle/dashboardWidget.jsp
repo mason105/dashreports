@@ -30,13 +30,15 @@
 		</s:else>								        
 	
 		<div id="alert_<s:property value="%{alert.id}"/>" class="alertBox_<s:property value="%{alert.width}"/>_<s:property value="%{alert.height}"/>">
-			<div class="widgetLabel"><s:property value="%{alert.alertName}"/> (Updated: <s:property value="%{alert.lastUpdated}"/> )</div>
+			<img src="<s:url value="/images/icons/chart_bar.png"/>" style="float:left;padding-right:5px;" title="(Last Updated: <s:date name="%{alert.lastUpdated}" format="yyyy-MM-dd hh:mm:ss" />)"/> 
+			<div class="widgetLabel"><s:property value="%{alert.alertName}"/></div>
 			<m:graph id="chart_%{id}" width="%{x}" height="%{y}" align="middle" bgcolor="#FFFFFF" url="/getDashboardChartData.action?alertId=%{alert.id}" />											
 		</div>
 
 	</s:if><s:else>			
 				 
 		<div id="alert_<s:property value="%{alert.id}"/>" class="alertBox_<s:property value="%{alert.width}"/>_<s:property value="%{alert.height}"/>">								
+			<img src="<s:url value="/images/icons/script.png"/>" style="float:left;padding-right:5px;" title="(Last Updated: <s:date name="%{alert.lastUpdated}" format="yyyy-MM-dd hh:mm:ss" />)"/> 
 			<div class="widgetLabel"><s:property value="%{alert.alertName}"/></div>
 			<display:table name="alert.currentDataset.rows"  requestURI="index.action" export="false">
 			</display:table>

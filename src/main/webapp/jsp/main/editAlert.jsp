@@ -26,19 +26,19 @@ function drawTabs() {
 	var tabDetails = (new Jx.Button.Tab({
         		image: '<s:url value="/images/icons/report.png"/>',
            		label: 'Details',            
-           		content: 'details',            	
+           		content: 'details'            	
        		}));
        		
 	var tabLayout = (new Jx.Button.Tab({
         		image: '<s:url value="/images/icons/table_lightning.png"/>',
            		label: 'Layout',            
-           		content: 'layout',            	
+           		content: 'layout'            	
        		}));
        		
 	var tabChart = (new Jx.Button.Tab({
         		image: '<s:url value='/images/icons/chart_bar.png'/>',
            		label: 'Chart',            
-           		content: 'chart',            	
+           		content: 'chart'            	
        		}));
     tb.add(tabDetails); 
     tabSet.add(tabDetails);  

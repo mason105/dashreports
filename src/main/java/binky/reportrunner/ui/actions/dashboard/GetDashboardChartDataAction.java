@@ -108,8 +108,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 							|| (alert.getSeriesNameColumn().isEmpty())) {
 						seriesName = "VALUE";
 					} else {
-						seriesName = (String) b
-								.get(alert.getSeriesNameColumn());
+						seriesName = ""+ b.get(alert.getSeriesNameColumn());
 					}
 					Double value;
 

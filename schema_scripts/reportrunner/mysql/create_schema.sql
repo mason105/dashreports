@@ -45,12 +45,13 @@ CREATE TABLE  `reportrunner`.`runnerdashboardalert` (
   `height` int(11) DEFAULT NULL,
   `numberFormat` varchar(255) DEFAULT NULL,
   `width` int(11) DEFAULT NULL,
+  `visualRefreshTime` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `FK9F5B6981FB5A866` (`group_groupName`),
   KEY `FK9F5B6986235B7F2` (`datasource_dataSourceName`),
   CONSTRAINT `FK9F5B6981FB5A866` FOREIGN KEY (`group_groupName`) REFERENCES `runnergroup` (`groupName`),
   CONSTRAINT `FK9F5B6986235B7F2` FOREIGN KEY (`datasource_dataSourceName`) REFERENCES `runnerdatasource` (`dataSourceName`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `reportrunner`.`runnerdatasource`;
 CREATE TABLE  `reportrunner`.`runnerdatasource` (

@@ -154,7 +154,8 @@ public class RunnerDashboardAlert implements Serializable {
 	private XAxisStep xAxisStep;
 	private Width width;
 	private Height height;
-	
+	//seconds to refresh the widget
+	private long visualRefreshTime=60;
 	
 	@ManyToOne
 	private RunnerDataSource datasource;
@@ -394,6 +395,18 @@ public class RunnerDashboardAlert implements Serializable {
 	public void setBackGroundColour(String backGroundColour) {
 		this.backGroundColour = backGroundColour;
 	}
+
+
+	public long getVisualRefreshTime() {
+		return visualRefreshTime;
+	}
+
+
+	public void setVisualRefreshTime(long visualRefreshTime) {
+		this.visualRefreshTime = visualRefreshTime;
+	}
+
+
 	
 	
 }

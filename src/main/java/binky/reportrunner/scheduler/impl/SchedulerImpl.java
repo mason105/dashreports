@@ -320,5 +320,24 @@ public class SchedulerImpl implements Scheduler {
 			throws SchedulerException {
 		this.interruptRunningJob(""+alertId, dashboardSchedulerGroup);
 	}
+
+	public Date getNextRunTime(Integer alertId) throws SchedulerException {
+		try {
+			return this.quartzScheduler.getTrigger(
+					alertId.toString() + ":" + dashboardSchedulerGroup + ":trigger", "RunnerTriggers")
+					.getNextFireTime();
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException("Error next run time for alert " + alertId, e);
+		}
+	}
+
+	public Date getPreviousRunTime(Integer alertId) throws SchedulerException {
+		try {
+			return this.quartzScheduler.getTrigger(
+					alertId.toString() + ":" + dashboardSchedulerGroup + ":trigger", "RunnerTriggers").getPreviousFireTime();
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException("Error last run time for alert " + alertId, e);
+		}
+	}
 	
 }

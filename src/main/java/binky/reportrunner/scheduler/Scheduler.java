@@ -45,8 +45,11 @@ public interface Scheduler {
 	public void invokeJob(String jobName, String groupName) throws SchedulerException;
 	
 	public Date getNextRunTime(String jobName, String groupName)  throws SchedulerException;
+	public Date getNextRunTime(Integer alertId)  throws SchedulerException;
+	
 	
 	public Date getPreviousRunTime(String jobName, String groupName)  throws SchedulerException;
+	public Date getPreviousRunTime(Integer alertId)  throws SchedulerException;
 	
 	public Boolean isJobActive(String jobName, String groupName)  throws SchedulerException;
 		

@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.engine.dashboard;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,13 +52,18 @@ public class AlertProcessor implements Job, InterruptableJob {
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
 
-		// Grab the elements of the job from the context to pass on
+		// Grab the elements of the job from the context to pass 	on
 		RunnerDashboardAlert alert = (RunnerDashboardAlert) context
 				.getJobDetail().getJobDataMap().get("alert");
 
 		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get(
 				"dataSource");
 		
+		try {
+			ds.setLogWriter(new PrintWriter(System.out));
+		} catch (SQLException e1) {
+			logger.warn(e1.getMessage(),e1);
+		}
 		
 		this.dashboardDao = (RunnerDashboardAlertDao) context.getJobDetail()
 				.getJobDataMap().get("dashboardDao");
@@ -103,7 +109,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 
 	public void interrupt() throws UnableToInterruptJobException {
 		try {
-			conn.close();
+			if (conn!=null) conn.close();			
 		} catch (SQLException e) {
 			throw new UnableToInterruptJobException(e);
 		}

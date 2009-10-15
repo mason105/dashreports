@@ -23,6 +23,7 @@
 package binky.reportrunner.service.impl;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,7 +51,31 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	public List<RunnerDashboardAlert> getAlertsForGroup(String groupName) {
-		return dashboardDao.getAlertsForGroup(groupName);
+		List<RunnerDashboardAlert> as = dashboardDao.getAlertsForGroup(groupName);			
+		List<RunnerDashboardAlert> alerts=new LinkedList<RunnerDashboardAlert>();
+		
+		//temp hack
+		for (RunnerDashboardAlert a: as) 
+		{
+			long visualRefreshTime=60;
+
+			try {
+				Date last = scheduler.getPreviousRunTime(a.getId());
+				Date next = scheduler.getNextRunTime(a.getId());
+				if ((last!=null) && (next!=null) && (last.getTime()<next.getTime())) {
+					visualRefreshTime=(next.getTime()-last.getTime());
+				}				
+			} catch (SchedulerException e) {
+				logger.error(e.getMessage(),e);
+			}		
+			
+			a.setVisualRefreshTime(visualRefreshTime);
+			alerts.add(a);
+			
+		}
+		return alerts;
+		
+		
 	}
 
 	public List<RunnerDashboardAlert> getAllAlerts() {

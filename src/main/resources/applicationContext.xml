@@ -136,6 +136,10 @@
 			<ref bean="authenticationService" />
 		</property>
 	</bean>
+	
+	<bean id="noCacheInterceptor" class="binky.reportrunner.interceptors.NoCache" scope="singleton" >
+	</bean>
+	
 	<bean id="userSessionIntercept" class="binky.reportrunner.interceptors.UserSessionIntercept"
 		scope="singleton" >
 		<property name="userDao">
@@ -145,6 +149,7 @@
 			<ref bean="runnerGroupDao" />
 		</property>	
 	</bean>
+	
 	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
 		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
@@ -169,7 +174,6 @@
 	  <property name="jobDataAsMap">
 	    <map>
 	      <entry key="daysToKeep" value="${reportrunner.daysToKeep}"/>
-	      <entry key="historyDao" value-ref="runnerHistoryDao"/>
 	    </map>
 	  </property>
 	</bean>

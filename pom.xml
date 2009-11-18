@@ -330,11 +330,12 @@
 			<version>2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>net.java.dev.connext-graphs</groupId>
-			<artifactId>connext-graphs</artifactId>		
-			<version>0.8-fork</version>
+			<groupId>binky.ofc2plugin</groupId>
+			<artifactId>ofc2plugin</artifactId>		
+			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<finalName>reportrunner</finalName>
 
@@ -455,15 +456,5 @@
 
 		</plugins>
 	</reporting>
-
-	<distributionManagement>
-		<site>
-			<id>siteServer</id>
-			<name>Report Runner</name>
-			<url>
-				scp://shell.sourceforge.net/home/groups/r/re/reportrunner/htdocs/mvn
-			</url>
-		</site>
-	</distributionManagement>
 
 </project>

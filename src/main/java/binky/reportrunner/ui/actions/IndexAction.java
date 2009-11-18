@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.data.RunnerGroup;
@@ -34,6 +36,7 @@ public class IndexAction extends StandardRunnerAction {
 
 	private DashboardService dashboardService;
 	private static final long serialVersionUID = 9093344521097271797L;
+	private static final Logger logger = Logger.getLogger(IndexAction.class);
 	private  Map<String, List<RunnerDashboardAlert>>  alerts;
 	private RunnerGroupDao groupDao;
 	private Integer currentRow;
@@ -44,12 +47,15 @@ public class IndexAction extends StandardRunnerAction {
 		List<RunnerGroup> groups;
 		
 		if (super.getSessionUser().getIsAdmin()) {
+			logger.debug("is admin so fetching admin groups");
 			groups=groupDao.listGroups();
 		} else {
+			logger.debug("is not admin so pulling groups from session");
 			groups=getSessionUser().getGroups();
 		}
 		
 		for (RunnerGroup g: groups) {
+			
 			List<RunnerDashboardAlert> a = dashboardService.getAlertsForGroup(g.getGroupName());		
 			alerts.put(g.getGroupName(), a);
 		}

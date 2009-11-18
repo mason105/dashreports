@@ -155,7 +155,7 @@ public class RunnerDashboardAlert implements Serializable {
 	private Width width;
 	private Height height;
 	//seconds to refresh the widget
-	private long visualRefreshTime=60;
+	private long visualRefreshTime=60000;
 	
 	@ManyToOne
 	private RunnerDataSource datasource;

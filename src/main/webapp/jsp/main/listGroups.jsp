@@ -43,8 +43,7 @@
 						<img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" />
 					</s:a></td>
 					<td width="16"><s:a href="deleteGroup.action?groupName=%{groupName}"  onClick="return confirm('Really delete this group and all jobs within it?');">
-						<img src="<s:url value='/images/icons/delete.png'/>" alt="Delete"
-							align="absmiddle" />
+						<img src="<s:url value='/images/icons/delete.png'/>" alt="Delete" align="absmiddle" />
 					</s:a></td>
 				</s:if>
 				<s:else>

@@ -29,30 +29,36 @@ import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.service.AuthenticationService;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
-
+	
 	private RunnerUserDao userDao;
 	private static final Logger logger = Logger
 			.getLogger(AuthenticationServiceImpl.class);
+	private  AUTH_RESULT lastResult;
+	
+	public RunnerUser authUser(String userName, String password ) {
 
-	public RunnerUser authUser(String userName, String password) {
-
-		logger.info("Authenticating user: " + userName);
-
-		RunnerUser user = userDao.getUser(userName);
+		RunnerUser  user = userDao.getUser(userName);
 		if (user == null) {
-			logger.warn("Authentication failed - unknown user");
-			return null;
+			logger.warn("Authentication failed - unknown user - " + userName);
+			user=null;
+			this.lastResult = AUTH_RESULT.FAIL;			
 		} else {
 			if (password.equals(user.getPassword())) {
-				// TODO:hashing
-				logger.info("Authenticated user: " + userName + " " + user.getFullName());
-				return user;
+				if (!user.getIsLocked()) {
+					logger.info("Authenticated user: " + userName + " " + user.getFullName());
+					this.lastResult = AUTH_RESULT.SUCCESS;
+				} else {
+					logger.warn("Authentication failed - locked");
+					user=null;
+					this.lastResult = AUTH_RESULT.LOCKED;
+				}
 			} else {
-				logger.warn("Authentication failed - invalid password");
-				return null;				
+				logger.warn("Authentication failed - invalid password for " + userName);
+				user=null;
+				this.lastResult = AUTH_RESULT.FAIL;				
 			}
 		}
-
+		return user;
 	}
 
 	public RunnerUserDao getUserDao() {
@@ -62,5 +68,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	public void setUserDao(RunnerUserDao userDao) {
 		this.userDao = userDao;
 	}
-
+	public  AUTH_RESULT getLastResult() {
+		return this.lastResult;
+	}
 }

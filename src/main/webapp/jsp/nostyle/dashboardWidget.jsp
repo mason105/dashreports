@@ -1,6 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
-<%@ taglib prefix="m" uri="/connext" %>
+<%@ taglib prefix="o" uri="/ofc2" %>
 <link href="<s:url value='/styles/displaytag.css'/>" rel="stylesheet" type="text/css" media="all" />
 
 <!--<s:property value="gridData" escape="false" />-->
@@ -32,7 +32,7 @@
 		<div id="alert_<s:property value="%{alert.id}"/>" class="alertBox_<s:property value="%{alert.width}"/>_<s:property value="%{alert.height}"/>">
 			<img src="<s:url value="/images/icons/chart_bar.png"/>" style="float:left;padding-right:5px;" title="(Last Updated: <s:date name="%{alert.lastUpdated}" format="yyyy-MM-dd HH:mm:ss" />)"/> 
 			<div class="widgetLabel"><s:property value="%{alert.alertName}"/></div>
-			<m:graph id="chart_%{id}" width="%{x}" height="%{y}" align="middle" bgcolor="#FFFFFF" url="/getDashboardChartData.action?alertId=%{alert.id}" />											
+			<o:graph id="chart_%{id}" width="%{x}" height="%{y}" dataUrl="/getDashboardChartData.action?alertId=%{alert.id}" />											
 		</div>
 
 	</s:if><s:else>			

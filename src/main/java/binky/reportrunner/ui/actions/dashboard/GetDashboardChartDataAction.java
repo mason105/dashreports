@@ -22,7 +22,6 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.dashboard;
 
-import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,14 +31,16 @@ import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 
-import za.co.connext.web.components.DefaultOFCGraphDataModel;
-import za.co.connext.web.components.DefaultOFCPieDataModel;
-import za.co.connext.web.components.OFCBarGlassSeriesType;
-import za.co.connext.web.components.OFCGraphController;
-import za.co.connext.web.components.OFCLineAreaSeriesType;
-import za.co.connext.web.components.OFCLineSeriesType;
-import za.co.connext.web.components.OFCPieController;
-import za.co.connext.web.components.OFCPieSeriesType;
+import binky.ofc2plugin.charts.OFC2Chart;
+import binky.ofc2plugin.charts.config.TextItem;
+import binky.ofc2plugin.charts.config.XAxis;
+import binky.ofc2plugin.charts.config.YAxis;
+import binky.ofc2plugin.charts.elements.Element;
+import binky.ofc2plugin.charts.elements.ElementAreaLine;
+import binky.ofc2plugin.charts.elements.ElementPie;
+import binky.ofc2plugin.charts.elements.ElementStandardBar;
+import binky.ofc2plugin.charts.elements.ElementStandardLine;
+import binky.ofc2plugin.charts.elements.ElementStandardBar.BarType;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
@@ -68,9 +69,9 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			return ERROR;
 		}
 
-		Double max = 0d;
+		Float max = 0f;
 		RowSetDynaClass data = alert.getCurrentDataset();
-		Map<String, List<Double>> dataMap = new HashMap<String, List<Double>>();
+		Map<String, List<Float>> dataMap = new HashMap<String, List<Float>>();
 
 		List<Object> xLabels = new LinkedList<Object>();
 		for (Object o : data.getRows()) {
@@ -110,21 +111,21 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 					} else {
 						seriesName = ""+ b.get(alert.getSeriesNameColumn());
 					}
-					Double value;
+					Float value;
 
 					if (label.equals(x)
 							&& (seriesName.equals(s) || (((alert
 									.getSeriesNameColumn() == null) || (alert
 									.getSeriesNameColumn().isEmpty()))))) {
-						value = Double.parseDouble(b
+						value = Float.parseFloat(b
 								.get(alert.getValueColumn()).toString());
 						found = true;
 						if (value > max)
 							max = value;
-						List<Double> values = dataMap.get(s);
+						List<Float> values = dataMap.get(s);
 
 						if (values == null) {
-							values = new LinkedList<Double>();
+							values = new LinkedList<Float>();
 						}
 						values.add(value);
 
@@ -133,12 +134,12 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 					}
 				}
 				if (!found) {
-					List<Double> values = dataMap.get(s);
+					List<Float> values = dataMap.get(s);
 
 					if (values == null) {
-						values = new LinkedList<Double>();
+						values = new LinkedList<Float>();
 					}
-					values.add(0d);
+					values.add(0f);
 
 					dataMap.put(s, values);
 				}
@@ -147,9 +148,11 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 		int c = 15;
 		int y = 1;
-		List<DefaultOFCGraphDataModel> models = new LinkedList<DefaultOFCGraphDataModel>();
-		for (String modName : dataMap.keySet()) {
-			List<Double> d = dataMap.get(modName);
+		
+		OFC2Chart chart = new OFC2Chart();
+		
+		for (String elementName : dataMap.keySet()) {
+			List<Float> d = dataMap.get(elementName);
 
 			/* hack for colours */
 
@@ -183,46 +186,27 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			if (c < 0) {
 				c = 15;
 			}
-			logger.debug("colouring series " + modName + "  with: " + mainHex);
+			logger.debug("colouring series " + elementName + "  with: " + mainHex);
 			/* end hack */
-
+			
+			Element e;
+			
 			switch (alert.getChartType()) {
 			case AREA:
-				DefaultOFCGraphDataModel modelArea = new DefaultOFCGraphDataModel();
-				modelArea.setData(d);
-				modelArea.setFormat(new DecimalFormat(alert.getNumberFormat()));
-				modelArea.setSeriesType(new OFCLineAreaSeriesType(3, mainHex,
-						modName, 10, 0, ""));
-				models.add(modelArea);
-				break;
+				e = new ElementAreaLine();
 			case BAR:
-				DefaultOFCGraphDataModel modelBar = new DefaultOFCGraphDataModel();
-				modelBar.setData(d);
-				modelBar.setFormat(new DecimalFormat(alert.getNumberFormat()));
-				// modelBar.setSeriesType(new OFCBar3DSeriesType(50,
-				// mainHex,modName, 10));
-				modelBar.setSeriesType(new OFCBarGlassSeriesType(50, mainHex,
-						modName, 10));
-
-				models.add(modelBar);
-
+				e = new ElementStandardBar();
+				((ElementStandardBar)e).setBarType(BarType.Glass);
 				break;
 			case LINE:
-				DefaultOFCGraphDataModel modelLine = new DefaultOFCGraphDataModel();
-				modelLine.setData(d);
-				modelLine.setFormat(new DecimalFormat(alert.getNumberFormat()));
-				modelLine.setSeriesType(new OFCLineSeriesType(1, mainHex,
-						modName, 10, 10, 1));
-				models.add(modelLine);
+				e=new ElementStandardLine();
 				break;
 			case PIE:
-				DefaultOFCPieDataModel modelPie = new DefaultOFCPieDataModel();
-				modelPie.setLabels(xLabels);
-				modelPie.setData(d);
+				e = new ElementPie();
 				List<String> colours = new LinkedList<String>();
 				int a = 15;
 				int x = 1;
-				for (Double val : d) {
+				for (Float val : d) {
 					logger.trace("value: " + val);
 					String hex1 = Integer.toHexString(a);
 
@@ -256,79 +240,31 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 					}
 
 				}
-				modelPie.setColors(colours);
-				modelPie.setSeriesType(new OFCPieSeriesType(70, "#FFFFFF",
-						"10px", "#404040"));
-				modelPie.setFormat(new DecimalFormat(alert.getNumberFormat()));
-				models.add(modelPie);
+				((ElementPie)e).setColoursHex(colours);
 				break;
-			}
+			default:
+				e = new ElementStandardBar();
+				((ElementStandardBar)e).setBarType(BarType.Standard);
+				break;
+			}			
+			
+			e.addValues(d);
+			e.setColourHex(mainHex);
+			chart.addElement(e);
+			break;
 
 		}
 
-		// I need to rewrite this chart library - a little bit of OO could
-		// have
-		// gone a long way!
-		switch (alert.getChartType()) {
-		case AREA:
-		case BAR:
-		case LINE:
-			OFCGraphController stdController = new OFCGraphController();
-			stdController.getTitle().setText(" ");
-			stdController.getTitle().setSize(12);
-			stdController.getLabels().setLabels(xLabels);
-			stdController.getYLegend().setText(
-					alert.getYLabel() == null ? "Value" : alert.getYLabel());
-			stdController.getYLegend().setColor("#8b0000");
-			stdController.getYLegend().setSize(10);
-			stdController.getXLegend().setText(alert.getXaxisColumn());
-			stdController.getXLegend().setColor("#8b0000");
-			stdController.getXLegend().setSize(10);
-			stdController.getColor().getBgColor().setColor(
-					alert.getBackGroundColour());
-			stdController.getColor().getXAxisColor().setColor("#e3e3e3");
-			stdController.getColor().getYAxisColor().setColor("#e3e3e3");
-			stdController.getColor().getXGridColor().setColor("#e3e3e3");
-			stdController.getColor().getYGridColor().setColor("#e3e3e3");
-
-			int tick = 0;
-			if (alert.getXAxisStep() != null) {
-				switch (alert.getXAxisStep()) {
-				case Eight:
-					tick = 8;
-				case Four:
-					tick = 4;
-				case One:
-					tick = 0;
-				case Sixteen:
-					tick = 16;
-				case ThirtyTwo:
-					tick = 32;
-				case Two:
-					tick = 2;
-				}
-			}
-			stdController.getXTicks().setSize(tick);
-			// *! 0=Hori 1=Verti 2=45 deg
-			stdController.getXLabelStyle().setOrientation(1);
-			for (DefaultOFCGraphDataModel m : models) {
-				stdController.add(m);
-			}
-			stdController.getYMax().setMax((int) (Math.round(max + 0.5d)));
-			this.data = stdController.render();
-			break;
-		case PIE:
-			OFCPieController pieController = new OFCPieController();
-			pieController.getTitle().setText(" ");
-			pieController.getTitle().setSize(12);
-			pieController.getColor().getBgColor().setColor(
-					alert.getBackGroundColour());
-			for (DefaultOFCGraphDataModel m : models) {
-				pieController.set(m);
-			}
-			this.data = pieController.render();
-			break;
-		}
+		chart.setTitle(new TextItem(""));
+		XAxis xAxis = new XAxis();
+		xAxis.setLabels(xLabels);
+		chart.setXAxis(xAxis);
+		YAxis yAxis = new YAxis();
+		yAxis.setMax((float) (Math.round(max + 0.5d)));
+		chart.setYAxis(yAxis);
+		
+		this.data=chart.encodeJSONString();
+		
 		return SUCCESS;
 	}
 

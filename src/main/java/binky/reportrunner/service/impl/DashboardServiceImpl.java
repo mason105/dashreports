@@ -57,7 +57,7 @@ public class DashboardServiceImpl implements DashboardService {
 		//temp hack
 		for (RunnerDashboardAlert a: as) 
 		{
-			long visualRefreshTime=60;
+			long visualRefreshTime=60000;
 
 			try {
 				Date last = scheduler.getPreviousRunTime(a.getId());

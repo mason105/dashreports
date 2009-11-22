@@ -284,6 +284,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		YAxis yAxis = new YAxis();
 		yAxis.setMax(max);
 		chart.setYAxis(yAxis);
+		chart.setBackGroundColour(alert.getBackGroundColour());
 
 		this.data = chart.encodeJSONString();
 

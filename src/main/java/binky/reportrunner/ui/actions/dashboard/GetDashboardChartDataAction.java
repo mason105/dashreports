@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.dashboard;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,8 +41,10 @@ import binky.ofc2plugin.charts.elements.ElementAreaLine;
 import binky.ofc2plugin.charts.elements.ElementPie;
 import binky.ofc2plugin.charts.elements.ElementStandardBar;
 import binky.ofc2plugin.charts.elements.ElementStandardLine;
+import binky.ofc2plugin.charts.elements.NormalValues;
 import binky.ofc2plugin.charts.elements.ElementStandardBar.BarType;
 import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.data.RunnerDashboardAlert.ChartType;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -59,7 +62,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			.getLogger(GetDashboardChartDataAction.class);
 
 	private String seriesFilter;
-	
+
 	@Override
 	public String execute() throws Exception {
 		RunnerDashboardAlert alert = dashboardService.getAlert(alertId);
@@ -69,9 +72,9 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			return ERROR;
 		}
 
-		Float max = 0f;
+		Number max = 0;
 		RowSetDynaClass data = alert.getCurrentDataset();
-		Map<String, List<Float>> dataMap = new HashMap<String, List<Float>>();
+		Map<String, List<Number>> dataMap = new HashMap<String, List<Number>>();
 
 		List<Object> xLabels = new LinkedList<Object>();
 		for (Object o : data.getRows()) {
@@ -101,6 +104,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		for (String s : series) {
 			for (Object x : xLabels) {
 				boolean found = false;
+
 				for (Object o : data.getRows()) {
 					DynaBean b = (DynaBean) o;
 					String label = b.get(alert.getXaxisColumn()).toString();
@@ -109,23 +113,27 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 							|| (alert.getSeriesNameColumn().isEmpty())) {
 						seriesName = "VALUE";
 					} else {
-						seriesName = ""+ b.get(alert.getSeriesNameColumn());
+						seriesName = "" + b.get(alert.getSeriesNameColumn());
 					}
-					Float value;
+					Number value;
 
 					if (label.equals(x)
 							&& (seriesName.equals(s) || (((alert
 									.getSeriesNameColumn() == null) || (alert
 									.getSeriesNameColumn().isEmpty()))))) {
-						value = Float.parseFloat(b
-								.get(alert.getValueColumn()).toString());
+						
+						value = BigDecimal.valueOf(Double.parseDouble(b.get(
+								alert.getValueColumn()).toString()));
+
 						found = true;
-						if (value > max)
+						if (value.floatValue() > max.floatValue()) {
 							max = value;
-						List<Float> values = dataMap.get(s);
+						}
+
+						List<Number> values = dataMap.get(s);
 
 						if (values == null) {
-							values = new LinkedList<Float>();
+							values = new LinkedList<Number>();
 						}
 						values.add(value);
 
@@ -133,26 +141,28 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 						break;
 					}
 				}
+
 				if (!found) {
-					List<Float> values = dataMap.get(s);
+					List<Number> values = dataMap.get(s);
 
 					if (values == null) {
-						values = new LinkedList<Float>();
+						values = new LinkedList<Number>();
 					}
-					values.add(0f);
+					values.add(0);
 
 					dataMap.put(s, values);
 				}
+
 			}
 		}
 
 		int c = 15;
 		int y = 1;
-		
+
 		OFC2Chart chart = new OFC2Chart();
-		
+
 		for (String elementName : dataMap.keySet()) {
-			List<Float> d = dataMap.get(elementName);
+			List<Number> d = dataMap.get(elementName);
 
 			/* hack for colours */
 
@@ -186,27 +196,28 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			if (c < 0) {
 				c = 15;
 			}
-			logger.debug("colouring series " + elementName + "  with: " + mainHex);
+			logger.debug("colouring series " + elementName + "  with: "
+					+ mainHex);
 			/* end hack */
-			
+
 			Element e;
-			
+
 			switch (alert.getChartType()) {
 			case AREA:
 				e = new ElementAreaLine();
 			case BAR:
 				e = new ElementStandardBar();
-				((ElementStandardBar)e).setBarType(BarType.Glass);
+				((ElementStandardBar) e).setBarType(BarType.Glass);
 				break;
 			case LINE:
-				e=new ElementStandardLine();
+				e = new ElementStandardLine();
 				break;
 			case PIE:
 				e = new ElementPie();
 				List<String> colours = new LinkedList<String>();
 				int a = 15;
 				int x = 1;
-				for (Float val : d) {
+				for (Number val : d) {
 					logger.trace("value: " + val);
 					String hex1 = Integer.toHexString(a);
 
@@ -240,17 +251,28 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 					}
 
 				}
-				((ElementPie)e).setColoursHex(colours);
+				((ElementPie) e).setColoursHex(colours);
 				break;
 			default:
 				e = new ElementStandardBar();
-				((ElementStandardBar)e).setBarType(BarType.Standard);
+				((ElementStandardBar) e).setBarType(BarType.Standard);
 				break;
-			}			
+			}
 			
-			e.addValues(d);
+			if (alert.getChartType() != ChartType.PIE) {
+				((NormalValues)e).addValues(d);
+			} else {
+				//pie chart hack
+				int pos=0;
+				for (Object label : xLabels) {
+					((ElementPie) e).addPieValue(label.toString(), d.get(pos));					
+					pos++;
+				}
+			}
+			
 			e.setColourHex(mainHex);
 			chart.addElement(e);
+			e.setText(elementName);
 			break;
 
 		}
@@ -260,11 +282,11 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		xAxis.setLabels(xLabels);
 		chart.setXAxis(xAxis);
 		YAxis yAxis = new YAxis();
-		yAxis.setMax((float) (Math.round(max + 0.5d)));
+		yAxis.setMax(max);
 		chart.setYAxis(yAxis);
-		
-		this.data=chart.encodeJSONString();
-		
+
+		this.data = chart.encodeJSONString();
+
 		return SUCCESS;
 	}
 

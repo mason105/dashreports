@@ -38,10 +38,10 @@ import binky.ofc2plugin.charts.config.XAxis;
 import binky.ofc2plugin.charts.config.YAxis;
 import binky.ofc2plugin.charts.elements.Element;
 import binky.ofc2plugin.charts.elements.ElementAreaLine;
+import binky.ofc2plugin.charts.elements.ElementNotPie;
 import binky.ofc2plugin.charts.elements.ElementPie;
 import binky.ofc2plugin.charts.elements.ElementStandardBar;
 import binky.ofc2plugin.charts.elements.ElementStandardLine;
-import binky.ofc2plugin.charts.elements.NormalValues;
 import binky.ofc2plugin.charts.elements.ElementStandardBar.BarType;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.data.RunnerDashboardAlert.ChartType;
@@ -206,7 +206,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			case AREA:
 				e = new ElementAreaLine();
 			case BAR:
-				e = new ElementStandardBar();
+				e = new ElementStandardBar(BarType.Glass);
 				((ElementStandardBar) e).setBarType(BarType.Glass);
 				break;
 			case LINE:
@@ -254,13 +254,13 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				((ElementPie) e).setColoursHex(colours);
 				break;
 			default:
-				e = new ElementStandardBar();
+				e = new ElementStandardBar(BarType.Glass);
 				((ElementStandardBar) e).setBarType(BarType.Standard);
 				break;
 			}
 			
 			if (alert.getChartType() != ChartType.PIE) {
-				((NormalValues)e).addValues(d);
+				((ElementNotPie)e).addValues(d);
 			} else {
 				//pie chart hack
 				int pos=0;

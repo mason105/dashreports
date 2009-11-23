@@ -106,7 +106,7 @@ function tree() {
     tree.append(root);
     
     /* add groups folder to the tree */
-    var groups = new Jx.TreeFolder({label: 'Report Groups'});
+    var groups = new Jx.TreeFolder({label: 'Groups'});
     
     <s:iterator value="groups">
 	    /* put items into the folder */

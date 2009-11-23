@@ -333,8 +333,14 @@ public class SchedulerImpl implements Scheduler {
 
 	public Date getPreviousRunTime(Integer alertId) throws SchedulerException {
 		try {
-			return this.quartzScheduler.getTrigger(
-					alertId.toString() + ":" + dashboardSchedulerGroup + ":trigger", "RunnerTriggers").getPreviousFireTime();
+			Trigger t=this.quartzScheduler.getTrigger(
+					alertId.toString() + ":" + dashboardSchedulerGroup + ":trigger", "RunnerTriggers");
+					if (t!=null) {
+						return t.getPreviousFireTime();
+					} else {
+						return null;
+					}
+			
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error last run time for alert " + alertId, e);
 		}

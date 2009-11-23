@@ -123,7 +123,10 @@
 		</property>
 		<property name="jobService">
 			<ref bean="runnerJobService" />
-		</property>			
+		</property>		
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>		
 	</bean>
 	<bean id="saveGroupAction" class="binky.reportrunner.ui.actions.group.SaveGroup"
 		scope="prototype">
@@ -295,10 +298,7 @@
 	<bean id="setupEditAlertAction" class="binky.reportrunner.ui.actions.dashboard.SetupEditAlert" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
-		</property>		
+		</property>			
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
 		</property>		
@@ -308,9 +308,6 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>		
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
-		</property>		
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
 		</property>		
@@ -319,9 +316,6 @@
 	<bean id="listAlertsAction" class="binky.reportrunner.ui.actions.dashboard.ListAlerts" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
 		</property>				
 	</bean>
 

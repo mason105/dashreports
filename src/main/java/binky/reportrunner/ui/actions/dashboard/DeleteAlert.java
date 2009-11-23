@@ -22,18 +22,29 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.dashboard;
 
+import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class DeleteAlert extends AdminRunnerAction {
+public class DeleteAlert extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private DashboardService dashboardService;
 	private Integer id;
 	@Override
 	public String execute() throws Exception {
-		dashboardService.deleteAlert(id);
-		return SUCCESS;
+		String groupName= dashboardService.getAlert(id).getGroup().getGroupName();
+		if (super.getSessionUser().getGroups().contains(groupName)
+				|| super.getSessionUser().getIsAdmin()) {
+			dashboardService.deleteAlert(id);
+			return SUCCESS;
+		} else {
+
+			SecurityException se = new SecurityException("Group " + groupName
+					+ " not valid for user "
+					+ super.getSessionUser().getUserName());
+			throw se;
+		}
 	}
 	public DashboardService getDashboardService() {
 		return dashboardService;

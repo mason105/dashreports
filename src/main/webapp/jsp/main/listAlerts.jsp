@@ -11,17 +11,16 @@
 <table border="0" width="100%">
 	<tr class="rowHeader"> 
 		
-		<td colspan="3" class="rowHeader"><a href="setupEditAlert.action"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add
+		<td colspan="3" class="rowHeader"><a href="setupEditAlert.action?groupName=%{groupName}"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add
 		New Alert</a></td>
 	</tr>
+	<tr class="rowHeader"><td colspan="3"><s:property value="%{groupName}"/></td></tr>
 <s:if test="alerts.size>0">					
-		<s:iterator value="alerts" status="rowstatus">
-		<s:if test="value.size>0">		
+		<s:iterator value="alerts" >		
 		<%
 			boolean rowOdd = true;
 		%>
-		<tr class="rowHeader"><td colspan="3"><s:property value="%{key.groupName}"/></td>
-		<s:iterator value="value">
+		
 			<%
 				if (rowOdd) {
 							rowOdd = false;
@@ -38,7 +37,7 @@
 				<td>
 					<s:property value="alertName" />
 				</td>		
-				<td width="16"><s:a href="setupEditAlert.action?id=%{id}">
+				<td width="16"><s:a href="setupEditAlert.action?id=%{id}&groupName=%{groupName}">
 					<img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>
 				</td>
 				<td width="16"><s:a href="deleteAlert.action?id=%{id}"  onClick="return confirm('Really delete this alert?');">
@@ -46,8 +45,6 @@
 							align="absmiddle" /></s:a>
 				</td>
 			</tr>
-		</s:iterator>
-	</s:if>
 	</s:iterator>
 </s:if>
 </table>

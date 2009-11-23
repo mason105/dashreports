@@ -26,21 +26,20 @@ import java.util.Arrays;
 import java.util.List;
 
 import binky.reportrunner.dao.RunnerDataSourceDao;
-import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.data.RunnerDataSource;
-import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerDashboardAlert.ChartType;
 import binky.reportrunner.data.RunnerDashboardAlert.DisplayType;
 import binky.reportrunner.data.RunnerDashboardAlert.Height;
 import binky.reportrunner.data.RunnerDashboardAlert.Width;
 import binky.reportrunner.data.RunnerDashboardAlert.XAxisStep;
+import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
 
-public class SetupEditAlert extends AdminRunnerAction implements Preparable {
+public class SetupEditAlert extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -52,25 +51,33 @@ public class SetupEditAlert extends AdminRunnerAction implements Preparable {
 
 	private RunnerDataSourceDao dataSourceDao;
 
-	private RunnerGroupDao groupDao;
-
-	private List<RunnerGroup> groups;
 
 	private List<RunnerDataSource> runnerDataSources;
 
+	private String groupName;
+	
 	public void prepare() throws Exception {
 		runnerDataSources = dataSourceDao.listDataSources();
-		groups = groupDao.listGroups();
 	}
 
 	@Override
 	public String execute() throws Exception {
-		if (id==null) {
-			dashboardAlert=new RunnerDashboardAlert();
+		if (super.getSessionUser().getGroups().contains(groupName)
+				|| super.getSessionUser().getIsAdmin()) {
+			if (id==null) {
+				dashboardAlert=new RunnerDashboardAlert();
+			} else {
+				dashboardAlert = dashboardService.getAlert(id);
+			}
+			return SUCCESS;
 		} else {
-			dashboardAlert = dashboardService.getAlert(id);
+
+			SecurityException se = new SecurityException("Group " + groupName
+					+ " not valid for user "
+					+ super.getSessionUser().getUserName());
+			throw se;
 		}
-		return SUCCESS;
+		
 	}
 
 	public DashboardService getDashboardService() {
@@ -122,15 +129,6 @@ public class SetupEditAlert extends AdminRunnerAction implements Preparable {
 		this.dataSourceDao = dataSourceDao;
 	}
 
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
-
-	public void setGroupDao(RunnerGroupDao groupDao) {
-		this.groupDao = groupDao;
-	}
-
-
 
 	public List<RunnerDataSource> getRunnerDataSources() {
 		return runnerDataSources;
@@ -140,7 +138,15 @@ public class SetupEditAlert extends AdminRunnerAction implements Preparable {
 		this.runnerDataSources = runnerDataSources;
 	}
 
-	public List<RunnerGroup> getGroups() {
-		return groups;
+
+
+	public String getGroupName() {
+		return groupName;
 	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+	
+	
 }

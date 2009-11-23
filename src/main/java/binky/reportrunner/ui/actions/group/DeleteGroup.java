@@ -25,14 +25,17 @@ package binky.reportrunner.ui.actions.group;
 import java.util.List;
 
 import binky.reportrunner.dao.RunnerGroupDao;
+import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
+import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
 public class DeleteGroup extends AdminRunnerAction {
 
 	private RunnerGroupDao groupDao;
+	private DashboardService dashboardService;
 	private RunnerJobService jobService;
 	private String groupName;
 	private static final long serialVersionUID = 1L;
@@ -49,6 +52,15 @@ public class DeleteGroup extends AdminRunnerAction {
 					jobService.deleteJob(job.getPk().getJobName(), groupName);
 				}
 			}
+			
+			//fix for issue 58 - unable to delete groups
+			List<RunnerDashboardAlert> alerts= dashboardService.getAlertsForGroup(groupName);
+			if ((alerts!=null)&&(alerts.size()>0)) {
+				for (RunnerDashboardAlert a: alerts) {
+					dashboardService.deleteAlert(a.getId());
+				}
+			}
+			
 			groupDao.deleteGroup(groupName);
 		} else {
 			SecurityException se = new SecurityException("Group " + groupName
@@ -76,6 +88,14 @@ public class DeleteGroup extends AdminRunnerAction {
 
 	public void setJobService(RunnerJobService jobService) {
 		this.jobService = jobService;
+	}
+
+	public DashboardService getDashboardService() {
+		return dashboardService;
+	}
+
+	public void setDashboardService(DashboardService dashboardService) {
+		this.dashboardService = dashboardService;
 	}
 
 }

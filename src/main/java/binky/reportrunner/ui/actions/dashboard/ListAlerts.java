@@ -22,51 +22,61 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.dashboard;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
-import binky.reportrunner.data.RunnerGroup;
+import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class ListAlerts  extends AdminRunnerAction {
+public class ListAlerts extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private DashboardService dashboardService;
-	private RunnerGroupDao groupDao;
-	
-	private Map<RunnerGroup,List<RunnerDashboardAlert>> alerts;
+	private String groupName;
+
+	private List<RunnerDashboardAlert> alerts;
+
 	@Override
 	public String execute() throws Exception {
-		alerts=new HashMap<RunnerGroup, List<RunnerDashboardAlert>>();
-		List<RunnerGroup> groups = groupDao.listGroups();
-		for (RunnerGroup group:groups){
-			List<RunnerDashboardAlert> a = dashboardService.getAlertsForGroup(group.getGroupName());
-			alerts.put(group, a);
+		if (super.getSessionUser().getGroups().contains(groupName)
+				|| super.getSessionUser().getIsAdmin()) {
+			alerts = dashboardService.getAlertsForGroup(groupName);
+			//hack to expand group folder
+			super.setCurrentGroupName(groupName);
+			return SUCCESS;
+		} else {
+			
+
+			SecurityException se = new SecurityException("Group " + groupName
+					+ " not valid for user "
+					+ super.getSessionUser().getUserName());
+			throw se;
 		}
-		return SUCCESS;
 	}
+
 	public DashboardService getDashboardService() {
 		return dashboardService;
 	}
+
 	public void setDashboardService(DashboardService dashboardService) {
 		this.dashboardService = dashboardService;
 	}
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
-	public void setGroupDao(RunnerGroupDao groupDao) {
-		this.groupDao = groupDao;
-	}
-	public Map<RunnerGroup, List<RunnerDashboardAlert>> getAlerts() {
+
+	public List<RunnerDashboardAlert> getAlerts() {
 		return alerts;
 	}
-	public void setAlerts(Map<RunnerGroup, List<RunnerDashboardAlert>> alerts) {
+
+	public void setAlerts(List<RunnerDashboardAlert> alerts) {
 		this.alerts = alerts;
 	}
 
-	
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
 }

@@ -107,19 +107,38 @@ function tree() {
     
     /* add groups folder to the tree */
     var groups = new Jx.TreeFolder({label: 'Report Groups'});
-
-    tree.append(groups);
     
     <s:iterator value="groups">
 	    /* put items into the folder */
-	    groups.append(new Jx.TreeItem({
-        image: '<s:url value="/images/icons/group.png"/>',
-	        label: '<s:property value="%{groupName}"/>',
+	    group = new Jx.TreeFolder({ label: '<s:property value="%{groupName}"/>'});
+
+    	group.append(new Jx.TreeItem({
+	        label: 'Reports',
+	        image: '<s:url value="/images/icons/report.png"/>',
+			onClick: function() {
+	        	parent.window.location='listJobs.action?groupName=<s:property value="%{groupName}"/>';
+	        },
+	        contextMenu: cm
+	    }));
+    	
+   		group.append(new Jx.TreeItem({
+	        label: 'Dashboard Items',
+	        image: '<s:url value="/images/icons/chart_bar.png"/>',
 	        onClick: function() {
-	        	parent.window.location='<s:url value="listJobs.action?groupName=%{groupName}"/>';
-	        }
-    	}));
+	            parent.window.location='listAlerts.action?groupName=<s:property value="%{groupName}"/>';
+	        },
+	        contextMenu: cm
+	    }));
+	
+		<s:if test="currentGroupName==groupName">
+				group.expand();
+		</s:if>
+	
+	    groups.append(group);
     </s:iterator>
+   
+   tree.append(groups);
+
 
 	<s:if test="expandGroups==true">
 		groups.expand();
@@ -147,15 +166,7 @@ function tree() {
 	        contextMenu: cm
 	    }));
 	       
-	    manager.append(new Jx.TreeItem({
-	        label: 'Dashboard Items',
-	        image: '<s:url value="/images/icons/chart_bar.png"/>',
-	        onClick: function() {
-	            parent.window.location='listAlerts.action';
-	        },
-	        contextMenu: cm
-	    }));
-	
+	   
 	    manager.append(new Jx.TreeItem({
 	        label: 'Data Sources',
 	        image: '<s:url value="/images/icons/database_link.png"/>',

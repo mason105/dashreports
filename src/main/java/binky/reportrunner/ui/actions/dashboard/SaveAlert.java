@@ -28,7 +28,6 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.RunnerDataSourceDao;
-import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDashboardAlert;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
@@ -37,12 +36,13 @@ import binky.reportrunner.data.RunnerDashboardAlert.Height;
 import binky.reportrunner.data.RunnerDashboardAlert.Width;
 import binky.reportrunner.data.RunnerDashboardAlert.XAxisStep;
 import binky.reportrunner.engine.renderers.ChartRenderer.ChartType;
+import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
 
-public class SaveAlert extends AdminRunnerAction implements Preparable {
+public class SaveAlert extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -52,33 +52,45 @@ public class SaveAlert extends AdminRunnerAction implements Preparable {
 
 	private RunnerDataSourceDao dataSourceDao;
 
-	private RunnerGroupDao groupDao;
-
-	private List<RunnerGroup> groups;
-
 	private List<RunnerDataSource> runnerDataSources;
 
 	private static final Logger logger = Logger.getLogger(SaveAlert.class);
 	
 	public void prepare() throws Exception {
 		runnerDataSources = dataSourceDao.listDataSources();
-		groups = groupDao.listGroups();
 	}
 
 	@Override
 	public String execute() throws Exception {
-			
-		logger.debug("alert is " + dashboardAlert.toString());	
 		
-		//preserve teh current data
-		if (dashboardAlert.getId()!=null) {
-			RunnerDashboardAlert currentAlert = dashboardService.getAlert(dashboardAlert.getId());
-			dashboardAlert.setCurrentDataset(currentAlert.getCurrentDataset());
+		
+		logger.debug("alert is " + dashboardAlert.toString());	
+		String groupName=dashboardAlert.getGroup().getGroupName();
+		
+		if (super.getSessionUser().getGroups().contains(groupName)
+				|| super.getSessionUser().getIsAdmin()) {
+
+			//preserve teh current data
+			if (dashboardAlert.getId()!=null) {
+				RunnerDashboardAlert currentAlert = dashboardService.getAlert(dashboardAlert.getId());
+				dashboardAlert.setCurrentDataset(currentAlert.getCurrentDataset());
+				dashboardAlert.setLastUpdated(currentAlert.getLastUpdated());
+			}
+			RunnerGroup group = new RunnerGroup();
+			group.setGroupName(groupName);
+			dashboardAlert.setGroup(group);
+			
+			dashboardService.saveUpdateAlert(dashboardAlert);
+
+			return SUCCESS;
+		} else {
+
+			SecurityException se = new SecurityException("Group " + groupName
+					+ " not valid for user "
+					+ super.getSessionUser().getUserName());
+			throw se;
 		}
 		
-		dashboardService.saveUpdateAlert(dashboardAlert);
-
-		return SUCCESS;
 	}
 
 	public DashboardService getDashboardService() {
@@ -113,15 +125,7 @@ public class SaveAlert extends AdminRunnerAction implements Preparable {
 		this.dataSourceDao = dataSourceDao;
 	}
 
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
 
-	public void setGroupDao(RunnerGroupDao groupDao) {
-		this.groupDao = groupDao;
-	}
-
-	
 
 	public List<RunnerDataSource> getRunnerDataSources() {
 		return runnerDataSources;
@@ -131,9 +135,7 @@ public class SaveAlert extends AdminRunnerAction implements Preparable {
 		this.runnerDataSources = runnerDataSources;
 	}
 
-	public List<RunnerGroup> getGroups() {
-		return groups;
-	}
+	
 
 	public RunnerDashboardAlert getDashboardAlert() {
 		return dashboardAlert;

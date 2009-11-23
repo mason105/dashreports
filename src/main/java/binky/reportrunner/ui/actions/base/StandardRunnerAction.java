@@ -47,6 +47,8 @@ public abstract class StandardRunnerAction extends ActionSupport implements Sess
 	private static final Logger logger = Logger.getLogger(StandardRunnerAction.class);
 	public abstract String execute() throws Exception;
 
+	private String currentGroupName;
+	
 	public final RunnerUser getSessionUser() {
 		//hack to deal with thread local issues
 		RunnerUser user;
@@ -112,13 +114,25 @@ public abstract class StandardRunnerAction extends ActionSupport implements Sess
 				||actionName.toLowerCase().contains("savejob")
 				||actionName.toLowerCase().contains("deletejob")
 				||actionName.toLowerCase().contains("listjobs")
+				||actionName.toLowerCase().contains("listalerts")
 			) {
 				return true;			       
 		} else {
+			currentGroupName="";
 			return false;
 		}
 	}
 	public List<RunnerGroup> getGroups() {
 		return getSessionUser().getGroups();
 	}
+
+	public final String getCurrentGroupName() {
+		return currentGroupName;
+	}
+
+	public final void setCurrentGroupName(String currentGroupName) {
+		this.currentGroupName = currentGroupName;
+	}
+	
+	
 }

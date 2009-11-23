@@ -104,11 +104,7 @@ function drawTabs() {
 			
 				<s:textfield label="Item Name" size="64" value="%{dashboardAlert.alertName}" name="dashboardAlert.alertName" cssClass="textbox" required="true">
 				</s:textfield>
-				<s:select label="Select Group"
-					name="dashboardAlert.group.groupName" value="%{dashboardAlert.group.groupName}"
-					list="groups" listKey="groupName" listValue="groupName" cssClass="textbox">
-				</s:select>
-				
+				<s:hidden name="dashboardAlert.group.groupName" value="%{groupName}"/>
 				<s:select label="Select Data Source"
 					name="dashboardAlert.datasource.dataSourceName" value="%{dashboardAlert.datasource}"
 					list="runnerDataSources" listKey="dataSourceName" listValue="dataSourceName" cssClass="textbox">

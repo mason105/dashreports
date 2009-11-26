@@ -153,12 +153,15 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	}
 
 	public List<RunnerJob> getRunningJobs() throws SchedulerException {
+		logger.debug("executed getRunningJobs()");
 		List<String> runningJobs = scheduler.getCurrentRunningJobs();
 		List<RunnerJob> jobs = new LinkedList<RunnerJob>();
 		for (String string : runningJobs) {
+			logger.debug("found entry:" + string);
 			String groupName = string.split(":|:")[0];
 			String jobName = string.split(":|:")[2];
 			if (!groupName.equals(Scheduler.dashboardSchedulerGroup)) {
+				logger.debug("found a job with details of: "+ jobName + "/" + groupName);
 				RunnerJob job = runnerJobDao.getJob(jobName, groupName);
 				jobs.add(job);
 			}

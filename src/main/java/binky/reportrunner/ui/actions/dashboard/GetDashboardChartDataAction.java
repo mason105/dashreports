@@ -84,7 +84,13 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				xLabels.add(label);
 			}
 		}
-
+		
+		if (xLabels.size()==0) {
+			Exception e = new Exception("invalid labels column identifier " + alert.getXaxisColumn() + " for alert id " + alert.getId());
+			logger.error(e.getMessage(),e);
+			throw e;
+		}
+		
 		List<String> series = new LinkedList<String>();
 		for (Object o : data.getRows()) {
 			DynaBean b = (DynaBean) o;
@@ -100,6 +106,12 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			}
 		}
 
+		if (series.size()==0) {
+			Exception e = new Exception("invalid series column identifier " + alert.getSeriesNameColumn() + " for alert id " + alert.getId());
+			logger.error(e.getMessage(),e);
+			throw e;
+		}
+		
 		// hack to fill in the gaps in the x series
 		for (String s : series) {
 			for (Object x : xLabels) {
@@ -156,6 +168,13 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 			}
 		}
 
+		if (dataMap.size()==0) {
+			Exception e = new Exception("invalid value column identifier " + alert.getValueColumn() + " for alert id " + alert.getId());
+			logger.error(e.getMessage(),e);
+			throw e;
+		}
+		
+		
 		int c = 15;
 		int y = 1;
 

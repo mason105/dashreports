@@ -38,4 +38,5 @@ public interface DashboardService {
 	public String getChartForAlert(Integer id) throws  NumberFormatException, IOException;
 	public List<RunnerDashboardAlert> getRunningAlerts() throws SchedulerException;
 	public void interruptRunningDashboardAlert(Integer alertId) throws SchedulerException;
+	public void invokeDashboardAlert(Integer alertId) throws SchedulerException;
 }

@@ -31,6 +31,7 @@ public class DeleteAlert extends StandardRunnerAction {
 	private static final long serialVersionUID = 1L;
 	private DashboardService dashboardService;
 	private Integer id;
+	private String groupName;
 	@Override
 	public String execute() throws Exception {
 		String groupName= dashboardService.getAlert(id).getGroup().getGroupName();
@@ -54,6 +55,12 @@ public class DeleteAlert extends StandardRunnerAction {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getGroupName() {
+		return groupName;
+	}
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 	
 }

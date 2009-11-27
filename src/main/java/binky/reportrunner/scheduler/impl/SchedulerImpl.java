@@ -345,5 +345,17 @@ public class SchedulerImpl implements Scheduler {
 			throw new SchedulerException("Error last run time for alert " + alertId, e);
 		}
 	}
+
+	@Override
+	public void invokeDashboardAler(Integer alertId) throws SchedulerException {
+		logger.debug("invoke alert: " + alertId + "." + alertId);
+		try {
+
+			this.quartzScheduler.triggerJob(""+alertId, dashboardSchedulerGroup);
+		} catch (org.quartz.SchedulerException e) {
+			throw new SchedulerException("Error triggering job " + alertId
+					+ "/" + dashboardSchedulerGroup, e);
+		}
+	}
 	
 }

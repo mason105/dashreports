@@ -295,6 +295,12 @@
 		</property>		
 	</bean>
 
+	<bean id="invokeAlertAction" class="binky.reportrunner.ui.actions.dashboard.InvokeAlert" scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>		
+	</bean>
+
 	<bean id="setupEditAlertAction" class="binky.reportrunner.ui.actions.dashboard.SetupEditAlert" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />

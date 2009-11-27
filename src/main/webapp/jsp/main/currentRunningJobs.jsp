@@ -9,8 +9,7 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-	<span class="pageTitle"><img
-	src="<s:url value='/images/icons/application_lightning.png'/>" align="absmiddle" />Current Executing Jobs and Dashboard Items</span>
+	<span class="pageTitle"><img src="<s:url value='/images/icons/application_lightning.png'/>" align="absmiddle" />Current Executing Jobs and Dashboard Items</span>
 	<s:if test="jobs.size > 0">
 <table border="0" width="100%">
 			<span class="pageTitle">Current Executing Jobs</span>
@@ -32,13 +31,17 @@
 			<%
 				}
 			%>
-				<td>
-					<s:property value="pk.jobName" />
-				</td>
-				<td><s:property value="pk.group.groupName" /></td>				
-					<td width="24"><s:a href="interruptCurrentExecutingJob.action?jobName=%{pk.jobName}groupName=%{pk.group.groupName}">
-						<img src="<s:url value='/images/delete_small.png'/>" align="absmiddle" alt="Halt Execution" />
-					</s:a></td>
+					<td>
+						<s:property value="pk.jobName" />
+					</td>
+					<td>
+						<s:property value="pk.group.groupName" />
+					</td>				
+					<td width="24">
+						<s:a href="interruptCurrentExecutingJob.action?jobName=%{pk.jobName}groupName=%{pk.group.groupName}">
+							<img src="<s:url value='/images/delete_small.png'/>" align="absmiddle" alt="Halt Execution" />
+						</s:a>
+					</td>
 			</tr>
 		</s:iterator>
 	</table>

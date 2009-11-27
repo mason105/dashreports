@@ -66,4 +66,6 @@ public interface Scheduler {
 
 	public void addDashboardAlert(Integer alertId, String cronTab) throws SchedulerException;
 	public void removedDashboardAlert(Integer alertId)throws SchedulerException;
+	public void invokeDashboardAler(Integer alertId) throws SchedulerException;
+	
 }

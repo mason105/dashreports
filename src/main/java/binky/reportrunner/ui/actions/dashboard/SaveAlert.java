@@ -55,7 +55,7 @@ public class SaveAlert extends StandardRunnerAction implements Preparable {
 	private List<RunnerDataSource> runnerDataSources;
 
 	private static final Logger logger = Logger.getLogger(SaveAlert.class);
-	
+	private String groupName;
 	public void prepare() throws Exception {
 		runnerDataSources = dataSourceDao.listDataSources();
 	}
@@ -81,7 +81,7 @@ public class SaveAlert extends StandardRunnerAction implements Preparable {
 			dashboardAlert.setGroup(group);
 			
 			dashboardService.saveUpdateAlert(dashboardAlert);
-
+			this.groupName=dashboardAlert.getGroup().getGroupName();
 			return SUCCESS;
 		} else {
 
@@ -146,6 +146,10 @@ public class SaveAlert extends StandardRunnerAction implements Preparable {
 	}
 	public List<XAxisStep> getXAxisSteps() {
 		return Arrays.asList(XAxisStep.values());
+	}
+
+	public String getGroupName() {
+		return groupName;
 	}
 	
 }

@@ -6,15 +6,13 @@
 <sx:head parseContent="true" />
   </head>  
   <body>  <%@ taglib prefix="s" uri="/struts-tags" %>  
-  <span class="pageTitle"><img
-	src="<s:url value="/images/icons/group.png"/>" align="absmiddle" /><s:property value="groupName" /></span>	
+  <span class="pageTitle"><img src="<s:url value="/images/icons/group.png"/>" align="absmiddle" /><s:property value="groupName" /></span>	
     <table border="0" width="100%">
 	
 	      <tr class="rowHeader">
       		<td colspan='7'  class="rowHeader">
       		<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
-      		<a href="setupEditJob.action?groupName=<s:property value="groupName" />"><img
-				src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add Job</a>
+      		<a href="setupEditJob.action?groupName=<s:property value="groupName" />"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add Job</a>
 		</s:if>				
 	      </td>
       	</tr>	    

@@ -331,7 +331,7 @@
 		</dependency>
 		<dependency>
 			<groupId>binky.ofc2plugin</groupId>
-			<artifactId>ofc2plugin</artifactId>		
+			<artifactId>ofc2struts2</artifactId>		
 			<version>1.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

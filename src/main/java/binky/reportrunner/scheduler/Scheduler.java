@@ -25,11 +25,16 @@ package binky.reportrunner.scheduler;
 import java.util.Date;
 import java.util.List;
 
+import org.quartz.SchedulerMetaData;
+
 public interface Scheduler {
 	public static final String dashboardSchedulerGroup="RR3DASHBOARDS";
 	public void startScheduler() throws SchedulerException;
 
 	public void stopScheduler() throws SchedulerException;
+	public SchedulerMetaData getMetaData ();
+	
+	public int getJobCount() throws org.quartz.SchedulerException;
 	
 	public Boolean isSchedulerActive()  throws SchedulerException;
 

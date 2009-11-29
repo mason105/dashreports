@@ -31,6 +31,7 @@ import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
+import org.quartz.SchedulerMetaData;
 import org.quartz.Trigger;
 import org.quartz.impl.StdScheduler;
 
@@ -53,6 +54,20 @@ public class SchedulerImpl implements Scheduler {
 		this.quartzScheduler = quartzScheduler;
 	}
 
+	public int getJobCount() throws org.quartz.SchedulerException {
+		int i=0;
+		for (String groupName:this.quartzScheduler.getJobGroupNames()) {
+			for (String jobName:this.quartzScheduler.getJobNames(groupName)) {
+				logger.debug("found " + jobName +"/" + groupName);
+				i++;
+			}
+		}
+		return i;
+	}
+	public SchedulerMetaData getMetaData () {
+		return this.quartzScheduler.getMetaData();
+	}
+	
 	public void addJob(String jobName, String groupName, 
 			String cronString, Date startDate, Date endDate)
 			throws SchedulerException {
@@ -96,10 +111,10 @@ public class SchedulerImpl implements Scheduler {
 			throw new SchedulerException("Error scheduling with quartz", e);
 		}
 	}
-
+	
 	public void startScheduler() throws SchedulerException {
 		try {
-			this.quartzScheduler.start();
+			this.quartzScheduler.start();			
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error starting scheduler", e);
 		}

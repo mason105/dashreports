@@ -57,9 +57,21 @@
 				/jsp/main/errorPage.jsp
 			</result>			
 		</global-results>
+		
 		<action name="logout" class="logoutAction"/>
+		
 		<action name="index" class="indexAction">
 			<result>/jsp/main/index.jsp</result>
+		</action>
+		
+		<action name="schedulerAdmin" class="schedulerAdminAction">
+			<result>/jsp/main/schedulerAdmin.jsp</result>
+		</action>
+		
+		<action name="schedulerStateChange" class="schedulerStateChangeAction">
+			<result type="redirectAction">
+				<param name="actionName">schedulerAdmin</param>
+			</result>
 		</action>
 		
 		<action name="listJobs" class="listJobsAction">

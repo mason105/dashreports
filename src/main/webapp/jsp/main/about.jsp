@@ -31,15 +31,7 @@
 </tr>
 <tr>
 	<td> 
-		<strong>Website Design</strong>   
-	</td>
-		<td>    
-		<a href="mailto:john@johncook.me.uk">John Cook</a>
-	</td>
-</tr>
-<tr>
-	<td> 
-		<strong>Graphic Design</strong>   
+		<strong>Logo Design</strong>   
 	</td>
 		<td>    
 		<a href="mailto:geord@hotmail.co.uk">Andrew Hall</a>

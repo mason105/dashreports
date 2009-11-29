@@ -29,6 +29,16 @@
 	<!--  actions -->
 
 
+	<bean id="schedulerAdminAction" class="binky.reportrunner.ui.actions.admin.SchedulerAdmin"
+		scope="prototype" >
+		<property name="scheduler" ref="scheduler" />
+	</bean>
+	
+	<bean id="schedulerStateChangeAction" class="binky.reportrunner.ui.actions.admin.SchedulerStateChange"
+		scope="prototype" >
+		<property name="scheduler" ref="scheduler" />
+	</bean>
+
 	<bean id="aboutAction" class="binky.reportrunner.ui.actions.About"
 		scope="prototype" >
 		<property name="versionId" value="${reportrunner.versionId}" />

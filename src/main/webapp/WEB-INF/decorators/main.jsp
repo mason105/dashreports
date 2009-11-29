@@ -193,6 +193,15 @@ function tree() {
 	        },
 	        contextMenu: cm
 	    }));
+	    
+		manager.append(new Jx.TreeItem({
+	        label: 'Scheduler Admin',
+	        image: '<s:url value="/images/icons/clock.png"/>',
+	        onClick: function() {
+	            parent.window.location='schedulerAdmin.action';
+	        },
+	        contextMenu: cm
+	    }));
 	
 	<s:if test="expandAdmin==true">
 		manager.expand();

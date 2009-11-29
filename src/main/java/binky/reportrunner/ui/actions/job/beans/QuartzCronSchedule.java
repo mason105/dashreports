@@ -62,7 +62,7 @@ public final class QuartzCronSchedule {
 			} else {				
 				for (int i=0;i<nums.length;i++) {
 					if (i>0) cronSegment.append(",");
-					cronSegment.append(""+nums[i]);
+					cronSegment.append(nums[i]);
 				}
 			}
 		}

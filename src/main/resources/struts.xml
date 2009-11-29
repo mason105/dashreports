@@ -294,13 +294,14 @@
 
 
 		<action name="getDashboardChartData" class="getDashboardChartDataAction">
-   			 <interceptor-ref name="defaultLoginStack"/>
+   			 <interceptor-ref name="defaultStack"/>		
    			 <interceptor-ref name="noCache"/>
 			<result>/jsp/nostyle/chartData.jsp</result>
 		</action>
 
 
 		<action name="dashboardWidget" class="dashboardWidgetAction">
+			<interceptor-ref name="defaultStack"/>		
 			<result>/jsp/nostyle/dashboardWidget.jsp</result>
 		</action>
 

@@ -67,7 +67,8 @@ public abstract class StandardRunnerAction extends ActionSupport implements Sess
 	}
 
 	public final boolean doesUserHaveGroup(String groupName) {
-
+		if (getSessionUser()==null) return false;
+		
 		if (getSessionUser().getIsAdmin()) {
 			return true;
 		} else {

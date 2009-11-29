@@ -10,8 +10,7 @@
 		<link href="<s:url value='/styles/displaytag.css'/>" rel="stylesheet" type="text/css" media="all" />
 	</head>
 <body>
-	<span class="pageTitle"><img
-	src="<s:url value='/images/icons/chart_curve.png'/>" align="absmiddle" />Statistics and Warnings</span>
+	<span class="pageTitle"><img src="<s:url value='/images/icons/chart_curve.png'/>" align="absmiddle" />Statistics and Warnings</span>
 	
 	<sx:tabbedpanel id="stats">
 		<sx:div id="success" label="Latest Success">		

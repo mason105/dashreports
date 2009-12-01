@@ -45,7 +45,7 @@ public class SchedulerImpl implements Scheduler {
 	private StdScheduler quartzScheduler;
 	private Logger logger = Logger.getLogger(SchedulerImpl.class);
 	private boolean clustered;
-	
+
 	public StdScheduler getQuartzScheduler() {
 		return quartzScheduler;
 	}
@@ -55,33 +55,32 @@ public class SchedulerImpl implements Scheduler {
 	}
 
 	public int getJobCount() throws org.quartz.SchedulerException {
-		int i=0;
-		for (String groupName:this.quartzScheduler.getJobGroupNames()) {
-			for (String jobName:this.quartzScheduler.getJobNames(groupName)) {
-				logger.debug("found " + jobName +"/" + groupName);
+		int i = 0;
+		for (String groupName : this.quartzScheduler.getJobGroupNames()) {
+			for (String jobName : this.quartzScheduler.getJobNames(groupName)) {
+				logger.debug("found " + jobName + "/" + groupName);
 				i++;
 			}
 		}
 		return i;
 	}
-	public SchedulerMetaData getMetaData () {
+
+	public SchedulerMetaData getMetaData() {
 		return this.quartzScheduler.getMetaData();
 	}
-	
-	public void addJob(String jobName, String groupName, 
-			String cronString, Date startDate, Date endDate)
-			throws SchedulerException {
-	
+
+	public void addJob(String jobName, String groupName, String cronString,
+			Date startDate, Date endDate) throws SchedulerException {
+
 		// Create our job with the specification RunnerJob
 		JobDetail jobDetail;
 		try {
 			if (this.quartzScheduler.getJobDetail(jobName, groupName) != null) {
-				removeJob(jobName,groupName);
-			}			
-			jobDetail = new JobDetail(jobName, groupName,RunnerEngine.class);
+				removeJob(jobName, groupName);
+			}
+			jobDetail = new JobDetail(jobName, groupName, RunnerEngine.class);
 		} catch (org.quartz.SchedulerException e) {
-			throw new SchedulerException(
-					"Error with scheduler", e);
+			throw new SchedulerException("Error with scheduler", e);
 		}
 
 		// Create the trigger
@@ -98,9 +97,10 @@ public class SchedulerImpl implements Scheduler {
 
 		jobTrigger.setName(jobName + ":" + groupName + ":trigger");
 		jobTrigger.setGroup("RunnerTriggers");
-		
-		//clusterting
-		if (clustered) jobDetail.setRequestsRecovery(true);
+
+		// clusterting
+		if (clustered)
+			jobDetail.setRequestsRecovery(true);
 		// Bind the listener
 		// jobDetail.addJobListener("ReportRunnerCoreJobListener");
 
@@ -111,10 +111,10 @@ public class SchedulerImpl implements Scheduler {
 			throw new SchedulerException("Error scheduling with quartz", e);
 		}
 	}
-	
+
 	public void startScheduler() throws SchedulerException {
 		try {
-			this.quartzScheduler.start();			
+			this.quartzScheduler.start();
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error starting scheduler", e);
 		}
@@ -160,14 +160,14 @@ public class SchedulerImpl implements Scheduler {
 	}
 
 	public Boolean isScheduled(String jobName, String groupName)
-			throws SchedulerException {		
+			throws SchedulerException {
 		try {
 			return !(this.quartzScheduler.getTrigger(jobName + ":" + groupName
 					+ ":trigger", "RunnerTriggers") == null);
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error getting state for " + jobName
 					+ "/" + groupName, e);
-		}		
+		}
 	}
 
 	public void invokeJob(String jobName, String groupName)
@@ -252,9 +252,8 @@ public class SchedulerImpl implements Scheduler {
 		try {
 			this.quartzScheduler.pauseJobGroup(groupName);
 		} catch (org.quartz.SchedulerException e) {
-			throw new SchedulerException("Error pausing group " 
-					+ groupName, e);
-		}	
+			throw new SchedulerException("Error pausing group " + groupName, e);
+		}
 	}
 
 	public void resumeGroup(String groupName) throws SchedulerException {
@@ -262,25 +261,26 @@ public class SchedulerImpl implements Scheduler {
 		try {
 			this.quartzScheduler.resumeJobGroup(groupName);
 		} catch (org.quartz.SchedulerException e) {
-			throw new SchedulerException("Error resuming group " 
-					+ groupName, e);
-		}			
+			throw new SchedulerException("Error resuming group " + groupName, e);
+		}
 	}
 
-	public void addDashboardAlert(Integer alertId, String cronTab) throws SchedulerException {
+	public void addDashboardAlert(Integer alertId, String cronTab)
+			throws SchedulerException {
 		// Create our job with the specification RunnerJob
-		String jobName=alertId.toString(); 		
+		String jobName = alertId.toString();
 		JobDetail jobDetail;
-		
-		logger.debug("scheduling:" + alertId + "/"+dashboardSchedulerGroup);
+
+		logger.debug("scheduling:" + alertId + "/" + dashboardSchedulerGroup);
 		try {
-			if (this.quartzScheduler.getJobDetail(jobName, dashboardSchedulerGroup) != null) {
-				removeJob(jobName,dashboardSchedulerGroup);
-			}			
-			jobDetail = new JobDetail(jobName, dashboardSchedulerGroup,AlertProcessor.class);
+			if (this.quartzScheduler.getJobDetail(jobName,
+					dashboardSchedulerGroup) != null) {
+				removeJob(jobName, dashboardSchedulerGroup);
+			}
+			jobDetail = new JobDetail(jobName, dashboardSchedulerGroup,
+					AlertProcessor.class);
 		} catch (org.quartz.SchedulerException e) {
-			throw new SchedulerException(
-					"Error with scheduler", e);
+			throw new SchedulerException("Error with scheduler", e);
 		}
 
 		// Create the trigger
@@ -292,12 +292,14 @@ public class SchedulerImpl implements Scheduler {
 		}
 
 		jobTrigger.setStartTime(new Date());
-		
-		jobTrigger.setName(jobName + ":" + dashboardSchedulerGroup + ":trigger");
+
+		jobTrigger
+				.setName(jobName + ":" + dashboardSchedulerGroup + ":trigger");
 		jobTrigger.setGroup("RunnerTriggers");
-		
-		//clusterting
-		if (clustered) jobDetail.setRequestsRecovery(true);
+
+		// clusterting
+		if (clustered)
+			jobDetail.setRequestsRecovery(true);
 		// Bind the listener
 		// jobDetail.addJobListener("ReportRunnerCoreJobListener");
 
@@ -305,16 +307,21 @@ public class SchedulerImpl implements Scheduler {
 		try {
 			this.quartzScheduler.scheduleJob(jobDetail, jobTrigger);
 		} catch (org.quartz.SchedulerException e) {
-			throw new SchedulerException("Error dashboard alert scheduling with quartz", e);
+			throw new SchedulerException(
+					"Error dashboard alert scheduling with quartz", e);
 		}
 	}
 
-	public void removedDashboardAlert(Integer alertId) throws SchedulerException {
+	public void removedDashboardAlert(Integer alertId)
+			throws SchedulerException {
 		logger.debug("remove alert: " + alertId);
 		try {
-			this.quartzScheduler.deleteJob(alertId.toString(), dashboardSchedulerGroup);
+			this.quartzScheduler.deleteJob(alertId.toString(),
+					dashboardSchedulerGroup);
 		} catch (org.quartz.SchedulerException e) {
-			throw new SchedulerException("Error removing dashboard alert from scheduler: RR-DASHBOARD"+alertId+"/RR3DASHBOARDS", e);
+			throw new SchedulerException(
+					"Error removing dashboard alert from scheduler: RR-DASHBOARD"
+							+ alertId + "/RR3DASHBOARDS", e);
 		}
 	}
 
@@ -322,7 +329,6 @@ public class SchedulerImpl implements Scheduler {
 		return clustered;
 	}
 
-	
 	public boolean getClustered() {
 		return clustered;
 	}
@@ -333,31 +339,41 @@ public class SchedulerImpl implements Scheduler {
 
 	public void interruptRunningDashboardAlert(Integer alertId)
 			throws SchedulerException {
-		this.interruptRunningJob(""+alertId, dashboardSchedulerGroup);
+		this.interruptRunningJob("" + alertId, dashboardSchedulerGroup);
 	}
 
 	public Date getNextRunTime(Integer alertId) throws SchedulerException {
 		try {
-			return this.quartzScheduler.getTrigger(
-					alertId.toString() + ":" + dashboardSchedulerGroup + ":trigger", "RunnerTriggers")
-					.getNextFireTime();
+			Trigger trigger = this.quartzScheduler.getTrigger(alertId
+					.toString()
+					+ ":" + dashboardSchedulerGroup + ":trigger",
+					"RunnerTriggers");
+			if (trigger != null) {
+				return trigger.getNextFireTime();
+			} else {
+				return null;
+			}	
+		
 		} catch (org.quartz.SchedulerException e) {
-			throw new SchedulerException("Error next run time for alert " + alertId, e);
+			throw new SchedulerException("Error next run time for alert "
+					+ alertId, e);
 		}
 	}
 
 	public Date getPreviousRunTime(Integer alertId) throws SchedulerException {
 		try {
-			Trigger t=this.quartzScheduler.getTrigger(
-					alertId.toString() + ":" + dashboardSchedulerGroup + ":trigger", "RunnerTriggers");
-					if (t!=null) {
-						return t.getPreviousFireTime();
-					} else {
-						return null;
-					}
-			
+			Trigger t = this.quartzScheduler.getTrigger(alertId.toString()
+					+ ":" + dashboardSchedulerGroup + ":trigger",
+					"RunnerTriggers");
+			if (t != null) {
+				return t.getPreviousFireTime();
+			} else {
+				return null;
+			}
+
 		} catch (org.quartz.SchedulerException e) {
-			throw new SchedulerException("Error last run time for alert " + alertId, e);
+			throw new SchedulerException("Error last run time for alert "
+					+ alertId, e);
 		}
 	}
 
@@ -366,11 +382,12 @@ public class SchedulerImpl implements Scheduler {
 		logger.debug("invoke alert: " + alertId + "." + alertId);
 		try {
 
-			this.quartzScheduler.triggerJob(""+alertId, dashboardSchedulerGroup);
+			this.quartzScheduler.triggerJob("" + alertId,
+					dashboardSchedulerGroup);
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error triggering job " + alertId
 					+ "/" + dashboardSchedulerGroup, e);
 		}
 	}
-	
+
 }

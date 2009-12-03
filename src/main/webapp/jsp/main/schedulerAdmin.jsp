@@ -16,9 +16,9 @@
 <div class="formGroup">
 <div class="formGroupHeader">Scheduler Infomation</div>
 
-<table border="0" cellpadding="2" cellspacing="2" style="border-collapse: collapse;"  width="450"> 
+<table border="0" cellpadding="2" cellspacing="5" width="100%"> 
 <tr>
-	<td width="50%"><strong>Job Count</strong></td>
+	<td><strong>Job Count</strong></td>
 	<td><s:property value="jobCount"/></td>
 </tr>
 <tr>
@@ -27,12 +27,9 @@
 </tr>
 <tr>
 	<td><strong>Running Since</strong></td>
-	<td><s:property value="runningSince"/></td>
+	<td><s:date name="runningSince"/></td>
 </tr>
-<tr>
-	<td><strong>Summary</strong></td>
-	<td><s:property value="summary"/></td>
-</tr>
+
 <tr>
 	<td><strong>Instance ID</strong></td>
 	<td><s:property value="instanceId"/></td>
@@ -54,18 +51,18 @@
 
 </div>
 
+
+<div class="formGroup">
+<div class="formGroupHeader">Summary</div>
+<pre><s:property value="summary"/></pre>
+</div>
+
 <div class="formGroup">
 <div class="formGroupHeader">Scheduler Status</div>
 
-<s:form action="schedulerStateChange" method="post" enctype="multipart/form-data" validate="false">	
-
-
-			<s:select label="Scheduler Status" name"schedulerState" 
-			value="%{schedulerState}"
-			 list="#{0:"Shutdown",2:"Started"}"></s:select>
-			
-			<s:submit/>
-			
+<s:form action="schedulerStateChange" method="post" enctype="multipart/form-data" validate="false">
+	<s:select label="Scheduler Status" name="schedulerState" value="%{schedulerState}" list="#{0:'Shutdown',2:'Started'}"></s:select>	
+	<s:submit/>		
 </s:form>
 
 </div>

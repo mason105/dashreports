@@ -18,10 +18,23 @@
 
 .formGroup {
 	clear:both;
-	width:600px;;
+	width:600px;
 	margin:5px;
 	border: 1px solid #ccc;;	
 	padding:2px;
+}
+pre {
+overflow: auto;
+padding-left: 15px;
+padding-right: 15px;
+font-size: 11px;
+line-height: 15px;
+margin-top: 10px;
+width: 93%;
+display: block;
+color: #000000;
+max-height: 300px;
+
 }
 
 .formGroupFluid {

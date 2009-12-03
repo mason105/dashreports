@@ -22,18 +22,31 @@
  ******************************************************************************/
 package binky.reportrunner.service;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import binky.reportrunner.data.RunnerDataSource;
 
 public interface DatasourceService {
 
-	public DataSource getJDBCDataSource(RunnerDataSource runnerDs);
+	public DataSource getJDBCDataSource(RunnerDataSource runnerDs)
+			throws SQLException;
+
 	public void saveUpdateDataSource(RunnerDataSource dataSource);
+
 	public void deleteDataSource(String dataSourceName);
+
 	public RunnerDataSource getDataSource(String dataSourceName);
+
 	public List<RunnerDataSource> listDataSources();
 
+	public void purgeConnections(String dataSourceName) throws SQLException;
+
+	public Map<String, Object> getConnectionInfo(ComboPooledDataSource ds,
+			String dsName) throws SQLException;
 }

@@ -226,7 +226,13 @@
 			<ref bean="runnerDatasourceService" />
 		</property>		
 	</bean>
-
+	<bean id="purgeConnectionsAction"
+		class="binky.reportrunner.ui.actions.datasource.PurgeConnections"
+		scope="prototype">
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>		
+	</bean>
 	<bean id="listDataSourcesAction"
 		class="binky.reportrunner.ui.actions.datasource.ListDataSources"
 		scope="prototype">

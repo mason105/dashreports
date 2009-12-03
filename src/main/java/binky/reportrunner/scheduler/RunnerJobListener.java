@@ -23,6 +23,7 @@
 package binky.reportrunner.scheduler;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -89,17 +90,29 @@ public class RunnerJobListener implements JobListener {
 					this.smtpServer);
 			ctx.getJobDetail().getJobDataMap().put("fromAddress",
 					this.fromAddress);
-			DataSource ds = datasourceService
-					.getJDBCDataSource(job.getDatasource());
-			ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
+			DataSource ds;
+			try {
+				ds = datasourceService
+						.getJDBCDataSource(job.getDatasource());
+				ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
+			} catch (SQLException e) {
+				logger.error(e.getMessage(),e);
+			}
+			
 		} else if (ctx.getJobDetail().getJobClass()
 				.equals(AlertProcessor.class)) {
 			// stuff for the dashboards
 			Integer alertId = Integer.parseInt(ctx.getJobDetail().getName());
 			RunnerDashboardAlert alert = dashboardDao.getAlert(alertId);
 			ctx.getJobDetail().getJobDataMap().put("alert", alert);
-			DataSource ds = datasourceService.getJDBCDataSource(alert.getDatasource());
-			ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
+			DataSource ds;
+			try {
+				ds = datasourceService.getJDBCDataSource(alert.getDatasource());
+				ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
+			} catch (SQLException e) {
+				logger.error(e.getMessage(),e);
+			}
+			
 			ctx.getJobDetail().getJobDataMap().put("dashboardDao", dashboardDao);
 		}
 		logger.info("Scheduled task to be executed: " + ctx.getJobDetail().getName()

@@ -23,6 +23,7 @@
 package binky.reportrunner.service.impl;
 
 import java.beans.PropertyVetoException;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,41 @@ public class DatasourceServiceImpl implements DatasourceService {
 		}
 	}
 
-	public DataSource getJDBCDataSource(RunnerDataSource runnerDs) {
+	public void purgeConnections(String dataSourceName)  throws SQLException {
+		ComboPooledDataSource ds = (ComboPooledDataSource)dataSources.get(dataSourceName);
+		if (ds != null) {
+			dumpLogInfo(ds,dataSourceName);
+			//reset the datasource
+			ds.hardReset();
+		}
+	}
+	
+	private void dumpLogInfo(ComboPooledDataSource ds, String dsName) throws SQLException {
+		//dump out a shed load of info about the datasource
+		logger.debug("Datasource info for " + dsName );
+		Map<String, Object> info = getConnectionInfo(ds, dsName);
+		for (String key:info.keySet()) {
+			logger.debug("* " + key + ": " + info.get(key));
+		}
+	}
+	
+	public Map<String,Object> getConnectionInfo(ComboPooledDataSource ds, String dsName) throws SQLException {
+		Map<String, Object> info = new HashMap<String, Object>();
+	
+		info.put("Num Connections" , ds.getNumConnections());
+		info.put("Num Busy Connections" , ds.getNumBusyConnections());
+		info.put("Num Idle Connections" , ds.getNumIdleConnections());
+		info.put("Num Unclosed Orphaned Connections" , ds.getNumUnclosedOrphanedConnections());
+		info.put("Thread Pool Num Active Threads" , ds.getThreadPoolNumActiveThreads());
+		info.put("Thread Pool Num Tasks Pending" , ds.getThreadPoolNumTasksPending());
+		info.put("Statement Cache Num Connections With Cached Statements All Users" , ds.getStatementCacheNumConnectionsWithCachedStatementsAllUsers());
+		info.put("Statement Cache Num Statements All Users" , ds.getStatementCacheNumStatementsAllUsers());
+		info.put("Num Helper Threads",ds.getNumHelperThreads());
+	
+		return info;
+	}
+	
+	public DataSource getJDBCDataSource(RunnerDataSource runnerDs)  throws SQLException {
 
 		DataSource ds = dataSources.get(runnerDs.getDataSourceName());
 		if (ds == null) {
@@ -96,6 +131,9 @@ public class DatasourceServiceImpl implements DatasourceService {
 				logger.info("Stored datasource: "
 						+ runnerDs.getDataSourceName());
 				dataSources.put(runnerDs.getDataSourceName(), ds);
+				
+				dumpLogInfo((ComboPooledDataSource)ds, runnerDs.getDataSourceName());
+				
 			} catch (Exception e) {
 				logger.fatal("Unable to create datasource: "
 						+ runnerDs.getDataSourceName(), e);

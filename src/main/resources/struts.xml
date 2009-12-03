@@ -158,7 +158,14 @@
 
 		</action>
 
+		<action name="purgeConnections" class="purgeConnectionsAction">
+		
+			<result type="redirectAction">
+				<param name="actionName">listDataSources</param>
+			</result>
 
+		</action>
+		
 		<action name="listDataSources" class="listDataSourcesAction">
 			<result>/jsp/main/listDataSources.jsp
 			</result>

@@ -40,7 +40,6 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.RunnerJobDao;
-import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.RunnerResultGenerator;
@@ -320,10 +319,6 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			conn.close();
 		}
 		return paramValues;
-	}
-
-	public DataSource getDataSource(RunnerDataSource runnerDs) {
-		return dataSourceService.getJDBCDataSource(runnerDs);
 	}
 
 	public DatasourceService getDataSourceService() {

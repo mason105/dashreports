@@ -11,7 +11,7 @@
 		<s:actionmessage/>
 	 <table border="0" width="100%">
 		<tr class="rowHeader"> 
-			<td colspan="4" class="rowHeader"><s:a href="setupEditDataSource.action"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add Datasource</s:a></td>
+			<td colspan="5" class="rowHeader"><s:a href="setupEditDataSource.action"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add Datasource</s:a></td>
 		 </tr>
 
 	      <s:if test="dataSources.size > 0">	            
@@ -40,9 +40,11 @@
                 <s:a href="setupEditDataSource.action?dataSourceName=%{dataSourceName}"><img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>  
               </td>  
               <td width="16">  
-                <s:a href="deleteDataSource.action?dataSourceName=%{dataSourceName}"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete"
-		onClick="return confirm('Really delete this datasource?');"					align="absmiddle" /></s:a>  
+                <s:a href="deleteDataSource.action?dataSourceName=%{dataSourceName}" onClick="return confirm('Really delete this datasource?');"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete" align="absmiddle" /></s:a>  
               </td>  
+              <td width="16">  
+                <s:a href="purgeConnections.action?dataSourceName=%{dataSourceName}" onClick="return confirm('Really purge all connections for this datasource?');" ><img src="<s:url value='/images/icons/database_error.png'/>" alt="Purge Connections" align="absmiddle" /></s:a>  
+              </td>              
             </tr>  
           </s:iterator>
           </s:if>  

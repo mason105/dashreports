@@ -56,8 +56,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 		RunnerDashboardAlert alert = (RunnerDashboardAlert) context
 				.getJobDetail().getJobDataMap().get("alert");
 
-		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get(
-				"dataSource");
+		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get("dataSource");
 		
 		try {
 			ds.setLogWriter(new PrintWriter(System.out));

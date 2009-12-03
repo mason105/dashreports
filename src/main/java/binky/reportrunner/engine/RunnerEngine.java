@@ -116,14 +116,14 @@ public class RunnerEngine implements Job, InterruptableJob {
 		List<String> fileUrls = new LinkedList<String>();
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
-		
 
 		conn = ds.getConnection();
 
-		RunnerResultGenerator resultGenerator = new RunnerResultGeneratorImpl(conn);
+		RunnerResultGenerator resultGenerator = new RunnerResultGeneratorImpl(
+				conn);
 
 		Map<String, ResultSet> results = new HashMap<String, ResultSet>();
-		
+
 		resultGenerator.getResultsForJob(job, results);
 
 		for (String fileNameValue : results.keySet()) {
@@ -131,12 +131,13 @@ public class RunnerEngine implements Job, InterruptableJob {
 			// if we are not outputting this anywhere (must be emailing) then
 			// dump this as a temp file
 			String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName,
-					groupName, job.getFileFormat().toString().toLowerCase(),fileNameValue);
+					groupName, job.getFileFormat().toString().toLowerCase(),
+					fileNameValue);
 
 			logger.info("bursted file being output to: " + outUrl);
 
-			resultGenerator.renderReport(rs, outUrl, job.getTemplateFile(), job.getTemplateType(),
-					job.getFileFormat().toString());
+			resultGenerator.renderReport(rs, outUrl, job.getTemplateFile(), job
+					.getTemplateType(), job.getFileFormat().toString());
 
 			fileUrls.add(outUrl);
 
@@ -169,17 +170,19 @@ public class RunnerEngine implements Job, InterruptableJob {
 		String jobName = job.getPk().getJobName();
 		Connection conn = ds.getConnection();
 		logger.debug("running single report for:" + groupName + "." + jobName);
-		RunnerResultGenerator resultGenerator = new RunnerResultGeneratorImpl(conn);
-		
+		RunnerResultGenerator resultGenerator = new RunnerResultGeneratorImpl(
+				conn);
+
 		Map<String, ResultSet> results = new HashMap<String, ResultSet>();
 		resultGenerator.getResultsForJob(job, results);
-		
+
 		// if we are not outputting this anywhere (must be emailing) then
 		// dump this as a temp file
 		String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName, groupName,
 				job.getFileFormat().toString().toLowerCase());
-		resultGenerator.renderReport(results.get("Results"), outUrl, job.getTemplateFile(), job.getTemplateType(),
-				job.getFileFormat().toString());
+		resultGenerator.renderReport(results.get("Results"), outUrl, job
+				.getTemplateFile(), job.getTemplateType(), job.getFileFormat()
+				.toString());
 		conn.close();
 		logger.info("writing report to: " + outUrl);
 		// send email if need be
@@ -199,13 +202,11 @@ public class RunnerEngine implements Job, InterruptableJob {
 
 	public void interrupt() throws UnableToInterruptJobException {
 		try {
+
 			conn.close();
 		} catch (SQLException e) {
 			throw new UnableToInterruptJobException(e);
 		}
 	}
 
-
-
-	
 }

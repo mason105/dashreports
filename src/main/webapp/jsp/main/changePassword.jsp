@@ -9,10 +9,10 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-<s:form action="changePassword">
+
 <div class="formGroup">
 	<div class="formGroupHeader">Change Password</div>
-	
+<s:form action="changePassword">	
 	
 	<s:actionerror />
 	<s:actionmessage/>

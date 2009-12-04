@@ -2,8 +2,6 @@ package binky.reportrunner.ui.actions.admin;
 
 import java.util.Date;
 
-import org.quartz.SchedulerMetaData;
-
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
@@ -15,15 +13,8 @@ public class SchedulerAdmin extends AdminRunnerAction {
 	
 	private int jobCount;
 	
-	private String instanceId;
-	
-	private String schedulerName;
-	
 	private String summary;
 	
-	private String version;
-	
-	private int threadPoolSize;
 	private int jobsExectuted;
 	private Date runningSince;
 	
@@ -32,29 +23,16 @@ public class SchedulerAdmin extends AdminRunnerAction {
 	@Override
 	public String execute() throws Exception {
 	
-		SchedulerMetaData meta= scheduler.getMetaData();
-		this.instanceId=meta.getSchedulerInstanceId();
-		this.schedulerName=meta.getSchedulerName();
 		
 		this.jobCount=scheduler.getJobCount();
 		
-		this.summary=meta.getSummary();
+		this.summary=scheduler.getSummary();
 		
-		this.version =  meta.getVersion();
+		this.runningSince=scheduler.getActiveFrom();
+		this.jobsExectuted=scheduler.getJobsExecuted();
 		
-		this.threadPoolSize=meta.getThreadPoolSize();
+		this.schedulerState=scheduler.isSchedulerActive() ? 1:0;
 		
-		this.jobsExectuted=meta.numJobsExecuted();
-		
-		this.runningSince=meta.runningSince();
-		
-		if (meta.isStarted()) {
-			this.schedulerState=1;
-		}
-		if (meta.isShutdown()) {
-			this.schedulerState=0;
-		}
-	
 		return SUCCESS;
 	}
 
@@ -70,25 +48,6 @@ public class SchedulerAdmin extends AdminRunnerAction {
 		return jobCount;
 	}
 
-	public String getInstanceId() {
-		return instanceId;
-	}
-
-	public String getSchedulerName() {
-		return schedulerName;
-	}
-
-	public String getSummary() {
-		return summary;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public int getThreadPoolSize() {
-		return threadPoolSize;
-	}
 
 	public int getJobsExectuted() {
 		return jobsExectuted;
@@ -102,5 +61,8 @@ public class SchedulerAdmin extends AdminRunnerAction {
 		return schedulerState;
 	}
 	
+	public String getSummary() {
+		return summary;
+	}
 	
 }

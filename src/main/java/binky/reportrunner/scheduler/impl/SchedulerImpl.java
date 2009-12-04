@@ -31,7 +31,6 @@ import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
-import org.quartz.SchedulerMetaData;
 import org.quartz.Trigger;
 import org.quartz.impl.StdScheduler;
 
@@ -63,10 +62,6 @@ public class SchedulerImpl implements Scheduler {
 			}
 		}
 		return i;
-	}
-
-	public SchedulerMetaData getMetaData() {
-		return this.quartzScheduler.getMetaData();
 	}
 
 	public void addJob(String jobName, String groupName, String cronString,
@@ -387,6 +382,26 @@ public class SchedulerImpl implements Scheduler {
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error triggering job " + alertId
 					+ "/" + dashboardSchedulerGroup, e);
+		}
+	}
+
+	@Override
+	public Date getActiveFrom()  {
+		return this.quartzScheduler.getMetaData().runningSince();
+	}
+
+	@Override
+	public int getJobsExecuted() {
+		return this.quartzScheduler.getMetaData().numJobsExecuted();
+	}
+
+	@Override
+	public String getSummary() throws SchedulerException {
+		try {
+			return this.quartzScheduler.getMetaData().getSummary();
+		} catch (org.quartz.SchedulerException e) {
+			logger.error(e.getMessage(),e);
+			throw new SchedulerException(e.getMessage(),e);
 		}
 	}
 

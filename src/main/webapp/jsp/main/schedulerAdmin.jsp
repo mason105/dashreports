@@ -14,6 +14,11 @@
        
 
 <div class="formGroup">
+<div class="formGroupHeader">Summary</div>
+<pre><s:property value="summary"/></pre>
+</div>
+
+<div class="formGroup">
 <div class="formGroupHeader">Scheduler Infomation</div>
 
 <table border="0" cellpadding="2" cellspacing="5" width="100%"> 
@@ -30,31 +35,8 @@
 	<td><s:date name="runningSince"/></td>
 </tr>
 
-<tr>
-	<td><strong>Instance ID</strong></td>
-	<td><s:property value="instanceId"/></td>
-</tr>
-<tr>
-	<td><strong>Scheduler Name</strong></td>
-	<td><s:property value="schedulerName"/></td>
-</tr>
-
-<tr>
-	<td><strong>Version</strong></td>
-	<td><s:property value="version"/></td>
-</tr>
-<tr>
-	<td><strong>Thread Pool Size</strong></td>
-	<td><s:property value="threadPoolSize"/></td>
-</tr>
 </table>
 
-</div>
-
-
-<div class="formGroup">
-<div class="formGroupHeader">Summary</div>
-<pre><s:property value="summary"/></pre>
 </div>
 
 <div class="formGroup">

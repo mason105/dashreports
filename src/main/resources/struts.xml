@@ -196,34 +196,34 @@
 			<result>/jsp/main/editUser.jsp</result>
 		</action>
 
-		<action name="listAlerts" class="listAlertsAction">
-			<result>/jsp/main/listAlerts.jsp</result>
+		<action name="listItems" class="listItemsAction">
+			<result>/jsp/main/listItems.jsp</result>
 		</action>
 		
-		<action name="setupEditAlert" class="setupEditAlertAction">
-			<result>/jsp/main/editAlert.jsp</result>
+		<action name="setupEditItem" class="setupEditItemAction">
+			<result>/jsp/main/editItem.jsp</result>
 		</action>
 		
-		<action name="saveAlert" class="saveAlertAction">
+		<action name="saveItem" class="saveItemAction">
 			<result type="redirectAction">
-				<param name="actionName">listAlerts</param>
+				<param name="actionName">listItems</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>				
 			</result>
-			<result  name="input">/jsp/main/editAlert.jsp</result>
+			<result  name="input">/jsp/main/editItem.jsp</result>
 		</action>
 
-		<action name="deleteAlert" class="deleteAlertAction">
+		<action name="deleteItem" class="deleteItemAction">
 			<result type="redirectAction">
-				<param name="actionName">listAlerts</param>
+				<param name="actionName">listItems</param>
 				 <param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
 			</result>
 		</action>
 
-		<action name="invokeAlert" class="invokeAlertAction">
+		<action name="invokeItem" class="invokeItemAction">
 			<result type="redirectAction">
-				<param name="actionName">listAlerts</param>
+				<param name="actionName">listItems</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>				
 			</result>
@@ -287,7 +287,7 @@
 				<param name="actionName">listCurrentExecutingJobs</param>
 			</result>
 		</action>
-		<action name="InterruptCurrentExecutingDashboardAlert" class="interruptCurrentExecutingDashboardAlertAction">
+		<action name="InterruptCurrentExecutingDashboardItem" class="interruptCurrentExecutingDashboardItemAction">
 			<result type="redirectAction">
 				<param name="actionName">listCurrentExecutingJobs</param>
 			</result>
@@ -325,14 +325,6 @@
 			<result>/jsp/nostyle/dashboard.jsp</result>
 		</action>
 		
-		<action name="downloadChart" class="downloadChartAction">
-		    <result name="sendFile" type="stream">
-		  	  <param name="contentType">image/png</param>
-  			  <param name="inputName">inputStream</param>
-		  	  <param name="contentDisposition">${contentDisposition}</param>
-			  <param name="bufferSize">1024</param>
-			</result>
-		</action>
 		
 		<action name="about" class="aboutAction">
 			<result>/jsp/main/about.jsp

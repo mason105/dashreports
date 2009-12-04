@@ -25,7 +25,7 @@ package binky.reportrunner.ui.actions.group;
 import java.util.List;
 
 import binky.reportrunner.dao.RunnerGroupDao;
-import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
@@ -54,10 +54,10 @@ public class DeleteGroup extends AdminRunnerAction {
 			}
 			
 			//fix for issue 58 - unable to delete groups
-			List<RunnerDashboardAlert> alerts= dashboardService.getAlertsForGroup(groupName);
+			List<RunnerDashboardItem> alerts= dashboardService.getItemsForGroup(groupName);
 			if ((alerts!=null)&&(alerts.size()>0)) {
-				for (RunnerDashboardAlert a: alerts) {
-					dashboardService.deleteAlert(a.getId());
+				for (RunnerDashboardItem a: alerts) {
+					dashboardService.deleteItem(a.getId());
 				}
 			}
 			

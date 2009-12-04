@@ -38,14 +38,14 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.UnableToInterruptJobException;
 
-import binky.reportrunner.dao.RunnerDashboardAlertDao;
-import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.dao.RunnerDashboardItemDao;
+import binky.reportrunner.data.RunnerDashboardItem;
 
 public class AlertProcessor implements Job, InterruptableJob {
 
 	DataSource ds;
 
-	RunnerDashboardAlertDao dashboardDao;
+	RunnerDashboardItemDao dashboardDao;
 	Connection conn;
 	private static final Logger logger = Logger.getLogger(AlertProcessor.class);
 
@@ -53,7 +53,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 			throws JobExecutionException {
 
 		// Grab the elements of the job from the context to pass 	on
-		RunnerDashboardAlert alert = (RunnerDashboardAlert) context
+		RunnerDashboardItem item = (RunnerDashboardItem) context
 				.getJobDetail().getJobDataMap().get("alert");
 
 		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get("dataSource");
@@ -64,12 +64,12 @@ public class AlertProcessor implements Job, InterruptableJob {
 			logger.warn(e1.getMessage(),e1);
 		}
 		
-		this.dashboardDao = (RunnerDashboardAlertDao) context.getJobDetail()
+		this.dashboardDao = (RunnerDashboardItemDao) context.getJobDetail()
 				.getJobDataMap().get("dashboardDao");
 		try {
-			if (alert == null) {
-				logger.fatal("alert is null!");
-				throw new Exception("alert is null!");
+			if (item == null) {
+				logger.fatal("item is null!");
+				throw new Exception("item is null!");
 			}
 			if (ds == null) {
 				logger.fatal("datasource is null!");
@@ -80,7 +80,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 				throw new Exception("dao is null!");
 			}
 
-			processAlert(alert);
+			processItem(item);
 			
 		} catch (Exception e) {
 			throw new JobExecutionException(e);
@@ -88,16 +88,16 @@ public class AlertProcessor implements Job, InterruptableJob {
 
 	}
 	
-	private void processAlert(RunnerDashboardAlert alert) throws SQLException {
+	private void processItem(RunnerDashboardItem item) throws SQLException {
 		
-		String sql = alert.getAlertQuery();
+		String sql = item.getAlertQuery();
 		conn = ds.getConnection();
 		
 		try {
 			ResultSet rs = conn.createStatement().executeQuery(sql);
-			alert.setCurrentDataset(new RowSetDynaClass(rs,false));
-			alert.setLastUpdated(Calendar.getInstance().getTime());
-			dashboardDao.saveUpdateAlert(alert);
+			item.setCurrentDataset(new RowSetDynaClass(rs,false));
+			item.setLastUpdated(Calendar.getInstance().getTime());
+			dashboardDao.saveUpdateItem(item);
 			rs.close();
 		} finally {
 			if (!conn.isClosed()) conn.close();

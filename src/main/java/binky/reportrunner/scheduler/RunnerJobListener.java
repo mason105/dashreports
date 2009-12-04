@@ -35,10 +35,10 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
-import binky.reportrunner.dao.RunnerDashboardAlertDao;
+import binky.reportrunner.dao.RunnerDashboardItemDao;
 import binky.reportrunner.dao.RunnerHistoryDao;
 import binky.reportrunner.dao.RunnerJobDao;
-import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.engine.RunnerEngine;
@@ -62,7 +62,7 @@ public class RunnerJobListener implements JobListener {
 
 	private DatasourceService datasourceService;
 
-	private RunnerDashboardAlertDao dashboardDao;
+	private RunnerDashboardItemDao dashboardDao;
 	
 	public void jobExecutionVetoed(JobExecutionContext ctx) {
 		RunnerHistoryEvent event = new RunnerHistoryEvent();
@@ -102,12 +102,12 @@ public class RunnerJobListener implements JobListener {
 		} else if (ctx.getJobDetail().getJobClass()
 				.equals(AlertProcessor.class)) {
 			// stuff for the dashboards
-			Integer alertId = Integer.parseInt(ctx.getJobDetail().getName());
-			RunnerDashboardAlert alert = dashboardDao.getAlert(alertId);
-			ctx.getJobDetail().getJobDataMap().put("alert", alert);
+			Integer itemId = Integer.parseInt(ctx.getJobDetail().getName());
+			RunnerDashboardItem item = dashboardDao.getItem(itemId);
+			ctx.getJobDetail().getJobDataMap().put("item", item);
 			DataSource ds;
 			try {
-				ds = datasourceService.getJDBCDataSource(alert.getDatasource());
+				ds = datasourceService.getJDBCDataSource(item.getDatasource());
 				ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
 			} catch (SQLException e) {
 				logger.error(e.getMessage(),e);
@@ -231,12 +231,14 @@ public class RunnerJobListener implements JobListener {
 		this.datasourceService = datasourceService;
 	}
 
-	public RunnerDashboardAlertDao getDashboardDao() {
+	public RunnerDashboardItemDao getDashboardDao() {
 		return dashboardDao;
 	}
 
-	public void setDashboardDao(RunnerDashboardAlertDao dashboardDao) {
+	public void setDashboardDao(RunnerDashboardItemDao dashboardDao) {
 		this.dashboardDao = dashboardDao;
 	}
+
+	
 
 }

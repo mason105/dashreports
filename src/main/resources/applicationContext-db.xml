@@ -71,8 +71,17 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>
-					binky.reportrunner.data.RunnerDashboardAlert
+					binky.reportrunner.data.RunnerDashboardItem
 				</value>
+				<value>
+					binky.reportrunner.data.RunnerDashboardChart
+				</value>
+				<value>
+					binky.reportrunner.data.RunnerDashboardGrid
+				</value>
+				<value>
+					binky.reportrunner.data.RunnerDashboardThreshold
+				</value>												
 				<value>
 					binky.reportrunner.data.RunnerHistoryEvent
 				</value>
@@ -169,14 +178,15 @@
 			</list>
 		</property>
 	</bean>
+	
 	<bean id="dashboardDaoTarget"
-		class="binky.reportrunner.dao.impl.RunnerDashboardAlertDaoImpl"
+		class="binky.reportrunner.dao.impl.RunnerDashboardItemDaoImpl"
 		autowire="byName" />
 	<bean id="dashboardDao"
 		class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<value>
-				binky.reportrunner.dao.RunnerDashboardAlertDao
+				binky.reportrunner.dao.RunnerDashboardItemDao
 			</value>
 		</property>
 		<property name="interceptorNames">

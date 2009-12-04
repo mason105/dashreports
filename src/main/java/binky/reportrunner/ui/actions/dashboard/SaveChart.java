@@ -28,33 +28,32 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.RunnerDataSourceDao;
-import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.data.RunnerDashboardChart;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
-import binky.reportrunner.data.RunnerDashboardAlert.DisplayType;
-import binky.reportrunner.data.RunnerDashboardAlert.Height;
-import binky.reportrunner.data.RunnerDashboardAlert.Width;
-import binky.reportrunner.data.RunnerDashboardAlert.XAxisStep;
-import binky.reportrunner.engine.renderers.ChartRenderer.ChartType;
+import binky.reportrunner.data.RunnerDashboardChart.ChartType;
+import binky.reportrunner.data.RunnerDashboardChart.XAxisStep;
+import binky.reportrunner.data.RunnerDashboardItem.Height;
+import binky.reportrunner.data.RunnerDashboardItem.Width;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
 
-public class SaveAlert extends StandardRunnerAction implements Preparable {
+public class SaveChart extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
 	private DashboardService dashboardService;
 
-	private RunnerDashboardAlert dashboardAlert;
+	private RunnerDashboardChart chart;
 
 	private RunnerDataSourceDao dataSourceDao;
 
 	private List<RunnerDataSource> runnerDataSources;
 
-	private static final Logger logger = Logger.getLogger(SaveAlert.class);
+	private static final Logger logger = Logger.getLogger(SaveChart.class);
 	private String groupName;
 	public void prepare() throws Exception {
 		runnerDataSources = dataSourceDao.listDataSources();
@@ -64,24 +63,24 @@ public class SaveAlert extends StandardRunnerAction implements Preparable {
 	public String execute() throws Exception {
 		
 		
-		logger.debug("alert is " + dashboardAlert.toString());	
-		String groupName=dashboardAlert.getGroup().getGroupName();
+		logger.debug("alert is " + chart.toString());	
+		String groupName=chart.getGroup().getGroupName();
 		
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
 
 			//preserve teh current data
-			if (dashboardAlert.getId()!=null) {
-				RunnerDashboardAlert currentAlert = dashboardService.getAlert(dashboardAlert.getId());
-				dashboardAlert.setCurrentDataset(currentAlert.getCurrentDataset());
-				dashboardAlert.setLastUpdated(currentAlert.getLastUpdated());
+			if (chart.getId()!=null) {
+				RunnerDashboardChart currentChart = (RunnerDashboardChart)dashboardService.getItem(chart.getId());
+				chart.setCurrentDataset(currentChart.getCurrentDataset());
+				chart.setLastUpdated(currentChart.getLastUpdated());
 			}
 			RunnerGroup group = new RunnerGroup();
 			group.setGroupName(groupName);
-			dashboardAlert.setGroup(group);
+			chart.setGroup(group);
 			
-			dashboardService.saveUpdateAlert(dashboardAlert);
-			this.groupName=dashboardAlert.getGroup().getGroupName();
+			dashboardService.saveUpdateItem(chart);
+			this.groupName=chart.getGroup().getGroupName();
 			return SUCCESS;
 		} else {
 
@@ -107,9 +106,6 @@ public class SaveAlert extends StandardRunnerAction implements Preparable {
 		return Arrays.asList(ChartType.values());
 	}
 
-	public List<DisplayType> getDisplayTypes() {
-		return Arrays.asList(DisplayType.values());
-	}
 	public List<Width> getWidths() {
 		return Arrays.asList(Width.values());
 	}
@@ -137,19 +133,21 @@ public class SaveAlert extends StandardRunnerAction implements Preparable {
 
 	
 
-	public RunnerDashboardAlert getDashboardAlert() {
-		return dashboardAlert;
-	}
 
-	public void setDashboardAlert(RunnerDashboardAlert dashboardAlert) {
-		this.dashboardAlert = dashboardAlert;
-	}
 	public List<XAxisStep> getXAxisSteps() {
 		return Arrays.asList(XAxisStep.values());
 	}
 
 	public String getGroupName() {
 		return groupName;
+	}
+
+	public RunnerDashboardChart getChart() {
+		return chart;
+	}
+
+	public void setChart(RunnerDashboardChart chart) {
+		this.chart = chart;
 	}
 	
 }

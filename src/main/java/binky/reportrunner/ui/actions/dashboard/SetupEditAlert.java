@@ -22,17 +22,11 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.dashboard;
 
-import java.util.Arrays;
 import java.util.List;
 
 import binky.reportrunner.dao.RunnerDataSourceDao;
-import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.data.RunnerDashboardChart;
 import binky.reportrunner.data.RunnerDataSource;
-import binky.reportrunner.data.RunnerDashboardAlert.ChartType;
-import binky.reportrunner.data.RunnerDashboardAlert.DisplayType;
-import binky.reportrunner.data.RunnerDashboardAlert.Height;
-import binky.reportrunner.data.RunnerDashboardAlert.Width;
-import binky.reportrunner.data.RunnerDashboardAlert.XAxisStep;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
@@ -45,7 +39,7 @@ public class SetupEditAlert extends StandardRunnerAction implements Preparable {
 
 	private DashboardService dashboardService;
 
-	private RunnerDashboardAlert dashboardAlert;
+	private RunnerDashboardChart chart;
 
 	private Integer id;
 
@@ -65,9 +59,9 @@ public class SetupEditAlert extends StandardRunnerAction implements Preparable {
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
 			if (id==null) {
-				dashboardAlert=new RunnerDashboardAlert();
+				chart=new RunnerDashboardChart();
 			} else {
-				dashboardAlert = dashboardService.getAlert(id);
+				chart = (RunnerDashboardChart)dashboardService.getItem(id);
 			}
 			return SUCCESS;
 		} else {
@@ -89,36 +83,13 @@ public class SetupEditAlert extends StandardRunnerAction implements Preparable {
 	}
 
 
-	public RunnerDashboardAlert getDashboardAlert() {
-		return dashboardAlert;
-	}
-
-	public void setDashboardAlert(RunnerDashboardAlert dashboardAlert) {
-		this.dashboardAlert = dashboardAlert;
-	}
+	
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public List<ChartType> getChartTypes() {
-		return Arrays.asList(ChartType.values());
-	}
 
-	public List<DisplayType> getDisplayTypes() {
-		return Arrays.asList(DisplayType.values());
-	}
-	
-	public List<Width> getWidths() {
-		return Arrays.asList(Width.values());
-	}
-	public List<Height> getHeights() {
-		return Arrays.asList(Height.values());
-	}
-	
-	public List<XAxisStep> getXAxisSteps() {
-		return Arrays.asList(XAxisStep.values());
-	}
 	
 	
 	public RunnerDataSourceDao getDataSourceDao() {
@@ -146,6 +117,18 @@ public class SetupEditAlert extends StandardRunnerAction implements Preparable {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+
+	public RunnerDashboardChart getChart() {
+		return chart;
+	}
+
+	public void setChart(RunnerDashboardChart chart) {
+		this.chart = chart;
+	}
+
+	public Integer getId() {
+		return id;
 	}
 	
 	

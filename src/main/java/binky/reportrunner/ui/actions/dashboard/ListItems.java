@@ -18,28 +18,35 @@
  * You should have received a copy of the GNU General Public License
  * along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
  * 
- * Module: DeleteAlert.java
+ * Module: ListAlerts.java
  ******************************************************************************/
 package binky.reportrunner.ui.actions.dashboard;
 
+import java.util.List;
+
+import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class DeleteAlert extends StandardRunnerAction {
+public class ListItems extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private DashboardService dashboardService;
-	private Integer id;
 	private String groupName;
+
+	private List<RunnerDashboardItem> items;
+
 	@Override
 	public String execute() throws Exception {
-		String groupName= dashboardService.getAlert(id).getGroup().getGroupName();
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
-			dashboardService.deleteAlert(id);
+			items = dashboardService.getItemsForGroup(groupName);
+			//hack to expand group folder
+			super.setCurrentGroupName(groupName);
 			return SUCCESS;
 		} else {
+			
 
 			SecurityException se = new SecurityException("Group " + groupName
 					+ " not valid for user "
@@ -47,20 +54,30 @@ public class DeleteAlert extends StandardRunnerAction {
 			throw se;
 		}
 	}
+
 	public DashboardService getDashboardService() {
 		return dashboardService;
 	}
+
 	public void setDashboardService(DashboardService dashboardService) {
 		this.dashboardService = dashboardService;
 	}
-	public void setId(Integer id) {
-		this.id = id;
+
+
+	public List<RunnerDashboardItem> getItems() {
+		return items;
 	}
+
+	public void setItems(List<RunnerDashboardItem> items) {
+		this.items = items;
+	}
+
 	public String getGroupName() {
 		return groupName;
 	}
+
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-	
+
 }

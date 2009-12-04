@@ -30,31 +30,31 @@ import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Order;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import binky.reportrunner.dao.RunnerDashboardAlertDao;
-import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.dao.RunnerDashboardItemDao;
+import binky.reportrunner.data.RunnerDashboardItem;
 
-public class RunnerDashboardAlertDaoImpl extends HibernateDaoSupport implements
-		RunnerDashboardAlertDao {
-	private Logger logger = Logger.getLogger(RunnerDashboardAlertDaoImpl.class);
+public class RunnerDashboardItemDaoImpl extends HibernateDaoSupport implements
+		RunnerDashboardItemDao {
+	private Logger logger = Logger.getLogger(RunnerDashboardItemDaoImpl.class);
 
-	public void deleteAlert(Integer id) {
+	public void deleteItem(Integer id) {
 		logger.debug("delete: " + id);
 		getHibernateTemplate().delete(
-				(RunnerDashboardAlert) getHibernateTemplate().get(
-						RunnerDashboardAlert.class, id));
+				(RunnerDashboardItem) getHibernateTemplate().get(
+						RunnerDashboardItem.class, id));
 	}
 
-	public RunnerDashboardAlert getAlert(Integer id) {
+	public RunnerDashboardItem getItem(Integer id) {
 		logger.debug("get alert: " + id);
-		return (RunnerDashboardAlert) getHibernateTemplate().get(
-				RunnerDashboardAlert.class, id);
+		return (RunnerDashboardItem) getHibernateTemplate().get(
+				RunnerDashboardItem.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<RunnerDashboardAlert> getAlertsForGroup(String groupName) {
+	public List<RunnerDashboardItem> getItemsForGroup(String groupName) {
 		logger.debug("list alerts for goup");
 		DetachedCriteria criteria = DetachedCriteria
-				.forClass(RunnerDashboardAlert.class);
+				.forClass(RunnerDashboardItem.class);
 		criteria.add(Expression.eq("group.groupName", groupName));
 		criteria.addOrder(Order.asc("displayRow"));
 		criteria.addOrder(Order.asc("displayColumn"));
@@ -62,15 +62,15 @@ public class RunnerDashboardAlertDaoImpl extends HibernateDaoSupport implements
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<RunnerDashboardAlert> getAllAlerts() {
+	public List<RunnerDashboardItem> getAllItems() {
 		logger.debug("list alerts");
 		DetachedCriteria criteria = DetachedCriteria
-				.forClass(RunnerDashboardAlert.class);
+				.forClass(RunnerDashboardItem.class);
 		criteria.addOrder(Order.asc("group.groupName"));
 		return getHibernateTemplate().findByCriteria(criteria);
 	}
 
-	public void saveUpdateAlert(RunnerDashboardAlert alert) {
+	public void saveUpdateItem(RunnerDashboardItem alert) {
 		getHibernateTemplate().saveOrUpdate(alert);
 		
 	}

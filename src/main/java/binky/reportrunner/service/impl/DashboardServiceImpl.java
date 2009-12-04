@@ -22,16 +22,14 @@
  ******************************************************************************/
 package binky.reportrunner.service.impl;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerDashboardAlertDao;
-import binky.reportrunner.data.RunnerDashboardAlert;
-import binky.reportrunner.engine.renderers.ChartRenderer;
+import binky.reportrunner.dao.RunnerDashboardItemDao;
+import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DashboardService;
@@ -40,22 +38,22 @@ public class DashboardServiceImpl implements DashboardService {
 	
 	private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
 	
-	private RunnerDashboardAlertDao dashboardDao;
+	private RunnerDashboardItemDao dashboardDao;
 	private Scheduler scheduler;
-	public RunnerDashboardAlert getAlert(Integer id) {
-		return dashboardDao.getAlert(id);
+	public RunnerDashboardItem getItem(Integer id) {
+		return dashboardDao.getItem(id);
 	}
-	public void deleteAlert(Integer id) throws SchedulerException {
-		dashboardDao.deleteAlert(id);
+	public void deleteItem(Integer id) throws SchedulerException {
+		dashboardDao.deleteItem(id);
 		scheduler.removedDashboardAlert(id);		
 	}
 
-	public List<RunnerDashboardAlert> getAlertsForGroup(String groupName) {
-		List<RunnerDashboardAlert> as = dashboardDao.getAlertsForGroup(groupName);			
-		List<RunnerDashboardAlert> alerts=new LinkedList<RunnerDashboardAlert>();
+	public List<RunnerDashboardItem> getItemsForGroup(String groupName) {
+		List<RunnerDashboardItem> as = dashboardDao.getItemsForGroup(groupName);			
+		List<RunnerDashboardItem> alerts=new LinkedList<RunnerDashboardItem>();
 		
 		//temp hack
-		for (RunnerDashboardAlert a: as) 
+		for (RunnerDashboardItem a: as) 
 		{
 			long visualRefreshTime=60000;
 
@@ -78,22 +76,22 @@ public class DashboardServiceImpl implements DashboardService {
 		
 	}
 
-	public List<RunnerDashboardAlert> getAllAlerts() {
-		return dashboardDao.getAllAlerts();
+	public List<RunnerDashboardItem> getAllItems() {
+		return dashboardDao.getAllItems();
 	}
 
-	public void saveUpdateAlert(RunnerDashboardAlert alert) throws SchedulerException {
+	public void saveUpdateItem(RunnerDashboardItem alert) throws SchedulerException {
 		logger.debug("alert is null=" + (alert==null));
 		if (alert.getId()!=null){
 			scheduler.removedDashboardAlert(alert.getId());
 		}
-		dashboardDao.saveUpdateAlert(alert);
+		dashboardDao.saveUpdateItem(alert);
 		scheduler.addDashboardAlert(alert.getId(),alert.getCronTab());		
 	}
-	public RunnerDashboardAlertDao getDashboardDao() {
+	public RunnerDashboardItemDao getDashboardDao() {
 		return dashboardDao;
 	}
-	public void setDashboardDao(RunnerDashboardAlertDao dashboardDao) {
+	public void setDashboardDao(RunnerDashboardItemDao dashboardDao) {
 		this.dashboardDao = dashboardDao;
 	}
 	public Scheduler getScheduler() {
@@ -102,39 +100,29 @@ public class DashboardServiceImpl implements DashboardService {
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
 	}
-	public String getChartForAlert(Integer id) throws NumberFormatException, IOException {
-		
-		RunnerDashboardAlert alert = dashboardDao.getAlert(id);
-		
-		ChartRenderer render = new ChartRenderer();
-		
-		String uid = render.renderChart(alert.getAlertName(), alert.getCurrentDataset(), 
-				alert.getXaxisColumn(), alert.getChartType());
-		
-		return uid;
-	}
-	public List<RunnerDashboardAlert> getRunningAlerts() {
+	
+	public List<RunnerDashboardItem> getRunningItems() {
 		List<String> runningJobs = scheduler.getCurrentRunningJobs();
-		List<RunnerDashboardAlert> alerts = new LinkedList<RunnerDashboardAlert>();
+		List<RunnerDashboardItem> alerts = new LinkedList<RunnerDashboardItem>();
 		for (String string : runningJobs) {
 			String groupName = string.split(":|:")[0];
 			if (groupName.equals(Scheduler.dashboardSchedulerGroup)) {
 				logger.debug("job name: " + string);
 				Integer id = Integer.parseInt(string.split(":|:")[2]);
-				RunnerDashboardAlert alert = dashboardDao.getAlert(id);
+				RunnerDashboardItem alert = dashboardDao.getItem(id);
 				alerts.add(alert);
 			}			
 		}
 		return alerts;
 	}
 	
-	public void interruptRunningDashboardAlert(Integer alertId)
+	public void interruptRunningDashboardItem(Integer alertId)
 	throws SchedulerException {
 		logger.debug("interrupt alert: " + alertId);		
 		scheduler.interruptRunningDashboardAlert(alertId);		
 	}
 	@Override
-	public void invokeDashboardAlert(Integer alertId) throws SchedulerException {
+	public void invokeDashboardItem(Integer alertId) throws SchedulerException {
 		scheduler.invokeDashboardAler(alertId);
 		
 	}

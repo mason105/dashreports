@@ -72,10 +72,8 @@
 			<ref bean="runnerJobService" />
 		</property>	
 	</bean>
-
-	<bean id="downloadChartAction" class="binky.reportrunner.ui.actions.dashboard.DownloadChartAction" scope="prototype">
-	</bean>
-
+	
+	
 	<bean id="getDashboardChartDataAction" class="binky.reportrunner.ui.actions.dashboard.GetDashboardChartDataAction"
 		scope="prototype" >
 		<property name="dashboardService">
@@ -305,19 +303,19 @@
 
 	
 	
-	<bean id="deleteAlertAction" class="binky.reportrunner.ui.actions.dashboard.DeleteAlert" scope="prototype">
+	<bean id="deleteItemAction" class="binky.reportrunner.ui.actions.dashboard.DeleteItem" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>		
 	</bean>
 
-	<bean id="invokeAlertAction" class="binky.reportrunner.ui.actions.dashboard.InvokeAlert" scope="prototype">
+	<bean id="invokeItemAction" class="binky.reportrunner.ui.actions.dashboard.InvokeItem" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>		
 	</bean>
 
-	<bean id="setupEditAlertAction" class="binky.reportrunner.ui.actions.dashboard.SetupEditAlert" scope="prototype">
+	<bean id="setupEditItemAction" class="binky.reportrunner.ui.actions.dashboard.SetupEditItem" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>			
@@ -326,7 +324,7 @@
 		</property>		
 	</bean>
 
-	<bean id="saveAlertAction" class="binky.reportrunner.ui.actions.dashboard.SaveAlert" scope="prototype">
+	<bean id="saveItemAction" class="binky.reportrunner.ui.actions.dashboard.SaveItem" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>		
@@ -335,7 +333,7 @@
 		</property>		
 	</bean>
 
-	<bean id="listAlertsAction" class="binky.reportrunner.ui.actions.dashboard.ListAlerts" scope="prototype">
+	<bean id="listItemsAction" class="binky.reportrunner.ui.actions.dashboard.ListItems" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>				
@@ -359,7 +357,7 @@
 		
 	</bean>
 
-	<bean id="interruptCurrentExecutingDashboardAlertAction" class="binky.reportrunner.ui.actions.admin.InterruptCurrentExecutingDashboardAlertAction"
+	<bean id="interruptCurrentExecutingDashboardItemAction" class="binky.reportrunner.ui.actions.admin.InterruptCurrentExecutingDashboardItemAction"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />

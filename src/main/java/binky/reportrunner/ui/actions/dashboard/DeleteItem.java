@@ -18,54 +18,49 @@
  * You should have received a copy of the GNU General Public License
  * along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
  * 
- * Module: DownloadChartAction.java
+ * Module: DeleteAlert.java
  ******************************************************************************/
 package binky.reportrunner.ui.actions.dashboard;
 
-import java.io.InputStream;
-
-import binky.reportrunner.engine.utils.FileSystemHandler;
-import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
+import binky.reportrunner.exceptions.SecurityException;
+import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class DownloadChartAction extends StandardRunnerAction {
+public class DeleteItem extends StandardRunnerAction {
 
-	private static final long serialVersionUID = 1276486788757993980L;
-
-	private String contentDisposition;
-
-	private String id;
-
-	private InputStream inputStream;
-
+	private static final long serialVersionUID = 1L;
+	private DashboardService dashboardService;
+	private Integer id;
+	private String groupName;
 	@Override
 	public String execute() throws Exception {
-		FileSystemHandler fs = new FileSystemHandlerImpl();
-		inputStream = fs.getFileObjectForUrl("tmp://" + id + ".tmp")
-				.getContent().getInputStream();
-		String fileName = "chart_" + id + ".png";
-		contentDisposition = "attachment; filename=\"" + fileName + "\"";
-		return "sendFile";
-	}
+		String groupName= dashboardService.getItem(id).getGroup().getGroupName();
+		if (super.getSessionUser().getGroups().contains(groupName)
+				|| super.getSessionUser().getIsAdmin()) {
+			dashboardService.deleteItem(id);
+			return SUCCESS;
+		} else {
 
-	public String getId() {
-		return id;
+			SecurityException se = new SecurityException("Group " + groupName
+					+ " not valid for user "
+					+ super.getSessionUser().getUserName());
+			throw se;
+		}
 	}
-
-	public void setId(String id) {
+	public DashboardService getDashboardService() {
+		return dashboardService;
+	}
+	public void setDashboardService(DashboardService dashboardService) {
+		this.dashboardService = dashboardService;
+	}
+	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public InputStream getInputStream() {
-		return inputStream;
+	public String getGroupName() {
+		return groupName;
 	}
-
-	public void setInputStream(InputStream inputStream) {
-		this.inputStream = inputStream;
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
-
-	public String getContentDisposition() {
-		return contentDisposition;
-	}
-
+	
 }

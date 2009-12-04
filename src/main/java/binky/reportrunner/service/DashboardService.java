@@ -22,21 +22,19 @@
  ******************************************************************************/
 package binky.reportrunner.service;
 
-import java.io.IOException;
 import java.util.List;
 
-import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.scheduler.SchedulerException;
 
 public interface DashboardService {
 
-	public List<RunnerDashboardAlert> getAlertsForGroup(String groupName);
-	public List<RunnerDashboardAlert> getAllAlerts();
-	public void saveUpdateAlert(RunnerDashboardAlert alert) throws SchedulerException;
-	public void deleteAlert(Integer id) throws SchedulerException;
-	public RunnerDashboardAlert getAlert(Integer id);
-	public String getChartForAlert(Integer id) throws  NumberFormatException, IOException;
-	public List<RunnerDashboardAlert> getRunningAlerts() throws SchedulerException;
-	public void interruptRunningDashboardAlert(Integer alertId) throws SchedulerException;
-	public void invokeDashboardAlert(Integer alertId) throws SchedulerException;
+	public List<RunnerDashboardItem> getItemsForGroup(String groupName);
+	public List<RunnerDashboardItem> getAllItems();
+	public void saveUpdateItem(RunnerDashboardItem item) throws SchedulerException;
+	public void deleteItem(Integer id) throws SchedulerException;
+	public RunnerDashboardItem getItem(Integer id);
+	public List<RunnerDashboardItem> getRunningItems() throws SchedulerException;
+	public void interruptRunningDashboardItem(Integer alertId) throws SchedulerException;
+	public void invokeDashboardItem(Integer alertId) throws SchedulerException;
 }

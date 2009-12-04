@@ -18,65 +18,34 @@
  * You should have received a copy of the GNU General Public License
  * along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
  * 
- * Module: ListAlerts.java
+ * Module: InterruptCurrentExecutingJobAction.java
  ******************************************************************************/
-package binky.reportrunner.ui.actions.dashboard;
+package binky.reportrunner.ui.actions.admin;
 
-import java.util.List;
-
-import binky.reportrunner.data.RunnerDashboardAlert;
-import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
-public class ListAlerts extends StandardRunnerAction {
+public class InterruptCurrentExecutingDashboardItemAction extends AdminRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private DashboardService dashboardService;
-	private String groupName;
-
-	private List<RunnerDashboardAlert> alerts;
-
+	private Integer itemId;
 	@Override
 	public String execute() throws Exception {
-		if (super.getSessionUser().getGroups().contains(groupName)
-				|| super.getSessionUser().getIsAdmin()) {
-			alerts = dashboardService.getAlertsForGroup(groupName);
-			//hack to expand group folder
-			super.setCurrentGroupName(groupName);
-			return SUCCESS;
-		} else {
-			
-
-			SecurityException se = new SecurityException("Group " + groupName
-					+ " not valid for user "
-					+ super.getSessionUser().getUserName());
-			throw se;
-		}
+		dashboardService.interruptRunningDashboardItem(itemId);
+		return SUCCESS;
 	}
-
 	public DashboardService getDashboardService() {
 		return dashboardService;
 	}
-
 	public void setDashboardService(DashboardService dashboardService) {
 		this.dashboardService = dashboardService;
 	}
-
-	public List<RunnerDashboardAlert> getAlerts() {
-		return alerts;
+	public Integer getItemId() {
+		return itemId;
 	}
-
-	public void setAlerts(List<RunnerDashboardAlert> alerts) {
-		this.alerts = alerts;
-	}
-
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
 	}
 
 }

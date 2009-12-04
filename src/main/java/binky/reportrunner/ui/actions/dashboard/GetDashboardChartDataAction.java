@@ -43,8 +43,8 @@ import binky.ofc2plugin.charts.elements.ElementPie;
 import binky.ofc2plugin.charts.elements.ElementStandardBar;
 import binky.ofc2plugin.charts.elements.ElementStandardLine;
 import binky.ofc2plugin.charts.elements.ElementStandardBar.BarType;
-import binky.reportrunner.data.RunnerDashboardAlert;
-import binky.reportrunner.data.RunnerDashboardAlert.ChartType;
+import binky.reportrunner.data.RunnerDashboardChart;
+import binky.reportrunner.data.RunnerDashboardChart.ChartType;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -54,7 +54,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 	private DashboardService dashboardService;
 
-	private Integer alertId;
+	private Integer itemId;
 
 	private String data;
 
@@ -65,28 +65,28 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
-		RunnerDashboardAlert alert = dashboardService.getAlert(alertId);
+		RunnerDashboardChart item = (RunnerDashboardChart)dashboardService.getItem(itemId);
 
 		// noddy security check
-		if (!doesUserHaveGroup(alert.getGroup().getGroupName())) {
+		if (!doesUserHaveGroup(item.getGroup().getGroupName())) {
 			return ERROR;
 		}
 
 		Number max = 0;
-		RowSetDynaClass data = alert.getCurrentDataset();
+		RowSetDynaClass data = item.getCurrentDataset();
 		Map<String, List<Number>> dataMap = new HashMap<String, List<Number>>();
 
 		List<Object> xLabels = new LinkedList<Object>();
 		for (Object o : data.getRows()) {
 			DynaBean b = (DynaBean) o;
-			String label = b.get(alert.getXaxisColumn()).toString();
+			String label = b.get(item.getXaxisColumn()).toString();
 			if (!xLabels.contains(label)) {
 				xLabels.add(label);
 			}
 		}
 		
 		if (xLabels.size()==0) {
-			Exception e = new Exception("invalid labels column identifier " + alert.getXaxisColumn() + " for alert id " + alert.getId());
+			Exception e = new Exception("invalid labels column identifier " + item.getXaxisColumn() + " for item " + item.getId());
 			logger.error(e.getMessage(),e);
 			throw e;
 		}
@@ -95,11 +95,11 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		for (Object o : data.getRows()) {
 			DynaBean b = (DynaBean) o;
 			String seriesName;
-			if ((alert.getSeriesNameColumn() == null)
-					|| (alert.getSeriesNameColumn().isEmpty())) {
+			if ((item.getSeriesNameColumn() == null)
+					|| (item.getSeriesNameColumn().isEmpty())) {
 				seriesName = "VALUE";
 			} else {
-				seriesName = (String) b.get(alert.getSeriesNameColumn());
+				seriesName = (String) b.get(item.getSeriesNameColumn());
 			}
 			if (!series.contains(seriesName)) {
 				series.add(seriesName);
@@ -107,7 +107,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		}
 
 		if (series.size()==0) {
-			Exception e = new Exception("invalid series column identifier " + alert.getSeriesNameColumn() + " for alert id " + alert.getId());
+			Exception e = new Exception("invalid series column identifier " + item.getSeriesNameColumn() + " for item id " + item.getId());
 			logger.error(e.getMessage(),e);
 			throw e;
 		}
@@ -119,23 +119,23 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 				for (Object o : data.getRows()) {
 					DynaBean b = (DynaBean) o;
-					String label = b.get(alert.getXaxisColumn()).toString();
+					String label = b.get(item.getXaxisColumn()).toString();
 					String seriesName;
-					if ((alert.getSeriesNameColumn() == null)
-							|| (alert.getSeriesNameColumn().isEmpty())) {
+					if ((item.getSeriesNameColumn() == null)
+							|| (item.getSeriesNameColumn().isEmpty())) {
 						seriesName = "VALUE";
 					} else {
-						seriesName = "" + b.get(alert.getSeriesNameColumn());
+						seriesName = "" + b.get(item.getSeriesNameColumn());
 					}
 					Number value;
 
 					if (label.equals(x)
-							&& (seriesName.equals(s) || (((alert
-									.getSeriesNameColumn() == null) || (alert
+							&& (seriesName.equals(s) || (((item
+									.getSeriesNameColumn() == null) || (item
 									.getSeriesNameColumn().isEmpty()))))) {
 						
 						value = BigDecimal.valueOf(Double.parseDouble(b.get(
-								alert.getValueColumn()).toString()));
+								item.getValueColumn()).toString()));
 
 						found = true;
 						if (value.floatValue() > max.floatValue()) {
@@ -169,7 +169,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		}
 
 		if (dataMap.size()==0) {
-			Exception e = new Exception("invalid value column identifier " + alert.getValueColumn() + " for alert id " + alert.getId());
+			Exception e = new Exception("invalid value column identifier " + item.getValueColumn() + " for item id " + item.getId());
 			logger.error(e.getMessage(),e);
 			throw e;
 		}
@@ -221,7 +221,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 			Element e;
 
-			switch (alert.getChartType()) {
+			switch (item.getChartType()) {
 			case AREA:
 				e = new ElementAreaLine();
 			case BAR:
@@ -278,7 +278,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 				break;
 			}
 			
-			if (alert.getChartType() != ChartType.PIE) {
+			if (item.getChartType() != ChartType.PIE) {
 				((ElementNotPie)e).addValues(d);
 			} else {
 				//pie chart hack
@@ -303,20 +303,26 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 		YAxis yAxis = new YAxis();
 		yAxis.setMax(max);
 		chart.setYAxis(yAxis);
-		chart.setBackGroundColour(alert.getBackGroundColour());
+		chart.setBackGroundColour(item.getBackGroundColour());
 
 		this.data = chart.encodeJSONString();
 
 		return SUCCESS;
 	}
 
-	public Integer getAlertId() {
-		return alertId;
+
+
+	public Integer getItemId() {
+		return itemId;
 	}
 
-	public void setAlertId(Integer alertId) {
-		this.alertId = alertId;
+
+
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
 	}
+
+
 
 	public DashboardService getDashboardService() {
 		return dashboardService;

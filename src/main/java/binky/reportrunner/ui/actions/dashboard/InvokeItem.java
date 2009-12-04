@@ -4,7 +4,7 @@ import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class InvokeAlert extends StandardRunnerAction {
+public class InvokeItem extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private DashboardService dashboardService;
@@ -15,7 +15,7 @@ public class InvokeAlert extends StandardRunnerAction {
 	
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
-			dashboardService.invokeDashboardAlert(alertId);
+			dashboardService.invokeDashboardItem(alertId);
 			return SUCCESS;
 		} else {
 				SecurityException se = new SecurityException("Group " + groupName

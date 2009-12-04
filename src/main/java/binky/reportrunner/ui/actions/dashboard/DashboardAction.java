@@ -3,7 +3,7 @@ package binky.reportrunner.ui.actions.dashboard;
 import java.util.LinkedList;
 import java.util.List;
 
-import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -12,18 +12,18 @@ public class DashboardAction extends StandardRunnerAction {
 	private String groupName;
 	private DashboardService dashboardService;
 	private static final long serialVersionUID = 0L;
-	private List<RunnerDashboardAlert> alerts;
+	private List<RunnerDashboardItem> items;
 	private Integer currentRow;
 
 	public String execute() throws Exception {
 
-		alerts = new LinkedList<RunnerDashboardAlert>();
+		items = new LinkedList<RunnerDashboardItem>();
 
 		if (!super.getSessionUser().getIsAdmin()
 				&& !super.doesUserHaveGroup(groupName)) {
 			return ERROR;
 		} else {
-			alerts = dashboardService.getAlertsForGroup(this.groupName);
+			items = dashboardService.getItemsForGroup(this.groupName);
 
 			return SUCCESS;
 		}
@@ -45,12 +45,12 @@ public class DashboardAction extends StandardRunnerAction {
 		this.dashboardService = dashboardService;
 	}
 
-	public List<RunnerDashboardAlert> getAlerts() {
-		return alerts;
+	public List<RunnerDashboardItem> getItems() {
+		return items;
 	}
 
-	public void setAlerts(List<RunnerDashboardAlert> alerts) {
-		this.alerts = alerts;
+	public void setItems(List<RunnerDashboardItem> items) {
+		this.items = items;
 	}
 
 	public Integer getCurrentRow() {

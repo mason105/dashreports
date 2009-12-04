@@ -24,13 +24,13 @@ package binky.reportrunner.dao;
 
 import java.util.List;
 
-import binky.reportrunner.data.RunnerDashboardAlert;
+import binky.reportrunner.data.RunnerDashboardItem;
 
-public interface RunnerDashboardAlertDao {
+public interface RunnerDashboardItemDao {
 
-	public void saveUpdateAlert(RunnerDashboardAlert alert);
-	public void deleteAlert(Integer id);
-	public RunnerDashboardAlert getAlert(Integer id);
-	public List<RunnerDashboardAlert> getAllAlerts();
-	public List<RunnerDashboardAlert> getAlertsForGroup(String groupName);
+	public void saveUpdateItem(RunnerDashboardItem item);
+	public void deleteItem(Integer id);
+	public RunnerDashboardItem getItem(Integer id);
+	public List<RunnerDashboardItem> getAllItems();
+	public List<RunnerDashboardItem> getItemsForGroup(String groupName);
 }

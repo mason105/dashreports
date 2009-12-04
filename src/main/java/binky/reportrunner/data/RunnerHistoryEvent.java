@@ -42,6 +42,9 @@ public class RunnerHistoryEvent {
 	private String message;
 	private Boolean success;
 	private Long runTime;
+	private String userName;
+	private String module;
+	
 	public Long getRunTime() {
 		return runTime;
 	}
@@ -103,6 +106,27 @@ public class RunnerHistoryEvent {
 		ret.append(" ");
 		ret.append("Message=");
 		ret.append(message);
+		ret.append(" ");
+		ret.append("User Name=");
+		ret.append(userName);
+		ret.append(" ");
+		ret.append("Module=");
+		ret.append(module);		
 		return ret.toString();
 	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getModule() {
+		return module;
+	}
+	public void setModule(String module) {
+		this.module = module;
+	}
+	
+	
+	
 }

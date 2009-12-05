@@ -4,13 +4,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import binky.reportrunner.data.RunnerDashboardItem;
-import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 
-public class DashboardAction extends StandardRunnerAction {
+public final class DashboardAction extends BaseDashboardAction {
 
 	private String groupName;
-	private DashboardService dashboardService;
 	private static final long serialVersionUID = 0L;
 	private List<RunnerDashboardItem> items;
 	private Integer currentRow;
@@ -23,7 +21,7 @@ public class DashboardAction extends StandardRunnerAction {
 				&& !super.doesUserHaveGroup(groupName)) {
 			return ERROR;
 		} else {
-			items = dashboardService.getItemsForGroup(this.groupName);
+			items = super.getDashboardService().getItemsForGroup(this.groupName);
 
 			return SUCCESS;
 		}
@@ -37,14 +35,7 @@ public class DashboardAction extends StandardRunnerAction {
 		this.groupName = groupName;
 	}
 
-	public DashboardService getDashboardService() {
-		return dashboardService;
-	}
-
-	public void setDashboardService(DashboardService dashboardService) {
-		this.dashboardService = dashboardService;
-	}
-
+	
 	public List<RunnerDashboardItem> getItems() {
 		return items;
 	}

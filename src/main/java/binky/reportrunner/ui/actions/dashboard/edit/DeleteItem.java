@@ -20,24 +20,22 @@
  * 
  * Module: DeleteAlert.java
  ******************************************************************************/
-package binky.reportrunner.ui.actions.dashboard;
+package binky.reportrunner.ui.actions.dashboard.edit;
 
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 
-public class DeleteItem extends StandardRunnerAction {
+public class DeleteItem extends BaseDashboardAction {
 
 	private static final long serialVersionUID = 1L;
-	private DashboardService dashboardService;
 	private Integer id;
 	private String groupName;
 	@Override
 	public String execute() throws Exception {
-		String groupName= dashboardService.getItem(id).getGroup().getGroupName();
+		String groupName= super.getDashboardService().getItem(id).getGroup().getGroupName();
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
-			dashboardService.deleteItem(id);
+			super.getDashboardService().deleteItem(id);
 			return SUCCESS;
 		} else {
 
@@ -47,12 +45,7 @@ public class DeleteItem extends StandardRunnerAction {
 			throw se;
 		}
 	}
-	public DashboardService getDashboardService() {
-		return dashboardService;
-	}
-	public void setDashboardService(DashboardService dashboardService) {
-		this.dashboardService = dashboardService;
-	}
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}

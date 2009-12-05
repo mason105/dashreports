@@ -18,68 +18,31 @@
  * You should have received a copy of the GNU General Public License
  * along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
  * 
- * Module: PopUpChartAction.java
+ * Module: SaveAlert.java
  ******************************************************************************/
-package binky.reportrunner.ui.actions.dashboard.popup;
+package binky.reportrunner.ui.actions.dashboard.edit;
 
-import binky.reportrunner.data.RunnerDashboardItem;
-import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.data.RunnerDashboardThreshold;
+import binky.reportrunner.ui.actions.dashboard.base.BaseEditDashboardAction;
 
-public class PopUpChartAction extends StandardRunnerAction {
+public class SaveThreshold extends BaseEditDashboardAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer itemId;
-	private String itemName;
-	private DashboardService dashboardService;
-	
+	private RunnerDashboardThreshold threshold;
+
 	@Override
 	public String execute() throws Exception {
-		
-		RunnerDashboardItem item= dashboardService.getItem(itemId);
-		this.itemName=item.getAlertName();
-		if (!doesUserHaveGroup(item.getGroup().getGroupName())) {
-			return ERROR;
-		}
-				
-		return SUCCESS;
+		return super.saveItem(this.threshold);
 	}
 
-	
+	public final RunnerDashboardThreshold getThreshold() {
+		return threshold;
+	}
 
-	public Integer getItemId() {
-		return itemId;
+	public final void setThreshold(RunnerDashboardThreshold threshold) {
+		this.threshold = threshold;
 	}
 
 
-
-	public void setItemId(Integer itemId) {
-		this.itemId = itemId;
-	}
-
-
-
-	public String getItemName() {
-		return itemName;
-	}
-
-
-
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
-
-
-
-	public DashboardService getDashboardService() {
-		return dashboardService;
-	}
-
-	public void setDashboardService(DashboardService dashboardService) {
-		this.dashboardService = dashboardService;
-	}
-
-	
-	
 }

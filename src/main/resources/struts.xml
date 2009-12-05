@@ -200,18 +200,45 @@
 			<result>/jsp/main/listItems.jsp</result>
 		</action>
 		
-		<action name="setupEditItem" class="setupEditItemAction">
-			<result>/jsp/main/editItem.jsp</result>
+		<action name="setupEditChart" class="setupEditChartAction">
+			<result>/jsp/main/editChart.jsp</result>
 		</action>
 		
-		<action name="saveItem" class="saveItemAction">
+		<action name="saveChart" class="saveChartAction">
 			<result type="redirectAction">
 				<param name="actionName">listItems</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>				
 			</result>
-			<result  name="input">/jsp/main/editItem.jsp</result>
+			<result  name="input">/jsp/main/editChart.jsp</result>
 		</action>
+
+		<action name="setupEditGrid" class="setupEditGridAction">
+			<result>/jsp/main/editGrid.jsp</result>
+		</action>
+		
+		<action name="saveGrid" class="saveGridAction">
+			<result type="redirectAction">
+				<param name="actionName">listItems</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>				
+			</result>
+			<result  name="input">/jsp/main/editGrid.jsp</result>
+		</action>
+
+		<action name="setupEditThreshold" class="setupEditThresholdAction">
+			<result>/jsp/main/editThreshold.jsp</result>
+		</action>
+		
+		<action name="saveThreshold" class="saveThresholdAction">
+			<result type="redirectAction">
+				<param name="actionName">listItems</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>				
+			</result>
+			<result  name="input">/jsp/main/editThreshold.jsp</result>
+		</action>
+
 
 		<action name="deleteItem" class="deleteItemAction">
 			<result type="redirectAction">
@@ -317,10 +344,7 @@
 			<result>/jsp/nostyle/leftNav.jsp</result>
 		</action>
 
-		<action name="popupChart" class="popUpChartAction">
-			<result>/jsp/nostyle/popupChart.jsp</result>
-		</action>
-		
+	
 		<action name="dashboard" class="dashboardAction">
 			<result>/jsp/nostyle/dashboard.jsp</result>
 		</action>

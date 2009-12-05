@@ -4,29 +4,28 @@
 package binky.reportrunner.ui.actions.dashboard;
 
 import binky.reportrunner.data.RunnerDashboardItem;
-import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 
 /**
  * @author Daniel Grout
  *
  */
-public class DashboardWidgetAction extends StandardRunnerAction {
+public class DashboardWidgetAction extends BaseDashboardAction {
 
 	/* (non-Javadoc)
 	 * @see binky.reportrunner.ui.actions.base.StandardRunnerAction#execute()
 	 */
 	private static final long serialVersionUID = 0L;
 
-	private DashboardService dashboardService;
+	
 
-	private Integer alertId;
+	private Integer itemId;
 	private RunnerDashboardItem item;
 	
 	@Override
 	public String execute() throws Exception {
 		
-		RunnerDashboardItem item = dashboardService.getItem(alertId);		
+		RunnerDashboardItem item = super.getDashboardService().getItem(itemId);		
 		// noddy security check
 		if (!doesUserHaveGroup(item.getGroup().getGroupName())) {
 			return ERROR;
@@ -38,23 +37,13 @@ public class DashboardWidgetAction extends StandardRunnerAction {
 	}
 
 
-	public DashboardService getDashboardService() {
-		return dashboardService;
+	public Integer getItemId() {
+		return itemId;
 	}
 
 
-	public void setDashboardService(DashboardService dashboardService) {
-		this.dashboardService = dashboardService;
-	}
-
-
-	public Integer getAlertId() {
-		return alertId;
-	}
-
-
-	public void setAlertId(Integer alertId) {
-		this.alertId = alertId;
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
 	}
 
 

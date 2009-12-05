@@ -1,21 +1,20 @@
 package binky.reportrunner.ui.actions.dashboard;
 
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 
-public class InvokeItem extends StandardRunnerAction {
+public class InvokeItem extends BaseDashboardAction {
 
 	private static final long serialVersionUID = 1L;
-	private DashboardService dashboardService;
-	private Integer alertId;
+	
+	private Integer itemId;
 	private String groupName;
 	@Override
 	public String execute() throws Exception {
-	
+		String groupName= super.getDashboardService().getItem(itemId).getGroup().getGroupName();
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
-			dashboardService.invokeDashboardItem(alertId);
+			super.getDashboardService().invokeDashboardItem(itemId);
 			return SUCCESS;
 		} else {
 				SecurityException se = new SecurityException("Group " + groupName
@@ -24,17 +23,13 @@ public class InvokeItem extends StandardRunnerAction {
 			throw se;
 		}
 	}
-	public DashboardService getDashboardService() {
-		return dashboardService;
+	
+
+	public Integer getItemId() {
+		return itemId;
 	}
-	public void setDashboardService(DashboardService dashboardService) {
-		this.dashboardService = dashboardService;
-	}
-	public Integer getAlertId() {
-		return alertId;
-	}
-	public void setAlertId(Integer alertId) {
-		this.alertId = alertId;
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
 	}
 	public String getGroupName() {
 		return groupName;

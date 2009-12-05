@@ -28,11 +28,14 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 
 import org.apache.commons.beanutils.RowSetDynaClass;
 
 @Entity
+@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class RunnerDashboardItem implements Serializable {
 
 	private static final long serialVersionUID = -4719560825938162696L;

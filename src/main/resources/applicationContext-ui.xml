@@ -52,13 +52,6 @@
 	</bean>
 
 
-	<bean id="popUpChartAction" class="binky.reportrunner.ui.actions.dashboard.popup.PopUpChartAction"
-		scope="prototype" >
-		<property name="dashboardService">
-			<ref bean="dashboardService" />
-		</property>		
-	</bean>
-
 	<bean id="leftNavAction" class="binky.reportrunner.ui.actions.navigation.LeftNavAction"
 		scope="prototype" >
 		<property name="groupDao">
@@ -303,7 +296,7 @@
 
 	
 	
-	<bean id="deleteItemAction" class="binky.reportrunner.ui.actions.dashboard.DeleteItem" scope="prototype">
+	<bean id="deleteItemAction" class="binky.reportrunner.ui.actions.dashboard.edit.DeleteItem" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>		
@@ -315,7 +308,7 @@
 		</property>		
 	</bean>
 
-	<bean id="setupEditItemAction" class="binky.reportrunner.ui.actions.dashboard.SetupEditItem" scope="prototype">
+	<bean id="setupEditChartAction" class="binky.reportrunner.ui.actions.dashboard.edit.SetupEditChart" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>			
@@ -324,7 +317,7 @@
 		</property>		
 	</bean>
 
-	<bean id="saveItemAction" class="binky.reportrunner.ui.actions.dashboard.SaveItem" scope="prototype">
+	<bean id="saveChartAction" class="binky.reportrunner.ui.actions.dashboard.edit.SaveChart" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>		
@@ -332,6 +325,42 @@
 			<ref bean="runnerDataSourceDao" />
 		</property>		
 	</bean>
+	
+	<bean id="setupEditGridAction" class="binky.reportrunner.ui.actions.dashboard.edit.SetupEditGrid" scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>			
+		<property name="dataSourceDao">
+			<ref bean="runnerDataSourceDao" />
+		</property>		
+	</bean>
+
+	<bean id="saveGridAction" class="binky.reportrunner.ui.actions.dashboard.edit.SaveGrid" scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>		
+		<property name="dataSourceDao">
+			<ref bean="runnerDataSourceDao" />
+		</property>		
+	</bean>
+
+	<bean id="setupEditThresholdAction" class="binky.reportrunner.ui.actions.dashboard.edit.SetupEditThreshold" scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>			
+		<property name="dataSourceDao">
+			<ref bean="runnerDataSourceDao" />
+		</property>		
+	</bean>
+
+	<bean id="saveThresholdAction" class="binky.reportrunner.ui.actions.dashboard.edit.SaveThreshold" scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>		
+		<property name="dataSourceDao">
+			<ref bean="runnerDataSourceDao" />
+		</property>		
+	</bean>	
 
 	<bean id="listItemsAction" class="binky.reportrunner.ui.actions.dashboard.ListItems" scope="prototype">
 		<property name="dashboardService">

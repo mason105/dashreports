@@ -18,57 +18,56 @@
  * You should have received a copy of the GNU General Public License
  * along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
  * 
- * Module: ListAlerts.java
+ * Module: SetupEditAlert.java
  ******************************************************************************/
-package binky.reportrunner.ui.actions.dashboard;
+package binky.reportrunner.ui.actions.dashboard.edit;
 
-import java.util.List;
-
-import binky.reportrunner.data.RunnerDashboardItem;
+import binky.reportrunner.data.RunnerDashboardThreshold;
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
+import binky.reportrunner.ui.actions.dashboard.base.BaseEditDashboardAction;
 
-public class ListItems extends BaseDashboardAction {
+public class SetupEditThreshold extends BaseEditDashboardAction {
 
 	private static final long serialVersionUID = 1L;
-	
-	private String groupName;
 
-	private List<RunnerDashboardItem> items;
+	private RunnerDashboardThreshold threshold;
+	private Integer itemId;
 
 	@Override
 	public String execute() throws Exception {
-		if (super.getSessionUser().getGroups().contains(groupName)
+
+		if (super.getSessionUser().getGroups().contains(super.getGroupName())
 				|| super.getSessionUser().getIsAdmin()) {
-			items = super.getDashboardService().getItemsForGroup(groupName);
-			//hack to expand group folder
-			super.setCurrentGroupName(groupName);
+			this.threshold = (RunnerDashboardThreshold) super.getDashboardService()
+					.getItem(itemId);
 			return SUCCESS;
 		} else {
-			
 
-			SecurityException se = new SecurityException("Group " + groupName
-					+ " not valid for user "
+			SecurityException se = new SecurityException("Group "
+					+ super.getGroupName() + " not valid for user "
 					+ super.getSessionUser().getUserName());
 			throw se;
 		}
+
 	}
 
 
-	public List<RunnerDashboardItem> getItems() {
-		return items;
+	public final RunnerDashboardThreshold getThreshold() {
+		return threshold;
 	}
 
-	public void setItems(List<RunnerDashboardItem> items) {
-		this.items = items;
+
+	public final void setThreshold(RunnerDashboardThreshold threshold) {
+		this.threshold = threshold;
 	}
 
-	public String getGroupName() {
-		return groupName;
+
+	public final Integer getItemId() {
+		return itemId;
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public final void setItemId(Integer itemId) {
+		this.itemId = itemId;
 	}
 
 }

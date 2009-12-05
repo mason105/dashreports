@@ -130,10 +130,6 @@ function drawTabs() {
 				
 				<s:textfield label="Display Row" size="64" value="%{dashboardAlert.displayRow}" name="dashboardAlert.displayRow" cssClass="textbox">
 				</s:textfield>
-				
-				
-				<s:select label="Display Type" name="dashboardAlert.displayType" list="displayTypes"
-						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 						
 				<s:select label="Width" name="dashboardAlert.width" list="widths"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>

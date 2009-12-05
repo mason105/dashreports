@@ -1,5 +1,8 @@
 package binky.reportrunner.data;
 
+import javax.persistence.Entity;
+
+@Entity
 public class RunnerDashboardGrid extends RunnerDashboardItem {
 
 

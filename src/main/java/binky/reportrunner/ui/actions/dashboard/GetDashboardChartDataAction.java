@@ -45,14 +45,12 @@ import binky.ofc2plugin.charts.elements.ElementStandardLine;
 import binky.ofc2plugin.charts.elements.ElementStandardBar.BarType;
 import binky.reportrunner.data.RunnerDashboardChart;
 import binky.reportrunner.data.RunnerDashboardChart.ChartType;
-import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 
-public class GetDashboardChartDataAction extends StandardRunnerAction {
+public class GetDashboardChartDataAction extends BaseDashboardAction {
 
 	private static final long serialVersionUID = 2460177730972381778L;
 
-	private DashboardService dashboardService;
 
 	private Integer itemId;
 
@@ -65,7 +63,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
-		RunnerDashboardChart item = (RunnerDashboardChart)dashboardService.getItem(itemId);
+		RunnerDashboardChart item = (RunnerDashboardChart)super.getDashboardService().getItem(itemId);
 
 		// noddy security check
 		if (!doesUserHaveGroup(item.getGroup().getGroupName())) {
@@ -324,13 +322,7 @@ public class GetDashboardChartDataAction extends StandardRunnerAction {
 
 
 
-	public DashboardService getDashboardService() {
-		return dashboardService;
-	}
-
-	public void setDashboardService(DashboardService dashboardService) {
-		this.dashboardService = dashboardService;
-	}
+	
 
 	public String getData() {
 		return data;

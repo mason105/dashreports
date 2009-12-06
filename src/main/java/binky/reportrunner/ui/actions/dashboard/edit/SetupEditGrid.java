@@ -38,9 +38,13 @@ public class SetupEditGrid extends BaseEditDashboardAction {
 
 		if (super.getSessionUser().getGroups().contains(super.getGroupName())
 				|| super.getSessionUser().getIsAdmin()) {
-			this.grid = (RunnerDashboardGrid) super.getDashboardService()
-					.getItem(itemId);
-			return SUCCESS;
+			if (itemId != null) {
+				this.grid = (RunnerDashboardGrid) super.getDashboardService()
+						.getItem(itemId);
+
+			} else {
+				this.grid = new RunnerDashboardGrid();
+			}
 		} else {
 
 			SecurityException se = new SecurityException("Group "
@@ -48,7 +52,7 @@ public class SetupEditGrid extends BaseEditDashboardAction {
 					+ super.getSessionUser().getUserName());
 			throw se;
 		}
-
+		return SUCCESS;
 	}
 
 	public final RunnerDashboardGrid getGrid() {

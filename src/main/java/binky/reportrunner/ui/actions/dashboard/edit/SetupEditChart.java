@@ -38,8 +38,13 @@ public class SetupEditChart extends BaseEditDashboardAction {
 
 		if (super.getSessionUser().getGroups().contains(super.getGroupName())
 				|| super.getSessionUser().getIsAdmin()) {
-			this.chart = (RunnerDashboardChart) super.getDashboardService()
-					.getItem(itemId);
+			if (itemId != null) {
+				this.chart = (RunnerDashboardChart) super.getDashboardService()
+						.getItem(itemId);
+
+			} else {
+				this.chart = new RunnerDashboardChart();
+			}
 			return SUCCESS;
 		} else {
 

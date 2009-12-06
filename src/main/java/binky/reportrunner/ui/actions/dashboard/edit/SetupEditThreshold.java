@@ -38,9 +38,12 @@ public class SetupEditThreshold extends BaseEditDashboardAction {
 
 		if (super.getSessionUser().getGroups().contains(super.getGroupName())
 				|| super.getSessionUser().getIsAdmin()) {
-			this.threshold = (RunnerDashboardThreshold) super.getDashboardService()
-					.getItem(itemId);
-			return SUCCESS;
+			if (itemId != null) {
+				this.threshold = (RunnerDashboardThreshold) super
+						.getDashboardService().getItem(itemId);
+			} else {
+				this.threshold = new RunnerDashboardThreshold();
+			}
 		} else {
 
 			SecurityException se = new SecurityException("Group "
@@ -48,19 +51,16 @@ public class SetupEditThreshold extends BaseEditDashboardAction {
 					+ super.getSessionUser().getUserName());
 			throw se;
 		}
-
+		return SUCCESS;
 	}
-
 
 	public final RunnerDashboardThreshold getThreshold() {
 		return threshold;
 	}
 
-
 	public final void setThreshold(RunnerDashboardThreshold threshold) {
 		this.threshold = threshold;
 	}
-
 
 	public final Integer getItemId() {
 		return itemId;

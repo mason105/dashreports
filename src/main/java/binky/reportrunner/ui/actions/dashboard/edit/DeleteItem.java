@@ -28,14 +28,14 @@ import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 public class DeleteItem extends BaseDashboardAction {
 
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private Integer itemId;
 	private String groupName;
 	@Override
 	public String execute() throws Exception {
-		String groupName= super.getDashboardService().getItem(id).getGroup().getGroupName();
+		String groupName= super.getDashboardService().getItem(itemId).getGroup().getGroupName();
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
-			super.getDashboardService().deleteItem(id);
+			super.getDashboardService().deleteItem(itemId);
 			return SUCCESS;
 		} else {
 
@@ -46,9 +46,17 @@ public class DeleteItem extends BaseDashboardAction {
 		}
 	}
 	
-	public void setId(Integer id) {
-		this.id = id;
+
+	public final Integer getItemId() {
+		return itemId;
 	}
+
+
+	public final void setItemId(Integer itemId) {
+		this.itemId = itemId;
+	}
+
+
 	public String getGroupName() {
 		return groupName;
 	}

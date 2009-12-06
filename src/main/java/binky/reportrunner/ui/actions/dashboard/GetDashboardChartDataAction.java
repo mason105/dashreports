@@ -84,7 +84,7 @@ public class GetDashboardChartDataAction extends BaseDashboardAction {
 		}
 		
 		if (xLabels.size()==0) {
-			Exception e = new Exception("invalid labels column identifier " + item.getXaxisColumn() + " for item " + item.getId());
+			Exception e = new Exception("invalid labels column identifier " + item.getXaxisColumn() + " for item " + item.getItemId());
 			logger.error(e.getMessage(),e);
 			throw e;
 		}
@@ -105,7 +105,7 @@ public class GetDashboardChartDataAction extends BaseDashboardAction {
 		}
 
 		if (series.size()==0) {
-			Exception e = new Exception("invalid series column identifier " + item.getSeriesNameColumn() + " for item id " + item.getId());
+			Exception e = new Exception("invalid series column identifier " + item.getSeriesNameColumn() + " for item id " + item.getItemId());
 			logger.error(e.getMessage(),e);
 			throw e;
 		}
@@ -167,7 +167,7 @@ public class GetDashboardChartDataAction extends BaseDashboardAction {
 		}
 
 		if (dataMap.size()==0) {
-			Exception e = new Exception("invalid value column identifier " + item.getValueColumn() + " for item id " + item.getId());
+			Exception e = new Exception("invalid value column identifier " + item.getValueColumn() + " for item id " + item.getItemId());
 			logger.error(e.getMessage(),e);
 			throw e;
 		}

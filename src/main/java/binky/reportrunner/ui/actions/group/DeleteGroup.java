@@ -57,7 +57,7 @@ public class DeleteGroup extends AdminRunnerAction {
 			List<RunnerDashboardItem> alerts= dashboardService.getItemsForGroup(groupName);
 			if ((alerts!=null)&&(alerts.size()>0)) {
 				for (RunnerDashboardItem a: alerts) {
-					dashboardService.deleteItem(a.getId());
+					dashboardService.deleteItem(a.getItemId());
 				}
 			}
 			

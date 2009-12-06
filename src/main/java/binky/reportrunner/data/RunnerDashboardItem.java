@@ -35,16 +35,16 @@ import javax.persistence.ManyToOne;
 import org.apache.commons.beanutils.RowSetDynaClass;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class RunnerDashboardItem implements Serializable {
 
 	private static final long serialVersionUID = -4719560825938162696L;
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Integer itemId;
 
-	private String alertName;
+	private String itemName;
 
 	@ManyToOne
 	private RunnerGroup group;
@@ -71,12 +71,14 @@ public abstract class RunnerDashboardItem implements Serializable {
 
 	private String backGroundColour = "#FFFFFF";
 
-	public String getAlertName() {
-		return alertName;
+
+
+	public final String getItemName() {
+		return itemName;
 	}
 
-	public void setAlertName(String alertName) {
-		this.alertName = alertName;
+	public final void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
 	public String getAlertQuery() {
@@ -119,12 +121,13 @@ public abstract class RunnerDashboardItem implements Serializable {
 		this.group = group;
 	}
 
-	public Integer getId() {
-		return id;
+
+	public final Integer getItemId() {
+		return itemId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public final void setItemId(Integer itemId) {
+		this.itemId = itemId;
 	}
 
 	public Date getLastUpdated() {
@@ -136,7 +139,7 @@ public abstract class RunnerDashboardItem implements Serializable {
 	}
 
 	public String toString() {
-		return id + alertName + alertQuery + cronTab;
+		return itemId + itemName + alertQuery + cronTab;
 	}
 
 	public Integer getDisplayRow() {
@@ -240,5 +243,27 @@ public abstract class RunnerDashboardItem implements Serializable {
 		}
 
 	}
+
+	public enum ItemType {
+
+		Chart("Chart"), Grid("Grid"), Threshold("Threshold");
+		private String displayName;
+
+		ItemType(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
+
+	public abstract ItemType getItemType();
+		
 
 }

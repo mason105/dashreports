@@ -58,8 +58,8 @@ public class DashboardServiceImpl implements DashboardService {
 			long visualRefreshTime=60000;
 
 			try {
-				Date last = scheduler.getPreviousRunTime(a.getId());
-				Date next = scheduler.getNextRunTime(a.getId());
+				Date last = scheduler.getPreviousRunTime(a.getItemId());
+				Date next = scheduler.getNextRunTime(a.getItemId());
 				if ((last!=null) && (next!=null) && (last.getTime()<next.getTime())) {
 					visualRefreshTime=(next.getTime()-last.getTime());
 				}				
@@ -82,11 +82,11 @@ public class DashboardServiceImpl implements DashboardService {
 
 	public void saveUpdateItem(RunnerDashboardItem alert) throws SchedulerException {
 		logger.debug("alert is null=" + (alert==null));
-		if (alert.getId()!=null){
-			scheduler.removedDashboardAlert(alert.getId());
+		if (alert.getItemId()!=null){
+			scheduler.removedDashboardAlert(alert.getItemId());
 		}
 		dashboardDao.saveUpdateItem(alert);
-		scheduler.addDashboardAlert(alert.getId(),alert.getCronTab());		
+		scheduler.addDashboardAlert(alert.getItemId(),alert.getCronTab());		
 	}
 	public RunnerDashboardItemDao getDashboardDao() {
 		return dashboardDao;

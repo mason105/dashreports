@@ -103,4 +103,9 @@ public class RunnerDashboardChart extends RunnerDashboardItem {
 		}
 
 	}
+
+	@Override
+	public ItemType getItemType() {
+		return ItemType.Chart;
+	}
 }

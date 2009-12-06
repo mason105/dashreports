@@ -93,5 +93,11 @@ public class RunnerDashboardThreshold extends RunnerDashboardItem {
 		}
 
 	}
+
+
+	@Override
+	public ItemType getItemType() {
+		return ItemType.Threshold;
+	}
 	
 }

@@ -17,5 +17,10 @@ public class RunnerDashboardGrid extends RunnerDashboardItem {
 	public void setRowsToDisplay(int rowsToDisplay) {
 		this.rowsToDisplay = rowsToDisplay;
 	}
+
+	@Override
+	public ItemType getItemType() {
+		return ItemType.Grid;
+	}
 	
 }

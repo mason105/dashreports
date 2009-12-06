@@ -29,8 +29,8 @@ import binky.reportrunner.data.RunnerDashboardItem;
 public interface RunnerDashboardItemDao {
 
 	public void saveUpdateItem(RunnerDashboardItem item);
-	public void deleteItem(Integer id);
-	public RunnerDashboardItem getItem(Integer id);
+	public void deleteItem(Integer itemId);
+	public RunnerDashboardItem getItem(Integer itemId);
 	public List<RunnerDashboardItem> getAllItems();
 	public List<RunnerDashboardItem> getItemsForGroup(String groupName);
 }

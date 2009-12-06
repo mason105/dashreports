@@ -39,9 +39,9 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 				|| super.getSessionUser().getIsAdmin()) {
 
 			// preserve teh current data
-			if (item.getId() != null) {
+			if (item.getItemId() != null) {
 				RunnerDashboardChart currentChart = (RunnerDashboardChart) super
-						.getDashboardService().getItem(item.getId());
+						.getDashboardService().getItem(item.getItemId());
 				item.setCurrentDataset(currentChart.getCurrentDataset());
 				item.setLastUpdated(currentChart.getLastUpdated());
 			}

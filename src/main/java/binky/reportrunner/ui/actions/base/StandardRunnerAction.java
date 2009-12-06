@@ -115,7 +115,16 @@ public abstract class StandardRunnerAction extends ActionSupport implements Sess
 				||actionName.toLowerCase().contains("savejob")
 				||actionName.toLowerCase().contains("deletejob")
 				||actionName.toLowerCase().contains("listjobs")
-				||actionName.toLowerCase().contains("listalerts")
+				||actionName.toLowerCase().contains("listitems")
+				||actionName.toLowerCase().contains("invokeitem")	
+				||actionName.toLowerCase().contains("deleteitem")	
+				||actionName.toLowerCase().contains("setupeditchart")
+				||actionName.toLowerCase().contains("savechart")
+				||actionName.toLowerCase().contains("setupeditgrid")
+				||actionName.toLowerCase().contains("savegrid")
+				||actionName.toLowerCase().contains("setupeditthreshold")
+				||actionName.toLowerCase().contains("savethreshold")
+							
 			) {
 				return true;			       
 		} else {

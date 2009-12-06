@@ -116,7 +116,7 @@ public class SchedulerImpl implements Scheduler {
 	}
 
 	public void stopScheduler() throws SchedulerException {
-		this.quartzScheduler.shutdown();
+		this.quartzScheduler.standby();
 	}
 
 	public Date getNextRunTime(String jobName, String groupName)

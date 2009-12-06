@@ -89,32 +89,32 @@ function drawTabs() {
 <div id="tabContain">
 </div>
 <div id="toolbarButtons"></div>
-<s:form action="saveAlert">
+<s:form action="saveChart">
 <div id="tabContentArea"></div>
 <div id="formBody" style="position:absolute;top:150px;">
 	
 		<s:actionerror />
 		<s:actionmessage/>
 		
-		<s:hidden name="dashboardAlert.id" value="%{dashboardAlert.id}"/>
+		<s:hidden name="chart.id" value="%{chart.id}"/>
 		
 		<div id="details">
 			<div class="formGroup">
 				<div class="formGroupHeader">Details</div>
 			
-				<s:textfield label="Item Name" size="64" value="%{dashboardAlert.alertName}" name="dashboardAlert.alertName" cssClass="textbox" required="true">
+				<s:textfield label="Item Name" size="64" value="%{chart.alertName}" name="chart.alertName" cssClass="textbox" required="true">
 				</s:textfield>
-				<s:hidden name="dashboardAlert.group.groupName" value="%{groupName}"/>
+				<s:hidden name="chart.group.groupName" value="%{groupName}"/>
 				<s:select label="Select Data Source"
-					name="dashboardAlert.datasource.dataSourceName" value="%{dashboardAlert.datasource}"
+					name="chart.datasource.dataSourceName" value="%{chart.datasource}"
 					list="runnerDataSources" listKey="dataSourceName" listValue="dataSourceName" cssClass="textbox">
 				</s:select>
 				
 				<s:textarea label="Query" cols="30" rows="20"
-					value="%{dashboardAlert.alertQuery}" name="dashboardAlert.alertQuery" cssClass="textbox" required="true">
+					value="%{chart.alertQuery}" name="chart.alertQuery" cssClass="textbox" required="true">
 				</s:textarea>	
 			
-				<s:textfield label="Cron String" size="32" value="%{dashboardAlert.cronTab}" name="dashboardAlert.cronTab" cssClass="textbox" required="true">
+				<s:textfield label="Cron String" size="32" value="%{chart.cronTab}" name="chart.cronTab" cssClass="textbox" required="true">
 				</s:textfield>
 				
 			</div>	
@@ -125,16 +125,16 @@ function drawTabs() {
 			<div class="formGroup">
 				<div class="formGroupHeader">Layout/Type</div>
 				
-				<s:textfield label="Display Column" size="64" value="%{dashboardAlert.displayColumn}" name="dashboardAlert.displayColumn" cssClass="textbox">
+				<s:textfield label="Display Column" size="64" value="%{chart.displayColumn}" name="chart.displayColumn" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="Display Row" size="64" value="%{dashboardAlert.displayRow}" name="dashboardAlert.displayRow" cssClass="textbox">
+				<s:textfield label="Display Row" size="64" value="%{chart.displayRow}" name="chart.displayRow" cssClass="textbox">
 				</s:textfield>
 						
-				<s:select label="Width" name="dashboardAlert.width" list="widths"
+				<s:select label="Width" name="chart.width" list="widths"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 						
-				<s:select label="Height" name="dashboardAlert.height" list="heights"
+				<s:select label="Height" name="chart.height" list="heights"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 					
 			</div>
@@ -144,15 +144,15 @@ function drawTabs() {
 			<div class="formGroup">
 				<div class="formGroupHeader">Chart Configuration</div>
 				
-				<s:select label="Chart Type" name="dashboardAlert.chartType" list="chartTypes"
+				<s:select label="Chart Type" name="chart.chartType" list="chartTypes"
 				listKey="name" listValue="displayName" cssClass="textbox"></s:select>			
 				
-				<s:select label="X Axis Step Size" name="dashboardAlert.xAxisStep" list="xAxisSteps"
+				<s:select label="X Axis Step Size" name="chart.xAxisStep" list="xAxisSteps"
 				listKey="name" listValue="displayName"></s:select>
 			
 				
 				 <s:select label="Chart Background Colour" 
-				    name="dashboardAlert.backGroundColour" 
+				    name="chart.backGroundColour" 
 				    list="#{'#FFFFFF':'White',
 				    '#000000':'Black',
 					'#150517':'Gray0',
@@ -454,17 +454,17 @@ function drawTabs() {
 				    cssClass="textbox" />
 				
 			
-			 	<s:textfield label="Y-Axis Label" size="64" value="%{dashboardAlert.yLabel}" name="dashboardAlert.yLabel" cssClass="textbox">
+			 	<s:textfield label="Y-Axis Label" size="64" value="%{chart.yLabel}" name="chart.yLabel" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="X-Axis Column Name" size="32" value="%{dashboardAlert.xaxisColumn}" name="dashboardAlert.xaxisColumn" cssClass="textbox">
+				<s:textfield label="X-Axis Column Name" size="32" value="%{chart.xaxisColumn}" name="chart.xaxisColumn" cssClass="textbox">
 				</s:textfield>
 				
 				
-				<s:textfield label="Value Column Name" size="32" value="%{dashboardAlert.valueColumn}" name="dashboardAlert.valueColumn" cssClass="textbox">
+				<s:textfield label="Value Column Name" size="32" value="%{chart.valueColumn}" name="chart.valueColumn" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="Series Name Column Name" size="32" value="%{dashboardAlert.seriesNameColumn}" name="dashboardAlert.seriesNameColumn" cssClass="textbox">
+				<s:textfield label="Series Name Column Name" size="32" value="%{chart.seriesNameColumn}" name="chart.seriesNameColumn" cssClass="textbox">
 				</s:textfield>
 			
 			</div>

@@ -10,24 +10,12 @@ public class RunnerDashboardThreshold extends RunnerDashboardItem {
 	 */
 	private static final long serialVersionUID = 7807770043726494295L;
 
-	private Float topValue;
+	private Float upperValue;
 	private Float lowerValue;
+	private String valueColmun;
+	private String labelColumn;
 	
 	private ThresholdType type;
-
-	
-	
-	public Float getTopValue() {
-		return topValue;
-	}
-
-
-
-	public void setTopValue(Float topValue) {
-		this.topValue = topValue;
-	}
-
-
 
 	public Float getLowerValue() {
 		return lowerValue;
@@ -51,6 +39,40 @@ public class RunnerDashboardThreshold extends RunnerDashboardItem {
 		this.type = type;
 	}
 
+
+	public final Float getUpperValue() {
+		return upperValue;
+	}
+
+
+
+	public final void setUpperValue(Float upperValue) {
+		this.upperValue = upperValue;
+	}
+
+
+
+	public final String getValueColmun() {
+		return valueColmun;
+	}
+
+
+
+	public final void setValueColmun(String valueColmun) {
+		this.valueColmun = valueColmun;
+	}
+
+
+
+	public final String getLabelColumn() {
+		return labelColumn;
+	}
+
+
+
+	public final void setLabelColumn(String labelColumn) {
+		this.labelColumn = labelColumn;
+	}
 
 
 	public enum ThresholdType {

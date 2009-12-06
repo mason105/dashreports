@@ -14,6 +14,7 @@ import binky.reportrunner.data.RunnerDashboardChart.ChartType;
 import binky.reportrunner.data.RunnerDashboardChart.XAxisStep;
 import binky.reportrunner.data.RunnerDashboardItem.Height;
 import binky.reportrunner.data.RunnerDashboardItem.Width;
+import binky.reportrunner.data.RunnerDashboardThreshold.ThresholdType;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.scheduler.SchedulerException;
 
@@ -112,4 +113,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 		return Arrays.asList(XAxisStep.values());
 	}
 
+	public final List<ThresholdType> getThresholdTypes() {
+		return Arrays.asList(ThresholdType.values());
+	}
 }

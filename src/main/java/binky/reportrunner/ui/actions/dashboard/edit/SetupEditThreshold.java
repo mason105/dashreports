@@ -51,6 +51,8 @@ public class SetupEditThreshold extends BaseEditDashboardAction {
 					+ super.getSessionUser().getUserName());
 			throw se;
 		}
+		//hack to expand group folder
+		super.setCurrentGroupName(super.getGroupName());
 		return SUCCESS;
 	}
 

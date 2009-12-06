@@ -35,40 +35,45 @@ import binky.reportrunner.ui.Statics;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-public abstract class StandardRunnerAction extends ActionSupport implements SessionAware {
+public abstract class StandardRunnerAction extends ActionSupport implements
+		SessionAware {
 
-	protected Map<String, Object> sessionData; 
-	
+	protected Map<String, Object> sessionData;
+
 	public void setSession(Map<String, Object> sessionData) {
-		this.sessionData=sessionData;		
+		this.sessionData = sessionData;
 	}
 
 	private static final long serialVersionUID = -5701712982967708713L;
-	private static final Logger logger = Logger.getLogger(StandardRunnerAction.class);
+	private static final Logger logger = Logger
+			.getLogger(StandardRunnerAction.class);
+
 	public abstract String execute() throws Exception;
 
 	private String currentGroupName;
-	
+
 	public final RunnerUser getSessionUser() {
-		//hack to deal with thread local issues
+		// hack to deal with thread local issues
 		RunnerUser user;
-		if ((ActionContext.getContext()==null) || (ActionContext.getContext().getSession()==null)) {
+		if ((ActionContext.getContext() == null)
+				|| (ActionContext.getContext().getSession() == null)) {
 			user = (RunnerUser) sessionData.get(Statics.USER_HANDLE);
-		} else {		
-			user = (RunnerUser) ActionContext.getContext().getSession()
-			.get(Statics.USER_HANDLE);
+		} else {
+			user = (RunnerUser) ActionContext.getContext().getSession().get(
+					Statics.USER_HANDLE);
 			sessionData.put(Statics.USER_HANDLE, user);
 		}
 		return user;
 	}
-	
+
 	public final String getActionName() {
 		return this.getClass().getName();
 	}
 
 	public final boolean doesUserHaveGroup(String groupName) {
-		if (getSessionUser()==null) return false;
-		
+		if (getSessionUser() == null)
+			return false;
+
 		if (getSessionUser().getIsAdmin()) {
 			return true;
 		} else {
@@ -81,57 +86,58 @@ public abstract class StandardRunnerAction extends ActionSupport implements Sess
 			return false;
 		}
 	}
-	
+
 	public final boolean isUserReadOnly() {
 		if (getSessionUser().getIsAdmin()) {
 			return false;
 		} else {
 			return getSessionUser().getIsReadOnly();
-		}	
+		}
 	}
 
 	public void listAllVars(String className) {
 		Map<String, Object> params = ActionContext.getContext().getContextMap();
 		logger.debug("dumping context map for action class: " + className);
-		for (String key : params.keySet()) {			 
+		for (String key : params.keySet()) {
 			logger.debug(key + " - " + params.get(key));
 		}
-	
-		
+
 	}
-	
+
 	public Boolean getExpandAdmin() {
-		return (this instanceof AdminRunnerAction) ;
+		return (this instanceof AdminRunnerAction);
 	}
+
 	public Boolean getExpandGroups() {
-		String actionName=getActionName();
+		String actionName = getActionName();
 		if (actionName.toLowerCase().contains("setupviewjob")
-				||actionName.toLowerCase().contains("viewjoboutput")
-				||actionName.toLowerCase().contains("invokejob")
-				||actionName.toLowerCase().contains("changeallgroupjobstatus")
-				||actionName.toLowerCase().contains("viewjobdetail")
-				||actionName.toLowerCase().contains("setupeditjob")
-				||actionName.toLowerCase().contains("setjobstatus")
-				||actionName.toLowerCase().contains("savejob")
-				||actionName.toLowerCase().contains("deletejob")
-				||actionName.toLowerCase().contains("listjobs")
-				||actionName.toLowerCase().contains("listitems")
-				||actionName.toLowerCase().contains("invokeitem")	
-				||actionName.toLowerCase().contains("deleteitem")	
-				||actionName.toLowerCase().contains("setupeditchart")
-				||actionName.toLowerCase().contains("savechart")
-				||actionName.toLowerCase().contains("setupeditgrid")
-				||actionName.toLowerCase().contains("savegrid")
-				||actionName.toLowerCase().contains("setupeditthreshold")
-				||actionName.toLowerCase().contains("savethreshold")
-							
-			) {
-				return true;			       
+				|| actionName.toLowerCase().contains("viewjoboutput")
+				|| actionName.toLowerCase().contains("invokejob")
+				|| actionName.toLowerCase().contains("changeallgroupjobstatus")
+				|| actionName.toLowerCase().contains("viewjobdetail")
+				|| actionName.toLowerCase().contains("setupeditjob")
+				|| actionName.toLowerCase().contains("setjobstatus")
+				|| actionName.toLowerCase().contains("savejob")
+				|| actionName.toLowerCase().contains("deletejob")
+				|| actionName.toLowerCase().contains("listjobs")
+				|| actionName.toLowerCase().contains("listitems")
+				|| actionName.toLowerCase().contains("invokeitem")
+				|| actionName.toLowerCase().contains("deleteitem")
+				|| actionName.toLowerCase().contains("setupeditchart")
+				|| actionName.toLowerCase().contains("savechart")
+				|| actionName.toLowerCase().contains("setupeditgrid")
+				|| actionName.toLowerCase().contains("savegrid")
+				|| actionName.toLowerCase().contains("setupeditthreshold")
+				|| actionName.toLowerCase().contains("savethreshold")
+
+		) {
+			return true;
 		} else {
-			currentGroupName="";
+			currentGroupName = "";
 			return false;
 		}
 	}
+
 	public List<RunnerGroup> getGroups() {
 		return getSessionUser().getGroups();
 	}
@@ -143,6 +149,5 @@ public abstract class StandardRunnerAction extends ActionSupport implements Sess
 	public final void setCurrentGroupName(String currentGroupName) {
 		this.currentGroupName = currentGroupName;
 	}
-	
-	
+
 }

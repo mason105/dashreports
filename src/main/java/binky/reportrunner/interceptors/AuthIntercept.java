@@ -22,9 +22,6 @@
  ******************************************************************************/
 package binky.reportrunner.interceptors;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -109,16 +106,16 @@ public class AuthIntercept implements Interceptor, StrutsStatics {
 			// and we need to send the login form.
 
 			// preserve the target URL - issue #5
-			Map<String, String> params = new HashMap<String, String>();
+			//Map<String, String> params = new HashMap<String, String>();
 
-			while (request.getParameterNames().hasMoreElements()) {
+			/*while (request.getParameterNames().hasMoreElements()) {
 				String key = (String) request.getParameterNames().nextElement();
 				String value = request.getParameter(key);
 				params.put(key, value);
 				logger.debug("found parameter to forward:" + key + " = "
 						+ value);
 
-			}
+			}*/
 			logger.debug("user session empty - sending to login screen");
 			return "login";
 		} else {

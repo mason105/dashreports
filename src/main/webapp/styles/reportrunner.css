@@ -1,36 +1,102 @@
 /* main layout */
 
-.appLogo {
-	/*float:left;*/
+.navHeader{
+color:#eeeeee;
+height:15px;
+padding:5px;
+width:150px;
+font-weight:bold;
+background-image: url(../images/v2/navheaderbg.gif);
 }
-
+.navFooter{
+position:absolute;
+color:#eeeeee;
+height:15px;
+padding:5px;
+width:150px;
+font-weight:bold;
+background-image: url(../images/v2/navfooterbg.gif);
+bottom:0px;
+}
+.navBody {
+position:absolute;
+background-color: #333333;
+top:25px;
+bottom:25px;
+height:auto;
+width:160px;
+}
+div .groupButton {
+color:#eeeeee;
+background-image: url(../images/v2/groupButton.png);
+height:15px;
+padding:5px;
+width:140px;
+margin-top:1px;
+margin-left:5px;
+}
+div .groupButton:hover {
+background-image: url(../images/v2/groupButtonHover.png);
+color:#3399ff;
+cursor:pointer;
+}
+.appLogo {
+	float:left;
+	padding-left:10px;
+	
+}
+#userName {
+	float:right;
+	color:#ffffff;
+	padding-right:10px;
+	padding-top:17px;
+}
 .vendorLogo {
 	float:right;
 }
-
+.whiteLink {
+	color:#fffff;
+}
 
 body,html {
 padding:0px;
 margin:0px;
 height:100%;
+
+}
+
+body {
+background-image: url(../images/v2/background.png);
+background-repeat:repeat-x;
+}
+
+#navbar {
+padding:5px;
+left:20px;
+right:20px;
+position:absolute;
+background-image: url(../images/v2/navbarbg.png);
+border: 1px solid gray;
+top:57px;
+height:15px;
+
 }
 
 #container
 {
-left:10px;
-right:10px;
+left:20px;
+right:20px;
 position:absolute;
-background-color: #fff;
-border: 1px solid gray;
-bottom:10px;
-top:10px;
+top:90px;
 height:auto;
+bottom:10px;
+
 }
 
 #top
 {
-background-color: #ccc;
-border-bottom: 1px solid gray;
+background-color: #000000;
+background-image: url(../images/v2/top_bar_bg.png);
 height:50px;
 }
 
@@ -43,31 +109,30 @@ margin: 0;
 #leftNav
 {
 position:absolute;
-top:51px;
-width: 150px;
-margin: 0;
-bottom:20px;
-overflow: hidden;	
+top:0px;
+width: 160px;
+margin: 0;	
+bottom:0px;
+overflow:auto;
 }
 
 
 #content
 {
+	background-color:#FFFFFF;
 	position:absolute;
 	padding:0px;
-	top:51px;
-	left:151px;
-	border-left: 1px solid gray;
-	bottom:15px;
+	top:0px;
+	left:170px;
 	right:0px;
-	overflow: auto;	
+	bottom:0px;
+	border: 1px solid gray;
 }
 
 .dashFrameCont{
 position:absolute;
 border:1px solid gray;
 top:30px;
-bottom:0px;
 left:1px;
 right:1px;	
 }
@@ -78,20 +143,6 @@ width:100%;
 .tabBar {;
 }
 
-
-
-
-#footer
-{
-	position:absolute;
-	color: #333;
-	background-color: #ccc;
-	border-top: 1px solid gray;
-	height:15px;
-	bottom:0px;
-	left:0px;
-	right:0px;
-}
 
 
 

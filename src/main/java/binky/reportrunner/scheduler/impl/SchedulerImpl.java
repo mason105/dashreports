@@ -372,30 +372,30 @@ public class SchedulerImpl implements Scheduler {
 		}
 	}
 
-	@Override
-	public void invokeDashboardAler(Integer alertId) throws SchedulerException {
-		logger.debug("invoke alert: " + alertId + "." + alertId);
+	
+	public void invokeDashboardItem(Integer itemId) throws SchedulerException {
+		logger.debug("invoke alert: " + itemId + "." + itemId);
 		try {
 
-			this.quartzScheduler.triggerJob("" + alertId,
+			this.quartzScheduler.triggerJob("" + itemId,
 					dashboardSchedulerGroup);
 		} catch (org.quartz.SchedulerException e) {
-			throw new SchedulerException("Error triggering job " + alertId
+			throw new SchedulerException("Error triggering job " + itemId
 					+ "/" + dashboardSchedulerGroup, e);
 		}
 	}
 
-	@Override
+	
 	public Date getActiveFrom()  {
 		return this.quartzScheduler.getMetaData().runningSince();
 	}
 
-	@Override
+	
 	public int getJobsExecuted() {
 		return this.quartzScheduler.getMetaData().numJobsExecuted();
 	}
 
-	@Override
+
 	public String getSummary() throws SchedulerException {
 		try {
 			return this.quartzScheduler.getMetaData().getSummary();

@@ -393,6 +393,9 @@
 		</property>		
 	</bean>
 
+	<bean id="groupAction" class="binky.reportrunner.ui.actions.group.Group"
+		scope="prototype">
+	</bean>
 
 	<bean id="setupJobStatsAction" class="binky.reportrunner.ui.actions.admin.SetupJobStatsAction"
 		scope="prototype">

@@ -2,14 +2,22 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 <html>
 <head>
-	<title><s:property value="%{groupName}"/></title>
+	<title>Report Runner - <s:property value="%{groupName}"/></title>
+	
 	<sx:head />
 
 <link href="<s:url value='/styles/main.css'/>" rel="stylesheet"
 	type="text/css" media="all" />
 
 <body>
-<s:if test="alerts.size>0">							
+
+	<div class="toolBar">
+		<s:a href="setupEditChart.action?groupName=%{groupName}">Add Chart</s:a>&nbsp;|&nbsp;
+		<s:a href="setupEditGrid.action?groupName=%{groupName}">Add Data Grid</s:a>&nbsp;|&nbsp;
+		<s:a href="setupEditThreshold.action?groupName=%{groupName}">Add Threshold</s:a>
+	</div>	
+					
+<s:if test="alerts.size>0">		
 	<div class="dashboard">							
 		<s:iterator value="alerts" status="rowstatus">
 			<s:if test="(displayRow!=#currentRow)">

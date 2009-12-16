@@ -108,36 +108,6 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 		return (this instanceof AdminRunnerAction);
 	}
 
-	public Boolean getExpandGroups() {
-		String actionName = getActionName();
-		if (actionName.toLowerCase().contains("setupviewjob")
-				|| actionName.toLowerCase().contains("viewjoboutput")
-				|| actionName.toLowerCase().contains("invokejob")
-				|| actionName.toLowerCase().contains("changeallgroupjobstatus")
-				|| actionName.toLowerCase().contains("viewjobdetail")
-				|| actionName.toLowerCase().contains("setupeditjob")
-				|| actionName.toLowerCase().contains("setjobstatus")
-				|| actionName.toLowerCase().contains("savejob")
-				|| actionName.toLowerCase().contains("deletejob")
-				|| actionName.toLowerCase().contains("listjobs")
-				|| actionName.toLowerCase().contains("listitems")
-				|| actionName.toLowerCase().contains("invokeitem")
-				|| actionName.toLowerCase().contains("deleteitem")
-				|| actionName.toLowerCase().contains("setupeditchart")
-				|| actionName.toLowerCase().contains("savechart")
-				|| actionName.toLowerCase().contains("setupeditgrid")
-				|| actionName.toLowerCase().contains("savegrid")
-				|| actionName.toLowerCase().contains("setupeditthreshold")
-				|| actionName.toLowerCase().contains("savethreshold")
-
-		) {
-			return true;
-		} else {
-			currentGroupName = "";
-			return false;
-		}
-	}
-
 	public List<RunnerGroup> getGroups() {
 		return getSessionUser().getGroups();
 	}

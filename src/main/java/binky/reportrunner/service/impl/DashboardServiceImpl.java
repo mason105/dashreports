@@ -121,9 +121,9 @@ public class DashboardServiceImpl implements DashboardService {
 		logger.debug("interrupt alert: " + alertId);		
 		scheduler.interruptRunningDashboardAlert(alertId);		
 	}
-	@Override
-	public void invokeDashboardItem(Integer alertId) throws SchedulerException {
-		scheduler.invokeDashboardAler(alertId);
+	
+	public void invokeDashboardItem(Integer itemId) throws SchedulerException {
+		scheduler.invokeDashboardItem(itemId);
 		
 	}
 

@@ -3,119 +3,15 @@
 
 <html>
 <head>
-
-
-<script language="javascript">
-window.onload=function(){ 	
-	tree();
-	drawTabs();	
-}
-
-function drawTabs() {
-	
-	
-	var tb = new Jx.Toolbar();
-	var tbButt = new Jx.Toolbar();
-	
-	var tabSet = new Jx.TabSet('tabContentArea');
-	
-		
-	var tabReport = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/report.png"/>',
-           		label: 'Report',            
-           		content: 'report',            	
-       		}));
-       		
-	var tabParameters = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/table_lightning.png"/>',
-           		label: 'Parameters',            
-           		content: 'parameters',            	
-       		}));
-       		
-	var tabSchedule = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/calendar.png"/>',
-           		label: 'Schedule',            
-           		content: 'schedule',            	
-       		}));
-       		
-	var tabOutput = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/folder_page.png"/>',
-           		label: 'Output',            
-           		content: 'output',            	
-       		}));
-       		
-	var tabMisc = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/application.png"/>',
-           		label: 'Misc',            
-           		content: 'misc',            	
-       		}));
-       		
-       		
-    tb.add(tabReport); 
-    tabSet.add(tabReport);
-    tb.add(tabParameters); 
-    tabSet.add(tabParameters);
-    tb.add(tabSchedule); 
-    tabSet.add(tabSchedule);
-    tb.add(tabOutput); 
-    tabSet.add(tabOutput);
-    tb.add(tabMisc); 
-    tabSet.add(tabMisc);
-    
-    
-	var submit=new Jx.Button({label: 'Save',
-            	image: '<s:url value="/images/icons/disk.png"/>',
-				onClick: function() {
-					document.saveJob.dispatchSaveButton.value='save';
-					document.saveJob.submit();
-				}
-			});
-	
-   tbButt.add(new Jx.Toolbar.Separator());
-   
-   tbButt.add(submit);
-   
-   tbButt.add(new Jx.Toolbar.Separator());
-   
-   
-   var cancel=new Jx.Button({label: 'Cancel',
-			onClick: function() {
-				window.location='<s:url value="listJobs.action?groupName=%{groupName}"/>';
-			}
-		});
-   
-   tbButt.add(cancel);
-   
-   var tbc=new Jx.Toolbar.Container().addTo('toolbar1');
-   tbc.add(tb);
-   tbc.add(tbButt);
-   
-   
-}
-
-
-
-</script>
 <sx:head />
 </head>
 <body>
 
-<div id="toolbar1"></div>
-
-<div id="tabContain">
-</div>
-<div id="toolbarButtons"></div>
-
-
-
 <s:form action="saveJob" method="post" enctype="multipart/form-data" validate="true">	
 
-<div id="tabContentArea"></div>
-<div id="formBody" style="position:absolute;top:150px;">
+<sx:tabbedpanel id="report">		
 
-	
-		
-	<div id="report">
+	<sx:div id="report" label="Report">
 
 		<s:actionerror />
 		<s:actionmessage/>
@@ -176,10 +72,10 @@ function drawTabs() {
 		</div>
 		<div class="formFooterText">* required field</div>
 
-	</div>
+	</sx:div>
 	
 	
-	<div id="parameters">	
+	<sx:div id="parameters" label="Parameters">	
 		
 		<div style="margin: 0 auto;"><div id="param_button_add" style="margin:0 auto;"></div></div>
 		
@@ -228,11 +124,11 @@ function drawTabs() {
 					listKey="name" listValue="displayName">
 
 				</s:select> 
-				<div id="param_button_<s:property value="%{pk.parameterIdx}"/>"></div>
+				<s:submit name"dispatchSaveButtom" value="Delete Parameter %{pk.parameterIdx}"/>
 				<script language="javascript">
 					new Jx.Button({label: 'Delete Parameter <s:property value="%{pk.parameterIdx}"/>',
 						onClick: function() {
-							document.saveJob.dispatchSaveButton.value='Delete Parameter <s:property value="%{pk.parameterIdx}"/>';
+							document.saveJob.dispatchSaveButton.value='';
 							document.saveJob.submit();	
 						}
 					}).addTo('param_button_<s:property value="%{pk.parameterIdx}"/>');
@@ -240,9 +136,9 @@ function drawTabs() {
 				
 			</div>
 		</s:iterator>
-	</div>
+	</sx:div>
 
-	<div id="schedule">	
+	<sx:div id="schedule" label="Schedule">	
 		<div class="formGroup">
 			<div class="formGroupHeader">Start and End</div>
 			<sx:datetimepicker label="Start Date Time" value="%{job.startDate}"
@@ -302,9 +198,9 @@ function drawTabs() {
 		</div>
 			
 
-	</div>
+	</sx:div>
 	
-	<div id="output">	
+	<sx:div id="output" label="Output">	
 	
 		<div class="formGroup">
 		<div class="formGroupHeader">File</div>
@@ -343,9 +239,9 @@ function drawTabs() {
 			</s:textarea>
 		</div>
 
-	</div>
+	</sx:div>
 
-	<div id="misc" >	
+	<sx:div id="misc" label="Misc" >	
 		<div class="formGroup">
 			<div class="formGroupHeader">Alerting</div>				
 			<div id="jobAlertEmailTip" class="tipText">Please enter a comma seperated list of email addresses to send alert emails to.</div>
@@ -356,14 +252,13 @@ function drawTabs() {
 			onblur="document.getElementById('jobAlertEmailTip').style.visibility='hidden';" cssClass="textbox">				
 			</s:textarea>
 		</div>
-	</div>
+	</sx:div>
 
-	<s:hidden name="dispatchSaveButton" value=""/>
-</div>	
+	<s:submit name="dispatchSaveButton" value="Save"/>
+	
+</sx:tabbedpanel>
 
 </s:form>
 		
-
-
 </body>
 </html>

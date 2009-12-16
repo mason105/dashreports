@@ -1,2 +1,1 @@
-font:Consolas
-colours: #000044 #C0c0c0 #003366 #6699CC
+3399ff

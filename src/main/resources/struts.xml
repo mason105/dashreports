@@ -75,7 +75,7 @@
 		</action>
 		
 		<action name="listJobs" class="listJobsAction">
-			<result>/jsp/main/listJobs.jsp</result>
+			<result>/jsp/nostyle/listJobs.jsp</result>
 		</action>
 		
 		<action name="listGroups" class="listGroupsAction">
@@ -215,6 +215,10 @@
 
 		<action name="setupEditGrid" class="setupEditGridAction">
 			<result>/jsp/main/editGrid.jsp</result>
+		</action>
+		
+		<action name="group" class="groupAction">
+			<result>/jsp/main/group.jsp</result>
 		</action>
 		
 		<action name="saveGrid" class="saveGridAction">

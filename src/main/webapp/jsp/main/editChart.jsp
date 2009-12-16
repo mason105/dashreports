@@ -6,99 +6,18 @@
 
 <html>
 <head>
-<script language="javascript">
-window.onload=function(){ 	
-	tree();
-	drawTabs();	
-	setupColour();
-}
-
-
-function drawTabs() {
-	
-	
-	var tb = new Jx.Toolbar();
-	var tbButt = new Jx.Toolbar();
-	
-	var tabSet = new Jx.TabSet('tabContentArea');
-	
-		
-	var tabDetails = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/report.png"/>',
-           		label: 'Details',            
-           		content: 'details'            	
-       		}));
-       		
-	var tabLayout = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/table_lightning.png"/>',
-           		label: 'Layout',            
-           		content: 'layout'            	
-       		}));
-       		
-	var tabChart = (new Jx.Button.Tab({
-        		image: '<s:url value='/images/icons/chart_bar.png'/>',
-           		label: 'Chart',            
-           		content: 'chart'            	
-       		}));
-    tb.add(tabDetails); 
-    tabSet.add(tabDetails);  
-    tb.add(tabLayout); 
-    tabSet.add(tabLayout);1
-    tb.add(tabChart); 
-    tabSet.add(tabChart);
-
-
-    
-	var submit=new Jx.Button({label: 'Save',
-            	image: '<s:url value="/images/icons/disk.png"/>',
-				onClick: function() {					
-					document.saveAlert.submit();
-				}
-			});
-	
-   tbButt.add(new Jx.Toolbar.Separator());
-   
-   tbButt.add(submit);
-   
-   tbButt.add(new Jx.Toolbar.Separator());
-   
-   
-   var cancel=new Jx.Button({label: 'Cancel',
-			onClick: function() {
-				window.location='<s:url value="listAlerts.action"/>';
-			}
-		});
-   
-   tbButt.add(cancel);
-   
-   var tbc=new Jx.Toolbar.Container().addTo('toolbar1');
-   tbc.add(tb);
-   tbc.add(tbButt);
-   
-   
-}
-
-
-
-</script>
 <sx:head  />
 </head>
 <body>
-<div id="toolbar1"></div>
-
-<div id="tabContain">
-</div>
-<div id="toolbarButtons"></div>
 <s:form action="saveChart">
-<div id="tabContentArea"></div>
-<div id="formBody" style="position:absolute;top:150px;">
+<sx:tabbedpanel id="report">
 	
 		<s:actionerror />
 		<s:actionmessage/>
 		
 		<s:hidden name="chart.id" value="%{chart.id}"/>
 		
-		<div id="details">
+		<sx:div id="details" label="Details">
 			<div class="formGroup">
 				<div class="formGroupHeader">Details</div>
 			
@@ -119,9 +38,9 @@ function drawTabs() {
 				
 			</div>	
 			<div class="formFooterText">* required field</div>
-		</div>
+		</sx:div>
 		
-		<div id="layout">
+		<sx:div id="layout" label="Layout">
 			<div class="formGroup">
 				<div class="formGroupHeader">Layout/Type</div>
 				
@@ -140,7 +59,7 @@ function drawTabs() {
 			</div>
 		</div>
 		
-		<div id="chart">
+		<sx:div id="chart" label="Chart Details">
 			<div class="formGroup">
 				<div class="formGroupHeader">Chart Configuration</div>
 				
@@ -467,10 +386,10 @@ function drawTabs() {
 				<s:textfield label="Series Name Column Name" size="32" value="%{chart.seriesNameColumn}" name="chart.seriesNameColumn" cssClass="textbox">
 				</s:textfield>
 			
-			</div>
-		</div>
-	
+			</div>		
 </div>
+<s:submit value="Save"/>
+</sx:tabbedpanel>
 </s:form>
 </body>
 </html>

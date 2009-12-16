@@ -14,24 +14,24 @@
 <br/><br/>
 <table width="100%">
 	<tr>
-		<td width="24" class="rowOdd"><img src="<s:url value='/images/user_small.png'/>"/></td>
+		<td width="24" class="rowOdd"><img src="<s:url value='/images/v2/icons/user.png'/>"/></td>
 		<td class="rowOdd"><a href="listUsers.action">User Management</a></td>
 	</tr>
 	<tr>
-		<td width="24" class="rowOdd"><img src="<s:url value='/images/dashboard_small.png'/>"/></td>
-		<td class="rowEven"><a href="listAlerts.action">Dashboard Alerts</a></td>
+		<td width="24" class="rowEven"><img src="<s:url value='/images/v2/icons/database.png'/>"/></td>	
+		<td class="rowEven"><a href="listDataSources.action">Datasource Management</a></td>
+	</tr>
+	<tr>
+		<td width="24" class="rowOdd"><img src="<s:url value='/images/v2/icons/lightning.png'/>"/></td>
+		<td class="rowOdd"><a href="listCurrentExecutingJobs.action">Current Executing Jobs</a></td>
+	</tr>
+	<tr>
+		<td width="24" class="rowEven"><img src="<s:url value='/images/v2/icons/chart_curve.png'/>"/></td>
+		<td class="rowEven"><a href="jobStatistics.action">Statistics and Warnings</a></td>
 	</tr>	
 	<tr>
-		<td width="24" class="rowEven"><img src="<s:url value='/images/datasource_small.png'/>"/></td>	
-		<td class="rowOdd"><a href="listDataSources.action">Datasource Management</a></td>
-	</tr>
-	<tr>
-		<td width="24" class="rowOdd"><img src="<s:url value='/images/executing_small.png'/>"/></td>
-		<td class="rowEven"><a href="listCurrentExecutingJobs.action">Current Executing Jobs</a></td>
-	</tr>
-	<tr>
-		<td width="24" class="rowEven"><img src="<s:url value='/images/stats_small.png'/>"/></td>
-		<td class="rowOdd"><a href="jobStatistics.action">Statistics and Warnings</a></td>
+		<td width="24" class="rowOdd"><img src="<s:url value='/images/v2/icons/clock.png'/>"/></td>
+		<td class="rowOdd"><a href="schedulerAdmin.action">Manage Scheduler</a></td>
 	</tr>	
 </table>
 

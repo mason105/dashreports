@@ -30,6 +30,7 @@ import java.util.Calendar;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 import org.quartz.InterruptableJob;
@@ -54,7 +55,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 
 		// Grab the elements of the job from the context to pass 	on
 		RunnerDashboardItem item = (RunnerDashboardItem) context
-				.getJobDetail().getJobDataMap().get("alert");
+				.getJobDetail().getJobDataMap().get("item");
 
 		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get("dataSource");
 		
@@ -94,8 +95,16 @@ public class AlertProcessor implements Job, InterruptableJob {
 		conn = ds.getConnection();
 		
 		try {
+			logger.debug("running SQL for item");
 			ResultSet rs = conn.createStatement().executeQuery(sql);
-			item.setCurrentDataset(new RowSetDynaClass(rs,false));
+			RowSetDynaClass rsdc= new RowSetDynaClass(rs,false);
+			if (logger.isDebugEnabled()) {
+				logger.debug("record set size: "+rsdc.getRows().size());
+				for (DynaProperty col:rsdc.getDynaProperties() ) {
+					logger.debug("found column: " + col.getName() + " of type " + col.getType().getName());
+				}
+			}
+			item.setCurrentDataset(rsdc);
 			item.setLastUpdated(Calendar.getInstance().getTime());
 			dashboardDao.saveUpdateItem(item);
 			rs.close();

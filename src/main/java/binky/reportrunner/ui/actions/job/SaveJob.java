@@ -45,7 +45,6 @@ import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
-import binky.reportrunner.ui.actions.job.beans.QuartzCronSchedule;
 
 import com.opensymphony.xwork2.Preparable;
 
@@ -77,7 +76,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	private String groupName;
 
-	private QuartzCronSchedule simpleCron;
+	//private QuartzCronSchedule simpleCron;
 	
 	private static Logger logger = Logger.getLogger(SaveJob.class);
 
@@ -198,7 +197,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 	private boolean doSaveJob(String jobName, String groupName)
 			throws JRException, SchedulerException {
 		this.activeTab = "report";
-		
+		/*
 		//make the cron string
 		if ((job.getCronString()==null)||(job.getCronString().trim().length()==0)) {
 			//use the simple cron stuff
@@ -207,7 +206,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 			}
 			job.setCronString(simpleCron.toString());
 		}
-		
+		*/
 		// Get the uploaded File 
 		if (logger.isDebugEnabled()) {
 			logger.debug("file uploaded is: " + templateFileName);
@@ -419,7 +418,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		is.close();
 		return bytes;
 	}
-
+/*
 	public QuartzCronSchedule getSimpleCron() {
 		return simpleCron;
 	}
@@ -427,5 +426,5 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 	public void setSimpleCron(QuartzCronSchedule simpleCron) {
 		this.simpleCron = simpleCron;
 	}
-	
+	*/
 }

@@ -6,103 +6,23 @@
 
 <html>
 <head>
-<script language="javascript">
-window.onload=function(){ 	
-	tree();
-	drawTabs();	
-	setupColour();
-}
-
-
-function drawTabs() {
-	
-	
-	var tb = new Jx.Toolbar();
-	var tbButt = new Jx.Toolbar();
-	
-	var tabSet = new Jx.TabSet('tabContentArea');
-	
-		
-	var tabDetails = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/report.png"/>',
-           		label: 'Details',            
-           		content: 'details'            	
-       		}));
-       		
-	var tabLayout = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/table_lightning.png"/>',
-           		label: 'Layout',            
-           		content: 'layout'            	
-       		}));
-       		
-	var tabThreshold = (new Jx.Button.Tab({
-        		image: '<s:url value='/images/icons/flag_green.png'/>',
-           		label: 'Threshold',            
-           		content: 'Threshold'            	
-       		}));
-    tb.add(tabDetails); 
-    tabSet.add(tabDetails);  
-    tb.add(tabLayout); 
-    tabSet.add(tabLayout);1
-    tb.add(tabThreshold); 
-    tabSet.add(tabThreshold);
-
-
-    
-	var submit=new Jx.Button({label: 'Save',
-            	image: '<s:url value="/images/icons/disk.png"/>',
-				onClick: function() {					
-					document.saveAlert.submit();
-				}
-			});
-	
-   tbButt.add(new Jx.Toolbar.Separator());
-   
-   tbButt.add(submit);
-   
-   tbButt.add(new Jx.Toolbar.Separator());
-   
-   
-   var cancel=new Jx.Button({label: 'Cancel',
-			onClick: function() {
-				window.location='<s:url value="listAlerts.action"/>';
-			}
-		});
-   
-   tbButt.add(cancel);
-   
-   var tbc=new Jx.Toolbar.Container().addTo('toolbar1');
-   tbc.add(tb);
-   tbc.add(tbButt);
-   
-   
-}
-
-
-
-</script>
 <sx:head  />
 </head>
 <body>
-<div id="toolbar1"></div>
+<s:form action="saveChart">
 
-<div id="tabContain">
-</div>
-<div id="toolbarButtons"></div>
-<s:form action="saveThreshold">
-<div id="tabContentArea"></div>
-<div id="formBody" style="position:absolute;top:150px;">
+<sx:tabbedpanel id="report">
 	
 		<s:actionerror />
 		<s:actionmessage/>
 		
-		<s:hidden name="threshold.id" value="%{threshold.id}"/>
+		<s:hidden name="threshold.itemId" value="%{threshold.itemId}"/>
 		
-		<div id="details">
+		<sx:div id="details" label="Details">
 			<div class="formGroup">
 				<div class="formGroupHeader">Details</div>
 			
-				<s:textfield label="Item Name" size="64" value="%{threshold.alertName}" name="threshold.alertName" cssClass="textbox" required="true">
+				<s:textfield label="Item Name" size="64" value="%{threshold.itemName}" name="threshold.itemName" cssClass="textbox" required="true">
 				</s:textfield>
 				<s:hidden name="threshold.group.groupName" value="%{groupName}"/>
 				<s:select label="Select Data Source"
@@ -119,12 +39,13 @@ function drawTabs() {
 				
 			</div>	
 			<div class="formFooterText">* required field</div>
-		</div>
+		</sx:div>
 		
-		<div id="layout">
+		<sx:div id="layout" label="Layout">
 			<div class="formGroup">
-				<div class="formGroupHeader">Layout/Type</div>
+				<div class="formGroupHeader">Layout</div>
 				
+
 				<s:textfield label="Display Column" size="64" value="%{threshold.displayColumn}" name="threshold.displayColumn" cssClass="textbox">
 				</s:textfield>
 				
@@ -138,12 +59,13 @@ function drawTabs() {
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 					
 			</div>
-		</div>
+		</sx:div>
 		
-		<div id="Threshold">
+		<sx:div id="chart" label="Chart Details">
 			<div class="formGroup">
 				<div class="formGroupHeader">Threshold Configuration</div>
 				
+			
 			
 				<s:select label="Threshold Type" name="threshold.type" list="thresholdTypes"
 				listKey="name" listValue="displayName"></s:select>
@@ -161,11 +83,10 @@ function drawTabs() {
 			
 				<s:textfield label="Lower Value" size="32" value="%{threshold.lowerValue}" name="threshold.lowerValue" cssClass="textbox">
 				</s:textfield>
-			</div>
-		</div>
-	
-</div>
+			</div>		
+	</sx:div>
+<s:submit value="Save"/>
+</sx:tabbedpanel>
 </s:form>
 </body>
-</html>
-	
+</html>	

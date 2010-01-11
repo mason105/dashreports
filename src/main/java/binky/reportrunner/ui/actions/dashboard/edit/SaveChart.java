@@ -33,7 +33,6 @@ public class SaveChart extends BaseEditDashboardAction {
 
 	@Override
 	public String execute() throws Exception {
-		super.setCurrentGroupName(super.getGroupName());
 		return super.saveItem(this.chart);
 	}
 

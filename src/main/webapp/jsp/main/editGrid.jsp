@@ -6,136 +6,65 @@
 
 <html>
 <head>
-<script language="javascript">
-window.onload=function(){ 	
-	tree();
-	drawTabs();	
-}
-
-
-function drawTabs() {
-	
-	
-	var tb = new Jx.Toolbar();
-	var tbButt = new Jx.Toolbar();
-	
-	var tabSet = new Jx.TabSet('tabContentArea');
-	
-		
-	var tabDetails = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/report.png"/>',
-           		label: 'Details',            
-           		content: 'details'            	
-       		}));
-       		
-	var tabLayout = (new Jx.Button.Tab({
-        		image: '<s:url value="/images/icons/table_lightning.png"/>',
-           		label: 'Layout',            
-           		content: 'layout'            	
-       		}));
-       		
-    tb.add(tabDetails); 
-    tabSet.add(tabDetails);  
-    tb.add(tabLayout); 
-    tabSet.add(tabLayout);1
-    
-	var submit=new Jx.Button({label: 'Save',
-            	image: '<s:url value="/images/icons/disk.png"/>',
-				onClick: function() {					
-					document.saveAlert.submit();
-				}
-			});
-	
-   tbButt.add(new Jx.Toolbar.Separator());
-   
-   tbButt.add(submit);
-   
-   tbButt.add(new Jx.Toolbar.Separator());
-   
-   
-   var cancel=new Jx.Button({label: 'Cancel',
-			onClick: function() {
-				window.location='<s:url value="listAlerts.action"/>';
-			}
-		});
-   
-   tbButt.add(cancel);
-   
-   var tbc=new Jx.Toolbar.Container().addTo('toolbar1');
-   tbc.add(tb);
-   tbc.add(tbButt);
-   
-   
-}
-
-
-
-</script>
 <sx:head  />
 </head>
 <body>
-<div id="toolbar1"></div>
+<s:form action="saveChart">
 
-<div id="tabContain">
-</div>
-<div id="toolbarButtons"></div>
-<s:form action="saveGrid">
-<div id="tabContentArea"></div>
-<div id="formBody" style="position:absolute;top:150px;">
+<sx:tabbedpanel id="report">
 	
 		<s:actionerror />
 		<s:actionmessage/>
 		
-		<s:hidden name="gird.id" value="%{gird.id}"/>
+		<s:hidden name="grid.itemId" value="%{grid.itemId}"/>
 		
-		<div id="details">
+		<sx:div id="details" label="Details">
 			<div class="formGroup">
 				<div class="formGroupHeader">Details</div>
 			
-				<s:textfield label="Item Name" size="64" value="%{gird.alertName}" name="gird.alertName" cssClass="textbox" required="true">
+				<s:textfield label="Item Name" size="64" value="%{grid.itemName}" name="grid.itemName" cssClass="textbox" required="true">
 				</s:textfield>
-				<s:hidden name="gird.group.groupName" value="%{groupName}"/>
+				<s:hidden name="grid.group.groupName" value="%{groupName}"/>
 				<s:select label="Select Data Source"
-					name="dashboardAlert.datasource.dataSourceName" value="%{gird.datasource}"
+					name="dashboardAlert.datasource.dataSourceName" value="%{grid.datasource}"
 					list="runnerDataSources" listKey="dataSourceName" listValue="dataSourceName" cssClass="textbox">
 				</s:select>
 				
 				<s:textarea label="Query" cols="30" rows="20"
-					value="%{gird.alertQuery}" name="gird.alertQuery" cssClass="textbox" required="true">
+					value="%{grid.alertQuery}" name="grid.alertQuery" cssClass="textbox" required="true">
 				</s:textarea>	
 			
-				<s:textfield label="Cron String" size="32" value="%{gird.cronTab}" name="gird.cronTab" cssClass="textbox" required="true">
+				<s:textfield label="Cron String" size="32" value="%{grid.cronTab}" name="grid.cronTab" cssClass="textbox" required="true">
 				</s:textfield>
 				
 			</div>	
 			<div class="formFooterText">* required field</div>
-		</div>
+		</sx:div>
 		
-		<div id="layout">
+		<sx:div id="layout" label="Layout">
 			<div class="formGroup">
-				<div class="formGroupHeader">Layout/Type</div>
-				
-				<s:textfield label="Display Column" size="10" value="%{gird.displayColumn}" name="gird.displayColumn" cssClass="textbox">
+				<div class="formGroupHeader">Layout</div>
+		<s:textfield label="Display Column" size="10" value="%{grid.displayColumn}" name="grid.displayColumn" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="Display Row" size="10" value="%{gird.displayRow}" name="gird.displayRow" cssClass="textbox">
+				<s:textfield label="Display Row" size="10" value="%{grid.displayRow}" name="grid.displayRow" cssClass="textbox">
 				</s:textfield>
 						
-				<s:textfield label="Max Rows" size="19" value="%{gird.rowsToDisplay}" name="gird.rowsToDisplay" cssClass="textbox">
+				<s:textfield label="Max Rows" size="19" value="%{grid.rowsToDisplay}" name="grid.rowsToDisplay" cssClass="textbox">
 				</s:textfield>
 						
 						
-				<s:select label="Width" name="gird.width" list="widths"
+				<s:select label="Width" name="grid.width" list="widths"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 						
-				<s:select label="Height" name="gird.height" list="heights"
+				<s:select label="Height" name="grid.height" list="heights"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 					
 			</div>
-		</div>
+		</sx:div>
 		
-	
-</div>
+<s:submit value="Save"/>
+</sx:tabbedpanel>
 </s:form>
 </body>
 </html>

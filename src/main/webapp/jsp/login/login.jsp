@@ -11,11 +11,14 @@
 </head>
 
 <body>
+<div id="top">
+		<div class="appLogo"><img src="<s:url value='/images/v2/top_bar_logo.png'/>" /></div>
+</div>
 <s:form namespace="/" action="index.action" method="post">
-<div class="formGroup" style="margin:0 auto;">
+<div class="formGroup" style="margin:0 auto;background-color:#ffffff;width:350px;">
 		<div class="formGroupHeader" >Login to Report Runner</div>
 		<s:hidden name="loginAttempt" value="%{'1'}" />
-		<div style="float:right;margin-top:10px;"><img src="<s:url value="/images/logo.png"/>" alt="report runner" />
+		<div style="float:right;margin-top:10px;">
 <s:actionerror /></div>
 		<s:textfield name="userName" label="Username"  cssClass="textbox"></s:textfield>
 		<s:password label="Password" name="password"  cssClass="textbox"></s:password><s:submit value="Login"/>

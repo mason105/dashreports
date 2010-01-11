@@ -49,19 +49,10 @@
 			value="%{dataSource.minPoolSize}" name="dataSource.minPoolSize" />
 		<s:textfield label="Max Pool Size" size="5"
 			value="%{dataSource.maxPoolSize}" name="dataSource.maxPoolSize" />
-	
+	<s:submit value="Save"/>
 	</s:form>
 </div>
 <div class="formFooterText">* required field</div>
-	<div id="submit_button"></div>
 
-	<script language="javascript">
-		new Jx.Button({label: 'Save',
-			image:'<s:url value="/images/icons/disk.png"/>',
-			onClick: function() {
-				document.saveDataSource.submit();
-			}
-		}).addTo('submit_button');
-	</script>
 </body>
 </html>

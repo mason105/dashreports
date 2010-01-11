@@ -10,18 +10,19 @@
 </head>
 <body>
 <s:form action="saveChart">
+
 <sx:tabbedpanel id="report">
 	
 		<s:actionerror />
 		<s:actionmessage/>
 		
-		<s:hidden name="chart.id" value="%{chart.id}"/>
+		<s:hidden name="chart.itemId" value="%{chart.itemId}"/>
 		
 		<sx:div id="details" label="Details">
 			<div class="formGroup">
 				<div class="formGroupHeader">Details</div>
 			
-				<s:textfield label="Item Name" size="64" value="%{chart.alertName}" name="chart.alertName" cssClass="textbox" required="true">
+				<s:textfield label="Item Name" size="64" value="%{chart.itemName}" name="chart.itemName" cssClass="textbox" required="true">
 				</s:textfield>
 				<s:hidden name="chart.group.groupName" value="%{groupName}"/>
 				<s:select label="Select Data Source"
@@ -57,7 +58,7 @@
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 					
 			</div>
-		</div>
+		</sx:div>
 		
 		<sx:div id="chart" label="Chart Details">
 			<div class="formGroup">
@@ -387,7 +388,7 @@
 				</s:textfield>
 			
 			</div>		
-</div>
+	</sx:div>
 <s:submit value="Save"/>
 </sx:tabbedpanel>
 </s:form>

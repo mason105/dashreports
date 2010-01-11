@@ -23,20 +23,10 @@
 		</s:else>
 		<s:textfield label="Group Description" size="60"
 			value="%{group.groupDescription}" name="group.groupDescription"  cssClass="textbox" />
-
+<s:submit value="Save"/>
 	</s:form>
 </div>
 <div class="formFooterText">* required field</div>
-	<div id="submit_button"></div>
-
-	<script language="javascript">
-		new Jx.Button({label: 'Save',
-			image:'<s:url value="/images/icons/disk.png"/>',
-			onClick: function() {
-				document.saveGroup.submit();
-			}
-		}).addTo('submit_button');
-	</script>
 	
 </body>
 </html>

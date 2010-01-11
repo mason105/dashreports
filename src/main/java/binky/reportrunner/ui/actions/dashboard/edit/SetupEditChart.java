@@ -45,7 +45,6 @@ public class SetupEditChart extends BaseEditDashboardAction {
 			} else {
 				this.chart = new RunnerDashboardChart();
 			}
-			super.setCurrentGroupName(super.getGroupName());
 			return SUCCESS;
 		} else {
 

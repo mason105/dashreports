@@ -9,7 +9,7 @@
 
 <s:form action="saveJob" method="post" enctype="multipart/form-data" validate="true">	
 
-<sx:tabbedpanel id="report">		
+<sx:tabbedpanel id="job">		
 
 	<sx:div id="report" label="Report">
 
@@ -79,15 +79,6 @@
 		
 		<div style="margin: 0 auto;"><div id="param_button_add" style="margin:0 auto;"></div></div>
 		
-		<script language="javascript">
-			new Jx.Button({label: 'Add Parameter',
-				onClick: function() {
-					document.saveJob.dispatchSaveButton.value='Add Parameter';
-					document.saveJob.submit();
-				}
-			}).addTo('param_button_add');
-		</script>
-		
 				
 		<s:iterator value="job.parameters" status="rowstatus">
 
@@ -124,16 +115,7 @@
 					listKey="name" listValue="displayName">
 
 				</s:select> 
-				<s:submit name"dispatchSaveButtom" value="Delete Parameter %{pk.parameterIdx}"/>
-				<script language="javascript">
-					new Jx.Button({label: 'Delete Parameter <s:property value="%{pk.parameterIdx}"/>',
-						onClick: function() {
-							document.saveJob.dispatchSaveButton.value='';
-							document.saveJob.submit();	
-						}
-					}).addTo('param_button_<s:property value="%{pk.parameterIdx}"/>');
-				</script>
-				
+				<s:submit name="dispatchSaveButtom" value="Delete Parameter %{pk.parameterIdx}"/>			
 			</div>
 		</s:iterator>
 	</sx:div>
@@ -151,7 +133,7 @@
 			
 		</div>
 		<div class="formGroup">
-			<div class="formGroupHeader">Cron Schedule Basic</div>			
+			<div class="formGroupHeader">Cron Schedule</div>			
 			<div id="jobCronTip" class="tipText">Please enter a valid cron string or use the builder below.</div>
 			<s:textfield label="Cron String" size="32" value="%{job.cronString}" name="job.cronString"
 			onfocus="document.getElementById('jobCronTip').style.visibility='visible';" 
@@ -159,7 +141,7 @@
 			</s:textfield>
 		</div>
 				
-		<div class="formGroup">
+		<!--<div class="formGroup">
 			<div class="formGroupHeader">Cron Schedule Builder</div>	
 					
 			<s:checkbox label="All Seconds" name="simpleCron.allSeconds" cssClass="checkbox" value="#{false}">
@@ -195,7 +177,7 @@
 			
 			<s:select label="Days of Week" name="simpleCron.daysOfWeek" multiple="true" list='#{1:"Monday",2:"Tuesday",3:"Wednesday",4:"Thursday",5:"Friday",6:"Saturday",7:"Sunday"}'></s:select>
 			
-		</div>
+		</div>-->
 			
 
 	</sx:div>

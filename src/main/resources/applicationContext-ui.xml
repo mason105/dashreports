@@ -361,13 +361,7 @@
 			<ref bean="runnerDataSourceDao" />
 		</property>		
 	</bean>	
-
-	<bean id="listItemsAction" class="binky.reportrunner.ui.actions.dashboard.ListItems" scope="prototype">
-		<property name="dashboardService">
-			<ref bean="dashboardService" />
-		</property>				
-	</bean>
-
+	
 	<bean id="listCurrentExecutingJobsAction" class="binky.reportrunner.ui.actions.admin.ListCurrentExecutingJobsAction"
 		scope="prototype">
 		<property name="jobService">

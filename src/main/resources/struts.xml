@@ -196,17 +196,13 @@
 			<result>/jsp/main/editUser.jsp</result>
 		</action>
 
-		<action name="listItems" class="listItemsAction">
-			<result>/jsp/main/listItems.jsp</result>
-		</action>
-		
 		<action name="setupEditChart" class="setupEditChartAction">
 			<result>/jsp/main/editChart.jsp</result>
 		</action>
 		
 		<action name="saveChart" class="saveChartAction">
 			<result type="redirectAction">
-				<param name="actionName">listItems</param>
+				<param name="actionName">group</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>				
 			</result>
@@ -223,7 +219,7 @@
 		
 		<action name="saveGrid" class="saveGridAction">
 			<result type="redirectAction">
-				<param name="actionName">listItems</param>
+				<param name="actionName">group</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>				
 			</result>
@@ -236,7 +232,7 @@
 		
 		<action name="saveThreshold" class="saveThresholdAction">
 			<result type="redirectAction">
-				<param name="actionName">listItems</param>
+				<param name="actionName">group</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>				
 			</result>
@@ -246,7 +242,7 @@
 
 		<action name="deleteItem" class="deleteItemAction">
 			<result type="redirectAction">
-				<param name="actionName">listItems</param>
+				<param name="actionName">group</param>
 				 <param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
 			</result>
@@ -254,7 +250,7 @@
 
 		<action name="invokeItem" class="invokeItemAction">
 			<result type="redirectAction">
-				<param name="actionName">listItems</param>
+				<param name="actionName">group</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>				
 			</result>

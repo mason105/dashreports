@@ -36,7 +36,6 @@ public class DeleteItem extends BaseDashboardAction {
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
 			super.getDashboardService().deleteItem(itemId);
-			super.setCurrentGroupName(groupName);
 			return SUCCESS;
 		} else {
 

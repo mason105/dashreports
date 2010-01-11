@@ -52,7 +52,6 @@ public class SetupEditGrid extends BaseEditDashboardAction {
 					+ super.getSessionUser().getUserName());
 			throw se;
 		}
-		super.setCurrentGroupName(super.getGroupName());
 		return SUCCESS;
 	}
 

@@ -49,9 +49,6 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 			.getLogger(StandardRunnerAction.class);
 
 	public abstract String execute() throws Exception;
-
-	private String currentGroupName;
-
 	public final RunnerUser getSessionUser() {
 		// hack to deal with thread local issues
 		RunnerUser user;
@@ -112,12 +109,5 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 		return getSessionUser().getGroups();
 	}
 
-	public final String getCurrentGroupName() {
-		return currentGroupName;
-	}
-
-	public final void setCurrentGroupName(String currentGroupName) {
-		this.currentGroupName = currentGroupName;
-	}
 
 }

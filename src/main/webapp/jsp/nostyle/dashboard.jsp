@@ -17,15 +17,15 @@
 		<s:a href="setupEditThreshold.action?groupName=%{groupName}">Add Threshold</s:a>
 	</div>	
 					
-<s:if test="alerts.size>0">		
+<s:if test="items.size>0">		
 	<div class="dashboard">							
-		<s:iterator value="alerts" status="rowstatus">
+		<s:iterator value="items" status="rowstatus">
 			<s:if test="(displayRow!=#currentRow)">
 				<div class="clearFix"></div>
 				<s:set name="currentRow" value="%{displayRow}"/>							
 			</s:if>						
-			<sx:div theme="ajax" href="dashboardWidget.action?alertId=%{id}" updateFreq="%{visualRefreshTime}">
-				<sx:div theme="ajax" href="dashboardWidget.action?alertId=%{id}"/>										
+			<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}" updateFreq="%{visualRefreshTime}">
+				<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}"/>										
 			</sx:div>	
 		</s:iterator>
 	</div>

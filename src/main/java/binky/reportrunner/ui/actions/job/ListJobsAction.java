@@ -51,8 +51,6 @@ public class ListJobsAction extends StandardRunnerAction {
 			logger.debug("looking for group: " + groupName);
 			
 			if (doesUserHaveGroup(groupName)) {
-				//hack to expand the group in the tree
-				super.setCurrentGroupName(groupName);
 
 				List<DisplayJob> jobs = new LinkedList<DisplayJob>();
 				for (RunnerJob job : jobService.listJobs(groupName)) {

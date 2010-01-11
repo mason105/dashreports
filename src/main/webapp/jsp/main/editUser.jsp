@@ -51,22 +51,11 @@
 	       listKey="groupName" 
 	       listValue="groupName"  cssClass="textbox"	       
 		/>
-
+	
+		<s:submit value="Save"/>
 	
 </div>
 <div class="formFooterText">* required field</div>
 </s:form>	
-<div id="submit_button"></div>
-
-<script language="javascript">
-	new Jx.Button({label: 'Save',
-		image:'<s:url value="/images/icons/disk.png"/>',
-		onClick: function() {
-			document.saveUser.submit();
-		}
-	}).addTo('submit_button');
-</script>
-
-
 </body>
 </html>

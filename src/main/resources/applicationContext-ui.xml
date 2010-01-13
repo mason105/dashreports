@@ -217,6 +217,18 @@
 			<ref bean="runnerDatasourceService" />
 		</property>		
 	</bean>
+	
+	
+	
+	<bean id="getColumnNamesForQueryAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.GetColumnNamesForQuery"
+		scope="prototype">
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>		
+	</bean>
+	
+	
 	<bean id="purgeConnectionsAction"
 		class="binky.reportrunner.ui.actions.datasource.PurgeConnections"
 		scope="prototype">

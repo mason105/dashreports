@@ -46,20 +46,22 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 
 				if ((rs == null) || (rs.isClosed()) || (rs.isLast())
 						|| (rs.getMetaData().getColumnCount() == 0)) {
-					logger.warn("query failed to return any info");
-					return ERROR;
+					logger.warn("query failed to return any data");
+					super.addActionError("query failed to return any data");
+					return SUCCESS;
 				}
 			} catch (SQLException sqle) {
 
 				logger.warn("query failed with exception", sqle);
-				return ERROR;
+				super.addActionError("query failed with exception - " + sqle.getMessage());
+				return SUCCESS;
 
 			} finally {
 				conn.close();
 			}
 
 			columnNames = new LinkedList<String>();
-			logger.debug("column count" + 0);
+			logger.debug("column count " + rs.getMetaData().getColumnCount());
 			for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
 				logger.debug("found column "
 						+ rs.getMetaData().getColumnName(i));

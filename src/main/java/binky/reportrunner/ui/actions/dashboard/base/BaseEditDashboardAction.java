@@ -54,7 +54,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 			} catch (SchedulerException e) {
 				super.addActionError(e.getMessage());
 				logger.fatal(e.getMessage(), e);
-				return ERROR;
+				return INPUT;
 			}
 			this.groupName = item.getGroup().getGroupName();
 			return SUCCESS;

@@ -9,7 +9,7 @@
 <sx:head  />
 </head>
 <body>
-<s:form action="saveChart">
+<s:form action="saveChart" id="saveChart">
 
 <sx:tabbedpanel id="report">
 	
@@ -31,7 +31,7 @@
 				</s:select>
 				
 				<s:textarea label="Query" cols="30" rows="20"
-					value="%{item.alertQuery}" name="item.alertQuery" cssClass="textbox" required="true">
+					value="%{item.alertQuery}" name="item.alertQuery" cssClass="textbox" required="true" onchange="dojo.event.topic.publish('refresh_fields');">
 				</s:textarea>	
 			
 				<s:textfield label="Cron String" size="32" value="%{item.cronTab}" name="item.cronTab" cssClass="textbox" required="true">
@@ -377,15 +377,10 @@
 			 	<s:textfield label="Y-Axis Label" size="64" value="%{item.yLabel}" name="item.yLabel" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="X-Axis Column Name" size="32" value="%{item.xaxisColumn}" name="item.xaxisColumn" cssClass="textbox">
-				</s:textfield>
+				<s:url id="fieldsUrl" action="getColumnNamesForQuery" /> 
+				<s:div showLoadingText="false" id="refreshFields" href="%{fieldsUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
+				</s:div>
 				
-				
-				<s:textfield label="Value Column Name" size="32" value="%{item.valueColumn}" name="item.valueColumn" cssClass="textbox">
-				</s:textfield>
-				
-				<s:textfield label="Series Name Column Name" size="32" value="%{item.seriesNameColumn}" name="item.seriesNameColumn" cssClass="textbox">
-				</s:textfield>
 			
 			</div>		
 	</sx:div>

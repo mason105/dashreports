@@ -355,5 +355,10 @@
 			</result>
 		</action>
 		
+			
+		<action name="getColumnNamesForQuery" class="getColumnNamesForQueryAction">
+			<result>/jsp/nostyle/dashboardItemFieldDropdowns.jsp</result>
+		</action>
+		
 	</package>
 </struts>

@@ -377,7 +377,7 @@
 			 	<s:textfield label="Y-Axis Label" size="64" value="%{item.yLabel}" name="item.yLabel" cssClass="textbox">
 				</s:textfield>
 				
-				<s:url id="fieldsUrl" action="getColumnNamesForQuery" /> 
+				<s:url id="fieldsUrl" action="getChartColumns" /> 
 				<s:div showLoadingText="false" id="refreshFields" href="%{fieldsUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
 				</s:div>
 				

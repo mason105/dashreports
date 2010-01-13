@@ -32,7 +32,7 @@ public class SetupEditChart extends BaseEditDashboardAction {
 
 	private RunnerDashboardChart chart;
 	private Integer itemId;
-
+	
 	@Override
 	public String execute() throws Exception {
 
@@ -41,6 +41,7 @@ public class SetupEditChart extends BaseEditDashboardAction {
 			if (itemId != null) {
 				this.chart = (RunnerDashboardChart) super.getDashboardService()
 						.getItem(itemId);
+				super.setGroupName(chart.getGroup().getGroupName());
 
 			} else {
 				this.chart = new RunnerDashboardChart();

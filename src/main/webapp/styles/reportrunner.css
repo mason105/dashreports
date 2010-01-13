@@ -380,4 +380,13 @@ div.formSectionInner div.smallLabel {
 	height:18px;
 	padding-top:1px;
 	padding-bottom:1px;
+	float:left;
+	width:100%;
+}
+
+
+.widgetToolbar {
+	float:right;
+	background-image: url(../images/formheaderbg.png);
+
 }

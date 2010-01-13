@@ -43,19 +43,25 @@ public class RunnerGroup implements Serializable {
 		super();
 		this.groupName = groupName;
 		this.groupDescription = groupDescription;
-		this.runnerJobs = runnerJobs;		
+		this.runnerJobs = runnerJobs;
 	}
-	public RunnerGroup(){};
+
+	public RunnerGroup() {
+	};
+
 	@Id
 	private String groupName;
 	private String groupDescription;
 
 	@ManyToMany
 	private List<RunnerUser> users;
-	
+
+	@OneToMany
+	private Collection<RunnerDashboardItem> dashboardItems;
+
 	@OneToMany()
 	private Collection<RunnerJob> runnerJobs;
-	
+
 	@RequiredStringValidator
 	public String getGroupName() {
 		return groupName;
@@ -73,22 +79,32 @@ public class RunnerGroup implements Serializable {
 		this.groupDescription = groupDescription;
 	}
 
-	
-	
 	public Collection<RunnerJob> getRunnerJobs() {
 		return runnerJobs;
 	}
+
 	public void setRunnerJobs(Collection<RunnerJob> runnerJobs) {
 		this.runnerJobs = runnerJobs;
 	}
+
 	public String toString() {
 		return this.groupName;
 	}
+
 	public List<RunnerUser> getUsers() {
 		return users;
 	}
+
 	public void setUsers(List<RunnerUser> users) {
 		this.users = users;
+	}
+
+	public Collection<RunnerDashboardItem> getDashboardItems() {
+		return dashboardItems;
+	}
+
+	public void setDashboardItems(Collection<RunnerDashboardItem> dashboardItems) {
+		this.dashboardItems = dashboardItems;
 	}
 
 }

@@ -41,7 +41,7 @@ public class SetupEditGrid extends BaseEditDashboardAction {
 			if (itemId != null) {
 				this.grid = (RunnerDashboardGrid) super.getDashboardService()
 						.getItem(itemId);
-
+				super.setGroupName(grid.getGroup().getGroupName());
 			} else {
 				this.grid = new RunnerDashboardGrid();
 			}

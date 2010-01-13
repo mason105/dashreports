@@ -41,6 +41,7 @@ public class SetupEditThreshold extends BaseEditDashboardAction {
 			if (itemId != null) {
 				this.threshold = (RunnerDashboardThreshold) super
 						.getDashboardService().getItem(itemId);
+				super.setGroupName(threshold.getGroup().getGroupName());
 			} else {
 				this.threshold = new RunnerDashboardThreshold();
 			}

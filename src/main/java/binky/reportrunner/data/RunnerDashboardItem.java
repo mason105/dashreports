@@ -53,7 +53,7 @@ public abstract class RunnerDashboardItem implements Serializable {
 
 	private String alertQuery;
 
-	private String cronTab;
+	private String cronTab="0 0 12 * * ?";
 
 	private Width width;
 	private Height height;

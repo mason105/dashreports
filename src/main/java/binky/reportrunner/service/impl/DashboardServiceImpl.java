@@ -29,7 +29,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.RunnerDashboardItemDao;
+import binky.reportrunner.dao.RunnerGroupDao;
 import binky.reportrunner.data.RunnerDashboardItem;
+import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DashboardService;
@@ -39,6 +41,7 @@ public class DashboardServiceImpl implements DashboardService {
 	private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
 	
 	private RunnerDashboardItemDao dashboardDao;
+	private RunnerGroupDao groupDao;
 	private Scheduler scheduler;
 	public RunnerDashboardItem getItem(Integer id) {
 		return dashboardDao.getItem(id);
@@ -85,6 +88,11 @@ public class DashboardServiceImpl implements DashboardService {
 		if (alert.getItemId()!=null){
 			scheduler.removedDashboardAlert(alert.getItemId());
 		}
+		
+		//hack to try to fix a batch update error		
+		RunnerGroup group = groupDao.getGroup(alert.getGroup().getGroupName());
+		alert.setGroup(group);
+		
 		dashboardDao.saveUpdateItem(alert);
 		scheduler.addDashboardAlert(alert.getItemId(),alert.getCronTab());		
 	}
@@ -125,6 +133,12 @@ public class DashboardServiceImpl implements DashboardService {
 	public void invokeDashboardItem(Integer itemId) throws SchedulerException {
 		scheduler.invokeDashboardItem(itemId);
 		
+	}
+	public RunnerGroupDao getGroupDao() {
+		return groupDao;
+	}
+	public void setGroupDao(RunnerGroupDao groupDao) {
+		this.groupDao = groupDao;
 	}
 
 

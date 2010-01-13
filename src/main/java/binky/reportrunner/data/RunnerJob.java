@@ -121,7 +121,7 @@ public class RunnerJob implements Serializable {
 
 	private Date endDate;
 
-	private String cronString;
+	private String cronString="0 0 12 * * ?";
 
 	private Boolean isBurst;
 

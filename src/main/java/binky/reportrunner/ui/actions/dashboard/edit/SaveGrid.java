@@ -29,20 +29,21 @@ public class SaveGrid extends BaseEditDashboardAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private RunnerDashboardGrid grid;
+	private RunnerDashboardGrid item;
 
 	@Override
 	public String execute() throws Exception {
-		return super.saveItem(this.grid);
+		return super.saveItem(this.item);
 	}
 
-	public final RunnerDashboardGrid getGrid() {
-		return grid;
+	public RunnerDashboardGrid getItem() {
+		return item;
 	}
 
-	public final void setGrid(RunnerDashboardGrid grid) {
-		this.grid = grid;
+	public void setItem(RunnerDashboardGrid item) {
+		this.item = item;
 	}
+
 
 
 }

@@ -29,19 +29,20 @@ public class SaveChart extends BaseEditDashboardAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private RunnerDashboardChart chart;
+	private RunnerDashboardChart item;
 
 	@Override
 	public String execute() throws Exception {
-		return super.saveItem(this.chart);
+		return super.saveItem(this.item);
 	}
 
-	public RunnerDashboardChart getChart() {
-		return chart;
+	public RunnerDashboardChart getItem() {
+		return item;
 	}
 
-	public void setChart(RunnerDashboardChart chart) {
-		this.chart = chart;
+	public void setItem(RunnerDashboardChart item) {
+		this.item = item;
 	}
+
 
 }

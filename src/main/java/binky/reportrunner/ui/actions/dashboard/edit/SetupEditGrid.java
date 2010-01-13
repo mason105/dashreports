@@ -30,7 +30,7 @@ public class SetupEditGrid extends BaseEditDashboardAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private RunnerDashboardGrid grid;
+	private RunnerDashboardGrid item;
 	private Integer itemId;
 
 	@Override
@@ -39,11 +39,11 @@ public class SetupEditGrid extends BaseEditDashboardAction {
 		if (super.getSessionUser().getGroups().contains(super.getGroupName())
 				|| super.getSessionUser().getIsAdmin()) {
 			if (itemId != null) {
-				this.grid = (RunnerDashboardGrid) super.getDashboardService()
+				this.item = (RunnerDashboardGrid) super.getDashboardService()
 						.getItem(itemId);
-				super.setGroupName(grid.getGroup().getGroupName());
+				super.setGroupName(item.getGroup().getGroupName());
 			} else {
-				this.grid = new RunnerDashboardGrid();
+				this.item = new RunnerDashboardGrid();
 			}
 		} else {
 
@@ -55,12 +55,12 @@ public class SetupEditGrid extends BaseEditDashboardAction {
 		return SUCCESS;
 	}
 
-	public final RunnerDashboardGrid getGrid() {
-		return grid;
+	public RunnerDashboardGrid getItem() {
+		return item;
 	}
 
-	public final void setGrid(RunnerDashboardGrid grid) {
-		this.grid = grid;
+	public void setItem(RunnerDashboardGrid item) {
+		this.item = item;
 	}
 
 	public final Integer getItemId() {

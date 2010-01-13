@@ -30,7 +30,7 @@ public class SetupEditThreshold extends BaseEditDashboardAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private RunnerDashboardThreshold threshold;
+	private RunnerDashboardThreshold item;
 	private Integer itemId;
 
 	@Override
@@ -39,11 +39,11 @@ public class SetupEditThreshold extends BaseEditDashboardAction {
 		if (super.getSessionUser().getGroups().contains(super.getGroupName())
 				|| super.getSessionUser().getIsAdmin()) {
 			if (itemId != null) {
-				this.threshold = (RunnerDashboardThreshold) super
+				this.item = (RunnerDashboardThreshold) super
 						.getDashboardService().getItem(itemId);
-				super.setGroupName(threshold.getGroup().getGroupName());
+				super.setGroupName(item.getGroup().getGroupName());
 			} else {
-				this.threshold = new RunnerDashboardThreshold();
+				this.item = new RunnerDashboardThreshold();
 			}
 		} else {
 
@@ -55,13 +55,16 @@ public class SetupEditThreshold extends BaseEditDashboardAction {
 		return SUCCESS;
 	}
 
-	public final RunnerDashboardThreshold getThreshold() {
-		return threshold;
+
+	public RunnerDashboardThreshold getItem() {
+		return item;
 	}
 
-	public final void setThreshold(RunnerDashboardThreshold threshold) {
-		this.threshold = threshold;
+
+	public void setItem(RunnerDashboardThreshold item) {
+		this.item = item;
 	}
+
 
 	public final Integer getItemId() {
 		return itemId;

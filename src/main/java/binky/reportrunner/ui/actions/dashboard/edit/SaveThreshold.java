@@ -29,20 +29,19 @@ public class SaveThreshold extends BaseEditDashboardAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private RunnerDashboardThreshold threshold;
+	private RunnerDashboardThreshold item;
 
 	@Override
 	public String execute() throws Exception {
-		return super.saveItem(this.threshold);
+		return super.saveItem(this.item);
 	}
 
-	public final RunnerDashboardThreshold getThreshold() {
-		return threshold;
+	public RunnerDashboardThreshold getItem() {
+		return item;
 	}
 
-	public final void setThreshold(RunnerDashboardThreshold threshold) {
-		this.threshold = threshold;
+	public void setItem(RunnerDashboardThreshold item) {
+		this.item = item;
 	}
-
 
 }

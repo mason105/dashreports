@@ -30,21 +30,21 @@ public class SetupEditChart extends BaseEditDashboardAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private RunnerDashboardChart chart;
+	private RunnerDashboardChart item;
 	private Integer itemId;
-	
+
 	@Override
 	public String execute() throws Exception {
 
 		if (super.getSessionUser().getGroups().contains(super.getGroupName())
 				|| super.getSessionUser().getIsAdmin()) {
 			if (itemId != null) {
-				this.chart = (RunnerDashboardChart) super.getDashboardService()
+				this.item = (RunnerDashboardChart) super.getDashboardService()
 						.getItem(itemId);
-				super.setGroupName(chart.getGroup().getGroupName());
+				super.setGroupName(item.getGroup().getGroupName());
 
 			} else {
-				this.chart = new RunnerDashboardChart();
+				this.item = new RunnerDashboardChart();
 			}
 			return SUCCESS;
 		} else {
@@ -57,12 +57,12 @@ public class SetupEditChart extends BaseEditDashboardAction {
 
 	}
 
-	public RunnerDashboardChart getChart() {
-		return chart;
+	public RunnerDashboardChart getItem() {
+		return item;
 	}
 
-	public void setChart(RunnerDashboardChart chart) {
-		this.chart = chart;
+	public void setItem(RunnerDashboardChart item) {
+		this.item = item;
 	}
 
 	public final Integer getItemId() {

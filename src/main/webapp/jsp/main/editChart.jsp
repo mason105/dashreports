@@ -378,8 +378,8 @@
 				</s:textfield>
 				
 				<s:url id="fieldsUrl" action="getChartColumns" /> 
-				<s:div showLoadingText="false" id="refreshFields" href="%{fieldsUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
-				</s:div>
+				<sx:div showLoadingText="false" id="refreshFields" href="%{fieldsUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
+				</sx:div>
 				
 			
 			</div>		

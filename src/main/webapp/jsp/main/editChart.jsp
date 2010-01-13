@@ -16,25 +16,25 @@
 		<s:actionerror />
 		<s:actionmessage/>
 		
-		<s:hidden name="chart.itemId" value="%{chart.itemId}"/>
+		<s:hidden name="item.itemId" value="%{item.itemId}"/>
 		
 		<sx:div id="details" label="Details">
 			<div class="formGroup">
 				<div class="formGroupHeader">Details</div>
 			
-				<s:textfield label="Item Name" size="64" value="%{chart.itemName}" name="chart.itemName" cssClass="textbox" required="true">
+				<s:textfield label="Item Name" size="64" value="%{item.itemName}" name="item.itemName" cssClass="textbox" required="true">
 				</s:textfield>
-				<s:hidden name="chart.group.groupName" value="%{groupName}"/>
+				<s:hidden name="item.group.groupName" value="%{groupName}"/>
 				<s:select label="Select Data Source"
-					name="chart.datasource.dataSourceName" value="%{chart.datasource}"
+					name="item.datasource.dataSourceName" value="%{item.datasource}"
 					list="runnerDataSources" listKey="dataSourceName" listValue="dataSourceName" cssClass="textbox">
 				</s:select>
 				
 				<s:textarea label="Query" cols="30" rows="20"
-					value="%{chart.alertQuery}" name="chart.alertQuery" cssClass="textbox" required="true">
+					value="%{item.alertQuery}" name="item.alertQuery" cssClass="textbox" required="true">
 				</s:textarea>	
 			
-				<s:textfield label="Cron String" size="32" value="%{chart.cronTab}" name="chart.cronTab" cssClass="textbox" required="true">
+				<s:textfield label="Cron String" size="32" value="%{item.cronTab}" name="item.cronTab" cssClass="textbox" required="true">
 				</s:textfield>
 				
 			</div>	
@@ -45,16 +45,16 @@
 			<div class="formGroup">
 				<div class="formGroupHeader">Layout/Type</div>
 				
-				<s:textfield label="Display Column" size="64" value="%{chart.displayColumn}" name="chart.displayColumn" cssClass="textbox">
+				<s:textfield label="Display Column" size="64" value="%{item.displayColumn}" name="item.displayColumn" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="Display Row" size="64" value="%{chart.displayRow}" name="chart.displayRow" cssClass="textbox">
+				<s:textfield label="Display Row" size="64" value="%{item.displayRow}" name="item.displayRow" cssClass="textbox">
 				</s:textfield>
 						
-				<s:select label="Width" name="chart.width" list="widths"
+				<s:select label="Width" name="item.width" list="widths"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 						
-				<s:select label="Height" name="chart.height" list="heights"
+				<s:select label="Height" name="item.height" list="heights"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 					
 			</div>
@@ -64,15 +64,15 @@
 			<div class="formGroup">
 				<div class="formGroupHeader">Chart Configuration</div>
 				
-				<s:select label="Chart Type" name="chart.chartType" list="chartTypes"
+				<s:select label="Chart Type" name="item.chartType" list="chartTypes"
 				listKey="name" listValue="displayName" cssClass="textbox"></s:select>			
 				
-				<s:select label="X Axis Step Size" name="chart.xAxisStep" list="xAxisSteps"
+				<s:select label="X Axis Step Size" name="item.xAxisStep" list="xAxisSteps"
 				listKey="name" listValue="displayName"></s:select>
 			
 				
 				 <s:select label="Chart Background Colour" 
-				    name="chart.backGroundColour" 
+				    name="item.backGroundColour" 
 				    list="#{'#FFFFFF':'White',
 				    '#000000':'Black',
 					'#150517':'Gray0',
@@ -374,17 +374,17 @@
 				    cssClass="textbox" />
 				
 			
-			 	<s:textfield label="Y-Axis Label" size="64" value="%{chart.yLabel}" name="chart.yLabel" cssClass="textbox">
+			 	<s:textfield label="Y-Axis Label" size="64" value="%{item.yLabel}" name="item.yLabel" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="X-Axis Column Name" size="32" value="%{chart.xaxisColumn}" name="chart.xaxisColumn" cssClass="textbox">
+				<s:textfield label="X-Axis Column Name" size="32" value="%{item.xaxisColumn}" name="item.xaxisColumn" cssClass="textbox">
 				</s:textfield>
 				
 				
-				<s:textfield label="Value Column Name" size="32" value="%{chart.valueColumn}" name="chart.valueColumn" cssClass="textbox">
+				<s:textfield label="Value Column Name" size="32" value="%{item.valueColumn}" name="item.valueColumn" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="Series Name Column Name" size="32" value="%{chart.seriesNameColumn}" name="chart.seriesNameColumn" cssClass="textbox">
+				<s:textfield label="Series Name Column Name" size="32" value="%{item.seriesNameColumn}" name="item.seriesNameColumn" cssClass="textbox">
 				</s:textfield>
 			
 			</div>		

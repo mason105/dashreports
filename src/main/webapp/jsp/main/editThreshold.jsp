@@ -16,25 +16,25 @@
 		<s:actionerror />
 		<s:actionmessage/>
 		
-		<s:hidden name="threshold.itemId" value="%{threshold.itemId}"/>
+		<s:hidden name="item.itemId" value="%{item.itemId}"/>
 		
 		<sx:div id="details" label="Details">
 			<div class="formGroup">
 				<div class="formGroupHeader">Details</div>
 			
-				<s:textfield label="Item Name" size="64" value="%{threshold.itemName}" name="threshold.itemName" cssClass="textbox" required="true">
+				<s:textfield label="Item Name" size="64" value="%{item.itemName}" name="item.itemName" cssClass="textbox" required="true">
 				</s:textfield>
-				<s:hidden name="threshold.group.groupName" value="%{groupName}"/>
+				<s:hidden name="item.group.groupName" value="%{groupName}"/>
 				<s:select label="Select Data Source"
-					name="threshold.datasource.dataSourceName" value="%{threshold.datasource}"
+					name="item.datasource.dataSourceName" value="%{item.datasource}"
 					list="runnerDataSources" listKey="dataSourceName" listValue="dataSourceName" cssClass="textbox">
 				</s:select>
 				
 				<s:textarea label="Query" cols="30" rows="20"
-					value="%{threshold.alertQuery}" name="threshold.alertQuery" cssClass="textbox" required="true">
+					value="%{item.alertQuery}" name="item.alertQuery" cssClass="textbox" required="true">
 				</s:textarea>	
 			
-				<s:textfield label="Cron String" size="32" value="%{threshold.cronTab}" name="threshold.cronTab" cssClass="textbox" required="true">
+				<s:textfield label="Cron String" size="32" value="%{item.cronTab}" name="item.cronTab" cssClass="textbox" required="true">
 				</s:textfield>
 				
 			</div>	
@@ -46,16 +46,16 @@
 				<div class="formGroupHeader">Layout</div>
 				
 
-				<s:textfield label="Display Column" size="64" value="%{threshold.displayColumn}" name="threshold.displayColumn" cssClass="textbox">
+				<s:textfield label="Display Column" size="64" value="%{item.displayColumn}" name="item.displayColumn" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="Display Row" size="64" value="%{threshold.displayRow}" name="threshold.displayRow" cssClass="textbox">
+				<s:textfield label="Display Row" size="64" value="%{item.displayRow}" name="item.displayRow" cssClass="textbox">
 				</s:textfield>
 						
-				<s:select label="Width" name="threshold.width" list="widths"
+				<s:select label="Width" name="item.width" list="widths"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 						
-				<s:select label="Height" name="threshold.height" list="heights"
+				<s:select label="Height" name="item.height" list="heights"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 					
 			</div>
@@ -67,21 +67,21 @@
 				
 			
 			
-				<s:select label="Threshold Type" name="threshold.type" list="thresholdTypes"
+				<s:select label="Threshold Type" name="item.type" list="thresholdTypes"
 				listKey="name" listValue="displayName"></s:select>
 		
 			
-			 	<s:textfield label="Label Column Name" size="64" value="%{threshold.labelColumn}" name="threshold.labelColumn" cssClass="textbox">
+			 	<s:textfield label="Label Column Name" size="64" value="%{item.labelColumn}" name="item.labelColumn" cssClass="textbox">
 				</s:textfield>
 				
 					
-				<s:textfield label="Value Column Name" size="32" value="%{threshold.valueColumn}" name="threshold.valueColumn" cssClass="textbox">
+				<s:textfield label="Value Column Name" size="32" value="%{item.valueColumn}" name="item.valueColumn" cssClass="textbox">
 				</s:textfield>
 				
-				<s:textfield label="Upper Value" size="32" value="%{threshold.upperValue}" name="threshold.upperValue" cssClass="textbox">
+				<s:textfield label="Upper Value" size="32" value="%{item.upperValue}" name="item.upperValue" cssClass="textbox">
 				</s:textfield>
 			
-				<s:textfield label="Lower Value" size="32" value="%{threshold.lowerValue}" name="threshold.lowerValue" cssClass="textbox">
+				<s:textfield label="Lower Value" size="32" value="%{item.lowerValue}" name="item.lowerValue" cssClass="textbox">
 				</s:textfield>
 			</div>		
 	</sx:div>

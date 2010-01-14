@@ -33,6 +33,11 @@ public class SaveChart extends BaseEditDashboardAction {
 
 	@Override
 	public String execute() throws Exception {
+		
+		if (this.item.getXaxisColumn().equals("-")) this.item.setXaxisColumn(null);
+		if (this.item.getSeriesNameColumn().equals("-")) this.item.setSeriesNameColumn(null);
+		if (this.item.getValueColumn().equals("-")) this.item.setValueColumn(null);
+		
 		return super.saveItem(this.item);
 	}
 

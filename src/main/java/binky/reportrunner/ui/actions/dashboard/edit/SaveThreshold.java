@@ -33,6 +33,8 @@ public class SaveThreshold extends BaseEditDashboardAction {
 
 	@Override
 	public String execute() throws Exception {
+		if (this.item.getLabelColumn().equals("-")) this.item.setLabelColumn(null);
+		if (this.item.getValueColumn().equals("-")) this.item.setValueColumn(null);
 		return super.saveItem(this.item);
 	}
 

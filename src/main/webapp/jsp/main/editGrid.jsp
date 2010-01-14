@@ -26,12 +26,12 @@
 				</s:textfield>
 				<s:hidden name="item.group.groupName" value="%{groupName}"/>
 				<s:select label="Select Data Source"
-					name="dashboardAlert.datasource.dataSourceName" value="%{item.datasource}"
-					list="runnerDataSources" listKey="dataSourceName" listValue="dataSourceName" cssClass="textbox">
+					name="dataSourceName" value="%{item.datasource.dataSourceName}"
+					list="runnerDataSources" cssClass="textbox">
 				</s:select>
 				
 				<s:textarea label="Query" cols="30" rows="20"
-					value="%{item.alertQuery}" name="item.alertQuery" cssClass="textbox" required="true">
+					value="%{item.alertQuery}" name="itemQuery" cssClass="textbox" required="true" onchange="dojo.event.topic.publish('refresh_fields');">
 				</s:textarea>	
 			
 				<s:textfield label="Cron String" size="32" value="%{item.cronTab}" name="item.cronTab" cssClass="textbox" required="true">

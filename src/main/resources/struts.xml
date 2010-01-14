@@ -356,11 +356,11 @@
 		</action>
 		
 			
-		<action name="getChartColumns" class="getColumnNamesForQueryAction">
+		<action name="getChartColumns" class="getQueryColumnsAction">
 			<result>/jsp/nostyle/chartFieldDropdowns.jsp</result>
 		</action>
 
-		<action name="getThresholdColumns" class="getColumnNamesForQueryAction">
+		<action name="getThresholdColumns" class="getQueryColumnsAction">
 			<result>/jsp/nostyle/thresholdFieldDropdowns.jsp</result>
 		</action>
 		

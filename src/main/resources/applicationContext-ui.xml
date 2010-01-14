@@ -220,7 +220,7 @@
 	
 	
 	
-	<bean id="getColumnNamesForQueryAction"
+	<bean id="getQueryColumnsAction"
 		class="binky.reportrunner.ui.actions.dashboard.edit.GetColumnNamesForQuery"
 		scope="prototype">
 		<property name="dataSourceService">

@@ -4,16 +4,16 @@
 <s:actionmessage/>
 
 				<s:select label="X-Axis Column Name"
-					name="item.xaxisColumn" 
+					name="item.xAxisColumn" value="xAxisColumnValue"
 					list="columnNames"  cssClass="textbox">
 				</s:select>
 
 				<s:select label="Value Column Name"
-					name="item.valueColumn" 
+					name="item.valueColumn" value="valueColumnValue"
 					list="columnNames"  cssClass="textbox">
 				</s:select>
 
 				<s:select label="Series Name Column Name"
-					name="item.seriesNameColumn" 
+					name="item.seriesNameColumn"  value="seriesNameColumnValue"
 					list="columnNames"  cssClass="textbox">
 				</s:select>

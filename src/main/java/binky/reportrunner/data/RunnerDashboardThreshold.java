@@ -12,7 +12,7 @@ public class RunnerDashboardThreshold extends RunnerDashboardItem {
 
 	private Float upperValue;
 	private Float lowerValue;
-	private String valueColmun;
+	private String valueColumn;
 	private String labelColumn;
 	
 	private ThresholdType type;
@@ -52,16 +52,6 @@ public class RunnerDashboardThreshold extends RunnerDashboardItem {
 
 
 
-	public final String getValueColmun() {
-		return valueColmun;
-	}
-
-
-
-	public final void setValueColmun(String valueColmun) {
-		this.valueColmun = valueColmun;
-	}
-
 
 
 	public final String getLabelColumn() {
@@ -93,6 +83,18 @@ public class RunnerDashboardThreshold extends RunnerDashboardItem {
 		}
 
 	}
+
+
+	public String getValueColumn() {
+		return valueColumn;
+	}
+
+
+
+	public void setValueColumn(String valueColumn) {
+		this.valueColumn = valueColumn;
+	}
+
 
 
 	@Override

@@ -27,6 +27,9 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 	private RunnerDataSourceDao dataSourceDao;
 	private List<RunnerDataSource> runnerDataSources;
 
+	private String itemQuery;
+	private String dataSourceName;
+	
 	private static final Logger logger = Logger
 			.getLogger(BaseEditDashboardAction.class);
 
@@ -48,6 +51,9 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 			RunnerGroup group = new RunnerGroup();
 			group.setGroupName(groupName);
 			item.setGroup(group);
+			
+			item.setDatasource(dataSourceDao.getDataSource(dataSourceName));
+			item.setAlertQuery(itemQuery);
 
 			try {
 				super.getDashboardService().saveUpdateItem(item);
@@ -116,4 +122,27 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 	public final List<ThresholdType> getThresholdTypes() {
 		return Arrays.asList(ThresholdType.values());
 	}
+
+
+	public String getItemQuery() {
+		return itemQuery;
+	}
+
+
+	public void setItemQuery(String itemQuery) {
+		this.itemQuery = itemQuery;
+	}
+
+
+	public String getDataSourceName() {
+		return dataSourceName;
+	}
+
+
+	public void setDataSourceName(String dataSourceName) {
+		this.dataSourceName = dataSourceName;
+	}
+
+
+	
 }

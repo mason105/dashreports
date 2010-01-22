@@ -219,6 +219,15 @@
 	</bean>
 	
 	
+	<bean id="validateQueryAction"
+		class="binky.reportrunner.ui.actions.dashboard.ValidateSQL"
+		scope="prototype">
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>		
+	</bean>
+	
+	
 	
 	<bean id="getQueryColumnsAction"
 		class="binky.reportrunner.ui.actions.dashboard.edit.GetColumnNamesForQuery"

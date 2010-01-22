@@ -33,6 +33,10 @@
 				<s:textarea label="Query" cols="30" rows="20"
 					value="%{item.alertQuery}" name="itemQuery" cssClass="textbox" required="true" onchange="dojo.event.topic.publish('refresh_fields');">
 				</s:textarea>	
+				
+				<s:url id="validateUrl" action="validateQuery" /> 
+				<sx:div showLoadingText="false" id="refreshFields" href="%{validateUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
+				</sx:div>
 			
 				<s:textfield label="Cron String" size="32" value="%{item.cronTab}" name="item.cronTab" cssClass="textbox" required="true">
 				</s:textfield>

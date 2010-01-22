@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<s:form action="saveJob" method="post" enctype="multipart/form-data" validate="true">	
+<s:form action="saveJob" method="post" enctype="multipart/form-data" validate="true" id="saveJob">	
 
 <sx:tabbedpanel id="job">		
 
@@ -43,21 +43,25 @@
 
 			</s:textfield>
 
-			 <s:select label="Select Data Source"
-				name="job.datasource.dataSourceName" value="%{job.datasource}"
-				list="dataSources" listKey="dataSourceName" listValue="dataSourceName">
-			</s:select> 
+				<s:select label="Select Data Source"
+					name="dataSourceName" value="%{job.datasource.dataSourceName}"
+					list="dataSources" cssClass="textbox">
+				</s:select>
 		</div>
 
 		<div class="formGroup">
 			<div class="formGroupHeader">Definition</div>
 			<div id="jobQueryTip" class="tipText">Please input the query to be used for this job.  This should be valid SQL to be used against the datasource selected above.</div>
 			<s:textarea label="Report Query" cols="80" rows="20"
-				value="%{job.query}" name="job.query" 
+				value="%{job.query}" name="itemQuery" 
 				onfocus="document.getElementById('jobQueryTip').style.visibility='visible';" 
 				onblur="document.getElementById('jobQueryTip').style.visibility='hidden';"
-				 required="true" cssClass="textbox">
+				 required="true" cssClass="textbox" onchange="dojo.event.topic.publish('validate_query');>
 				</s:textarea>
+
+				<s:url id="validateUrl" action="validateQuery" /> 
+				<sx:div showLoadingText="false" id="refreshFields" href="%{validateUrl}" theme="ajax"  listenTopics="validate_query" formId="saveJob">
+				</sx:div>
 
 			<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
 				name="job.isBurst" cssClass="checkbox">

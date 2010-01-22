@@ -355,6 +355,9 @@
 			</result>
 		</action>
 		
+		<action name="validateQuery" class="validateQueryAction">
+			<result>/jsp/nostyle/validateQuery.jsp</result>
+		</action>
 			
 		<action name="getChartColumns" class="getQueryColumnsAction">
 			<result>/jsp/nostyle/chartFieldDropdowns.jsp</result>

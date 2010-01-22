@@ -76,6 +76,10 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	private String groupName;
 
+	private String itemQuery;
+	
+	private String dataSourceName;
+	
 	//private QuartzCronSchedule simpleCron;
 	
 	private static Logger logger = Logger.getLogger(SaveJob.class);
@@ -90,6 +94,12 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		this.groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
 
+		
+		//stuff to allow the sql validation
+		this.job.setQuery(itemQuery);
+		RunnerDataSource ds = dataSourceDao.getDataSource(dataSourceName);
+		job.setDatasource(ds);
+		
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
@@ -427,4 +437,22 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		this.simpleCron = simpleCron;
 	}
 	*/
+
+	public String getItemQuery() {
+		return itemQuery;
+	}
+
+	public void setItemQuery(String itemQuery) {
+		this.itemQuery = itemQuery;
+	}
+
+	public String getDataSourceName() {
+		return dataSourceName;
+	}
+
+	public void setDataSourceName(String dataSourceName) {
+		this.dataSourceName = dataSourceName;
+	}
+	
+	
 }

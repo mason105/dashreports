@@ -10,13 +10,11 @@
 	type="text/css" media="all" />
 
 <body>
-
 	<div class="toolBar">
-		<s:a href="setupEditChart.action?groupName=%{groupName}">Add Chart</s:a>&nbsp;|&nbsp;
-		<s:a href="setupEditGrid.action?groupName=%{groupName}">Add Data Grid</s:a>&nbsp;|&nbsp;
-		<s:a href="setupEditThreshold.action?groupName=%{groupName}">Add Threshold</s:a>
-	</div>	
-					
+		<s:a href="setupEditChart.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/chart_add.png"/>"/>Add Chart</s:a>&nbsp;|
+		<s:a href="setupEditGrid.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/grid_add.png"/>"/>Add Data Grid</s:a>&nbsp;|
+		<s:a href="setupEditThreshold.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/threshold_add.png"/>"/>Add Threshold</s:a>
+	</div>					
 <s:if test="items.size>0">		
 	<div class="dashboard">							
 		<s:iterator value="items" status="rowstatus">

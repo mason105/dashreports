@@ -25,13 +25,15 @@ top:25px;
 bottom:25px;
 height:auto;
 width:160px;
+overflow:auto;
 }
 div .groupButton {
 color:#eeeeee;
 background-image: url(../images/v2/groupButton.png);
-height:15px;
-padding:5px;
-width:140px;
+height:20px;
+padding-top:5px;
+padding-left:5px;
+width:115px;
 margin-top:1px;
 margin-left:5px;
 }
@@ -79,7 +81,7 @@ background-image: url(../images/v2/navbarbg.png);
 border: 1px solid gray;
 top:57px;
 height:15px;
-
+overflow:auto;
 }
 
 #container
@@ -127,6 +129,7 @@ overflow:auto;
 	right:0px;
 	bottom:0px;
 	border: 1px solid gray;
+	overflow:auto;
 }
 
 .dashFrameCont{
@@ -247,6 +250,21 @@ div.formSectionInner div.smallLabel {
 	padding-top:4px;
 	background-image: url(../images/formheaderbg.png);
 	background-repeat: repeat-x; 	
+}
+.toolBar{
+	border-top-style: solid;
+	border-top-width: 1px;
+	border-top-color: #cccccc;
+	width:100%;
+	display:inline-table;
+	height:15px;	
+	padding-top:4px;
+	background-image: url(../images/formheaderbg.png);
+	background-repeat: repeat-x; 	
+}
+.toolBar img {
+	padding-right:4px;
+	padding-left:4px;
 }
 .rowOdd {
 

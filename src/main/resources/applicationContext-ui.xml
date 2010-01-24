@@ -220,7 +220,7 @@
 	
 	
 	<bean id="validateQueryAction"
-		class="binky.reportrunner.ui.actions.dashboard.ValidateSQL"
+		class="binky.reportrunner.ui.actions.ValidateSQL"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />

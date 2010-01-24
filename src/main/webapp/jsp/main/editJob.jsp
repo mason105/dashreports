@@ -3,7 +3,34 @@
 
 <html>
 <head>
-<sx:head />
+<sx:head/>
+
+
+<script language="JavaScript">
+
+
+window.onload= validateQuery;
+
+function validateQuery(){
+
+
+   dojo.require("dojo.io.IframeIO");
+
+   var bindArgs = {
+        transport: "IframeTransport",
+	url: "<s:url value="/validateQuery.action" />",
+        mimetype: "text/html",
+	formNode: dojo.byId("saveJob"),
+        load: function(type, data, evt){
+            document.getElementById("queryValidation").innerHTML=data.firstChild.innerHTML;
+        }
+    };
+    var request = dojo.io.bind(bindArgs);
+}
+
+
+</script>
+
 </head>
 <body>
 
@@ -45,7 +72,7 @@
 
 				<s:select label="Select Data Source"
 					name="dataSourceName" value="%{job.datasource.dataSourceName}"
-					list="dataSources" cssClass="textbox">
+					list="dataSources" cssClass="textbox" onchange="validateQuery();">
 				</s:select>
 		</div>
 
@@ -56,12 +83,12 @@
 				value="%{job.query}" name="itemQuery" 
 				onfocus="document.getElementById('jobQueryTip').style.visibility='visible';" 
 				onblur="document.getElementById('jobQueryTip').style.visibility='hidden';"
-				 required="true" cssClass="textbox" onchange="dojo.event.topic.publish('validate_query');>
+				 required="true" cssClass="textbox" onchange="validateQuery()">
 				</s:textarea>
 
-				<s:url id="validateUrl" action="validateQuery" /> 
-				<sx:div showLoadingText="false" id="refreshFields" href="%{validateUrl}" theme="ajax"  listenTopics="validate_query" formId="saveJob">
-				</sx:div>
+				
+				<div id="queryValidation">
+				</div>
 
 			<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
 				name="job.isBurst" cssClass="checkbox">

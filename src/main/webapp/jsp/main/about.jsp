@@ -50,7 +50,7 @@
 	</tr><tr>
 	<td align="center"><a href="http://www.springsource.org/" target="_blank"><img src="<s:url value="/images/vendor/spring.png"/>" border="0" align="middle"/></a></td>
 	<td align="center"><a href="http://displaytag.sourceforge.net/1.2/" target="_blank"><img src="<s:url value="/images/vendor/displaytag.png"/>" border="0" align="middle"/></a></td>
-	<td align="center"><h4><a href="http://www.jxlib.org/" target="_blank">JxLib</a></h4></td>
+	<td align="center"></td>
 	</tr><tr>
 	<td align="center"><a href="http://commons.apache.org/vfs/" target="_blank"><img src="<s:url value="/images/vendor/vfs-logo-white.png"/>" border="0" align="middle"/></a></td>
 	<td align="center"><a href="http://teethgrinder.co.uk/open-flash-chart/" target="_blank"><img src="<s:url value="/images/vendor/openflashchart.png"/>" border="0" align="middle"/></a></td>
@@ -62,7 +62,7 @@
 <div class="formGroup">
 <div class="formGroupHeader">License</div>
 <pre>
-    Copyright (C) 2009  Daniel Grout (daniel@daniel-grout.co.uk)
+    Copyright (C) 2009-2010  Daniel Grout (daniel@daniel-grout.co.uk)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

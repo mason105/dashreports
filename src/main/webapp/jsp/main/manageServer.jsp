@@ -18,19 +18,23 @@
 		<td class="rowOdd"><a href="listUsers.action">User Management</a></td>
 	</tr>
 	<tr>
-		<td width="24" class="rowEven"><img src="<s:url value='/images/v2/icons/database.png'/>"/></td>	
+	<tr>
+		<td width="24" class="rowEven"><img src="<s:url value='/images/v2/icons/group.png'/>"/></td>
+		<td class="rowOdd"><a href="listGroups.action">Group Management</a></td>
+	</tr>
+		<td width="24" class="rowOdd"><img src="<s:url value='/images/v2/icons/database.png'/>"/></td>	
 		<td class="rowEven"><a href="listDataSources.action">Datasource Management</a></td>
 	</tr>
 	<tr>
-		<td width="24" class="rowOdd"><img src="<s:url value='/images/v2/icons/lightning.png'/>"/></td>
+		<td width="24" class="rowEven"><img src="<s:url value='/images/v2/icons/lightning.png'/>"/></td>
 		<td class="rowOdd"><a href="listCurrentExecutingJobs.action">Current Executing Jobs</a></td>
 	</tr>
 	<tr>
-		<td width="24" class="rowEven"><img src="<s:url value='/images/v2/icons/chart_curve.png'/>"/></td>
+		<td width="24" class="rowOdd"><img src="<s:url value='/images/v2/icons/chart_curve.png'/>"/></td>
 		<td class="rowEven"><a href="jobStatistics.action">Statistics and Warnings</a></td>
 	</tr>	
 	<tr>
-		<td width="24" class="rowOdd"><img src="<s:url value='/images/v2/icons/clock.png'/>"/></td>
+		<td width="24" class="rowEven"><img src="<s:url value='/images/v2/icons/clock.png'/>"/></td>
 		<td class="rowOdd"><a href="schedulerAdmin.action">Manage Scheduler</a></td>
 	</tr>	
 </table>

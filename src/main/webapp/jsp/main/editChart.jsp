@@ -9,7 +9,7 @@
 <sx:head  />
 </head>
 <body>
-<s:form action="saveChart" id="saveChart">
+<s:form action="saveChart"  method="post"  id="saveChart">
 
 <sx:tabbedpanel id="report">
 	
@@ -27,7 +27,7 @@
 				<s:hidden name="item.group.groupName" value="%{groupName}"/>
 				<s:select label="Select Data Source"
 					name="dataSourceName" value="%{item.datasource.dataSourceName}"
-					list="runnerDataSources" cssClass="textbox">
+					list="runnerDataSources" cssClass="textbox" onchange="dojo.event.topic.publish('refresh_fields');">
 				</s:select>
 				
 				<s:textarea label="Query" cols="30" rows="20"
@@ -35,7 +35,7 @@
 				</s:textarea>	
 				
 				<s:url id="validateUrl" action="validateQuery" /> 
-				<sx:div showLoadingText="false" id="refreshFields" href="%{validateUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
+				<sx:div showLoadingText="true" loadingText="Testing query..." id="validateQuery" href="%{validateUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
 				</sx:div>
 			
 				<s:textfield label="Cron String" size="32" value="%{item.cronTab}" name="item.cronTab" cssClass="textbox" required="true">
@@ -386,7 +386,7 @@
 				<s:hidden name="seriesNameColumnValue" value="%{item.seriesNameColumn}"/>
 				
 				<s:url id="fieldsUrl" action="getChartColumns" /> 
-				<sx:div showLoadingText="false" id="refreshFields" href="%{fieldsUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
+				<sx:div  showLoadingText="true" loadingText="Getting fields..." id="refreshFields" href="%{fieldsUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
 				</sx:div>
 			
 			

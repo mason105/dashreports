@@ -33,9 +33,9 @@
 				<s:property value="%{item.itemName}"/>
 				<div class="widgetToolbar">
 	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
-	 					 <s:a href="setupEditChart.action?itemId=%{itemId}&groupName=%{group.groupName}"><img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>
-						 <s:a href="invokeItem.action?itemId=%{itemId}&groupName=%{group.groupName}"><img src="<s:url value='/images/icons/cog.png'/>" alt="Invoke Now" align="absmiddle" /></s:a> 					 
-	 					 <s:a href="deleteItem.action?itemId=%{itemId}&groupName=%{group.groupName}" onClick="return confirm('Really delete this item?');"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete" align="absmiddle" /></s:a>	
+	 					 <s:a href="setupEditChart.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>
+						 <s:a href="invokeItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/icons/cog.png'/>" alt="Invoke Now" align="absmiddle" /></s:a> 					 
+	 					 <s:a href="deleteItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}" onClick="return confirm('Really delete this item?');"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete" align="absmiddle" /></s:a>	
 	 				</s:if>		
 				</div>	
 			</div>
@@ -51,9 +51,9 @@
 				<s:property value="%{item.itemName}"/>
 				<div class="widgetToolbar">
 	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
-	 					 <s:a href="setupEditGrid.action?itemId=%{itemId}&groupName=%{group.groupName}"><img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>
-						 <s:a href="invokeItem.action?itemId=%{itemId}&groupName=%{group.groupName}"><img src="<s:url value='/images/icons/cog.png'/>" alt="Invoke Now" align="absmiddle" /></s:a> 					 
-	 					 <s:a href="deleteItem.action?itemId=%{itemId}&groupName=%{group.groupName}" onClick="return confirm('Really delete this item?');"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete" align="absmiddle" /></s:a>	
+	 					 <s:a href="setupEditGrid.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>
+						 <s:a href="invokeItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/icons/cog.png'/>" alt="Invoke Now" align="absmiddle" /></s:a> 					 
+	 					 <s:a href="deleteItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}" onClick="return confirm('Really delete this item?');"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete" align="absmiddle" /></s:a>	
 	 				</s:if>		
 				</div>	
 			</div>	
@@ -68,9 +68,9 @@
 				<s:property value="%{item.itemName}"/>
 				<div class="widgetToolbar">
 	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
-	 					 <s:a href="setupEditThreshold.action?itemId=%{itemId}&groupName=%{group.groupName}"><img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>
-						 <s:a href="invokeItem.action?itemId=%{itemId}&groupName=%{group.groupName}"><img src="<s:url value='/images/icons/cog.png'/>" alt="Invoke Now" align="absmiddle" /></s:a> 					 
-	 					 <s:a href="deleteItem.action?itemId=%{itemId}&groupName=%{group.groupName}" onClick="return confirm('Really delete this item?');"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete" align="absmiddle" /></s:a>	
+	 					 <s:a href="setupEditThreshold.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>
+						 <s:a href="invokeItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/icons/cog.png'/>" alt="Invoke Now" align="absmiddle" /></s:a> 					 
+	 					 <s:a href="deleteItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}" onClick="return confirm('Really delete this item?');"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete" align="absmiddle" /></s:a>	
 	 				</s:if>		
 				</div>	
 			</div>		

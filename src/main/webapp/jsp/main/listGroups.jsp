@@ -6,7 +6,7 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-<span class="pageTitle"><img src="<s:url value='/images/icons/group.png'/>" align="absmiddle" />Groups</span>
+<span class="pageTitle"><img src="<s:url value='/images/v2/icons/group.png'/>" align="absmiddle" />Groups</span>
 
 <table border="0" width="100%">
 	<s:if test="sessionUser.isAdmin == true">

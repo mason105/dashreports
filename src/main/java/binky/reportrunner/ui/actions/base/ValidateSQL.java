@@ -1,4 +1,4 @@
-package binky.reportrunner.ui.actions;
+package binky.reportrunner.ui.actions.base;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -14,38 +14,37 @@ import binky.reportrunner.service.impl.DatasourceServiceImpl;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 import binky.reportrunner.ui.actions.dashboard.edit.GetColumnNamesForQuery;
 
-public class ValidateSQL extends StandardRunnerAction {
+public abstract class ValidateSQL extends StandardRunnerAction {
 
 	private static final long serialVersionUID = -2392254690021411047L;
 
 	private static final Logger logger = Logger
 			.getLogger(GetColumnNamesForQuery.class);
 
-	private String itemQuery;
-	private String dataSourceName;
 	private DatasourceServiceImpl dataSourceService;
-	private Boolean isValid;
 
-	@Override
-	public String execute() throws Exception {
+	private boolean isValid;
+	
+	public void validateSql(String sql, String dsName) throws Exception {
 		Connection conn = null;
 
 		logger.debug("getting column names for query");
 
-		logger.debug("item query is null = " + (itemQuery == null));
-		if (itemQuery == null) {
+		logger.debug("item query is null = " + (sql == null));
+		if (sql == null) {
 			super.addActionError("Query passed was null");
-			return SUCCESS;
+			this.isValid=false;
+			return;
 		}
 
-		logger
-				.debug("item.dataSourceName is null = " + (dataSourceName) == null);
-		if (dataSourceName == null) {
+		logger.debug("item.dataSourceName is null = " + (dsName) == null);
+		if (sql == null) {
 			super.addActionError("Item's datasource passed was null");
-			return SUCCESS;
+			this.isValid=false;
+			return;
 		}
 
-		RunnerDataSource rds = dataSourceService.getDataSource(dataSourceName);
+		RunnerDataSource rds = dataSourceService.getDataSource(dsName);
 
 		DataSource ds = dataSourceService.getJDBCDataSource(rds);
 
@@ -56,35 +55,34 @@ public class ValidateSQL extends StandardRunnerAction {
 
 			Statement stmt = conn.createStatement();
 
-			logger.debug("running sql: " + itemQuery);
-			ResultSet rs = stmt.executeQuery(itemQuery);
+			logger.debug("running sql: " + sql);
+			ResultSet rs = stmt.executeQuery(sql);
 
 			logger.debug("rs is null = " + (rs == null));
-			logger.debug("rs meta data is null = "	+ (rs.getMetaData() == null));
+			logger
+					.debug("rs meta data is null = "
+							+ (rs.getMetaData() == null));
 
 			if ((rs == null) || (rs.getMetaData().getColumnCount() == 0)) {
 				logger.warn("query failed to return any data");
 				super.addActionError("query failed to return any data");
-				this.isValid = false;
-				return SUCCESS;
+				this.isValid=false;
+				return;
 			} else {
 
 				logger.debug("looks like this sql is valid");
 
 				logger.debug("column count "
 						+ rs.getMetaData().getColumnCount());
-
-				this.isValid = true;
-
-				return SUCCESS;
+				this.isValid=true;
+				return;
 			}
 		} catch (SQLException sqle) {
-
 			logger.warn("query failed with exception", sqle);
 			super.addActionError("query failed with exception - "
 					+ sqle.getMessage());
 			this.isValid=false;
-			return SUCCESS;
+			return;
 
 		} finally {
 			if (conn != null)
@@ -93,21 +91,7 @@ public class ValidateSQL extends StandardRunnerAction {
 
 	}
 
-	public String getItemQuery() {
-		return itemQuery;
-	}
-
-	public void setItemQuery(String itemQuery) {
-		this.itemQuery = itemQuery;
-	}
-
-	public String getDataSourceName() {
-		return dataSourceName;
-	}
-
-	public void setDataSourceName(String dataSourceName) {
-		this.dataSourceName = dataSourceName;
-	}
+	
 
 	public DatasourceServiceImpl getDataSourceService() {
 		return dataSourceService;

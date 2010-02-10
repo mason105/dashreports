@@ -219,15 +219,29 @@
 	</bean>
 	
 	
-	<bean id="validateQueryAction"
-		class="binky.reportrunner.ui.actions.ValidateSQL"
+	<bean id="validateItemQueryAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.ValidateItemSQL"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>		
 	</bean>
 	
+	<bean id="validateJobQueryAction"
+		class="binky.reportrunner.ui.actions.job.ValidateJobSQL"
+		scope="prototype">
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>		
+	</bean>
 	
+	<bean id="validateBurstQueryAction"
+		class="binky.reportrunner.ui.actions.job.ValidateBurstSQL"
+		scope="prototype">
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>		
+	</bean>
 	
 	<bean id="getQueryColumnsAction"
 		class="binky.reportrunner.ui.actions.dashboard.edit.GetColumnNamesForQuery"

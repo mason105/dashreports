@@ -28,8 +28,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Vector;
-
 import net.sf.jasperreports.engine.JRException;
 
 import org.apache.log4j.Logger;
@@ -39,7 +37,6 @@ import binky.reportrunner.dao.RunnerJobParameterDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
-import binky.reportrunner.data.RunnerJobParameter_pk;
 import binky.reportrunner.data.RunnerJobParameter.DataType;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.scheduler.SchedulerException;
@@ -66,22 +63,20 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 	private String activeTab;
 
-	private List<RunnerJobParameter> parameters;
-
 	private RunnerDataSourceDao dataSourceDao;
 
 	private List<RunnerDataSource> dataSources;
 
-	private String dispatchSaveButton;
-
 	private String groupName;
 
-	private String itemQuery;
+	private String query;
+	private String burstQuery;
 	
 	private String dataSourceName;
 	
 	//private QuartzCronSchedule simpleCron;
-	
+
+	private List<RunnerJobParameter> parameters;
 	private static Logger logger = Logger.getLogger(SaveJob.class);
 
 	public void prepare() throws Exception {
@@ -96,7 +91,9 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 
 		
 		//stuff to allow the sql validation
-		this.job.setQuery(itemQuery);
+		this.job.setQuery(query);
+		this.job.setBurstQuery(burstQuery);
+		
 		RunnerDataSource ds = dataSourceDao.getDataSource(dataSourceName);
 		job.setDatasource(ds);
 		
@@ -104,19 +101,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
 			if (doesUserHaveGroup(groupName) && !isUserReadOnly()) {
-				if (dispatchSaveButton.equals("Add Parameter")) {
-					logger.debug("dispatching to add parameter");
-					this.doAddParameter();
-					return INPUT;	
-				//OMFG I must have been drunk when I wrote this shit!
-				} else if (dispatchSaveButton.startsWith("Delete Parameter")) {
-					logger.debug("dispatching to delete parameter "
-							+ dispatchSaveButton.substring(18));
-					int paramIdx = Integer.parseInt(dispatchSaveButton
-							.substring(17));
-					this.deleteParameter(paramIdx);
-					return INPUT;
-				} else {
+				
 					logger.debug("dispatching to save job");
 					
 					boolean ok = validateJob(job);
@@ -127,7 +112,7 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 						doSaveJob(jobName, groupName);
 						return SUCCESS;
 					}
-				}
+				
 
 			} else {
 				SecurityException se = new SecurityException("Group "
@@ -145,41 +130,6 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		
 	}
 
-	private void deleteParameter(int paramIdx) {
-		/*
-		 * for (RunnerJobParameter p : parameters) { if
-		 * (p.getPk().getParameterIdx().equals(paramIdx)) {
-		 * parameters.remove(p); }
-		 *  }
-		 */
-		parameters.remove(paramIdx - 1);
-		job.setParameters(parameters);
-		this.activeTab = "params";
-	}
-
-	private void doAddParameter() {
-		this.activeTab = "params";
-		if (parameters == null) {
-			logger.debug("parameters are null so creating new list");
-			parameters = new Vector<RunnerJobParameter>();
-		}
-		/*
-		 * int maxIdx = 0; for (RunnerJobParameter p : parameters) { if
-		 * (p.getPk().getParameterIdx() > maxIdx) { maxIdx =
-		 * p.getPk().getParameterIdx(); } } maxIdx++;
-		 */
-
-		RunnerJobParameter parameter = new RunnerJobParameter();
-		RunnerJobParameter_pk pk = new RunnerJobParameter_pk();
-
-		// pk.setParameterIdx(maxIdx);
-		pk.setParameterIdx(parameters.size() + 1);
-		parameter.setPk(pk);
-		logger.debug("created new parameter with index of: "
-				+ parameters.size() + 1);
-		parameters.add(parameter);
-		job.setParameters(parameters);
-	}
 
 	private boolean validateJob(RunnerJob job) {
 		boolean valid=true;
@@ -331,13 +281,6 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		return Arrays.asList(RunnerJobParameter.DataType.values());
 	}
 
-	public String getDispatchSaveButton() {
-		return dispatchSaveButton;
-	}
-
-	public void setDispatchSaveButton(String dispatchSaveButton) {
-		this.dispatchSaveButton = dispatchSaveButton;
-	}
 
 	public String getGroupName() {
 		return groupName;
@@ -438,16 +381,25 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 	}
 	*/
 
-	public String getItemQuery() {
-		return itemQuery;
-	}
-
-	public void setItemQuery(String itemQuery) {
-		this.itemQuery = itemQuery;
-	}
 
 	public String getDataSourceName() {
 		return dataSourceName;
+	}
+
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
+	}
+
+	public String getBurstQuery() {
+		return burstQuery;
+	}
+
+	public void setBurstQuery(String burstQuery) {
+		this.burstQuery = burstQuery;
 	}
 
 	public void setDataSourceName(String dataSourceName) {

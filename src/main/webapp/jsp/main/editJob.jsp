@@ -9,25 +9,49 @@
 <script language="JavaScript">
 
 
-window.onload= validateQuery;
+window.onload= validateQueries;
 
-function validateQuery(){
+function validateQueries() {
+	validateJobQuery();
+	validateBurstQuery();
+}
+
+function validateJobQuery(){
 
 
    dojo.require("dojo.io.IframeIO");
 
    var bindArgs = {
         transport: "IframeTransport",
-	url: "<s:url value="/validateQuery.action" />",
+	url: "<s:url value="/validateJobQuery.action" />",
         mimetype: "text/html",
 	formNode: dojo.byId("saveJob"),
         load: function(type, data, evt){
-            document.getElementById("queryValidation").innerHTML=data.firstChild.innerHTML;
+            document.getElementById("jobQueryValidation").innerHTML=data.firstChild.innerHTML;
         }
     };
     var request = dojo.io.bind(bindArgs);
 }
+function validateBurstQuery(){
 
+   var isBurst= document.getElementById("saveJob_job_isBurst").checked;
+
+
+   if (isBurst!=false) {
+	   dojo.require("dojo.io.IframeIO");
+	
+	   var bindArgs = {
+	        transport: "IframeTransport",
+		url: "<s:url value="/validateBurstQuery.action" />",
+	        mimetype: "text/html",
+		formNode: dojo.byId("saveJob"),
+	        load: function(type, data, evt){
+	            document.getElementById("burstQueryValidation").innerHTML=data.firstChild.innerHTML;
+	        }
+	    };
+    	var request = dojo.io.bind(bindArgs);
+    }
+}
 
 </script>
 
@@ -72,7 +96,7 @@ function validateQuery(){
 
 				<s:select label="Select Data Source"
 					name="dataSourceName" value="%{job.datasource.dataSourceName}"
-					list="dataSources" cssClass="textbox" onchange="validateQuery();">
+					list="dataSources" cssClass="textbox" onchange="validateQueries();">
 				</s:select>
 		</div>
 
@@ -80,26 +104,29 @@ function validateQuery(){
 			<div class="formGroupHeader">Definition</div>
 			<div id="jobQueryTip" class="tipText">Please input the query to be used for this job.  This should be valid SQL to be used against the datasource selected above.</div>
 			<s:textarea label="Report Query" cols="80" rows="20"
-				value="%{job.query}" name="itemQuery" 
+				value="%{job.query}" name="query" 
 				onfocus="document.getElementById('jobQueryTip').style.visibility='visible';" 
 				onblur="document.getElementById('jobQueryTip').style.visibility='hidden';"
-				 required="true" cssClass="textbox" onchange="validateQuery()">
+				 required="true" cssClass="textbox" onchange="validateJobQuery()">
 				</s:textarea>
-
-				
-				<div id="queryValidation">
-				</div>
+			
+			<div id="jobQueryValidation">
+			</div>
 
 			<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
-				name="job.isBurst" cssClass="checkbox">
+				name="job.isBurst" cssClass="checkbox"   onchange="validateBurstQuery()">
 			</s:checkbox>
 			<div id="jobBurstQueryTip" class="tipText">Please enter an SQL query to be used to populate parameters to burst the report.  The above check box must be enabled for this query to be used.</div>
 			<s:textarea label="Burst Query" cols="80" rows="5"
-				value="%{job.burstQuery}" name="job.burstQuery"
+				value="%{job.burstQuery}" name="burstQuery"
 				onfocus="document.getElementById('jobBurstQueryTip').style.visibility='visible';" 
-				onblur="document.getElementById('jobBurstQueryTip').style.visibility='hidden';" cssClass="textbox">
+				onblur="document.getElementById('jobBurstQueryTip').style.visibility='hidden';" cssClass="textbox"  onchange="validateBurstQuery()">
 
-			</s:textarea>		
+			</s:textarea>
+
+			<div id="burstQueryValidation">
+			</div>
+	
 		</div>
 		<div class="formFooterText">* required field</div>
 
@@ -108,47 +135,12 @@ function validateQuery(){
 	
 	<sx:div id="parameters" label="Parameters">	
 		
-		<div style="margin: 0 auto;"><div id="param_button_add" style="margin:0 auto;"></div></div>
-		
-				
-		<s:iterator value="job.parameters" status="rowstatus">
-
-			<div class="formGroup">
- 				<div class="formGroupHeader">Parameter Index <s:property value="%{pk.parameterIdx}" /></div>
-				
-				<s:hidden value="%{pk.parameterIdx}"
-					name="parameters[%{#rowstatus.index}].pk.parameterIdx" />
-
-				<s:textfield
-					label="Description" name="parameters[%{#rowstatus.index}].description"
-					value="%{description}" cssClass="textbox">
-				</s:textfield> 
-
-				<div id="jobValueTip<s:property value="%{#rowstatus.index}"/>" class="tipText">Use this field to hard code the value. </div>
-				<s:textfield
-					label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
-					value="%{parameterValue}"
-					onfocus="document.getElementById('jobValueTip%{#rowstatus.index}').style.visibility='visible';" 
-					onblur="document.getElementById('jobValueTip%{#rowstatus.index}').style.visibility='hidden';" cssClass="textbox">
-
-				</s:textfield> 
-				<div id="jobBurstColTip<s:property value="%{#rowstatus.index}"/>" class="tipText">Entry should match a column in the burst query.</div>
-				<s:textfield label="Burst Column"
-					name="parameters[%{#rowstatus.index}].parameterBurstColumn"
-					value="%{parameterBurstColumn}"	
-					onfocus="document.getElementById('jobBurstColTip%{#rowstatus.index}').style.visibility='visible';" 
-					onblur="document.getElementById('jobBurstColTip%{#rowstatus.index}').style.visibility='hidden';" cssClass="textbox">
-
-				</s:textfield>
-
-				 <s:select label="Data Type"
-					name="parameters[%{#rowstatus.index}].parameterType" list="dataTypes"
-					listKey="name" listValue="displayName">
-
-				</s:select> 
-				<s:submit name="dispatchSaveButtom" value="Delete Parameter %{pk.parameterIdx}"/>			
-			</div>
-		</s:iterator>
+		<div class="formGroup">
+			<div class="formGroupHeader">Parameters</div>
+			<s:url id="paramUrl" action="jobParameters?jobName=%{job.pk.jobName}&groupName=%{job.pk.group.groupName}" /> 
+			<sx:div showLoadingText="true" loadingText="Populating parameters..." id="parameters" href="%{paramUrl}" theme="ajax"  listenTopics="updateParameters" formId="saveJob">
+			</sx:div>
+	    </div>
 	</sx:div>
 
 	<sx:div id="schedule" label="Schedule">	
@@ -267,7 +259,7 @@ function validateQuery(){
 		</div>
 	</sx:div>
 
-	<s:submit name="dispatchSaveButton" value="Save"/>
+	<input type="submit" name="dispatchSaveButton" value="Save"/>
 	
 </sx:tabbedpanel>
 

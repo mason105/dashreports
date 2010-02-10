@@ -34,6 +34,10 @@
 					value="%{item.alertQuery}" name="itemQuery" cssClass="textbox" required="true" onchange="dojo.event.topic.publish('refresh_fields');">
 				</s:textarea>	
 			
+				<s:url id="validateUrl" action="validateItemQuery" /> 
+				<sx:div showLoadingText="true" loadingText="Testing query..." id="validateQuery" href="%{validateUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
+				</sx:div>
+			
 				<s:textfield label="Cron String" size="32" value="%{item.cronTab}" name="item.cronTab" cssClass="textbox" required="true">
 				</s:textfield>
 				

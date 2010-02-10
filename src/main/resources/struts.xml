@@ -355,10 +355,19 @@
 			</result>
 		</action>
 		
-		<action name="validateQuery" class="validateQueryAction">
+		<!--  SQL Validation Stuff -->
+		<action name="validateItemQuery" class="validateItemQueryAction">
 			<result>/jsp/nostyle/validateQuery.jsp</result>
 		</action>
-			
+
+		<action name="validateBurstQuery" class="validateBurstQueryAction">
+			<result>/jsp/nostyle/validateQuery.jsp</result>
+		</action>
+		
+		<action name="validateJobQuery" class="validateJobQueryAction">
+			<result>/jsp/nostyle/validateQuery.jsp</result>
+		</action>
+					
 		<action name="getChartColumns" class="getQueryColumnsAction">
 			<result>/jsp/nostyle/chartFieldDropdowns.jsp</result>
 		</action>

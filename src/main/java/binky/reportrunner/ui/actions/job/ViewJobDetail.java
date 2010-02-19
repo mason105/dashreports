@@ -47,7 +47,7 @@ public class ViewJobDetail extends StandardRunnerAction {
 	private String groupName;
 	private DisplayJob job;
 	private List<RunnerHistoryEvent> events;
-	private static final Logger logger = Logger.getLogger(SetupEditJob.class);
+	private static final Logger logger = Logger.getLogger(ViewJobDetail.class);
 	private RunnerJobService jobService;
 
 	@Override

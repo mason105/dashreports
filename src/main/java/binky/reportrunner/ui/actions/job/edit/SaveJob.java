@@ -20,69 +20,30 @@
  * 
  * Module: SaveJob.java
  ******************************************************************************/
-package binky.reportrunner.ui.actions.job;
+package binky.reportrunner.ui.actions.job.edit;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
+
 import net.sf.jasperreports.engine.JRException;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerDataSourceDao;
 import binky.reportrunner.dao.RunnerJobParameterDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
-import binky.reportrunner.data.RunnerJobParameter.DataType;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.scheduler.SchedulerException;
-import binky.reportrunner.service.RunnerJobService;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-import com.opensymphony.xwork2.Preparable;
-
-public class SaveJob extends StandardRunnerAction implements Preparable {
+public class SaveJob  extends BaseEditJob  {
 
 	private static final long serialVersionUID = 1L;
-
-	private RunnerJobService jobService;
-
-	private RunnerJob job;
-
-	private File template;// The actual file
-
-	private String templateContentType; // The content type of the file
-
-	private String templateFileName; // The uploaded file name
-
-	private RunnerJobParameterDao parameterDao;
-
-	private String activeTab;
-
-	private RunnerDataSourceDao dataSourceDao;
-
-	private List<RunnerDataSource> dataSources;
-
-	private String groupName;
-
-	private String query;
-	private String burstQuery;
 	
-	private String dataSourceName;
-	
-	//private QuartzCronSchedule simpleCron;
-
-	private List<RunnerJobParameter> parameters;
 	private static Logger logger = Logger.getLogger(SaveJob.class);
-
-	public void prepare() throws Exception {
-		this.dataSources = dataSourceDao.listDataSources();
-	}
-
+	private RunnerJobParameterDao parameterDao;
 	@Override
 	public String execute() throws Exception {
 
@@ -216,114 +177,6 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		return true;
 	}
 
-	public RunnerJobService getJobService() {
-		return jobService;
-	}
-
-	public void setJobService(RunnerJobService jobService) {
-		this.jobService = jobService;
-	}
-
-	public RunnerJob getJob() {
-		return job;
-	}
-
-	public void setJob(RunnerJob job) {
-		this.job = job;
-	}
-
-	public List<RunnerJobParameter> getParameters() {
-		return parameters;
-	}
-
-	public void setParameters(List<RunnerJobParameter> parameters) {
-		this.parameters = parameters;
-	}
-
-	public static long getSerialVersionUID() {
-		return serialVersionUID;
-	}
-
-	public RunnerDataSourceDao getDataSourceDao() {
-		return dataSourceDao;
-	}
-
-	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
-		this.dataSourceDao = dataSourceDao;
-	}
-
-	public List<RunnerDataSource> getDataSources() {
-		return dataSources;
-	}
-
-	public RunnerJobParameterDao getParameterDao() {
-		return parameterDao;
-	}
-
-	public void setParameterDao(RunnerJobParameterDao parameterDao) {
-		this.parameterDao = parameterDao;
-	}
-
-	public void setDataSources(List<RunnerDataSource> dataSources) {
-		this.dataSources = dataSources;
-	}
-
-	public List<RunnerJob.FileFormat> getFileFormats() {
-		return Arrays.asList(RunnerJob.FileFormat.values());
-	}
-	
-
-	public List<RunnerJob.Template> getTemplateTypes() {
-		return Arrays.asList(RunnerJob.Template.values());
-	}
-	
-	public List<DataType> getDataTypes() {
-		return Arrays.asList(RunnerJobParameter.DataType.values());
-	}
-
-
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-
-	public String getActiveTab() {
-		return activeTab;
-	}
-
-	public void setActiveTab(String activeTab) {
-		this.activeTab = activeTab;
-	}
-
-	
-	
-
-	public File getTemplate() {
-		return template;
-	}
-
-	public void setTemplate(File template) {
-		this.template = template;
-	}
-
-	public String getTemplateContentType() {
-		return templateContentType;
-	}
-
-	public void setTemplateContentType(String templateContentType) {
-		this.templateContentType = templateContentType;
-	}
-
-	public String getTemplateFileName() {
-		return templateFileName;
-	}
-
-	public void setTemplateFileName(String templateFileName) {
-		this.templateFileName = templateFileName;
-	}
 
 	// Returns the contents of the file in a byte array.
 	private byte[] getBytesFromFile(File file) throws IOException {
@@ -380,31 +233,13 @@ public class SaveJob extends StandardRunnerAction implements Preparable {
 		this.simpleCron = simpleCron;
 	}
 	*/
-
-
-	public String getDataSourceName() {
-		return dataSourceName;
-	}
-
-	public String getQuery() {
-		return query;
-	}
-
-	public void setQuery(String query) {
-		this.query = query;
-	}
-
-	public String getBurstQuery() {
-		return burstQuery;
-	}
-
-	public void setBurstQuery(String burstQuery) {
-		this.burstQuery = burstQuery;
-	}
-
-	public void setDataSourceName(String dataSourceName) {
-		this.dataSourceName = dataSourceName;
-	}
 	
+	public RunnerJobParameterDao getParameterDao() {
+		return parameterDao;
+	}
+
+	public void setParameterDao(RunnerJobParameterDao parameterDao) {
+		this.parameterDao = parameterDao;
+	}
 	
 }

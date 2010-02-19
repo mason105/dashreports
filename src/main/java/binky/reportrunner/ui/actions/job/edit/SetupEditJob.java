@@ -20,42 +20,29 @@
  * 
  * Module: SetupEditJob.java
  ******************************************************************************/
-package binky.reportrunner.ui.actions.job;
+package binky.reportrunner.ui.actions.job.edit;
 
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.opensymphony.xwork2.Preparable;
-
-import binky.reportrunner.dao.RunnerDataSourceDao;
-import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJobParameter.DataType;
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.service.RunnerJobService;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SetupEditJob extends StandardRunnerAction implements Preparable {
+public class SetupEditJob extends BaseEditJob {
 
 	private static final long serialVersionUID = 1L;
-	private String jobName;
-	private String groupName;
-	private RunnerJob job;
-	private static final Logger logger = Logger.getLogger(SetupEditJob.class);
-	private RunnerJobService jobService;
-	private String activeTab="report";
-	private RunnerDataSourceDao dataSourceDao;
+	
+	
 	private Integer paramCount;
 
-	private List<RunnerDataSource> dataSources;
+	private String activeTab="report";
+	private static final Logger logger = Logger.getLogger(SetupEditJob.class);
 	
-	public void prepare() throws Exception {
-		dataSources = dataSourceDao.listDataSources();
-
-	}
+	
 
 	// TODO:clean up this mess
 	@Override
@@ -89,41 +76,8 @@ public class SetupEditJob extends StandardRunnerAction implements Preparable {
 		return SUCCESS;
 	}
 
-	public final RunnerJobService getJobService() {
-		return jobService;
-	}
 
-	public final void setJobService(RunnerJobService jobService) {
-		this.jobService = jobService;
-	}
 
-	public final void setJobName(String jobName) {
-		this.jobName = jobName;
-	}
-
-	public final String getGroupName() {
-		return groupName;
-	}
-
-	public final void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-
-	public final RunnerJob getJob() {
-		return job;
-	}
-
-	public RunnerDataSourceDao getDataSourceDao() {
-		return dataSourceDao;
-	}
-
-	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
-		this.dataSourceDao = dataSourceDao;
-	}
-
-	public List<RunnerDataSource> getDataSources() {
-		return dataSources;
-	}
 
 	public Integer getParamCount() {
 		return paramCount;

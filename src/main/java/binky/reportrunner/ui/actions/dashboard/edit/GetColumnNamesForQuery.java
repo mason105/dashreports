@@ -46,8 +46,7 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 			return SUCCESS;
 		}
 
-		logger
-				.debug("item.dataSourceName is null = " + (dataSourceName) == null);
+		logger.debug("item.dataSourceName is null = " + (dataSourceName) == null);
 		if (dataSourceName == null) {
 			super.addActionError("Item's datasource passed was null");
 			return SUCCESS;

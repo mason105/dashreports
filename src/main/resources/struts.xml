@@ -99,6 +99,15 @@
 			<result name="input">/jsp/main/editJob.jsp</result>			
 		</action>
 
+		
+		<action name="addParameter" class="addParameterAction">
+			<result>/jsp/main/editJob.jsp</result>			
+		</action>
+
+		<action name="deleteParameter" class="deleteParameterAction">
+			<result>/jsp/main/editJob.jsp</result>			
+		</action>
+
 		<action name="setJobStatus" class="setJobStatusAction">
 			<result type="redirectAction">
 				<param name="actionName">listJobs</param>

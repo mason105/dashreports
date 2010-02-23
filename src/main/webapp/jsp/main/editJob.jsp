@@ -60,7 +60,7 @@ function validateBurstQuery(){
 </head>
 <body>
 
-<s:form method="post" enctype="multipart/form-data" validate="true" id="saveJob">	
+<s:form  action="editJob" method="post" enctype="multipart/form-data" validate="true" id="editJob">	
 
 <sx:tabbedpanel id="job">		
 
@@ -137,13 +137,12 @@ function validateBurstQuery(){
 	
 	<sx:div id="parameters" label="Parameters">	
 		
-			<div class="formGroupHeader">Parameters</div>
 			<s:iterator value="job.parameters" status="rowstatus">
 
 			<div class="formGroup">
- 				<div class="formGroupHeader">Parameter Index <s:property value="%{pk.parameterIdx}" /></div>
+ 				<div class="formGroupHeader">Parameter Index <s:property value="%{#rowstatus.index}" /></div>
 				
-				<s:hidden value="%{pk.parameterIdx}"
+				<s:hidden value="%{#rowstatus.index}"
 					name="parameters[%{#rowstatus.index}].pk.parameterIdx" />
 				
 				<s:textfield
@@ -174,12 +173,11 @@ function validateBurstQuery(){
 
 				</s:select> 
 				
-				<s:checkbox name="parameterId"/>				
+				<s:checkbox name="parameterId" fieldValue="%{#rowstatus.index}" label="Delete"/>				
 			</div>
 		</s:iterator>
-		<s:submit name="deleteParameter" value="Delete Parameter(s)" action="deleteParameter"/>
-		<s:submit name="addParameter" value="Add Parameter" action="addParameter"/>			
-	    </div>
+		<s:submit name="deleteParameters" value="Delete Parameter(s)"/>
+		<s:submit name="addParameter" value="Add Parameter"/>			
 	</sx:div>
 
 	<sx:div id="schedule" label="Schedule">	
@@ -297,10 +295,10 @@ function validateBurstQuery(){
 			</s:textarea>
 		</div>
 	</sx:div>
-
-	<s:submit name="dispatchSaveButton" value="Save" action="saveJob"/>
 	
 </sx:tabbedpanel>
+
+<s:submit name="saveJob" value="Save"/>
 
 </s:form>
 		

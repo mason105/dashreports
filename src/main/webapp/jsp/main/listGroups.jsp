@@ -34,7 +34,7 @@
 			<%
 				}
 			%>
-				<td><s:a href="listJobs.action?groupName=%{groupName}">
+				<td><s:a href="group.action?groupName=%{groupName}">
 					<s:property value="groupName" />
 				</s:a></td>
 				<td><s:property value="groupDescription" /></td>				

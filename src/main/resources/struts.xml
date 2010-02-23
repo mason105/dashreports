@@ -90,24 +90,15 @@
 			</result>
 		</action>
 
-		<action name="saveJob" class="saveJobAction">
+		<action name="editJob" class="editJobAction">
 			<result type="redirectAction">
-				<param name="actionName">listJobs</param>
+				<param name="actionName">group</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>				
 			</result>
 			<result name="input">/jsp/main/editJob.jsp</result>			
-		</action>
-
+		</action>		
 		
-		<action name="addParameter" class="addParameterAction">
-			<result>/jsp/main/editJob.jsp</result>			
-		</action>
-
-		<action name="deleteParameter" class="deleteParameterAction">
-			<result>/jsp/main/editJob.jsp</result>			
-		</action>
-
 		<action name="setJobStatus" class="setJobStatusAction">
 			<result type="redirectAction">
 				<param name="actionName">listJobs</param>

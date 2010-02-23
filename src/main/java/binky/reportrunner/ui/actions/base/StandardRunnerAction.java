@@ -110,4 +110,16 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 	}
 
 
+	protected boolean isStringPopulated(String value) {
+		if (value!=null) {
+			if (value.trim().isEmpty()) {
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
+	
 }

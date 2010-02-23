@@ -1,31 +1,10 @@
-/*******************************************************************************
- * Copyright (c) 2009 Daniel Grout.
- * 
- * GNU GENERAL PUBLIC LICENSE - Version 3
- * 
- * This file is part of Report Runner (http://code.google.com/p/reportrunner).
- * 
- * Report Runner is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * Report Runner is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
- * 
- * Module: SaveJob.java
- ******************************************************************************/
 package binky.reportrunner.ui.actions.job.edit;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
 
 import net.sf.jasperreports.engine.JRException;
 
@@ -35,45 +14,93 @@ import binky.reportrunner.dao.RunnerJobParameterDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
+import binky.reportrunner.data.RunnerJobParameter_pk;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.scheduler.SchedulerException;
 
-public class SaveJob  extends BaseEditJob  {
+public class EditJob extends BaseEditJob {
 
 	private static final long serialVersionUID = 1L;
-	
-	private static Logger logger = Logger.getLogger(SaveJob.class);
+	private static final Logger logger = Logger.getLogger(EditJob.class);
+
 	private RunnerJobParameterDao parameterDao;
+
+	private int[] parameterId;
+	private String deleteParameters;
+	private String addParameter;
+	private String saveJob;
+
 	@Override
 	public String execute() throws Exception {
+		if (isStringPopulated(deleteParameters)) {
+			logger.debug("delete parameters");
+			return deleteParameters();
+		} else if (isStringPopulated(addParameter)) {
+			logger.debug("add parameter");
+			return addParameter();
+		} else {
+			logger.debug("save job");
+			return saveJob();
+		}
+	}
 
+	private String addParameter() {
+		logger.debug("adding parameter to job " + jobName + " of group " + groupName);
+		if (parameters == null) {
+			logger.debug("parameters are null so creating new list");
+			parameters = new LinkedList<RunnerJobParameter>();
+		}
+
+		RunnerJobParameter parameter = new RunnerJobParameter();
+		RunnerJobParameter_pk pk = new RunnerJobParameter_pk();
+
+		// pk.setParameterIdx(maxIdx);
+		pk.setParameterIdx(parameters.size() + 1);
+		parameter.setPk(pk);
+		logger.debug("created new parameter with index of: "
+				+ (parameters.size() + 1));
+		parameters.add(parameter);
+		job.setParameters(parameters);
+		return INPUT;
+	}
+
+	private String deleteParameters() {
+		for (int paramIdx : parameterId) {
+			logger.debug("removing parameter:" + paramIdx + " for job "
+					+ jobName + " of group " + groupName);
+			parameters.remove(paramIdx);
+		}
+		job.setParameters(parameters);
+		return INPUT;
+	}
+	
+	private String saveJob() throws JRException, SchedulerException,
+			SecurityException {
 		this.groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
 
-		
-		//stuff to allow the sql validation
+		// stuff to allow the sql validation
 		this.job.setQuery(query);
 		this.job.setBurstQuery(burstQuery);
-		
+
 		RunnerDataSource ds = dataSourceDao.getDataSource(dataSourceName);
 		job.setDatasource(ds);
-		
+
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check
 			if (doesUserHaveGroup(groupName) && !isUserReadOnly()) {
-				
-					logger.debug("dispatching to save job");
-					
-					boolean ok = validateJob(job);
-											
-					if (!ok) {
-						return INPUT; 
-					} else {
-						doSaveJob(jobName, groupName);
-						return SUCCESS;
-					}
-				
+
+				logger.debug("dispatching to save job");
+
+				boolean ok = validateJob(job);
+
+				if (!ok) {
+					return INPUT;
+				} else {
+					doSaveJob(jobName, groupName);
+					return SUCCESS;
+				}
 
 			} else {
 				SecurityException se = new SecurityException("Group "
@@ -88,72 +115,68 @@ public class SaveJob  extends BaseEditJob  {
 			super.addActionError("Job Name missing");
 			return INPUT;
 		}
-		
+
 	}
+
 
 
 	private boolean validateJob(RunnerJob job) {
-		boolean valid=true;
-		
-		if (job.getPk()==null)  {
+		boolean valid = true;
+
+		if (job.getPk() == null) {
 			super.addActionError("Error with job definition - name and group were not set!");
-			valid=false;
-		};
-		if ((job.getPk().getJobName()==null)||(job.getPk().getJobName().trim().isEmpty()))  {
+			valid = false;
+		}
+		;
+		if ((job.getPk().getJobName() == null)
+				|| (job.getPk().getJobName().trim().isEmpty())) {
 			super.addActionError("Job name not set");
-			valid=false;
-		}		
-		if ((job.getPk().getGroup()==null)||(job.getPk().getGroup().getGroupName()==null)||(job.getPk().getGroup().getGroupName().trim().isEmpty()))  {
+			valid = false;
+		}
+		if ((job.getPk().getGroup() == null)
+				|| (job.getPk().getGroup().getGroupName() == null)
+				|| (job.getPk().getGroup().getGroupName().trim().isEmpty())) {
 			super.addActionError("Group name not set");
-			valid=false;
+			valid = false;
 		}
-		if ((job.getQuery()==null)||(job.getQuery().trim().isEmpty())) {
+		if ((job.getQuery() == null) || (job.getQuery().trim().isEmpty())) {
 			super.addActionError("Query not set");
-			valid=false;
+			valid = false;
 		}
-		
+
 		return valid;
 	}
-	
+
 	private boolean doSaveJob(String jobName, String groupName)
 			throws JRException, SchedulerException {
 		this.activeTab = "report";
-		/*
-		//make the cron string
-		if ((job.getCronString()==null)||(job.getCronString().trim().length()==0)) {
-			//use the simple cron stuff
-			if (simpleCron==null) {
-				simpleCron = new QuartzCronSchedule();
-			}
-			job.setCronString(simpleCron.toString());
-		}
-		*/
-		// Get the uploaded File 
+	
+		// Get the uploaded File
 		if (logger.isDebugEnabled()) {
 			logger.debug("file uploaded is: " + templateFileName);
-			logger.debug("upload object is null: "+ (template==null));
-			if (template !=null){
+			logger.debug("upload object is null: " + (template == null));
+			if (template != null) {
 				logger.debug("upload object is file: " + template.isFile());
 				logger.debug("upload object exists: " + template.exists());
 			}
 		}
 		if ((template != null) && template.isFile() && template.exists()) {
-			
+
 			try {
 				byte[] file = getBytesFromFile(template);
 				job.setTemplateFile(file);
 				job.setTemplateFileName(templateFileName);
 			} catch (IOException e) {
-				logger.warn(e.getMessage(),e);
+				logger.warn(e.getMessage(), e);
 				super.addActionError(e.getMessage());
 				return false;
 			}
-			
+
 		} else {
-			//hack to preserve template file
-			RunnerJob job2=jobService.getJob(jobName, groupName);
-			if ((job2!=null) && (job2.getTemplateFile()!=null)) {
-					job.setTemplateFile(job2.getTemplateFile().clone());				
+			// hack to preserve template file
+			RunnerJob job2 = jobService.getJob(jobName, groupName);
+			if ((job2 != null) && (job2.getTemplateFile() != null)) {
+				job.setTemplateFile(job2.getTemplateFile().clone());
 			}
 		}
 		// part of my hack work :(
@@ -177,28 +200,24 @@ public class SaveJob  extends BaseEditJob  {
 		return true;
 	}
 
-
 	// Returns the contents of the file in a byte array.
 	private byte[] getBytesFromFile(File file) throws IOException {
-		
-		//if the file is null then return a null byte array to show this
-		if (file==null) {
+
+		// if the file is null then return a null byte array to show this
+		if (file == null) {
 			logger.warn("getBytesFromFile called with null file object");
 			return null;
 		}
-		
+
 		logger.debug("getBytesFromFile called for: " + file.getName());
 		InputStream is = new FileInputStream(file);
 
 		// Get the size of the file
 		long length = file.length();
 		logger.debug("file len: " + length);
-		// You cannot create an array using a long type.
-		// It needs to be an int type.
-		// Before converting to an int type, check
-		// to ensure that file is not larger than Integer.MAX_VALUE.
+
 		if (length > Integer.MAX_VALUE) {
-			// File is too large
+			throw new IOException("file too large");
 		}
 
 		// Create the byte array to hold the data
@@ -224,16 +243,14 @@ public class SaveJob  extends BaseEditJob  {
 		is.close();
 		return bytes;
 	}
-/*
-	public QuartzCronSchedule getSimpleCron() {
-		return simpleCron;
-	}
 
-	public void setSimpleCron(QuartzCronSchedule simpleCron) {
-		this.simpleCron = simpleCron;
-	}
-	*/
-	
+	/*
+	 * public QuartzCronSchedule getSimpleCron() { return simpleCron; }
+	 * 
+	 * public void setSimpleCron(QuartzCronSchedule simpleCron) {
+	 * this.simpleCron = simpleCron; }
+	 */
+
 	public RunnerJobParameterDao getParameterDao() {
 		return parameterDao;
 	}
@@ -241,5 +258,41 @@ public class SaveJob  extends BaseEditJob  {
 	public void setParameterDao(RunnerJobParameterDao parameterDao) {
 		this.parameterDao = parameterDao;
 	}
+
+
+
+	public int[] getParameterId() {
+		return parameterId;
+	}
+
+	public void setParameterId(int[] parameterId) {
+		this.parameterId = parameterId;
+	}
+
+	public String getDeleteParameters() {
+		return deleteParameters;
+	}
+
+	public void setDeleteParameters(String deleteParameters) {
+		this.deleteParameters = deleteParameters;
+	}
+
+	public String getAddParameter() {
+		return addParameter;
+	}
+
+	public void setAddParameter(String addParameter) {
+		this.addParameter = addParameter;
+	}
+
+	public String getSaveJob() {
+		return saveJob;
+	}
+
+	public void setSaveJob(String saveJob) {
+		this.saveJob = saveJob;
+	}
+
 	
+
 }

@@ -173,7 +173,7 @@
 		</property>
 	</bean>
 
-	<bean id="saveJobAction" class="binky.reportrunner.ui.actions.job.edit.SaveJob"
+	<bean id="editJobAction" class="binky.reportrunner.ui.actions.job.edit.EditJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
@@ -195,25 +195,6 @@
 		</property>				
 	</bean>
 	
-	<bean id="addParameterAction" class="binky.reportrunner.ui.actions.job.edit.AddParameter"
-		scope="prototype">
-		<property name="jobService">
-			<ref bean="runnerJobService" />
-		</property>
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
-		</property>		
-	</bean>
-	
-	<bean id="deleteParameterAction" class="binky.reportrunner.ui.actions.job.edit.DeleteParameter"
-		scope="prototype">
-		<property name="jobService">
-			<ref bean="runnerJobService" />
-		</property>
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
-		</property>		
-	</bean>	
 	
 	<bean id="setJobStatusAction" class="binky.reportrunner.ui.actions.job.SetJobStatus"
 		scope="prototype">

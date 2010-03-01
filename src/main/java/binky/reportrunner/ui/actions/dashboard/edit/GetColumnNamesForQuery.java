@@ -26,7 +26,6 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 	private String dataSourceName;
 	private DatasourceServiceImpl dataSourceService;
 	private List<String> columnNames;
-
 	private String valueColumnValue;
 	private String xAxisColumnValue;
 	private String seriesNameColumnValue;

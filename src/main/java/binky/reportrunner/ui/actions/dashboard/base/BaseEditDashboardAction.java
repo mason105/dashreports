@@ -22,14 +22,13 @@ import com.opensymphony.xwork2.Preparable;
 
 public abstract class BaseEditDashboardAction extends BaseDashboardAction
 		implements Preparable {
-	private String groupName;
 	private static final long serialVersionUID = 1L;
 	private RunnerDataSourceDao dataSourceDao;
 	private List<RunnerDataSource> runnerDataSources;
 
 	private String itemQuery;
 	private String dataSourceName;
-	
+
 	private static final Logger logger = Logger
 			.getLogger(BaseEditDashboardAction.class);
 
@@ -51,7 +50,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 			RunnerGroup group = new RunnerGroup();
 			group.setGroupName(groupName);
 			item.setGroup(group);
-			
+
 			item.setDatasource(dataSourceDao.getDataSource(dataSourceName));
 			item.setAlertQuery(itemQuery);
 
@@ -71,15 +70,6 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 					+ super.getSessionUser().getUserName());
 			throw se;
 		}
-	}
-
-
-	public final String getGroupName() {
-		return groupName;
-	}
-
-	public final void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	public final void prepare() throws Exception {
@@ -123,26 +113,20 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 		return Arrays.asList(ThresholdType.values());
 	}
 
-
 	public String getItemQuery() {
 		return itemQuery;
 	}
-
 
 	public void setItemQuery(String itemQuery) {
 		this.itemQuery = itemQuery;
 	}
 
-
 	public String getDataSourceName() {
 		return dataSourceName;
 	}
-
 
 	public void setDataSourceName(String dataSourceName) {
 		this.dataSourceName = dataSourceName;
 	}
 
-
-	
 }

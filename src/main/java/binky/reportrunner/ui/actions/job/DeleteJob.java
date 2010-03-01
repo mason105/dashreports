@@ -34,7 +34,6 @@ public class DeleteJob extends StandardRunnerAction {
 	private static final long serialVersionUID = 1L;
 
 	private RunnerJobService jobService;
-	private String groupName;
 	private String jobName;
 	
 	@Override
@@ -66,14 +65,6 @@ public class DeleteJob extends StandardRunnerAction {
 
 	public final void setJobService(RunnerJobService jobService) {
 		this.jobService = jobService;
-	}
-
-	public final String getGroupName() {
-		return groupName;
-	}
-
-	public final void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	public final String getJobName() {

@@ -96,8 +96,10 @@ public class GetDashboardChartDataAction extends BaseDashboardAction {
 			if ((item.getSeriesNameColumn() == null)
 					|| (item.getSeriesNameColumn().isEmpty())) {
 				seriesName = "VALUE";
+				
 			} else {
 				seriesName = (String) b.get(item.getSeriesNameColumn());
+				logger.debug("found series" + seriesName);
 			}
 			if (!series.contains(seriesName)) {
 				series.add(seriesName);
@@ -218,7 +220,6 @@ public class GetDashboardChartDataAction extends BaseDashboardAction {
 			/* end hack */
 
 			Element e;
-
 			switch (item.getChartType()) {
 			case AREA:
 				e = new ElementAreaLine();
@@ -290,8 +291,6 @@ public class GetDashboardChartDataAction extends BaseDashboardAction {
 			e.setColourHex(mainHex);
 			chart.addElement(e);
 			e.setText(elementName);
-			break;
-
 		}
 
 		chart.setTitle(new TextItem(""));

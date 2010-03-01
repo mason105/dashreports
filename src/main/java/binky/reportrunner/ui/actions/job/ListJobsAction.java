@@ -38,7 +38,6 @@ import binky.reportrunner.ui.actions.job.beans.DisplayJob;
 public class ListJobsAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 6919067344312363024L;
-	private String groupName;
 
 	private static Logger logger = Logger.getLogger(ListJobsAction.class);
 
@@ -89,14 +88,6 @@ public class ListJobsAction extends StandardRunnerAction {
 			this.jobs = new LinkedList<DisplayJob>();
 		}
 		return SUCCESS;
-	}
-
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	public List<DisplayJob> getJobs() {

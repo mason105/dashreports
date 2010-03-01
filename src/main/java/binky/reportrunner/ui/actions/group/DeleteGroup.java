@@ -37,7 +37,6 @@ public class DeleteGroup extends AdminRunnerAction {
 	private RunnerGroupDao groupDao;
 	private DashboardService dashboardService;
 	private RunnerJobService jobService;
-	private String groupName;
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -76,10 +75,6 @@ public class DeleteGroup extends AdminRunnerAction {
 
 	public void setGroupDao(RunnerGroupDao groupDao) {
 		this.groupDao = groupDao;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	public RunnerJobService getJobService() {

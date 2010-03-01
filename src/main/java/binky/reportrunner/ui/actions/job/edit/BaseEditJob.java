@@ -18,7 +18,6 @@ public abstract class BaseEditJob extends StandardRunnerAction implements
 		Preparable {
 
 	protected String jobName;
-	protected String groupName;
 	protected RunnerJob job;
 	protected RunnerJobService jobService;
 	protected RunnerDataSourceDao dataSourceDao;
@@ -108,13 +107,6 @@ public abstract class BaseEditJob extends StandardRunnerAction implements
 		return Arrays.asList(RunnerJobParameter.DataType.values());
 	}
 
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
 
 	public String getActiveTab() {
 		return activeTab;

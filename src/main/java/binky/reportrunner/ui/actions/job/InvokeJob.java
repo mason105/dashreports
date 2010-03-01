@@ -32,14 +32,9 @@ public class InvokeJob extends StandardRunnerAction {
 
 	private RunnerJobService jobService;
 	private String jobName;
-	private String groupName;
 
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	@Override
@@ -68,10 +63,6 @@ public class InvokeJob extends StandardRunnerAction {
 
 	public final void setJobService(RunnerJobService jobService) {
 		this.jobService = jobService;
-	}
-
-	public String getGroupName() {
-		return groupName;
 	}
 
 }

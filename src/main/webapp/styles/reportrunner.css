@@ -37,6 +37,16 @@ width:115px;
 margin-top:1px;
 margin-left:5px;
 }
+div .groupButtonSelected {
+background-image: url(../images/v2/groupButtonHover.png);
+color:#3399ff;
+height:20px;
+padding-top:5px;
+padding-left:5px;
+width:115px;
+margin-top:1px;
+margin-left:5px;
+}
 div .groupButton:hover {
 background-image: url(../images/v2/groupButtonHover.png);
 color:#3399ff;

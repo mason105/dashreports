@@ -37,7 +37,6 @@ public class DownloadReportAction extends StandardRunnerAction {
 
 	private String contentDisposition;
 	private String id;
-	private String groupName;
 	private String jobName;
 	private RunnerJobService jobService;
 	private InputStream inputStream;
@@ -51,13 +50,6 @@ public class DownloadReportAction extends StandardRunnerAction {
 		return "sendFile";
 	}
 
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
 
 	public String getId() {
 		return id;

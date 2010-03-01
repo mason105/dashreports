@@ -30,7 +30,6 @@ import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 public class SetupEditGroup extends AdminRunnerAction {
 
 	private RunnerGroupDao groupDao;
-	private String groupName;
 	private RunnerGroup group;
 
 	private static final long serialVersionUID = 1L;
@@ -62,10 +61,6 @@ public class SetupEditGroup extends AdminRunnerAction {
 
 	public void setGroupDao(RunnerGroupDao groupDao) {
 		this.groupDao = groupDao;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	public RunnerGroup getGroup() {

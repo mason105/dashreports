@@ -29,7 +29,6 @@ public class DeleteItem extends BaseDashboardAction {
 
 	private static final long serialVersionUID = 1L;
 	private Integer itemId;
-	private String groupName;
 	@Override
 	public String execute() throws Exception {
 		String groupName= super.getDashboardService().getItem(itemId).getGroup().getGroupName();
@@ -57,11 +56,4 @@ public class DeleteItem extends BaseDashboardAction {
 	}
 
 
-	public String getGroupName() {
-		return groupName;
-	}
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-	
 }

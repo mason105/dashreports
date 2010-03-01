@@ -44,7 +44,6 @@ public class ViewJobDetail extends StandardRunnerAction {
 
 
 	private String jobName;
-	private String groupName;
 	private DisplayJob job;
 	private List<RunnerHistoryEvent> events;
 	private static final Logger logger = Logger.getLogger(ViewJobDetail.class);
@@ -102,14 +101,6 @@ public class ViewJobDetail extends StandardRunnerAction {
 
 	public final void setJobName(String jobName) {
 		this.jobName = jobName;
-	}
-
-	public final String getGroupName() {
-		return groupName;
-	}
-
-	public final void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	public final DisplayJob getJob() {

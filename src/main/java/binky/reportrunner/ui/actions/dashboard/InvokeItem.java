@@ -8,7 +8,6 @@ public class InvokeItem extends BaseDashboardAction {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer itemId;
-	private String groupName;
 	@Override
 	public String execute() throws Exception {
 		String groupName= super.getDashboardService().getItem(itemId).getGroup().getGroupName();
@@ -31,11 +30,5 @@ public class InvokeItem extends BaseDashboardAction {
 	public void setItemId(Integer itemId) {
 		this.itemId = itemId;
 	}
-	public String getGroupName() {
-		return groupName;
-	}
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-
+	
 }

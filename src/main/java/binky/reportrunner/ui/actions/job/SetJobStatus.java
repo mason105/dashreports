@@ -34,7 +34,6 @@ public class SetJobStatus extends StandardRunnerAction {
 	private static final Logger logger = Logger.getLogger(SetJobStatus.class);
 	private RunnerJobService jobService;
 	private String jobName;
-	private String groupName;
 	private Boolean jobStatus;
 
 	public Boolean getJobStatus() {
@@ -47,10 +46,6 @@ public class SetJobStatus extends StandardRunnerAction {
 
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	@Override
@@ -85,10 +80,6 @@ public class SetJobStatus extends StandardRunnerAction {
 
 	public final void setJobService(RunnerJobService jobService) {
 		this.jobService = jobService;
-	}
-
-	public String getGroupName() {
-		return groupName;
 	}
 
 }

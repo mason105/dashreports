@@ -40,8 +40,6 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 	private String jobName;
 
-	private String groupName;
-
 	private List<RunnerJobParameter> parameters;
 
 	private Map<String, ViewerResults> results;
@@ -99,14 +97,6 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 	public void setJobService(RunnerJobService jobService) {
 		this.jobService = jobService;
-	}
-
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	public String getJobName() {

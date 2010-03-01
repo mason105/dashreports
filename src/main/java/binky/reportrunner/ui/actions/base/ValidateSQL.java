@@ -78,7 +78,7 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 				return;
 			}
 		} catch (SQLException sqle) {
-			logger.warn("query failed with exception", sqle);
+			logger.warn("query failed with exception" + sqle.getMessage());
 			super.addActionError("query failed with exception - "
 					+ sqle.getMessage());
 			this.isValid=false;

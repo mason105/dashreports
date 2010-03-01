@@ -10,7 +10,6 @@ import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 
 public final class DashboardAction extends BaseDashboardAction {
 
-	private String groupName;
 	private static final long serialVersionUID = 0L;
 	private List<RunnerDashboardItem> items;
 	private Integer currentRow;
@@ -39,14 +38,6 @@ public final class DashboardAction extends BaseDashboardAction {
 		
 			return SUCCESS;
 		}
-	}
-
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	

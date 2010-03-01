@@ -37,8 +37,13 @@
 	<div id="leftNav"  class="leftnav">
 			<div class="navHeader">Groups</div>	
 			<div class="navBody">	
-			<s:iterator value="groups">
-				<div class="groupButton" onClick="parent.location='group.action?groupName=<s:property value="%{groupName}" />'"><s:property value="%{groupName}" /></div>
+			<s:iterator value="groups">	
+				<s:if test="groupName!=currentGroupName">			
+					<div class="groupButton" onClick="parent.location='group.action?groupName=<s:property value="%{groupName}" />'"><s:property value="%{groupName}" /></div>
+				</s:if>
+				<s:else>
+					<div class="groupButtonSelected" onClick="parent.location='group.action?groupName=<s:property value="%{groupName}" />'"><s:property value="%{groupName}" /></div>
+				</s:else>
 	   		</s:iterator>
 			</div>
 			<div class="navFooter"></div>

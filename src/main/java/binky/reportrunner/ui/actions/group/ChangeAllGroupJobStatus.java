@@ -33,7 +33,6 @@ public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 
 	private RunnerGroupDao groupDao;
 	private RunnerJobService jobService;
-	private String groupName;
 	private Boolean status;
 
 	public void setStatus(Boolean status) {
@@ -72,10 +71,6 @@ public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 			throw se;
 		}
 		return SUCCESS;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
 	}
 
 	public RunnerGroupDao getGroupDao() {

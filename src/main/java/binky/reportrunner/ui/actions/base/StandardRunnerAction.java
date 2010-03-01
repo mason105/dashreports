@@ -39,7 +39,8 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 		SessionAware {
 
 	protected Map<String, Object> sessionData;
-
+	protected String groupName;
+	
 	public void setSession(Map<String, Object> sessionData) {
 		this.sessionData = sessionData;
 	}
@@ -121,5 +122,16 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 			return false;
 		}
 	}
+	public final String getCurrentGroupName() {
+		return groupName;
+	}
+	public final String getGroupName() {
+		return groupName;
+	}
+	public final void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+	
+	
 	
 }

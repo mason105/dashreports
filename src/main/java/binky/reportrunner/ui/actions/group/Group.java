@@ -5,22 +5,25 @@ import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 public class Group extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
-	
-	private String groupName;
-	
+	private String activeTab;
+
 	@Override
 	public String execute() throws Exception {
-	
-		
+
 		return SUCCESS;
 	}
 
-	public String getGroupName() {
-		return groupName;
+
+	public String getActiveTab() {
+		if (!super.isStringPopulated(activeTab)) {
+			return "dashboard";
+		} else {
+			return activeTab;
+		}
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setActiveTab(String activeTab) {
+		this.activeTab = activeTab;
 	}
 
 }

@@ -3,7 +3,13 @@
  */
 package binky.reportrunner.ui.actions.dashboard;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.beanutils.DynaBean;
+
 import binky.reportrunner.data.RunnerDashboardItem;
+import binky.reportrunner.data.RunnerDashboardThreshold;
 import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 
 /**
@@ -35,7 +41,42 @@ public class DashboardWidgetAction extends BaseDashboardAction {
 	
 		return SUCCESS;
 	}
+	public Map<String, Integer> getThresholdData() {
+		
+		if ((item.getCurrentDataset() != null) && (item instanceof RunnerDashboardThreshold)) {
+			Map<String, Integer> data = new HashMap<String, Integer>();
 
+			for (Object o : item.getCurrentDataset().getRows()) {
+				DynaBean b = (DynaBean) o;
+				String label = b.get(((RunnerDashboardThreshold)item).getLabelColumn()).toString();
+				Number value = (Number) b.get(((RunnerDashboardThreshold)item).getValueColumn());
+				Integer result = 2;
+				switch (((RunnerDashboardThreshold)item).getType()) {
+				case GreaterThan:
+					if (value.floatValue() <= ((RunnerDashboardThreshold)item).getLowerValue()) {
+						result = 1;
+					}
+					if (value.floatValue() >= ((RunnerDashboardThreshold)item).getUpperValue()) {
+						result = 3;
+					}
+					break;
+				case LessThan:
+					if (value.floatValue() <= ((RunnerDashboardThreshold)item).getLowerValue()) {
+						result = 3;
+					}
+					if (value.floatValue() >= ((RunnerDashboardThreshold)item).getUpperValue()) {
+						result = 1;
+					}
+					break;
+				}
+				data.put(label, result);
+			}
+			return data;
+		} else {
+			return null;
+		}
+
+	}
 
 	public Integer getItemId() {
 		return itemId;

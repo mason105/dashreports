@@ -14,56 +14,40 @@ public class RunnerDashboardThreshold extends RunnerDashboardItem {
 	private Float lowerValue;
 	private String valueColumn;
 	private String labelColumn;
-	
+
 	private ThresholdType type;
 
 	public Float getLowerValue() {
 		return lowerValue;
 	}
 
-
-
 	public void setLowerValue(Float lowerValue) {
 		this.lowerValue = lowerValue;
 	}
-
-
 
 	public ThresholdType getType() {
 		return type;
 	}
 
-
-
 	public void setType(ThresholdType type) {
 		this.type = type;
 	}
-
 
 	public final Float getUpperValue() {
 		return upperValue;
 	}
 
-
-
 	public final void setUpperValue(Float upperValue) {
 		this.upperValue = upperValue;
 	}
-
-
-
-
 
 	public final String getLabelColumn() {
 		return labelColumn;
 	}
 
-
-
 	public final void setLabelColumn(String labelColumn) {
 		this.labelColumn = labelColumn;
 	}
-
 
 	public enum ThresholdType {
 
@@ -84,22 +68,19 @@ public class RunnerDashboardThreshold extends RunnerDashboardItem {
 
 	}
 
-
 	public String getValueColumn() {
 		return valueColumn;
 	}
-
-
 
 	public void setValueColumn(String valueColumn) {
 		this.valueColumn = valueColumn;
 	}
 
-
-
 	@Override
 	public ItemType getItemType() {
 		return ItemType.Threshold;
 	}
+
 	
+
 }

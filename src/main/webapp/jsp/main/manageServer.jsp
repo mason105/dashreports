@@ -30,7 +30,7 @@
 		<td class="rowOdd"><a href="listCurrentExecutingJobs.action">Current Executing Jobs</a></td>
 	</tr>
 	<tr>
-		<td width="24" class="rowOdd"><img src="<s:url value='/images/v2/icons/chart_curve.png'/>"/></td>
+		<td width="24" class="rowOdd"><img src="<s:url value='/images/v2/icons/chart.png'/>"/></td>
 		<td class="rowEven"><a href="jobStatistics.action">Statistics and Warnings</a></td>
 	</tr>	
 	<tr>

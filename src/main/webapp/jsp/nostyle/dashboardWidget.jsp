@@ -74,7 +74,17 @@
 	 				</s:if>		
 				</div>	
 			</div>		
-			<display:table name="item.currentDataset.rows"  requestURI="index.action" export="false">
-			</display:table>
+			<table class="thesholdTable">
+				<s:iterator status="stat" value="thresholdData" >
+				<tr>
+					<td class="label"><s:property value="key"/></td>
+					<td class="value">
+						<s:if test="value==1"/><img src="<s:url="/images/v2/icons/flag_red.png"/>"/></s:if>
+						<s:if test="value==2"/><img src="<s:url="/images/v2/icons/flag_yellow.png"/>"/></s:if>
+						<s:if test="value==3"/><img src="<s:url="/images/v2/icons/flag_green.png"/>"/></s:if>
+					</td>
+				</tr>
+				</s:iterator>
+			</table>
 		</div>								
 	</s:if>

@@ -168,7 +168,7 @@ public class EditJob extends BaseEditJob {
 				job.setTemplateFileName(templateFileName);
 			} catch (IOException e) {
 				logger.warn(e.getMessage(), e);
-				super.addActionError(e.getMessage());
+				super.addActionError("Error processing template:" + e.getMessage());
 				return false;
 			}
 

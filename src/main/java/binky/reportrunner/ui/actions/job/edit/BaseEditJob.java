@@ -17,6 +17,10 @@ import com.opensymphony.xwork2.Preparable;
 public abstract class BaseEditJob extends StandardRunnerAction implements
 		Preparable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected String jobName;
 	protected RunnerJob job;
 	protected RunnerJobService jobService;

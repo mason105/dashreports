@@ -73,14 +73,14 @@
 			
 				<s:select label="Threshold Type" name="item.type" list="thresholdTypes"
 				listKey="name" listValue="displayName"></s:select>
-		
 			
-			 	<s:textfield label="Label Column Name" size="64" value="%{item.labelColumn}" name="item.labelColumn" cssClass="textbox">
-				</s:textfield>
+				<s:hidden name="valueColumnValue" value="%{item.valueColumn}"/>
+				<s:hidden name="labelColumnValue" value="%{item.labelColumn}"/>
 				
-					
-				<s:textfield label="Value Column Name" size="32" value="%{item.valueColumn}" name="item.valueColumn" cssClass="textbox">
-				</s:textfield>
+				<s:url id="fieldsUrl" action="getThresholdColumns" /> 
+				<sx:div  showLoadingText="true" loadingText="Getting fields..." id="refreshFields" href="%{fieldsUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
+				</sx:div>
+			
 				
 				<s:textfield label="Upper Value" size="32" value="%{item.upperValue}" name="item.upperValue" cssClass="textbox">
 				</s:textfield>

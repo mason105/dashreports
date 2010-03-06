@@ -8,7 +8,7 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-<sx:tabbedpanel id="grouptabs">						
+<sx:tabbedpanel id="grouptabs" selectedTab="%{activeTab}">						
 				<sx:div id="dashboard" label="Dashboard">		
 					<sx:div href="dashboard.action?groupName=%{groupName}" separateScripts="true"  executeScripts="true"/>
 				</sx:div>

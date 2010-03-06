@@ -28,7 +28,7 @@
 -->    
     
 <struts>
-	<package name="myPackage" extends="struts-default">
+	<package name="reportRunner" extends="struts-default">
 		<interceptors>
 			<interceptor name="login" class="loginInterceptor" />
 			<interceptor name="noCache" class="noCacheInterceptor" />
@@ -84,9 +84,10 @@
 
 		<action name="deleteJob" class="deleteJobAction">
 			<result type="redirectAction">
-				<param name="actionName">listJobs</param>
+				<param name="actionName">group</param>
         		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>				
+        		<param name="groupName">${groupName}</param>
+        		<param name="activeTab">reports</param>				
 			</result>
 		</action>
 
@@ -94,16 +95,18 @@
 			<result type="redirectAction">
 				<param name="actionName">group</param>
         		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>				
+        		<param name="groupName">${groupName}</param>
+				<param name="activeTab">reports</param>        						
 			</result>
 			<result name="input">/jsp/main/editJob.jsp</result>			
 		</action>		
 		
 		<action name="setJobStatus" class="setJobStatusAction">
 			<result type="redirectAction">
-				<param name="actionName">listJobs</param>
+				<param name="actionName">group</param>
         		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>				
+        		<param name="groupName">${groupName}</param>
+				<param name="activeTab">reports</param>        						        						
 			</result>
 		</action>
 
@@ -182,9 +185,10 @@
 
 		<action name="invokeJob" class="invokeJobAction">
 			<result type="redirectAction">
-				<param name="actionName">listJobs</param>
+				<param name="actionName">group</param>
         		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>				
+        		<param name="groupName">${groupName}</param>
+				<param name="activeTab">reports</param>        						        						
 			</result>
 		</action>
 
@@ -204,7 +208,8 @@
 			<result type="redirectAction">
 				<param name="actionName">group</param>
         		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>				
+        		<param name="groupName">${groupName}</param>
+				<param name="activeTab">dashboard</param>        						
 			</result>
 			<result  name="input">/jsp/main/editChart.jsp</result>
 		</action>
@@ -221,7 +226,8 @@
 			<result type="redirectAction">
 				<param name="actionName">group</param>
         		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>				
+        		<param name="groupName">${groupName}</param>
+        		<param name="activeTab">dashboard</param>				
 			</result>
 			<result  name="input">/jsp/main/editGrid.jsp</result>
 		</action>
@@ -234,7 +240,8 @@
 			<result type="redirectAction">
 				<param name="actionName">group</param>
         		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>				
+        		<param name="groupName">${groupName}</param>
+        		<param name="activeTab">dashboard</param>				
 			</result>
 			<result  name="input">/jsp/main/editThreshold.jsp</result>
 		</action>
@@ -245,6 +252,7 @@
 				<param name="actionName">group</param>
 				 <param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
+        		<param name="activeTab">dashboard</param>
 			</result>
 		</action>
 
@@ -252,7 +260,8 @@
 			<result type="redirectAction">
 				<param name="actionName">group</param>
         		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>				
+        		<param name="groupName">${groupName}</param>		
+        		<param name="activeTab">dashboard</param>		
 			</result>
 		</action>
 

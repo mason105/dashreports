@@ -9,5 +9,10 @@
 </head>
 <body>
 </body>
+
+<span class="pageTitle"><img src="<s:url value='/images/icons/house.png'/>" align="absmiddle" />Welcome to Report Runner</span>
+<p>
+Please select a group from the menu to view dashboards and jobs.
+</p>
 </html>
 	

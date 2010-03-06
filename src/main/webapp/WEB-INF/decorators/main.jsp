@@ -35,7 +35,10 @@
 </DIV>	
 <div id="container">
 	<div id="leftNav"  class="leftnav">
-			<div class="navHeader">Groups</div>	
+			<div class="navHeader">Groups<a href="setupEditGroup.action">
+			<s:if test="sessionUser.isAdmin">
+				<img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" alt="Add Group"/></a></div>	
+			</s:if>
 			<div class="navBody">	
 			<s:iterator value="groups">	
 				<s:if test="groupName!=currentGroupName">			

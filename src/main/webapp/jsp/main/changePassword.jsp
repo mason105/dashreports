@@ -12,7 +12,7 @@
 
 <div class="formGroup">
 	<div class="formGroupHeader">Change Password</div>
-<s:form action="changePassword">	
+<s:form action="changePassword" autocomplete="off">	
 	
 	<s:actionerror />
 	<s:actionmessage/>

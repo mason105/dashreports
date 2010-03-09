@@ -14,7 +14,7 @@
 <div id="top">
 		<div class="appLogo"><img src="<s:url value='/images/v2/top_bar_logo.png'/>" /></div>
 </div>
-<s:form namespace="/" action="index.action" method="post">
+<s:form namespace="/" action="index.action" method="post" autocomplete="off">
 <div class="formGroup" style="margin:0 auto;background-color:#ffffff;width:350px;">
 		<div class="formGroupHeader" >Login to Report Runner</div>
 		<s:hidden name="loginAttempt" value="%{'1'}" />

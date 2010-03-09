@@ -14,7 +14,7 @@
 		<s:actionerror />
 		<s:actionmessage/>
 		<s:if test="group.groupName != null">
-			<s:textfield label="Group Name" size="32" value="%{group.groupName}"
+			<s:textfield label="Group Name" size="14" value="%{group.groupName}"
 				name="group.groupName" readonly="true" cssClass="readOnly, textbox" required="true"/>
 		</s:if>
 		<s:else>

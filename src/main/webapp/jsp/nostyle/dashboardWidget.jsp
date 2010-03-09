@@ -79,9 +79,9 @@
 				<tr>
 					<td class="label"><s:property value="key"/></td>
 					<td class="value">
-						<s:if test="value==1"/><img src="<s:url="/images/v2/icons/flag_red.png"/>"/></s:if>
-						<s:if test="value==2"/><img src="<s:url="/images/v2/icons/flag_yellow.png"/>"/></s:if>
-						<s:if test="value==3"/><img src="<s:url="/images/v2/icons/flag_green.png"/>"/></s:if>
+						<s:if test="value==1"><img src="<s:url value="/images/v2/icons/flag_red.png"/>"/></s:if>
+						<s:if test="value==2"><img src="<s:url value="/images/v2/icons/flag_yellow.png"/>"/></s:if>
+						<s:if test="value==3"><img src="<s:url value="/images/v2/icons/flag_green.png"/>"/></s:if>
 					</td>
 				</tr>
 				</s:iterator>

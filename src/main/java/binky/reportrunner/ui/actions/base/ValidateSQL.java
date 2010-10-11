@@ -38,7 +38,7 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 		}
 
 		logger.debug("item.dataSourceName is null = " + (dsName) == null);
-		if (sql == null) {
+		if (dsName==null) {
 			super.addActionError("Item's datasource passed was null");
 			this.isValid=false;
 			return;

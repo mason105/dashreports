@@ -9,6 +9,7 @@ public interface ReportRunnerDao<T, ID extends Serializable> {
 	public T get(ID id);
 	public List<T> getAll();
 	public List<T> findByNamedQuery(String queryName, Object[] values);
+	public List<T> findByNamedQuery(String queryName, Object[] values,int maxResults);
 	public void saveOrUpdate(T entity);
 	
 }

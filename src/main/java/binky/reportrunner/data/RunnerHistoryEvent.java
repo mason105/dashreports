@@ -33,8 +33,12 @@ import javax.persistence.NamedQuery;
 
 @Entity
 @NamedQueries( {
-		@NamedQuery(name = "getLatestForApplicationMetric", query = "from T_DATA d where d.application.applicationName = ? and d.metric.id.metricName=? and d.isLatest=true"),
-		@NamedQuery(name = "getHistoryForApplicationMetric", query = "from T_DATA d where d.application.applicationName = ? and d.metric.id.metricName=? and d.isLatest=false order by d.date desc") })
+		@NamedQuery(name = "getEventsByJob", query = "from RunnerHistoryEvent e where e.jobName = ? and e.groupName = ?"),
+		@NamedQuery(name = "getFailedEvents", query = "from RunnerHistoryEvent e where e.success=false order by timestamp desc"),
+		@NamedQuery(name = "getLongestRunningEvents", query = "from RunnerHistoryEvent e order by runTime desc"),
+		@NamedQuery(name = "getSuccessEvents", query = "from RunnerHistoryEvent e where e.success=true order by timestamp desc"),
+		@NamedQuery(name = "getOldEvents", query = "from RunnerHistoryEvent e where e.timestamp < ?")	
+})
 public class RunnerHistoryEvent {
 
 	@Id

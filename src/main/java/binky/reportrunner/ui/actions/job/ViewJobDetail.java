@@ -72,7 +72,7 @@ public class ViewJobDetail extends StandardRunnerAction {
 					}
 				}
 				this.job.setIsScheduleActive(jobService.isJobActive(jobName, groupName));
-				events = historyDao.getEvents(groupName, jobName);
+				events = historyDao.findByNamedQuery("getEventsByJob", new String[]{jobName,groupName});
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "

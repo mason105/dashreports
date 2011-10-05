@@ -30,12 +30,17 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 
 @Entity
+@NamedQueries( {
+	@NamedQuery(name = "getJobsByGroup", query = "from RunnerJob j where j.pk.group.groupName = ?"),
+})
 public class RunnerJob implements Serializable {
 
 	private static final long serialVersionUID = 2036013437864145537L;

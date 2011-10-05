@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.LinkedList;
 
 import net.sf.jasperreports.engine.JRException;
@@ -195,11 +196,30 @@ public class EditJob extends BaseEditJob {
 					logger.warn("null parameter");
 				}
 			}
-			parameterDao.updateParametersForJob(jobName, groupName, parameters);
+			this.updateParametersForJob(jobName, groupName, parameters);
 		}
 		return true;
 	}
 
+	private void updateParametersForJob(String jobName,String groupName, Collection<RunnerJobParameter> parameters) {
+          logger.debug("updating parameters for job/group:" + jobName + "/" + groupName);
+          //delete any parameters first
+          
+          logger.debug("deleting existing parameters");
+          Collection<RunnerJobParameter> params= parameterDao.findByNamedQuery("getParmatersByJob", new String[]{jobName,groupName});
+          if (params.size()>0)  {        	  
+        	  //TODO:refactor
+        	  for (RunnerJobParameter p:parameters) {
+        		  parameterDao.delete(p.getPk());
+        	  }
+          }          
+          for (RunnerJobParameter p:parameters) {
+                  logger.debug("saving parameter idx:" + p.getPk());
+                  parameterDao.saveOrUpdate(p);
+          }
+          
+	}
+	
 	// Returns the contents of the file in a byte array.
 	private byte[] getBytesFromFile(File file) throws IOException {
 

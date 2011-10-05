@@ -40,9 +40,9 @@ public class SetupJobStatsAction extends AdminRunnerAction {
 	@Override
 	public String execute() throws Exception {
 
-		this.longestEvents = historyDao.getLongestRunningEvents(20);
-		this.latestSuccessEvents = historyDao.getSuccessEvents(20);
-		this.latestFailEvents = historyDao.getFailEvents(20);
+		this.longestEvents = historyDao.findByNamedQuery("getLongestRunningEvents",new String[]{} ,20);
+		this.latestSuccessEvents = historyDao.findByNamedQuery("getSuccessEvents",new String[]{} ,20);
+		this.latestFailEvents = historyDao.findByNamedQuery("getFailedEvents",new String[]{} ,20);
 		
 		return SUCCESS;
 	}

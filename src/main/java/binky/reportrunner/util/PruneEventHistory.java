@@ -33,7 +33,10 @@ public class PruneEventHistory extends QuartzJobBean {
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_YEAR, 0 - daysToKeep);
 		Date oldest = cal.getTime();
-		historyDao.deleteRangeOfEvents(oldest);
+		//TODO:refactor
+		for (RunnerHistoryEvent e:  historyDao.findByNamedQuery("getOldEvents", new Object[]{oldest})) {
+			historyDao.delete(e.getEventId());
+		}
 	}
 
 	private ApplicationContext getApplicationContext(JobExecutionContext context)

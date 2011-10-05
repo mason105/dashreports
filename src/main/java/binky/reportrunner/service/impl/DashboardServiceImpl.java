@@ -51,7 +51,7 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	public List<RunnerDashboardItem> getItemsForGroup(String groupName) {
-		List<RunnerDashboardItem> as = dashboardDao.getItemsForGroup(groupName);			
+		List<RunnerDashboardItem> as = dashboardDao.findByNamedQuery("getItemsByGroup", new String[]{groupName});			
 		List<RunnerDashboardItem> alerts=new LinkedList<RunnerDashboardItem>();
 		
 		//temp hack

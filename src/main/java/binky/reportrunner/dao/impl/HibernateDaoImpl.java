@@ -37,4 +37,11 @@ public class HibernateDaoImpl<T,ID extends Serializable> extends HibernateDaoSup
 		super.getHibernateTemplate().saveOrUpdate(entity);
 	}
 
+	@Override
+	public List<T> findByNamedQuery(String queryName, Object[] values,
+			int maxResults) {
+		super.getHibernateTemplate().setMaxResults(maxResults);
+		return (List<T>)super.getHibernateTemplate().findByNamedQuery(queryName, values);
+	}
+
 }

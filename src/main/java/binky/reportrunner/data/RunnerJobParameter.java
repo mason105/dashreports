@@ -24,8 +24,13 @@ package binky.reportrunner.data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries( {
+	@NamedQuery(name = "getParmatersByJob", query = "from RunnerJobParameter p where p.pk.runnerJob_pk.jobName=? and p.pk.runnerJob_pk.group.groupName=?"),
+})
 public class RunnerJobParameter {
 	public enum DataType {
 		STRING("String"), DATE("Date"), BOOLEAN("Boolean"),INTEGER("Integer"),LONG("Long"),DOUBLE("Double");

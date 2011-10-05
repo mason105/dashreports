@@ -106,7 +106,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	}
 
 	public List<RunnerJob> listJobs(String groupName) {
-		return runnerJobDao.listJobs(groupName);
+		return runnerJobDao.findByNamedQuery("getJobsByGroup", new String[]{groupName});
 	}
 
 	public Scheduler getScheduler() {

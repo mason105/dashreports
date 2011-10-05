@@ -24,7 +24,7 @@ package binky.reportrunner.ui.actions.user;
 
 import java.util.List;
 
-import binky.reportrunner.dao.RunnerUserDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
@@ -34,17 +34,13 @@ public class ListUsers extends AdminRunnerAction{
 	private List<RunnerUser> users;
 	@Override
 	public String execute() throws Exception {
-		this.users=userDao.listUsers();
+		this.users=userDao.getAll();
 		return SUCCESS;
 	}
 
-	private RunnerUserDao userDao;
+	private ReportRunnerDao<RunnerUser,String> userDao;
 
-	public RunnerUserDao getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(RunnerUserDao userDao) {
+	public void setUserDao(ReportRunnerDao<RunnerUser,String> userDao) {
 		this.userDao = userDao;
 	}
 

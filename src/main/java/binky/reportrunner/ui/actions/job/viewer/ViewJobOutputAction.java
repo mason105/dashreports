@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import binky.reportrunner.dao.RunnerHistoryDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
@@ -44,7 +44,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 	private Map<String, ViewerResults> results;
 	
-	private RunnerHistoryDao historyDao;
+	private ReportRunnerDao<RunnerHistoryEvent,Long> historyDao;
 	
 	
 	private RunnerJobService jobService;
@@ -86,7 +86,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		event.setRunTime(endTime-startTime);
 		event.setTimestamp(new Date());
 		event.setSuccess(true);
-		historyDao.saveEvent(event);
+		historyDao.saveOrUpdate(event);
 		
 		return SUCCESS;
 	}
@@ -123,11 +123,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		this.results = results;
 	}
 
-	public RunnerHistoryDao getHistoryDao() {
-		return historyDao;
-	}
-
-	public void setHistoryDao(RunnerHistoryDao historyDao) {
+	public void setHistoryDao(ReportRunnerDao<RunnerHistoryEvent,Long> historyDao) {
 		this.historyDao = historyDao;
 	}
 

@@ -24,17 +24,21 @@ package binky.reportrunner.data;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries( {
+		@NamedQuery(name = "getLatestForApplicationMetric", query = "from T_DATA d where d.application.applicationName = ? and d.metric.id.metricName=? and d.isLatest=true"),
+		@NamedQuery(name = "getHistoryForApplicationMetric", query = "from T_DATA d where d.application.applicationName = ? and d.metric.id.metricName=? and d.isLatest=false order by d.date desc") })
 public class RunnerHistoryEvent {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long eventId;
 	private Date timestamp;
 	private String jobName;
@@ -44,54 +48,66 @@ public class RunnerHistoryEvent {
 	private Long runTime;
 	private String userName;
 	private String module;
-	
+
 	public Long getRunTime() {
 		return runTime;
 	}
+
 	public void setRunTime(Long runTime) {
 		this.runTime = runTime;
 	}
+
 	public Boolean getSuccess() {
 		return success;
 	}
+
 	public void setSuccess(Boolean success) {
 		this.success = success;
 	}
+
 	public Long getEventId() {
 		return eventId;
 	}
+
 	public void setEventId(Long eventId) {
 		this.eventId = eventId;
 	}
+
 	public Date getTimestamp() {
 		return timestamp;
 	}
+
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
+
 	public String getJobName() {
 		return jobName;
 	}
+
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
 	}
+
 	public String getGroupName() {
 		return groupName;
 	}
+
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
+
 	public String getMessage() {
 		return message;
 	}
+
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
+
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
-		
+
 		ret.append("Job Name=");
 		ret.append(jobName);
 		ret.append(" ");
@@ -111,22 +127,24 @@ public class RunnerHistoryEvent {
 		ret.append(userName);
 		ret.append(" ");
 		ret.append("Module=");
-		ret.append(module);		
+		ret.append(module);
 		return ret.toString();
 	}
+
 	public String getUserName() {
 		return userName;
 	}
+
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getModule() {
 		return module;
 	}
+
 	public void setModule(String module) {
 		this.module = module;
 	}
-	
-	
-	
+
 }

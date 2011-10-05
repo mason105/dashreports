@@ -93,7 +93,7 @@ background-image: url(../images/v2/navbarbg.png);
 border: 1px solid gray;
 top:57px;
 height:15px;
-overflow:auto;
+overflow:hidden;
 }
 
 #container

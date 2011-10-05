@@ -22,7 +22,8 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.user;
 
-import binky.reportrunner.dao.RunnerUserDao;
+import binky.reportrunner.dao.ReportRunnerDao;
+import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
 public class DeleteUser extends AdminRunnerAction {
@@ -30,19 +31,17 @@ public class DeleteUser extends AdminRunnerAction {
 	private static final long serialVersionUID = 1L;
 	private String userName;
 
+	private ReportRunnerDao<RunnerUser,String> userDao;
+	
 	@Override
 	public String execute() throws Exception {
-		userDao.deleteUser(userName);
+		userDao.delete(userName);
 		return SUCCESS;
 	}
 
-	private RunnerUserDao userDao;
 
-	public RunnerUserDao getUserDao() {
-		return userDao;
-	}
 
-	public void setUserDao(RunnerUserDao userDao) {
+	public void setUserDao(ReportRunnerDao<RunnerUser,String>  userDao) {
 		this.userDao = userDao;
 	}
 

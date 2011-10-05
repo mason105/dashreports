@@ -28,7 +28,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerHistoryDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
@@ -40,7 +40,7 @@ public class ViewJobDetail extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private RunnerHistoryDao historyDao;
+	private ReportRunnerDao<RunnerHistoryEvent,Long> historyDao;
 
 
 	private String jobName;
@@ -111,11 +111,7 @@ public class ViewJobDetail extends StandardRunnerAction {
 		this.job = job;
 	}
 
-	public final RunnerHistoryDao getHistoryDao() {
-		return historyDao;
-	}
-
-	public final void setHistoryDao(RunnerHistoryDao historyDao) {
+	public final void setHistoryDao(ReportRunnerDao<RunnerHistoryEvent,Long> historyDao) {
 		this.historyDao = historyDao;
 	}
 

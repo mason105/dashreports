@@ -28,8 +28,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.apache.struts2.StrutsStatics;
 
-import binky.reportrunner.dao.RunnerGroupDao;
-import binky.reportrunner.dao.RunnerUserDao;
+import binky.reportrunner.dao.ReportRunnerDao;
+import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.Statics;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
@@ -42,8 +42,8 @@ public class UserSessionIntercept implements Interceptor, StrutsStatics {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(UserSessionIntercept.class);
-	private RunnerGroupDao groupDao;
-	private RunnerUserDao userDao;
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
+	private ReportRunnerDao<RunnerUser,String> userDao;
 	public void destroy() {
 
 	}
@@ -75,7 +75,7 @@ public class UserSessionIntercept implements Interceptor, StrutsStatics {
 
 		if (user.getIsAdmin()) {
 			if ((user.getGroups()==null) || (user.getGroups().size()==0)) { 
-				user.setGroups(groupDao.listGroups());
+				user.setGroups(groupDao.getAll());
 			}
 		}
 		
@@ -89,21 +89,13 @@ public class UserSessionIntercept implements Interceptor, StrutsStatics {
 		
 	}
 
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
-
-	public void setGroupDao(RunnerGroupDao groupDao) {
+	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
 		this.groupDao = groupDao;
 	}
 
-	public RunnerUserDao getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(RunnerUserDao userDao) {
+	public void setUserDao(ReportRunnerDao<RunnerUser, String> userDao) {
 		this.userDao = userDao;
 	}
-	
+
 	
 }

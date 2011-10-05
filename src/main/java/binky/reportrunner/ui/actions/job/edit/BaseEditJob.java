@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import binky.reportrunner.dao.RunnerDataSourceDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
@@ -24,15 +24,13 @@ public abstract class BaseEditJob extends StandardRunnerAction implements
 	protected String jobName;
 	protected RunnerJob job;
 	protected RunnerJobService jobService;
-	protected RunnerDataSourceDao dataSourceDao;
+	protected ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
 	protected List<RunnerDataSource> dataSources;
 	protected File template;// The actual file
 
 	protected String templateContentType; // The content type of the file
 
 	protected String templateFileName; // The uploaded file name
-
-	
 
 	protected String activeTab;
 
@@ -58,7 +56,7 @@ public abstract class BaseEditJob extends StandardRunnerAction implements
 	}
 
 	public void prepare() throws Exception {
-		dataSources = dataSourceDao.listDataSources();
+		dataSources = dataSourceDao.getAll();
 
 	}
 
@@ -90,14 +88,10 @@ public abstract class BaseEditJob extends StandardRunnerAction implements
 		this.parameters = parameters;
 	}
 
-	public RunnerDataSourceDao getDataSourceDao() {
-		return dataSourceDao;
-	}
-
-	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
+	public void setDataSourceDao(
+			ReportRunnerDao<RunnerDataSource, String> dataSourceDao) {
 		this.dataSourceDao = dataSourceDao;
 	}
-	
 
 	public List<RunnerJob.FileFormat> getFileFormats() {
 		return Arrays.asList(RunnerJob.FileFormat.values());
@@ -110,7 +104,6 @@ public abstract class BaseEditJob extends StandardRunnerAction implements
 	public List<DataType> getDataTypes() {
 		return Arrays.asList(RunnerJobParameter.DataType.values());
 	}
-
 
 	public String getActiveTab() {
 		return activeTab;

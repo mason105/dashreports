@@ -27,8 +27,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerGroupDao;
-import binky.reportrunner.dao.RunnerUserDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
@@ -52,7 +51,7 @@ public class SetupEditUser extends AdminRunnerAction implements Preparable {
 		if ((userName != null) && (!userName.isEmpty())) {
 			logger.debug("editing user: " + userName);
 			userGroups = new LinkedList<String>();
-			this.runnerUser = userDao.getUser(userName);
+			this.runnerUser = userDao.get(userName);
 			for (RunnerGroup group:runnerUser.getGroups()) {
 				userGroups.add(group.getGroupName());
 				logger.debug("found group: " + group.getGroupName());
@@ -65,26 +64,20 @@ public class SetupEditUser extends AdminRunnerAction implements Preparable {
 	}
 
 	public void prepare() throws Exception {
-		this.groups = groupDao.listGroups();
+		this.groups = groupDao.getAll();
 	}
 
-	private RunnerUserDao userDao;
+	private ReportRunnerDao<RunnerUser,String> userDao;
 
-	public RunnerUserDao getUserDao() {
-		return userDao;
-	}
+	
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
 
-	public void setUserDao(RunnerUserDao userDao) {
+	
+	public void setUserDao(ReportRunnerDao<RunnerUser, String> userDao) {
 		this.userDao = userDao;
 	}
 
-	private RunnerGroupDao groupDao;
-
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
-
-	public void setGroupDao(RunnerGroupDao groupDao) {
+	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
 		this.groupDao = groupDao;
 	}
 

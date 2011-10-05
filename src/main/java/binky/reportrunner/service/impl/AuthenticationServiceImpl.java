@@ -24,20 +24,20 @@ package binky.reportrunner.service.impl;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerUserDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.service.AuthenticationService;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 	
-	private RunnerUserDao userDao;
+	private ReportRunnerDao<RunnerUser,String> userDao;
 	private static final Logger logger = Logger
 			.getLogger(AuthenticationServiceImpl.class);
 	private  AUTH_RESULT lastResult;
 	
 	public RunnerUser authUser(String userName, String password ) {
 
-		RunnerUser  user = userDao.getUser(userName);
+		RunnerUser  user = userDao.get(userName);
 		if (user == null) {
 			logger.warn("Authentication failed - unknown user - " + userName);
 			user=null;
@@ -61,13 +61,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return user;
 	}
 
-	public RunnerUserDao getUserDao() {
-		return userDao;
-	}
 
-	public void setUserDao(RunnerUserDao userDao) {
+	public void setUserDao(ReportRunnerDao<RunnerUser, String> userDao) {
 		this.userDao = userDao;
 	}
+
 	public  AUTH_RESULT getLastResult() {
 		return this.lastResult;
 	}

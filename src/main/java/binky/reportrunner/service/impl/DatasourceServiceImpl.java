@@ -35,7 +35,7 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerDataSourceDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.service.DatasourceService;
 
@@ -43,7 +43,7 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class DatasourceServiceImpl implements DatasourceService {
 
-	private RunnerDataSourceDao dataSourceDao;
+	private ReportRunnerDao<RunnerDataSource,String> dataSourceDao;
 	private Map<String, DataSource> dataSources = new HashMap<String, DataSource>();;
 
 	private Logger logger = Logger.getLogger(DatasourceServiceImpl.class);
@@ -142,11 +142,16 @@ public class DatasourceServiceImpl implements DatasourceService {
 		return ds;
 	}
 
-	public RunnerDataSourceDao getDataSourceDao() {
-		return dataSourceDao;
+	public Map<String, DataSource> getDataSources() {
+		return dataSources;
 	}
 
-	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
+	public void setDataSources(Map<String, DataSource> dataSources) {
+		this.dataSources = dataSources;
+	}
+
+	public void setDataSourceDao(
+			ReportRunnerDao<RunnerDataSource, String> dataSourceDao) {
 		this.dataSourceDao = dataSourceDao;
 	}
 
@@ -154,23 +159,22 @@ public class DatasourceServiceImpl implements DatasourceService {
 		if (dataSources.get(dataSourceName)!=null) {		
 			dataSources.remove(dataSourceName);
 		}		
-		dataSourceDao.deleteDataSource(dataSourceName);
+		dataSourceDao.delete(dataSourceName);
 		
 	}
 
 	public RunnerDataSource getDataSource(String dataSourceName) {
-		return dataSourceDao.getDataSource(dataSourceName);
+		return dataSourceDao.get(dataSourceName);
 	}
 
 	public List<RunnerDataSource> listDataSources() {
-		return dataSourceDao.listDataSources();
+		return dataSourceDao.getAll();
 	}
 
 	public void saveUpdateDataSource(RunnerDataSource dataSource) {
 		if (dataSources.get(dataSource.getDataSourceName())!=null) {		
 			dataSources.remove(dataSource.getDataSourceName());
 		}		
-		dataSourceDao.saveUpdateDataSource(dataSource);
-		
+		dataSourceDao.saveOrUpdate(dataSource);		
 	}
 }

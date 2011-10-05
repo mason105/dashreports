@@ -5,16 +5,16 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerDataSourceDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardChart;
-import binky.reportrunner.data.RunnerDashboardItem;
-import binky.reportrunner.data.RunnerDataSource;
-import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerDashboardChart.ChartType;
 import binky.reportrunner.data.RunnerDashboardChart.XAxisStep;
+import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerDashboardItem.Height;
 import binky.reportrunner.data.RunnerDashboardItem.Width;
 import binky.reportrunner.data.RunnerDashboardThreshold.ThresholdType;
+import binky.reportrunner.data.RunnerDataSource;
+import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.scheduler.SchedulerException;
 
@@ -23,7 +23,7 @@ import com.opensymphony.xwork2.Preparable;
 public abstract class BaseEditDashboardAction extends BaseDashboardAction
 		implements Preparable {
 	private static final long serialVersionUID = 1L;
-	private RunnerDataSourceDao dataSourceDao;
+	private ReportRunnerDao<RunnerDataSource,String> dataSourceDao;
 	private List<RunnerDataSource> runnerDataSources;
 
 	private String itemQuery;
@@ -51,7 +51,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 			group.setGroupName(groupName);
 			item.setGroup(group);
 
-			item.setDatasource(dataSourceDao.getDataSource(dataSourceName));
+			item.setDatasource(dataSourceDao.get(dataSourceName));
 			item.setAlertQuery(itemQuery);
 
 			try {
@@ -73,7 +73,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 	}
 
 	public final void prepare() throws Exception {
-		runnerDataSources = this.dataSourceDao.listDataSources();
+		runnerDataSources = this.dataSourceDao.getAll();
 	}
 
 	public final List<RunnerDataSource> getRunnerDataSources() {
@@ -85,11 +85,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 		this.runnerDataSources = runnerDataSources;
 	}
 
-	public final RunnerDataSourceDao getDataSourceDao() {
-		return dataSourceDao;
-	}
-
-	public final void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
+	public final void setDataSourceDao( ReportRunnerDao<RunnerDataSource,String> dataSourceDao) {
 		this.dataSourceDao = dataSourceDao;
 	}
 

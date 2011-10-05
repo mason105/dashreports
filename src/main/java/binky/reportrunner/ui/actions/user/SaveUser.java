@@ -27,8 +27,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerGroupDao;
-import binky.reportrunner.dao.RunnerUserDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
@@ -39,8 +38,8 @@ public class SaveUser extends AdminRunnerAction  implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
-	private RunnerUserDao userDao;
-	private RunnerGroupDao groupDao;
+	private ReportRunnerDao<RunnerUser,String> userDao;
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private RunnerUser runnerUser;
 	private String[] groupNames;
 	private List<RunnerGroup> groups;
@@ -58,7 +57,7 @@ public class SaveUser extends AdminRunnerAction  implements Preparable {
 				super.addActionError("Please enter a username");				
 			} else {
 				if ((runnerUser.getPassword()==null)||(runnerUser.getPassword().trim().isEmpty())) {
-				RunnerUser userCompare = userDao.getUser(runnerUser.getUserName());
+				RunnerUser userCompare = userDao.get(runnerUser.getUserName());
 					if (userCompare==null) {
 						valid = false;
 						super.addActionError("Please enter a password");
@@ -74,14 +73,14 @@ public class SaveUser extends AdminRunnerAction  implements Preparable {
 				List<RunnerGroup> groups = new LinkedList<RunnerGroup>();
 				for (String g: userGroups) {
 					logger.debug("user now has group: " + g);
-					RunnerGroup group = groupDao.getGroup(g);
+					RunnerGroup group = groupDao.get(g);
 					groups.add(group);
 				}
 				runnerUser.setGroups(groups);
 			}
 			
 			if (valid) {
-				userDao.saveUpdateUser(runnerUser);
+				userDao.saveOrUpdate(runnerUser);
 				return SUCCESS;
 			} else {
 				return INPUT;
@@ -92,23 +91,15 @@ public class SaveUser extends AdminRunnerAction  implements Preparable {
 	}
 
 	public void prepare() throws Exception {
-		this.groups=groupDao.listGroups();
+		this.groups=groupDao.getAll();
 	}
 
 	
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
-
-	public void setGroupDao(RunnerGroupDao groupDao) {
+	public void setGroupDao(ReportRunnerDao<RunnerGroup,String> groupDao) {
 		this.groupDao = groupDao;
 	}
 
-	public RunnerUserDao getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(RunnerUserDao userDao) {
+	public void setUserDao(ReportRunnerDao<RunnerUser,String> userDao) {
 		this.userDao = userDao;
 	}
 

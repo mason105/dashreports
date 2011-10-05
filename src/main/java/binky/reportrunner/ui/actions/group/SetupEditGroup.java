@@ -22,14 +22,14 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.group;
 
-import binky.reportrunner.dao.RunnerGroupDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
 public class SetupEditGroup extends AdminRunnerAction {
 
-	private RunnerGroupDao groupDao;
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private RunnerGroup group;
 
 	private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public class SetupEditGroup extends AdminRunnerAction {
 				|| super.getSessionUser().getIsAdmin()) {
 
 			if (groupName != null) {
-				this.group = groupDao.getGroup(groupName);
+				this.group = groupDao.get(groupName);
 			} else {
 				this.group = new RunnerGroup();
 			}
@@ -55,13 +55,19 @@ public class SetupEditGroup extends AdminRunnerAction {
 		return SUCCESS;
 	}
 
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
 
-	public void setGroupDao(RunnerGroupDao groupDao) {
+
+	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
 		this.groupDao = groupDao;
 	}
+
+
+
+	public void setGroup(RunnerGroup group) {
+		this.group = group;
+	}
+
+
 
 	public RunnerGroup getGroup() {
 		return group;

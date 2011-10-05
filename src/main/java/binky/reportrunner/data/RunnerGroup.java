@@ -46,6 +46,10 @@ public class RunnerGroup implements Serializable {
 		this.runnerJobs = runnerJobs;
 	}
 
+
+	public RunnerGroup(String groupName) {
+		this.groupName=groupName;
+	};
 	public RunnerGroup() {
 	};
 

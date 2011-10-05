@@ -10,7 +10,7 @@ import net.sf.jasperreports.engine.JRException;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerJobParameterDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
@@ -23,7 +23,7 @@ public class EditJob extends BaseEditJob {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(EditJob.class);
 
-	private RunnerJobParameterDao parameterDao;
+	private  ReportRunnerDao<RunnerJobParameter,RunnerJobParameter_pk> parameterDao;
 
 	private int[] parameterId;
 	private String deleteParameters;
@@ -83,7 +83,7 @@ public class EditJob extends BaseEditJob {
 		this.job.setQuery(query);
 		this.job.setBurstQuery(burstQuery);
 
-		RunnerDataSource ds = dataSourceDao.getDataSource(dataSourceName);
+		RunnerDataSource ds = dataSourceDao.get(dataSourceName);
 		job.setDatasource(ds);
 
 		if (groupName != null && !groupName.isEmpty()
@@ -251,11 +251,7 @@ public class EditJob extends BaseEditJob {
 	 * this.simpleCron = simpleCron; }
 	 */
 
-	public RunnerJobParameterDao getParameterDao() {
-		return parameterDao;
-	}
-
-	public void setParameterDao(RunnerJobParameterDao parameterDao) {
+	public void setParameterDao( ReportRunnerDao<RunnerJobParameter,RunnerJobParameter_pk>  parameterDao) {
 		this.parameterDao = parameterDao;
 	}
 

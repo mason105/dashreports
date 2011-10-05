@@ -51,6 +51,12 @@ public class RunnerJob_pk implements Serializable {
 	}
 	public void setGroup(RunnerGroup group) {
 		this.group = group;
+	
+	}
+	public RunnerJob_pk(){}
+	public RunnerJob_pk(String jobName, RunnerGroup group) {
+		this.jobName = jobName;
+		this.group = group;
 	}
 	
 	

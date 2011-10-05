@@ -28,8 +28,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerDashboardItemDao;
-import binky.reportrunner.dao.RunnerGroupDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.scheduler.Scheduler;
@@ -40,14 +39,14 @@ public class DashboardServiceImpl implements DashboardService {
 	
 	private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
 	
-	private RunnerDashboardItemDao dashboardDao;
-	private RunnerGroupDao groupDao;
+	private ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao;
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private Scheduler scheduler;
 	public RunnerDashboardItem getItem(Integer id) {
-		return dashboardDao.getItem(id);
+		return dashboardDao.get(id);
 	}
 	public void deleteItem(Integer id) throws SchedulerException {
-		dashboardDao.deleteItem(id);
+		dashboardDao.delete(id);
 		scheduler.removedDashboardAlert(id);		
 	}
 
@@ -80,7 +79,7 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	public List<RunnerDashboardItem> getAllItems() {
-		return dashboardDao.getAllItems();
+		return dashboardDao.getAll();
 	}
 
 	public void saveUpdateItem(RunnerDashboardItem alert) throws SchedulerException {
@@ -90,16 +89,13 @@ public class DashboardServiceImpl implements DashboardService {
 		}
 		
 		//hack to try to fix a batch update error		
-		RunnerGroup group = groupDao.getGroup(alert.getGroup().getGroupName());
+		RunnerGroup group = groupDao.get(alert.getGroup().getGroupName());
 		alert.setGroup(group);
 		
-		dashboardDao.saveUpdateItem(alert);
+		dashboardDao.saveOrUpdate(alert);
 		scheduler.addDashboardAlert(alert.getItemId(),alert.getCronTab());		
 	}
-	public RunnerDashboardItemDao getDashboardDao() {
-		return dashboardDao;
-	}
-	public void setDashboardDao(RunnerDashboardItemDao dashboardDao) {
+	public void setDashboardDao(ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao) {
 		this.dashboardDao = dashboardDao;
 	}
 	public Scheduler getScheduler() {
@@ -117,7 +113,7 @@ public class DashboardServiceImpl implements DashboardService {
 			if (groupName.equals(Scheduler.dashboardSchedulerGroup)) {
 				logger.debug("job name: " + string);
 				Integer id = Integer.parseInt(string.split(":|:")[2]);
-				RunnerDashboardItem alert = dashboardDao.getItem(id);
+				RunnerDashboardItem alert = dashboardDao.get(id);
 				alerts.add(alert);
 			}			
 		}
@@ -134,10 +130,8 @@ public class DashboardServiceImpl implements DashboardService {
 		scheduler.invokeDashboardItem(itemId);
 		
 	}
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
-	public void setGroupDao(RunnerGroupDao groupDao) {
+
+	public void setGroupDao(ReportRunnerDao<RunnerGroup,String> groupDao) {
 		this.groupDao = groupDao;
 	}
 

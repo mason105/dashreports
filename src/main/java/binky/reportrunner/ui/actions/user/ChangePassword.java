@@ -22,7 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.user;
 
-import binky.reportrunner.dao.RunnerUserDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -32,7 +32,7 @@ public class ChangePassword  extends StandardRunnerAction {
 	private String oldPassword;
 	private String newPassword1;
 	private String newPassword2;
-	private RunnerUserDao userDao;
+	private ReportRunnerDao<RunnerUser,String> userDao;
 	
 	@Override
 	public String execute() throws Exception {
@@ -42,7 +42,7 @@ public class ChangePassword  extends StandardRunnerAction {
 			if (oldPassword.equals(getSessionUser().getPassword())) {
 				RunnerUser currentUser = this.getSessionUser();
 				currentUser.setPassword(newPassword1);
-				userDao.saveUpdateUser(currentUser);
+				userDao.saveOrUpdate(currentUser);
 				return SUCCESS;
 			} else {
 				super.addActionError("Old password invalid!");
@@ -72,10 +72,8 @@ public class ChangePassword  extends StandardRunnerAction {
 	public void setNewPassword2(String newPassword2) {
 		this.newPassword2 = newPassword2;
 	}
-	public RunnerUserDao getUserDao() {
-		return userDao;
-	}
-	public void setUserDao(RunnerUserDao userDao) {
+	
+	public void setUserDao(ReportRunnerDao<RunnerUser,String>  userDao) {
 		this.userDao = userDao;
 	}
 

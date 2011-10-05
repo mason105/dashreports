@@ -39,9 +39,11 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerJobDao;
+import binky.reportrunner.dao.ReportRunnerDao;
+import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
+import binky.reportrunner.data.RunnerJob_pk;
 import binky.reportrunner.engine.RunnerResultGenerator;
 import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.engine.impl.RunnerResultGeneratorImpl;
@@ -56,18 +58,15 @@ import binky.reportrunner.service.RunnerJobService;
 public class RunnerJobServiceImpl implements RunnerJobService {
 	private Scheduler scheduler;
 
-	private RunnerJobDao runnerJobDao;
+	private ReportRunnerDao<RunnerJob,RunnerJob_pk> runnerJobDao;
 
 	private DatasourceService dataSourceService;
 
 	private static final Logger logger = Logger
 			.getLogger(RunnerJobServiceImpl.class);
 
-	public RunnerJobDao getRunnerJobDao() {
-		return runnerJobDao;
-	}
 
-	public void setRunnerJobDao(RunnerJobDao runnerJobDao) {
+	public void setReportRunnerDao(ReportRunnerDao<RunnerJob,RunnerJob_pk>  runnerJobDao) {
 		this.runnerJobDao = runnerJobDao;
 	}
 
@@ -75,7 +74,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
 		logger.debug("add update job: " + groupName + "." + jobName);
-		RunnerJob job_comp = runnerJobDao.getJob(jobName, groupName);
+		RunnerJob job_comp = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
 		if ((job_comp != null)
 				&& ((job_comp.getCronString() != null) && !job_comp
 						.getCronString().isEmpty()) && !job_comp.getCronString().equals(job.getCronString())) {
@@ -87,15 +86,15 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 					.getCronString(), job.getStartDate(), job.getEndDate());
 		}
 
-		runnerJobDao.saveUpdateJob(job);
+		runnerJobDao.saveOrUpdate(job);
 
 	}
 
 	public void deleteJob(String jobName, String groupName)
 			throws SchedulerException {
 		logger.debug("delete job: " + groupName + "." + jobName);
-		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
-		runnerJobDao.deleteJob(jobName, groupName);
+		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
+		runnerJobDao.delete(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			scheduler.removeJob(jobName, groupName);
 		}
@@ -103,7 +102,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 
 	public RunnerJob getJob(String jobName, String groupName) {
 		logger.debug("get job: " + groupName + "." + jobName);
-		return runnerJobDao.getJob(jobName, groupName);
+		return runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
 	}
 
 	public List<RunnerJob> listJobs(String groupName) {
@@ -121,7 +120,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	public Boolean isJobActive(String jobName, String groupName)
 			throws SchedulerException {
 		logger.debug("is job active: " + groupName + "." + jobName);
-		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			if (scheduler.isScheduled(jobName, groupName)) {
 				return this.scheduler.isJobActive(jobName, groupName);
@@ -136,7 +135,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	public void pauseJob(String jobName, String groupName)
 			throws SchedulerException {
 		logger.debug("pause job: " + groupName + "." + jobName);
-		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			scheduler.pauseJob(jobName, groupName);
 		}
@@ -145,7 +144,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	public void resumeJob(String jobName, String groupName)
 			throws SchedulerException {
 		logger.debug("resume job: " + groupName + "." + jobName);
-		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			scheduler.resumeJob(jobName, groupName);
 		}
@@ -161,17 +160,21 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			String jobName = string.split(":|:")[2];
 			if (!groupName.equals(Scheduler.dashboardSchedulerGroup)) {
 				logger.debug("found a job with details of: "+ jobName + "/" + groupName);
-				RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+				RunnerJob job = getJobHelper(jobName, groupName);
 				jobs.add(job);
 			}
 		}
 		return jobs;
 	}
+	
+	private RunnerJob getJobHelper(String jobName,String groupName) {
+		return runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
+	}
 
 	public void interruptRunningJob(String jobName, String groupName)
 			throws SchedulerException {
 		logger.debug("interrupt job: " + groupName + "." + jobName);
-		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		RunnerJob job = getJobHelper(jobName, groupName);
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			scheduler.interruptRunningJob(jobName, groupName);
 		}
@@ -180,7 +183,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	public void invokeJob(String jobName, String groupName)
 			throws SchedulerException {
 		logger.debug("invoke job: " + groupName + "." + jobName);
-		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		RunnerJob job = getJobHelper(jobName, groupName);
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			// if already in scheduler lets go
 			scheduler.invokeJob(jobName, groupName);
@@ -231,7 +234,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			String groupName, List<RunnerJobParameter> parameters)
 			throws SQLException, NumberFormatException, ParseException, RenderException, IOException {
 		Map<String, ViewerResults> results = new HashMap<String, ViewerResults>();
-		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		RunnerJob job = getJobHelper(jobName, groupName);
 		DataSource ds = dataSourceService.getJDBCDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 
@@ -277,7 +280,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			String jobName, String groupName) throws SQLException,
 			NumberFormatException, ParseException {
 		Map<RunnerJobParameter, List<Object>> paramValues = new HashMap<RunnerJobParameter, List<Object>>();
-		RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+		RunnerJob job = getJobHelper(jobName, groupName);
 		DataSource ds = dataSourceService.getJDBCDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 		SQLProcessor sqlProcessor = new SQLProcessorImpl();

@@ -39,14 +39,14 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.UnableToInterruptJobException;
 
-import binky.reportrunner.dao.RunnerDashboardItemDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardItem;
 
 public class AlertProcessor implements Job, InterruptableJob {
 
 	DataSource ds;
 
-	RunnerDashboardItemDao dashboardDao;
+	ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao;
 	Connection conn;
 	private static final Logger logger = Logger.getLogger(AlertProcessor.class);
 
@@ -65,7 +65,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 			logger.warn(e1.getMessage(),e1);
 		}
 		
-		this.dashboardDao = (RunnerDashboardItemDao) context.getJobDetail()
+		this.dashboardDao = (ReportRunnerDao<RunnerDashboardItem,Integer>) context.getJobDetail()
 				.getJobDataMap().get("dashboardDao");
 		try {
 			if (item == null) {
@@ -106,7 +106,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 			}
 			item.setCurrentDataset(rsdc);
 			item.setLastUpdated(Calendar.getInstance().getTime());
-			dashboardDao.saveUpdateItem(item);
+			dashboardDao.saveOrUpdate(item);
 			rs.close();
 		} finally {
 			if (!conn.isClosed()) conn.close();

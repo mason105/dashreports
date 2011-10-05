@@ -24,14 +24,14 @@ package binky.reportrunner.ui.actions.admin;
 
 import java.util.List;
 
-import binky.reportrunner.dao.RunnerHistoryDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
 public class SetupJobStatsAction extends AdminRunnerAction {
 
 	private static final long serialVersionUID = 1L;
-	private RunnerHistoryDao historyDao;
+	private ReportRunnerDao<RunnerHistoryEvent,Long> historyDao;
 	private List<RunnerHistoryEvent> longestEvents;
 	private List<RunnerHistoryEvent> latestSuccessEvents;
 	private List<RunnerHistoryEvent> latestFailEvents;
@@ -46,10 +46,8 @@ public class SetupJobStatsAction extends AdminRunnerAction {
 		
 		return SUCCESS;
 	}
-	public RunnerHistoryDao getHistoryDao() {
-		return historyDao;
-	}
-	public void setHistoryDao(RunnerHistoryDao historyDao) {
+
+	public void setHistoryDao(ReportRunnerDao<RunnerHistoryEvent,Long> historyDao) {
 		this.historyDao = historyDao;
 	}
 	public List<RunnerHistoryEvent> getLatestFailEvents() {

@@ -23,7 +23,7 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerGroupDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.service.DashboardService;
@@ -38,7 +38,7 @@ public class IndexAction extends StandardRunnerAction {
 	private static final long serialVersionUID = 9093344521097271797L;
 	private static final Logger logger = Logger.getLogger(IndexAction.class);
 	private  Map<String, List<RunnerDashboardItem>>  items;
-	private RunnerGroupDao groupDao;
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private Integer currentRow;
 	public String execute() throws Exception {
 	
@@ -48,7 +48,7 @@ public class IndexAction extends StandardRunnerAction {
 		
 		if (super.getSessionUser().getIsAdmin()) {
 			logger.debug("is admin so fetching admin groups");
-			groups=groupDao.listGroups();
+			groups=groupDao.getAll();
 		} else {
 			logger.debug("is not admin so pulling groups from session");
 			groups=getSessionUser().getGroups();
@@ -73,15 +73,11 @@ public class IndexAction extends StandardRunnerAction {
 		this.dashboardService = dashboardService;
 	}
 
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
 
-	public void setGroupDao(RunnerGroupDao groupDao) {
+
+	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
 		this.groupDao = groupDao;
 	}
-
-	 
 
 	public Map<String, List<RunnerDashboardItem>> getItems() {
 		return items;

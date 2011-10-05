@@ -22,7 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.group;
 
-import binky.reportrunner.dao.RunnerGroupDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
@@ -31,7 +31,7 @@ import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 
-	private RunnerGroupDao groupDao;
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private RunnerJobService jobService;
 	private Boolean status;
 
@@ -46,7 +46,7 @@ public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
 
-			RunnerGroup group = groupDao.getGroup(groupName);
+			RunnerGroup group = groupDao.get(groupName);
 			if (super.getSessionUser().getGroups().contains(group)) {
 				for (RunnerJob job : group.getRunnerJobs()) {
 					if (status) {
@@ -73,11 +73,8 @@ public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 		return SUCCESS;
 	}
 
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
 
-	public void setGroupDao(RunnerGroupDao groupDao) {
+	public void setGroupDao(ReportRunnerDao<RunnerGroup,String>  groupDao) {
 		this.groupDao = groupDao;
 	}
 

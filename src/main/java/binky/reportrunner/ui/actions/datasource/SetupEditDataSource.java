@@ -22,7 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.datasource;
 
-import binky.reportrunner.dao.RunnerDataSourceDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
@@ -34,14 +34,14 @@ public class SetupEditDataSource extends AdminRunnerAction{
 	@Override
 	public String execute() throws Exception {
 		if ((dataSourceName !=null) && (!dataSourceName.isEmpty())){
-			dataSource=dataSourceDao.getDataSource(dataSourceName);
+			dataSource=dataSourceDao.get(dataSourceName);
 		} else {
 			dataSource=new RunnerDataSource();
 		}
 		return SUCCESS;
 	}
 	
-	private RunnerDataSourceDao dataSourceDao;
+	private  ReportRunnerDao<RunnerDataSource,String> dataSourceDao;
 
 	public void setDataSourceName(String dataSourceName) {
 		this.dataSourceName = dataSourceName;
@@ -49,10 +49,7 @@ public class SetupEditDataSource extends AdminRunnerAction{
 	public RunnerDataSource getDataSource() {
 		return dataSource;
 	}
-	public RunnerDataSourceDao getDataSourceDao() {
-		return dataSourceDao;
-	}
-	public void setDataSourceDao(RunnerDataSourceDao dataSourceDao) {
+	public void setDataSourceDao( ReportRunnerDao<RunnerDataSource,String> dataSourceDao) {
 		this.dataSourceDao = dataSourceDao;
 	}
 	

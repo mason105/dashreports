@@ -22,14 +22,14 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.group;
 
-import binky.reportrunner.dao.RunnerGroupDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 
 public class SaveGroup extends AdminRunnerAction {
 
-	private RunnerGroupDao groupDao;
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private RunnerGroup group;
 
 	private static final long serialVersionUID = 1L;
@@ -39,7 +39,7 @@ public class SaveGroup extends AdminRunnerAction {
 		String groupName = group.getGroupName();
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {								
-			groupDao.saveUpdateGroup(group);
+			groupDao.saveOrUpdate(group);
 		} else {
 			SecurityException se = new SecurityException("Group " + groupName
 					+ " not valid for user " + super.getSessionUser().getUserName());
@@ -47,16 +47,11 @@ public class SaveGroup extends AdminRunnerAction {
 		}
 		
 		//hack to force group update
-		super.getSessionUser().setGroups(groupDao.listGroups());
+		super.getSessionUser().setGroups(groupDao.getAll());
 		
 		return SUCCESS;
 	}
-
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
-
-	public void setGroupDao(RunnerGroupDao groupDao) {
+	public void setGroupDao(ReportRunnerDao<RunnerGroup,String> groupDao) {
 		this.groupDao = groupDao;
 	}
 

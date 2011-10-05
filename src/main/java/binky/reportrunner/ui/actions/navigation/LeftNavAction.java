@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.RunnerGroupDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.ui.actions.base.AdminRunnerAction;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
@@ -35,7 +35,7 @@ public class LeftNavAction extends StandardRunnerAction {
 	
 	private static final Logger logger = Logger.getLogger(LeftNavAction.class);
 	private static final long serialVersionUID = -2321083106251542716L;
-	private RunnerGroupDao groupDao;
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private List<RunnerGroup> groups;
 	private Boolean expandAdmin;
 	private Boolean expandGroups;
@@ -71,7 +71,7 @@ public class LeftNavAction extends StandardRunnerAction {
 		}
 		
 		if (super.getSessionUser().getIsAdmin()) {
-			groups = groupDao.listGroups();
+			groups = groupDao.getAll();
 		} else {			
 			super.getSessionUser().getGroups();
 		}
@@ -79,10 +79,7 @@ public class LeftNavAction extends StandardRunnerAction {
 		
 		return SUCCESS;
 	}
-	public RunnerGroupDao getGroupDao() {
-		return groupDao;
-	}
-	public void setGroupDao(RunnerGroupDao groupDao) {
+	public void setGroupDao(ReportRunnerDao<RunnerGroup,String> groupDao) {
 		this.groupDao = groupDao;
 	}
 	public List<RunnerGroup> getGroups() {

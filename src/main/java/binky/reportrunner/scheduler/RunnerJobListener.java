@@ -35,12 +35,12 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
-import binky.reportrunner.dao.RunnerDashboardItemDao;
-import binky.reportrunner.dao.RunnerHistoryDao;
-import binky.reportrunner.dao.RunnerJobDao;
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardItem;
+import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.data.RunnerJob_pk;
 import binky.reportrunner.engine.RunnerEngine;
 import binky.reportrunner.engine.dashboard.AlertProcessor;
 import binky.reportrunner.engine.utils.EmailHandler;
@@ -56,13 +56,13 @@ public class RunnerJobListener implements JobListener {
 
 	private String fromAddress;
 
-	private RunnerHistoryDao runnerHistoryDao;
+	private ReportRunnerDao<RunnerHistoryEvent,Long> runnerHistoryDao;
 
-	private RunnerJobDao runnerJobDao;
+	private ReportRunnerDao<RunnerJob,RunnerJob_pk> runnerJobDao;
 
 	private DatasourceService datasourceService;
 
-	private RunnerDashboardItemDao dashboardDao;
+	private ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao;
 	
 	public void jobExecutionVetoed(JobExecutionContext ctx) {
 		RunnerHistoryEvent event = new RunnerHistoryEvent();
@@ -71,7 +71,7 @@ public class RunnerJobListener implements JobListener {
 		event.setMessage("Job Execution Vetoed");
 		event.setTimestamp(Calendar.getInstance().getTime());
 
-		runnerHistoryDao.saveEvent(event);
+		runnerHistoryDao.saveOrUpdate(event);
 		logger.warn("Job Execution Vetoed: " + ctx.getJobDetail().getName()
 				+ "/" + ctx.getJobDetail().getGroup());
 	}
@@ -83,7 +83,7 @@ public class RunnerJobListener implements JobListener {
 			String jobName = ctx.getJobDetail().getName();
 			String groupName = ctx.getJobDetail().getGroup();
 
-			RunnerJob job = runnerJobDao.getJob(jobName, groupName);
+			RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
 			ctx.getJobDetail().getJobDataMap().put("runnerJob", job);
 
 			ctx.getJobDetail().getJobDataMap().put("smtpServer",
@@ -103,7 +103,7 @@ public class RunnerJobListener implements JobListener {
 				.equals(AlertProcessor.class)) {
 			// stuff for the dashboards
 			Integer itemId = Integer.parseInt(ctx.getJobDetail().getName());
-			RunnerDashboardItem item = dashboardDao.getItem(itemId);
+			RunnerDashboardItem item = dashboardDao.get(itemId);
 			ctx.getJobDetail().getJobDataMap().put("item", item);
 			DataSource ds;
 			try {
@@ -135,12 +135,12 @@ public class RunnerJobListener implements JobListener {
 		event.setTimestamp(finishTime);
 		event.setSuccess(success);
 		event.setRunTime(ctx.getJobRunTime());
-		runnerHistoryDao.saveEvent(event);
+		runnerHistoryDao.saveOrUpdate(event);
 
 		
 		if (ctx.getJobDetail().getJobClass().equals(RunnerEngine.class)) {
 
-			RunnerJob job = runnerJobDao.getJob(jobName, groupName);		
+			RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));		
 
 			if ((job.getAlertEmailAddress() != null)
 					&& !job.getAlertEmailAddress().isEmpty()) {
@@ -187,12 +187,13 @@ public class RunnerJobListener implements JobListener {
 		return result.toString();
 	}
 
-	public RunnerHistoryDao getRunnerHistoryDao() {
-		return runnerHistoryDao;
+
+	public void setRunnerHistoryDao(ReportRunnerDao<RunnerHistoryEvent,Long> runnerHistoryDao) {
+		this.runnerHistoryDao = runnerHistoryDao;
 	}
 
-	public void setRunnerHistoryDao(RunnerHistoryDao runnerHistoryDao) {
-		this.runnerHistoryDao = runnerHistoryDao;
+	public void setRunnerJobDao(ReportRunnerDao<RunnerJob,RunnerJob_pk> runnerJobDao) {
+		this.runnerJobDao = runnerJobDao;
 	}
 
 	public String getSmtpServer() {
@@ -211,13 +212,6 @@ public class RunnerJobListener implements JobListener {
 		this.fromAddress = fromAddress;
 	}
 
-	public RunnerJobDao getRunnerJobDao() {
-		return runnerJobDao;
-	}
-
-	public void setRunnerJobDao(RunnerJobDao runnerJobDao) {
-		this.runnerJobDao = runnerJobDao;
-	}
 
 	public String getName() {
 		return "ReportRunnerCoreJobListener";
@@ -231,14 +225,11 @@ public class RunnerJobListener implements JobListener {
 		this.datasourceService = datasourceService;
 	}
 
-	public RunnerDashboardItemDao getDashboardDao() {
-		return dashboardDao;
-	}
-
-	public void setDashboardDao(RunnerDashboardItemDao dashboardDao) {
+	public void setDashboardDao(
+			ReportRunnerDao<RunnerDashboardItem, Integer> dashboardDao) {
 		this.dashboardDao = dashboardDao;
 	}
 
-	
+
 
 }

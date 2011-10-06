@@ -67,13 +67,6 @@
 	</bean>
 	
 	
-	<bean id="getDashboardChartDataAction" class="binky.reportrunner.ui.actions.dashboard.GetDashboardChartDataAction"
-		scope="prototype" >
-		<property name="dashboardService">
-			<ref bean="dashboardService" />
-		</property>		
-	</bean>
-	
 	<bean id="dashboardWidgetAction" class="binky.reportrunner.ui.actions.dashboard.DashboardWidgetAction"
 		scope="prototype" >
 		<property name="dashboardService">

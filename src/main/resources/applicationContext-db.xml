@@ -103,13 +103,19 @@
 	<bean id="hibernateInterceptor"
 		class="org.springframework.orm.hibernate3.HibernateInterceptor"
 		autowire="byName" />
+		
 	<bean id="runnerJobParameterDaoTarget"
-		class="binky.reportrunner.dao.impl.RunnerJobParameterDaoImpl"
-		autowire="byName" />
+		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
+		autowire="byName">
+		  <constructor-arg>
+            <value>binky.reportrunner.data.RunnerJobParameter</value>
+        </constructor-arg>
+	</bean>
+	
 	<bean id="runnerJobParameterDao"
 		class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerJobParameterDao</value>
+			<value>binky.reportrunner.dao.ReportRunnerDao</value>
 		</property>
 		<property name="interceptorNames">
 			<list>
@@ -119,12 +125,16 @@
 		</property>
 	</bean>
 	<bean id="runnerHistoryDaoTarget"
-		class="binky.reportrunner.dao.impl.RunnerHistoryDaoImpl"
-		autowire="byName" />
+		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
+		autowire="byName">
+		  <constructor-arg>
+            <value>binky.reportrunner.data.RunnerHistoryEvent</value>
+        </constructor-arg>
+	</bean>
 	<bean id="runnerHistoryDao"
 		class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerHistoryDao</value>
+			<value>binky.reportrunner.dao.ReportRunnerDao</value>
 		</property>
 		<property name="interceptorNames">
 			<list>
@@ -134,12 +144,16 @@
 		</property>
 	</bean>
 	<bean id="runnerJobDaoTarget"
-		class="binky.reportrunner.dao.impl.RunnerJobDaoImpl"
-		autowire="byName" />
+		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
+		autowire="byName">
+		  <constructor-arg>
+            <value>binky.reportrunner.data.RunnerJob</value>
+        </constructor-arg>
+	</bean>
 	<bean id="runnerJobDao"
 		class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerJobDao</value>
+			<value>binky.reportrunner.dao.ReportRunnerDao</value>
 		</property>
 		<property name="interceptorNames">
 			<list>
@@ -149,12 +163,16 @@
 		</property>
 	</bean>
 	<bean id="runnerGroupDaoTarget"
-		class="binky.reportrunner.dao.impl.RunnerGroupDaoImpl"
-		autowire="byName" />
+		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
+		autowire="byName">
+		  <constructor-arg>
+            <value>binky.reportrunner.data.RunnerGroup</value>
+        </constructor-arg>
+	</bean>
 	<bean id="runnerGroupDao"
 		class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerGroupDao</value>
+			<value>binky.reportrunner.dao.ReportRunnerDao</value>
 		</property>
 		<property name="interceptorNames">
 			<list>
@@ -164,12 +182,16 @@
 		</property>
 	</bean>
 	<bean id="runnerUserDaoTarget"
-		class="binky.reportrunner.dao.impl.RunnerUserDaoImpl"
-		autowire="byName" />
+		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
+		autowire="byName">
+		  <constructor-arg>
+            <value>binky.reportrunner.data.RunnerUser</value>
+        </constructor-arg>
+	</bean>
 	<bean id="runnerUserDao"
 		class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerUserDao</value>
+			<value>binky.reportrunner.dao.ReportRunnerDao</value>
 		</property>
 		<property name="interceptorNames">
 			<list>
@@ -180,13 +202,17 @@
 	</bean>
 	
 	<bean id="dashboardDaoTarget"
-		class="binky.reportrunner.dao.impl.RunnerDashboardItemDaoImpl"
-		autowire="byName" />
+		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
+		autowire="byName">
+		  <constructor-arg>
+            <value>binky.reportrunner.data.RunnerDashboardItem</value>
+        </constructor-arg>
+	</bean>
 	<bean id="dashboardDao"
 		class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="proxyInterfaces">
 			<value>
-				binky.reportrunner.dao.RunnerDashboardItemDao
+				binky.reportrunner.dao.ReportRunnerDao
 			</value>
 		</property>
 		<property name="interceptorNames">
@@ -200,12 +226,16 @@
 
 
 	<bean id="runnerDataSourceDaoTarget"
-		class="binky.reportrunner.dao.impl.RunnerDataSourceDaoImpl"
-		autowire="byName" />
+		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
+		autowire="byName">
+		  <constructor-arg>
+            <value>binky.reportrunner.data.RunnerDataSource</value>
+        </constructor-arg>
+	</bean>
 	<bean id="runnerDataSourceDao"
 		class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.RunnerDataSourceDao</value>
+			<value>binky.reportrunner.dao.ReportRunnerDao</value>
 		</property>
 		<property name="interceptorNames">
 			<list>

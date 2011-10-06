@@ -332,6 +332,15 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		this.dataSourceService = dataSourceService;
 	}
 
+	public ReportRunnerDao<RunnerJob, RunnerJob_pk> getRunnerJobDao() {
+		return runnerJobDao;
+	}
+
+	public void setRunnerJobDao(
+			ReportRunnerDao<RunnerJob, RunnerJob_pk> runnerJobDao) {
+		this.runnerJobDao = runnerJobDao;
+	}
+
 
 	
 

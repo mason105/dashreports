@@ -29,14 +29,6 @@
 		<a href="mailto:daniel@daniel-grout.co.uk">Daniel Grout</a>
 	</td>
 </tr>
-<tr>
-	<td> 
-		<strong>Logo Design</strong>   
-	</td>
-		<td>    
-		<a href="mailto:geord@hotmail.co.uk">Andrew Hall</a>
-	</td>
-</tr>
 </table>
 </div>
 

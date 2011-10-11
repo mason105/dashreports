@@ -73,11 +73,7 @@
 				<param name="actionName">schedulerAdmin</param>
 			</result>
 		</action>
-		
-		<action name="listJobs" class="listJobsAction">
-			<result>/jsp/nostyle/listJobs.jsp</result>
-		</action>
-		
+				
 		<action name="listGroups" class="listGroupsAction">
 			<result>/jsp/main/listGroups.jsp</result>
 		</action>
@@ -218,8 +214,8 @@
 			<result>/jsp/main/editGrid.jsp</result>
 		</action>
 		
-		<action name="group" class="groupAction">
-			<result>/jsp/main/group.jsp</result>
+		<action name="showGroup" class="showGroupAction">
+			<result>/jsp/main/showGroup.jsp</result>
 		</action>
 		
 		<action name="saveGrid" class="saveGridAction">

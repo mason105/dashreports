@@ -42,10 +42,10 @@
 			<div class="navBody">	
 			<s:iterator value="groups">	
 				<s:if test="groupName!=currentGroupName">			
-					<div class="groupButton" onClick="parent.location='group.action?groupName=<s:property value="%{groupName}" />'"><s:property value="%{groupName}" /></div>
+					<div class="groupButton" onClick="parent.location='showGroup.action?groupName=<s:property value="%{groupName}" />'"><s:property value="%{groupName}" /></div>
 				</s:if>
 				<s:else>
-					<div class="groupButtonSelected" onClick="parent.location='group.action?groupName=<s:property value="%{groupName}" />'"><s:property value="%{groupName}" /></div>
+					<div class="groupButtonSelected" onClick="parent.location='showGroup.action?groupName=<s:property value="%{groupName}" />'"><s:property value="%{groupName}" /></div>
 				</s:else>
 	   		</s:iterator>
 			</div>

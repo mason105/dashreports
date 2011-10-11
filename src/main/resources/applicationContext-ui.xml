@@ -44,14 +44,6 @@
 		<property name="versionId" value="${reportrunner.versionId}" />
 	</bean>
 
-	<bean id="dashboardAction" class="binky.reportrunner.ui.actions.dashboard.DashboardAction"
-		scope="prototype" >
-		<property name="dashboardService">
-			<ref bean="dashboardService" />
-		</property>		
-	</bean>
-
-
 	<bean id="leftNavAction" class="binky.reportrunner.ui.actions.navigation.LeftNavAction"
 		scope="prototype" >
 		<property name="groupDao">
@@ -94,12 +86,6 @@
 	<bean id="logoutAction" class="binky.reportrunner.ui.actions.Logout"
 		scope="prototype" />		
 		
-	<bean id="listJobsAction" class="binky.reportrunner.ui.actions.job.ListJobsAction"
-		scope="prototype">
-		<property name="jobService">
-			<ref bean="runnerJobService" />
-		</property>
-	</bean>
 	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.group.ListGroupsAction"
 		scope="prototype">
 		<property name="groupDao">
@@ -424,15 +410,22 @@
 		</property>		
 	</bean>
 
-	<bean id="groupAction" class="binky.reportrunner.ui.actions.group.Group"
+	<bean id="showGroupAction" class="binky.reportrunner.ui.actions.group.ShowGroup"
 		scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>	
+		<property name="jobService">
+			<ref bean="runnerJobService" />
+		</property>
 	</bean>
 
 	<bean id="setupJobStatsAction" class="binky.reportrunner.ui.actions.admin.SetupJobStatsAction"
 		scope="prototype">
 		<property name="historyDao">
 			<ref bean="runnerHistoryDao" />
-		</property>		
+		</property>	
+			
 	</bean>
 
 </beans>

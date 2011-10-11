@@ -9,7 +9,7 @@
 <sx:head  />
 </head>
 <body>
-<s:form action="saveChart">
+<s:form action="saveGrid">
 
 <sx:tabbedpanel id="report">
 	

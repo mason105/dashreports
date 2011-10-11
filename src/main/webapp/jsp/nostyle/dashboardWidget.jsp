@@ -1,7 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib uri="http://displaytag.sf.net" prefix="display"%>
-<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
-
+<%@ taglib prefix="o" uri="/ofc2" %>
 <link href="<s:url value='/styles/displaytag.css'/>" rel="stylesheet" type="text/css" media="all" />
 
 <!--<s:property value="gridData" escape="false" />-->
@@ -40,17 +39,6 @@
 	 				</s:if>		
 				</div>	
 			</div>
-			
-			<sjc:chart cssStyle="width: 600px; height: 400px;">
-		    	<s:iterator value="values">
-		    		<sjc:chartData
-		    			label="%{key}"
-		    			list="%{value}"
-		    			points="{ show: true }"
-		    			lines="{ show: true }"
-		    		/>
-		    	</s:iterator>
-	    	</sjc:chart>
 			
 			<o:graph id="chart_%{itemId}" width="%{x}" height="%{y}" dataUrl="/getDashboardChartData.action?itemId=%{item.itemId}" />											
 		</div>

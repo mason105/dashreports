@@ -39,7 +39,7 @@ import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 
 @Entity
 @NamedQueries( {
-	@NamedQuery(name = "getJobsByGroup", query = "from RunnerJob j where j.pk.group.groupName = ?"),
+	@NamedQuery(name = "getJobsByGroup", query = "from RunnerJob j where j.pk.group.groupName = ?")
 })
 public class RunnerJob implements Serializable {
 

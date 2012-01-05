@@ -39,7 +39,7 @@ import org.apache.commons.beanutils.RowSetDynaClass;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries( {
-	@NamedQuery(name = "getItemsByGroup", query = "from RunnerDashboardItem i where i.group.groupName = ?"),
+	@NamedQuery(name = "getItemsByGroup", query = "from RunnerDashboardItem i where i.group.groupName = ?")
 })
 public abstract class RunnerDashboardItem implements Serializable {
 

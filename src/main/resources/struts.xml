@@ -80,7 +80,7 @@
 
 		<action name="deleteJob" class="deleteJobAction">
 			<result type="redirectAction">
-				<param name="actionName">group</param>
+				<param name="actionName">showGroup</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
         		<param name="activeTab">reports</param>				
@@ -89,7 +89,7 @@
 
 		<action name="editJob" class="editJobAction">
 			<result type="redirectAction">
-				<param name="actionName">group</param>
+				<param name="actionName">showGroup</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
 				<param name="activeTab">reports</param>        						
@@ -99,7 +99,7 @@
 		
 		<action name="setJobStatus" class="setJobStatusAction">
 			<result type="redirectAction">
-				<param name="actionName">group</param>
+				<param name="actionName">showGroup</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
 				<param name="activeTab">reports</param>        						        						
@@ -181,7 +181,7 @@
 
 		<action name="invokeJob" class="invokeJobAction">
 			<result type="redirectAction">
-				<param name="actionName">group</param>
+				<param name="actionName">showGroup</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
 				<param name="activeTab">reports</param>        						        						
@@ -202,7 +202,7 @@
 		
 		<action name="saveChart" class="saveChartAction">
 			<result type="redirectAction">
-				<param name="actionName">group</param>
+				<param name="actionName">showGroup</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
 				<param name="activeTab">dashboard</param>        						
@@ -220,7 +220,7 @@
 		
 		<action name="saveGrid" class="saveGridAction">
 			<result type="redirectAction">
-				<param name="actionName">group</param>
+				<param name="actionName">showGroup</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
         		<param name="activeTab">dashboard</param>				
@@ -234,7 +234,7 @@
 		
 		<action name="saveThreshold" class="saveThresholdAction">
 			<result type="redirectAction">
-				<param name="actionName">group</param>
+				<param name="actionName">showGroup</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
         		<param name="activeTab">dashboard</param>				
@@ -245,7 +245,7 @@
 
 		<action name="deleteItem" class="deleteItemAction">
 			<result type="redirectAction">
-				<param name="actionName">group</param>
+				<param name="actionName">showGroup</param>
 				 <param name="parse">true</param>
         		<param name="groupName">${groupName}</param>
         		<param name="activeTab">dashboard</param>
@@ -254,7 +254,7 @@
 
 		<action name="invokeItem" class="invokeItemAction">
 			<result type="redirectAction">
-				<param name="actionName">group</param>
+				<param name="actionName">showGroup</param>
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>		
         		<param name="activeTab">dashboard</param>		

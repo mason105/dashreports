@@ -45,6 +45,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	private ReportRunnerDao<RunnerDataSource,String> dataSourceDao;
 	private Map<String, DataSource> dataSources = new HashMap<String, DataSource>();;
+	private String secureKey;
 
 	private Logger logger = Logger.getLogger(DatasourceServiceImpl.class);
 
@@ -176,5 +177,8 @@ public class DatasourceServiceImpl implements DatasourceService {
 			dataSources.remove(dataSource.getDataSourceName());
 		}		
 		dataSourceDao.saveOrUpdate(dataSource);		
+	}
+	public void setSecureKey(String secureKey) {
+		this.secureKey = secureKey;
 	}
 }

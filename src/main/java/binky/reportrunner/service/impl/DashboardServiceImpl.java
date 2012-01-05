@@ -42,6 +42,7 @@ public class DashboardServiceImpl implements DashboardService {
 	private ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao;
 	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private Scheduler scheduler;
+
 	public RunnerDashboardItem getItem(Integer id) {
 		return dashboardDao.get(id);
 	}
@@ -134,6 +135,7 @@ public class DashboardServiceImpl implements DashboardService {
 	public void setGroupDao(ReportRunnerDao<RunnerGroup,String> groupDao) {
 		this.groupDao = groupDao;
 	}
+
 
 
 }

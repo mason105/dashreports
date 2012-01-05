@@ -22,10 +22,16 @@
  ******************************************************************************/
 package binky.reportrunner.service;
 
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.sql.DataSource;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -37,7 +43,7 @@ public interface DatasourceService {
 	public DataSource getJDBCDataSource(RunnerDataSource runnerDs)
 			throws SQLException;
 
-	public void saveUpdateDataSource(RunnerDataSource dataSource);
+	public void saveUpdateDataSource(RunnerDataSource dataSource) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException;
 
 	public void deleteDataSource(String dataSourceName);
 

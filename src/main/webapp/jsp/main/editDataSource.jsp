@@ -40,7 +40,7 @@
 			name="dataSource.jdbcUrl"  cssClass="textbox"/>
 		<s:textfield label="Username" size="60" value="%{dataSource.username}"
 			name="dataSource.username"  cssClass="textbox"/>
-		<s:textfield label="Password" size="60" value="%{dataSource.password}"
+		<s:password label="Password" size="60"
 			name="dataSource.password"  cssClass="textbox"/>
 		<s:textfield label="Initial Pool Size" size="10"
 			value="%{dataSource.initialPoolSize}"

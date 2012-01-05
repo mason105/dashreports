@@ -23,11 +23,17 @@
 package binky.reportrunner.service.impl;
 
 import java.beans.PropertyVetoException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -38,12 +44,13 @@ import org.apache.log4j.Logger;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.service.DatasourceService;
+import binky.reportrunner.util.EncryptionUtil;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 public class DatasourceServiceImpl implements DatasourceService {
 
-	private ReportRunnerDao<RunnerDataSource,String> dataSourceDao;
+	private ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
 	private Map<String, DataSource> dataSources = new HashMap<String, DataSource>();;
 	private String secureKey;
 
@@ -51,19 +58,22 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	private DataSource getDs(RunnerDataSource runnerDs)
 			throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException, PropertyVetoException, NamingException {
+			ClassNotFoundException, PropertyVetoException, NamingException, InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException {
 		final String jndiDataSource = runnerDs.getJndiName();
 		
-		if ((jndiDataSource == null)||jndiDataSource.isEmpty()) {
+		EncryptionUtil enc = new EncryptionUtil();
+		if ((jndiDataSource == null) || jndiDataSource.isEmpty()) {
 			logger.info("using c3p0 pooled connection for: "
 					+ runnerDs.getDataSourceName());
+		
 			String jdbcUser = runnerDs.getUsername();
-			String jdbcPassword = runnerDs.getPassword();
+			String jdbcPassword="";
+			jdbcPassword= enc.decrpyt(secureKey, runnerDs.getPassword());
 			String jdbcUrl = runnerDs.getJdbcUrl();
 			String databaseDriver = runnerDs.getJdbcClass();
 
 			Class.forName(databaseDriver).newInstance();
-
+			
 			ComboPooledDataSource ds = new ComboPooledDataSource();
 			ds.setDriverClass(databaseDriver);
 			ds.setJdbcUrl(jdbcUrl);
@@ -75,7 +85,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 			ds.setDescription(runnerDs.getDataSourceName());
 			ds.setIdleConnectionTestPeriod(600);
 			ds.setNumHelperThreads(5);
-			ds.setMaxStatements(5);		
+			ds.setMaxStatements(5);
 			return ds;
 		} else {
 			logger.info("getting datasource from JNDI url: " + jndiDataSource
@@ -87,41 +97,51 @@ public class DatasourceServiceImpl implements DatasourceService {
 		}
 	}
 
-	public void purgeConnections(String dataSourceName)  throws SQLException {
-		ComboPooledDataSource ds = (ComboPooledDataSource)dataSources.get(dataSourceName);
+	public void purgeConnections(String dataSourceName) throws SQLException {
+		ComboPooledDataSource ds = (ComboPooledDataSource) dataSources
+				.get(dataSourceName);
 		if (ds != null) {
-			dumpLogInfo(ds,dataSourceName);
-			//reset the datasource
+			dumpLogInfo(ds, dataSourceName);
+			// reset the datasource
 			ds.hardReset();
 		}
 	}
-	
-	private void dumpLogInfo(ComboPooledDataSource ds, String dsName) throws SQLException {
-		//dump out a shed load of info about the datasource
-		logger.debug("Datasource info for " + dsName );
+
+	private void dumpLogInfo(ComboPooledDataSource ds, String dsName)
+			throws SQLException {
+		// dump out a shed load of info about the datasource
+		logger.debug("Datasource info for " + dsName);
 		Map<String, Object> info = getConnectionInfo(ds, dsName);
-		for (String key:info.keySet()) {
+		for (String key : info.keySet()) {
 			logger.debug("* " + key + ": " + info.get(key));
 		}
 	}
-	
-	public Map<String,Object> getConnectionInfo(ComboPooledDataSource ds, String dsName) throws SQLException {
+
+	public Map<String, Object> getConnectionInfo(ComboPooledDataSource ds,
+			String dsName) throws SQLException {
 		Map<String, Object> info = new HashMap<String, Object>();
-	
-		info.put("Num Connections" , ds.getNumConnections());
-		info.put("Num Busy Connections" , ds.getNumBusyConnections());
-		info.put("Num Idle Connections" , ds.getNumIdleConnections());
-		info.put("Num Unclosed Orphaned Connections" , ds.getNumUnclosedOrphanedConnections());
-		info.put("Thread Pool Num Active Threads" , ds.getThreadPoolNumActiveThreads());
-		info.put("Thread Pool Num Tasks Pending" , ds.getThreadPoolNumTasksPending());
-		info.put("Statement Cache Num Connections With Cached Statements All Users" , ds.getStatementCacheNumConnectionsWithCachedStatementsAllUsers());
-		info.put("Statement Cache Num Statements All Users" , ds.getStatementCacheNumStatementsAllUsers());
-		info.put("Num Helper Threads",ds.getNumHelperThreads());
-	
+
+		info.put("Num Connections", ds.getNumConnections());
+		info.put("Num Busy Connections", ds.getNumBusyConnections());
+		info.put("Num Idle Connections", ds.getNumIdleConnections());
+		info.put("Num Unclosed Orphaned Connections",
+				ds.getNumUnclosedOrphanedConnections());
+		info.put("Thread Pool Num Active Threads",
+				ds.getThreadPoolNumActiveThreads());
+		info.put("Thread Pool Num Tasks Pending",
+				ds.getThreadPoolNumTasksPending());
+		info.put(
+				"Statement Cache Num Connections With Cached Statements All Users",
+				ds.getStatementCacheNumConnectionsWithCachedStatementsAllUsers());
+		info.put("Statement Cache Num Statements All Users",
+				ds.getStatementCacheNumStatementsAllUsers());
+		info.put("Num Helper Threads", ds.getNumHelperThreads());
+
 		return info;
 	}
-	
-	public DataSource getJDBCDataSource(RunnerDataSource runnerDs)  throws SQLException {
+
+	public DataSource getJDBCDataSource(RunnerDataSource runnerDs)
+			throws SQLException {
 
 		DataSource ds = dataSources.get(runnerDs.getDataSourceName());
 		if (ds == null) {
@@ -132,12 +152,14 @@ public class DatasourceServiceImpl implements DatasourceService {
 				logger.info("Stored datasource: "
 						+ runnerDs.getDataSourceName());
 				dataSources.put(runnerDs.getDataSourceName(), ds);
-				
-				dumpLogInfo((ComboPooledDataSource)ds, runnerDs.getDataSourceName());
-				
+
+				dumpLogInfo((ComboPooledDataSource) ds,
+						runnerDs.getDataSourceName());
+
 			} catch (Exception e) {
-				logger.fatal("Unable to create datasource: "
-						+ runnerDs.getDataSourceName(), e);
+				logger.fatal(
+						"Unable to create datasource: "
+								+ runnerDs.getDataSourceName(), e);
 			}
 		}
 		return ds;
@@ -157,27 +179,37 @@ public class DatasourceServiceImpl implements DatasourceService {
 	}
 
 	public void deleteDataSource(String dataSourceName) {
-		if (dataSources.get(dataSourceName)!=null) {		
+		if (dataSources.get(dataSourceName) != null) {
 			dataSources.remove(dataSourceName);
-		}		
+		}
 		dataSourceDao.delete(dataSourceName);
-		
+
 	}
 
 	public RunnerDataSource getDataSource(String dataSourceName) {
-		return dataSourceDao.get(dataSourceName);
+		RunnerDataSource ds = dataSourceDao.get(dataSourceName);
+		ds.setPassword(null);
+		return ds;
 	}
 
 	public List<RunnerDataSource> listDataSources() {
 		return dataSourceDao.getAll();
 	}
 
-	public void saveUpdateDataSource(RunnerDataSource dataSource) {
-		if (dataSources.get(dataSource.getDataSourceName())!=null) {		
+	public void saveUpdateDataSource(RunnerDataSource dataSource) throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException {
+		if (dataSources.get(dataSource.getDataSourceName()) != null) {
 			dataSources.remove(dataSource.getDataSourceName());
-		}		
-		dataSourceDao.saveOrUpdate(dataSource);		
+		}
+		EncryptionUtil enc = new EncryptionUtil();
+		if ((dataSource.getPassword() != null)
+				&& dataSource.getPassword().length() > 0) {
+			dataSource.setPassword(enc.encrpyt(secureKey,
+					dataSource.getPassword()));
+		}
+
+		dataSourceDao.saveOrUpdate(dataSource);
 	}
+
 	public void setSecureKey(String secureKey) {
 		this.secureKey = secureKey;
 	}

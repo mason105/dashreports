@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 
 public class EncryptionUtilTest extends TestCase {
 
-	private static final String testString="IAMATEST STRING 1234";
+	private static final String testString="password";
 	public void testGenerateKey() {
 		EncryptionUtil en = new EncryptionUtil();
 		String key=null;

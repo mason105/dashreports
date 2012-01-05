@@ -23,9 +23,9 @@
 package binky.reportrunner.ui.actions.admin;
 
 import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class InterruptCurrentExecutingDashboardItemAction extends AdminRunnerAction {
+public class InterruptCurrentExecutingDashboardItemAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private DashboardService dashboardService;

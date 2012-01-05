@@ -23,9 +23,9 @@
 package binky.reportrunner.ui.actions.admin;
 
 import binky.reportrunner.service.RunnerJobService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class InterruptCurrentExecutingJobAction extends AdminRunnerAction {
+public class InterruptCurrentExecutingJobAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private RunnerJobService jobService;

@@ -3,9 +3,9 @@ package binky.reportrunner.ui.actions.admin;
 import java.util.Date;
 
 import binky.reportrunner.scheduler.Scheduler;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SchedulerAdmin extends AdminRunnerAction {
+public class SchedulerAdmin extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	

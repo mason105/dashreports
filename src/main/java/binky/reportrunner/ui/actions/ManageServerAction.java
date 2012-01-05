@@ -22,9 +22,9 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions;
 
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class ManageServerAction extends AdminRunnerAction  {
+public class ManageServerAction extends StandardRunnerAction  {
 
 	private static final long serialVersionUID = -4549766518691836880L;
 

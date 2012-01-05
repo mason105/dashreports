@@ -25,9 +25,9 @@ package binky.reportrunner.ui.actions.datasource;
 import org.springframework.dao.DataIntegrityViolationException;
 
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class DeleteDataSource extends AdminRunnerAction {
+public class DeleteDataSource extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 

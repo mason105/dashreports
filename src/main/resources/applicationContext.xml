@@ -107,25 +107,20 @@
 			<ref bean="runnerUserDao" />
 		</property>
 	</bean>
-	<bean id="loginInterceptor" class="binky.reportrunner.interceptors.AuthIntercept"
-		scope="singleton">
-		<property name="authService">
-			<ref bean="authenticationService" />
-		</property>
-	</bean>
 	
-	<bean id="noCacheInterceptor" class="binky.reportrunner.interceptors.NoCache" scope="singleton" >
-	</bean>
-	
-	<bean id="userSessionIntercept" class="binky.reportrunner.interceptors.UserSessionIntercept"
-		scope="singleton" >
+	<bean id="userService"
+		class="binky.reportrunner.service.impl.UserServiceImpl">
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
 		</property>
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
-		</property>	
+		</property>
 	</bean>
+	
+	<bean id="noCacheInterceptor" class="binky.reportrunner.interceptors.NoCache" scope="singleton" >
+	</bean>
+
 	
 	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
 		<property name="runnerHistoryDao" ref="runnerHistoryDao" />

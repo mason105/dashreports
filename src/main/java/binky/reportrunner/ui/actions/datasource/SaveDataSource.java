@@ -24,9 +24,9 @@ package binky.reportrunner.ui.actions.datasource;
 
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SaveDataSource extends AdminRunnerAction {
+public class SaveDataSource extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 

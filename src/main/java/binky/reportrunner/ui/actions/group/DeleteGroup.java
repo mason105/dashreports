@@ -31,9 +31,9 @@ import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.service.RunnerJobService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class DeleteGroup extends AdminRunnerAction {
+public class DeleteGroup extends StandardRunnerAction {
 
 	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private DashboardService dashboardService;

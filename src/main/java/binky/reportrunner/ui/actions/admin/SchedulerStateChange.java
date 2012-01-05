@@ -1,9 +1,9 @@
 package binky.reportrunner.ui.actions.admin;
 
 import binky.reportrunner.scheduler.Scheduler;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SchedulerStateChange extends AdminRunnerAction {
+public class SchedulerStateChange extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 778488274157345048L;
 

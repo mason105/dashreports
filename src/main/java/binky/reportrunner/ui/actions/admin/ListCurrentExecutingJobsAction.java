@@ -28,9 +28,9 @@ import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.service.RunnerJobService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class ListCurrentExecutingJobsAction extends AdminRunnerAction {
+public class ListCurrentExecutingJobsAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 

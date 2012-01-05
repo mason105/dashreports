@@ -22,51 +22,82 @@
  ******************************************************************************/
 package binky.reportrunner.service.impl;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.springframework.dao.DataAccessException;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.service.AuthenticationService;
+import binky.reportrunner.util.EncryptionUtil;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
 	
 	private ReportRunnerDao<RunnerUser,String> userDao;
 	private static final Logger logger = Logger
 			.getLogger(AuthenticationServiceImpl.class);
-	private  AUTH_RESULT lastResult;
-	
-	public RunnerUser authUser(String userName, String password ) {
-
-		RunnerUser  user = userDao.get(userName);
-		if (user == null) {
-			logger.warn("Authentication failed - unknown user - " + userName);
-			user=null;
-			this.lastResult = AUTH_RESULT.FAIL;			
-		} else {
-			if (password.equals(user.getPassword())) {
-				if (!user.getIsLocked()) {
-					logger.info("Authenticated user: " + userName + " " + user.getFullName());
-					this.lastResult = AUTH_RESULT.SUCCESS;
-				} else {
-					logger.warn("Authentication failed - locked");
-					user=null;
-					this.lastResult = AUTH_RESULT.LOCKED;
-				}
-			} else {
-				logger.warn("Authentication failed - invalid password for " + userName);
-				user=null;
-				this.lastResult = AUTH_RESULT.FAIL;				
-			}
-		}
-		return user;
-	}
-
 
 	public void setUserDao(ReportRunnerDao<RunnerUser, String> userDao) {
 		this.userDao = userDao;
 	}
 
-	public  AUTH_RESULT getLastResult() {
-		return this.lastResult;
+	public Authentication authenticate(Authentication authentication)
+			throws AuthenticationException {
+		if (StringUtils.isBlank((String) authentication.getPrincipal())
+				|| StringUtils.isBlank((String) authentication.getCredentials())) {
+
+			throw new BadCredentialsException("Invalid username/password");
+
+		}
+
+		String userName=(String) authentication.getPrincipal();
+		String password=(String) authentication.getCredentials();
+			
+		
+		RunnerUser user = userDao.get(userName);
+		
+		EncryptionUtil enc = new EncryptionUtil();
+		
+		List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
+		try {
+		if (user != null && user.getPassword().equals(enc.hashString(password))) {			
+ 			if (user.getIsAdmin()) {
+				authorities.add(new GrantedAuthorityImpl("ROLE_ADMIN"));				
+			}
+ 			authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
+		} else {
+			throw new BadCredentialsException("Invalid username/password");
+		}
+		}catch (Exception e) {
+			throw new AuthenticationServiceException(e.getMessage(),e);
+		}
+		return new UsernamePasswordAuthenticationToken(userName, authentication
+				.getCredentials(), authorities);
+
 	}
+
+	public boolean supports(Class<? extends Object> arg0) {
+		return true;
+	}
+
+	public UserDetails loadUserByUsername(String userName)
+			throws UsernameNotFoundException, DataAccessException {
+		
+		return userDao.get(userName);
+		
+		
+	}
+	
 }

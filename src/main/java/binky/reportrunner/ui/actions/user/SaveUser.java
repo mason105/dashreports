@@ -30,11 +30,12 @@ import org.apache.log4j.Logger;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.util.EncryptionUtil;
 
 import com.opensymphony.xwork2.Preparable;
 
-public class SaveUser extends AdminRunnerAction  implements Preparable {
+public class SaveUser extends StandardRunnerAction  implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -80,6 +81,9 @@ public class SaveUser extends AdminRunnerAction  implements Preparable {
 			}
 			
 			if (valid) {
+				//hash the password
+				EncryptionUtil enc = new EncryptionUtil();
+				runnerUser.setPassword(enc.hashString(runnerUser.getPassword()));
 				userDao.saveOrUpdate(runnerUser);
 				return SUCCESS;
 			} else {

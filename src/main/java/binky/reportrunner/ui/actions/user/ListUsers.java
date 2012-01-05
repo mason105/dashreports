@@ -26,9 +26,9 @@ import java.util.List;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerUser;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class ListUsers extends AdminRunnerAction{
+public class ListUsers extends StandardRunnerAction{
 
 	private static final long serialVersionUID = 1L;
 	private List<RunnerUser> users;

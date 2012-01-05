@@ -28,9 +28,9 @@ import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class ListGroupsAction extends AdminRunnerAction {
+public class ListGroupsAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = -1335751757190312426L;
 	private static final Logger logger = Logger.getLogger(ListGroupsAction.class);

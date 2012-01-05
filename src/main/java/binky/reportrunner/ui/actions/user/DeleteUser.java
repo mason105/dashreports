@@ -24,9 +24,9 @@ package binky.reportrunner.ui.actions.user;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerUser;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class DeleteUser extends AdminRunnerAction {
+public class DeleteUser extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private String userName;

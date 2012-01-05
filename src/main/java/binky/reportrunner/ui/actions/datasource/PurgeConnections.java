@@ -1,9 +1,9 @@
 package binky.reportrunner.ui.actions.datasource;
 
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class PurgeConnections extends AdminRunnerAction {
+public class PurgeConnections extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private DatasourceService dataSourceService;

@@ -30,33 +30,16 @@
 <struts>
 	<package name="reportRunner" extends="struts-default">
 		<interceptors>
-			<interceptor name="login" class="loginInterceptor" />
 			<interceptor name="noCache" class="noCacheInterceptor" />
-			<interceptor name="userSession" class="userSessionIntercept" />
-			<interceptor-stack name="defaultLoginStack">
-				<interceptor-ref name="defaultStack" />
-				<interceptor-ref name="login" /> <!-- Our LoginInterceptor -->
-				<interceptor-ref name="userSession" /> <!-- Our UserSessionIntercept -->
-			</interceptor-stack>
 		</interceptors>
 		<!--
 			Make the defaultLoginStack the default one used for all actions
 			unless otherwise configured.
 		-->
-		<default-interceptor-ref name="defaultLoginStack" />
+		<default-interceptor-ref name="defaultStack" />
 		
 		<default-action-ref name="index" />
-		
-		<global-results>
-			<result name="login">/jsp/login/login.jsp</result>
-				<result name="login-success" type="redirectAction">
-					<param name="actionName">index</param>
-				</result>
-			<result name="securityError">/jsp/main/securityError.jsp</result>
-			<result  name="error">
-				/jsp/main/errorPage.jsp
-			</result>			
-		</global-results>
+	
 		
 		<action name="logout" class="logoutAction"/>
 		

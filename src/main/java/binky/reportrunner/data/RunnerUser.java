@@ -23,6 +23,8 @@
 package binky.reportrunner.data;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -30,10 +32,14 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity
-public class RunnerUser implements Serializable {
+public class RunnerUser implements  UserDetails,Serializable {
 
 	private static final long serialVersionUID = 8376600609942516518L;
 
@@ -129,5 +135,30 @@ public class RunnerUser implements Serializable {
 	public void setIsLocked(Boolean isLocked) {
 		this.isLocked = isLocked;
 	}
+	public Collection<GrantedAuthority> getAuthorities() {
+		List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
+ 			if (this.isAdmin) {
+				authorities.add(new GrantedAuthorityImpl("ROLE_ADMIN"));				
+			}
+ 			authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
+ 			return authorities;
+	}
+	public boolean isAccountNonExpired() {
+		return  !this.isLocked;
+	}
+	public boolean isAccountNonLocked() {		// 
+		return !this.isLocked;
+	}
+	public boolean isCredentialsNonExpired() {
+		return  !this.isLocked;
+	}
+	public boolean isEnabled() {
+		return  !this.isLocked;
+	}
 
+	@Override
+	public String getUsername() {
+		return getUserName();
+	}
+	
 }

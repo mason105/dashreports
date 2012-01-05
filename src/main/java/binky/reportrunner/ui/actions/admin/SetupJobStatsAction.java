@@ -26,9 +26,9 @@ import java.util.List;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SetupJobStatsAction extends AdminRunnerAction {
+public class SetupJobStatsAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private ReportRunnerDao<RunnerHistoryEvent,Long> historyDao;

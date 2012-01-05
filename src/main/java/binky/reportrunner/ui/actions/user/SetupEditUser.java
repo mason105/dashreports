@@ -30,11 +30,11 @@ import org.apache.log4j.Logger;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
 
-public class SetupEditUser extends AdminRunnerAction implements Preparable {
+public class SetupEditUser extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 

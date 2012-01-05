@@ -26,9 +26,9 @@ import java.util.List;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class ListDataSources extends AdminRunnerAction {
+public class ListDataSources extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private List<RunnerDataSource> dataSources;

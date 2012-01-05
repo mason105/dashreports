@@ -27,12 +27,15 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
-import binky.reportrunner.ui.Statics;
+import binky.reportrunner.service.UserService;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public abstract class StandardRunnerAction extends ActionSupport implements
@@ -40,7 +43,7 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 
 	protected Map<String, Object> sessionData;
 	protected String groupName;
-	
+
 	public void setSession(Map<String, Object> sessionData) {
 		this.sessionData = sessionData;
 	}
@@ -50,20 +53,24 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 			.getLogger(StandardRunnerAction.class);
 
 	public abstract String execute() throws Exception;
+
+	//ewww
+	ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+	private UserService userService = (UserService)ctx.getBean("userService"); 
+
+
 	public final RunnerUser getSessionUser() {
-		// hack to deal with thread local issues
-		RunnerUser user;
-		if ((ActionContext.getContext() == null)
-				|| (ActionContext.getContext().getSession() == null)) {
-			user = (RunnerUser) sessionData.get(Statics.USER_HANDLE);
-		} else {
-			user = (RunnerUser) ActionContext.getContext().getSession().get(
-					Statics.USER_HANDLE);
-			sessionData.put(Statics.USER_HANDLE, user);
-		}
-		return user;
+
+		return userService.getUser(this.getSessionUserName());
 	}
 
+	public final String getSessionUserName() {
+		// this is going to need caching to death
+		Authentication auth = SecurityContextHolder.getContext()
+				.getAuthentication();
+		return auth.getName();		
+	}
+	
 	public final String getActionName() {
 		return this.getClass().getName();
 	}
@@ -93,26 +100,12 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 		}
 	}
 
-	public void listAllVars(String className) {
-		Map<String, Object> params = ActionContext.getContext().getContextMap();
-		logger.debug("dumping context map for action class: " + className);
-		for (String key : params.keySet()) {
-			logger.debug(key + " - " + params.get(key));
-		}
-
-	}
-
-	public Boolean getExpandAdmin() {
-		return (this instanceof AdminRunnerAction);
-	}
-
 	public List<RunnerGroup> getGroups() {
-		return getSessionUser().getGroups();
+		return userService.getGroupsForUser(this.getSessionUserName());
 	}
-
 
 	protected boolean isStringPopulated(String value) {
-		if (value!=null) {
+		if (value != null) {
 			if (value.trim().isEmpty()) {
 				return false;
 			} else {
@@ -122,16 +115,22 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 			return false;
 		}
 	}
+
 	public final String getCurrentGroupName() {
 		return groupName;
 	}
+
 	public final String getGroupName() {
 		return groupName;
 	}
+
 	public final void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
 	
-	
-	
+	protected UserService getUserService() {
+		return userService;
+	}
+
+
 }

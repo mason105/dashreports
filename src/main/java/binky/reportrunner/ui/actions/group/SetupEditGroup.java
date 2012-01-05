@@ -25,9 +25,9 @@ package binky.reportrunner.ui.actions.group;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.ui.actions.base.AdminRunnerAction;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SetupEditGroup extends AdminRunnerAction {
+public class SetupEditGroup extends StandardRunnerAction {
 
 	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private RunnerGroup group;

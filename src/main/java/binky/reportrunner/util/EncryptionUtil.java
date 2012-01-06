@@ -1,7 +1,6 @@
 package binky.reportrunner.util;
 
 import java.security.InvalidKeyException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
@@ -13,6 +12,9 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESedeKeySpec;
+
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 
 public class EncryptionUtil {
 	
@@ -32,9 +34,9 @@ public class EncryptionUtil {
 	}
 
 	public String hashString(String input) throws NoSuchAlgorithmException {
-		MessageDigest md = MessageDigest.getInstance("MD5");
-		md.reset();
-		return bytesToHex(md.digest(input.getBytes()));		
+		PasswordEncoder encoder = new Md5PasswordEncoder();
+
+		return encoder.encodePassword(input, null);
 	}
 	
 	private String bytesToHex(byte[] bytes) {

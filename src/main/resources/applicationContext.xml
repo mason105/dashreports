@@ -101,7 +101,7 @@
 		<property name="groupDao" ref="runnerGroupDao" />
 	</bean>	
 	
-	<bean id="authenticationService"
+	<bean id="authenticationService"	          
 		class="binky.reportrunner.service.impl.AuthenticationServiceImpl">
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
@@ -118,6 +118,7 @@
 		</property>
 	</bean>
 	
+
 	<bean id="noCacheInterceptor" class="binky.reportrunner.interceptors.NoCache" scope="singleton" >
 	</bean>
 

@@ -126,7 +126,7 @@
 		</action>
 		
 		<action name="viewJobOutput" class="viewJobOutputAction">
-   			 <interceptor-ref name="defaultLoginStack"/>
+   			 <interceptor-ref name="defaultStack"/>
    			 <interceptor-ref name="execAndWait"/>
    			 <result name="wait">/jsp/main/jobViewerWait.jsp</result>
     		 <result name="success">/jsp/main/jobViewer.jsp</result>

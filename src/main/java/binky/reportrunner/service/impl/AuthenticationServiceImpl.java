@@ -44,8 +44,8 @@ import binky.reportrunner.service.AuthenticationService;
 import binky.reportrunner.util.EncryptionUtil;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
-	
-	private ReportRunnerDao<RunnerUser,String> userDao;
+
+	private ReportRunnerDao<RunnerUser, String> userDao;
 	private static final Logger logger = Logger
 			.getLogger(AuthenticationServiceImpl.class);
 
@@ -55,36 +55,52 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	public Authentication authenticate(Authentication authentication)
 			throws AuthenticationException {
+		
+		logger.info("authenticate service invoked");
+		
 		if (StringUtils.isBlank((String) authentication.getPrincipal())
-				|| StringUtils.isBlank((String) authentication.getCredentials())) {
-
+				|| StringUtils
+						.isBlank((String) authentication.getCredentials())) {
+			logger.debug("userName blank is "
+					+ StringUtils.isBlank((String) authentication
+							.getPrincipal()
+							+ " password blank is "
+							+ StringUtils.isBlank((String) authentication
+									.getCredentials())));
 			throw new BadCredentialsException("Invalid username/password");
 
 		}
 
-		String userName=(String) authentication.getPrincipal();
-		String password=(String) authentication.getCredentials();
-			
-		
+		String userName = (String) authentication.getPrincipal();
+		String password = (String) authentication.getCredentials();
+
 		RunnerUser user = userDao.get(userName);
-		
+
 		EncryptionUtil enc = new EncryptionUtil();
-		
+
 		List<GrantedAuthority> authorities = new LinkedList<GrantedAuthority>();
 		try {
-		if (user != null && user.getPassword().equals(enc.hashString(password))) {			
- 			if (user.getIsAdmin()) {
-				authorities.add(new GrantedAuthorityImpl("ROLE_ADMIN"));				
+			if (user != null
+					&& user.getPassword().equals(enc.hashString(password))) {
+				if (user.getIsAdmin()) {
+					logger.info("admin login for user: " + userName);
+					authorities.add(new GrantedAuthorityImpl("ROLE_ADMIN"));
+				} else {
+					logger.info("user login for user: " + userName);
+				}
+				authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
+			} else {
+				logger.warn("login fail for user: " + userName);
+				logger.debug("hash got: " + enc.hashString(password)
+						+ " hash expected: " + user.getPassword());
+				throw new BadCredentialsException("Invalid username/password");
 			}
- 			authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
-		} else {
-			throw new BadCredentialsException("Invalid username/password");
+		} catch (Exception e) {
+			logger.fatal(e.getMessage(), e);
+			throw new AuthenticationServiceException(e.getMessage(), e);
 		}
-		}catch (Exception e) {
-			throw new AuthenticationServiceException(e.getMessage(),e);
-		}
-		return new UsernamePasswordAuthenticationToken(userName, authentication
-				.getCredentials(), authorities);
+		return new UsernamePasswordAuthenticationToken(userName,
+				authentication.getCredentials(), authorities);
 
 	}
 
@@ -94,10 +110,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	public UserDetails loadUserByUsername(String userName)
 			throws UsernameNotFoundException, DataAccessException {
-		
+
+		logger.info("authenticate service invoked for userName: " + userName);
 		return userDao.get(userName);
-		
-		
+
 	}
-	
+
 }

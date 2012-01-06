@@ -156,7 +156,7 @@ CREATE TABLE  `reportrunner`.`runnergroup_runneruser` (
   CONSTRAINT `FK6EC21C6BB4A88336` FOREIGN KEY (`RunnerGroup_groupName`) REFERENCES `runnergroup` (`groupName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-insert into runneruser values ('admin','admin',1,0,0,'password');
+insert into runneruser values ('admin','admin',1,0,0,'5f4dcc3b5aa765d61d8327deb882cf99');
 commit;
 
 SET FOREIGN_KEY_CHECKS = 1;

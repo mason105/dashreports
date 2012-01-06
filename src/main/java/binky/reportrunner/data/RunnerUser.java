@@ -144,16 +144,16 @@ public class RunnerUser implements  UserDetails,Serializable {
  			return authorities;
 	}
 	public boolean isAccountNonExpired() {
-		return  !this.isLocked;
+		return  !isLocked;
 	}
 	public boolean isAccountNonLocked() {		// 
-		return !this.isLocked;
+		return !isLocked;
 	}
 	public boolean isCredentialsNonExpired() {
-		return  !this.isLocked;
+		return  !isLocked;
 	}
 	public boolean isEnabled() {
-		return  !this.isLocked;
+		return !isLocked;
 	}
 
 	@Override

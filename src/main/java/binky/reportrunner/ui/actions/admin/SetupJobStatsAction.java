@@ -24,6 +24,8 @@ package binky.reportrunner.ui.actions.admin;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
@@ -38,6 +40,7 @@ public class SetupJobStatsAction extends StandardRunnerAction {
 	
 	
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 
 		this.longestEvents = historyDao.findByNamedQuery("getLongestRunningEvents",new String[]{} ,20);

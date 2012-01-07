@@ -24,6 +24,8 @@ package binky.reportrunner.ui.actions.group;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerGroup;
@@ -41,6 +43,7 @@ public class DeleteGroup extends StandardRunnerAction {
 	private static final long serialVersionUID = 1L;
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {

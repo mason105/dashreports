@@ -24,6 +24,8 @@ package binky.reportrunner.ui.actions.admin;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.service.DashboardService;
@@ -40,6 +42,7 @@ public class ListCurrentExecutingJobsAction extends StandardRunnerAction {
 	private List<RunnerDashboardItem> items;
 	
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		this.jobs=jobService.getRunningJobs();
 		this.items=dashboardService.getRunningItems();

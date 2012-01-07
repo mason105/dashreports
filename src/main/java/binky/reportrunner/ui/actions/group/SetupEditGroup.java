@@ -22,6 +22,8 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.group;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.exceptions.SecurityException;
@@ -35,6 +37,7 @@ public class SetupEditGroup extends StandardRunnerAction {
 	private static final long serialVersionUID = 1L;
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 
 		if (super.getSessionUser().getGroups().contains(groupName)

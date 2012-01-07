@@ -22,6 +22,8 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ManageServerAction extends StandardRunnerAction  {
@@ -29,6 +31,7 @@ public class ManageServerAction extends StandardRunnerAction  {
 	private static final long serialVersionUID = -4549766518691836880L;
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		return SUCCESS;
 	}

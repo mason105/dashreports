@@ -32,6 +32,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 	private static final Logger logger = Logger
 			.getLogger(BaseEditDashboardAction.class);
 
+	
 	protected final String saveItem(RunnerDashboardItem item)
 			throws SecurityException {
 		logger.debug("item is " + item.toString());

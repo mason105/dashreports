@@ -24,6 +24,8 @@ package binky.reportrunner.ui.actions.user;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
@@ -33,6 +35,7 @@ public class ListUsers extends StandardRunnerAction{
 	private static final long serialVersionUID = 1L;
 	private List<RunnerUser> users;
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		this.users=userDao.getAll();
 		return SUCCESS;

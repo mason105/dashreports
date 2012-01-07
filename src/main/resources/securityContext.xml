@@ -11,7 +11,7 @@
 
 	<http>
 <!-- 		<intercept-url pattern="/admin/*.action" access="ROLE_ADMIN"  /> -->	
-		<intercept-url pattern="/index.action" access="ROLE_USER"  />
+		<intercept-url pattern="/*.action" access="ROLE_USER"  />
 		<remember-me key="reportrunner" />
 		<form-login />
 		<http-basic />

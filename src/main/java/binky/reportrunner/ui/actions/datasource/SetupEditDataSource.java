@@ -22,6 +22,8 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.datasource;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
@@ -32,6 +34,7 @@ public class SetupEditDataSource extends StandardRunnerAction{
 	private String dataSourceName;
 	private RunnerDataSource dataSource;
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		if ((dataSourceName !=null) && (!dataSourceName.isEmpty())){
 			dataSource=dataSourceDao.get(dataSourceName);

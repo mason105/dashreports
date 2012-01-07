@@ -1,5 +1,7 @@
 package binky.reportrunner.ui.actions.admin;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -11,6 +13,7 @@ public class SchedulerStateChange extends StandardRunnerAction {
 	private int schedulerState;
 	
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		
 		//0=shutdown

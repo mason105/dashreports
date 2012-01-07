@@ -9,6 +9,7 @@ public class InvokeItem extends BaseDashboardAction {
 	
 	private Integer itemId;
 	@Override
+	
 	public String execute() throws Exception {
 		String groupName= super.getDashboardService().getItem(itemId).getGroup().getGroupName();
 		if (super.getSessionUser().getGroups().contains(groupName)

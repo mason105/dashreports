@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
@@ -47,6 +48,7 @@ public class SetupEditUser extends StandardRunnerAction implements Preparable {
 	private static final Logger logger = Logger.getLogger(SetupEditUser.class);
 
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		if ((userName != null) && (!userName.isEmpty())) {
 			logger.debug("editing user: " + userName);

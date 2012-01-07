@@ -22,6 +22,8 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.admin;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -31,6 +33,7 @@ public class InterruptCurrentExecutingDashboardItemAction extends StandardRunner
 	private DashboardService dashboardService;
 	private Integer itemId;
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		dashboardService.interruptRunningDashboardItem(itemId);
 		return SUCCESS;

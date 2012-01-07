@@ -30,6 +30,7 @@ public class DeleteItem extends BaseDashboardAction {
 	private static final long serialVersionUID = 1L;
 	private Integer itemId;
 	@Override
+	
 	public String execute() throws Exception {
 		String groupName= super.getDashboardService().getItem(itemId).getGroup().getGroupName();
 		if (super.getSessionUser().getGroups().contains(groupName)

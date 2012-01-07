@@ -22,6 +22,8 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.admin;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -31,6 +33,7 @@ public class InterruptCurrentExecutingJobAction extends StandardRunnerAction {
 	private RunnerJobService jobService;
 	private String jobName;
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		jobService.interruptRunningJob(jobName, groupName);
 		return SUCCESS;

@@ -1,0 +1,50 @@
+package binky.reportrunner.security;
+
+import java.io.IOException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import binky.reportrunner.data.RunnerUser;
+import binky.reportrunner.service.UserService;
+import binky.reportrunner.ui.Statics;
+
+
+
+public class RRAuthenticationProcessingFilter extends UsernamePasswordAuthenticationFilter  {
+
+	private static Logger logger = Logger.getLogger(RRAuthenticationProcessingFilter.class);
+	private UserService userService;
+	
+	@Override
+	protected void successfulAuthentication(HttpServletRequest request,
+			HttpServletResponse response, Authentication authResult)
+			throws IOException, ServletException {		
+		super.successfulAuthentication(request, response, authResult);
+		logger.info("logged in: " + authResult.getName());
+		RunnerUser userObject = userService.getUser(authResult.getName());
+		logger.debug("storing user in session");
+		request.getSession().setAttribute(Statics.USER_HANDLE, userObject);
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	@Override
+	protected void unsuccessfulAuthentication(HttpServletRequest request,
+			HttpServletResponse response, AuthenticationException failed)
+			throws IOException, ServletException {		
+		super.unsuccessfulAuthentication(request, response, failed);
+		logger.warn("login failed: " + failed.getMessage(),failed);
+	}
+	
+	
+
+}

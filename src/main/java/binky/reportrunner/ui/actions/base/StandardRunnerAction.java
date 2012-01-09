@@ -27,15 +27,15 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.service.UserService;
+import binky.reportrunner.ui.Statics;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public abstract class StandardRunnerAction extends ActionSupport implements
@@ -54,20 +54,24 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 
 	public abstract String execute() throws Exception;
 
-	//ewww
-	ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-	private UserService userService = (UserService)ctx.getBean("userService"); 
 
 
 	public final RunnerUser getSessionUser() {
-
-		return userService.getUser(this.getSessionUserName());
+		// hack to deal with thread local issues
+		RunnerUser user;
+		if ((ActionContext.getContext() == null)
+				|| (ActionContext.getContext().getSession() == null)) {
+			user = (RunnerUser) sessionData.get(Statics.USER_HANDLE);
+		} else {
+			user = (RunnerUser) ActionContext.getContext().getSession().get(
+					Statics.USER_HANDLE);
+			sessionData.put(Statics.USER_HANDLE, user);
+		}
+		return user;
 	}
 
 	public final String getSessionUserName() {
-		// this is going to need caching to death
-		Authentication auth = SecurityContextHolder.getContext()
-				.getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return auth.getName();		
 	}
 	
@@ -101,7 +105,7 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 	}
 
 	public List<RunnerGroup> getGroups() {
-		return userService.getGroupsForUser(this.getSessionUserName());
+		return this.getSessionUser().getGroups();
 	}
 
 	protected boolean isStringPopulated(String value) {
@@ -128,9 +132,5 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 		this.groupName = groupName;
 	}
 	
-	protected UserService getUserService() {
-		return userService;
-	}
-
 
 }

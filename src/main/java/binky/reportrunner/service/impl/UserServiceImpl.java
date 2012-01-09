@@ -25,7 +25,11 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public RunnerUser getUser(String userName) {
-		return userDao.get(userName);
+		RunnerUser user = userDao.get(userName);
+		if (user!=null){
+			user.setGroups(getGroupsForUser(userName));
+		}
+		return user;
 	}
 	@Override
 	public List<RunnerGroup> getGroupsForUser(String userName) {

@@ -6,19 +6,31 @@
 
 	<!--  our main data source -->
 	<bean id="dataSource"
-		class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
-		<property name="driverClass" value="${jdbc.driver}" />
-		<property name="jdbcUrl" value="${jdbc.url}" />
-		<property name="user" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-		<property name="breakAfterAcquireFailure"
-			value="${c3p0.breakAfterAcquireFailure}" />
-		<property name="automaticTestTable"
-			value="${c3p0.automaticTestTable}" />
-		<property name="idleConnectionTestPeriod"
-			value="${c3p0.idleConnectionTestPeriod}" />
+		<property name="driverClassName">
+			<value>${jdbc.driver}</value>
+		</property>
+		<property name="url">
+			<value>${jdbc.url}</value>
+		</property>
+		<property name="username">
+			<value>${jdbc.username}</value>
+		</property>
+		<property name="password">
+			<value>${jdbc.password}</value>
+		</property>
+		<property name="initialSize">
+			<value>2</value>
+		</property>
+		<property name="maxActive">
+			<value>15</value>
+		</property>
+		<property name="maxIdle">
+			<value>2</value>
+		</property>
 	</bean>
+	
 
 	<!--  hibernate plumbing -->
 	<bean id="sessionFactory"
@@ -77,6 +89,16 @@
 			</list>
 		</property>
 	</bean>
+	
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="sessionFactory" />
+		</property>
+	</bean>
+	
+	
 	<bean id="hibernateInterceptor"
 		class="org.springframework.orm.hibernate3.HibernateInterceptor"
 		autowire="byName" />
@@ -90,17 +112,16 @@
 	</bean>
 	
 	<bean id="runnerJobParameterDao"
-		class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.ReportRunnerDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerJobParameterDaoTarget</value>
-			</list>
-		</property>
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="runnerJobParameterDaoTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>		
 	</bean>
+	
 	<bean id="runnerHistoryDaoTarget"
 		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
 		autowire="byName">
@@ -109,16 +130,14 @@
         </constructor-arg>
 	</bean>
 	<bean id="runnerHistoryDao"
-		class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.ReportRunnerDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerHistoryDaoTarget</value>
-			</list>
-		</property>
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="runnerHistoryDaoTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>			
 	</bean>
 	<bean id="runnerJobDaoTarget"
 		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
@@ -128,16 +147,14 @@
         </constructor-arg>
 	</bean>
 	<bean id="runnerJobDao"
-		class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.ReportRunnerDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerJobDaoTarget</value>
-			</list>
-		</property>
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="runnerJobDaoTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>		
 	</bean>
 	<bean id="runnerGroupDaoTarget"
 		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
@@ -147,16 +164,14 @@
         </constructor-arg>
 	</bean>
 	<bean id="runnerGroupDao"
-		class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.ReportRunnerDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerGroupDaoTarget</value>
-			</list>
-		</property>
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="runnerGroupDaoTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>				
 	</bean>
 	<bean id="runnerUserDaoTarget"
 		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
@@ -166,16 +181,14 @@
         </constructor-arg>
 	</bean>
 	<bean id="runnerUserDao"
-		class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.ReportRunnerDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerUserDaoTarget</value>
-			</list>
-		</property>
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="runnerUserDaoTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>		
 	</bean>
 	
 	<bean id="dashboardDaoTarget"
@@ -186,18 +199,14 @@
         </constructor-arg>
 	</bean>
 	<bean id="dashboardDao"
-		class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>
-				binky.reportrunner.dao.ReportRunnerDao
-			</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>dashboardDaoTarget</value>
-			</list>
-		</property>
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="dashboardDaoTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>		
 	</bean>
 
 
@@ -210,17 +219,14 @@
         </constructor-arg>
 	</bean>
 	<bean id="runnerDataSourceDao"
-		class="org.springframework.aop.framework.ProxyFactoryBean">
-		<property name="proxyInterfaces">
-			<value>binky.reportrunner.dao.ReportRunnerDao</value>
-		</property>
-		<property name="interceptorNames">
-			<list>
-				<value>hibernateInterceptor</value>
-				<value>runnerDataSourceDaoTarget</value>
-			</list>
-		</property>
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="runnerDataSourceDaoTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>	
 	</bean>
-
 
 </beans>

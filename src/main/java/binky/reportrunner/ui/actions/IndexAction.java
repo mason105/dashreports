@@ -38,21 +38,13 @@ public class IndexAction extends StandardRunnerAction {
 	private static final long serialVersionUID = 9093344521097271797L;
 	private static final Logger logger = Logger.getLogger(IndexAction.class);
 	private  Map<String, List<RunnerDashboardItem>>  items;
-	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private Integer currentRow;
 	public String execute() throws Exception {
 	
 		items = new  HashMap<String, List<RunnerDashboardItem>>();
 		
-		List<RunnerGroup> groups;
+		List<RunnerGroup> groups=getSessionUser().getGroups();
 		
-		if (super.getSessionUser().getIsAdmin()) {
-			logger.debug("is admin so fetching admin groups");
-			groups=groupDao.getAll();
-		} else {
-			logger.debug("is not admin so pulling groups from session");
-			groups=getSessionUser().getGroups();
-		}
 		
 		for (RunnerGroup g: groups) {
 			
@@ -73,11 +65,6 @@ public class IndexAction extends StandardRunnerAction {
 		this.dashboardService = dashboardService;
 	}
 
-
-
-	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
-		this.groupDao = groupDao;
-	}
 
 	public Map<String, List<RunnerDashboardItem>> getItems() {
 		return items;

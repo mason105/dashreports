@@ -31,7 +31,7 @@
 <img src="<s:url value='/images/v2/icons/key.png'/>"  align="absmiddle" style="padding-right:5px;"/><s:a href="setupChangePassword.action">Password</s:a>&nbsp;|&nbsp;
 <img src="<s:url value='/images/v2/icons/page.png'/>"  align="absmiddle" style="padding-right:5px;"/><s:a href="about.action">About</s:a>&nbsp;|&nbsp;
 <img src="<s:url value='/images/v2/icons/help.png'/>"  align="absmiddle" style="padding-right:5px;"/><s:a href="index.action">Help</s:a>&nbsp;|&nbsp;
-<img src="<s:url value='/images/v2/icons/door_out.png'/>"  align="absmiddle" style="padding-right:5px;"/><s:a href="logout.action">Logout</s:a>
+<img src="<s:url value='/images/v2/icons/door_out.png'/>"  align="absmiddle" style="padding-right:5px;"/><s:a href="j_spring_security_logout">Logout</s:a>
 </DIV>	
 <div id="container">
 	<div id="leftNav"  class="leftnav">

@@ -54,9 +54,6 @@
 		
 	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction"
 		scope="prototype" >
-		<property name="dashboardService">
-			<ref bean="dashboardService" />
-		</property>		
 	</bean>
 	
 	<bean id="logoutAction" class="binky.reportrunner.ui.actions.Logout"
@@ -182,7 +179,14 @@
 		</property>		
 	</bean>
 	
-	
+	<bean id="testDataSourceAction"
+		class="binky.reportrunner.ui.actions.datasource.TestDataSource"
+		scope="prototype">
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>		
+	</bean>
+				
 	<bean id="validateItemQueryAction"
 		class="binky.reportrunner.ui.actions.dashboard.edit.ValidateItemSQL"
 		scope="prototype">

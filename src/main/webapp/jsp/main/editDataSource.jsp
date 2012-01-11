@@ -45,10 +45,18 @@
 		<s:textfield label="Initial Pool Size" size="10"
 			value="%{dataSource.initialPoolSize}"
 			name="dataSource.initialPoolSize"/>
-		<s:textfield label="Min Pool Size" size="5"
-			value="%{dataSource.minPoolSize}" name="dataSource.minPoolSize" />
+	<!--	<s:textfield label="Min Pool Size" size="5"
+			value="%{dataSource.minPoolSize}" name="dataSource.minPoolSize" />-->
 		<s:textfield label="Max Pool Size" size="5"
 			value="%{dataSource.maxPoolSize}" name="dataSource.maxPoolSize" />
+
+		<input type="button" value="Test" onclick="dojo.event.topic.publish('testButton');">
+
+		<s:url id="validateUrl" action="testDataSource" /> 
+		<sx:div showLoadingText="true" loadingText="Testing datasource..." id="validateQuery" href="%{validateUrl}" theme="ajax"  listenTopics="testButton" formId="saveDataSource">
+		</sx:div>
+						
+			
 	<s:submit value="Save"/>
 	</s:form>
 </div>

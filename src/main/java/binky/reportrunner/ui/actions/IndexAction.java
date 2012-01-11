@@ -17,16 +17,8 @@
  */
 package binky.reportrunner.ui.actions;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.ReportRunnerDao;
-import binky.reportrunner.data.RunnerDashboardItem;
-import binky.reportrunner.data.RunnerGroup;
-import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 /**
@@ -34,52 +26,12 @@ import binky.reportrunner.ui.actions.base.StandardRunnerAction;
  */
 public class IndexAction extends StandardRunnerAction {
 
-	private DashboardService dashboardService;
 	private static final long serialVersionUID = 9093344521097271797L;
 	private static final Logger logger = Logger.getLogger(IndexAction.class);
-	private  Map<String, List<RunnerDashboardItem>>  items;
-	private Integer currentRow;
 	public String execute() throws Exception {
 	
-		items = new  HashMap<String, List<RunnerDashboardItem>>();
-		
-		List<RunnerGroup> groups=getSessionUser().getGroups();
-		
-		
-		for (RunnerGroup g: groups) {
-			
-			List<RunnerDashboardItem> a = dashboardService.getItemsForGroup(g.getGroupName());		
-			items.put(g.getGroupName(), a);
-		}
-		
-		
+	
 		return SUCCESS;
-	}
-
-	public DashboardService getDashboardService() {
-		return dashboardService;
-		
-	}
-
-	public void setDashboardService(DashboardService dashboardService) {
-		this.dashboardService = dashboardService;
-	}
-
-
-	public Map<String, List<RunnerDashboardItem>> getItems() {
-		return items;
-	}
-
-	public void setItems(Map<String, List<RunnerDashboardItem>> items) {
-		this.items = items;
-	}
-
-	public Integer getCurrentRow() {
-		return currentRow;
-	}
-
-	public void setCurrentRow(Integer currentRow) {
-		this.currentRow = currentRow;
 	}
 
 	

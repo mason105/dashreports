@@ -51,6 +51,10 @@
 			<result>/jsp/main/schedulerAdmin.jsp</result>
 		</action>
 		
+		<action name="testDataSource" class="testDataSourceAction">
+			<result>/jsp/nostyle/testDataSource.jsp</result>
+		</action>
+		
 		<action name="schedulerStateChange" class="schedulerStateChangeAction">
 			<result type="redirectAction">
 				<param name="actionName">schedulerAdmin</param>

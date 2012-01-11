@@ -1,0 +1,113 @@
+<!--  thanks to : http://www.devx.com/tips/Tip/28818 -->
+<jdbcDrivers>
+	<driver>
+		<label>IBM DB2</label>
+		<url>jdbc:db2://HOST:PORT/DB</url>
+		<class>COM.ibm.db2.jdbc.app.DB2Driver</class>
+	</driver>
+	<driver>
+		<label>JDBC-ODBC Bridge</label>
+		<url>jdbc:odbc:DB</url>
+		<class>sun.jdbc.odbc.JdbcOdbcDriver</class>
+	</driver>
+	<driver>
+		<label>Microsoft SQL Server</label>
+		<url>jdbc:weblogic:mssqlserver4:DB@HOST:PORT</url>
+		<class>weblogic.jdbc.mssqlserver4.Driver</class>
+	</driver>
+	<driver>
+		<label>Oracle Thin</label>
+		<url>jdbc:oracle:thin:@HOST:PORT:SID</url>
+		<class>oracle.jdbc.driver.OracleDriver</class>
+	</driver>
+	<driver>
+		<label>PointBase Embedded Server</label>
+		<url>jdbc:pointbase://embedded[:PORT]/DB</url>
+		<class>com.pointbase.jdbc.jdbcUniversalDriver</class>
+	</driver>
+	<driver>
+		<label>Cloudscape</label>
+		<url>jdbc:cloudscape:DB</url>
+		<class>COM.cloudscape.core.JDBCDriver</class>
+	</driver>
+	<driver>
+		<label>Cloudscape RMI</label>
+		<url>jdbc:rmi://HOST:PORT/jdbc:cloudscape:DB</url>
+		<class>RmiJdbc.RJDriver</class>
+	</driver>
+	<driver>
+		<label>Firebird (JCA/JDBC Driver)</label>
+		<url>jdbc:firebirdsql:[//HOST[:PORT]/]DB</url>
+		<class>org.firebirdsql.jdbc.FBDriver</class>
+	</driver>
+	<driver>
+		<label>IDS Server</label>
+		<url>jdbc:ids://HOST:PORT/conn?dsn='ODBC_DSN_NAME'</url>
+		<class>ids.sql.IDSDriver</class>
+	</driver>
+	<driver>
+		<label>Informix Dynamic Server</label>
+		<url>jdbc:informix-sqli://HOST:PORT/DB:INFORMIXSERVER=SERVER_NAME</url>
+		<class>com.informix.jdbc.IfxDriver</class>
+	</driver>
+	<driver>
+		<label>InstantDB (v3.13 and earlier)</label>
+		<url>jdbc:idb:DB</url>
+		<class>jdbc.idbDriver</class>
+	</driver>
+	<driver>
+		<label>InstantDB (v3.14 and later)</label>
+		<url>jdbc:idb:DB</url>
+		<class>org.enhydra.instantdb.jdbc.idbDriver</class>
+	</driver>
+	<driver>
+		<label>Interbase (InterClient Driver)</label>
+		<url>jdbc:interbase://HOST/DB</url>
+		<class>interbase.interclient.Driver</class>
+	</driver>
+	<driver>
+		<label>Hypersonic SQL (v1.2 and earlier)</label>
+		<url>jdbc:HypersonicSQL:DB</url>
+		<class>hSql.hDriver</class>
+	</driver>
+	<driver>
+		<label>Hypersonic SQL (v1.3 and later)</label>
+		<url>jdbc:HypersonicSQL:DB</url>
+		<class>org.hsql.jdbcDriver</class>
+	</driver>
+	<driver>
+		<label>Microsoft SQL Server (JTurbo Driver)</label>
+		<url>jdbc:JTurbo://HOST:PORT/DB</url>
+		<class>com.ashna.jturbo.driver.Driver</class>
+	</driver>
+	<driver>
+		<label>Microsoft SQL Server (Sprinta Driver)</label>
+		<url>jdbc:inetdae:HOST:PORT?database=DB</url>
+		<class>com.inet.tds.TdsDriver</class>
+	</driver>
+	<driver>
+		<label>Microsoft SQL Server 2000 (Microsoft Driver)</label>
+		<url>jdbc:microsoft:sqlserver://HOST:PORT[;DatabaseName=DB]</url>
+		<class>com.microsoft.sqlserver.jdbc.SQLServerDriver</class>
+	</driver>
+	<driver>
+		<label>MySQL</label>
+		<url>>jdbc:mysql://HOST:PORT/DB</url>
+		<class>com.mysql.jdbc.Driver</class>
+	</driver>
+	<driver>
+		<label>PostgreSQL</label>
+		<url>jdbc:postgresql://HOST:PORT/DB</url>
+		<class>org.postgresql.Driver</class>
+	</driver>
+	<driver>
+		<label>Sybase (jConnect 4.2 and earlier)</label>
+		<url>jdbc:sybase:Tds:HOST:PORT</url>
+		<class>com.sybase.jdbc.SybDriver</class>
+	</driver>
+	<driver>
+		<label>Sybase (jConnect 5.2)</label>
+		<url>jdbc:sybase:Tds:HOST:PORT</url>
+		<class>com.sybase.jdbc2.jdbc.SybDriver</class>
+	</driver>	
+</jdbcDrivers>

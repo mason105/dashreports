@@ -156,12 +156,13 @@ public class DatasourceServiceImpl implements DatasourceService {
 				runnerDs.setPassword(enc.encrpyt(this.secureKey,runnerDs.getPassword()));
 			}
 
-			DataSource ds = this.getDs(runnerDs);
+			BasicDataSource ds = (BasicDataSource)this.getDs(runnerDs);
 			Connection conn = ds.getConnection();
 			DatabaseMetaData meta = conn.getMetaData();
 			String information = meta.getDatabaseProductName() + ", "
 					+ meta.getDatabaseProductVersion();
 			conn.close();
+			ds.close();
 			return information;
 		} catch (Exception e) {
 			logger.debug(e.getMessage(), e);
@@ -245,4 +246,44 @@ public class DatasourceServiceImpl implements DatasourceService {
 		this.secureKey = secureKey;
 	}
 
+	public List<JDBCDriverDefinition> getJDBCDriverDefinitions() {
+		return null;
+	}
+	
+	public class JDBCDriverDefinition {
+		public JDBCDriverDefinition() {
+			
+		}
+		public JDBCDriverDefinition(String label, String className, String url) {
+			this.label = label;
+			this.className = className;
+			this.url = url;
+		}
+		private String label;
+		private String className;
+		private String url;
+		public String getLabel() {
+			return label;
+		}
+		public void setLabel(String label) {
+			this.label = label;
+		}
+		public String getClassName() {
+			return className;
+		}
+		public void setClassName(String className) {
+			this.className = className;
+		}
+		public String getUrl() {
+			return url;
+		}
+		public void setUrl(String url) {
+			this.url = url;
+		}
+		
+		
+		
+		
+	}
+	
 }

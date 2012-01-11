@@ -34,6 +34,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.sql.DataSource;
 
 import binky.reportrunner.data.RunnerDataSource;
+import binky.reportrunner.service.impl.DatasourceServiceImpl.JDBCDriverDefinition;
 
 public interface DatasourceService {
 
@@ -50,5 +51,5 @@ public interface DatasourceService {
 
 	public void purgeConnections(String dataSourceName) throws SQLException;
 	public String testDataSource(RunnerDataSource runnerDs) ;
-	
+	public List<JDBCDriverDefinition> getJDBCDriverDefinitions();
 }

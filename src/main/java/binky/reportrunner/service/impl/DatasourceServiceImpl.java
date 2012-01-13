@@ -171,6 +171,9 @@ public class DatasourceServiceImpl implements DatasourceService {
 			ds.close();
 			return information;
 		} catch (Exception e) {
+			if (e instanceof NullPointerException) {
+				logger.fatal(e.getMessage(),e);
+			}
 			logger.debug(e.getMessage());
 			return "ERROR - " +e.getClass().getSimpleName() + ": " + e.getMessage();
 		}
@@ -238,10 +241,12 @@ public class DatasourceServiceImpl implements DatasourceService {
 			dataSources.remove(dataSource.getDataSourceName());
 		}
 		EncryptionUtil enc = new EncryptionUtil();
-		if ((dataSource.getPassword() != null)
-				&& dataSource.getPassword().length() > 0) {
+		if (StringUtils.isNotBlank(dataSource.getPassword())) {
 			dataSource.setPassword(enc.encrpyt(secureKey,
 					dataSource.getPassword()));
+		} else {
+			RunnerDataSource ds = dataSourceDao.get(dataSource.getDataSourceName());
+			if (ds!=null) dataSource.setPassword(ds.getPassword());
 		}
 
 		dataSourceDao.saveOrUpdate(dataSource);

@@ -22,17 +22,23 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.datasource;
 
+import java.util.Collection;
+
 import org.springframework.security.access.prepost.PreAuthorize;
+
+import com.opensymphony.xwork2.Preparable;
 
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.service.DatasourceService;
+import binky.reportrunner.service.JDBCDriverDefinition;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SaveDataSource extends StandardRunnerAction {
+public class SaveDataSource extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
 	private RunnerDataSource dataSource;
+	private Collection<JDBCDriverDefinition> drivers;
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
@@ -44,7 +50,12 @@ public class SaveDataSource extends StandardRunnerAction {
 		}
 		return SUCCESS;
 	}
+	@Override
+	public void prepare() throws Exception {
 
+		this.drivers=dataSourceService.getJDBCDriverDefinitions().getDefinitions().values();
+		
+	}
 	private DatasourceService dataSourceService;
 
 
@@ -63,6 +74,12 @@ public class SaveDataSource extends StandardRunnerAction {
 
 	public void setDataSource(RunnerDataSource dataSource) {
 		this.dataSource = dataSource;
+	}
+	public Collection<JDBCDriverDefinition> getDrivers() {
+		return drivers;
+	}
+	public void setDrivers(Collection<JDBCDriverDefinition> drivers) {
+		this.drivers = drivers;
 	}
 
 	

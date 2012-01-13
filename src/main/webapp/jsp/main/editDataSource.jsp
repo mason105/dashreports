@@ -25,7 +25,7 @@
 		
 		<s:select label="Select Driver"
 					name="jdbcDriver"
-					list="drivers" cssClass="textbox" onchange="updateDriver();">
+					list="drivers" cssClass="textbox" onchange="dojo.event.topic.publish('updateDriver');">
 		</s:select>
 		
 		<s:url id="driverDetail" action="driverDetail" /> 

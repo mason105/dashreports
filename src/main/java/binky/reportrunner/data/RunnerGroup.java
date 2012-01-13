@@ -33,7 +33,7 @@ import javax.persistence.OneToMany;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
-@Entity
+@Entity(name = "T_GROUP")
 public class RunnerGroup implements Serializable {
 
 	private static final long serialVersionUID = -5727491198024680384L;

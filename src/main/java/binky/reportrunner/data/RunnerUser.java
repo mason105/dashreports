@@ -38,7 +38,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
-@Entity
+@Entity(name = "T_USER")
 public class RunnerUser implements  UserDetails,Serializable {
 
 	private static final long serialVersionUID = 8376600609942516518L;

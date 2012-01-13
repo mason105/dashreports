@@ -2,7 +2,7 @@ package binky.reportrunner.data;
 
 import javax.persistence.Entity;
 
-@Entity
+@Entity(name = "T_CHART")
 public class RunnerDashboardChart extends RunnerDashboardItem {
 
 	

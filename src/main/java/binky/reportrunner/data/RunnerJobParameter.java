@@ -27,9 +27,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-@Entity
+@Entity(name = "T_PARAMETER")
 @NamedQueries( {
-	@NamedQuery(name = "getParmatersByJob", query = "from RunnerJobParameter p where p.pk.runnerJob_pk.jobName=? and p.pk.runnerJob_pk.group.groupName=?")
+	@NamedQuery(name = "getParmatersByJob", query = "from T_PARAMETER p where p.pk.runnerJob_pk.jobName=? and p.pk.runnerJob_pk.group.groupName=?")
 })
 public class RunnerJobParameter {
 	public enum DataType {

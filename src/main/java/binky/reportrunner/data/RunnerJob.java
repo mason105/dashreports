@@ -37,9 +37,9 @@ import javax.persistence.OneToMany;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 
-@Entity
+@Entity(name = "T_JOB")
 @NamedQueries( {
-	@NamedQuery(name = "getJobsByGroup", query = "from RunnerJob j where j.pk.group.groupName = ?")
+	@NamedQuery(name = "getJobsByGroup", query = "from T_JOB j where j.pk.group.groupName = ?")
 })
 public class RunnerJob implements Serializable {
 

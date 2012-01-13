@@ -29,7 +29,7 @@ import javax.persistence.Id;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
-@Entity
+@Entity(name = "T_DATASOURCE")
 public class RunnerDataSource implements Serializable {
 
 	private static final long serialVersionUID = 7230871954372088509L;

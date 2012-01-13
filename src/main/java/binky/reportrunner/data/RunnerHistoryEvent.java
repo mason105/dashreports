@@ -31,13 +31,13 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
-@Entity
+@Entity(name = "T_EVENT")
 @NamedQueries( {
-		@NamedQuery(name = "getEventsByJob", query = "from RunnerHistoryEvent e where e.jobName = ? and e.groupName = ?"),
-		@NamedQuery(name = "getFailedEvents", query = "from RunnerHistoryEvent e where e.success=false order by timestamp desc"),
-		@NamedQuery(name = "getLongestRunningEvents", query = "from RunnerHistoryEvent e order by runTime desc"),
-		@NamedQuery(name = "getSuccessEvents", query = "from RunnerHistoryEvent e where e.success=true order by timestamp desc"),
-		@NamedQuery(name = "getOldEvents", query = "from RunnerHistoryEvent e where e.timestamp < ?")	
+		@NamedQuery(name = "getEventsByJob", query = "from T_EVENT e where e.jobName = ? and e.groupName = ?"),
+		@NamedQuery(name = "getFailedEvents", query = "from T_EVENT e where e.success=false order by timestamp desc"),
+		@NamedQuery(name = "getLongestRunningEvents", query = "from T_EVENT e order by runTime desc"),
+		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.success=true order by timestamp desc"),
+		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timestamp < ?")	
 })
 public class RunnerHistoryEvent {
 

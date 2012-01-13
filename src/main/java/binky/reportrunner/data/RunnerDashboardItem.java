@@ -36,10 +36,10 @@ import javax.persistence.NamedQuery;
 
 import org.apache.commons.beanutils.RowSetDynaClass;
 
-@Entity
+@Entity(name = "T_ITEM")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries( {
-	@NamedQuery(name = "getItemsByGroup", query = "from RunnerDashboardItem i where i.group.groupName = ?")
+	@NamedQuery(name = "getItemsByGroup", query = "from T_ITEM i where i.group.groupName = ?")
 })
 public abstract class RunnerDashboardItem implements Serializable {
 

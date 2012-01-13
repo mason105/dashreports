@@ -2,7 +2,7 @@ package binky.reportrunner.data;
 
 import javax.persistence.Entity;
 
-@Entity
+@Entity(name = "T_THRESHOLD")
 public class RunnerDashboardThreshold extends RunnerDashboardItem {
 
 	/**

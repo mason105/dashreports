@@ -41,6 +41,7 @@ public class SetupEditDataSource extends StandardRunnerAction implements Prepara
 	private RunnerDataSource dataSource;
 	private Collection<JDBCDriverDefinition> drivers;
 	private DatasourceService dataSourceService;
+	private String currentDriver;
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {	
@@ -48,6 +49,13 @@ public class SetupEditDataSource extends StandardRunnerAction implements Prepara
 		if ((dataSourceName !=null) && (!dataSourceName.isEmpty())){
 			dataSource=dataSourceDao.get(dataSourceName);
 			dataSource.setPassword(null);			
+			//hacky as hacky mchackerson of the clan mchackerson
+			for (JDBCDriverDefinition def : dataSourceService.getJDBCDriverDefinitions().getDefinitions().values()) {
+				if (def.getDriverName().equalsIgnoreCase(dataSource.getJdbcClass())) {
+					this.currentDriver=def.getLabel();
+				}
+			}
+			
 		} else {
 			dataSource=new RunnerDataSource();
 		}
@@ -85,6 +93,10 @@ public class SetupEditDataSource extends StandardRunnerAction implements Prepara
 
 	public void setDataSourceService(DatasourceService dataSourceService) {
 		this.dataSourceService = dataSourceService;
+	}
+
+	public String getCurrentDriver() {
+		return currentDriver;
 	}
 	
 

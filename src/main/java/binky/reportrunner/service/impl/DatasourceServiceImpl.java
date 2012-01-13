@@ -171,7 +171,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 			ds.close();
 			return information;
 		} catch (Exception e) {
-			logger.debug(e.getMessage(), e);
+			logger.debug(e.getMessage());
 			return "ERROR - " +e.getClass().getSimpleName() + ": " + e.getMessage();
 		}
 	}

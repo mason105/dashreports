@@ -24,7 +24,7 @@
 		</s:else>
 		
 		<s:select label="Select Driver"
-					name="jdbcDriver"
+					name="jdbcDriver" value="%{currentDriver}"
 					list="drivers" cssClass="textbox" onchange="dojo.event.topic.publish('updateDriver');">
 		</s:select>
 		

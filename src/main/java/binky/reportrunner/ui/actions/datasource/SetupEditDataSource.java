@@ -35,9 +35,11 @@ public class SetupEditDataSource extends StandardRunnerAction{
 	private RunnerDataSource dataSource;
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String execute() throws Exception {
+	public String execute() throws Exception {	
+		
 		if ((dataSourceName !=null) && (!dataSourceName.isEmpty())){
 			dataSource=dataSourceDao.get(dataSourceName);
+			dataSource.setPassword(null);
 		} else {
 			dataSource=new RunnerDataSource();
 		}

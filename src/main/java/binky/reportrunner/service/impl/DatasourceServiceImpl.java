@@ -217,7 +217,6 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	public RunnerDataSource getDataSource(String dataSourceName) {
 		RunnerDataSource ds = dataSourceDao.get(dataSourceName);
-		ds.setPassword(null);
 		return ds;
 	}
 

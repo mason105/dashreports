@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.service;
 
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -33,8 +34,9 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.sql.DataSource;
 
+import org.xml.sax.SAXException;
+
 import binky.reportrunner.data.RunnerDataSource;
-import binky.reportrunner.service.impl.DatasourceServiceImpl.JDBCDriverDefinition;
 
 public interface DatasourceService {
 
@@ -51,5 +53,5 @@ public interface DatasourceService {
 
 	public void purgeConnections(String dataSourceName) throws SQLException;
 	public String testDataSource(RunnerDataSource runnerDs) ;
-	public List<JDBCDriverDefinition> getJDBCDriverDefinitions();
+	public JDBCDrivers getJDBCDriverDefinitions() throws IOException, SAXException;
 }

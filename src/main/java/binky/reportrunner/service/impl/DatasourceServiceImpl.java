@@ -23,6 +23,8 @@
 package binky.reportrunner.service.impl;
 
 import java.beans.PropertyVetoException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -42,12 +44,16 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.digester.Digester;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.xml.sax.SAXException;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.service.DatasourceService;
+import binky.reportrunner.service.JDBCDriverDefinition;
+import binky.reportrunner.service.JDBCDrivers;
 import binky.reportrunner.util.EncryptionUtil;
 
 public class DatasourceServiceImpl implements DatasourceService {
@@ -245,44 +251,25 @@ public class DatasourceServiceImpl implements DatasourceService {
 		this.secureKey = secureKey;
 	}
 
-	public List<JDBCDriverDefinition> getJDBCDriverDefinitions() {
-		return null;
+	public JDBCDrivers getJDBCDriverDefinitions() throws IOException, SAXException {
+		
+		InputStream in =DatasourceServiceImpl.class.getResourceAsStream("/jdbcDrivers.xml");
+		
+        Digester digester = new Digester();
+        digester.setValidating(false);
+        digester.addObjectCreate("jdbcDrivers",JDBCDrivers.class);
+        digester.addObjectCreate("jdbcDrivers/driver", JDBCDriverDefinition.class);
+        digester.addBeanPropertySetter("jdbcDrivers/driver/label", "label");
+        digester.addBeanPropertySetter("jdbcDrivers/driver/url", "url");
+        digester.addBeanPropertySetter("jdbcDrivers/driver/driverName", "driverName");
+        digester.addSetNext("jdbcDrivers/driver", "addDefinition");      
+		
+        JDBCDrivers drivers = (JDBCDrivers)digester.parse(in);
+        
+		return drivers;
 	}
 	
-	public class JDBCDriverDefinition {
-		public JDBCDriverDefinition() {
-			
-		}
-		public JDBCDriverDefinition(String label, String className, String url) {
-			this.label = label;
-			this.className = className;
-			this.url = url;
-		}
-		private String label;
-		private String className;
-		private String url;
-		public String getLabel() {
-			return label;
-		}
-		public void setLabel(String label) {
-			this.label = label;
-		}
-		public String getClassName() {
-			return className;
-		}
-		public void setClassName(String className) {
-			this.className = className;
-		}
-		public String getUrl() {
-			return url;
-		}
-		public void setUrl(String url) {
-			this.url = url;
-		}
-		
-		
-		
-		
-	}
+
+
 	
 }

@@ -55,6 +55,10 @@
 			<result>/jsp/nostyle/testDataSource.jsp</result>
 		</action>
 		
+		<action name="driverDetail" class="driverDetailAction">
+			<result>/jsp/nostyle/driverDetail.jsp</result>
+		</action>
+		
 		<action name="schedulerStateChange" class="schedulerStateChangeAction">
 			<result type="redirectAction">
 				<param name="actionName">schedulerAdmin</param>
@@ -287,6 +291,13 @@
 			<result>/jsp/main/editDataSource.jsp
 			</result>
 		</action>
+
+		<action name="setupEditJNDIDataSource" class="setupEditJNDIDataSourceAction">
+			<result>/jsp/main/editJNDIDataSource.jsp
+			</result>
+		</action>
+				
+		
 		
 		<action name="downloadReport" class="downloadReportAction">
 		    <result name="sendFile" type="stream">

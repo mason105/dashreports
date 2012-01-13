@@ -22,47 +22,39 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.datasource;
 
-import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
-import binky.reportrunner.data.RunnerDataSource;
-import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.service.JDBCDriverDefinition;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
-
 import com.opensymphony.xwork2.Preparable;
 
-public class SetupEditDataSource extends StandardRunnerAction implements Preparable{
+import binky.reportrunner.dao.ReportRunnerDao;
+import binky.reportrunner.data.RunnerDataSource;
+import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+
+public class SetupEditJNDIDataSource extends StandardRunnerAction implements Preparable{
 
 	private static final long serialVersionUID = 1L;
 	private String dataSourceName;
 	private RunnerDataSource dataSource;
-	private Collection<JDBCDriverDefinition> drivers;
-	private DatasourceService dataSourceService;
+	
+	private List<String> jndiNames;
+	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public String execute() throws Exception {	
-		
+	public String execute() throws Exception {
 		if ((dataSourceName !=null) && (!dataSourceName.isEmpty())){
 			dataSource=dataSourceDao.get(dataSourceName);
-			dataSource.setPassword(null);			
 		} else {
 			dataSource=new RunnerDataSource();
 		}
-		this.drivers=dataSourceService.getJDBCDriverDefinitions().getDefinitions().values();
 		return SUCCESS;
-	}
-	
+	}//http://denistek.blogspot.com/2008/08/list-jndi-names.html
 	@Override
 	public void prepare() throws Exception {
-
-		this.drivers=dataSourceService.getJDBCDriverDefinitions().getDefinitions().values();
+		// TODO Auto-generated method stub
 		
 	}
-	
-	
 	private  ReportRunnerDao<RunnerDataSource,String> dataSourceDao;
 
 	public void setDataSourceName(String dataSourceName) {
@@ -74,18 +66,13 @@ public class SetupEditDataSource extends StandardRunnerAction implements Prepara
 	public void setDataSourceDao( ReportRunnerDao<RunnerDataSource,String> dataSourceDao) {
 		this.dataSourceDao = dataSourceDao;
 	}
-
-	public Collection<JDBCDriverDefinition> getDrivers() {
-		return drivers;
+	public List<String> getJndiNames() {
+		return jndiNames;
+	}
+	public void setJndiNames(List<String> jndiNames) {
+		this.jndiNames = jndiNames;
 	}
 
-	public void setDrivers(Collection<JDBCDriverDefinition> drivers) {
-		this.drivers = drivers;
-	}
-
-	public void setDataSourceService(DatasourceService dataSourceService) {
-		this.dataSourceService = dataSourceService;
-	}
 	
 
 }

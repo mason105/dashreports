@@ -28,8 +28,7 @@
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
 		</property>		
-	</bean>
-	
+	</bean>	
 
 	<bean id="downloadReportAction" class="binky.reportrunner.ui.actions.job.viewer.DownloadReportAction" scope="prototype">
 		<property name="jobService">
@@ -186,6 +185,14 @@
 			<ref bean="runnerDatasourceService" />
 		</property>		
 	</bean>
+	
+	<bean id="driverDetailAction"
+		class="binky.reportrunner.ui.actions.datasource.DriverDetail"
+		scope="prototype">
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>		
+	</bean>
 				
 	<bean id="validateItemQueryAction"
 		class="binky.reportrunner.ui.actions.dashboard.edit.ValidateItemSQL"
@@ -244,6 +251,17 @@
 
 	<bean id="setupEditDataSourceAction"
 		class="binky.reportrunner.ui.actions.datasource.SetupEditDataSource"
+		scope="prototype">
+		<property name="dataSourceDao">
+			<ref bean="runnerDataSourceDao" />
+		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>				
+	</bean>
+
+	<bean id="setupEditJNDIDataSourceAction"
+		class="binky.reportrunner.ui.actions.datasource.SetupEditJNDIDataSource"
 		scope="prototype">
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />

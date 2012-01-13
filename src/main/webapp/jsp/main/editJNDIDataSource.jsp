@@ -22,18 +22,22 @@
 			<s:textfield label="Data Source Name" size="32"
 				value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName" />
 		</s:else>
-		
-		<s:select label="Select Driver"
-					name="jdbcDriver"
-					list="drivers" cssClass="textbox" onchange="updateDriver();">
-		</s:select>
-		
-		<s:url id="driverDetail" action="driverDetail" /> 
-		<sx:div showLoadingText="true" loadingText="Getting details..." id="validateQuery" href="%{driverDetail}" theme="ajax"  listenTopics="updateDriver" formId="saveDataSource">
-		</sx:div>
-		
-		
+		<s:textfield label="JNDI Name" size="60" value="%{dataSource.jndiName}"	name="dataSource.jndiName"  cssClass="textbox"/>
 			
+			<table align="center">
+			<tr><td>
+				<div class="wwlbl">
+					<div id="wwlbl_or" class="wwlbl">
+						OR
+					</div>
+				</div>
+			</td></tr>
+			</table>
+	
+		<s:textfield label="JDBC Driver" size="60"
+			value="%{dataSource.jdbcClass}" name="dataSource.jdbcClass"  cssClass="textbox"/>
+		<s:textfield label="JDBC URL" size="60" value="%{dataSource.jdbcUrl}"
+			name="dataSource.jdbcUrl"  cssClass="textbox"/>
 		<s:textfield label="Username" size="60" value="%{dataSource.username}"
 			name="dataSource.username"  cssClass="textbox"/>
 		<s:password label="Password" size="60"

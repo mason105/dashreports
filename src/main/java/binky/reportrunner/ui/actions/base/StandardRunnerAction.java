@@ -32,7 +32,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
-import binky.reportrunner.service.UserService;
 import binky.reportrunner.ui.Statics;
 
 import com.opensymphony.xwork2.ActionContext;

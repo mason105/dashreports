@@ -1,24 +1,24 @@
-package binky.reportrunner.ui.actions.job.beans;
+package binky.reportrunner.ui.util;
 
 public final class QuartzCronSchedule {
 	
 	private int[] seconds;
-	private boolean allSeconds;
+	private boolean allSeconds=true;
 
 	private int[] minutes;
-	private boolean allMinutes;
+	private boolean allMinutes=true;
 	
 	private int[] hours;
-	private boolean allHours;
+	private boolean allHours=true;
 	
 	private int[] daysOfMonth;
-	private boolean allDaysOfMonth; //?
+	private boolean allDaysOfMonth=true; //?
 	
 	private int[] daysOfWeek;
-	private boolean allDaysOfWeek; //?
+	private boolean allDaysOfWeek=true; //?
 	
 	private int[] months;
-	private boolean allMonths;
+	private boolean allMonths=true;
 	
 	/*
 		Field Name Mandatory Allowed Values Allowed Special Characters 
@@ -37,28 +37,32 @@ public final class QuartzCronSchedule {
 		
 		//seconds
 		cron.append(getCronSegment(allSeconds,"*",seconds));
+		cron.append(" ");
 		//minutes
 		cron.append(getCronSegment(allMinutes,"*",minutes));
+		cron.append(" ");
 		//hours
 		cron.append(getCronSegment(allHours,"*",hours));
+		cron.append(" ");
 		//day of month
 		cron.append(getCronSegment(allDaysOfMonth,"?",daysOfMonth));
+		cron.append(" ");
 		//month
 		cron.append(getCronSegment(allMonths,"*",months));
+		cron.append(" ");
 		//day of month
-		cron.append(getCronSegment(allDaysOfWeek,"?",daysOfWeek));
+		cron.append(getCronSegment(allDaysOfWeek,"*",daysOfWeek));
 		
 		return cron.toString();
 	}
 
 	private String getCronSegment(boolean all, String allString, int[] nums) {
 		StringBuilder cronSegment = new StringBuilder();
-		if (all) {
-			cronSegment.append(allString);
-			cronSegment.append(" ");
+		if (all && (nums==null || nums.length==0)) {
+			cronSegment.append(allString);		
 		} else {
 			if ((nums==null)||(nums.length==0)) {
-				cronSegment.append("0 ");
+				cronSegment.append("0");
 			} else {				
 				for (int i=0;i<nums.length;i++) {
 					if (i>0) cronSegment.append(",");

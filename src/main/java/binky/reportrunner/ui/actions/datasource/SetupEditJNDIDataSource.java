@@ -22,15 +22,23 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.datasource;
 
+import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.security.access.prepost.PreAuthorize;
+import javax.naming.Binding;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
 
-import com.opensymphony.xwork2.Preparable;
+import org.apache.log4j.Logger;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+
+import com.opensymphony.xwork2.Preparable;
 
 public class SetupEditJNDIDataSource extends StandardRunnerAction implements Preparable{
 
@@ -39,7 +47,7 @@ public class SetupEditJNDIDataSource extends StandardRunnerAction implements Pre
 	private RunnerDataSource dataSource;
 	
 	private List<String> jndiNames;
-	
+	private static final Logger logger = Logger.getLogger(SetupEditJNDIDataSource.class);
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
@@ -48,11 +56,45 @@ public class SetupEditJNDIDataSource extends StandardRunnerAction implements Pre
 		} else {
 			dataSource=new RunnerDataSource();
 		}
+		
+		populateJNDINames();
+		
 		return SUCCESS;
-	}//http://denistek.blogspot.com/2008/08/list-jndi-names.html
+	}
+	
+	private void populateJNDINames() throws NamingException {
+		String ident="";
+		Context ctx = (Context)new InitialContext().lookup("java:comp/env");
+		this.jndiNames=this.listJNDINames(ctx,ident);		
+	}
+	
+	//http://denistek.blogspot.com/2008/08/list-jndi-names.html
+	private List<String> listJNDINames(Context ctx,String ident) throws NamingException {
+		List<String> names = new LinkedList<String>();
+		
+		String indent="";
+		
+		 NamingEnumeration<Binding> list = ctx.listBindings("");
+		   while (list.hasMore()) {
+		       Binding item = (Binding) list.next();
+		       String className = item.getClassName();
+		       String name = item.getName();		  
+		       logger.debug(indent + className + " " + name);		       
+		       Object o = item.getObject();
+		       if (o instanceof javax.naming.Context) {
+		    	   names.addAll(listJNDINames((Context) o, name));
+		       } else {
+		    	   names.add(ident+"/" +name);   
+		       }
+		   }
+		
+		return names;
+	}
+	
+	
 	@Override
 	public void prepare() throws Exception {
-		// TODO Auto-generated method stub
+		populateJNDINames();
 		
 	}
 	private  ReportRunnerDao<RunnerDataSource,String> dataSourceDao;

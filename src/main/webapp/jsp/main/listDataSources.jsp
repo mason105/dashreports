@@ -11,7 +11,7 @@
 		<s:actionmessage/>
 	 <table border="0" width="100%">
 		<tr class="rowHeader"> 
-			<td colspan="5" class="rowHeader"><s:a href="setupEditDataSource.action"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add Datasource</s:a></td>
+			<td colspan="5" class="rowHeader"><s:a href="setupEditDataSource.action"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add JDBC Datasource</s:a> | <s:a href="setupEditJNDIDataSource.action"><img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add JNDI Datasource</s:a></td>
 		 </tr>
 
 	      <s:if test="dataSources.size > 0">	            

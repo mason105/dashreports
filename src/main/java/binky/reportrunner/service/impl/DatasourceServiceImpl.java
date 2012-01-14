@@ -133,11 +133,11 @@ public class DatasourceServiceImpl implements DatasourceService {
 	}
 
 	public void purgeConnections(String dataSourceName) throws SQLException {
-		BasicDataSource ds = (BasicDataSource) dataSources.get(dataSourceName);
-		if (ds != null) {
+		DataSource ds = dataSources.get(dataSourceName);
+		if (ds != null && ds instanceof BasicDataSource) {			 
 			dumpLogInfo(dataSourceName);
 			// reset the datasource
-			ds.close();
+			((BasicDataSource)ds).close();
 		}
 	}
 
@@ -162,13 +162,15 @@ public class DatasourceServiceImpl implements DatasourceService {
 				runnerDs.setPassword(enc.encrpyt(this.secureKey,runnerDs.getPassword()));
 			}
 
-			BasicDataSource ds = (BasicDataSource)this.getDs(runnerDs);
+			DataSource ds = this.getDs(runnerDs);
 			Connection conn = ds.getConnection();
 			DatabaseMetaData meta = conn.getMetaData();
 			String information = meta.getDatabaseProductName() + ", "
 					+ meta.getDatabaseProductVersion();
 			conn.close();
-			ds.close();
+			if (ds instanceof BasicDataSource) {			 
+				((BasicDataSource)ds).close();
+			}
 			return information;
 		} catch (Exception e) {
 			if (e instanceof NullPointerException) {

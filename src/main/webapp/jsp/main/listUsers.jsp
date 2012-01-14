@@ -6,57 +6,31 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-<span class="pageTitle"><img
-	src="<s:url value='/images/icons/user.png'/>" align="absmiddle" />Users</span>
+<div class="formGroup">
+	<div class="formGroupHeader">
+		<img src="<s:url value='/images/v2/nav/usersblue.png'/>" align="absmiddle" />&nbsp;Manage Users
+	</div>
+	<div class="listingHeader"> 	
+		<div class="listingIcon"><img src="<s:url value='/images/v2/icons/add.png'/>" align="absmiddle" /></div><a href="setupEditUser.action">Add a User</a>
+	</div>
 
-<table border="0" width="100%">
-	<s:if test="sessionUser.isAdmin == true">
-	<tr class="rowHeader"> 
-		
-		<td colspan="4" class="rowHeader"><a href="setupEditUser.action"><img
-			src="<s:url value='/images/icons/add.png'/>" align="absmiddle" />Add
-		User</a></td>
-	</tr>
-	</s:if>
-	<s:if test="users.size > 0">
-		<%
-			boolean rowOdd = true;
-		%>
-		<s:iterator value="users">
-			<%
-				if (rowOdd) {
-							rowOdd = false;
-			%>
-				<tr class="rowOdd">
-			<%
-				} else {
-							rowOdd = true;
-			%>			
-				<tr class="rowEven">
-			<%
-				}
-			%>
-				<td>
-					<s:property value="userName" />
-				</td>
-				<td><s:property value="fullName" /></td>				
-				<s:if test="sessionUser.isAdmin == true">
-					<td width="16"><s:a href="setupEditUser.action?userName=%{userName}">
-						<img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" />
-					</s:a></td>
-					<td width="16"><s:a href="deleteUser.action?userName=%{userName}"  onClick="return confirm('Really delete this user?');">
-						<img src="<s:url value='/images/icons/delete.png'/>" alt="Delete"
-							align="absmiddle" />
-					</s:a></td>
-				</s:if>
-				<s:else>
-					<td></td>
-					<td></td>
-				</s:else>
-			</tr>
-		</s:iterator>
-	</s:if>
-</table>
-
+	<div class="listing">
+	
+	<div class="listingHeaderRow">		
+		<div class="listingIconCell">&nbsp;</div>
+		<div class="listingIconCell">&nbsp;</div>		
+		<div class="listingCell">User Name</div>
+		<div class="listingCell">Full Name</div>
+	</div>
+	<s:iterator value="users">
+	<div class="listingRow">
+		<div class="listingIconCell"><s:a href="setupEditUser.action?userName=%{userName}"><img src="<s:url value='/images/v2/icons/edit.png'/>" align="absmiddle" alt="Edit" /></s:a></div>
+		<div class="listingIconCell"><s:a href="deleteUser.action?userName=%{userName}"  onClick="return confirm('Really delete this user?');"><img src="<s:url value='/images/v2/icons/delete.png'/>" alt="Delete" align="absmiddle" /></s:a></div>		
+		<div class="listingCell"><s:property value="userName" /></div>
+		<div class="listingCell"><s:property value="fullName" /></div>								
+	</div>
+	</s:iterator>	
+	</div>
+</div>
 </body>
 </html>

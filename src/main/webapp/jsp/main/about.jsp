@@ -26,7 +26,15 @@
 		<strong>Lead Developer</strong>   
 	</td>
 	<td>    
-		<a href="mailto:daniel@daniel-grout.co.uk">Daniel Grout</a>
+		<a href="mailto:dangrout@googlemail.com">Daniel Matthews-Grout</a>
+	</td>
+</tr>
+<tr>
+	<td width="50%"> 
+		<strong>Icon Design</strong>   
+	</td>
+	<td>    
+		<a href="http://www.doublejdesign.co.uk/" target="_blank">Double-J Design</a>
 	</td>
 </tr>
 </table>
@@ -54,7 +62,7 @@
 <div class="formGroup">
 <div class="formGroupHeader">License</div>
 <pre>
-    Copyright (C) 2009-2010  Daniel Grout (daniel@daniel-grout.co.uk)
+    Copyright (C) 2009-2012  Daniel Matthews-Grout (dangrout@googlemail.com)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by

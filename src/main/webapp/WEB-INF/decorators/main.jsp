@@ -10,8 +10,24 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title><decorator:title default="Report Runner" /></title>
+<title><decorator:title default="Dash Reports" /></title>
+<script language="JavaScript" type="text/javascript">
 
+	function hideNav(navName) {
+		document.getElementById(navName).style.visibility='hidden';	
+	}
+
+	function showNav(navName) {
+		hideAllNav();
+		document.getElementById(navName).style.visibility='visible';	
+	}
+
+	function hideAllNav() {
+		document.getElementById('manageNavPane').style.visibility='hidden';	
+		document.getElementById('groupNavPane').style.visibility='hidden';	
+	}
+	
+</script>
 <decorator:head />
 <link href="<s:url value='/styles/main.css'/>" rel="stylesheet"
 	type="text/css" media="all" />
@@ -20,40 +36,46 @@
 <body id="page-home">
 <div id="top">
 		<div class="appLogo"><img src="<s:url value='/images/v2/top_bar_logo.png'/>" /></div>
-		<div id="userName"><img src="<s:url value='/images/v2/icons/user.png'/>" align="absmiddle" style="padding-right:5px;"/><s:property value="sessionUser.fullName"/></div>
+		<div id="userName"><img src="<s:url value='/images/v2/nav/user.png'/>" align="absmiddle" style="padding-right:5px;"/><s:property value="sessionUser.fullName"/></div>
 </div>
-<div id="navbar">
-<img src="<s:url value='/images/v2/icons/house.png'/>"  align="absmiddle" style="padding-right:5px;"/><s:a href="index.action">Home</s:a>&nbsp;|&nbsp;
-<s:if test="sessionUser.isAdmin">
-	<img src="<s:url value='/images/v2/icons/wrench.png'/>"  align="absmiddle" style="padding-right:5px;"/>
-	<s:a href="manageServer.action">Manage</s:a>&nbsp;|&nbsp;
-</s:if>
-<img src="<s:url value='/images/v2/icons/key.png'/>"  align="absmiddle" style="padding-right:5px;"/><s:a href="setupChangePassword.action">Password</s:a>&nbsp;|&nbsp;
-<img src="<s:url value='/images/v2/icons/page.png'/>"  align="absmiddle" style="padding-right:5px;"/><s:a href="about.action">About</s:a>&nbsp;|&nbsp;
-<img src="<s:url value='/images/v2/icons/help.png'/>"  align="absmiddle" style="padding-right:5px;"/><s:a href="index.action">Help</s:a>&nbsp;|&nbsp;
-<img src="<s:url value='/images/v2/icons/door_out.png'/>"  align="absmiddle" style="padding-right:5px;"/><s:a href="j_spring_security_logout">Logout</s:a>
-</DIV>	
 <div id="container">
-	<div id="leftNav"  class="leftnav">
-			<div class="navHeader">Groups<a href="setupEditGroup.action">
+<div id="leftNav"  class="leftnav" >
+		<div class="navBody" >	
+			<div class="navItemTop"><div class="navIcon"><img src="<s:url value='/images/v2/nav/home.png'/>" /></div><s:a href="index.action">Home</s:a></div>
+			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/groups.png'/>" /></div><a href="#" onclick="showNav('groupNavPane');">My Groups</a></div>
 			<s:if test="sessionUser.isAdmin">
-				<img src="<s:url value='/images/icons/add.png'/>" align="absmiddle" alt="Add Group"/></a></div>	
+				<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/manage.png'/>" /></div>
+				<a href="#" onclick="showNav('manageNavPane');">Manage</a></div>
 			</s:if>
-			<div class="navBody">	
-			<s:iterator value="groups">	
-				<s:if test="groupName!=currentGroupName">			
-					<div class="groupButton" onClick="parent.location='showGroup.action?groupName=<s:property value="%{groupName}" />'"><s:property value="%{groupName}" /></div>
-				</s:if>
-				<s:else>
-					<div class="groupButtonSelected" onClick="parent.location='showGroup.action?groupName=<s:property value="%{groupName}" />'"><s:property value="%{groupName}" /></div>
-				</s:else>
-	   		</s:iterator>
-			</div>
-			<div class="navFooter"></div>
+			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/about.png'/>" /></div><s:a href="about.action">About</s:a></div>
+			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/help.png'/>" /></div><s:a href="index.action">Help</s:a></div>
+			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/logout.png'/>" /></div><s:a href="j_spring_security_logout">Logout</s:a></div>
 		</div>
+	</div>
 <div id="content">
 <decorator:body />
 </div>
+</div>
+<div id="manageNavPane" class="navPaneSec" onclick="hideAllNav();">
+	<div class="navItemSecTop"><div class="navIcon"><img src="<s:url value='/images/v2/nav/users.png'/>" /></div><s:a href="listUsers.action">User Management</s:a></div>
+	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/managegroups.png'/>" /></div><s:a href="listGroups.action">Group Management</s:a></div>
+	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/datasource.png'/>" /></div><s:a href="listDataSources.action">Datasource Management</s:a></div>
+	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/executingJobs.png'/>" /></div><s:a href="listCurrentExecutingJobs.action">Current Executing Jobs</s:a></div>
+	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/stats.png'/>" /></div><s:a href="jobStatistics.action">Statistics and Warnings</s:a></div>
+	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/scheduler.png'/>" /></div><s:a href="schedulerAdmin.action">Manage Scheduler</s:a></div>
+</div>
+
+<div id="groupNavPane" class="navPaneSec" onclick="hideAllNav();">
+
+	<% boolean firstDone=false; %>
+	<s:iterator value="groups">
+		<% if (!firstDone) { %>
+		<div class="navItemSecTop"><s:a href="showGroup.action?groupName=%{groupName}"><s:property value="%{groupName}" /></s:a></div>
+		<% firstDone=true;
+		   } else { %>
+		<div class="navItemSec"><s:a href="showGroup.action?groupName=%{groupName}"><s:property value="%{groupName}" /></s:a></div>
+		<%}%>
+	</s:iterator>
 </div>
 
 </body>

@@ -1,59 +1,6 @@
 /* main layout */
 
-.navHeader{
-color:#eeeeee;
-height:15px;
-padding:5px;
-width:150px;
-font-weight:bold;
-background-image: url(../images/v2/navheaderbg.gif);
-}
-.navFooter{
-position:absolute;
-color:#eeeeee;
-height:15px;
-padding:5px;
-width:150px;
-font-weight:bold;
-background-image: url(../images/v2/navfooterbg.gif);
-bottom:0px;
-}
-.navBody {
-position:absolute;
-background-color: #333333;
-top:25px;
-bottom:25px;
-height:auto;
-width:160px;
-overflow:auto;
-}
-div .groupButton {
-color:#eeeeee;
-background-image: url(../images/v2/groupButton.png);
-height:20px;
-padding-top:5px;
-padding-left:5px;
-width:115px;
-margin-top:1px;
-margin-left:5px;
-overflow:hidden;
-}
-div .groupButtonSelected {
-background-image: url(../images/v2/groupButtonHover.png);
-color:#3399ff;
-height:20px;
-padding-top:5px;
-padding-left:5px;
-width:115px;
-margin-top:1px;
-margin-left:5px;
-overflow:hidden;
-}
-div .groupButton:hover {
-background-image: url(../images/v2/groupButtonHover.png);
-color:#3399ff;
-cursor:pointer;
-}
+
 .appLogo {
 	float:left;
 	padding-left:10px;
@@ -84,24 +31,12 @@ background-image: url(../images/v2/background.png);
 background-repeat:repeat-x;
 }
 
-#navbar {
-padding:5px;
-left:20px;
-right:20px;
-position:absolute;
-background-image: url(../images/v2/navbarbg.png);
-border: 1px solid gray;
-top:57px;
-height:15px;
-overflow:hidden;
-}
-
 #container
 {
-left:20px;
+left:0px;
 right:20px;
 position:absolute;
-top:90px;
+top:60px;
 height:auto;
 bottom:10px;
 
@@ -109,9 +44,11 @@ bottom:10px;
 
 #top
 {
+position:absolute;
 background-color: #000000;
 background-image: url(../images/v2/top_bar_bg.png);
 height:50px;
+width:100%;
 }
 
 #top h1
@@ -119,18 +56,87 @@ height:50px;
 padding: 0;
 margin: 0;
 }
+.navItem {
+	
+	height:35px;
+	border-top: 1px solid gray;
+	padding:5px;
+	line-height:35px;
+}
+.navItem A,.navItemTop A {
+	color:#ffffff;
+	font-weight:bold;
+}
+.navItem A:hover,.navItemTop A:hover {
+        color: #11b7f0;
+}
 
+.navItemTop {
+	height:35px;
+	padding:5px;
+	line-height:35px;
+}
+.navBody {
+position:absolute;
+background-color: #333333;
+top:0px;
+height:auto;
+width:160px;
+overflow:hidden;
+}
+.navIcon {
+position:relative;
+top:5px;
+width:25px;
+height: 25px;
+float:left;
+margin-right:7px;
+}
 #leftNav
 {
 position:absolute;
 top:0px;
 width: 160px;
 margin: 0;	
-bottom:0px;
+height:400px;
 overflow:auto;
 }
+.navItemSec {
+	
+	height:35px;
+	border-top: 1px solid gray;
+	padding:5px;
+	line-height:35px;
+}
+.navItemSec A,.navItemSecTop A {
+color:#666666;
+font-weight:bold;
+}
+.navItemSec A:hover,.navItemSecTop A:hover {
+        color: #11b7f0;
+}
 
+.navItemSecTop {
+	height:35px;
+	padding:5px;
+	line-height:35px;
+}
 
+.navPaneSec {
+	width:250px;
+	border: 1px solid gray;
+	background-color:#EEEEEE;
+	position:absolute;
+	visibility:hidden;
+}
+#manageNavPane {	
+	top:152px;
+	left:161px;
+}
+#groupNavPane {	
+	top:106px;
+	left:161px;
+}
 #content
 {
 	background-color:#FFFFFF;
@@ -417,4 +423,59 @@ div.formSectionInner div.smallLabel {
 	float:right;
 	background-image: url(../images/formheaderbg.png);
 	margin-top:-10px;
+}
+
+.listing {
+display: table;
+width:100%;
+border-left: 1px solid gray;
+border-right: 1px solid gray;
+}
+
+.listingHeader  A{
+	color:#ffffff;
+}
+.listingHeader  A:hover{
+	color: #11b7f0;
+}
+
+.listingHeader {
+	border-bottom: 1px solid gray;
+	border-top: 1px solid gray;
+	background-color:#333333;
+	font-weight:bold;	
+	height:35px;
+	padding:5px;
+	line-height:35px;
+
+}
+.listingRow , .listingHeaderRow {
+   height:30px;
+   line-height:30px;
+   display: table-row;
+}
+.listingHeaderRow  {
+	font-weight:bold;
+	background-image:url(../images/v2/listheader.jpg);
+	background-repeat: repeat-x; 
+}  
+.listingCell    {	
+	display: table-cell;
+	padding-left:5px;
+	border-left: 1px solid gray;
+	border-bottom: 1px solid gray;
+}
+.listingIconCell  {
+	display: table-cell;
+	width:30px;
+	border-bottom: 1px solid gray;
+}
+
+.listingIcon {
+position:relative;
+top:0px;
+width:25px;
+height: 25px;
+float:left;
+margin-right:7px;
 }

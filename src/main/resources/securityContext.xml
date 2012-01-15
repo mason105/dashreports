@@ -11,8 +11,7 @@
 	<security:http auto-config="false" entry-point-ref="loginUrlAuthenticationEntryPoint">
 <!-- 		<intercept-url pattern="/admin/*.action" access="ROLE_ADMIN"  /> -->	
 		<security:custom-filter position="FORM_LOGIN_FILTER" ref="authIntercept"/>
-		<security:intercept-url pattern="/*.action" access="ROLE_USER"  />
-		<security:remember-me key="reportrunner" />				
+		<security:intercept-url pattern="/*.action" access="ROLE_USER"  />	
 		<security:logout />
 	</security:http>
 

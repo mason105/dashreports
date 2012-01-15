@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<span class="pageTitle"><img src="<s:url value='/images/icons/information.png'/>" align="absmiddle" />About Report Runner</span>
+<span class="pageTitle"><img src="<s:url value='/images/icons/information.png'/>" align="absmiddle" />About Dash Reports</span>
        
 
 <div class="formGroup">
@@ -41,7 +41,7 @@
 </div>
 
 <div class="formGroup">
-<div class="formGroupHeader">Report Runner Uses the Following Technologies and Frameworks</div>
+<div class="formGroupHeader">Dash Reports Uses the Following Technologies and Frameworks</div>
 <table border="1" cellpadding="2" cellspacing="2" style="border-collapse: collapse;" width="450">
 	<tr> 
 	<td width="33%" align="center"><a href="http://struts.apache.org/2.x/" target="_blank"><img src="<s:url value="/images/vendor/struts2.png"/>" border="0" align="middle"/></a></td>

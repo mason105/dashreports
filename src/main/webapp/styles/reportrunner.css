@@ -443,15 +443,13 @@ border-right: 1px solid gray;
 }
 
 .listingHeader {
-	border-bottom: 1px solid gray;
-	border-top: 1px solid gray;
+	border: 1px solid gray;
 	background-color:#333333;
 	font-weight:bold;	
 	height:35px;
-	padding:5px;
 	line-height:35px;
 	color:#cccccc;
-
+	width:100%;
 }
 .listingRow , .listingHeaderRow {
    height:30px;

@@ -10,7 +10,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title><decorator:title default="Dash Reports" /></title>
+<title><decorator:title default="Report Runner" /></title>
 <script language="JavaScript" type="text/javascript">
 
 	function hideNav(navName) {

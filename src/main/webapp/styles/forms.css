@@ -22,7 +22,7 @@
 .formGroup {
 	clear:both;
 	width:600px;
-	margin:5px;
+	background-color:#fff;
 	padding:0px;
 	border-top: 1px solid #ccc;
 	border-left: 1px solid #ccc;
@@ -48,9 +48,9 @@ max-height: 300px;
 	padding-left:0px;
 	color:#ffffff;
 	font-weight:bold;
-	height:29px;
+	height:35px;
 	padding:5px;
-	line-height:29px;
+	line-height:35px;
 	font-size:12px;
 	width:590px;
 }

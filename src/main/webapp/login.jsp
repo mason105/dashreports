@@ -25,11 +25,13 @@
 		border-right: 1px solid gray;
 		border-left: 1px solid gray;
 		border-top: 1px solid gray;
-		padding:10px;
+		padding-top:5px;
+		padding-left:15px;
+		padding-bottom:5px;
 		color:#ffffff;
 		font-weight:bold;
-		height:19px;
-		line-height:19px;
+		height:35px;
+		line-height:35px;
 		font-size:12px;
 	}
 	.loginBoxMiddle {

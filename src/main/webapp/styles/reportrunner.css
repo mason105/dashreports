@@ -27,8 +27,7 @@ height:100%;
 }
 
 body {
-background-image: url(../images/v2/background.png);
-background-repeat:repeat-x;
+	background-image: url(../images/v2/background.png);
 }
 
 #container
@@ -431,8 +430,7 @@ div.formSectionInner div.smallLabel {
 .listing {
 display: table;
 width:100%;
-border-left: 1px solid gray;
-border-right: 1px solid gray;
+
 }
 
 .listingHeader  A{
@@ -443,13 +441,16 @@ border-right: 1px solid gray;
 }
 
 .listingHeader {
-	border: 1px solid gray;
-	background-color:#333333;
+
+	border-bottom: 1px solid #ccc;
+	background-color:#666666;
 	font-weight:bold;	
-	height:35px;
-	line-height:35px;
 	color:#cccccc;
-	width:100%;
+	height:29px;
+	padding:5px;
+	line-height:29px;
+	font-size:12px;
+	width:590px;
 }
 .listingRow , .listingHeaderRow {
    height:30px;
@@ -464,13 +465,13 @@ border-right: 1px solid gray;
 .listingCell    {	
 	display: table-cell;
 	padding-left:5px;
-	border-left: 1px solid gray;
-	border-bottom: 1px solid gray;
+	border-left: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 }
 .listingIconCell  {
 	display: table-cell;
 	width:30px;
-	border-bottom: 1px solid gray;
+	border-bottom: 1px solid #ccc;
 }
 
 .listingIcon {

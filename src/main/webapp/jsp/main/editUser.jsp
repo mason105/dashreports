@@ -31,16 +31,16 @@
 		<s:else>	
 			<s:password label="Password" name="runnerUser.password" cssClass="textbox"  required="true"/>	
 		</s:else>
-		<s:checkbox label="Is User an Administrator" value="%{runnerUser.isAdmin}"
+		<s:checkbox label="Administrator" value="%{runnerUser.isAdmin}"
 			name="runnerUser.isAdmin" cssClass="checkbox">
 		</s:checkbox>
 
-		<s:checkbox label="Is User Read Only" value="%{runnerUser.isReadOnly}"
+		<s:checkbox label="Read Only" value="%{runnerUser.isReadOnly}"
 			name="runnerUser.isReadOnly" cssClass="checkbox">
 		</s:checkbox>		
 
 
-		<s:checkbox label="Is Account Locked" value="%{runnerUser.isLocked}"
+		<s:checkbox label="Locked" value="%{runnerUser.isLocked}"
 			name="runnerUser.isLocked" cssClass="checkbox">
 		</s:checkbox>		
 
@@ -51,11 +51,12 @@
 	       listKey="groupName" 
 	       listValue="groupName"  cssClass="textbox"	       
 		/>
-	
-		<s:submit value="Save"/>
+		<div class="formBottom">
+		<div class="formFooterText">* required field</div>
+		<s:submit value="Save" align="left"/>
+		</div>
 	
 </div>
-<div class="formFooterText">* required field</div>
 </s:form>	
 </body>
 </html>

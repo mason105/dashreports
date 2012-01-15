@@ -5,32 +5,87 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<link href="<s:url value="/styles/main.css"/>" rel="stylesheet"
+<link href="<s:url value='/styles/forms.css'/>" rel="stylesheet"
 	type="text/css" media="all" />
+<link href="<s:url value='/styles/typo.css'/>" rel="stylesheet"
+	type="text/css" media="all" />	
+<style>
+	.errorText {
+		padding-top:13px;
+		float:right;
+		font-weight:bold;
+		font-style:italic;
+		color:#ff0000;
+	}
+	.loginBox {
+		width:440px;
+	}
+	.loginBoxTop {
+		background-color:#333333;
+		border-right: 1px solid gray;
+		border-left: 1px solid gray;
+		border-top: 1px solid gray;
+		padding:10px;
+		color:#ffffff;
+		font-weight:bold;
+		height:19px;
+		line-height:19px;
+		font-size:12px;
+	}
+	.loginBoxMiddle {
+		background-color:#ffffff;
+		border: 1px solid gray;
+		padding:10px;
+	}
+	.loginBoxBottom {
+		background-color:#eeeeee;
+		border-right: 1px solid gray;
+		border-left: 1px solid gray;
+		border-bottom: 1px solid gray;		
+		padding-left:15px;
+		padding-top:10px;
+		padding-bottom:10px;
+		padding-right:20px;
+	}
+	body {
+		background-image: url(<s:url value="/images/v2/background.png"/>);
+		text-align: center;
+}
+
+div#container
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 50em;
+	text-align: left;
+
+}
+input.textbox {
+	width:400px;
+}
+</style>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Report Runner - Login</title>
+<title>Login</title>
 </head>
-
 <body>
-<div id="top">
-		<div class="appLogo"><img src="<s:url value='/images/v2/top_bar_logo.png'/>" /></div>
-</div>
-
 <form action="j_spring_security_check" method="post" autocomplete="off">
-<div class="formGroup" style="margin:0 auto;background-color:#ffffff;width:350px;">
-		<div class="formGroupHeader" >Login to Report Runner</div>
-		<s:hidden name="loginAttempt" value="%{'1'}" />
-		<div style="float:right;margin-top:10px;">
- <c:if test="${not empty param.login_error}">
-      <font color="red">
-        Your login attempt was not successful, try again.<br/><br/>
-      </font>
-    </c:if></div>
-		<s:textfield name="j_username" label="Username"  cssClass="textbox"></s:textfield>
-		<s:password label="Password" name="j_password"  cssClass="textbox"></s:password>
-		<s:checkbox label="Remember Me" name="_spring_security_remember_me" />
-		<s:submit value="Login"/>
-</div>
+	<div id="container">
+	<div class="loginBox">
+	<div class="loginBoxTop">
+		Security Login
+	</div>
+	<div class="loginBoxMiddle">
+	
+		<s:textfield name="j_username" label="Username"  cssClass="textbox"/>
+		<s:password label="Password" name="j_password"  cssClass="textbox"/>
+	</div>
+	<div class="loginBoxBottom">
+			<c:if test="${not empty param.login_error}">    
+			<div class="errorText">Your login attempt was not successful</div>
+		</c:if><s:submit value="Login" align="left"/>
+	</div>
+	</div>
+	</div>
 </form>
 </body>
 </html>

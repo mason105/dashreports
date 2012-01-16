@@ -37,4 +37,5 @@ public interface DashboardService {
 	public List<RunnerDashboardItem> getRunningItems() throws SchedulerException;
 	public void interruptRunningDashboardItem(Integer alertId) throws SchedulerException;
 	public void invokeDashboardItem(Integer alertId) throws SchedulerException;
+	
 }

@@ -38,10 +38,7 @@
 		-->
 		<default-interceptor-ref name="defaultStack" />
 		
-		<default-action-ref name="index" />
-	
-		
-		<action name="logout" class="logoutAction"/>
+		<default-action-ref name="index" />		
 		
 		<action name="index" class="indexAction">
 			<result>/jsp/main/index.jsp</result>
@@ -282,11 +279,6 @@
 			<result name="input">/jsp/main/editUser.jsp</result>	
 		</action>
 
-
-		<action name="manageServer" class="manageServerAction">
-			<result>/jsp/main/manageServer.jsp</result>
-		</action>
-
 		<action name="setupEditDataSource" class="setupEditDataSourceAction">
 			<result>/jsp/main/editDataSource.jsp
 			</result>
@@ -341,12 +333,6 @@
 			<interceptor-ref name="defaultStack"/>		
 			<result>/jsp/nostyle/dashboardWidget.jsp</result>
 		</action>
-
-
-		<action name="leftNav" class="leftNavAction">
-			<result>/jsp/nostyle/leftNav.jsp</result>
-		</action>
-
 	
 		<action name="dashboard" class="dashboardAction">
 			<result>/jsp/nostyle/dashboard.jsp</result>

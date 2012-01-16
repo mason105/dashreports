@@ -23,12 +23,16 @@
 package binky.reportrunner.ui.actions.datasource;
 
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.opensymphony.xwork2.Preparable;
 
+import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
+import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.service.JDBCDriverDefinition;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
@@ -39,10 +43,21 @@ public class SaveDataSource extends StandardRunnerAction implements Preparable {
 
 	private RunnerDataSource dataSource;
 	private Collection<JDBCDriverDefinition> drivers;
+	private List<String> dataSourceGroups;
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		try {
+			
+			if (dataSourceGroups!=null) {
+				List<RunnerGroup> groups = new LinkedList<RunnerGroup>();
+				for (String g: dataSourceGroups) {
+					RunnerGroup group = groupDao.get(g);
+					groups.add(group);
+				}
+				dataSource.setGroups(groups);
+			}
+			
 			dataSourceService.saveUpdateDataSource(dataSource);
 		} catch (Exception e) {
 			super.addActionError(e.getMessage());
@@ -55,7 +70,10 @@ public class SaveDataSource extends StandardRunnerAction implements Preparable {
 
 		this.drivers=dataSourceService.getJDBCDriverDefinitions().getDefinitions().values();
 		
+		this.groups = groupDao.getAll();
 	}
+	private List<RunnerGroup> groups;
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private DatasourceService dataSourceService;
 
 
@@ -80,6 +98,24 @@ public class SaveDataSource extends StandardRunnerAction implements Preparable {
 	}
 	public void setDrivers(Collection<JDBCDriverDefinition> drivers) {
 		this.drivers = drivers;
+	}
+	public List<RunnerGroup> getGroups() {
+		return groups;
+	}
+	public void setGroups(List<RunnerGroup> groups) {
+		this.groups = groups;
+	}
+	public ReportRunnerDao<RunnerGroup, String> getGroupDao() {
+		return groupDao;
+	}
+	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
+		this.groupDao = groupDao;
+	}
+	public List<String> getDataSourceGroups() {
+		return dataSourceGroups;
+	}
+	public void setDataSourceGroups(List<String> dataSourceGroups) {
+		this.dataSourceGroups = dataSourceGroups;
 	}
 
 	

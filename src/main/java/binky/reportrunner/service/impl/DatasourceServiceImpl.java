@@ -51,6 +51,7 @@ import org.xml.sax.SAXException;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
+import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.service.JDBCDriverDefinition;
 import binky.reportrunner.service.JDBCDrivers;
@@ -59,6 +60,7 @@ import binky.reportrunner.util.EncryptionUtil;
 public class DatasourceServiceImpl implements DatasourceService {
 
 	private ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
+	private ReportRunnerDao<RunnerGroup, String> groupDao;
 	private Map<String, DataSource> dataSources = new HashMap<String, DataSource>();;
 	private String secureKey;
 
@@ -274,6 +276,11 @@ public class DatasourceServiceImpl implements DatasourceService {
         JDBCDrivers drivers = (JDBCDrivers)digester.parse(in);
         
 		return drivers;
+	}
+
+	@Override
+	public List<RunnerDataSource> getDataSourcesForGroup(String groupName) {
+		return groupDao.get(groupName).getDataSources();
 	}
 	
 

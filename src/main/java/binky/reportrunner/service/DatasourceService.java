@@ -50,7 +50,7 @@ public interface DatasourceService {
 	public RunnerDataSource getDataSource(String dataSourceName);
 
 	public List<RunnerDataSource> listDataSources();
-
+	public List<RunnerDataSource> getDataSourcesForGroup(String groupName);
 	public void purgeConnections(String dataSourceName) throws SQLException;
 	public String testDataSource(RunnerDataSource runnerDs) ;
 	public JDBCDrivers getJDBCDriverDefinitions() throws IOException, SAXException;

@@ -135,7 +135,7 @@ public class DashboardServiceImpl implements DashboardService {
 	public void setGroupDao(ReportRunnerDao<RunnerGroup,String> groupDao) {
 		this.groupDao = groupDao;
 	}
-
+	
 
 
 }

@@ -36,6 +36,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
+import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
@@ -45,14 +46,24 @@ public class SetupEditJNDIDataSource extends StandardRunnerAction implements Pre
 	private static final long serialVersionUID = 1L;
 	private String dataSourceName;
 	private RunnerDataSource dataSource;
-	
+	private List<String> dataSourceGroups;
 	private List<String> jndiNames;
 	private static final Logger logger = Logger.getLogger(SetupEditJNDIDataSource.class);
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
+		this.dataSourceGroups=new LinkedList<String>();
 		if ((dataSourceName !=null) && (!dataSourceName.isEmpty())){
 			dataSource=dataSourceDao.get(dataSourceName);
+		
+			if (dataSource!=null) {
+				for (RunnerGroup g: dataSource.getGroups()) {
+					this.dataSourceGroups.add(g.getGroupName());
+				}
+				
+			} else {
+				dataSource=new RunnerDataSource();	
+			}
 		} else {
 			dataSource=new RunnerDataSource();
 		}
@@ -96,7 +107,10 @@ public class SetupEditJNDIDataSource extends StandardRunnerAction implements Pre
 	public void prepare() throws Exception {
 		populateJNDINames();
 		
+		this.groups = groupDao.getAll();
 	}
+	private List<RunnerGroup> groups;
+	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	private  ReportRunnerDao<RunnerDataSource,String> dataSourceDao;
 
 	public void setDataSourceName(String dataSourceName) {
@@ -113,6 +127,30 @@ public class SetupEditJNDIDataSource extends StandardRunnerAction implements Pre
 	}
 	public void setJndiNames(List<String> jndiNames) {
 		this.jndiNames = jndiNames;
+	}
+
+	public List<RunnerGroup> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<RunnerGroup> groups) {
+		this.groups = groups;
+	}
+
+	public ReportRunnerDao<RunnerGroup, String> getGroupDao() {
+		return groupDao;
+	}
+
+	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
+		this.groupDao = groupDao;
+	}
+
+	public List<String> getDataSourceGroups() {
+		return dataSourceGroups;
+	}
+
+	public void setDataSourceGroups(List<String> dataSourceGroups) {
+		this.dataSourceGroups = dataSourceGroups;
 	}
 
 	

@@ -23,9 +23,11 @@
 package binky.reportrunner.data;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
@@ -71,6 +73,9 @@ public class RunnerDataSource implements Serializable {
 
 	private Integer maxPoolSize=5;
 
+	@ManyToMany
+	private List<RunnerGroup> groups;
+	
 	@RequiredStringValidator
 	public String getDataSourceName() {
 		return dataSourceName;
@@ -148,4 +153,13 @@ public class RunnerDataSource implements Serializable {
 	public String toString() {
 		return this.dataSourceName;
 	}
+
+	public List<RunnerGroup> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<RunnerGroup> groups) {
+		this.groups = groups;
+	}
+	
 }

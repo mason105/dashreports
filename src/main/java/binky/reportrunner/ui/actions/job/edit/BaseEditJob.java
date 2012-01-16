@@ -9,6 +9,7 @@ import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJobParameter.DataType;
+import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -25,6 +26,7 @@ public abstract class BaseEditJob extends StandardRunnerAction implements
 	protected RunnerJob job;
 	protected RunnerJobService jobService;
 	protected ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
+	protected DatasourceService dataSourceService;
 	protected List<RunnerDataSource> dataSources;
 	protected File template;// The actual file
 
@@ -56,7 +58,7 @@ public abstract class BaseEditJob extends StandardRunnerAction implements
 	}
 
 	public void prepare() throws Exception {
-		dataSources = dataSourceDao.getAll();
+		dataSources = this.dataSourceService.getDataSourcesForGroup(groupName);
 
 	}
 
@@ -159,6 +161,14 @@ public abstract class BaseEditJob extends StandardRunnerAction implements
 
 	public void setDataSourceName(String dataSourceName) {
 		this.dataSourceName = dataSourceName;
+	}
+
+	public DatasourceService getDataSourceService() {
+		return dataSourceService;
+	}
+
+	public void setDataSourceService(DatasourceService dataSourceService) {
+		this.dataSourceService = dataSourceService;
 	}
 
 }

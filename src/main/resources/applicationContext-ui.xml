@@ -23,13 +23,6 @@
 		<property name="versionId" value="${reportrunner.versionId}" />
 	</bean>
 
-	<bean id="leftNavAction" class="binky.reportrunner.ui.actions.navigation.LeftNavAction"
-		scope="prototype" >
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
-		</property>		
-	</bean>	
-
 	<bean id="downloadReportAction" class="binky.reportrunner.ui.actions.job.viewer.DownloadReportAction" scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
@@ -55,9 +48,6 @@
 		scope="prototype" >
 	</bean>
 	
-	<bean id="logoutAction" class="binky.reportrunner.ui.actions.Logout"
-		scope="prototype" />		
-		
 	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.group.ListGroupsAction"
 		scope="prototype">
 		<property name="groupDao">
@@ -257,7 +247,10 @@
 		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>				
+		</property>		
+		<property name="groupDao">
+			<ref bean="runnerGroupDao" />
+		</property>						
 	</bean>
 
 	<bean id="setupEditJNDIDataSourceAction"
@@ -266,6 +259,9 @@
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
 		</property>
+		<property name="groupDao">
+			<ref bean="runnerGroupDao" />
+		</property>				
 	</bean>
 
 	<bean id="setupEditUserAction" class="binky.reportrunner.ui.actions.user.SetupEditUser"
@@ -311,12 +307,6 @@
 		</property>		
 	</bean>
 
-	<bean id="manageServerAction" class="binky.reportrunner.ui.actions.ManageServerAction"
-		scope="prototype">
-	</bean>
-
-	
-	
 	<bean id="deleteItemAction" class="binky.reportrunner.ui.actions.dashboard.edit.DeleteItem" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />

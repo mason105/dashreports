@@ -6,11 +6,9 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-
+<s:form action="saveDataSource">
 <div class="formGroup">
 	<div class="formGroupHeader">Data Source Details</div>
-	
-	<s:form action="saveDataSource">
 		<s:actionerror />
 		<s:actionmessage/>
 		<s:if test="dataSource.dataSourceName != null">
@@ -30,15 +28,27 @@
 
 		<input type="button" value="Test" onclick="dojo.event.topic.publish('testButton');">
 
+				
+		<s:select label="Groups"
+	       name="dataSourceGroups"
+	       list="groups"
+	       multiple="true"
+	       listKey="groupName" 
+	       listValue="groupName"  cssClass="textbox"	       
+		/>
+		
+		<input type="button" value="Test" onclick="dojo.event.topic.publish('testButton');">
+
 		<s:url id="validateUrl" action="testDataSource" /> 
 		<sx:div showLoadingText="true" loadingText="Testing datasource..." id="validateQuery" href="%{validateUrl}" theme="ajax"  listenTopics="testButton" formId="saveDataSource" preload="false">
 		Please click test
 		</sx:div>
-						
-			
-	<s:submit value="Save"/>
-	</s:form>
+				
+		<div class="formBottom">
+		<div class="formFooterText">* required field</div>
+		<s:submit value="Save" align="left"/>
+		</div>
 </div>
-
+</s:form>
 </body>
 </html>

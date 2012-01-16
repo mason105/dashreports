@@ -17,6 +17,7 @@ import binky.reportrunner.data.RunnerDashboardItem.Width;
 import binky.reportrunner.data.RunnerDashboardThreshold.ThresholdType;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.scheduler.SchedulerException;
+import binky.reportrunner.service.DatasourceService;
 
 import com.opensymphony.xwork2.Preparable;
 
@@ -24,6 +25,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 		implements Preparable {
 	private static final long serialVersionUID = 1L;
 	private ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
+	private DatasourceService dataSourceService;
 	private List<RunnerDataSource> runnerDataSources;
 
 	private String itemQuery;
@@ -74,7 +76,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 	}
 
 	public final void prepare() throws Exception {
-		runnerDataSources = this.dataSourceDao.getAll();
+		runnerDataSources = this.dataSourceService.getDataSourcesForGroup(groupName);
 	}
 
 	public final List<RunnerDataSource> getRunnerDataSources() {

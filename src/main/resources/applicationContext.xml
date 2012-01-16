@@ -3,9 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
                     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<import resource="applicationContext-db.xml"/>
-	<import resource="applicationContext-ui.xml"/>
-	
+	<import resource="applicationContext-db.xml" />
+	<import resource="applicationContext-ui.xml" />
+
 
 	<!--  properties file -->
 	<bean id="placeholderConfig"
@@ -15,17 +15,18 @@
 				<value>classpath:reportrunner.properties</value>
 			</list>
 		</property>
-		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="systemPropertiesModeName"
+			value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 	</bean>
 
-	
+
 	<bean id="quartzFactory"
 		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-		  <property name="triggers">
-		    <list>
-		      <ref bean="pruneEventHistoryTrigger"/>		      
-		    </list>
-		  </property>
+		<property name="triggers">
+			<list>
+				<ref bean="pruneEventHistoryTrigger" />
+			</list>
+		</property>
 		<property name="overwriteExistingJobs">
 			<value>true</value>
 		</property>
@@ -49,65 +50,95 @@
 		<property name="quartzProperties">
 			<props>
 				<!-- ThreadPool -->
-				<prop key="org.quartz.threadPool.class">org.quartz.simpl.SimpleThreadPool</prop>
-				<prop key="org.quartz.threadPool.threadCount">${org.quartz.threadPool.threadCount}</prop>
-				<prop key="org.quartz.threadPool.threadPriority">${org.quartz.threadPool.threadPriority}</prop>
+				<prop key="org.quartz.threadPool.class">
+					org.quartz.simpl.SimpleThreadPool
+				</prop>
+				<prop key="org.quartz.threadPool.threadCount">
+					${org.quartz.threadPool.threadCount}
+				</prop>
+				<prop key="org.quartz.threadPool.threadPriority">
+					${org.quartz.threadPool.threadPriority}
+				</prop>
 
 				<!-- Job store -->
-				<prop key="org.quartz.jobStore.misfireThreshold">${org.quartz.jobStore.misfireThreshold}</prop>
-				<prop key="org.quartz.jobStore.class">org.springframework.scheduling.quartz.LocalDataSourceJobStore</prop>
+				<prop key="org.quartz.jobStore.misfireThreshold">
+					${org.quartz.jobStore.misfireThreshold}
+				</prop>
+				<prop key="org.quartz.jobStore.class">
+					org.springframework.scheduling.quartz.LocalDataSourceJobStore
+				</prop>
 				<!--
 					<prop
 					key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
 				-->
-				<prop key="org.quartz.jobStore.driverDelegateClass">${quartz.JDBCDelegate}</prop>
-				<prop key="org.quartz.jobStore.useProperties">false</prop>
-				<prop key="org.quartz.jobStore.selectWithLockSQL">SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME = ?</prop>
+				<prop key="org.quartz.jobStore.driverDelegateClass">
+					${quartz.JDBCDelegate}
+				</prop>
+				<prop key="org.quartz.jobStore.useProperties">
+					false
+				</prop>
+				<prop key="org.quartz.jobStore.selectWithLockSQL">
+					SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME = ?
+				</prop>
 
 				<!-- history plugin -->
-				<prop key="org.quartz.plugin.triggHistory.class">org.quartz.plugins.history.LoggingJobHistoryPlugin</prop>
-				
+				<prop key="org.quartz.plugin.triggHistory.class">
+					org.quartz.plugins.history.LoggingJobHistoryPlugin
+				</prop>
+
 				<!--  clustering -->
-				<prop key="org.quartz.jobStore.isClustered">${org.quartz.jobStore.isClustered}</prop>
-				<prop key="org.quartz.jobStore.clusterCheckinInterval">${org.quartz.jobStore.clusterCheckinInterval}</prop>
-				<prop key="org.quartz.scheduler.instanceId">${org.quartz.scheduler.instanceId}</prop>								
+				<prop key="org.quartz.jobStore.isClustered">
+					${org.quartz.jobStore.isClustered}
+				</prop>
+				<prop
+					key="org.quartz.jobStore.clusterCheckinInterval">
+					${org.quartz.jobStore.clusterCheckinInterval}
+				</prop>
+				<prop key="org.quartz.scheduler.instanceId">
+					${org.quartz.scheduler.instanceId}
+				</prop>
 			</props>
 		</property>
 	</bean>
 
 	<!--  setup our scheduler singleton and the quartz bean -->
-	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
+	<bean id="scheduler"
+		class="binky.reportrunner.scheduler.impl.SchedulerImpl"
 		scope="singleton">
 		<property name="quartzScheduler" ref="quartzFactory" />
-		<property name="clustered" value="${org.quartz.jobStore.isClustered}"/>
-		
+		<property name="clustered"
+			value="${org.quartz.jobStore.isClustered}" />
+
 	</bean>
-	
-	
 
 
-	<bean id="runnerJobService" class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
+
+
+	<bean id="runnerJobService"
+		class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
 		<property name="scheduler" ref="scheduler" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>			
+		</property>
 	</bean>
-	<bean id="dashboardService" class="binky.reportrunner.service.impl.DashboardServiceImpl" scope="prototype">
+	<bean id="dashboardService"
+		class="binky.reportrunner.service.impl.DashboardServiceImpl"
+		scope="prototype">
 		<property name="dashboardDao">
 			<ref bean="dashboardDao" />
 		</property>
 		<property name="scheduler" ref="scheduler" />
 		<property name="groupDao" ref="runnerGroupDao" />
-	</bean>	
-	
-	<bean id="authenticationService"	          
+	</bean>
+
+	<bean id="authenticationService"
 		class="binky.reportrunner.service.impl.AuthenticationServiceImpl">
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
 		</property>
 	</bean>
-	
+
 	<bean id="userService"
 		class="binky.reportrunner.service.impl.UserServiceImpl">
 		<property name="userDao">
@@ -117,45 +148,57 @@
 			<ref bean="runnerGroupDao" />
 		</property>
 	</bean>
-	
 
-	<bean id="noCacheInterceptor" class="binky.reportrunner.interceptors.NoCache" scope="singleton" >
+
+	<bean id="noCacheInterceptor"
+		class="binky.reportrunner.interceptors.NoCache" scope="singleton">
 	</bean>
 
-	
-	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener">
+
+	<bean id="runnerJobListener"
+		class="binky.reportrunner.scheduler.RunnerJobListener">
 		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
 		<property name="smtpServer" value="${reportrunner.smtpServer}" />
-		<property name="fromAddress" value="${reportrunner.fromAddress}" />
+		<property name="fromAddress"
+			value="${reportrunner.fromAddress}" />
 		<property name="datasourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
 		<property name="dashboardDao">
 			<ref bean="dashboardDao" />
-		</property>		
+		</property>
 	</bean>
-	<bean id="runnerDatasourceService" class="binky.reportrunner.service.impl.DatasourceServiceImpl"
-		scope="singleton">		
+
+	<bean id="runnerDatasourceService"
+		class="binky.reportrunner.service.impl.DatasourceServiceImpl"
+		scope="singleton">
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
+		</property>
+		<property name="groupDao">
+			<ref bean="runnerGroupDao" />
 		</property>
 		<property name="secureKey" value="${reportrunner.secureKey}" />
 	</bean>
 
-	<bean name="pruneEventHistoryJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-	  <property name="jobClass" value="binky.reportrunner.util.PruneEventHistory"/>
-	  <property name="jobDataAsMap">
-	    <map>
-	      <entry key="daysToKeep" value="${reportrunner.daysToKeep}"/>
-	    </map>
-	  </property>
+	<bean name="pruneEventHistoryJob"
+		class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass"
+			value="binky.reportrunner.util.PruneEventHistory" />
+		<property name="jobDataAsMap">
+			<map>
+				<entry key="daysToKeep"
+					value="${reportrunner.daysToKeep}" />
+			</map>
+		</property>
 	</bean>
-		
-	<bean id="pruneEventHistoryTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-	  <property name="jobDetail" ref="pruneEventHistoryJob"/>
+
+	<bean id="pruneEventHistoryTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="pruneEventHistoryJob" />
 		<!-- run every morning at 6 AM -->
-	  <property name="cronExpression" value="0 0 6 * * ?"/>
+		<property name="cronExpression" value="0 0 6 * * ?" />
 	</bean>
-		
+
 </beans>

@@ -236,7 +236,10 @@
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>		
+		</property>
+		<property name="groupDao">
+			<ref bean="runnerGroupDao" />
+		</property>							
 	</bean>
 
 	<bean id="setupEditDataSourceAction"

@@ -282,6 +282,14 @@ public class DatasourceServiceImpl implements DatasourceService {
 	public List<RunnerDataSource> getDataSourcesForGroup(String groupName) {
 		return groupDao.get(groupName).getDataSources();
 	}
+
+	public ReportRunnerDao<RunnerGroup, String> getGroupDao() {
+		return groupDao;
+	}
+
+	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
+		this.groupDao = groupDao;
+	}
 	
 
 

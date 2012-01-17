@@ -6,8 +6,9 @@ import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import binky.reportrunner.dao.ReportRunnerDao;
+import binky.reportrunner.data.DatabaseObject;
 
-public class HibernateDaoImpl<T,ID extends Serializable> extends HibernateDaoSupport implements ReportRunnerDao<T, ID> {
+public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializable> extends HibernateDaoSupport implements ReportRunnerDao<T, ID> {
 
 	private Class<T> clazz;
 	
@@ -34,7 +35,12 @@ public class HibernateDaoImpl<T,ID extends Serializable> extends HibernateDaoSup
 	}
 
 	public void saveOrUpdate(T entity) {
-		super.getHibernateTemplate().saveOrUpdate(entity);
+		//dealing with the caching while using the hibernate session in view filter
+		if (this.get(entity.getId()) != null) {
+			super.getHibernateTemplate().merge(entity);
+		} else {
+			super.getHibernateTemplate().saveOrUpdate(entity);
+		}
 	}
 
 	@Override

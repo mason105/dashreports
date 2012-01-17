@@ -22,7 +22,6 @@
  ******************************************************************************/
 package binky.reportrunner.data;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -41,7 +40,11 @@ import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 @NamedQueries( {
 	@NamedQuery(name = "getJobsByGroup", query = "from T_JOB j where j.pk.group.groupName = ?")
 })
-public class RunnerJob implements Serializable {
+public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
+
+	public RunnerJob_pk getId() {
+		return pk;
+	}
 
 	private static final long serialVersionUID = 2036013437864145537L;
 

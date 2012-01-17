@@ -39,7 +39,17 @@ import javax.persistence.NamedQuery;
 		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.success=true order by timestamp desc"),
 		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timestamp < ?")	
 })
-public class RunnerHistoryEvent {
+public class RunnerHistoryEvent extends DatabaseObject<Long> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8583408359341993933L;
+
+	public Long getId() {
+		return eventId;
+	}
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

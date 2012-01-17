@@ -31,7 +31,16 @@ import javax.persistence.NamedQuery;
 @NamedQueries( {
 	@NamedQuery(name = "getParmatersByJob", query = "from T_PARAMETER p where p.pk.runnerJob_pk.jobName=? and p.pk.runnerJob_pk.group.groupName=?")
 })
-public class RunnerJobParameter {
+public class RunnerJobParameter extends DatabaseObject<RunnerJobParameter_pk> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5963262941328410080L;
+	public RunnerJobParameter_pk getId() {
+		return pk;
+	}
+
 	public enum DataType {
 		STRING("String"), DATE("Date"), BOOLEAN("Boolean"),INTEGER("Integer"),LONG("Long"),DOUBLE("Double");
 		

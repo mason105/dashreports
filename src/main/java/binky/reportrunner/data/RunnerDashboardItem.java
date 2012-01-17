@@ -22,7 +22,6 @@
  ******************************************************************************/
 package binky.reportrunner.data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -41,7 +40,11 @@ import org.apache.commons.beanutils.RowSetDynaClass;
 @NamedQueries( {
 	@NamedQuery(name = "getItemsByGroup", query = "from T_ITEM i where i.group.groupName = ?")
 })
-public abstract class RunnerDashboardItem implements Serializable {
+public abstract class RunnerDashboardItem extends DatabaseObject<Integer> {
+
+	public Integer getId() {
+		return itemId;
+	}
 
 	private static final long serialVersionUID = -4719560825938162696L;
 

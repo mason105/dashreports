@@ -3,7 +3,14 @@ package binky.reportrunner.dao;
 import java.io.Serializable;
 import java.util.List;
 
-public interface ReportRunnerDao<T, ID extends Serializable> {
+import binky.reportrunner.data.DatabaseObject;
+
+/**
+ * 
+ * Rather nifty Generic DAO, if I do say so myself
+ *
+ **/
+public interface ReportRunnerDao<T extends DatabaseObject<ID>, ID extends Serializable> {
 
 	public void delete(ID id);
 	public T get(ID id);

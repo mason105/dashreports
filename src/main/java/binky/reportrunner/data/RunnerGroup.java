@@ -22,7 +22,6 @@
  ******************************************************************************/
 package binky.reportrunner.data;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,7 +33,11 @@ import javax.persistence.OneToMany;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity(name = "T_GROUP")
-public class RunnerGroup implements Serializable {
+public class RunnerGroup extends DatabaseObject<String> {
+
+	public String getId() {
+		return groupName;
+	}
 
 	private static final long serialVersionUID = -5727491198024680384L;
 

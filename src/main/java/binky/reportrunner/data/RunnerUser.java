@@ -22,7 +22,6 @@
  ******************************************************************************/
 package binky.reportrunner.data;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,7 +38,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity(name = "T_USER")
-public class RunnerUser implements  UserDetails,Serializable {
+public class RunnerUser extends DatabaseObject<String> implements  UserDetails {
+
+	public String getId() {
+		return userName;
+	}
+
 
 	private static final long serialVersionUID = 8376600609942516518L;
 

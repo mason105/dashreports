@@ -22,7 +22,6 @@
  ******************************************************************************/
 package binky.reportrunner.data;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -32,7 +31,11 @@ import javax.persistence.ManyToMany;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity(name = "T_DATASOURCE")
-public class RunnerDataSource implements Serializable {
+public class RunnerDataSource extends DatabaseObject<String> {
+
+	public String getId() {
+		return dataSourceName;
+	}
 
 	private static final long serialVersionUID = 7230871954372088509L;
 

@@ -74,7 +74,7 @@ function validateBurstQuery(){
 			<div class="formGroupHeader">Job Details</div>
 			<s:if test="job.pk.jobName">
 				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
-					name="job.pk.jobName" readonly="true" cssClass="readOnly" required="true" cssClass="textbox">
+					name="job.pk.jobName" readonly="true" cssClass="readOnly, textBox" required="true" >
 
 				</s:textfield>
 			</s:if><s:else>
@@ -264,7 +264,7 @@ function validateBurstQuery(){
 			
 			<s:if test="job.templateFileName!=null">
 			<s:textfield size="40" label="Template File Name" value="%{job.templateFileName}"
-			name="job.templateFileName" readonly="true" cssClass="readOnly" cssClass="textbox"></s:textfield>
+			name="job.templateFileName" readonly="true" cssClass="readOnly,textbox"></s:textfield>
 			</s:if>	
 		
 			<s:file label="Template File" name="template"></s:file> 

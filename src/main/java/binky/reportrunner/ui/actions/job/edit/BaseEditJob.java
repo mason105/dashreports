@@ -15,9 +15,7 @@ import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
 
-public abstract class BaseEditJob extends StandardRunnerAction implements
-		Preparable {
-
+public abstract class BaseEditJob extends StandardRunnerAction {
 	/**
 	 * 
 	 */
@@ -55,11 +53,6 @@ public abstract class BaseEditJob extends StandardRunnerAction implements
 
 	public List<RunnerDataSource> getDataSources() {
 		return dataSources;
-	}
-
-	public void prepare() throws Exception {
-		dataSources = this.dataSourceService.getDataSourcesForGroup(groupName);
-
 	}
 
 	public void setDataSources(List<RunnerDataSource> dataSources) {

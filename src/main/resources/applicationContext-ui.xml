@@ -8,47 +8,54 @@
 	<!--  actions -->
 
 
-	<bean id="schedulerAdminAction" class="binky.reportrunner.ui.actions.admin.SchedulerAdmin"
-		scope="prototype" >
+	<bean id="schedulerAdminAction"
+		class="binky.reportrunner.ui.actions.admin.SchedulerAdmin"
+		scope="prototype">
 		<property name="scheduler" ref="scheduler" />
 	</bean>
-	
-	<bean id="schedulerStateChangeAction" class="binky.reportrunner.ui.actions.admin.SchedulerStateChange"
-		scope="prototype" >
+
+	<bean id="schedulerStateChangeAction"
+		class="binky.reportrunner.ui.actions.admin.SchedulerStateChange"
+		scope="prototype">
 		<property name="scheduler" ref="scheduler" />
 	</bean>
 
 	<bean id="aboutAction" class="binky.reportrunner.ui.actions.About"
-		scope="prototype" >
+		scope="prototype">
 		<property name="versionId" value="${reportrunner.versionId}" />
 	</bean>
 
-	<bean id="downloadReportAction" class="binky.reportrunner.ui.actions.job.viewer.DownloadReportAction" scope="prototype">
+	<bean id="downloadReportAction"
+		class="binky.reportrunner.ui.actions.job.viewer.DownloadReportAction"
+		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
-		</property>	
+		</property>
 	</bean>
-	
-	
-	<bean id="getDashboardChartDataAction" class="binky.reportrunner.ui.actions.dashboard.GetDashboardChartDataAction"
-		scope="prototype" >
+
+
+	<bean id="getDashboardChartDataAction"
+		class="binky.reportrunner.ui.actions.dashboard.GetDashboardChartDataAction"
+		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
+		</property>
 	</bean>
-	
-	<bean id="dashboardWidgetAction" class="binky.reportrunner.ui.actions.dashboard.DashboardWidgetAction"
-		scope="prototype" >
+
+	<bean id="dashboardWidgetAction"
+		class="binky.reportrunner.ui.actions.dashboard.DashboardWidgetAction"
+		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
+		</property>
 	</bean>
-		
-	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction"
-		scope="prototype" >
+
+	<bean id="indexAction"
+		class="binky.reportrunner.ui.actions.IndexAction" scope="prototype">
 	</bean>
-	
-	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.group.ListGroupsAction"
+
+	<bean id="listGroupsAction"
+		class="binky.reportrunner.ui.actions.group.ListGroupsAction"
 		scope="prototype">
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
@@ -65,63 +72,71 @@
 		</property>
 	</bean>
 
-	<bean id="deleteGroupAction" class="binky.reportrunner.ui.actions.group.DeleteGroup"
+	<bean id="deleteGroupAction"
+		class="binky.reportrunner.ui.actions.group.DeleteGroup"
 		scope="prototype">
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
 		</property>
 		<property name="jobService">
 			<ref bean="runnerJobService" />
-		</property>		
+		</property>
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
+		</property>
 	</bean>
-	<bean id="saveGroupAction" class="binky.reportrunner.ui.actions.group.SaveGroup"
+	<bean id="saveGroupAction"
+		class="binky.reportrunner.ui.actions.group.SaveGroup"
 		scope="prototype">
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
-		</property>		
+		</property>
 	</bean>
-	<bean id="setupEditGroupAction" class="binky.reportrunner.ui.actions.group.SetupEditGroup"
+	<bean id="setupEditGroupAction"
+		class="binky.reportrunner.ui.actions.group.SetupEditGroup"
 		scope="prototype">
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
 		</property>
 	</bean>
 
-	<bean id="deleteJobAction" class="binky.reportrunner.ui.actions.job.DeleteJob"
+	<bean id="deleteJobAction"
+		class="binky.reportrunner.ui.actions.job.DeleteJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
 	</bean>
 
-	<bean id="setupViewJobAction" class="binky.reportrunner.ui.actions.job.viewer.SetupViewJobAction"
+	<bean id="setupViewJobAction"
+		class="binky.reportrunner.ui.actions.job.viewer.SetupViewJobAction"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
 	</bean>
-	
-	<bean id="viewJobOutputAction" class="binky.reportrunner.ui.actions.job.viewer.ViewJobOutputAction"
+
+	<bean id="viewJobOutputAction"
+		class="binky.reportrunner.ui.actions.job.viewer.ViewJobOutputAction"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
 		<property name="historyDao">
 			<ref bean="runnerHistoryDao" />
-		</property>		
+		</property>
 	</bean>
 
-	<bean id="invokeJobAction" class="binky.reportrunner.ui.actions.job.InvokeJob"
+	<bean id="invokeJobAction"
+		class="binky.reportrunner.ui.actions.job.InvokeJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
 	</bean>
 
-	<bean id="editJobAction" class="binky.reportrunner.ui.actions.job.edit.EditJob"
+	<bean id="editJobAction"
+		class="binky.reportrunner.ui.actions.job.edit.EditJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
@@ -131,26 +146,35 @@
 		</property>
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
-		</property>		
+		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
 	</bean>
-		<bean id="setupEditJobAction" class="binky.reportrunner.ui.actions.job.edit.SetupEditJob"
+	<bean id="setupEditJobAction"
+		class="binky.reportrunner.ui.actions.job.edit.SetupEditJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
-		</property>				
+		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
 	</bean>
-	
-	
-	<bean id="setJobStatusAction" class="binky.reportrunner.ui.actions.job.SetJobStatus"
+
+
+	<bean id="setJobStatusAction"
+		class="binky.reportrunner.ui.actions.job.SetJobStatus"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
 	</bean>
-	<bean id="viewJobDetailAction" class="binky.reportrunner.ui.actions.job.ViewJobDetail"
+	<bean id="viewJobDetailAction"
+		class="binky.reportrunner.ui.actions.job.ViewJobDetail"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
@@ -165,64 +189,64 @@
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>		
+		</property>
 	</bean>
-	
+
 	<bean id="testDataSourceAction"
 		class="binky.reportrunner.ui.actions.datasource.TestDataSource"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>		
+		</property>
 	</bean>
-	
+
 	<bean id="driverDetailAction"
 		class="binky.reportrunner.ui.actions.datasource.DriverDetail"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>		
+		</property>
 	</bean>
-				
+
 	<bean id="validateItemQueryAction"
 		class="binky.reportrunner.ui.actions.dashboard.edit.ValidateItemSQL"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>		
+		</property>
 	</bean>
-	
+
 	<bean id="validateJobQueryAction"
 		class="binky.reportrunner.ui.actions.job.ValidateJobSQL"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>		
+		</property>
 	</bean>
-	
+
 	<bean id="validateBurstQueryAction"
 		class="binky.reportrunner.ui.actions.job.ValidateBurstSQL"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>		
+		</property>
 	</bean>
-	
+
 	<bean id="getQueryColumnsAction"
 		class="binky.reportrunner.ui.actions.dashboard.edit.GetColumnNamesForQuery"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>		
+		</property>
 	</bean>
-	
-	
+
+
 	<bean id="purgeConnectionsAction"
 		class="binky.reportrunner.ui.actions.datasource.PurgeConnections"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>		
+		</property>
 	</bean>
 	<bean id="listDataSourcesAction"
 		class="binky.reportrunner.ui.actions.datasource.ListDataSources"
@@ -232,14 +256,15 @@
 		</property>
 	</bean>
 
-	<bean id="saveDataSourceAction" class="binky.reportrunner.ui.actions.datasource.SaveDataSource"
+	<bean id="saveDataSourceAction"
+		class="binky.reportrunner.ui.actions.datasource.SaveDataSource"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
-		</property>							
+		</property>
 	</bean>
 
 	<bean id="setupEditDataSourceAction"
@@ -250,10 +275,10 @@
 		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
-		</property>		
+		</property>
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
-		</property>						
+		</property>
 	</bean>
 
 	<bean id="setupEditJNDIDataSourceAction"
@@ -264,10 +289,11 @@
 		</property>
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
-		</property>				
+		</property>
 	</bean>
 
-	<bean id="setupEditUserAction" class="binky.reportrunner.ui.actions.user.SetupEditUser"
+	<bean id="setupEditUserAction"
+		class="binky.reportrunner.ui.actions.user.SetupEditUser"
 		scope="prototype">
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
@@ -277,146 +303,190 @@
 		</property>
 	</bean>
 
-	<bean id="changePasswordAction" class="binky.reportrunner.ui.actions.user.ChangePassword"
+	<bean id="changePasswordAction"
+		class="binky.reportrunner.ui.actions.user.ChangePassword"
 		scope="prototype">
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
 		</property>
 	</bean>
-	<bean id="setupChangePasswordAction" class="binky.reportrunner.ui.actions.user.SetupChangePassword"
-		scope="prototype"/>
-		
-	<bean id="deleteUserAction" class="binky.reportrunner.ui.actions.user.DeleteUser"
+	<bean id="setupChangePasswordAction"
+		class="binky.reportrunner.ui.actions.user.SetupChangePassword"
+		scope="prototype" />
+
+	<bean id="deleteUserAction"
+		class="binky.reportrunner.ui.actions.user.DeleteUser"
 		scope="prototype">
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
 		</property>
 	</bean>
 
-	<bean id="listUsersAction" class="binky.reportrunner.ui.actions.user.ListUsers"
+	<bean id="listUsersAction"
+		class="binky.reportrunner.ui.actions.user.ListUsers"
 		scope="prototype">
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
 		</property>
 	</bean>
 
-	<bean id="saveUserAction" class="binky.reportrunner.ui.actions.user.SaveUser"
+	<bean id="saveUserAction"
+		class="binky.reportrunner.ui.actions.user.SaveUser"
 		scope="prototype">
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
 		</property>
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
-		</property>		
+		</property>
 	</bean>
 
-	<bean id="deleteItemAction" class="binky.reportrunner.ui.actions.dashboard.edit.DeleteItem" scope="prototype">
+	<bean id="deleteItemAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.DeleteItem"
+		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
+		</property>
 	</bean>
 
-	<bean id="invokeItemAction" class="binky.reportrunner.ui.actions.dashboard.InvokeItem" scope="prototype">
+	<bean id="invokeItemAction"
+		class="binky.reportrunner.ui.actions.dashboard.InvokeItem"
+		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
+		</property>
 	</bean>
 
-	<bean id="setupEditChartAction" class="binky.reportrunner.ui.actions.dashboard.edit.SetupEditChart" scope="prototype">
+	<bean id="setupEditChartAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.SetupEditChart"
+		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>			
+		</property>
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
-		</property>		
+		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
 	</bean>
 
-	<bean id="saveChartAction" class="binky.reportrunner.ui.actions.dashboard.edit.SaveChart" scope="prototype">
+	<bean id="saveChartAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.SaveChart"
+		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
+		</property>
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
-		</property>		
-	</bean>
-	
-	<bean id="setupEditGridAction" class="binky.reportrunner.ui.actions.dashboard.edit.SetupEditGrid" scope="prototype">
-		<property name="dashboardService">
-			<ref bean="dashboardService" />
-		</property>			
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
-		</property>		
+		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
 	</bean>
 
-	<bean id="saveGridAction" class="binky.reportrunner.ui.actions.dashboard.edit.SaveGrid" scope="prototype">
+	<bean id="setupEditGridAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.SetupEditGrid"
+		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
+		</property>
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
-		</property>		
+		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
 	</bean>
 
-	<bean id="setupEditThresholdAction" class="binky.reportrunner.ui.actions.dashboard.edit.SetupEditThreshold" scope="prototype">
+	<bean id="saveGridAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.SaveGrid"
+		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>			
+		</property>
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
-		</property>		
+		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
 	</bean>
 
-	<bean id="saveThresholdAction" class="binky.reportrunner.ui.actions.dashboard.edit.SaveThreshold" scope="prototype">
+	<bean id="setupEditThresholdAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.SetupEditThreshold"
+		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
+		</property>
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
-		</property>		
-	</bean>	
-	
-	<bean id="listCurrentExecutingJobsAction" class="binky.reportrunner.ui.actions.admin.ListCurrentExecutingJobsAction"
+		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
+	</bean>
+
+	<bean id="saveThresholdAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.SaveThreshold"
+		scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>
+		<property name="dataSourceDao">
+			<ref bean="runnerDataSourceDao" />
+		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
+	</bean>
+
+	<bean id="listCurrentExecutingJobsAction"
+		class="binky.reportrunner.ui.actions.admin.ListCurrentExecutingJobsAction"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
+		</property>
 	</bean>
 
-	<bean id="interruptCurrentExecutingJobAction" class="binky.reportrunner.ui.actions.admin.InterruptCurrentExecutingJobAction"
+	<bean id="interruptCurrentExecutingJobAction"
+		class="binky.reportrunner.ui.actions.admin.InterruptCurrentExecutingJobAction"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
-		
+
 	</bean>
 
-	<bean id="interruptCurrentExecutingDashboardItemAction" class="binky.reportrunner.ui.actions.admin.InterruptCurrentExecutingDashboardItemAction"
+	<bean id="interruptCurrentExecutingDashboardItemAction"
+		class="binky.reportrunner.ui.actions.admin.InterruptCurrentExecutingDashboardItemAction"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>		
+		</property>
 	</bean>
 
-	<bean id="showGroupAction" class="binky.reportrunner.ui.actions.group.ShowGroup"
+	<bean id="showGroupAction"
+		class="binky.reportrunner.ui.actions.group.ShowGroup"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>	
+		</property>
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
 	</bean>
 
-	<bean id="setupJobStatsAction" class="binky.reportrunner.ui.actions.admin.SetupJobStatsAction"
+	<bean id="setupJobStatsAction"
+		class="binky.reportrunner.ui.actions.admin.SetupJobStatsAction"
 		scope="prototype">
 		<property name="historyDao">
 			<ref bean="runnerHistoryDao" />
-		</property>	
-			
+		</property>
+
 	</bean>
 
 </beans>

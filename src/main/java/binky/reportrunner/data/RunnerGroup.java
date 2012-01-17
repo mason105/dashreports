@@ -61,9 +61,6 @@ public class RunnerGroup extends DatabaseObject<String> {
 	private String groupDescription;
 
 	@ManyToMany
-	private List<RunnerUser> users;
-
-	@ManyToMany
 	private List<RunnerDataSource> dataSources;
 
 	
@@ -100,14 +97,6 @@ public class RunnerGroup extends DatabaseObject<String> {
 
 	public String toString() {
 		return this.groupName;
-	}
-
-	public List<RunnerUser> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<RunnerUser> users) {
-		this.users = users;
 	}
 
 	public Collection<RunnerDashboardItem> getDashboardItems() {

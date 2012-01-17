@@ -280,7 +280,10 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	@Override
 	public List<RunnerDataSource> getDataSourcesForGroup(String groupName) {
-		return groupDao.get(groupName).getDataSources();
+		logger.debug("getting datasources for group: " + groupName);
+		List<RunnerDataSource> dsList = groupDao.get(groupName).getDataSources();
+		logger.debug("got : " + dsList.size() + " data sources for group: " + groupName);
+		return dsList;
 	}
 
 	public ReportRunnerDao<RunnerGroup, String> getGroupDao() {

@@ -18,7 +18,7 @@
 			required="true" readonly="true" cssClass="readonly, textbox" />
 	</s:if> <s:else>
 		<s:textfield label="Data Source Name" size="32"
-			value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName" />
+			value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName"  cssClass="textbox" />
 	</s:else> <s:select
 		label="Select Driver (please ensure the relevant JAR is on the classpath)"
 		name="jdbcDriver" value="%{currentDriver}" list="drivers"
@@ -40,7 +40,8 @@
 		label="Groups" name="dataSourceGroups" list="groups" multiple="true"
 		listKey="groupName" listValue="groupName" cssClass="textbox" />
 
-	<input type="button" value="Test"
+	<div class="testBox">
+	<input type="button" value="Test" class="testButton"
 		onclick="dojo.event.topic.publish('testButton');"> <s:url
 		id="validateUrl" action="testDataSource" /> <sx:div
 		showLoadingText="true" loadingText="Testing datasource..."
@@ -48,7 +49,8 @@
 		listenTopics="testButton" formId="saveDataSource" preload="false">
 		Please click test
 		</sx:div>
-
+	</div>
+	
 	<div class="formBottom">
 	<div class="formFooterText">* required field</div>
 	<s:submit value="Save" align="left" /></div>

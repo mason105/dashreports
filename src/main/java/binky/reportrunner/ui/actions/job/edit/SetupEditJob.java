@@ -57,7 +57,7 @@ public class SetupEditJob extends BaseEditJob {
 				} else {
 					paramCount = job.getParameters().size();
 				}
-
+				
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
@@ -73,6 +73,7 @@ public class SetupEditJob extends BaseEditJob {
 			SecurityException se = new SecurityException("Group not passed");
 			logger.fatal(se.getMessage(), se);
 		}
+		dataSources = this.dataSourceService.getDataSourcesForGroup(groupName);
 		return SUCCESS;
 	}
 

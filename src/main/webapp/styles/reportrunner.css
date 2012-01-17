@@ -479,3 +479,7 @@ height: 25px;
 float:left;
 margin-right:7px;
 }
+.testBox {
+		border-top: 1px solid #ccc;
+		padding:5px;
+}

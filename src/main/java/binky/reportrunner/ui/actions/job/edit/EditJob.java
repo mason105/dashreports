@@ -24,18 +24,20 @@ public class EditJob extends BaseEditJob {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(EditJob.class);
 
-	private  ReportRunnerDao<RunnerJobParameter,RunnerJobParameter_pk> parameterDao;
+	private ReportRunnerDao<RunnerJobParameter, RunnerJobParameter_pk> parameterDao;
 
-	private int[] parameterId;
+	private int parameterId;
 	private String deleteParameters;
 	private String addParameter;
 	private String saveJob;
 
 	@Override
 	public String execute() throws Exception {
+		dataSources = dataSourceService.getDataSourcesForGroup(groupName);
+		logger.debug("execute called");
 		if (isStringPopulated(deleteParameters)) {
-			logger.debug("delete parameters");
-			return deleteParameters();
+			logger.debug("delete parameter");
+			return deleteParameter();
 		} else if (isStringPopulated(addParameter)) {
 			logger.debug("add parameter");
 			return addParameter();
@@ -46,7 +48,8 @@ public class EditJob extends BaseEditJob {
 	}
 
 	private String addParameter() {
-		logger.debug("adding parameter to job " + jobName + " of group " + groupName);
+		logger.debug("adding parameter to job " + jobName + " of group "
+				+ groupName);
 		if (parameters == null) {
 			logger.debug("parameters are null so creating new list");
 			parameters = new LinkedList<RunnerJobParameter>();
@@ -65,24 +68,20 @@ public class EditJob extends BaseEditJob {
 		return INPUT;
 	}
 
-	private String deleteParameters() {
-		for (int paramIdx : parameterId) {
-			logger.debug("removing parameter:" + paramIdx + " for job "
-					+ jobName + " of group " + groupName);
-			parameters.remove(paramIdx);
-		}
+	private String deleteParameter() {
+		logger.debug("removing parameter:" + parameterId + " for job "
+				+ jobName + " of group " + groupName);
+		parameters.remove(parameterId);
+
 		job.setParameters(parameters);
 		return INPUT;
 	}
-	
+
 	private String saveJob() throws JRException, SchedulerException,
 			SecurityException {
+		logger.debug("entered save job");
 		this.groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
-
-		// stuff to allow the sql validation
-		this.job.setQuery(query);
-		this.job.setBurstQuery(burstQuery);
 
 		RunnerDataSource ds = dataSourceDao.get(dataSourceName);
 		job.setDatasource(ds);
@@ -97,6 +96,7 @@ public class EditJob extends BaseEditJob {
 				boolean ok = validateJob(job);
 
 				if (!ok) {
+					logger.debug("failed validation");
 					return INPUT;
 				} else {
 					doSaveJob(jobName, groupName);
@@ -119,28 +119,30 @@ public class EditJob extends BaseEditJob {
 
 	}
 
-
-
 	private boolean validateJob(RunnerJob job) {
 		boolean valid = true;
 
 		if (job.getPk() == null) {
+			logger.debug("Error with job definition - name and group were not set!");
 			super.addActionError("Error with job definition - name and group were not set!");
 			valid = false;
 		}
 		;
 		if ((job.getPk().getJobName() == null)
 				|| (job.getPk().getJobName().trim().isEmpty())) {
+			logger.debug("Job name not set");
 			super.addActionError("Job name not set");
 			valid = false;
 		}
 		if ((job.getPk().getGroup() == null)
 				|| (job.getPk().getGroup().getGroupName() == null)
 				|| (job.getPk().getGroup().getGroupName().trim().isEmpty())) {
+			logger.debug("Group name not set");
 			super.addActionError("Group name not set");
 			valid = false;
 		}
 		if ((job.getQuery() == null) || (job.getQuery().trim().isEmpty())) {
+			logger.debug("Query not set");
 			super.addActionError("Query not set");
 			valid = false;
 		}
@@ -151,7 +153,7 @@ public class EditJob extends BaseEditJob {
 	private boolean doSaveJob(String jobName, String groupName)
 			throws JRException, SchedulerException {
 		this.activeTab = "report";
-	
+
 		// Get the uploaded File
 		if (logger.isDebugEnabled()) {
 			logger.debug("file uploaded is: " + templateFileName);
@@ -169,7 +171,8 @@ public class EditJob extends BaseEditJob {
 				job.setTemplateFileName(templateFileName);
 			} catch (IOException e) {
 				logger.warn(e.getMessage(), e);
-				super.addActionError("Error processing template:" + e.getMessage());
+				super.addActionError("Error processing template:"
+						+ e.getMessage());
 				return false;
 			}
 
@@ -201,25 +204,28 @@ public class EditJob extends BaseEditJob {
 		return true;
 	}
 
-	private void updateParametersForJob(String jobName,String groupName, Collection<RunnerJobParameter> parameters) {
-          logger.debug("updating parameters for job/group:" + jobName + "/" + groupName);
-          //delete any parameters first
-          
-          logger.debug("deleting existing parameters");
-          Collection<RunnerJobParameter> params= parameterDao.findByNamedQuery("getParmatersByJob", new String[]{jobName,groupName});
-          if (params.size()>0)  {        	  
-        	  //TODO:refactor
-        	  for (RunnerJobParameter p:parameters) {
-        		  parameterDao.delete(p.getPk());
-        	  }
-          }          
-          for (RunnerJobParameter p:parameters) {
-                  logger.debug("saving parameter idx:" + p.getPk());
-                  parameterDao.saveOrUpdate(p);
-          }
-          
+	private void updateParametersForJob(String jobName, String groupName,
+			Collection<RunnerJobParameter> parameters) {
+		logger.debug("updating parameters for job/group:" + jobName + "/"
+				+ groupName);
+		// delete any parameters first
+
+		logger.debug("deleting existing parameters");
+		Collection<RunnerJobParameter> params = parameterDao.findByNamedQuery(
+				"getParmatersByJob", new String[] { jobName, groupName });
+		if (params.size() > 0) {
+			// TODO:refactor
+			for (RunnerJobParameter p : parameters) {
+				parameterDao.delete(p.getPk());
+			}
+		}
+		for (RunnerJobParameter p : parameters) {
+			logger.debug("saving parameter idx:" + p.getPk());
+			parameterDao.saveOrUpdate(p);
+		}
+
 	}
-	
+
 	// Returns the contents of the file in a byte array.
 	private byte[] getBytesFromFile(File file) throws IOException {
 
@@ -271,17 +277,18 @@ public class EditJob extends BaseEditJob {
 	 * this.simpleCron = simpleCron; }
 	 */
 
-	public void setParameterDao( ReportRunnerDao<RunnerJobParameter,RunnerJobParameter_pk>  parameterDao) {
+	public void setParameterDao(
+			ReportRunnerDao<RunnerJobParameter, RunnerJobParameter_pk> parameterDao) {
 		this.parameterDao = parameterDao;
 	}
 
 
 
-	public int[] getParameterId() {
+	public int getParameterId() {
 		return parameterId;
 	}
 
-	public void setParameterId(int[] parameterId) {
+	public void setParameterId(int parameterId) {
 		this.parameterId = parameterId;
 	}
 
@@ -308,7 +315,5 @@ public class EditJob extends BaseEditJob {
 	public void setSaveJob(String saveJob) {
 		this.saveJob = saveJob;
 	}
-
-	
 
 }

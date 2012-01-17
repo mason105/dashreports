@@ -25,7 +25,7 @@ Detail</span>
 		<td><b>Group Name</b></td>
 		<td><s:property value="%{job.groupName}" /></td>
 	</tr>
-	<tr class="rowEven"
+	<tr class="rowEven">
 		<td><b>Job Description</b></td>
 		<td><s:property value="%{job.description}" /></td>
 	</tr>

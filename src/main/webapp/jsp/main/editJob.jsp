@@ -1,10 +1,10 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
-
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <html>
 <head>
 <sx:head/>
-
+ 	<sj:head locale="en" jqueryui="true" jquerytheme="smoothness"/>
 
 <script language="JavaScript">
 
@@ -59,40 +59,36 @@ function validateBurstQuery(){
 
 </head>
 <body>
-
+<div id="jobEditForm">
 <s:form  action="editJob" method="post" enctype="multipart/form-data" validate="true" id="editJob">	
 
-<sx:tabbedpanel id="job">		
-
-	<sx:div id="report" label="Report">
-
+<sj:tabbedpanel id="job"  animate="true" collapsible="true" useSelectedTabCookie="true">						
+	<sj:tab id="report" label="Report" target="reportDiv"/>
+	
+	<div id="reportDiv">
+	
 		<s:actionerror />
 		<s:actionmessage/>
 
 
 		<div class="formGroup">
 			<div class="formGroupHeader">Job Details</div>
-			<s:if test="job.pk.jobName">
+			<s:if test="job.pk.jobName">				
 				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
 					name="job.pk.jobName" readonly="true" cssClass="readOnly, textBox" required="true" >
-
 				</s:textfield>
-			</s:if><s:else>
-				<div id="jobNameTip" class="tipText">Please enter a unique name for this job</div>
+			</s:if><s:else>				
 				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
-					name="job.pk.jobName"
-					onfocus="document.getElementById('jobNameTip').style.visibility='visible';" 
-					onblur="document.getElementById('jobNameTip').style.visibility='hidden';"
+					name="job.pk.jobName"								
 					required="true" cssClass="textbox">
 				</s:textfield>
 				
 			</s:else> 
-			
+					<s:hidden value="%{groupName}" name="groupName" />
 			<s:hidden value="%{groupName}" name="job.pk.group.groupName" /> 
-			<div id="jobDescriptionTip" class="tipText">Please enter a short description of this job</div>
 			<s:textfield label="Description" size="50" value="%{job.description}"
 				name="job.description"
-				onfocus="document.getElementById('jobDescriptionTip').style.visibility='visible';" onblur="document.getElementById('jobDescriptionTip').style.visibility='hidden';" cssClass="textbox">
+				cssClass="textbox">
 
 			</s:textfield>
 
@@ -100,16 +96,14 @@ function validateBurstQuery(){
 					name="dataSourceName" value="%{job.datasource.dataSourceName}"
 					list="dataSources" cssClass="textbox" onchange="validateQueries();">
 				</s:select>
+			
 		</div>
 
 		<div class="formGroup">
 			<div class="formGroupHeader">Definition</div>
-			<div id="jobQueryTip" class="tipText">Please input the query to be used for this job.  This should be valid SQL to be used against the datasource selected above.</div>
 			<s:textarea label="Report Query" cols="80" rows="20"
-				value="%{job.query}" name="query" 
-				onfocus="document.getElementById('jobQueryTip').style.visibility='visible';" 
-				onblur="document.getElementById('jobQueryTip').style.visibility='hidden';"
-				 required="true" cssClass="textbox" onchange="validateJobQuery()">
+				value="%{job.query}" name="job.query" 
+  			    required="true" cssClass="textbox" onchange="validateJobQuery()">
 				</s:textarea>
 			
 			<div id="jobQueryValidation">
@@ -118,11 +112,10 @@ function validateBurstQuery(){
 			<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
 				name="job.isBurst" cssClass="checkbox"   onchange="validateBurstQuery()">
 			</s:checkbox>
-			<div id="jobBurstQueryTip" class="tipText">Please enter an SQL query to be used to populate parameters to burst the report.  The above check box must be enabled for this query to be used.</div>
+		
 			<s:textarea label="Burst Query" cols="80" rows="5"
-				value="%{job.burstQuery}" name="burstQuery"
-				onfocus="document.getElementById('jobBurstQueryTip').style.visibility='visible';" 
-				onblur="document.getElementById('jobBurstQueryTip').style.visibility='hidden';" cssClass="textbox"  onchange="validateBurstQuery()">
+				value="%{job.burstQuery}" name="job.burstQuery"
+				cssClass="textbox"  onchange="validateBurstQuery()">
 
 			</s:textarea>
 
@@ -130,13 +123,13 @@ function validateBurstQuery(){
 			</div>
 	
 		</div>
-		<div class="formFooterText">* required field</div>
+		<div class="formBottomEmpty"></div>
 
-	</sx:div>
+	</div>
 	
-	
-	<sx:div id="parameters" label="Parameters">	
 		
+	<sj:tab id="parameters" label="Parameters" target="parametersDiv"/>
+	<div id="parametersDiv">	
 			<s:iterator value="job.parameters" status="rowstatus">
 
 			<div class="formGroup">
@@ -150,7 +143,7 @@ function validateBurstQuery(){
 					value="%{description}" cssClass="textbox">
 				</s:textfield> 
 
-				<div id="jobValueTip<s:property value="%{#rowstatus.index}"/>" class="tipText">Use this field to hard code the value. </div>
+			
 				<s:textfield
 					label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
 					value="%{parameterValue}"
@@ -158,7 +151,7 @@ function validateBurstQuery(){
 					onblur="document.getElementById('jobValueTip%{#rowstatus.index}').style.visibility='hidden';" cssClass="textbox">
 
 				</s:textfield> 
-				<div id="jobBurstColTip<s:property value="%{#rowstatus.index}"/>" class="tipText">Entry should match a column in the burst query.</div>
+			
 				<s:textfield label="Burst Column"
 					name="parameters[%{#rowstatus.index}].parameterBurstColumn"
 					value="%{parameterBurstColumn}"	
@@ -170,34 +163,33 @@ function validateBurstQuery(){
 				 <s:select label="Data Type"
 					name="parameters[%{#rowstatus.index}].parameterType" list="dataTypes"
 					listKey="name" listValue="displayName">
-
-				</s:select> 
-				
-				<s:checkbox name="parameterId" fieldValue="%{#rowstatus.index}" label="Delete"/>				
+		
+				</s:select> 				
+				<input type="radio" name="parameterId" value="<s:property value="%{#rowstatus.index}"/>" checked="false"/>					
 			</div>
 		</s:iterator>
-		<s:submit name="deleteParameters" value="Delete Parameter(s)"/>
-		<s:submit name="addParameter" value="Add Parameter"/>			
-	</sx:div>
+		<s:if test="job.parameters.size>0">
+			<div class="formBottomEmpty"></div>
+		</s:if>		
+		<s:submit name="addParameter" value="Add Parameter" align="left" cssStyle="float:left;"/>
+		<s:submit name="deleteParameters" value="Delete Parameter" align="left"/>			
+	</div>
 
-	<sx:div id="schedule" label="Schedule">	
+	<sj:tab id="schedule" label="Schedule" target="scheduleDiv"/>
+	<div id="scheduleDiv">
 		<div class="formGroup">
 			<div class="formGroupHeader">Start and End</div>
-			<sx:datetimepicker label="Start Date Time" value="%{job.startDate}"
-				name="job.startDate">
-			</sx:datetimepicker>
-
-			<sx:datetimepicker label="End Date/Time" value="%{job.endDate}"
-				name="job.endDate">
-			</sx:datetimepicker>
-			
+			<sj:datepicker label="Start Date Time" value="%{job.startDate}"
+				name="job.startDate" showAnim="slideDown"  displayFormat="dd/mm/yy">
+			</sj:datepicker>
+			<sj:datepicker label="End Date/Time" value="%{job.endDate}"
+				name="job.endDate" showAnim="slideDown" displayFormat="dd/mm/yy">
+			</sj:datepicker>			
 		</div>
+		
 		<div class="formGroup">
-			<div class="formGroupHeader">Cron Schedule</div>			
-			<div id="jobCronTip" class="tipText">Please enter a valid cron string or use the builder below.</div>
-			<s:textfield label="Cron String" size="32" value="%{job.cronString}" name="job.cronString"
-			onfocus="document.getElementById('jobCronTip').style.visibility='visible';" 
-			onblur="document.getElementById('jobCronTip').style.visibility='hidden';" cssClass="textbox">
+			<div class="formGroupHeader">Cron Schedule</div>						
+			<s:textfield label="Cron String" size="32" value="%{job.cronString}" name="job.cronString" cssClass="textbox">
 			</s:textfield>
 		</div>
 				
@@ -239,26 +231,20 @@ function validateBurstQuery(){
 			
 		</div>-->
 			
-
-	</sx:div>
+		<div class="formBottomEmpty"></div>
+	</div>
 	
-	<sx:div id="output" label="Output">	
-	
+	<sj:tab id="output" label="Output" target="outputDiv"/>
+	<div id="outputDiv">	
 		<div class="formGroup">
-		<div class="formGroupHeader">File</div>
-			<div id="jobOutputTip" class="tipText">Please enter an output URL (see help).</div>
-			<s:textfield label="Output URL" size="50" value="%{job.outputUrl}" name="job.outputUrl"
-			onfocus="document.getElementById('jobOutputTip').style.visibility='visible';" 
-			onblur="document.getElementById('jobOutputTip').style.visibility='hidden';" cssClass="textbox">			
+		<div class="formGroupHeader">File</div>		
+			<s:textfield label="Output URL" size="50" value="%{job.outputUrl}" name="job.outputUrl" cssClass="textbox">			
 			</s:textfield>
+			<s:select label="File Format" name="job.fileFormat" list="fileFormats"
+			listKey="name" listValue="displayName"></s:select>
 		</div>
 		<div class="formGroup">
 			<div class="formGroupHeader">Template</div>				
-		
-			<s:select label="File Format" name="job.fileFormat" list="fileFormats"
-			listKey="name" listValue="displayName"></s:select>
-
-		
 			<s:select label="Template Type" name="job.templateType" list="templateTypes"
 			listKey="name" listValue="displayName"></s:select>
 			
@@ -273,34 +259,33 @@ function validateBurstQuery(){
 		
 		<div class="formGroup">
 			<div class="formGroupHeader">Email Distribution</div>				
-			<div id="jobEmailTip" class="tipText">Please enter a comma seperated list of email addresses to send output files to.</div>
 			<s:textarea label="Distribution Email Address(es)" cols="30" rows="20"
-				value="%{job.targetEmailAddress}" name="job.targetEmailAddress"
-				onfocus="document.getElementById('jobEmailTip').style.visibility='visible';" 
-				onblur="document.getElementById('jobEmailTip').style.visibility='hidden';" cssClass="textbox">							
+				value="%{job.targetEmailAddress}" name="job.targetEmailAddress" cssClass="textbox">							
 			</s:textarea>
 		</div>
-
-	</sx:div>
-
-	<sx:div id="misc" label="Misc" >	
+		<div class="formBottomEmpty"></div>
+	</div>
+	<sj:tab id="miscstuff" label="Misc" target="miscDiv"/>
+	<div id="miscDiv">	
 		<div class="formGroup">
-			<div class="formGroupHeader">Alerting</div>				
-			<div id="jobAlertEmailTip" class="tipText">Please enter a comma seperated list of email addresses to send alert emails to.</div>
+			<div class="formGroupHeader">Alerting</div>							
 			<s:textarea label="Success/Fail Alert Email Address(es)" cols="30"
 			rows="20" value="%{job.alertEmailAddress}"
 			name="job.alertEmailAddress"
-			onfocus="document.getElementById('jobAlertEmailTip').style.visibility='visible';" 
-			onblur="document.getElementById('jobAlertEmailTip').style.visibility='hidden';" cssClass="textbox">				
+			cssClass="textbox">				
 			</s:textarea>
 		</div>
-	</sx:div>
-	
-</sx:tabbedpanel>
+		<div class="formBottomEmpty"></div>
+	</div>
+	<div class="formBottom">
+	<div class="formFooterText">* required field</div>
+<s:submit name="saveJob" value="Save" align="left" cssStyle="margin-left:15px"/>
+</div>	
+</sj:tabbedpanel>
 
-<s:submit name="saveJob" value="Save"/>
+
 
 </s:form>
-		
+</div>		
 </body>
 </html>

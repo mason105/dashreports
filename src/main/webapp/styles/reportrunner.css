@@ -1,6 +1,10 @@
 /* main layout */
 
-
+#jobEditForm {
+	width:650px;
+	margin:0px;
+	padding:0px;
+}
 .appLogo {
 	float:left;
 	padding-left:10px;
@@ -145,8 +149,6 @@ font-weight:bold;
 	top:0px;
 	left:170px;
 	right:0px;
-	bottom:0px;
-	overflow:hidden;
 }
 
 .dashFrameCont{
@@ -478,8 +480,5 @@ width:25px;
 height: 25px;
 float:left;
 margin-right:7px;
-}
-.testBox {
-		border-top: 1px solid #ccc;
-		padding:5px;
+
 }

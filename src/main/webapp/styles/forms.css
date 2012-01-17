@@ -27,6 +27,7 @@
 	border-top: 1px solid #ccc;
 	border-left: 1px solid #ccc;
 	border-right: 1px solid #ccc;
+	padding-bottom:1px;
 }
 pre {
 overflow: auto;
@@ -134,9 +135,14 @@ max-height: 300px;
 		font-family:arial;
 		font-size:11px;
 		font-weight:bold;
-		padding:10px 24px;
+	
 		text-decoration:none;
-		
+
+		padding:10px 24px;
+	}	
+	
+	input.testButton {
+		margin:5px;
 	}
 	
 	input[type=submit]:hover, input.testButton:hover {
@@ -154,5 +160,11 @@ max-height: 300px;
 		padding-top:10px;
 		padding-bottom:10px;		
 		border-bottom: 1px solid #ccc;
+	}
+	.formBottomEmpty {
+		border-top: 1px solid #ccc;
+		width:602px;
+	background-color:#fff;
+	padding:0px;
 	}
 /* END FORM ELEMENTS */

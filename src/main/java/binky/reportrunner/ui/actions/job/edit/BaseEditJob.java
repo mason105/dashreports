@@ -2,6 +2,7 @@ package binky.reportrunner.ui.actions.job.edit;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import binky.reportrunner.dao.ReportRunnerDao;
@@ -25,7 +26,7 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 	protected RunnerJobService jobService;
 	protected ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
 	protected DatasourceService dataSourceService;
-	protected List<RunnerDataSource> dataSources;
+	protected List<RunnerDataSource> dataSources=new LinkedList<RunnerDataSource>();
 	protected File template;// The actual file
 
 	protected String templateContentType; // The content type of the file

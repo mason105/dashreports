@@ -281,7 +281,8 @@ public class DatasourceServiceImpl implements DatasourceService {
 	@Override
 	public List<RunnerDataSource> getDataSourcesForGroup(String groupName) {
 		logger.debug("getting datasources for group: " + groupName);
-		List<RunnerDataSource> dsList = groupDao.get(groupName).getDataSources();
+		//List<RunnerDataSource> dsList = groupDao.get(groupName).getDataSources();
+		List<RunnerDataSource> dsList = dataSourceDao.findByNamedQuery("findAllForGroup", new String[]{groupName});
 		logger.debug("got : " + dsList.size() + " data sources for group: " + groupName);
 		return dsList;
 	}

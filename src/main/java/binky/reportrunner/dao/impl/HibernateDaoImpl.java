@@ -36,7 +36,7 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 
 	public void saveOrUpdate(T entity) {
 		//dealing with the caching while using the hibernate session in view filter
-		if (this.get(entity.getId()) != null) {
+		if (entity.getId()!=null&&this.get(entity.getId()) != null) {
 			super.getHibernateTemplate().merge(entity);
 		} else {
 			super.getHibernateTemplate().saveOrUpdate(entity);

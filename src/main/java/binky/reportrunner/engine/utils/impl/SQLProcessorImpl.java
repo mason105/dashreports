@@ -67,9 +67,9 @@ public class SQLProcessorImpl implements SQLProcessor {
 		for (RunnerJobParameter param : parameters) {
 			switch (param.getParameterType()) {
 			case STRING:
-				stmt.setString(param.getPk().getParameterIdx(), param
+				stmt.setString(param.getPk().getParameterIdx()+1, param
 						.getParameterValue());
-				logger.debug("param: " + param.getPk().getParameterIdx()
+				logger.debug("param: " + param.getPk().getParameterIdx()+1
 						+ " type String value=" + param.getParameterValue());
 				break;
 			case DATE:
@@ -78,31 +78,31 @@ public class SQLProcessorImpl implements SQLProcessor {
 				java.util.Date date = sdf.parse(param.getParameterValue());
 				logger.debug("param: " + param.getPk().getParameterIdx()
 						+ " type Timestamp value=" +date);
-				stmt.setTimestamp(param.getPk().getParameterIdx(),
+				stmt.setTimestamp(param.getPk().getParameterIdx()+1,
 						new java.sql.Timestamp(date.getTime()));
 				break;
 			case BOOLEAN:
 				boolean bool = Boolean.parseBoolean(param.getParameterValue());
-				stmt.setBoolean(param.getPk().getParameterIdx(), bool);
-				logger.debug("param: " + param.getPk().getParameterIdx()
+				stmt.setBoolean(param.getPk().getParameterIdx()+1, bool);
+				logger.debug("param: " + param.getPk().getParameterIdx()+1
 						+ " type Boolean value="
 						+ bool);
 				break;
 			case INTEGER:
 				int intg = Integer.parseInt(param.getParameterValue());
-				stmt.setInt(param.getPk().getParameterIdx(), intg);
-				logger.debug("param: " + param.getPk().getParameterIdx()
+				stmt.setInt(param.getPk().getParameterIdx()+1, intg);
+				logger.debug("param: " + param.getPk().getParameterIdx()+1
 						+ " type Integer value=" + intg);
 				break;
 			case LONG:
 				long lng = Long.parseLong(param.getParameterValue());
-				stmt.setLong(param.getPk().getParameterIdx(), lng);
+				stmt.setLong(param.getPk().getParameterIdx()+1, lng);
 				logger.debug("param: " + param.getPk().getParameterIdx()
 						+ " type Long value=" + lng);
 				break;
 			case DOUBLE:
 				double dbl = Double.parseDouble(param.getParameterValue());
-				stmt.setDouble(param.getPk().getParameterIdx(), dbl);
+				stmt.setDouble(param.getPk().getParameterIdx()+1, dbl);
 				logger.debug("param: " + param.getPk().getParameterIdx()
 						+ " type Double value=" + dbl);
 				break;

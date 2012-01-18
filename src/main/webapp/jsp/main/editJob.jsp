@@ -15,10 +15,6 @@
 	
 	<div id="reportDiv">
 	
-		<s:actionerror />
-		<s:actionmessage/>
-
-
 		<div class="formGroup">
 			<div class="formGroupHeader">Job Details</div>
 			<s:if test="job.pk.jobName">				
@@ -142,20 +138,23 @@
 		</div> -->
 				
 		<div class="formGroup">
-			<div class="formGroupHeader">Cron Schedule Builder</div>	
+			<div class="formGroupHeader">Scheduling</div>	
 					
+			<s:checkbox label="Schedule Report" name="job.scheduled" cssClass="checkbox">
+			</s:checkbox>		
+
 			<s:checkbox label="All Seconds" name="simpleCron.allSeconds" cssClass="checkbox">
 			</s:checkbox>		
 			
 			<s:select label="Seconds" 
-			onClick="document.getElementById('editJob_simpleCron_allSeconds').checked=false;"
+			onclick="document.getElementById('editJob_simpleCron_allSeconds').checked=false;"
 			name="simpleCron.seconds" multiple="true" list="#{0:0,1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,11:11,12:12,13:13,14:14,15:15,16:16,17:17,18:18,19:19,20:20,21:21,22:22,23:23,24:24,25:25,26:26,27:27,28:28,29:29,30:30,31:31,32:32,33:33,34:34,35:35,36:36,37:37,38:38,39:39,40:40,41:41,42:42,43:43,44:44,45:45,46:46,47:47,48:48,49:49,50:50,51:51,52:52,53:53,54:54,55:55,56:56,57:57,58:58,59:59}"></s:select>
 			
 			<s:checkbox label="All Minutes" name="simpleCron.allMinutes" cssClass="checkbox">
 			</s:checkbox>		
 			
 			<s:select label="Minutes" 
-			onClick="document.getElementById('editJob_simpleCron_allMinutes').checked=false;"
+			onclick="document.getElementById('editJob_simpleCron_allMinutes').checked=false;"
 			name="simpleCron.minutes" multiple="true" list="#{0:0,1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,11:11,12:12,13:13,14:14,15:15,16:16,17:17,18:18,19:19,20:20,21:21,22:22,23:23,24:24,25:25,26:26,27:27,28:28,29:29,30:30,31:31,32:32,33:33,34:34,35:35,36:36,37:37,38:38,39:39,40:40,41:41,42:42,43:43,44:44,45:45,46:46,47:47,48:48,49:49,50:50,51:51,52:52,53:53,54:54,55:55,56:56,57:57,58:58,59:59}"></s:select>
 			
 			<s:checkbox label="All Hours" name="simpleCron.allHours" cssClass="checkbox">
@@ -163,7 +162,7 @@
 			
 			
 			<s:select label="Hours" 
-			onClick="document.getElementById('editJob_simpleCron_allHours').checked=false;"
+			onclick="document.getElementById('editJob_simpleCron_allHours').checked=false;"
 			name="simpleCron.hours" multiple="true" list="#{0:0,1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,11:11,12:12,13:13,14:14,15:15,16:16,17:17,18:18,19:19,20:20,21:21,22:22,23:23}"></s:select>
 
 			<s:checkbox label="All Days of The Month" name="simpleCron.allDaysOfMonth" cssClass="checkbox">
@@ -171,14 +170,14 @@
 			
 			
 			<s:select label="Days of Month" 
-			onClick="document.getElementById('editJob_simpleCron_allDaysOfMonth').checked=false;"
+			onclick="document.getElementById('editJob_simpleCron_allDaysOfMonth').checked=false;"
 			name="simpleCron.daysOfMonth" multiple="true" list="#{0:0,1:1,2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,10:10,11:11,12:12,13:13,14:14,15:15,16:16,17:17,18:18,19:19,20:20,21:21,22:22,23:23,24:24,25:25,26:26,27:27,28:28,29:29,30:30,31:31}"></s:select>
 		
 			<s:checkbox label="All Months" name="simpleCron.allMonths" cssClass="checkbox">
 			</s:checkbox>		
 			
 			<s:select label="Month" 
-			onClick="document.getElementById('editJob_simpleCron_allMonths').checked=false;"
+			onclick="document.getElementById('editJob_simpleCron_allMonths').checked=false;"
 			name="simpleCron.months" multiple="true" list='#{1:"Jan",2:"Feb",3:"March",4:"April",5:"May",6:"June",7:"July",8:"Aug",9:"Sept",10:"Oct",11:"Nov",12:"Dec"}'></s:select>
 
 			
@@ -186,7 +185,7 @@
 			</s:checkbox>		
 			
 			<s:select label="Days of Week" 
-			onClick="document.getElementById('editJob_simpleCron_allDaysOfWeek').checked=false;"
+			onclick="document.getElementById('editJob_simpleCron_allDaysOfWeek').checked=false;"
 			name="simpleCron.daysOfWeek" multiple="true" list='#{1:"Monday",2:"Tuesday",3:"Wednesday",4:"Thursday",5:"Friday",6:"Saturday",7:"Sunday"}'></s:select>
 			
 		</div>
@@ -238,7 +237,10 @@
 		<div class="formBottomEmpty"></div>
 	</div>
 	<div class="formBottom">
-	<div class="formFooterText">* required field</div>
+	<div class="formFooterText">* required field
+		<s:actionerror />
+		<s:actionmessage/>
+	</div>
 <s:submit name="saveJob" value="Save" align="left" cssStyle="margin-left:15px"/>
 </div>	
 </sj:tabbedpanel>

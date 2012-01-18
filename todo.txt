@@ -1,6 +1,7 @@
 Jobs:
-Datasource is not selecting when editing
-Invalid cron schedule - needs validation
+Datasource is not selecting when editing - done
+Invalid cron schedule - needs validation - done - needs testing
 move error messages to bottom for visibility across tabs
 navigation enhancements
 URL builder
+Job viewer - bursting - allow "all" - then have tabbed grid display

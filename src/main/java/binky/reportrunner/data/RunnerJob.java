@@ -111,7 +111,9 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 		this.fileFormat = fileFormat;
 		this.alertOnSuccess = alertOnSuccess;
 		this.parameters = parameters;
+		
 	}
+	private boolean scheduled;
 
 	@Id
 	private RunnerJob_pk pk;
@@ -298,6 +300,14 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 
 	public void setTemplateFileName(String templateFileName) {
 		this.templateFileName = templateFileName;
+	}
+
+	public boolean isScheduled() {
+		return scheduled;
+	}
+
+	public void setScheduled(boolean scheduled) {
+		this.scheduled = scheduled;
 	}
 
 }

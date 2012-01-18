@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.Collection;
 import java.util.LinkedList;
 
 import net.sf.jasperreports.engine.JRException;
 
 import org.apache.log4j.Logger;
+import org.quartz.CronTrigger;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
@@ -146,7 +148,15 @@ public class EditJob extends BaseEditJob {
 			super.addActionError("Query not set");
 			valid = false;
 		}
-
+		if (job.isScheduled()) {
+			try {
+				new CronTrigger("test", "test", simpleCron.toString());
+			} catch (ParseException e) {
+				logger.debug("cron fail:" + e.getMessage());
+				super.addActionError("Schedule invalid: " + e.getMessage());
+				valid = false;
+			}	
+		}
 		return valid;
 	}
 
@@ -165,6 +175,7 @@ public class EditJob extends BaseEditJob {
 		}
 		
 		logger.debug("cron schedule="+simpleCron.toString());
+		
 		job.setCronString(simpleCron.toString());
 		if ((template != null) && template.isFile() && template.exists()) {
 

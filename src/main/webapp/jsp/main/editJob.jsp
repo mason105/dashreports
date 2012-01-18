@@ -10,14 +10,22 @@
 <div id="jobEditForm">
 <s:form  action="editJob" method="post" enctype="multipart/form-data" validate="true" id="editJob">	
 
-<sj:tabbedpanel id="job"  animate="true" collapsible="true" useSelectedTabCookie="true">						
+<div class="jobHeader"><img src="<s:url value='/images/v2/nav/groupsblue.png'/>" align="absmiddle" />&nbsp;<s:a href="showGroup.action?groupName=%{groupName}"><s:property value="groupName"/></s:a> > Edit Job - 
+			<s:if test="job.pk.jobName!=null">
+				<s:property  value="job.pk.jobName"/>
+			</s:if>
+			<s:else>
+				New
+			</s:else>
+</div>
+<sj:tabbedpanel id="jobTabs" name="jobTabs"  animate="true"  useSelectedTabCookie="true">						
 	<sj:tab id="report" label="Report" target="reportDiv"/>
 	
 	<div id="reportDiv">
 	
 		<div class="formGroup">
 			<div class="formGroupHeader">Job Details</div>
-			<s:if test="job.pk.jobName">				
+			<s:if test="job.pk.jobName!=null">				
 				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
 					name="job.pk.jobName" readonly="true" cssClass="readOnly, textBox" required="true" >
 				</s:textfield>
@@ -121,28 +129,19 @@
 
 	<sj:tab id="schedule" label="Schedule" target="scheduleDiv"/>
 	<div id="scheduleDiv">
-		<div class="formGroup">
-			<div class="formGroupHeader">Start and End</div>
-			<sj:datepicker label="Start Date Time" value="%{job.startDate}"
-				name="job.startDate" showAnim="slideDown"  displayFormat="dd/mm/yy">
-			</sj:datepicker>
-			<sj:datepicker label="End Date/Time" value="%{job.endDate}"
-				name="job.endDate" showAnim="slideDown" displayFormat="dd/mm/yy">
-			</sj:datepicker>			
-		</div>
-		
-		<!-- <div class="formGroup">
-			<div class="formGroupHeader">Cron Schedule</div>						
-			<s:textfield label="Cron String" size="32" value="%{job.cronString}" name="job.cronString" cssClass="textbox">
-			</s:textfield>
-		</div> -->
+
 				
 		<div class="formGroup">
 			<div class="formGroupHeader">Scheduling</div>	
 					
 			<s:checkbox label="Schedule Report" name="job.scheduled" cssClass="checkbox">
 			</s:checkbox>		
-
+			<sj:datepicker label="Start Date Time" value="%{job.startDate}"
+				name="job.startDate" showAnim="slideDown"  displayFormat="dd/mm/yy">
+			</sj:datepicker>
+			<sj:datepicker label="End Date/Time" value="%{job.endDate}"
+				name="job.endDate" showAnim="slideDown" displayFormat="dd/mm/yy">
+			</sj:datepicker>	
 			<s:checkbox label="All Seconds" name="simpleCron.allSeconds" cssClass="checkbox">
 			</s:checkbox>		
 			

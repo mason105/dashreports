@@ -18,10 +18,11 @@
 	color:#FF0000;
 	float:right;
 }
-
-.formGroup {
+.formGroup {width:600px;}
+.jobList { width:800px;}
+.formGroup, .jobList {
 	clear:both;
-	width:600px;
+	
 	background-color:#fff;
 	padding:0px;
 	border-top: 1px solid #ccc;
@@ -43,7 +44,7 @@ max-height: 300px;
 
 }
 
-.formGroupHeader{
+.jobHeader{
 	background-color:#333333;
 	border-bottom: 1px solid #666;
 	padding-left:0px;
@@ -53,7 +54,27 @@ max-height: 300px;
 	padding:5px;
 	line-height:35px;
 	font-size:12px;
-	width:590px;
+	width:640px;
+}
+.jobHeader  A{
+	color:#ffffff;
+}
+.jobHeader  A:hover{
+	color: #11b7f0;
+}
+.formGroupHeader {width:590px;}
+.jobListHeader  {width:790px;}
+
+.formGroupHeader, .jobListHeader {
+	background-color:#333333;
+	border-bottom: 1px solid #666;
+	padding-left:0px;
+	color:#ffffff;
+	font-weight:bold;
+	height:35px;
+	padding:5px;
+	line-height:35px;
+	font-size:12px;	
 }
 
 

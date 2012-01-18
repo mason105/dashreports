@@ -10,36 +10,38 @@
 	<sx:head parseContent="false" />
 </head>
 <body>
-<sj:tabbedpanel id="groupTabs"  animate="true" collapsible="true" useSelectedTabCookie="true">						
+<div id="groupPanel">
+<sj:tabbedpanel id="groupTabs"   name="groupTabs" animate="true" collapsible="false" useSelectedTabCookie="true">						
 	<sj:tab id="dashboardTab" label="Dashboard" target="dashDiv"/>
 		<div id="dashDiv" style="overflow:auto">
-		<div class="toolBar">
-			<s:a href="setupEditChart.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/chart_add.png"/>"/>Add Chart</s:a>&nbsp;|
-			<s:a href="setupEditGrid.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/grid_add.png"/>"/>Add Data Grid</s:a>&nbsp;|
-			<s:a href="setupEditThreshold.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/threshold_add.png"/>"/>Add Threshold</s:a>
-		</div>					
-		<s:if test="items.size>0">		
-			<div class="dashboard">							
-				<s:iterator value="items" status="rowstatus">
-					<s:if test="(displayRow!=#currentRow)">
-						<div class="clearFix"></div>
-						<s:set name="currentRow" value="%{displayRow}"/>							
-					</s:if>						
-					<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}" updateFreq="%{visualRefreshTime}">
-						<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}"/>										
-					</sx:div>	
-				</s:iterator>
-			</div>
-		</s:if>
+			<div class="toolBar">
+				<s:a href="setupEditChart.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/chart_add.png"/>"/>Add Chart</s:a>&nbsp;|
+				<s:a href="setupEditGrid.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/grid_add.png"/>"/>Add Data Grid</s:a>&nbsp;|
+				<s:a href="setupEditThreshold.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/threshold_add.png"/>"/>Add Threshold</s:a>
+			</div>					
+			<s:if test="items.size>0">		
+				<div class="dashboard">							
+					<s:iterator value="items" status="rowstatus">
+						<s:if test="(displayRow!=#currentRow)">
+							<div class="clearFix"></div>
+							<s:set name="currentRow" value="%{displayRow}"/>							
+						</s:if>						
+						<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}" updateFreq="%{visualRefreshTime}">
+							<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}"/>										
+						</sx:div>	
+					</s:iterator>
+				</div>
+			</s:if>
 		</div>
-	<sj:tab id="reportsTab" label="Reports" target="reportsDiv"/>	
+
+<sj:tab id="reportsTab" label="Reports" target="reportsDiv"/>	
 	<div id="reportsDiv"  style="overflow:auto">
 	
-<div class="formGroup">
-	<div class="formGroupHeader">
+	<div class="jobList">
+	<div class="jobListHeader">
 		<img src="<s:url value='/images/v2/nav/reportsblue.png'/>" align="absmiddle" />&nbsp;Reports for <s:property value="groupName"/>
 	</div>
-	<div class="listingHeader"> 	
+	<div class="listingHeaderWide"> 	
 		<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
 		<div class="listingIcon"><img src="<s:url value='/images/v2/icons/add.png'/>" align="absmiddle" /></div>		      	
 		<a href="setupEditJob.action?groupName=<s:property value="groupName" />">Add Report</a>
@@ -92,6 +94,8 @@
 	</s:iterator>
 	</div>
 	</div>
+	</div>
 </sj:tabbedpanel>
+</div>
 </body>
 </html>

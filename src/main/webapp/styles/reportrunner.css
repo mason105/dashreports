@@ -1,5 +1,7 @@
 /* main layout */
 
+
+
 #jobEditForm {
 	width:650px;
 	margin:0px;
@@ -172,7 +174,7 @@ width:100%;
 # toolbar {
 	position:absolute;
 	position:relative;
-	width:100%;
+
 	height:30px;
 } 
 #tabContain {
@@ -439,7 +441,7 @@ width:100%;
 	color: #11b7f0;
 }
 
-.listingHeader {
+.listingHeader,.listingHeaderWide { 
 
 	border-bottom: 1px solid #ccc;
 	background-color:#666666;
@@ -449,8 +451,11 @@ width:100%;
 	padding:5px;
 	line-height:36px;
 	font-size:12px;
-	width:590px;
+
 }
+
+	.listingHeader {width:590px;}
+	.listingHeaderWide {width:790px;}
 .listingRow , .listingHeaderRow {
    height:30px;
    line-height:30px;

@@ -162,7 +162,7 @@ public class EditJob extends BaseEditJob {
 
 	private boolean doSaveJob(String jobName, String groupName)
 			throws JRException, SchedulerException {
-		this.activeTab = "report";
+	
 
 		// Get the uploaded File
 		if (logger.isDebugEnabled()) {

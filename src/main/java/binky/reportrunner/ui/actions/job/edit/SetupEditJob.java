@@ -40,7 +40,7 @@ public class SetupEditJob extends BaseEditJob {
 	
 	private Integer paramCount;
 	private QuartzCronSchedule simpleCron=new QuartzCronSchedule();
-	private String activeTab="report";
+
 	private static final Logger logger = Logger.getLogger(SetupEditJob.class);
 
 	
@@ -102,13 +102,6 @@ public class SetupEditJob extends BaseEditJob {
 		return Arrays.asList(RunnerJobParameter.DataType.values());
 	}
 
-	public String getActiveTab() {
-		return activeTab;
-	}
-
-	public void setActiveTab(String activeTab) {
-		this.activeTab = activeTab;
-	}
 
 
 

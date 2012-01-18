@@ -32,7 +32,7 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 
 	protected String templateFileName; // The uploaded file name
 
-	protected String activeTab;
+
 
 	protected String query;
 	protected String burstQuery;
@@ -101,13 +101,6 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 		return Arrays.asList(RunnerJobParameter.DataType.values());
 	}
 
-	public String getActiveTab() {
-		return activeTab;
-	}
-
-	public void setActiveTab(String activeTab) {
-		this.activeTab = activeTab;
-	}
 
 	public File getTemplate() {
 		return template;

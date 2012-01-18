@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.opensymphony.xwork2.ActionContext;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
@@ -13,8 +15,7 @@ import binky.reportrunner.data.RunnerJobParameter.DataType;
 import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
-
-import com.opensymphony.xwork2.Preparable;
+import binky.reportrunner.ui.util.QuartzCronSchedule;
 
 public abstract class BaseEditJob extends StandardRunnerAction {
 	/**
@@ -26,9 +27,9 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 	protected RunnerJobService jobService;
 	protected ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
 	protected DatasourceService dataSourceService;
-	protected List<RunnerDataSource> dataSources=new LinkedList<RunnerDataSource>();
+	private List<RunnerDataSource> dataSources=new LinkedList<RunnerDataSource>();
 	protected File template;// The actual file
-
+	
 	protected String templateContentType; // The content type of the file
 
 	protected String templateFileName; // The uploaded file name
@@ -38,9 +39,9 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 	protected String query;
 	protected String burstQuery;
 
-	protected String dataSourceName;
+	protected String dsName;
 
-	// private QuartzCronSchedule simpleCron;
+	protected QuartzCronSchedule simpleCron;
 
 	protected List<RunnerJobParameter> parameters;
 
@@ -57,6 +58,7 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 	}
 
 	public void setDataSources(List<RunnerDataSource> dataSources) {
+
 		this.dataSources = dataSources;
 	}
 
@@ -149,12 +151,13 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 		this.burstQuery = burstQuery;
 	}
 
-	public String getDataSourceName() {
-		return dataSourceName;
+
+	public String getDsName() {
+		return dsName;
 	}
 
-	public void setDataSourceName(String dataSourceName) {
-		this.dataSourceName = dataSourceName;
+	public void setDsName(String dsName) {
+		this.dsName = dsName;
 	}
 
 	public DatasourceService getDataSourceService() {
@@ -163,6 +166,14 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 
 	public void setDataSourceService(DatasourceService dataSourceService) {
 		this.dataSourceService = dataSourceService;
+	}
+
+	public QuartzCronSchedule getSimpleCron() {
+		return simpleCron;
+	}
+
+	public void setSimpleCron(QuartzCronSchedule simpleCron) {
+		this.simpleCron = simpleCron;
 	}
 
 }

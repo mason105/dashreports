@@ -33,7 +33,7 @@ public class EditJob extends BaseEditJob {
 
 	@Override
 	public String execute() throws Exception {
-		dataSources = dataSourceService.getDataSourcesForGroup(groupName);
+		super.setDataSources(dataSourceService.getDataSourcesForGroup(groupName));
 		logger.debug("execute called");
 		if (isStringPopulated(deleteParameters)) {
 			logger.debug("delete parameter");
@@ -83,7 +83,7 @@ public class EditJob extends BaseEditJob {
 		this.groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
 
-		RunnerDataSource ds = dataSourceDao.get(dataSourceName);
+		RunnerDataSource ds = dataSourceDao.get(dsName);
 		job.setDatasource(ds);
 
 		if (groupName != null && !groupName.isEmpty()
@@ -163,6 +163,9 @@ public class EditJob extends BaseEditJob {
 				logger.debug("upload object exists: " + template.exists());
 			}
 		}
+		
+		logger.debug("cron schedule="+simpleCron.toString());
+		job.setCronString(simpleCron.toString());
 		if ((template != null) && template.isFile() && template.exists()) {
 
 			try {

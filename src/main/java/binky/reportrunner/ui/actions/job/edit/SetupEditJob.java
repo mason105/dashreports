@@ -31,6 +31,7 @@ import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJobParameter.DataType;
 import binky.reportrunner.exceptions.SecurityException;
+import binky.reportrunner.ui.util.QuartzCronSchedule;
 
 public class SetupEditJob extends BaseEditJob {
 
@@ -38,10 +39,10 @@ public class SetupEditJob extends BaseEditJob {
 	
 	
 	private Integer paramCount;
-
+	private QuartzCronSchedule simpleCron=new QuartzCronSchedule();
 	private String activeTab="report";
 	private static final Logger logger = Logger.getLogger(SetupEditJob.class);
-	
+
 	
 
 	// TODO:clean up this mess
@@ -57,7 +58,11 @@ public class SetupEditJob extends BaseEditJob {
 				} else {
 					paramCount = job.getParameters().size();
 				}
-				
+				simpleCron=new QuartzCronSchedule(job.getCronString());
+				logger.debug("cron is set to: "+ simpleCron);
+				if (job.getDatasource() != null) {
+					dsName=job.getDatasource().getDataSourceName();
+				}
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
@@ -73,7 +78,7 @@ public class SetupEditJob extends BaseEditJob {
 			SecurityException se = new SecurityException("Group not passed");
 			logger.fatal(se.getMessage(), se);
 		}
-		dataSources = this.dataSourceService.getDataSourcesForGroup(groupName);
+		super.setDataSources(this.dataSourceService.getDataSourcesForGroup(groupName));
 		return SUCCESS;
 	}
 
@@ -104,6 +109,23 @@ public class SetupEditJob extends BaseEditJob {
 	public void setActiveTab(String activeTab) {
 		this.activeTab = activeTab;
 	}
-	
+
+
+
+
+	public QuartzCronSchedule getSimpleCron() {
+		return simpleCron;
+	}
+
+
+
+
+	public void setSimpleCron(QuartzCronSchedule simpleCron) {
+		this.simpleCron = simpleCron;
+	}
+
+
+
+
 	
 }

@@ -31,7 +31,9 @@ import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -282,7 +284,16 @@ public class DatasourceServiceImpl implements DatasourceService {
 	public List<RunnerDataSource> getDataSourcesForGroup(String groupName) {
 		logger.debug("getting datasources for group: " + groupName);
 		//List<RunnerDataSource> dsList = groupDao.get(groupName).getDataSources();
-		List<RunnerDataSource> dsList = dataSourceDao.findByNamedQuery("findAllForGroup", new String[]{groupName});
+
+		//some crazy ass shit going down here - the join returns an array for each row that would be returned by the db
+		//if i try prefixing the names query with select d (which makes sense to me) then it won't run
+		List<RunnerDataSource> dsList = new LinkedList<RunnerDataSource>(); 
+		Object holder = dataSourceDao.findByNamedQuery("findAllForGroup", new String[]{groupName});
+		for (Object[] o : (ArrayList<Object[]>)holder ) {
+			RunnerDataSource d = (RunnerDataSource)o[0];
+			logger.debug(d.getDataSourceName());
+			dsList.add(d);
+		}
 		logger.debug("got : " + dsList.size() + " data sources for group: " + groupName);
 		return dsList;
 	}

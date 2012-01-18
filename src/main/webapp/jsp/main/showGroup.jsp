@@ -10,7 +10,9 @@
 	<sx:head parseContent="false" />
 </head>
 <body>
+
 <div id="groupPanel">
+<div class="groupHeader"><img src="<s:url value='/images/v2/nav/groupsblue.png'/>" align="absmiddle" />&nbsp;<s:property value="groupName"/> </div>
 <sj:tabbedpanel id="groupTabs"   name="groupTabs" animate="true" collapsible="false" useSelectedTabCookie="true">						
 	<sj:tab id="dashboardTab" label="Dashboard" target="dashDiv"/>
 		<div id="dashDiv" style="overflow:auto">

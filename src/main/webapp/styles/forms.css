@@ -43,7 +43,23 @@ color: #000000;
 max-height: 300px;
 
 }
-
+.groupHeader img{
+	padding-left:5px; 
+}
+.groupHeader{
+	background-color:#333333;
+	border-bottom: 1px solid #666;
+	padding-left:0px;
+	color:#ffffff;
+	font-weight:bold;
+	height:35px;
+	padding-top:5px;
+	padding-bottom:5px;
+	line-height:35px;
+	font-size:12px;
+	width:100%;
+	right:-5px;
+}
 .jobHeader{
 	background-color:#333333;
 	border-bottom: 1px solid #666;
@@ -60,6 +76,12 @@ max-height: 300px;
 	color:#ffffff;
 }
 .jobHeader  A:hover{
+	color: #11b7f0;
+}
+.formGroupHeader  A{
+	color:#ffffff;
+}
+.formGroupHeader  A:hover{
 	color: #11b7f0;
 }
 .formGroupHeader {width:590px;}

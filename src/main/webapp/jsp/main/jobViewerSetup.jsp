@@ -10,9 +10,7 @@
 </head>
 <body>
 
-	<span class="pageTitle"><img
-		src="<s:url value="/images/icons/application_form_magnify.png"/>"
-		align="absmiddle" />View Report</span>
+
 	<s:form action="viewJobOutput" method="post"
 		enctype="multipart/form-data" validate="true">
 
@@ -22,11 +20,14 @@
 		<s:hidden value="%{groupName}" name="groupName" />
 
 		<div class="formGroup">
+		<div class="formGroupHeader"><img src="<s:url value='/images/v2/nav/groupsblue.png'/>" align="absmiddle" />&nbsp;<s:a href="showGroup.action?groupName=%{groupName}"><s:property value="groupName"/></s:a> > View Job - 
+			<s:property  value="jobName"/>			
+</div>
+
+
+			<s:if test="parameters.size>0">
 			<div class="formGroupHeader">
-				<s:property value="%{jobName}" />
-				(
-				<s:property value="%{groupName}" />
-				)
+				Set Parameters
 			</div>
 
 			<s:iterator value="parameters" status="rowstatus">
@@ -57,11 +58,11 @@
 					name="parameters[%{#rowstatus.index}].parameterType" />
 
 			</s:iterator>
-
-			<s:submit align="left" />
+			</s:if>
+			<s:submit value="View Report" align="left" />
 
 		</div>
-
+<div class="formBottomEmpty"></div>
 
 	</s:form>
 </body>

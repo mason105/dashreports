@@ -434,10 +434,10 @@ width:100%;
 
 }
 
-.listingHeader  A{
+.listingHeader  A,.listingHeaderWide A{
 	color:#ffffff;
 }
-.listingHeader  A:hover{
+.listingHeader  A:hover, .listingHeaderWide A:hover{
 	color: #11b7f0;
 }
 

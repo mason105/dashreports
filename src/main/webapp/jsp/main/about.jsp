@@ -14,8 +14,8 @@
        
 
 <div class="formGroup">
-<div class="formGroupHeader">Version</div>
-<s:property value="versionId"/>
+<div class="formGroupHeader">Information</div>
+Version:<s:property value="versionId"/>
 </div>
 
 <div class="formGroup">
@@ -78,7 +78,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 </pre>
 </div>
-
+	<div class="formBottomEmpty"></div>
 
 </body>
 </html>	

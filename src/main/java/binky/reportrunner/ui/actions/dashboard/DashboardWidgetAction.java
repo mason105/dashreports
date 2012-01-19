@@ -14,17 +14,19 @@ import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 
 /**
  * @author Daniel Grout
- *
+ * 
  */
 public class DashboardWidgetAction extends BaseDashboardAction {
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see binky.reportrunner.ui.actions.base.StandardRunnerAction#execute()
 	 */
 	private static final long serialVersionUID = 0L;
 
 	
-
+	private Map<String, Integer> thresholdData;
 	private Integer itemId;
 	private RunnerDashboardItem item;
 	
@@ -39,10 +41,6 @@ public class DashboardWidgetAction extends BaseDashboardAction {
 		
 		this.item=item;
 	
-		return SUCCESS;
-	}
-	public Map<String, Integer> getThresholdData() {
-		
 		if ((item.getCurrentDataset() != null) && (item instanceof RunnerDashboardThreshold)) {
 			Map<String, Integer> data = new HashMap<String, Integer>();
 
@@ -71,11 +69,14 @@ public class DashboardWidgetAction extends BaseDashboardAction {
 				}
 				data.put(label, result);
 			}
-			return data;
-		} else {
-			return null;
+			this.thresholdData=data;
 		}
-
+		
+		
+		return SUCCESS;
+	}
+	public Map<String, Integer> getThresholdData() {
+		return this.thresholdData;
 	}
 
 	public Integer getItemId() {

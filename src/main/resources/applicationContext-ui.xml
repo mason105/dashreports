@@ -127,6 +127,14 @@
 		</property>
 	</bean>
 	
+	<bean id="viewJobGridAction"
+		class="binky.reportrunner.ui.actions.job.viewer.ViewJobGrid"
+		scope="prototype">
+		<property name="jobService">
+			<ref bean="runnerJobService" />
+		</property>
+	</bean>
+	
 	<bean id="jobJsonDataAction"
 		class="binky.reportrunner.ui.actions.job.viewer.JobJsonData"
 		scope="prototype">

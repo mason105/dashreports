@@ -29,6 +29,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.beanutils.RowSetDynaClass;
+
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.beans.ViewerResults;
@@ -67,4 +69,6 @@ public interface RunnerJobService {
 	
 	public Map<RunnerJobParameter, List<Object>> getPossibleParameterValues(String jobName, String groupName) throws SQLException,NumberFormatException, ParseException;
 	
+	public Map<String, RowSetDynaClass > getResultSet(String groupName,String jobName,List<RunnerJobParameter> parameters) throws NumberFormatException, SQLException, ParseException;
+	public Map<String, RowSetDynaClass > getResultSet(String groupName,String jobName) throws NumberFormatException, SQLException, ParseException;
 }

@@ -37,6 +37,7 @@ import java.util.UUID;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 
@@ -231,6 +232,34 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	}
 
 	
+	public Map<String, RowSetDynaClass > getResultSet(String groupName,String jobName) throws NumberFormatException, SQLException, ParseException {
+		return this.getResultSet(groupName, jobName, null);
+	}
+
+	public Map<String, RowSetDynaClass > getResultSet(String groupName,String jobName,List<RunnerJobParameter> parameters) throws NumberFormatException, SQLException, ParseException {
+		RunnerJob job = getJobHelper(jobName, groupName);
+		DataSource ds = dataSourceService.getJDBCDataSource(job.getDatasource());
+		Connection conn = ds.getConnection();		
+		try{
+		
+		// get all the results
+		logger.debug("going to get a set of results for job: "
+				+ job.getPk().getJobName() + "/"
+				+ job.getPk().getGroup().getGroupName());
+		RunnerResultGenerator res = new RunnerResultGeneratorImpl(conn);
+		Map<String, ResultSet> rs = new HashMap<String, ResultSet>();
+		if (parameters != null) job.setParameters(parameters);
+		res.getResultsForJob(job, rs);		
+		Map<String, RowSetDynaClass > ret = new HashMap<String, RowSetDynaClass>();
+		for (String key:rs.keySet()) {
+			RowSetDynaClass rsdc= new RowSetDynaClass(rs.get(key),false);
+			ret.put(key, rsdc);			
+		}
+		return ret;
+		}finally {
+			conn.close();
+		}
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -240,7 +269,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		RunnerJob job = getJobHelper(jobName, groupName);
 		DataSource ds = dataSourceService.getJDBCDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
-		
+		try {
 		// get all the results
 		logger.debug("going to get a set of results for job: "
 				+ job.getPk().getJobName() + "/"
@@ -285,6 +314,9 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		}
 				
 		return jsons;
+		}finally {
+			conn.close();
+		}
 	}
 
 	@Override
@@ -303,7 +335,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		RunnerJob job = getJobHelper(jobName, groupName);
 		DataSource ds = dataSourceService.getJDBCDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
-
+		try{
 		// get all the results
 		logger.debug("going to get a set of results for job: "
 				+ job.getPk().getJobName() + "/"
@@ -331,9 +363,11 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			}
 			logger.debug("Tab name=" + key + " rows=" + lastRow);
 		}
-
-		conn.close();
+		
 		return results;
+		}finally {
+			conn.close();
+		}
 	}
 
 	public Map<String, ViewerResults> getResultsForJob(String jobName,
@@ -349,6 +383,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		RunnerJob job = getJobHelper(jobName, groupName);
 		DataSource ds = dataSourceService.getJDBCDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
+		
 		SQLProcessor sqlProcessor = new SQLProcessorImpl();
 		if ((job.getIsBurst()==null)||(!job.getIsBurst())) {
 			for (RunnerJobParameter p : job.getParameters()) {

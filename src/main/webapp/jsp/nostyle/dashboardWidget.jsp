@@ -57,7 +57,7 @@
 	 				</s:if>		
 				</div>	
 			</div>	
-			<display:table name="item.currentDataset.rows"  requestURI="index.action" export="false">
+			<display:table name="item.currentDataset.rows"  requestURI="showGroup.action?groupName=%{groupName}" export="false">
 			</display:table>
 		</div>						
 	</s:if>

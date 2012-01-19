@@ -126,6 +126,17 @@
 			<ref bean="runnerHistoryDao" />
 		</property>
 	</bean>
+	
+	<bean id="jobJsonDataAction"
+		class="binky.reportrunner.ui.actions.job.viewer.JobJsonData"
+		scope="prototype">
+		<property name="jobService">
+			<ref bean="runnerJobService" />
+		</property>
+		<property name="historyDao">
+			<ref bean="runnerHistoryDao" />
+		</property>
+	</bean>
 
 	<bean id="invokeJobAction"
 		class="binky.reportrunner.ui.actions.job.InvokeJob"

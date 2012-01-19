@@ -50,6 +50,7 @@ public interface RunnerJobService {
 	
 	public List<RunnerJob> getRunningJobs() throws SchedulerException;
 	
+
 	
 	public void interruptRunningJob(String jobName, String groupName)
 			throws SchedulerException;
@@ -60,6 +61,9 @@ public interface RunnerJobService {
 	
 	public Map<String, ViewerResults> getResultsForJob(String jobName, String groupName, List<RunnerJobParameter> parameters) throws SQLException, NumberFormatException, ParseException,RenderException, IOException;
 	public Map<String, ViewerResults> getResultsForJob(String jobName, String groupName) throws SQLException, NumberFormatException, ParseException,RenderException, IOException;
+
+	public Map<String,String> getJSONsForJob(String groupName,String jobName, List<RunnerJobParameter> parameters) throws SQLException, NumberFormatException, ParseException,RenderException;
+	public Map<String,String> getJSONsForJob(String groupName,String jobName) throws SQLException, NumberFormatException, ParseException,RenderException;
 	
 	public Map<RunnerJobParameter, List<Object>> getPossibleParameterValues(String jobName, String groupName) throws SQLException,NumberFormatException, ParseException;
 	

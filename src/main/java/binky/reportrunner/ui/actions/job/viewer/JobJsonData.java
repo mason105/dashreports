@@ -1,62 +1,35 @@
-/*******************************************************************************
- * Copyright (c) 2009 Daniel Grout.
- * 
- * GNU GENERAL PUBLIC LICENSE - Version 3
- * 
- * This file is part of Report Runner (http://code.google.com/p/reportrunner).
- * 
- * Report Runner is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- * 
- * Report Runner is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
- * 
- * Module: ViewJobOutputAction.java
- ******************************************************************************/
 package binky.reportrunner.ui.actions.job.viewer;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
-import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class ViewJobOutputAction extends StandardRunnerAction {
-
-	private static final long serialVersionUID = 2677747746707641721L;
+public class JobJsonData extends StandardRunnerAction {
 
 	private String jobName;
-
-
-
-	private Map<String, ViewerResults> results;
-	
+	private RunnerJobService jobService;
 	private ReportRunnerDao<RunnerHistoryEvent,Long> historyDao;
 	private List<RunnerJobParameter> parameters;
 	
-	private RunnerJobService jobService;
-	//private static final Logger logger = Logger.getLogger(ViewJobOutputAction.class);
+	private String jsonData;
+	
+	private static final Logger logger = Logger.getLogger(StandardRunnerAction.class);
 	@Override
 	public String execute() throws Exception {
-		
 		if (!super.doesUserHaveGroup(groupName)) throw new SecurityException("User does not have permissions for group: " + groupName);
-		
 		long startTime = (new Date()).getTime();
 		//TODO: NASTY HACK ALERT
+		Map<String,String> jsons;
 		if ((this.parameters != null) && (this.parameters.size() > 0)) {
 			RunnerJob job = jobService.getJob(jobName, groupName);
 			
@@ -69,17 +42,20 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 						jp.setParameterValue(p.getParameterValue());
 						break;
 					}
-				}
-				
-			}
-					
-			results = jobService.getResultsForJob(jobName, groupName,
-					jobParameters);
-		} else {
-			results = jobService.getResultsForJob(jobName, groupName);
+				}			
+			}					
+			//running with parameters
+			jsons=jobService.getJSONsForJob(groupName, jobName, jobParameters);
+		} else {		
+		   //running without parameters
+			jsons=jobService.getJSONsForJob(groupName, jobName);
 		}
 		
 		long endTime = (new Date()).getTime();
+		
+		if (jsons!=null&&jsons.values().size()>0) {
+			this.jsonData=jsons.values().iterator().next();
+		}
 		
 		//create an event for this so we can track performance of bad queries
 		RunnerHistoryEvent event = new RunnerHistoryEvent();
@@ -94,43 +70,37 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		
 		return SUCCESS;
 	}
-
-	public RunnerJobService getJobService() {
-		return jobService;
-	}
-
-	public void setJobService(RunnerJobService jobService) {
-		this.jobService = jobService;
-	}
-
 	public String getJobName() {
 		return jobName;
 	}
-
 	public void setJobName(String jobName) {
 		this.jobName = jobName;
 	}
-
+	
+	public RunnerJobService getJobService() {
+		return jobService;
+	}
+	public void setJobService(RunnerJobService jobService) {
+		this.jobService = jobService;
+	}
+	public ReportRunnerDao<RunnerHistoryEvent, Long> getHistoryDao() {
+		return historyDao;
+	}
+	public void setHistoryDao(ReportRunnerDao<RunnerHistoryEvent, Long> historyDao) {
+		this.historyDao = historyDao;
+	}
 	public List<RunnerJobParameter> getParameters() {
 		return parameters;
 	}
-
 	public void setParameters(List<RunnerJobParameter> parameters) {
 		this.parameters = parameters;
 	}
-
-	public Map<String, ViewerResults> getResults() {
-		return results;
+	public String getJsonData() {
+		return jsonData;
 	}
-
-	public void setResults(Map<String, ViewerResults> results) {
-		this.results = results;
+	public void setJsonData(String jsonData) {
+		this.jsonData = jsonData;
 	}
-
-	public void setHistoryDao(ReportRunnerDao<RunnerHistoryEvent,Long> historyDao) {
-		this.historyDao = historyDao;
-	}
-
 
 
 }

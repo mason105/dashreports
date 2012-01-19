@@ -137,6 +137,10 @@
     		 <result name="success">/jsp/main/jobViewer.jsp</result>
 		</action>
 
+		<action name="jobJsonData" class="jobJsonDataAction">
+    		 <result name="success">/jsp/main/jobJson.jsp</result>
+		</action>
+
 
 		<action name="deleteDataSource" class="deleteDataSourceAction">
 			<result type="redirectAction">

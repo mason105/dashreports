@@ -28,6 +28,8 @@ public class ViewJobGridAction extends StandardRunnerAction {
 		if ((this.parameters != null) && (this.parameters.size() > 0)) {
 			RunnerJob job = jobService.getJob(jobName, groupName);
 			
+			
+			
 			List<RunnerJobParameter> jobParameters = job.getParameters();
 			
 			for (RunnerJobParameter p: this.parameters) {								
@@ -40,6 +42,7 @@ public class ViewJobGridAction extends StandardRunnerAction {
 				}			
 			}	
 			this.results= jobService.getResultSet(groupName, jobName, parameters);
+
 		} else {
 			this.results=jobService.getResultSet(groupName, jobName);
 		}

@@ -42,6 +42,8 @@
 				</s:if>
 				<s:else>
 					<s:select label="%{key.description}"
+						headerKey="**********"
+  						headerValue="-- All --"
 						name="parameters[%{#rowstatus.index}].parameterValue"
 						value="%{key.parameterValue}" list="value">
 					</s:select>

@@ -97,17 +97,17 @@ public class RunnerResultGeneratorImpl implements RunnerResultGenerator {
 							
 							populatedParams.add(paramNew);
 		
-							logger.debug("added populated param"
+							logger.trace("added populated param"
 									+ param.getPk().getParameterIdx()
 									+ " - value - " + param.getParameterValue());
 						} else {
 							//value already assigned so carry on using that.
-							logger.debug("using overide value" + param.getParameterValue());
+							logger.trace("using overide value" + param.getParameterValue());
 							populatedParams.add(paramNew);
 						}
 					} else {
 						//not populated via the bursting query
-						logger.debug("standard parameter");
+						logger.trace("standard parameter");
 						populatedParams.add(paramNew);						
 					}
 					if (!name.isEmpty()) {
@@ -116,7 +116,7 @@ public class RunnerResultGeneratorImpl implements RunnerResultGenerator {
 					name=name+paramNew.getParameterValue();
 				}
 				
-				logger.debug("file/tab is called:" + name);
+				logger.trace("file/tab is called:" + name);
 				
 				
 				// process the query with the results in

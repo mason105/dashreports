@@ -61,7 +61,6 @@
     				]
     			, multiselect: false,rowList:[10,20,30],pager: '#mygridpager<s:property value="#rowstatus.index"/>',viewrecords: true
     			,autowidth:true
-    			,height:500	
     			,caption: "<s:property value="key"/>"}) ;
     	    
     			jQuery("#mygrid<s:property value="#rowstatus.index"/>").jqGrid('navGrid','#mygridpager<s:property value="#rowstatus.index"/>',{edit:false,add:false,del:false});

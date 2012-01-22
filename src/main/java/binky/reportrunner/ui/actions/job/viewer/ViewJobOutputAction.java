@@ -83,13 +83,17 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 					for (RunnerJobParameter jp : jobParameters) {
 						if (jp.getPk().getParameterIdx()
 								.equals(p.getPk().getParameterIdx())) {
-							jp.setParameterValue(p.getParameterValue());
+							logger.debug(p.getParameterValue() + " " + p.getParameterValue().equals("**********"));
+							if (!p.getParameterValue().equals("**********"))  {
+								logger.debug("setting parameter value for + " +  p.getPk().getParameterIdx() + " to: " + p.getParameterValue());
+								jp.setParameterValue(p.getParameterValue());
+							}
 							break;
 						}
 					}
 				}
 				dynaSets = jobService.getResultSet(groupName, jobName,
-						parameters);
+						jobParameters);
 
 			} else {
 				logger.debug("not using parameters");

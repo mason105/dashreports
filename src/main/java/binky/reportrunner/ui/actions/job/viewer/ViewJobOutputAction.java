@@ -70,6 +70,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		if (jobService.getJob(jobName, groupName)!=null && jobService.getJob(jobName, groupName).getTemplateType()
 				.equals(RunnerJob.Template.NONE)) {
 			logger.debug("populating grid");
+			long startTime = (new Date()).getTime();
 			Map<String,RowSetDynaClass> dynaSets;
 		
 			if ((this.parameters != null) && (this.parameters.size() > 0)) {
@@ -131,7 +132,20 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 				this.gridResults.put(key, rows);
 			}
 			
+			long endTime = (new Date()).getTime();
 
+			// create an event for this so we can track performance of bad
+			// queries
+			RunnerHistoryEvent event = new RunnerHistoryEvent();
+			event.setGroupName(groupName);
+			event.setJobName(jobName);
+			String message = "User:" + super.getSessionUser().getUserName()
+					+ " ran job viewer";
+			event.setMessage(message);
+			event.setRunTime(endTime - startTime);
+			event.setTimestamp(new Date());
+			event.setSuccess(true);
+			historyDao.saveOrUpdate(event);
 			logger.debug("redirecting to grid");
 			return "GRID";			
 		

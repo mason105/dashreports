@@ -142,11 +142,6 @@
     		 <result name="success">/jsp/main/jobJson.jsp</result>
 		</action>
 
-		<action name="viewJobGrid" class="viewJobGridAction">
-    		 <result name="success">/jsp/main/viewJobGrid.jsp</result>
-		</action>
-
-
 		<action name="deleteDataSource" class="deleteDataSourceAction">
 			<result type="redirectAction">
 				<param name="actionName">listDataSources</param>

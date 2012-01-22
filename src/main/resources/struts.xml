@@ -134,7 +134,8 @@
    			 <interceptor-ref name="defaultStack"/>
    			 <interceptor-ref name="execAndWait"/>
    			 <result name="wait">/jsp/main/jobViewerWait.jsp</result>
-    		 <result name="success">/jsp/main/jobViewer.jsp</result>
+    		 <result name="DOWNLOAD">/jsp/main/jobViewer.jsp</result>
+    		 <result name="GRID">/jsp/main/viewJobGrid.jsp</result>
 		</action>
 
 		<action name="jobJsonData" class="jobJsonDataAction">

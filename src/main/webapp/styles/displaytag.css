@@ -2,20 +2,35 @@ table {
 	border: 1px solid #666;
 	width: 100%;
 	margin: 20px 0 20px 0 !important;
+	border-collapse:collapse;
 }
 
-th,td {
-	padding: 2px 4px 2px 4px !important;
+th {
+	padding:5px;
 	text-align: left;
-	vertical-align: top;
-		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-		font-size: 76%;
-        line-height: 1em;
-		color: #333;	
+	border: 1px solid #ccc;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+    line-height: 1em;
+	color: #333;	
+	font-weight:bold;
+	background-image:url(../images/v2/listheader.jpg);
+	background-repeat: repeat-x; 	
+}
+td {
+	padding:3px;
+	text-align: left;
+	border: 1px solid #ccc;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+    line-height: 15px;
+	color: #000;
+	height:15px;	
 }
 
 thead tr {
-	background-color: #fc0;
+	background-color: #666;
+	
 }
 
 th.sorted {
@@ -60,7 +75,7 @@ tr.odd {
 }
 
 tr.tableRowEven,tr.even {
-	background-color: #fea
+	background-color: #eee
 }
 
 div.exportlinks {

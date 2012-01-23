@@ -9,13 +9,10 @@
 <sx:head parseContent="true" />
 </head>
 <body>
-
-<span class="pageTitle"><img src="<s:url value='/images/icons/clock.png'/>" align="absmiddle" />Scheduler Administration</span>
-       
-
+   
 <div class="formGroup">
-<div class="formGroupHeader">Summary</div>
-<pre><s:property value="summary"/></pre>
+<div class="formGroupHeader"><img src="<s:url value="/images/v2/icons/scheduler_blue.png"/>" align="absmiddle" />&nbsp;Manage Scheduler</div>
+<pre style="font-size:11px;"><s:property value="summary"/></pre>
 </div>
 
 <div class="formGroup">
@@ -43,8 +40,10 @@
 <div class="formGroupHeader">Scheduler Status</div>
 
 <s:form action="schedulerStateChange" method="post" enctype="multipart/form-data" validate="false">
-	<s:select label="Scheduler Status" name="schedulerState" value="%{schedulerState}" list="#{0:'Shutdown',2:'Started'}"></s:select>	
-	<s:submit/>		
+	<s:select label="Scheduler Status" name="schedulerState" value="%{schedulerState}" list="#{0:'Paused',1:'Started'}"></s:select>	
+	<div class="formBottom">
+	<s:submit align="left"/>		
+	</div>
 </s:form>
 
 </div>

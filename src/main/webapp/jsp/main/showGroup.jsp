@@ -54,10 +54,8 @@
 	
 	<div class="listingHeaderRow">		
 	 	<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
+		<div class="listingIconCell" style="padding-left:5px;width:90px;border-right: 1px solid #cccccc;">Schedule</div>
 		<div class="listingIconCell">&nbsp;</div>		
-		<div class="listingIconCell">&nbsp;</div>		
-		<div class="listingIconCell">&nbsp;</div>
-		<div class="listingIconCell">&nbsp;</div>
 		<div class="listingIconCell">&nbsp;</div>					
 		</s:if>
 		<div class="listingCell">Report</div>
@@ -66,28 +64,29 @@
 		<s:iterator value="jobs">    
 		<div class="listingRow">
 			<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
-			<div class="listingIconCell">
-			<s:a href="viewJobDetail.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/icons/magnifier.png'/>" alt="View Detail/History" align="absmiddle" /></s:a>
-			</div>
-			<div class="listingIconCell">
-			<s:a href="invokeJob.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/icons/cog.png'/>" alt="Invoke Now" align="absmiddle" /></s:a>
-			</div>
-			<div class="listingIconCell">
-			<s:a href="setupEditJob.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/icons/pencil.png'/>" align="absmiddle" alt="Edit" /></s:a>
-			</div>
-			<div class="listingIconCell">
-			      <s:if test="isScheduled"><s:if test="isScheduleActive">
-			      <s:a href="setJobStatus.action?jobName=%{jobName}&groupName=%{groupName}&jobStatus=false"><img src="<s:url value='/images/icons/clock_pause.png'/>" alt="Pause" align="absmiddle" /></s:a>
+			 <s:if test="isScheduled">
+			<div class="listingIconCell"  style="padding-left:5px;width:90px;border-right: 1px solid #cccccc;background-color:#eeeeee">
+			<s:a href="viewJobDetail.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/v2/icons/jobhistory.png'/>" title="View Execution Detail/History" align="absmiddle" /></s:a>
+			
+			<s:a href="invokeJob.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/v2/icons/execute.png'/>" title="Invoke Now" align="absmiddle" /></s:a>
+		
+			
+			     <s:if test="isScheduleActive">
+			      <s:a href="setJobStatus.action?jobName=%{jobName}&groupName=%{groupName}&jobStatus=false"><img src="<s:url value='/images/v2/icons/pause.png'/>" title="Pause Schedule" align="absmiddle" /></s:a>
 			      </s:if><s:else>
-			      <s:a href="setJobStatus.action?jobName=%{jobName}&groupName=%{groupName}&jobStatus=true"><img src="<s:url value='/images/icons/clock_play.png'/>" alt="Resume" align="absmiddle" /></s:a>				 	
-			      </s:else></s:if>
+			      <s:a href="setJobStatus.action?jobName=%{jobName}&groupName=%{groupName}&jobStatus=true"><img src="<s:url value='/images/v2/icons/play.png'/>" title="Resume Schedule" align="absmiddle" /></s:a>				 	
+			      </s:else>
 			</div>
+			</s:if>
 			<div class="listingIconCell">
-				<a href="deleteJob.action?jobName=<s:property value="jobName" />&groupName=<s:property value="groupName" />" onClick="return confirm('Really delete this job?');"><img src="<s:url value='/images/icons/delete.png'/>" alt="Delete" align="absmiddle" /></a>
+				<a href="deleteJob.action?jobName=<s:property value="jobName" />&groupName=<s:property value="groupName" />" onClick="return confirm('Really delete this job?');"><img src="<s:url value='/images/v2/icons/delete.png'/>" title="Delete" align="absmiddle" /></a>
+			</div>		
+			<div class="listingIconCell">
+			<s:a href="setupEditJob.action?jobName=%{jobName}&groupName=%{groupName}"><img src="<s:url value='/images/v2/icons/edit.png'/>" align="absmiddle" title="Edit" /></s:a>			
 			</div>
 			</s:if>			  
 			<div class="listingCell">
-				<img src="<s:url value="/images/icons/report.png"/>" align="absmiddle"/>&nbsp;<s:a href="setupViewJob.action?jobName=%{jobName}&groupName=%{groupName}"><s:property value="jobName" /></s:a>
+				<s:a href="setupViewJob.action?jobName=%{jobName}&groupName=%{groupName}"><s:property value="jobName" /></s:a>
 			</div>
 			<div class="listingCell">
 				<s:property value="description" />

@@ -40,7 +40,8 @@
 <body >
 	<s:iterator value="columns" status="rowstatus">
 
-    	
+<div class="jobViewHeader"><img src="<s:url value='/images/v2/nav/groupsblue.png'/>" align="absmiddle" />&nbsp;<s:a href="showGroup.action?groupName=%{groupName}"><s:property value="groupName"/></s:a> > <s:a href="setupViewJob.action?groupName=%{groupName}&jobName=%{jobName}"><s:property value="jobName"/></s:a> 
+</div>			
     	<table  id="mygrid<s:property value="#rowstatus.index"/>" class="scroll" ></table>
     	<div id="mygridpager<s:property value="#rowstatus.index"/>"></div>
     	<script type='text/javascript'>
@@ -61,6 +62,7 @@
     				]
     			, multiselect: false,rowList:[10,20,30],pager: '#mygridpager<s:property value="#rowstatus.index"/>',viewrecords: true
     			,autowidth:true
+    			,height:600
     			,caption: "<s:property value="key"/>"}) ;
     	    
     			jQuery("#mygrid<s:property value="#rowstatus.index"/>").jqGrid('navGrid','#mygridpager<s:property value="#rowstatus.index"/>',{edit:false,add:false,del:false});

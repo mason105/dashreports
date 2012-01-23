@@ -41,8 +41,12 @@ public class SetupViewJobAction extends StandardRunnerAction {
 	public String execute() throws Exception {
 		
 		parameters = jobService.getPossibleParameterValues(jobName, groupName);		
+		if (parameters==null||parameters.isEmpty()) {
+			return "NOPARAMS";
+		} else {
+			return "PARAMS";	
+		}
 		
-		return SUCCESS;
 	}
 
 	public RunnerJobService getJobService() {

@@ -37,7 +37,7 @@ public class EditJob extends BaseEditJob {
 	public String execute() throws Exception {
 		
 		if (!super.doesUserHaveGroup(groupName)) throw new SecurityException("User does not have permissions for group: " + groupName);
-		if (!super.getSessionUser().getIsReadOnly()) throw new SecurityException("User is readonly");
+		if (super.getSessionUser().getIsReadOnly()) throw new SecurityException("User is readonly");
 		
 		super.setDataSources(dataSourceService.getDataSourcesForGroup(groupName));
 		logger.debug("execute called");

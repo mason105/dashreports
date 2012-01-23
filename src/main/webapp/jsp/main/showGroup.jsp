@@ -78,6 +78,11 @@
 			      </s:else>
 			</div>
 			</s:if>
+			<s:else>
+			<div class="listingIconCell"  style="padding-left:5px;width:90px;border-right: 1px solid #cccccc;background-color:#eeeeee">
+			&nbsp;
+			</div>
+			</s:else>
 			<div class="listingIconCell">
 				<a href="deleteJob.action?jobName=<s:property value="jobName" />&groupName=<s:property value="groupName" />" onClick="return confirm('Really delete this job?');"><img src="<s:url value='/images/v2/icons/delete.png'/>" title="Delete" align="absmiddle" /></a>
 			</div>		

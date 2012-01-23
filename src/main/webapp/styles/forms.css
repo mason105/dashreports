@@ -83,10 +83,10 @@ max-height: 300px;
 	width:100%;
 	padding-bottom:5px;
 }
-.jobHeader  A, .jobViewHeader A{
+.jobHeader  A, .jobViewHeader A, .formGroupWideHeader A{
 	color:#ffffff;
 }
-.jobHeader  A:hover, .jobViewHeader A:hover{
+.jobHeader  A:hover, .jobViewHeader A:hover, .formGroupWideHeader A:hover{
 	color: #11b7f0;
 }
 .formGroupHeader  A{

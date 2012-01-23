@@ -34,7 +34,7 @@ thead tr {
 }
 
 th.sorted {
-	background-color: orange;
+	background-color: #11b7f0;
 }
 
 th a,th a:visited {
@@ -122,17 +122,20 @@ span.pagebanner {
 	background-color: #eee;
 	border: 1px dotted #999;
 	padding: 2px 4px 2px 4px;
-	width: 79%;
+	width: 95%;
 	margin-top: 10px;
 	display: block;
 	border-bottom: none;
 }
 
+span.pagelinks a {
+	font-weight:bold;	
+}
 span.pagelinks {
 	background-color: #eee;
 	border: 1px dotted #999;
 	padding: 2px 4px 2px 4px;
-	width: 79%;
+	width: 95%;
 	display: block;
 	border-top: none;
 	margin-bottom: -5px;

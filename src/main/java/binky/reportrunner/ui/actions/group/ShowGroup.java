@@ -62,7 +62,7 @@ public class ShowGroup extends StandardRunnerAction {
 							.getNextRunTime(jobName, groupName)));
 				}
 				dJob.setIsScheduled(((job.getCronString() != null) && !job
-						.getCronString().isEmpty()));
+						.getCronString().isEmpty()) && job.isScheduled());
 
 				dJob.setGroupName(groupName);
 				dJob.setJobName(jobName);

@@ -21,6 +21,9 @@
 
 	<properties>
 		<compileSource>1.6</compileSource>
+		<springVersion>3.0.6.RELEASE</springVersion>
+		<hibernateVersion>3.2.6.ga</hibernateVersion>
+		<strutsVersion>2.3.1.1</strutsVersion>
 	</properties>
 
 	<issueManagement>
@@ -101,26 +104,40 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>1.8.3</version>
+		</dependency>
+
+
 		<!-- Struts 2 -->
+
+		<dependency>
+			<groupId>org.apache.struts</groupId>
+			<artifactId>struts2-jfreechart-plugin</artifactId>
+			<version>2.3.1.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-core</artifactId>
-			<version>2.1.8.1</version>
+			<version>${strutsVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-sitemesh-plugin</artifactId>
-			<version>2.1.8.1</version>
+			<version>${strutsVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-dojo-plugin</artifactId>
-			<version>2.1.8.1</version>
+			<version>${strutsVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.struts</groupId>
 			<artifactId>struts2-spring-plugin</artifactId>
-			<version>2.1.8.1</version>
+			<version>${strutsVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>displaytag</groupId>
@@ -184,7 +201,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate</artifactId>
-			<version>3.2.6.ga</version>
+			<version>${hibernateVersion}</version>
 		</dependency>
 		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring</artifactId> 
 			<version>2.0.1</version> </dependency> <dependency> <groupId>org.springframework</groupId> 
@@ -200,11 +217,6 @@
 			<groupId>opensymphony</groupId>
 			<artifactId>quartz</artifactId>
 			<version>1.5.0</version>
-		</dependency>
-		<dependency>
-			<groupId>binky.ofc2plugin</groupId>
-			<artifactId>ofc2struts2</artifactId>
-			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>jasperreports</groupId>
@@ -269,38 +281,38 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -317,22 +329,22 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>3.0.6.RELEASE</version>
+			<version>${springVersion}</version>
 		</dependency>
 
 		<dependency>
@@ -340,12 +352,6 @@
 			<artifactId>jfreechart</artifactId>
 			<version>1.0.13</version>
 		</dependency>
-		<dependency>
-			<groupId>com.googlecode.json-simple</groupId>
-			<artifactId>json-simple</artifactId>
-			<version>1.1</version>
-		</dependency>
-
 	</dependencies>
 
 	<build>

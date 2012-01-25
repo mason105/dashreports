@@ -19,14 +19,12 @@ import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DatasourceService;
 
-import com.opensymphony.xwork2.Preparable;
-
 public abstract class BaseEditDashboardAction extends BaseDashboardAction
-		implements Preparable {
+		{
 	private static final long serialVersionUID = 1L;
 	private ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
-	private DatasourceService dataSourceService;
-	private List<RunnerDataSource> runnerDataSources;
+	protected DatasourceService dataSourceService;
+	protected List<RunnerDataSource> runnerDataSources;
 
 	private String itemQuery;
 	private String dataSourceName;
@@ -65,6 +63,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 				return INPUT;
 			}
 			this.groupName = item.getGroup().getGroupName();
+			runnerDataSources = this.dataSourceService.getDataSourcesForGroup(groupName);
 			return SUCCESS;
 		} else {
 
@@ -75,9 +74,6 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 		}
 	}
 
-	public final void prepare() throws Exception {
-		runnerDataSources = this.dataSourceService.getDataSourcesForGroup(groupName);
-	}
 
 	public final List<RunnerDataSource> getRunnerDataSources() {
 		return runnerDataSources;
@@ -126,6 +122,14 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 
 	public void setDataSourceName(String dataSourceName) {
 		this.dataSourceName = dataSourceName;
+	}
+
+	public DatasourceService getDataSourceService() {
+		return dataSourceService;
+	}
+
+	public void setDataSourceService(DatasourceService dataSourceService) {
+		this.dataSourceService = dataSourceService;
 	}
 
 }

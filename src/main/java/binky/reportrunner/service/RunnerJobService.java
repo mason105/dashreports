@@ -64,9 +64,6 @@ public interface RunnerJobService {
 	public Map<String, ViewerResults> getResultsForJob(String jobName, String groupName, List<RunnerJobParameter> parameters) throws SQLException, NumberFormatException, ParseException,RenderException, IOException;
 	public Map<String, ViewerResults> getResultsForJob(String jobName, String groupName) throws SQLException, NumberFormatException, ParseException,RenderException, IOException;
 
-	public Map<String,String> getJSONsForJob(String groupName,String jobName, List<RunnerJobParameter> parameters) throws SQLException, NumberFormatException, ParseException,RenderException;
-	public Map<String,String> getJSONsForJob(String groupName,String jobName) throws SQLException, NumberFormatException, ParseException,RenderException;
-	
 	public Map<RunnerJobParameter, List<Object>> getPossibleParameterValues(String jobName, String groupName) throws SQLException,NumberFormatException, ParseException;
 	
 	public Map<String, RowSetDynaClass > getResultSet(String groupName,String jobName,List<RunnerJobParameter> parameters) throws NumberFormatException, SQLException, ParseException;

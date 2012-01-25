@@ -144,10 +144,6 @@
     		 <result name="GRID">/jsp/main/viewJobGrid.jsp</result>
 		</action>
 
-		<action name="jobJsonData" class="jobJsonDataAction">
-    		 <result name="success">/jsp/main/jobJson.jsp</result>
-		</action>
-
 		<action name="deleteDataSource" class="deleteDataSourceAction">
 			<result type="redirectAction">
 				<param name="actionName">listDataSources</param>
@@ -330,15 +326,6 @@
 			<result>/jsp/main/jobStats.jsp</result>
 		</action>
 
-
-
-		<action name="getDashboardChartData" class="getDashboardChartDataAction">
-   			 <interceptor-ref name="defaultStack"/>		
-   			 <interceptor-ref name="noCache"/>
-			<result>/jsp/nostyle/chartData.jsp</result>
-		</action>
-
-
 		<action name="dashboardWidget" class="dashboardWidgetAction">
 			<interceptor-ref name="defaultStack"/>		
 			<result>/jsp/nostyle/dashboardWidget.jsp</result>
@@ -375,5 +362,13 @@
 			<result>/jsp/nostyle/thresholdFieldDropdowns.jsp</result>
 		</action>
 		
+	</package>
+	<package name="charts" extends="jfreechart-default">
+		<action name="getChart" class="getChartAction">
+			<result name="success" type="chart">
+			    <param name="width">400</param>
+			    <param name="height">300</param> 
+  			</result>
+		</action>
 	</package>
 </struts>

@@ -85,8 +85,8 @@ public class RunnerDashboardChart extends RunnerDashboardItem {
 	public enum ChartType {
 
 		/*DIAL("Dial"),*/ 
-		LINE("Line Graph"), BAR("Bar Chart"), AREA("Area Graph"), PIE(
-				"Pie Chart");
+		LINE("Line"), STACKED_BAR("Stacked Bar"), CLUSTERED_BAR("Clustered Bar"), AREA("Area"), PIE(
+				"Pie");
 
 		private String displayName;
 

@@ -46,6 +46,7 @@ public class SetupEditChart extends BaseEditDashboardAction {
 			} else {
 				this.item = new RunnerDashboardChart();
 			}
+			runnerDataSources = dataSourceService.getDataSourcesForGroup(groupName);
 			return SUCCESS;
 		} else {
 

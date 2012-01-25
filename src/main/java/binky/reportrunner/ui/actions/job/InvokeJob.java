@@ -39,6 +39,7 @@ public class InvokeJob extends StandardRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
+		
 		if (groupName != null && !groupName.isEmpty()
 				&& (jobName != null && !jobName.isEmpty())) {
 			// security check

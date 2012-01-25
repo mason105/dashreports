@@ -34,13 +34,14 @@
 	</bean>
 
 
-	<bean id="getDashboardChartDataAction"
-		class="binky.reportrunner.ui.actions.dashboard.GetDashboardChartDataAction"
+	<bean id="getChartAction"
+		class="binky.reportrunner.ui.actions.dashboard.GetChart"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
 	</bean>
+
 
 	<bean id="dashboardWidgetAction"
 		class="binky.reportrunner.ui.actions.dashboard.DashboardWidgetAction"
@@ -127,17 +128,6 @@
 		</property>
 	</bean>
 	
-	<bean id="jobJsonDataAction"
-		class="binky.reportrunner.ui.actions.job.viewer.JobJsonData"
-		scope="prototype">
-		<property name="jobService">
-			<ref bean="runnerJobService" />
-		</property>
-		<property name="historyDao">
-			<ref bean="runnerHistoryDao" />
-		</property>
-	</bean>
-
 	<bean id="invokeJobAction"
 		class="binky.reportrunner.ui.actions.job.InvokeJob"
 		scope="prototype">

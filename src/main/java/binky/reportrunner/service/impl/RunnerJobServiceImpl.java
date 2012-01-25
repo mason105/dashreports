@@ -39,7 +39,6 @@ import javax.sql.DataSource;
 
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
-import org.json.simple.JSONObject;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
@@ -260,73 +259,6 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 			conn.close();
 		}
 	}
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public Map<String,String> getJSONsForJob(String groupName, String jobName,
-			List<RunnerJobParameter> parameters) throws SQLException,
-			NumberFormatException, ParseException, RenderException {
-		RunnerJob job = getJobHelper(jobName, groupName);
-		DataSource ds = dataSourceService.getJDBCDataSource(job.getDatasource());
-		Connection conn = ds.getConnection();
-		try {
-		// get all the results
-		logger.debug("going to get a set of results for job: "
-				+ job.getPk().getJobName() + "/"
-				+ job.getPk().getGroup().getGroupName());
-		RunnerResultGenerator res = new RunnerResultGeneratorImpl(conn);
-		Map<String, ResultSet> rs = new HashMap<String, ResultSet>();
-		if (parameters != null)
-			job.setParameters(parameters);
-		res.getResultsForJob(job, rs);
-
-		logger.debug("streaming to JSON data");
-		
-		Map<String,String> jsons = new HashMap<String, String>();
-		
-		
-		//{"JSON":"success","gridModel":[],"page":0,"records":x}
-		for (String key : rs.keySet()) {
-			ResultSet result = rs.get(key);
-			
-			//get the column names
-			int c=result.getMetaData().getColumnCount();
-			String[] cols = new String[c];
-			for (int i=1;i<=c;i++) {
-				cols[i]=result.getMetaData().getColumnLabel(i);
-			}
-			int rowCount=0;
-			JSONObject json = new JSONObject();
-			json.put("JSON", "success");	
-			List<JSONObject> rows = new LinkedList<JSONObject>();
-			while (result.next()) {
-				JSONObject row = new JSONObject();
-				for (int i=1;i<=c;i++) {
-					Object val = result.getObject(i);
-					row.put(cols[i], val);
-				}
-				rows.add(row);
-				rowCount++;
-			}			
-			json.put("gridModel",rows.toArray(new JSONObject[]{}));
-			json.put("records",rowCount);
-			jsons.put(key, json.toJSONString());
-		}
-				
-		return jsons;
-		}finally {
-			conn.close();
-		}
-	}
-
-	@Override
-	public Map<String,String> getJSONsForJob(String groupName, String jobName)
-			throws SQLException, NumberFormatException, ParseException,
-			RenderException {
-		return getJSONsForJob(groupName, jobName,null);
-	}
-
-
 	
 	public Map<String, ViewerResults> getResultsForJob(String jobName,
 			String groupName, List<RunnerJobParameter> parameters)

@@ -27,7 +27,7 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 	private DatasourceServiceImpl dataSourceService;
 	private List<String> columnNames;
 	private String valueColumnValue;
-	private String xAxisColumnValue;
+	private String xaxisColumnValue;
 	private String seriesNameColumnValue;
 	private String labelColumnValue;
 
@@ -143,12 +143,14 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 		this.valueColumnValue = valueColumnValue;
 	}
 
-	public String getXAxisColumnValue() {
-		return xAxisColumnValue;
+
+
+	public String getXaxisColumnValue() {
+		return xaxisColumnValue;
 	}
 
-	public void setXAxisColumnValue(String axisColumnValue) {
-		xAxisColumnValue = axisColumnValue;
+	public void setXaxisColumnValue(String xaxisColumnValue) {
+		this.xaxisColumnValue = xaxisColumnValue;
 	}
 
 	public String getSeriesNameColumnValue() {

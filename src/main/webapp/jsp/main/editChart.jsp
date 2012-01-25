@@ -3,22 +3,23 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
-
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <html>
 <head>
-<sx:head  />
+    <sx:head/>
+ 	<sj:head locale="en" jqueryui="true" jquerytheme="smoothness"/>
 </head>
 <body>
 <s:form action="saveChart"  method="post"  id="saveChart">
-
-<sx:tabbedpanel id="report">
+<div id="jobEditForm">
+	<div class="jobHeader"><img src="<s:url value='/images/v2/nav/groupsblue.png'/>" align="absmiddle" />&nbsp;<s:a href="showGroup.action?groupName=%{groupName}"><s:property value="groupName"/></s:a> > Edit Chart</div>
+<sj:tabbedpanel id="report" animate="true"  useSelectedTabCookie="true">	
 	
-		<s:actionerror />
-		<s:actionmessage/>
+		
 		
 		<s:hidden name="item.itemId" value="%{item.itemId}"/>
-		
-		<sx:div id="details" label="Details">
+		<sj:tab id="detailsTab" target="detailsDiv" label="Details"/>
+		<div id="detailsDiv" >
 			<div class="formGroup">
 				<div class="formGroupHeader">Details</div>
 			
@@ -42,10 +43,11 @@
 				</s:textfield>
 				
 			</div>	
-			<div class="formFooterText">* required field</div>
-		</sx:div>
-		
-		<sx:div id="layout" label="Layout">
+			<div class="formBottomEmpty"></div>
+		</div>
+			
+		<sj:tab id="layoutTab" target="layoutDiv" label="Layout"/>
+		<div id="layoutDiv" >
 			<div class="formGroup">
 				<div class="formGroupHeader">Layout/Type</div>
 				
@@ -62,9 +64,11 @@
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 					
 			</div>
-		</sx:div>
-		
-		<sx:div id="chart" label="Chart Details">
+			<div class="formBottomEmpty"></div>
+		</div>
+			
+		<sj:tab id="chartTab" target="chartDiv" label="Chart Details"/>
+		<div id="chartDiv" >
 			<div class="formGroup">
 				<div class="formGroupHeader">Chart Configuration</div>
 				
@@ -381,7 +385,7 @@
 			 	<s:textfield label="Y-Axis Label" size="64" value="%{item.yLabel}" name="item.yLabel" cssClass="textbox">
 				</s:textfield>
 											
-				<s:hidden name="xaxisColumnValue" value="%{item.xAxisColumn}"/>
+				<s:hidden name="xaxisColumnValue" value="%{item.xaxisColumn}"/>
 				<s:hidden name="valueColumnValue" value="%{item.valueColumn}"/>
 				<s:hidden name="seriesNameColumnValue" value="%{item.seriesNameColumn}"/>
 				
@@ -389,11 +393,20 @@
 				<sx:div  showLoadingText="true" loadingText="Getting fields..." id="refreshFields" href="%{fieldsUrl}" theme="ajax"  listenTopics="refresh_fields" formId="saveChart">
 				</sx:div>
 			
-			
+			<div class="formBottomEmpty"></div>
 			</div>		
-	</sx:div>
-<s:submit value="Save"/>
-</sx:tabbedpanel>
+				
+	</div>
+	<div class="formBottom">
+	<div class="formFooterText">* required field
+	
+	<s:actionerror />
+		<s:actionmessage/>
+		</div>
+	<s:submit value="Save" align="left" /></div>
+	
+</sj:tabbedpanel>
+</div>
 </s:form>
 </body>
 </html>

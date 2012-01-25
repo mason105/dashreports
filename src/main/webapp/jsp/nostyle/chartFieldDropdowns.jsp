@@ -4,7 +4,7 @@
 <s:actionmessage/>
 
 				<s:select label="X-Axis Column Name"
-					name="item.xaxisColumn" value="xAxisColumnValue"
+					name="item.xaxisColumn" value="xaxisColumnValue"
 					list="columnNames"  cssClass="textbox">
 				</s:select>
 

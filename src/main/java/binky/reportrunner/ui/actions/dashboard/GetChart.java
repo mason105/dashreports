@@ -1,9 +1,8 @@
 package binky.reportrunner.ui.actions.dashboard;
 
-import java.util.HashMap;
+import java.awt.Color;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.RowSetDynaClass;
@@ -14,18 +13,16 @@ import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.SymbolAxis;
 import org.jfree.chart.axis.ValueAxis;
 import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.chart.plot.Plot;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.ClusteredXYBarRenderer;
 import org.jfree.chart.renderer.xy.StackedXYBarRenderer;
 import org.jfree.chart.renderer.xy.StandardXYItemRenderer;
 import org.jfree.chart.renderer.xy.XYAreaRenderer;
 import org.jfree.chart.renderer.xy.XYItemRenderer;
-import org.jfree.data.general.AbstractDataset;
 import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.xy.AbstractIntervalXYDataset;
 import org.jfree.data.xy.AbstractXYDataset;
 import org.jfree.data.xy.DefaultTableXYDataset;
-import org.jfree.data.xy.TableXYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.util.Rotation;
@@ -191,10 +188,13 @@ public class GetChart extends BaseDashboardAction {
 				
 
 			}
-
+			Plot plot = new XYPlot(xyDataset, xAxis,
+					yAxis, renderer);
+			
+			plot.setBackgroundPaint(Color.decode(item.getBackGroundColour()));
+			
 			chart = new JFreeChart(item.getItemName(),
-					JFreeChart.DEFAULT_TITLE_FONT, new XYPlot(xyDataset, xAxis,
-							yAxis, renderer), true);
+					JFreeChart.DEFAULT_TITLE_FONT, plot, true);
 			
 		}
 		return SUCCESS;

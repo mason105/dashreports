@@ -1,12 +1,12 @@
 package binky.reportrunner.ui.actions.dashboard.base;
 
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.ReportRunnerDao;
-import binky.reportrunner.data.RunnerDashboardChart;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
@@ -18,6 +18,7 @@ import binky.reportrunner.data.RunnerDashboardThreshold.ThresholdType;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DatasourceService;
+import binky.reportrunner.ui.util.QuartzCronSchedule;
 
 public abstract class BaseEditDashboardAction extends BaseDashboardAction
 		{
@@ -25,7 +26,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 	private ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
 	protected DatasourceService dataSourceService;
 	protected List<RunnerDataSource> runnerDataSources;
-
+	protected QuartzCronSchedule simpleCron;
 	private String itemQuery;
 	private String dataSourceName;
 
@@ -43,10 +44,10 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 
 			// preserve teh current data
 			if (item.getItemId() != null) {
-				RunnerDashboardChart currentChart = (RunnerDashboardChart) super
+				RunnerDashboardItem currentItem = super
 						.getDashboardService().getItem(item.getItemId());
-				item.setCurrentDataset(currentChart.getCurrentDataset());
-				item.setLastUpdated(currentChart.getLastUpdated());
+				item.setCurrentDataset(currentItem.getCurrentDataset());
+				item.setLastUpdated(currentItem.getLastUpdated());
 			}
 			RunnerGroup group = new RunnerGroup();
 			group.setGroupName(groupName);
@@ -55,6 +56,8 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 			item.setDatasource(dataSourceDao.get(dataSourceName));
 			item.setAlertQuery(itemQuery);
 
+			item.setCronTab(simpleCron.toString());
+			
 			try {
 				super.getDashboardService().saveUpdateItem(item);
 			} catch (SchedulerException e) {
@@ -130,6 +133,16 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 
 	public void setDataSourceService(DatasourceService dataSourceService) {
 		this.dataSourceService = dataSourceService;
+	}
+
+
+	public QuartzCronSchedule getSimpleCron() {
+		return simpleCron;
+	}
+
+
+	public void setSimpleCron(QuartzCronSchedule simpleCron) {
+		this.simpleCron = simpleCron;
 	}
 
 }

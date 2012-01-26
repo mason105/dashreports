@@ -8,10 +8,7 @@
 <head>
 <sx:head parseContent="true" />
 </head>
-<body>
-
-<span class="pageTitle"><img src="<s:url value='/images/icons/information.png'/>" align="absmiddle" />About Dash Reports</span>
-       
+<body>      
 
 <div class="formGroup">
 <div class="formGroupHeader">Information</div>
@@ -50,11 +47,16 @@ Version:<s:property value="versionId"/>
 	</tr><tr>
 	<td align="center"><a href="http://www.springsource.org/" target="_blank"><img src="<s:url value="/images/vendor/spring.png"/>" border="0" align="middle"/></a></td>
 	<td align="center"><a href="http://displaytag.sourceforge.net/1.2/" target="_blank"><img src="<s:url value="/images/vendor/displaytag.png"/>" border="0" align="middle"/></a></td>
-	<td align="center"></td>
+	<td align="center"><a href="http://code.google.com/p/struts2-jquery/" target="_blank"><img src="<s:url value="/images/vendor/s2jq.png.png"/>" border="0" align="middle"/></a></td>
 	</tr><tr>
 	<td align="center"><a href="http://commons.apache.org/vfs/" target="_blank"><img src="<s:url value="/images/vendor/vfs-logo-white.png"/>" border="0" align="middle"/></a></td>
-	<td align="center"><a href="http://teethgrinder.co.uk/open-flash-chart/" target="_blank"><img src="<s:url value="/images/vendor/openflashchart.png"/>" border="0" align="middle"/></a></td>
-	<td align="center"><a href="" target="_blank"><img src="<s:url value="/images/vendor/jasperreports.gif"/>" border="0" align="middle"/></a></td>
+	<td align="center"><a href="http://www.jfree.org/jfreechart/index.html" target="_blank">JFree Chart</a></td>
+	<td align="center"><a href="http://jasperforge.org/projects/jasperreports" target="_blank"><img src="<s:url value="/images/vendor/jasperreports.gif"/>" border="0" align="middle"/></a></td>
+	</tr>
+	<tr>
+	<td align="center"><a href="http://jquery.com/" target="_blank"><img src="<s:url value="/images/vendor/jquery.jpg"/>" border="0" align="middle"/></a></td>
+	<td align="center"><a href="http://www.trirand.com/blog/" target="_blank">JQuery Grid</a></td>
+	<td></td>
 	</tr>
 </table>	
 </div>

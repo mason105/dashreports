@@ -123,8 +123,14 @@
 		<s:if test="job.parameters.size>0">
 			<div class="formBottomEmpty"></div>
 		</s:if>		
+		
+		<s:if test="job.parameters.size>0">
 		<s:submit name="addParameter" value="Add Parameter" align="left" cssStyle="float:left;"/>
-		<s:submit name="deleteParameters" value="Delete Parameter" align="left"/>			
+		<s:submit name="deleteParameters" value="Delete Parameter" align="left"/>
+		</s:if>			
+		<s:else>
+		<s:submit name="addParameter" value="Add Parameter" align="left"/>
+		</s:else>
 	</div>
 
 	<sj:tab id="schedule" label="Schedule" target="scheduleDiv"/>

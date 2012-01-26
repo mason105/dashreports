@@ -30,6 +30,7 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 		return (List<T>)super.getHibernateTemplate().loadAll(clazz);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<T> findByNamedQuery(String queryName, Object[] values) {
 		return (List<T>)super.getHibernateTemplate().findByNamedQuery(queryName, values);
 	}
@@ -43,6 +44,7 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findByNamedQuery(String queryName, Object[] values,
 			int maxResults) {

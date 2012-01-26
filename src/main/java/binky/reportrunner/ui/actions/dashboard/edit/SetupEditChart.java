@@ -25,6 +25,7 @@ package binky.reportrunner.ui.actions.dashboard.edit;
 import binky.reportrunner.data.RunnerDashboardChart;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.ui.actions.dashboard.base.BaseEditDashboardAction;
+import binky.reportrunner.ui.util.QuartzCronSchedule;
 
 public class SetupEditChart extends BaseEditDashboardAction {
 
@@ -42,7 +43,7 @@ public class SetupEditChart extends BaseEditDashboardAction {
 				this.item = (RunnerDashboardChart) super.getDashboardService()
 						.getItem(itemId);
 				super.setGroupName(item.getGroup().getGroupName());
-
+				super.simpleCron = new QuartzCronSchedule(item.getCronTab());
 			} else {
 				this.item = new RunnerDashboardChart();
 			}

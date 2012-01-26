@@ -364,11 +364,76 @@
 		
 	</package>
 	<package name="charts" extends="jfreechart-default">
+	
 		<action name="getChart" class="getChartAction">
 			<result name="success" type="chart">
 			    <param name="width">400</param>
 			    <param name="height">300</param> 
   			</result>
 		</action>
+	
+		<action name="getChartSS" class="getChartAction">
+			<result name="success" type="chart">
+			    <param name="width">353</param>
+			    <param name="height">293</param> 
+  			</result>
+		</action>
+	
+		<action name="getChartSM" class="getChartAction">
+			<result name="success" type="chart">
+			    <param name="width">353</param>
+			    <param name="height">594</param> 
+  			</result>
+		</action>
+	
+		<action name="getChartSL" class="getChartAction">
+			<result name="success" type="chart">
+			    <param name="width">353</param>
+			    <param name="height">895</param> 
+  			</result>
+		</action>
+	
+		<action name="getChartMS" class="getChartAction">
+			<result name="success" type="chart">
+			    <param name="width">714</param>
+			    <param name="height">293</param> 
+  			</result>
+		</action>
+	
+		<action name="getChartMM" class="getChartAction">
+			<result name="success" type="chart">
+			    <param name="width">714</param>
+			    <param name="height">594</param> 
+  			</result>
+		</action>
+	
+		<action name="getChartML" class="getChartAction">
+			<result name="success" type="chart">
+			    <param name="width">714</param>
+			    <param name="height">895</param> 
+  			</result>
+		</action>
+	
+		<action name="getChartLS" class="getChartAction">
+			<result name="success" type="chart">
+			    <param name="width">1075</param>
+			    <param name="height">293</param> 
+  			</result>
+		</action>
+	
+		<action name="getChartLM" class="getChartAction">
+			<result name="success" type="chart">
+			    <param name="width">1075</param>
+			    <param name="height">594</param> 
+  			</result>
+		</action>
+	
+		<action name="getChartLL" class="getChartAction">
+			<result name="success" type="chart">
+			    <param name="width">1075</param>
+			    <param name="height">895</param> 
+  			</result>
+		</action>	
+	
 	</package>
 </struts>

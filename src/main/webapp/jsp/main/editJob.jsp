@@ -243,8 +243,8 @@
 	</div>
 	<div class="formBottom">
 	<div class="formFooterText">* required field
-		<s:actionerror />
-		<s:actionmessage/>
+		<s:actionerror  theme="jquery"/>
+		<s:actionmessage theme="jquery"/>
 	</div>
 <s:submit name="saveJob" value="Save" align="left" cssStyle="margin-left:15px"/>
 </div>	

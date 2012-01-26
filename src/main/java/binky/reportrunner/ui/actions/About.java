@@ -23,7 +23,7 @@ public class About extends StandardRunnerAction {
 		freeMem=runTime.freeMemory()/mb;
 		processors=runTime.availableProcessors();
 		maxMem=runTime.maxMemory()/mb;
-		javaVersion=System.getProperty("java.version");
+		javaVersion=System.getProperty("java.version")  + " (" + System.getProperty("java.vendor") + ")";
 		
 		return SUCCESS;
 	}

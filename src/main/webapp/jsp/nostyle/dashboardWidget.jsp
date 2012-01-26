@@ -27,7 +27,7 @@
 		</s:else>								        
 		<div id="alert_<s:property value="%{item.itemId}"/>" class="alertBox_<s:property value="%{item.width}"/>_<s:property value="%{item.height}"/>">		
 			<div class="widgetLabel">
-				<img src="<s:url value="/images/icons/chart_bar.png"/>" style="float:left;padding-right:5px;" title="(Last Updated: <s:date name="%{alert.lastUpdated}" format="yyyy-MM-dd HH:mm:ss" />)"/>
+				
 				<s:property value="%{item.itemName}"/>
 				<div class="widgetToolbar">
 	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
@@ -45,7 +45,7 @@
 	<s:if test="(item.itemType.name=='Grid')">				 
 		<div id="alert_<s:property value="%{item.itemId}"/>" class="alertBox_<s:property value="%{item.width}"/>_<s:property value="%{item.height}"/>">								
 			<div class="widgetLabel">
-				<img src="<s:url value="/images/v2/icons/chart_bar.png"/>" style="float:left;padding-right:5px;" title="(Last Updated: <s:date name="%{alert.lastUpdated}" format="yyyy-MM-dd HH:mm:ss" />)"/>
+				
 				<s:property value="%{item.itemName}"/>
 				<div class="widgetToolbar">
 	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
@@ -62,7 +62,6 @@
 	<s:if test="(item.itemType.name=='Threshold')">				 
 		<div id="alert_<s:property value="%{item.itemId}"/>" class="alertBox_<s:property value="%{item.width}"/>_<s:property value="%{item.height}"/>">								
 			<div class="widgetLabel">
-				<img src="<s:url value="/images/v2/icons/chart_bar.png"/>" style="float:left;padding-right:5px;" title="(Last Updated: <s:date name="%{alert.lastUpdated}" format="yyyy-MM-dd HH:mm:ss" />)"/>
 				<s:property value="%{item.itemName}"/>
 				<div class="widgetToolbar">
 	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">

@@ -193,7 +193,7 @@ public class GetChart extends BaseDashboardAction {
 			
 			plot.setBackgroundPaint(Color.decode(item.getBackGroundColour()));
 			
-			chart = new JFreeChart(item.getItemName(),
+			chart = new JFreeChart(null,
 					JFreeChart.DEFAULT_TITLE_FONT, plot, true);
 			
 		}

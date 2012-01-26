@@ -56,8 +56,8 @@
 </div>
 
 <div class="formGroup">
-<div class="formGroupHeader">Dash Reports Uses the Following Technologies and Frameworks</div>
-<table border="1" cellpadding="2" cellspacing="2" style="border-collapse: collapse;" width="450">
+<div class="formGroupHeader">Dash Reports uses the following technologies and frameworks</div>
+<table border="0" cellpadding="2" cellspacing="2" style="border-collapse: collapse;" width="450" align="center">
 	<tr> 
 	<td width="33%" align="center"><a href="http://struts.apache.org/2.x/" target="_blank"><img src="<s:url value="/images/vendor/struts2.png"/>" border="0" align="middle"/></a></td>
 	<td width="34%" align="center"><a href="http://maven.apache.org/" target="_blank"><img src="<s:url value="/images/vendor/maven-feather.png"/>" border="0" align="middle"/></a></td>
@@ -65,16 +65,17 @@
 	</tr><tr>
 	<td align="center"><a href="http://www.springsource.org/" target="_blank"><img src="<s:url value="/images/vendor/spring.png"/>" border="0" align="middle"/></a></td>
 	<td align="center"><a href="http://displaytag.sourceforge.net/1.2/" target="_blank"><img src="<s:url value="/images/vendor/displaytag.png"/>" border="0" align="middle"/></a></td>
-	<td align="center"><a href="http://code.google.com/p/struts2-jquery/" target="_blank"><img src="<s:url value="/images/vendor/s2jq.png.png"/>" border="0" align="middle"/></a></td>
+<td align="center"><a href="http://jasperforge.org/projects/jasperreports" target="_blank"><img src="<s:url value="/images/vendor/jasperreports.gif"/>" border="0" align="middle"/></a></td>
 	</tr><tr>
 	<td align="center"><a href="http://commons.apache.org/vfs/" target="_blank"><img src="<s:url value="/images/vendor/vfs-logo-white.png"/>" border="0" align="middle"/></a></td>
 	<td align="center"><a href="http://www.jfree.org/jfreechart/index.html" target="_blank">JFree Chart</a></td>
-	<td align="center"><a href="http://jasperforge.org/projects/jasperreports" target="_blank"><img src="<s:url value="/images/vendor/jasperreports.gif"/>" border="0" align="middle"/></a></td>
+	<td align="center" rowspan="2"><a href="http://code.google.com/p/struts2-jquery/" target="_blank"><img src="<s:url value="/images/vendor/s2jq.png"/>" border="0" align="middle" /></a></td>
+	
 	</tr>
 	<tr>
-	<td align="center"><a href="http://jquery.com/" target="_blank"><img src="<s:url value="/images/vendor/jquery.jpg"/>" border="0" align="middle"/></a></td>
+	<td align="center"><a href="http://jquery.com/" target="_blank"><img src="<s:url value="/images/vendor/jquery.png"/>" border="0" align="middle"/></a></td>
 	<td align="center"><a href="http://www.trirand.com/blog/" target="_blank">JQuery Grid</a></td>
-	<td></td>
+	
 	</tr>
 </table>	
 </div>

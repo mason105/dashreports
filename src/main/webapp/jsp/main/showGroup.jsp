@@ -15,11 +15,17 @@
 <div class="groupHeader"><img src="<s:url value='/images/v2/nav/groupsblue.png'/>" align="absmiddle" />&nbsp;<s:property value="groupName"/> </div>
 <sj:tabbedpanel id="groupTabs"   name="groupTabs" animate="true" collapsible="false" useSelectedTabCookie="true">						
 	<sj:tab id="dashboardTab" label="Dashboard" target="dashDiv"/>
-		<div id="dashDiv" style="overflow:auto">
+		<div id="dashDiv">
 			<div class="toolBar">
-				<s:a href="setupEditChart.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/chart_add.png"/>"/>Add Chart</s:a>&nbsp;|
-				<s:a href="setupEditGrid.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/grid_add.png"/>"/>Add Data Grid</s:a>&nbsp;|
+				<div class="toolButtonFirst">
+				<s:a href="setupEditChart.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/chart_add.png"/>"/>Add Chart</s:a>
+				</div>
+				<div class="toolButton">
+				<s:a href="setupEditGrid.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/grid_add.png"/>"/>Add Data Grid</s:a>
+				</div>
+				<div class="toolButtonLast">
 				<s:a href="setupEditThreshold.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/threshold_add.png"/>"/>Add Threshold</s:a>
+				</div>
 			</div>					
 			<s:if test="items.size>0">		
 				<div class="dashboard">							

@@ -272,20 +272,48 @@ div.formSectionInner div.smallLabel {
 	background-image: url(../images/formheaderbg.png);
 	background-repeat: repeat-x; 	
 }
-.toolBar{
-	border-top-style: solid;
-	border-top-width: 1px;
-	border-top-color: #cccccc;
+
+#dashDiv,#reportsDiv {
+	padding:0px;	
+	overflow:auto;
+		margin-top:1px;
+}
+.toolButtonFirst {
+	border-right: 1px solid #aaa;	
+}
+.toolButtonLast {
+	border-right: 2px solid #aaa;
+	border-left: 1px solid #ccc;
+}
+.toolButton  {
+	border-right: 1px solid #aaa;
+	border-left: 1px solid #ccc;
+}
+.toolButton , .toolButtonLast,.toolButtonFirst {
+	float:left;
+	padding:5px;
+	
+	width:130px;
+}
+.toolBar a {
+	color:#fff;
+	font-weight:bold;
+}
+.toolBar a:hover {
+	color: #11b7f0;
+}
+.toolBar {
+
+	border-bottom: 1px solid #ccc;	
 	width:100%;
-	display:inline-table;
-	height:15px;	
-	padding-top:4px;
-	background-image: url(../images/formheaderbg.png);
-	background-repeat: repeat-x; 	
+	height:46px;
+	line-height:36px;	
+	background-color:#666666;
+
 }
 .toolBar img {
-	padding-right:4px;
-	padding-left:4px;
+	padding-right:5px;
+	padding-left:5px;
 }
 .rowOdd {
 
@@ -337,7 +365,7 @@ div.formSectionInner div.smallLabel {
 .alertBox_Small_Small {
 	width:353px;
 	min-height:293px;
-	border: 1px solid gray;
+	border: 1px solid #666;
 	float:left;
 	margin:3px;
 }
@@ -345,7 +373,7 @@ div.formSectionInner div.smallLabel {
 .alertBox_Small_Medium {
 	width:353px;
 	min-height:594px;
-	border: 1px solid gray;	
+	border: 1px solid #666;	
 	float:left;
 	margin:3px;
 }
@@ -354,7 +382,7 @@ div.formSectionInner div.smallLabel {
 .alertBox_Small_Large {
 	width:353px;
 	min-height:694px;
-	border: 1px solid gray;		
+	border: 1px solid #666;		
 	float:left;
 	margin:3px;
 }
@@ -362,7 +390,7 @@ div.formSectionInner div.smallLabel {
 .alertBox_Medium_Small {
 	width:714px;
 	min-height:293px;
-	border: 1px solid gray;	
+	border: 1px solid #666;	
 	float:left;
 	margin:3px;
 }
@@ -370,13 +398,13 @@ div.formSectionInner div.smallLabel {
 .alertBox_Medium_Medium {
 	width:716px;
 	min-height:594px;
-	border: 1px solid gray;	
+	border: 1px solid #666;	
 	float:left;
 	margin:3px;
 }
 
 .alertBox_Medium_Large {
-	border: 1px solid gray;	
+	border: 1px solid #666;	
 	width:716px;
 	min-height:895px;
 	float:left;
@@ -388,7 +416,7 @@ div.formSectionInner div.smallLabel {
 	min-height:293px;
 	float:left;
 	margin:3px;
-	border: 1px solid gray;	
+	border: 1px solid #666;	
 	
 }
 
@@ -397,7 +425,7 @@ div.formSectionInner div.smallLabel {
 	min-height:594px;
 	float:left;
 	margin:3px;	
-	border: 1px solid gray;	
+	border: 1px solid #666;	
 	
 }
 
@@ -406,26 +434,26 @@ div.formSectionInner div.smallLabel {
 	min-height:895px;
 	float:left;
 	margin:3px;
-	border: 1px solid gray;	
+	border: 1px solid #666;	
 	
 }
 
 
 .widgetLabel {	
 	font-weight:bold;
-	font-size:11px;
-	background-image: url(../images/formheaderbg.png);
+	font-size:12px;	 
+	color:#333;
+	height:25px;
+	line-height:25px;
+	padding-left:4px;
+	border-bottom: 1px solid #ccc;
+	background-image:url(../images/v2/listheader.jpg);
 	background-repeat: repeat-x; 	
-	height:18px;
-	padding-top:1px;
-	padding-bottom:1px;
 }
 
 
 .widgetToolbar {
 	float:right;
-	background-image: url(../images/formheaderbg.png);
-	margin-top:-10px;
 }
 
 .listing {

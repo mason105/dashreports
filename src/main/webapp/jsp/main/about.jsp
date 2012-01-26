@@ -12,9 +12,27 @@
 
 <div class="formGroup">
 <div class="formGroupHeader">Information</div>
-Version:<s:property value="versionId"/>
+<table border="0" cellpadding="2" cellspacing="2" style="border-collapse: collapse;"  width="450"> 
+<tr><td width="50%"> 
+<strong>Dash Reports Version</strong></td><td><s:property value="versionId"/></td>
+</tr>
+<tr>
+<td width="50%"> <strong>Java Version</strong></td><td><s:property value="javaVersion"/></td>
+</tr>
+<tr>
+<td width="50%"> <strong>Available Processors</strong></td><td><s:property value="processors"/></td>
+</tr>
+<tr>
+<td width="50%"> <strong>Total Memory (mb)</strong></td><td><s:property value="totalMem"/></td>
+</tr>
+<tr>
+<td width="50%"> <strong>Max Memory (mb)</strong></td><td><s:property value="maxMem"/></td>
+</tr>
+<tr>
+<td width="50%"> <strong>Free Memory (mb)</strong></td><td><s:property value="freeMem"/></td>
+</tr>
+</table>
 </div>
-
 <div class="formGroup">
 <div class="formGroupHeader">Credits</div>
 <table border="0" cellpadding="2" cellspacing="2" style="border-collapse: collapse;"  width="450"> 

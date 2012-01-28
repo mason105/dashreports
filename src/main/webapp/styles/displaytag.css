@@ -1,7 +1,6 @@
 table {
 	border: 1px solid #666;
 	width: 100%;
-	margin: 20px 0 20px 0 !important;
 	border-collapse:collapse;
 }
 
@@ -124,6 +123,7 @@ span.pagebanner {
 	padding: 2px 4px 2px 4px;
 	width: 95%;
 	margin-top: 10px;
+
 	display: block;
 	border-bottom: none;
 }
@@ -138,7 +138,7 @@ span.pagelinks {
 	width: 95%;
 	display: block;
 	border-top: none;
-	margin-bottom: -5px;
+	margin-bottom: 5px;
 }
 
 

@@ -26,6 +26,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
 
 import javax.sql.DataSource;
@@ -39,8 +40,11 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.UnableToInterruptJobException;
 
+
 import binky.reportrunner.dao.ReportRunnerDao;
+import binky.reportrunner.data.RunnerDashboardGrid;
 import binky.reportrunner.data.RunnerDashboardItem;
+import binky.reportrunner.data.RunnerDashboardItem.ItemType;
 
 public class AlertProcessor implements Job, InterruptableJob {
 
@@ -96,7 +100,16 @@ public class AlertProcessor implements Job, InterruptableJob {
 		
 		try {
 			logger.debug("running SQL for item");
-			ResultSet rs = conn.createStatement().executeQuery(sql);
+			Statement stmt =  conn.createStatement();
+			if (item.getItemType()==ItemType.Grid){
+				int rows=((RunnerDashboardGrid)item).getRowsToDisplay();
+				if (rows>0){
+					logger.debug("limiting grid result to " + rows + " rows");
+					stmt.setFetchSize(rows);
+					stmt.setMaxRows(rows);
+				}
+			}
+			ResultSet rs =stmt.executeQuery(sql);
 			RowSetDynaClass rsdc= new RowSetDynaClass(rs,false);
 			if (logger.isDebugEnabled()) {
 				logger.debug("record set size: "+rsdc.getRows().size());

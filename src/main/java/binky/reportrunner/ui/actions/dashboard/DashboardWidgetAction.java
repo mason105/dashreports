@@ -26,7 +26,7 @@ public class DashboardWidgetAction extends BaseDashboardAction {
 	private static final long serialVersionUID = 0L;
 
 	
-	private Map<String, Integer> thresholdData;
+	private Map<String, ThresholdItem> thresholdData;
 	private Integer itemId;
 	private RunnerDashboardItem item;
 	
@@ -42,7 +42,7 @@ public class DashboardWidgetAction extends BaseDashboardAction {
 		this.item=item;
 	
 		if ((item.getCurrentDataset() != null) && (item instanceof RunnerDashboardThreshold)) {
-			Map<String, Integer> data = new HashMap<String, Integer>();
+			Map<String, ThresholdItem> data = new HashMap<String, ThresholdItem>();
 
 			for (Object o : item.getCurrentDataset().getRows()) {
 				DynaBean b = (DynaBean) o;
@@ -67,7 +67,8 @@ public class DashboardWidgetAction extends BaseDashboardAction {
 					}
 					break;
 				}
-				data.put(label, result);
+				
+				data.put(label, new ThresholdItem(value,result));
 			}
 			this.thresholdData=data;
 		}
@@ -75,7 +76,7 @@ public class DashboardWidgetAction extends BaseDashboardAction {
 		
 		return SUCCESS;
 	}
-	public Map<String, Integer> getThresholdData() {
+	public Map<String, ThresholdItem> getThresholdData() {
 		return this.thresholdData;
 	}
 

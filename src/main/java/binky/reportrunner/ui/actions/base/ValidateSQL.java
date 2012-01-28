@@ -28,7 +28,7 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 	public void validateSql(String sql, String dsName) throws Exception {
 		Connection conn = null;
 
-		logger.debug("getting column names for query");
+		logger.debug("validating query");
 
 		logger.debug("item query is null = " + (sql == null));
 		if (sql == null) {

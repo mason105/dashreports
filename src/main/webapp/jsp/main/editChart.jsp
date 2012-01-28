@@ -10,7 +10,7 @@
  	<sj:head locale="en" jqueryui="true" jquerytheme="smoothness"/>
 </head>
 <body>
-<s:form action="saveChart"  method="post"  id="saveChart">
+<s:form action="saveChart"  method="post"  id="saveChart"  validate="true">
 <div id="jobEditForm">
 	<div class="jobHeader"><img src="<s:url value='/images/v2/nav/groupsblue.png'/>" align="absmiddle" />&nbsp;<s:a href="showGroup.action?groupName=%{groupName}"><s:property value="groupName"/></s:a> > Edit Chart</div>
 <sj:tabbedpanel id="report" animate="true"  useSelectedTabCookie="true">	
@@ -101,14 +101,32 @@
 		<sj:tab id="layoutTab" target="layoutDiv" label="Layout"/>
 		<div id="layoutDiv" >
 			<div class="formGroup">
-				<div class="formGroupHeader">Layout/Type</div>
-				
-				<s:textfield label="Display Column" size="64" value="%{item.displayColumn}" name="item.displayColumn" cssClass="textbox">
-				</s:textfield>
-				
-				<s:textfield label="Display Row" size="64" value="%{item.displayRow}" name="item.displayRow" cssClass="textbox">
-				</s:textfield>
-						
+				<div class="formGroupHeader">Layout</div>
+
+				<div style="float:left;padding-right:10px;">
+				 <sj:spinner 
+			    	name="item.displayColumn" 
+			    	id="item.displayColumn" 
+			    	min="1" 
+			    	max="50" 
+			    	step="1" 
+			    	value="%{item.displayColumn}"
+			    	label="Display Column"
+			    	
+			    	/>
+</div>
+<div>
+		 <sj:spinner 
+			    	name="item.displayRow" 
+			    	id="item.displayRow" 
+			    	min="1" 
+			    	max="50" 
+			    	step="1" 
+			    	value="%{item.displayRow}"
+			    	label="Display Row"
+			    	
+			    	/>
+	</div>					
 				<s:select label="Width" name="item.width" list="widths"
 						listKey="name" listValue="displayName" cssClass="textbox"></s:select>
 						

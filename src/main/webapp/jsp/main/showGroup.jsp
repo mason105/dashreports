@@ -18,13 +18,13 @@
 		<div id="dashDiv">
 			<div class="toolBar">
 				<div class="toolButtonFirst">
-				<s:a href="setupEditChart.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/chart_add.png"/>"/>Add Chart</s:a>
+				<s:a href="setupEditChart.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/add.png"/>"/>Chart</s:a>
 				</div>
 				<div class="toolButton">
-				<s:a href="setupEditGrid.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/grid_add.png"/>"/>Add Data Grid</s:a>
+				<s:a href="setupEditGrid.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/add.png"/>"/>Data Grid</s:a>
 				</div>
 				<div class="toolButtonLast">
-				<s:a href="setupEditThreshold.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/threshold_add.png"/>"/>Add Threshold</s:a>
+				<s:a href="setupEditThreshold.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/add.png"/>"/>Threshold</s:a>
 				</div>
 			</div>					
 			<s:if test="items.size>0">		

@@ -279,14 +279,14 @@ div.formSectionInner div.smallLabel {
 		margin-top:1px;
 }
 .toolButtonFirst {
-	border-right: 1px solid #aaa;	
+	border-right: 1px solid #333;	
 }
 .toolButtonLast {
-	border-right: 2px solid #aaa;
+	border-right: 1px solid #333;
 	border-left: 1px solid #ccc;
 }
 .toolButton  {
-	border-right: 1px solid #aaa;
+	border-right: 1px solid #333;
 	border-left: 1px solid #ccc;
 }
 .toolButton , .toolButtonLast,.toolButtonFirst {
@@ -364,78 +364,92 @@ div.formSectionInner div.smallLabel {
 
 .alertBox_Small_Small {
 	width:353px;
-	min-height:293px;
+	height:325px;
 	border: 1px solid #666;
 	float:left;
 	margin:3px;
+	overflow:auto;
+	background-color:#eee;
 }
 
 .alertBox_Small_Medium {
 	width:353px;
-	min-height:594px;
+	height:625px;
 	border: 1px solid #666;	
 	float:left;
 	margin:3px;
+	overflow:auto;
+	background-color:#eee;
 }
 
 
 .alertBox_Small_Large {
 	width:353px;
-	min-height:694px;
+	height:920px;
 	border: 1px solid #666;		
 	float:left;
 	margin:3px;
+	overflow:auto;
+	background-color:#eee;
 }
 
 .alertBox_Medium_Small {
 	width:714px;
-	min-height:293px;
+	height:325px;
 	border: 1px solid #666;	
 	float:left;
 	margin:3px;
+	overflow:auto;
+	background-color:#eee;
 }
 
 .alertBox_Medium_Medium {
 	width:716px;
-	min-height:594px;
+	height:625px;
 	border: 1px solid #666;	
 	float:left;
 	margin:3px;
+	overflow:auto;
+	background-color:#eee;
 }
 
 .alertBox_Medium_Large {
 	border: 1px solid #666;	
 	width:716px;
-	min-height:895px;
+	height:925px;
 	float:left;
-	margin:3px;	
+	margin:3px;
+	overflow:auto;	
+	background-color:#eee;
 }
 
 .alertBox_Large_Small {
-	width:1075px;
-	min-height:293px;
+	width:925px;
+	height:325px;
 	float:left;
 	margin:3px;
 	border: 1px solid #666;	
-	
+	overflow:auto;
+	background-color:#eee;
 }
 
 .alertBox_Large_Medium {
-	width:1075px;
-	min-height:594px;
+	width:925px;
+	height:625px;
 	float:left;
 	margin:3px;	
 	border: 1px solid #666;	
-	
+	overflow:auto;
 }
 
 .alertBox_Large_Large {
-	width:1075px;
-	min-height:895px;
+	width:925px;
+	height:925px;
 	float:left;
 	margin:3px;
 	border: 1px solid #666;	
-	
+	overflow:auto;
+	background-color:#eee;
 }
 
 
@@ -482,6 +496,7 @@ width:100%;
 
 }
 
+
 	.listingHeader {width:590px;}
 	.listingHeaderWide {width:790px;}
 .listingRow , .listingHeaderRow {
@@ -523,3 +538,30 @@ float:left;
 margin-right:7px;
 
 }
+.thresholdTable {
+}
+.thresholdTable .label{
+	background-color:#ffffff;
+	
+}
+
+.thresholdTable .value{
+background-color:#fff;
+}
+.thresholdTable .status{
+width:16px;
+}
+.thresholdTable .thresholdRed {
+background-color:#FF0000;
+width:16px;
+}
+.thresholdTable .thresholdGreen {
+background-color:#00FF00;
+width:16px;	
+}
+.thresholdTable .thresholdAmber {
+background-color:#FFBF00;
+width:16px;
+}
+
+

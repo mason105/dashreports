@@ -47,6 +47,7 @@ public class SetupEditThreshold extends BaseEditDashboardAction {
 			} else {
 				this.item = new RunnerDashboardThreshold();
 			}
+			runnerDataSources = dataSourceService.getDataSourcesForGroup(groupName);
 		} else {
 
 			SecurityException se = new SecurityException("Group "

@@ -45,7 +45,6 @@
 	<s:if test="(item.itemType.name=='Grid')">				 
 		<div id="alert_<s:property value="%{item.itemId}"/>" class="alertBox_<s:property value="%{item.width}"/>_<s:property value="%{item.height}"/>">								
 			<div class="widgetLabel">
-				
 				<s:property value="%{item.itemName}"/>
 				<div class="widgetToolbar">
 	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
@@ -66,19 +65,24 @@
 				<div class="widgetToolbar">
 	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
 	 					 <s:a href="setupEditThreshold.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/v2/icons/edit.png'/>" align="absmiddle" alt="Edit" /></s:a>
-						 <s:a href="invokeItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/v2/icons/execure.png'/>" alt="Invoke Now" align="absmiddle" /></s:a> 					 
+						 <s:a href="invokeItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/v2/icons/execute.png'/>" alt="Invoke Now" align="absmiddle" /></s:a> 					 
 	 					 <s:a href="deleteItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}" onclick="return confirm('Really delete this item?');"><img src="<s:url value='/images/v2/icons/delete.png'/>" alt="Delete" align="absmiddle" /></s:a>	
 	 				</s:if>		
 				</div>	
 			</div>		
-			<table class="thesholdTable">
+			<table class="thresholdTable">
+				<tr><th>Item</th><th>Value</th><th>&nbsp;</th></tr>
 				<s:iterator status="stat" value="thresholdData" >
+			
 				<tr>
 					<td class="label"><s:property value="key"/></td>
 					<td class="value">
-						<s:if test="value==1"><img src="<s:url value="/images/v2/icons/flag_red.png"/>"/></s:if>
-						<s:if test="value==2"><img src="<s:url value="/images/v2/icons/flag_yellow.png"/>"/></s:if>
-						<s:if test="value==3"><img src="<s:url value="/images/v2/icons/flag_green.png"/>"/></s:if>
+						<s:property value="value.value"/>
+					</td>
+					<td class="status">
+						<s:if test="value.status==1"><img src="<s:url value="/images/v2/icons/flag_red.png"/>"/></s:if>
+						<s:if test="value.status==2"><img src="<s:url value="/images/v2/icons/flag_yellow.png"/>"/></s:if>
+						<s:if test="value.status==3"><img src="<s:url value="/images/v2/icons/flag_green.png"/>"/></s:if>
 					</td>
 				</tr>
 				</s:iterator>

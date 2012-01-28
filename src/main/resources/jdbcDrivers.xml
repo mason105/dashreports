@@ -110,4 +110,9 @@
 		<url>jdbc:sybase:Tds:HOST:PORT</url>
 		<driverName>com.sybase.jdbc2.jdbc.SybDriver</driverName>
 	</driver>	
+	<driver>
+		<label>Other</label>
+		<url>JDBC URL</url>
+		<driverName>Please enter a valid class name</driverName>
+	</driver>		
 </jdbcDrivers>

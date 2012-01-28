@@ -47,6 +47,7 @@ public class SetupEditGrid extends BaseEditDashboardAction {
 			} else {
 				this.item = new RunnerDashboardGrid();
 			}
+			runnerDataSources = dataSourceService.getDataSourcesForGroup(groupName);
 		} else {
 
 			SecurityException se = new SecurityException("Group "

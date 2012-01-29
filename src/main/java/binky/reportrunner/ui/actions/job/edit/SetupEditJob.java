@@ -25,6 +25,7 @@ package binky.reportrunner.ui.actions.job.edit;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.data.RunnerJob;
@@ -63,6 +64,12 @@ public class SetupEditJob extends BaseEditJob {
 				if (job.getDatasource() != null) {
 					dsName=job.getDatasource().getDataSourceName();
 				}
+				if (StringUtils.isNotEmpty(job.getOutputUrl())){
+					String[] outSplit = job.getOutputUrl().split("://");
+					outputPrefix=outSplit[0];
+					outputUrl=outSplit[1];
+				}
+				
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "

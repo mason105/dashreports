@@ -25,6 +25,9 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 	protected RunnerJobService jobService;
 	protected ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
 	protected DatasourceService dataSourceService;
+	protected String outputUrl;
+	protected String outputPrefix;
+	
 	private List<RunnerDataSource> dataSources=new LinkedList<RunnerDataSource>();
 	protected File template;// The actual file
 	
@@ -165,6 +168,22 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 
 	public void setSimpleCron(QuartzCronSchedule simpleCron) {
 		this.simpleCron = simpleCron;
+	}
+
+	public String getOutputUrl() {
+		return outputUrl;
+	}
+
+	public void setOutputUrl(String outputUrl) {
+		this.outputUrl = outputUrl;
+	}
+
+	public String getOutputPrefix() {
+		return outputPrefix;
+	}
+
+	public void setOutputPrefix(String outputPrefix) {
+		this.outputPrefix = outputPrefix;
 	}
 
 }

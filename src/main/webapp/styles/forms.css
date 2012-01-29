@@ -138,12 +138,12 @@ max-height: 300px;
 	input{
 
 	}
-	input.textbox {
+	input.textbox{
 
 		height:20px;
 
 	}
-	
+
 
 	input.textbox:focus{
 		background-color:#eee;		

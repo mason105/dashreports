@@ -1,6 +1,6 @@
 Jobs:
 Upgrade quartz to 2.1 - can't be done without refactoring loads of stuff as it is not supported by spring - went to 1.8.6 instead - to be tested
-Assess Hibernate 4
+Assess Hibernate 4 - implemented - required Spring 3.1 and a bit of faffing but i'm happy with it.
 URL builder
 Parameters populate field from the burst query
 Remove jquery grid - display tag

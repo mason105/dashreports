@@ -167,7 +167,8 @@ public class EditJob extends BaseEditJob {
 	private boolean doSaveJob(String jobName, String groupName)
 			throws JRException, SchedulerException {
 	
-
+		job.setOutputUrl(outputPrefix+outputUrl);
+		
 		// Get the uploaded File
 		if (logger.isDebugEnabled()) {
 			logger.debug("file uploaded is: " + templateFileName);
@@ -213,6 +214,7 @@ public class EditJob extends BaseEditJob {
 				if (p != null) {
 					logger.debug(p.getParameterValue());
 					p.getPk().setRunnerJob_pk(job.getPk());
+					logger.debug("parameter type : " + p.getParameterType());
 				} else {
 					logger.warn("null parameter");
 				}

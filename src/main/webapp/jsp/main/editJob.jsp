@@ -116,7 +116,7 @@
 					name="parameters[%{#rowstatus.index}].parameterType" list="dataTypes"
 					listKey="name" listValue="displayName">
 		
-				</s:select> 				
+					</s:select> 				
 				<input type="radio" name="parameterId" value="<s:property value="%{#rowstatus.index}"/>" checked="unchecked"/>	Select				
 			</div>
 		</s:iterator>
@@ -202,7 +202,8 @@
 	<div id="outputDiv">	
 		<div class="formGroup">
 		<div class="formGroupHeader">File</div>		
-			<s:textfield label="Output URL" size="50" value="%{job.outputUrl}" name="job.outputUrl" cssClass="textbox">			
+			<s:select name="outputPrefix" style="width:75px;float:left;margin-left:2px;margin-top:20px;margin-right:5px;height:25px;" list="{'file://','sftp://','ftp://'}" value="outputPrefix" />
+			<s:textfield label="Output URL" value="%{outputUrl}" name="outputUrl" cssClass="textbox" style="width:500px;">			
 			</s:textfield>
 			<s:select label="File Format" name="job.fileFormat" list="fileFormats"
 			listKey="name" listValue="displayName"></s:select>

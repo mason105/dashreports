@@ -25,6 +25,7 @@ package binky.reportrunner.ui.actions.user;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -59,8 +60,9 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 				valid=false;
 				super.addActionError("Please enter a username");				
 			} else {
-				if ((runnerUser.getPassword()==null)||(runnerUser.getPassword().trim().isEmpty())) {
-				RunnerUser userCompare = userDao.get(runnerUser.getUserName());
+				if (StringUtils.isBlank(runnerUser.getPassword())||StringUtils.isEmpty(runnerUser.getPassword())) {
+				
+					RunnerUser userCompare = userDao.get(runnerUser.getUserName());
 					if (userCompare==null) {
 						valid = false;
 						super.addActionError("Please enter a password");
@@ -68,6 +70,11 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 						//put the old password back in
 						runnerUser.setPassword(userCompare.getPassword());
 					}
+				} else {
+					//hash the password
+					EncryptionUtil enc = new EncryptionUtil();
+					runnerUser.setPassword(enc.hashString(runnerUser.getPassword()));
+					
 				}
 			}
 	
@@ -82,10 +89,9 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 				runnerUser.setGroups(groups);
 			}
 			
+			
+			
 			if (valid) {
-				//hash the password
-				EncryptionUtil enc = new EncryptionUtil();
-				runnerUser.setPassword(enc.hashString(runnerUser.getPassword()));
 				userDao.saveOrUpdate(runnerUser);
 				return SUCCESS;
 			} else {

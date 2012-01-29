@@ -16,6 +16,7 @@
 <sj:tabbedpanel id="groupTabs"   name="groupTabs" animate="true" collapsible="false" useSelectedTabCookie="true">						
 	<sj:tab id="dashboardTab" label="Dashboard" target="dashDiv"/>
 		<div id="dashDiv">
+		<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
 			<div class="toolBar">
 				<div class="toolButtonFirst">
 				<s:a href="setupEditChart.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/add.png"/>"/>Chart</s:a>
@@ -27,6 +28,7 @@
 				<s:a href="setupEditThreshold.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/add.png"/>"/>Threshold</s:a>
 				</div>
 			</div>					
+			</s:if>
 			<s:if test="items.size>0">		
 				<div class="dashboard">							
 					<s:iterator value="items" status="rowstatus">

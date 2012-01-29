@@ -49,6 +49,7 @@
 			</s:if>
 			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/about.png'/>" /></div><s:a href="about.action">About</s:a></div>
 			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/help.png'/>" /></div><s:a href="index.action">Help</s:a></div>
+			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/password.png'/>" /></div><s:a href="setupChangePassword.action">Password</s:a></div>
 			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/logout.png'/>" /></div><s:a href="j_spring_security_logout">Logout</s:a></div>
 		</div>
 	</div>

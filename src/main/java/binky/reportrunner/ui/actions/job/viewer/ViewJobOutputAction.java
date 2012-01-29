@@ -53,7 +53,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 	private Map<String, List<String>> columns;
 	private ReportRunnerDao<RunnerHistoryEvent, Long> historyDao;
 	private List<RunnerJobParameter> parameters;
-	private Map<String,List<Map<String, Object>>> gridResults;
+	private Map<String,RowSetDynaClass> gridResults;
 
 	private RunnerJobService jobService;
 
@@ -102,36 +102,8 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 			}
 
 
-			this.gridResults= new LinkedHashMap<String, List<Map<String,Object>>>();			
-			
-			this.columns = new HashMap<String, List<String>>();
-			
-			for (String key : dynaSets.keySet()) {
-				List<Map<String,Object>> rows = new LinkedList<Map<String,Object>>();
-				logger.debug("getting columns for result:" + key);
-				// populate columns
-				List<String> cols = new LinkedList<String>();
-				RowSetDynaClass rsdc = dynaSets.get(key);				
-				for (DynaProperty d : rsdc.getDynaProperties()) {
-					logger.debug("got column: " + d.getName());
-					cols.add(d.getName());
-				}
-				columns.put(key, cols);
-				
-				
-				//populate data
-				for (Object r:dynaSets.get(key).getRows()) {
-					Map<String, Object> row=new LinkedHashMap<String, Object>();
-					DynaBean b = (DynaBean) r;
-					for (String c:cols)  {
-						Object v = b.get(c);
-						row.put(c, v);
-					}
-					rows.add(row);
-				}
-				this.gridResults.put(key, rows);
-			}
-			
+			this.gridResults= dynaSets;		
+						
 			long endTime = (new Date()).getTime();
 
 			// create an event for this so we can track performance of bad
@@ -242,11 +214,13 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 	}
 
 
-	public Map<String, List<Map<String, Object>>> getGridResults() {
+
+
+	public Map<String, RowSetDynaClass> getGridResults() {
 		return gridResults;
 	}
 
-	public void setGridResults(Map<String, List<Map<String, Object>>> gridResults) {
+	public void setGridResults(Map<String, RowSetDynaClass> gridResults) {
 		this.gridResults = gridResults;
 	}
 

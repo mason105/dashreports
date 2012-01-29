@@ -16,7 +16,7 @@
 	<artifactId>reportrunner</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>Report Runner</name>
+	<name>Dash Reports</name>
 	<url>http://www.reportrunner.org</url>
 
 	<properties>

@@ -387,12 +387,12 @@ public class SchedulerImpl implements Scheduler {
 
 	
 	public Date getActiveFrom()  {
-		return this.quartzScheduler.getMetaData().runningSince();
+		return this.quartzScheduler.getMetaData().getRunningSince();
 	}
 
 	
 	public int getJobsExecuted() {
-		return this.quartzScheduler.getMetaData().numJobsExecuted();
+		return this.quartzScheduler.getMetaData().getNumberOfJobsExecuted();
 	}
 
 

@@ -21,8 +21,8 @@
 
 	<properties>
 		<compileSource>1.6</compileSource>
-		<springVersion>3.0.6.RELEASE</springVersion>
-		<hibernateVersion>3.2.6.ga</hibernateVersion>
+		<springVersion>3.1.0.RELEASE</springVersion>
+		<hibernateVersion>4.0.1.Final</hibernateVersion>
 		<strutsVersion>2.3.1.1</strutsVersion>
 	</properties>
 
@@ -78,7 +78,12 @@
 	</organization>
 
 	<dependencies>
-
+<dependency>
+	<groupId>org.slf4j</groupId>
+	<artifactId>slf4j-api</artifactId>
+	<version>1.6.4</version>
+</dependency>
+            
 		<dependency>
 			<groupId>commons-digester</groupId>
 			<artifactId>commons-digester</artifactId>
@@ -143,6 +148,20 @@
 			<groupId>displaytag</groupId>
 			<artifactId>displaytag-export-poi</artifactId>
 			<version>1.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-log4j12</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>jcl104-over-slf4j</artifactId>
+				</exclusion>
+			</exclusions>			
 		</dependency>
 		<!-- Servlet & Jsp -->
 		<dependency>
@@ -177,37 +196,30 @@
 			<scope>compile</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>jcl104-over-slf4j</artifactId>
-			<version>1.5.6</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.6</version>
-		</dependency>
+	
 		<!-- <dependency> <groupId>log4j</groupId> <artifactId>log4j</artifactId> 
 			<version>1.2.9</version> </dependency> -->
-
-
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-annotations</artifactId>
-			<version>3.3.1.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate</artifactId>
+			<artifactId>hibernate-ehcache</artifactId>
 			<version>${hibernateVersion}</version>
 		</dependency>
 
 		<dependency>
-			<groupId>opensymphony</groupId>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernateVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
-			<version>1.5.0</version>
+			<version>1.8.6</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>jasperreports</groupId>

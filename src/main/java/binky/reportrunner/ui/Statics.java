@@ -33,4 +33,5 @@ public interface Statics {
 	public static final String USERNAME="userName";
 	public static final String PASSWORD="password";
 	public static final String LOGIN_ATTEMPT="loginAttempt";	
+	public static final String GROUPS_HANDLE="groups";
 }

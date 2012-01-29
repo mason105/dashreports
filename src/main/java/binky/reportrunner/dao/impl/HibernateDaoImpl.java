@@ -3,13 +3,23 @@ package binky.reportrunner.dao.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
+
+
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.DatabaseObject;
 
-public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializable> extends HibernateDaoSupport implements ReportRunnerDao<T, ID> {
 
+
+public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializable>  implements ReportRunnerDao<T, ID> {
+
+	private SessionFactory sessionFactory;
+	
 	private Class<T> clazz;
 	
 	public HibernateDaoImpl(Class<T> clazz) {
@@ -17,30 +27,37 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 	}
 	
 	public void delete(ID id) {
-
-		super.getHibernateTemplate().delete(super.getHibernateTemplate().get(clazz, id));
+		
+		sessionFactory.getCurrentSession().delete(sessionFactory.getCurrentSession().get(clazz, id));
 		
 	}
 
 	public T get(ID id) {
-		return	(T)super.getHibernateTemplate().get(clazz, id);
+		return	(T)sessionFactory.getCurrentSession().get(clazz, id);
 	}
 
 	public List<T> getAll() {
-		return (List<T>)super.getHibernateTemplate().loadAll(clazz);
+		return (List<T>)sessionFactory.getCurrentSession().createCriteria(clazz).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<T> findByNamedQuery(String queryName, Object[] values) {
-		return (List<T>)super.getHibernateTemplate().findByNamedQuery(queryName, values);
+		Query q = sessionFactory.getCurrentSession().getNamedQuery(queryName);
+		if (values!=null) {
+			for (int i=0;i<values.length;i++) {
+				q.setParameter(i, values[i]);
+			}
+		}
+
+		return (List<T>)q.list();
 	}
 
 	public void saveOrUpdate(T entity) {
 		//dealing with the caching while using the hibernate session in view filter
 		if (entity.getId()!=null&&this.get(entity.getId()) != null) {
-			super.getHibernateTemplate().merge(entity);
+			sessionFactory.getCurrentSession().merge(entity);
 		} else {
-			super.getHibernateTemplate().saveOrUpdate(entity);
+			sessionFactory.getCurrentSession().saveOrUpdate(entity);
 		}
 	}
 
@@ -48,8 +65,19 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 	@Override
 	public List<T> findByNamedQuery(String queryName, Object[] values,
 			int maxResults) {
-		super.getHibernateTemplate().setMaxResults(maxResults);
-		return (List<T>)super.getHibernateTemplate().findByNamedQuery(queryName, values);
+		
+		Query q = sessionFactory.getCurrentSession().getNamedQuery(queryName);
+		if (values!=null) {
+			for (int i=0;i<values.length;i++) {
+				q.setParameter(i, values[i]);
+			}
+		}
+		q.setMaxResults(maxResults);
+		return (List<T>)q.list();
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 }

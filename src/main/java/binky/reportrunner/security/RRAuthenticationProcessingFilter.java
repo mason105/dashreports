@@ -1,6 +1,8 @@
 package binky.reportrunner.security;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.service.UserService;
 import binky.reportrunner.ui.Statics;
@@ -29,9 +32,18 @@ public class RRAuthenticationProcessingFilter extends UsernamePasswordAuthentica
 		super.successfulAuthentication(request, response, authResult);
 		logger.info("logged in: " + authResult.getName());
 		RunnerUser userObject = userService.getUser(authResult.getName());
+		logger.debug("enumerating group memberships");
+		List<RunnerGroup> groups = new LinkedList<RunnerGroup>();
+		for (RunnerGroup g: userService.getGroupsForUser(userObject.getUsername())) {
+			groups.add(g);
+		}
 		logger.debug("storing user in session");
 		request.getSession().setAttribute(Statics.USER_HANDLE, userObject);
+		logger.debug("storing groups in session");
+		request.getSession().setAttribute(Statics.GROUPS_HANDLE, groups);
+
 	}
+	
 
 	public void setUserService(UserService userService) {
 		this.userService = userService;

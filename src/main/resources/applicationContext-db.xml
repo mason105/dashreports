@@ -2,7 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-                    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+                    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
 	<!--  our main data source -->
 	<bean id="dataSource"
@@ -34,7 +34,7 @@
 
 	<!--  hibernate plumbing -->
 	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource">
 			<ref bean="dataSource" />
 		</property>
@@ -46,9 +46,8 @@
 				<prop key="hibernate.hbm2ddl.auto">
 					${hibernate.hbm2ddl.auto}
 				</prop>
-				<prop key="hibernate.cache.provider_class">
-					net.sf.ehcache.hibernate.SingletonEhCacheProvider
-				</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
+				<prop key="hibernate.cache.use_second_level_cache">true</prop>
 				<prop key="hibernate.connection.autoReconnect">
 					${hibernate.connection.autoReconnect}
 				</prop>
@@ -92,16 +91,13 @@
 	
 	
 	<bean id="transactionManager"
-		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory">
 			<ref local="sessionFactory" />
 		</property>
 	</bean>
 	
 	
-	<bean id="hibernateInterceptor"
-		class="org.springframework.orm.hibernate3.HibernateInterceptor"
-		autowire="byName" />
 		
 	<bean id="runnerJobParameterDaoTarget"
 		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
@@ -109,6 +105,7 @@
 		  <constructor-arg>
             <value>binky.reportrunner.data.RunnerJobParameter</value>
         </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	
 	<bean id="runnerJobParameterDao"
@@ -128,6 +125,7 @@
 		  <constructor-arg>
             <value>binky.reportrunner.data.RunnerHistoryEvent</value>
         </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	<bean id="runnerHistoryDao"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
@@ -145,6 +143,7 @@
 		  <constructor-arg>
             <value>binky.reportrunner.data.RunnerJob</value>
         </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 	<bean id="runnerJobDao"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
@@ -162,6 +161,7 @@
 		  <constructor-arg>
             <value>binky.reportrunner.data.RunnerGroup</value>
         </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>        
 	</bean>
 	<bean id="runnerGroupDao"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
@@ -172,6 +172,7 @@
 				<prop key="*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>				
+       
 	</bean>
 	<bean id="runnerUserDaoTarget"
 		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
@@ -179,6 +180,7 @@
 		  <constructor-arg>
             <value>binky.reportrunner.data.RunnerUser</value>
         </constructor-arg>
+         <property name="sessionFactory" ref="sessionFactory"/>	
 	</bean>
 	<bean id="runnerUserDao"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
@@ -189,6 +191,7 @@
 				<prop key="*">PROPAGATION_REQUIRED</prop>
 			</props>
 		</property>		
+       	
 	</bean>
 	
 	<bean id="dashboardDaoTarget"
@@ -197,6 +200,7 @@
 		  <constructor-arg>
             <value>binky.reportrunner.data.RunnerDashboardItem</value>
         </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>        
 	</bean>
 	<bean id="dashboardDao"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
@@ -217,6 +221,7 @@
 		  <constructor-arg>
             <value>binky.reportrunner.data.RunnerDataSource</value>
         </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>        
 	</bean>
 	<bean id="runnerDataSourceDao"
 		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">

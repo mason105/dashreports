@@ -68,7 +68,19 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 		}
 		return user;
 	}
-
+	public final List<RunnerGroup> getSessionGroups() {
+		// hack to deal with thread local issues
+		List<RunnerGroup>  groups;
+		if ((ActionContext.getContext() == null)
+				|| (ActionContext.getContext().getSession() == null)) {
+			groups = ( List<RunnerGroup> ) sessionData.get(Statics.GROUPS_HANDLE);
+		} else {
+			groups = ( List<RunnerGroup> ) ActionContext.getContext().getSession().get(
+					Statics.GROUPS_HANDLE);
+			sessionData.put(Statics.GROUPS_HANDLE, groups);
+		}
+		return groups;
+	}
 	public final String getSessionUserName() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		return auth.getName();		
@@ -86,7 +98,7 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 			return true;
 		} else {
 
-			for (RunnerGroup g : getSessionUser().getGroups()) {
+			for (RunnerGroup g : getSessionGroups()) {
 				if (g.getGroupName().equals(groupName))
 					return true;
 			}
@@ -104,7 +116,7 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 	}
 
 	public List<RunnerGroup> getGroups() {
-		return this.getSessionUser().getGroups();
+		return this.getSessionGroups();
 	}
 
 	protected boolean isStringPopulated(String value) {

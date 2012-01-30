@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardChart.ChartType;
-import binky.reportrunner.data.RunnerDashboardChart.XAxisStep;
+import binky.reportrunner.data.RunnerDashboardChart.Orientation;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerDashboardItem.Height;
 import binky.reportrunner.data.RunnerDashboardItem.Width;
@@ -102,8 +102,8 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 		return Arrays.asList(Height.values());
 	}
 
-	public final List<XAxisStep> getXAxisSteps() {
-		return Arrays.asList(XAxisStep.values());
+	public final List<Orientation> getOrientations() {
+		return Arrays.asList(Orientation.values());
 	}
 
 	public final List<ThresholdType> getThresholdTypes() {

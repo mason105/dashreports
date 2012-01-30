@@ -8,11 +8,32 @@ public class RunnerDashboardChart extends RunnerDashboardItem {
 	
 	private static final long serialVersionUID = 7236467079269602254L;
 
+	public enum Orientation {
+
+		VERTICAL("Vertical"), HORIZONTAL("Horizontal");
+		private String displayName;
+
+		Orientation(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
+	
+	private Orientation orientation;
+	private boolean gridLines;
 	private String yLabel;
 	private String valueColumn;
 	private String seriesNameColumn;
 	private String xaxisColumn;
-	private XAxisStep xAxisStep;
+
 	private ChartType chartType;
 
 	public String getYLabel() {
@@ -47,13 +68,6 @@ public class RunnerDashboardChart extends RunnerDashboardItem {
 		this.xaxisColumn = xaxisColumn;
 	}
 
-	public XAxisStep getXAxisStep() {
-		return xAxisStep;
-	}
-
-	public void setXAxisStep(XAxisStep axisStep) {
-		xAxisStep = axisStep;
-	}
 
 	public ChartType getChartType() {
 		return chartType;
@@ -63,29 +77,12 @@ public class RunnerDashboardChart extends RunnerDashboardItem {
 		this.chartType = chartType;
 	}
 
-	public enum XAxisStep {
-
-		One("One"), Two("Two"), Four("Four"), Eight("Eight"), Sixteen(""), ThirtyTwo("Thirty Two");
-		private String displayName;
-
-		XAxisStep(String displayName) {
-			this.displayName = displayName;
-		}
-
-		public String getName() {
-			return name();
-		}
-
-		public String getDisplayName() {
-			return displayName;
-		}
-
-	}
+	
 	
 	public enum ChartType {
 
 		/*DIAL("Dial"),*/ 
-		LINE("Line"), STACKED_BAR("Stacked Bar"), CLUSTERED_BAR("Clustered Bar"), AREA("Area"), PIE(
+		LINE("Line"),LINE_3D("3D Line"), BAR_3D("3D Bar"), BAR("Bar"), BAR_STACKED("Stacked Bar"), BAR_STACKED_3D("3D Stacked Bar"), AREA("Area"), PIE(
 				"Pie");
 
 		private String displayName;
@@ -108,4 +105,30 @@ public class RunnerDashboardChart extends RunnerDashboardItem {
 	public ItemType getItemType() {
 		return ItemType.Chart;
 	}
+
+	public Orientation getOrientation() {
+		return orientation;
+	}
+
+	public void setOrientation(Orientation orientation) {
+		this.orientation = orientation;
+	}
+
+	public boolean isGridLines() {
+		return gridLines;
+	}
+
+	public void setGridLines(boolean gridLines) {
+		this.gridLines = gridLines;
+	}
+
+	public String getyLabel() {
+		return yLabel;
+	}
+
+	public void setyLabel(String yLabel) {
+		this.yLabel = yLabel;
+	}
+	
+	
 }

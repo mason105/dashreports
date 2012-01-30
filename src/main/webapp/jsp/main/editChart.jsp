@@ -145,9 +145,11 @@
 				<s:select label="Chart Type" name="item.chartType" list="chartTypes"
 				listKey="name" listValue="displayName" cssClass="textbox"></s:select>			
 				
-				<!--<s:select label="X Axis Step Size" name="item.xAxisStep" list="xAxisSteps"
-				listKey="name" listValue="displayName"></s:select>-->
-			
+				<s:select label="Orientation" name="item.orientation" list="orientations"
+				listKey="name" listValue="displayName" cssClass="textbox"></s:select>						
+				
+				<s:checkbox name="item.gridLines" label="Show Grid Lines"/>
+				
 				
 				 <s:select label="Chart Background Colour" 
 				    name="item.backGroundColour" 

@@ -51,13 +51,14 @@
 	<div class="jobListHeader">
 		<img src="<s:url value='/images/v2/nav/reportsblue.png'/>" align="absmiddle" />&nbsp;Reports for <s:property value="groupName"/>
 	</div>
+	<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
 	<div class="listingHeaderWide"> 	
-		<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
+		
 		<div class="listingIcon"><img src="<s:url value='/images/v2/icons/add.png'/>" align="absmiddle" /></div>		      	
 		<a href="setupEditJob.action?groupName=<s:property value="groupName" />">Add Report</a>
-		</s:if>				
+			
 	</div>
-
+	</s:if>	
 	<div class="listing">
 	
 	<div class="listingHeaderRow">		

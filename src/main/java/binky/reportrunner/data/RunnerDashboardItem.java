@@ -254,7 +254,7 @@ public abstract class RunnerDashboardItem extends DatabaseObject<Integer> {
 
 	public enum ItemType {
 
-		Chart("Chart"), Grid("Grid"), Threshold("Threshold");
+		Chart("Chart"), Grid("Grid"), Threshold("Threshold"), Sampling("Sampling");
 		private String displayName;
 
 		ItemType(String displayName) {

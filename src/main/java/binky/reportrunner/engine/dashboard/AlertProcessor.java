@@ -28,6 +28,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.sql.DataSource;
 
@@ -40,37 +41,42 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.UnableToInterruptJobException;
 
-
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardGrid;
 import binky.reportrunner.data.RunnerDashboardItem;
+import binky.reportrunner.data.RunnerDashboardSampler;
+import binky.reportrunner.data.SamplingData;
+import binky.reportrunner.data.SamplingData_pk;
 import binky.reportrunner.data.RunnerDashboardItem.ItemType;
 
 public class AlertProcessor implements Job, InterruptableJob {
 
 	DataSource ds;
 
-	ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao;
-	Connection conn;
+	ReportRunnerDao<RunnerDashboardItem, Integer> dashboardDao;
+		Connection conn;
 	private static final Logger logger = Logger.getLogger(AlertProcessor.class);
 
 	public void execute(JobExecutionContext context)
 			throws JobExecutionException {
 
-		// Grab the elements of the job from the context to pass 	on
-		RunnerDashboardItem item = (RunnerDashboardItem) context
-				.getJobDetail().getJobDataMap().get("item");
+		// Grab the elements of the job from the context to pass on
+		RunnerDashboardItem item = (RunnerDashboardItem) context.getJobDetail()
+				.getJobDataMap().get("item");
 
-		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get("dataSource");
-		
+		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get(
+				"dataSource");
+
 		try {
 			ds.setLogWriter(new PrintWriter(System.out));
 		} catch (SQLException e1) {
-			logger.warn(e1.getMessage(),e1);
+			logger.warn(e1.getMessage(), e1);
 		}
+
+		this.dashboardDao = (ReportRunnerDao<RunnerDashboardItem, Integer>) context
+				.getJobDetail().getJobDataMap().get("dashboardDao");
 		
-		this.dashboardDao = (ReportRunnerDao<RunnerDashboardItem,Integer>) context.getJobDetail()
-				.getJobDataMap().get("dashboardDao");
+		
 		try {
 			if (item == null) {
 				logger.fatal("item is null!");
@@ -84,37 +90,100 @@ public class AlertProcessor implements Job, InterruptableJob {
 				logger.fatal("dao is null!");
 				throw new Exception("dao is null!");
 			}
+			if (item.getItemType() != ItemType.Sampling) {
+				processQueryItem(item);
+			} else {
+				processSampler(item);
+			}
 
-			processItem(item);
-			
 		} catch (Exception e) {
 			throw new JobExecutionException(e);
 		}
 
 	}
-	
-	private void processItem(RunnerDashboardItem item) throws SQLException {
-		
+
+	private void processSampler(RunnerDashboardItem item) throws SQLException {
+
 		String sql = item.getAlertQuery();
 		conn = ds.getConnection();
-		
+
+		try {
+			logger.debug("running SQL for sampler");
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			RunnerDashboardSampler sampler = (RunnerDashboardSampler)item;
+			int period = Calendar.MINUTE;
+			int amount=-1;
+			
+			//calculate the start of the window 
+			switch (sampler.getWindow()) {
+			case YEAR:
+				period = Calendar.YEAR;
+				break;
+			case MONTH:
+				period = Calendar.MONTH;
+				break;
+			case WEEK:
+				period = Calendar.DAY_OF_YEAR;
+				amount=-7;
+				break;
+			case DAY:
+				period = Calendar.DAY_OF_YEAR;
+				break;
+			case HOUR:
+				period = Calendar.HOUR;
+				break;				
+			}
+			
+			Calendar cal=Calendar.getInstance();
+			Date now = cal.getTime();
+			cal.add(period, amount);
+			Date cutoff= cal.getTime();
+			//first of all we need to clean out any that now fall outside of our window
+			for (SamplingData d: sampler.getData()) {
+				if (d.getPk().getSampleTime().getTime()<cutoff.getTime()) {
+					sampler.getData().remove(d);
+				}
+			}
+			//get the value - as this is a sampler we only grab the first row
+			if (rs.next()) {
+				Number val = rs.getBigDecimal(sampler.getValueColumn());				
+				sampler.getData().add(new SamplingData(sampler,now,val));
+			} else {
+				//no rows returned so add a 0 value for this time
+				sampler.getData().add(new SamplingData(sampler,now,0));
+			}
+			dashboardDao.saveOrUpdate(item);
+			rs.close();
+		} finally {
+			if (!conn.isClosed())
+				conn.close();
+		}
+	}
+
+	private void processQueryItem(RunnerDashboardItem item) throws SQLException {
+
+		String sql = item.getAlertQuery();
+		conn = ds.getConnection();
+
 		try {
 			logger.debug("running SQL for item");
-			Statement stmt =  conn.createStatement();
-			if (item.getItemType()==ItemType.Grid){
-				int rows=((RunnerDashboardGrid)item).getRowsToDisplay();
-				if (rows>0){
+			Statement stmt = conn.createStatement();
+			if (item.getItemType() == ItemType.Grid) {
+				int rows = ((RunnerDashboardGrid) item).getRowsToDisplay();
+				if (rows > 0) {
 					logger.debug("limiting grid result to " + rows + " rows");
 					stmt.setFetchSize(rows);
 					stmt.setMaxRows(rows);
 				}
 			}
-			ResultSet rs =stmt.executeQuery(sql);
-			RowSetDynaClass rsdc= new RowSetDynaClass(rs,false);
+			ResultSet rs = stmt.executeQuery(sql);
+			RowSetDynaClass rsdc = new RowSetDynaClass(rs, false);
 			if (logger.isDebugEnabled()) {
-				logger.debug("record set size: "+rsdc.getRows().size());
-				for (DynaProperty col:rsdc.getDynaProperties() ) {
-					logger.debug("found column: " + col.getName() + " of type " + col.getType().getName());
+				logger.debug("record set size: " + rsdc.getRows().size());
+				for (DynaProperty col : rsdc.getDynaProperties()) {
+					logger.debug("found column: " + col.getName() + " of type "
+							+ col.getType().getName());
 				}
 			}
 			item.setCurrentDataset(rsdc);
@@ -122,15 +191,16 @@ public class AlertProcessor implements Job, InterruptableJob {
 			dashboardDao.saveOrUpdate(item);
 			rs.close();
 		} finally {
-			if (!conn.isClosed()) conn.close();
+			if (!conn.isClosed())
+				conn.close();
 		}
-		
-		
+
 	}
 
 	public void interrupt() throws UnableToInterruptJobException {
 		try {
-			if (conn!=null) conn.close();			
+			if (conn != null)
+				conn.close();
 		} catch (SQLException e) {
 			throw new UnableToInterruptJobException(e);
 		}

@@ -27,7 +27,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
-import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class SaveGroup extends StandardRunnerAction {

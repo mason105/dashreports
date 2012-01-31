@@ -470,10 +470,9 @@
 				
 	</div>
 	<div class="formBottom">
-	<div class="formFooterText">* required field
-	
-	<s:actionerror  theme="jquery" />
+		<s:actionerror  theme="jquery" />
 		<s:actionmessage  theme="jquery"/>
+		<div class="formFooterText">* required field
 		</div>
 	<s:submit value="Save" align="left" /></div>
 	

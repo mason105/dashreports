@@ -190,6 +190,32 @@
 			<result>/jsp/main/editUser.jsp</result>
 		</action>
 
+		<action name="itemAddDispatcher" class="itemAddDispatcherAction">
+			<result name="Chart" type="redirectAction">
+				<param name="actionName">setupEditChart</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>	
+			</result>
+		</action>
+
+		<action name="itemAddDispatcher" class="itemAddDispatcherAction">
+			<result name="Chart" type="redirectAction">
+				<param name="actionName">setupEditChart</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>	
+			</result>
+			<result name="Grid" type="redirectAction">
+				<param name="actionName">setupEditGrid</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>	
+			</result>
+			<result name="Threshold" type="redirectAction">
+				<param name="actionName">setupEditThreshold</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>	
+			</result>
+		</action>
+
 		<action name="setupEditChart" class="setupEditChartAction">
 			<result>/jsp/main/editChart.jsp</result>
 		</action>
@@ -368,21 +394,21 @@
 		<action name="getChart" class="getChartAction">
 			<result name="success" type="chart">
 			    <param name="width">353</param>
-			    <param name="height">298</param> 
+			    <param name="height">295</param> 
   			</result>
 		</action>
 	
 		<action name="getChartSS" class="getChartAction">
 			<result name="success" type="chart">
 			    <param name="width">353</param>
-			    <param name="height">298</param> 
+			    <param name="height">295</param> 
   			</result>
 		</action>
 	
 		<action name="getChartSM" class="getChartAction">
 			<result name="success" type="chart">
 			    <param name="width">353</param>
-			    <param name="height">298</param> 
+			    <param name="height">295</param> 
   			</result>
 		</action>
 	
@@ -396,7 +422,7 @@
 		<action name="getChartMS" class="getChartAction">
 			<result name="success" type="chart">
 			    <param name="width">714</param>
-			    <param name="height">298</param> 
+			    <param name="height">295</param> 
   			</result>
 		</action>
 	
@@ -417,7 +443,7 @@
 		<action name="getChartLS" class="getChartAction">
 			<result name="success" type="chart">
 			    <param name="width">925</param>
-			    <param name="height">298</param> 
+			    <param name="height">295</param> 
   			</result>
 		</action>
 	

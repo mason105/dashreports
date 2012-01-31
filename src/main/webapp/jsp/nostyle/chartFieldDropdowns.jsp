@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:actionerror />
-<s:actionmessage/>
+		<s:actionerror theme="jquery"/>
+		<s:actionmessage theme="jquery"/>
 
 				<s:select label="X-Axis Column Name"
 					name="item.xaxisColumn" value="xaxisColumnValue"

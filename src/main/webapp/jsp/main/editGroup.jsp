@@ -1,17 +1,19 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <html>
 <head>
-<sx:head parseContent="true" />
+	<sj:head locale="en" jqueryui="true" jquerytheme="smoothness"/>
+
 </head>
 <body>
-<s:form action="saveGroup">
+<s:form action="saveGroup" validate="true">
 	<div class="formGroup">
 	<div class="formGroupHeader">Group Details</div>
 
-
-	<s:actionerror /> <s:actionmessage /> <s:if
+		<s:actionerror theme="jquery"/>
+		<s:actionmessage theme="jquery"/>
+		 <s:if
 		test="group.groupName != null">
 		<s:textfield label="Group Name" size="14" value="%{group.groupName}"
 			name="group.groupName" readonly="true" cssClass="readOnly, textbox"

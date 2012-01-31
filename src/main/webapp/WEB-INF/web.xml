@@ -62,6 +62,10 @@
 	<filter>
 		<filter-name>action2</filter-name>
 		<filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+<!-- 		 <init-param>
+		    <param-name>actionPackages</param-name>
+		    <param-value>binky.reportrunner.ui.actions</param-value>
+		  </init-param> -->		
 	</filter>
 	<filter>
 		<filter-name>ResponseOverrideFilter</filter-name>

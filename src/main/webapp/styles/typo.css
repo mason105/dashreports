@@ -80,9 +80,8 @@
 /* TEXT */
 	p {
 		font-size: 1em;
-		margin: 0 0 1.5em 0;
-		padding: 0;
-		line-height:1.4em;
+		margin: 0 0 0 0;
+		padding: 2px;
 	}
 	blockquote {
 		border-left:10px solid #ddd;

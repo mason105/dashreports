@@ -44,7 +44,7 @@ public class SetupEditJob extends BaseEditJob {
 
 	private static final Logger logger = Logger.getLogger(SetupEditJob.class);
 
-	
+	private boolean exists;
 
 	// TODO:clean up this mess
 	@Override
@@ -69,7 +69,7 @@ public class SetupEditJob extends BaseEditJob {
 					outputPrefix=outSplit[0];
 					outputUrl=outSplit[1];
 				}
-				
+				exists=true;
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
@@ -79,6 +79,7 @@ public class SetupEditJob extends BaseEditJob {
 			}
 
 		} else if (groupName != null && !groupName.isEmpty()) {
+			exists=false;
 			job = new RunnerJob();
 			paramCount = 0;
 		} else {
@@ -122,6 +123,20 @@ public class SetupEditJob extends BaseEditJob {
 
 	public void setSimpleCron(QuartzCronSchedule simpleCron) {
 		this.simpleCron = simpleCron;
+	}
+
+
+
+
+	public boolean isExists() {
+		return exists;
+	}
+
+
+
+
+	public void setExists(boolean exists) {
+		this.exists = exists;
 	}
 
 

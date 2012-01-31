@@ -1,6 +1,7 @@
 package binky.reportrunner.ui.actions.group;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.data.RunnerDashboardItem;
+import binky.reportrunner.data.RunnerDashboardItem.ItemType;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.service.RunnerJobService;
@@ -89,6 +91,9 @@ public class ShowGroup extends StandardRunnerAction {
 
 	public void setJobService(RunnerJobService jobService) {
 		this.jobService = jobService;
+	}
+	public final List<ItemType> getItemTypes() {
+		return Arrays.asList(ItemType.values());
 	}
 
 

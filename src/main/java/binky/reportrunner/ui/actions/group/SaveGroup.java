@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.group;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import binky.reportrunner.dao.ReportRunnerDao;
@@ -39,16 +40,14 @@ public class SaveGroup extends StandardRunnerAction {
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
-		String groupName = group.getGroupName();
-		if (super.getSessionUser().getGroups().contains(groupName)
-				|| super.getSessionUser().getIsAdmin()) {								
-			groupDao.saveOrUpdate(group);
-		} else {
-			SecurityException se = new SecurityException("Group " + groupName
-					+ " not valid for user " + super.getSessionUser().getUserName());
-			throw se;
+
+		if (StringUtils.isBlank(group.getGroupName())) {
+			super.addActionError("Please specify a group name");
+			return INPUT;
 		}
-		
+							
+			groupDao.saveOrUpdate(group);
+
 		//hack to force group update
 		super.getSessionUser().setGroups(groupDao.getAll());
 		

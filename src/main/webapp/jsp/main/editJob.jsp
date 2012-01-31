@@ -11,7 +11,7 @@
 <s:form  action="editJob" method="post" enctype="multipart/form-data" validate="true" id="editJob">	
 
 <div class="jobHeader"><img src="<s:url value='/images/v2/nav/groupsblue.png'/>" align="absmiddle" />&nbsp;<s:a href="showGroup.action?groupName=%{groupName}"><s:property value="groupName"/></s:a> > Edit Job - 
-			<s:if test="job.pk.jobName!=null">
+			<s:if test="exists">
 				<s:property  value="job.pk.jobName"/>
 			</s:if>
 			<s:else>
@@ -25,12 +25,12 @@
 	
 		<div class="formGroup">
 			<div class="formGroupHeader">Job Details</div>
-			<s:if test="job.pk.jobName!=null">				
-				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
+			<s:if test="exists">				
+				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}" 
 					name="job.pk.jobName" readonly="true" cssClass="readOnly, textBox" required="true" >
 				</s:textfield>
 			</s:if><s:else>				
-				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}"
+				<s:textfield size="32" label="Job Name" value="%{job.pk.jobName}" tooltip="please enter a name for this job"
 					name="job.pk.jobName"								
 					required="true" cssClass="textbox">
 				</s:textfield>
@@ -54,7 +54,7 @@
 		<div class="formGroup">
 			<div class="formGroupHeader">Definition</div>
 			<s:textarea label="Report Query" cols="80" rows="20"
-				value="%{job.query}" name="job.query" 
+				value="%{job.query}" name="job.query" tooltip="please enter the SQL used to create the report, parameters are specified using a question mark, e.g. val=?"
   			    required="true" cssClass="textbox" onchange="validateJobQuery()">
 				</s:textarea>
 			
@@ -65,7 +65,7 @@
 				name="job.isBurst" cssClass="checkbox"   onchange="validateBurstQuery()">
 			</s:checkbox>
 		
-			<s:textarea label="Burst Query" cols="80" rows="5"
+			<s:textarea label="Burst Query" cols="80" rows="5" tooltip="the burst query can inject parameters into your query, which will be executed for each row returned in the burst query"
 				value="%{job.burstQuery}" name="job.burstQuery"
 				cssClass="textbox"  onchange="validateBurstQuery()">
 
@@ -98,14 +98,14 @@
 			
 				<s:textfield
 					label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
-					value="%{parameterValue}"
+					value="%{parameterValue}" tooltip="please enter a value to pass to the query - this is overidden if using burst"
 					onfocus="document.getElementById('jobValueTip%{#rowstatus.index}').style.visibility='visible';" 
 					onblur="document.getElementById('jobValueTip%{#rowstatus.index}').style.visibility='hidden';" cssClass="textbox">
 
 				</s:textfield> 
 			
 				<s:textfield label="Burst Column"
-					name="parameters[%{#rowstatus.index}].parameterBurstColumn"
+					name="parameters[%{#rowstatus.index}].parameterBurstColumn" tooltip="Please enter a name referenced in the burst query (if being used)"
 					value="%{parameterBurstColumn}"	
 					onfocus="document.getElementById('jobBurstColTip%{#rowstatus.index}').style.visibility='visible';" 
 					onblur="document.getElementById('jobBurstColTip%{#rowstatus.index}').style.visibility='hidden';" cssClass="textbox">
@@ -203,7 +203,7 @@
 		<div class="formGroup">
 		<div class="formGroupHeader">File</div>		
 			<s:select name="outputPrefix" style="width:75px;float:left;margin-left:2px;margin-top:20px;margin-right:5px;height:25px;" list="{'file://','sftp://','ftp://'}" value="outputPrefix" />
-			<s:textfield label="Output URL" value="%{outputUrl}" name="outputUrl" cssClass="textbox" style="width:500px;">			
+			<s:textfield label="Output URL" value="%{outputUrl}" name="outputUrl" tooltip="please enter the path.  Insert !VALUE! within the path to include the combination of any bursted parameters.  You can also add date information between two @ symbols - in the java date format - e.g. @ddmmyyyy@" cssClass="textbox" style="width:500px;">			
 			</s:textfield>
 			<s:select label="File Format" name="job.fileFormat" list="fileFormats"
 			listKey="name" listValue="displayName"></s:select>
@@ -243,9 +243,10 @@
 		<div class="formBottomEmpty"></div>
 	</div>
 	<div class="formBottom">
-	<div class="formFooterText">* required field
-		<s:actionerror  theme="jquery"/>
+			<s:actionerror  theme="jquery"/>
 		<s:actionmessage theme="jquery"/>
+	<div class="formFooterText">* required field
+
 	</div>
 <s:submit name="saveJob" value="Save" align="left" cssStyle="margin-left:15px"/>
 </div>	

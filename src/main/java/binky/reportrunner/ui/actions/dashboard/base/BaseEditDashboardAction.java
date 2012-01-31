@@ -1,9 +1,12 @@
 package binky.reportrunner.ui.actions.dashboard.base;
 
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.quartz.CronTrigger;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardChart.ChartType;
@@ -35,12 +38,31 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 	
 	protected final String saveItem(RunnerDashboardItem item)
 			throws SecurityException {
+		//incase we get directed back to the home page
+		super.setGroupName(item.getGroup().getGroupName());
+		runnerDataSources = dataSourceService.getDataSourcesForGroup(groupName);
 		logger.debug("item is " + item.toString());
 		String groupName = item.getGroup().getGroupName();
 
+		
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
 
+			//some validation
+
+			if (StringUtils.isBlank(item.getItemName())) {
+				super.addActionError("Please complete the item name field");
+				return INPUT;
+			}
+			
+			try {
+				new CronTrigger("test", "test", simpleCron.toString());
+			} catch (ParseException e) {
+				logger.debug("cron fail:" + e.getMessage());
+				super.addActionError("Schedule invalid: " + e.getMessage());
+				return INPUT;
+			}	
+			
 			// preserve teh current data
 			if (item.getItemId() != null) {
 				RunnerDashboardItem currentItem = super

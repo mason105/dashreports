@@ -16,17 +16,14 @@
 <sj:tabbedpanel id="groupTabs"   name="groupTabs" animate="true" collapsible="false" useSelectedTabCookie="true">						
 	<sj:tab id="dashboardTab" label="Dashboard" target="dashDiv"/>
 		<div id="dashDiv">
-		<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
+		<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin" >
 			<div class="toolBar">
-				<div class="toolButtonFirst">
-				<s:a href="setupEditChart.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/add.png"/>"/>Chart</s:a>
-				</div>
-				<div class="toolButton">
-				<s:a href="setupEditGrid.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/add.png"/>"/>Data Grid</s:a>
-				</div>
-				<div class="toolButtonLast">
-				<s:a href="setupEditThreshold.action?groupName=%{groupName}"><img align="absmiddle" src="<s:url value="/images/v2/icons/add.png"/>"/>Threshold</s:a>
-				</div>
+				<s:form action="itemAddDispatcher">
+				<s:hidden name="groupName" value="%{groupName}"/>
+				<s:select name="itemType" list="itemTypes"
+				listKey="name" listValue="displayName" cssClass="textbox" style="float:left;margin-right:5px;margin-top:8px;height:25px;"/>
+				<s:submit align="left" style="margin-top:-7px;" value="Add"/>
+				</s:form>
 			</div>					
 			</s:if>
 			<s:if test="items.size>0">		

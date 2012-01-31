@@ -1,9 +1,9 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <html>
 <head>
-<sx:head parseContent="true" />
+	<sj:head locale="en" jqueryui="true" jquerytheme="smoothness"/>
 </head>
 <body>
 
@@ -11,8 +11,8 @@
 <div class="formGroup">
 	<div class="formGroupHeader">User Details</div>
 	
-		<s:actionerror />
-		<s:actionmessage/>
+		<s:actionerror theme="jquery"/>
+		<s:actionmessage theme="jquery"/>
 		<s:if test="runnerUser.userName != null">
 			<s:textfield label="User Name" size="32" value="%{runnerUser.userName}"
 				name="runnerUser.userName" readonly="true" cssClass="readOnly, textbox" required="true"/>

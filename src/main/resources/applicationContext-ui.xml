@@ -33,7 +33,10 @@
 		</property>
 	</bean>
 
-
+	<bean id="itemAddDispatcherAction"
+		class="binky.reportrunner.ui.actions.dashboard.ItemAddDispatcher"
+		scope="prototype"/>
+		
 	<bean id="getChartAction"
 		class="binky.reportrunner.ui.actions.dashboard.GetChart"
 		scope="prototype">

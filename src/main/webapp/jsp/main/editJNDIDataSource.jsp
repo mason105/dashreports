@@ -1,15 +1,21 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 
+<%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
+
 <html>
 <head>
 <sx:head parseContent="true" />
+
+	<sj:head locale="en" jqueryui="true" jquerytheme="smoothness"/>
+
 </head>
 <body>
 <s:form action="saveDataSource">
 	<div class="formGroup">
 	<div class="formGroupHeader">Data Source Details</div>
-	<s:actionerror /> <s:actionmessage /> <s:if
+			<s:actionerror theme="jquery"/>
+		<s:actionmessage theme="jquery"/><s:if
 		test="dataSource.dataSourceName != null">
 		<s:textfield label="Data Source Name" size="32"
 			value="%{dataSource.dataSourceName}" name="dataSource.dataSourceName"

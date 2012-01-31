@@ -26,6 +26,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.opensymphony.xwork2.Preparable;
@@ -47,6 +48,12 @@ public class SaveDataSource extends StandardRunnerAction implements Preparable {
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
+		
+		if (StringUtils.isBlank(dataSource.getDataSourceName())) {
+			super.addActionError("Please complete the datasource name field");
+			return INPUT;
+		}
+		
 		try {
 			
 			if (dataSourceGroups!=null) {

@@ -214,6 +214,11 @@
         		<param name="parse">true</param>
         		<param name="groupName">${groupName}</param>	
 			</result>
+			<result name="Sampler" type="redirectAction">
+				<param name="actionName">setupEditSampler</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>	
+			</result>			
 		</action>
 
 		<action name="setupEditChart" class="setupEditChartAction">
@@ -234,9 +239,23 @@
 			<result>/jsp/main/editGrid.jsp</result>
 		</action>
 		
+		<action name="setupEditSampler" class="setupEditSamplerAction">
+			<result>/jsp/main/editSampler.jsp</result>
+		</action>
+				
 		<action name="showGroup" class="showGroupAction">
 			<result>/jsp/main/showGroup.jsp</result>
 		</action>
+		
+		<action name="saveSampler" class="saveSamplerAction">
+			<result type="redirectAction">
+				<param name="actionName">showGroup</param>
+        		<param name="parse">true</param>
+        		<param name="groupName">${groupName}</param>
+        		<param name="activeTab">dashboard</param>				
+			</result>
+			<result  name="input">/jsp/main/editSampler.jsp</result>
+		</action>		
 		
 		<action name="saveGrid" class="saveGridAction">
 			<result type="redirectAction">
@@ -387,10 +406,14 @@
 		<action name="getThresholdColumns" class="getQueryColumnsAction">
 			<result>/jsp/nostyle/thresholdFieldDropdowns.jsp</result>
 		</action>
+
+		<action name="getSamplerColumns" class="getQueryColumnsAction">
+			<result>/jsp/nostyle/samplerFieldDropdowns.jsp</result>
+		</action>
 		
 	</package>
 	<package name="charts" extends="jfreechart-default">
-	
+		<!-- normal chart -->
 		<action name="getChart" class="getChartAction">
 			<result name="success" type="chart">
 			    <param name="width">353</param>
@@ -460,6 +483,79 @@
 			    <param name="height">895</param> 
   			</result>
 		</action>	
+
+	<!-- sampler charts -->
+	
+		<action name="getSamplerChart" class="getSamplerChartAction">
+			<result name="success" type="chart">
+			    <param name="width">353</param>
+			    <param name="height">295</param> 
+  			</result>
+		</action>
+	
+		<action name="getSamplerChartSS" class="getSamplerChartAction">
+			<result name="success" type="chart">
+			    <param name="width">353</param>
+			    <param name="height">295</param> 
+  			</result>
+		</action>
+	
+		<action name="getSamplerChartSM" class="getSamplerChartAction">
+			<result name="success" type="chart">
+			    <param name="width">353</param>
+			    <param name="height">295</param> 
+  			</result>
+		</action>
+	
+		<action name="getSamplerChartSL" class="getSamplerChartAction">
+			<result name="success" type="chart">
+			    <param name="width">353</param>
+			    <param name="height">895</param> 
+  			</result>
+		</action>
+	
+		<action name="getSamplerChartMS" class="getSamplerChartAction">
+			<result name="success" type="chart">
+			    <param name="width">714</param>
+			    <param name="height">295</param> 
+  			</result>
+		</action>
+	
+		<action name="getSamplerChartMM" class="getSamplerChartAction">
+			<result name="success" type="chart">
+			    <param name="width">714</param>
+			    <param name="height">594</param> 
+  			</result>
+		</action>
+	
+		<action name="getSamplerChartML" class="getSamplerChartAction">
+			<result name="success" type="chart">
+			    <param name="width">714</param>
+			    <param name="height">895</param> 
+  			</result>
+		</action>
+	
+		<action name="getSamplerChartLS" class="getSamplerChartAction">
+			<result name="success" type="chart">
+			    <param name="width">925</param>
+			    <param name="height">295</param> 
+  			</result>
+		</action>
+	
+		<action name="getSamplerChartLM" class="getSamplerChartAction">
+			<result name="success" type="chart">
+			    <param name="width">925</param>
+			    <param name="height">594</param> 
+  			</result>
+		</action>
+	
+		<action name="getSamplerChartLL" class="getSamplerChartAction">
+			<result name="success" type="chart">
+			    <param name="width">925</param>
+			    <param name="height">895</param> 
+  			</result>
+		</action>	
+		
 	
 	</package>
 </struts>

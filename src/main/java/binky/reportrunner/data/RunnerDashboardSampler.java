@@ -2,12 +2,18 @@ package binky.reportrunner.data;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+
+import binky.reportrunner.data.RunnerDashboardChart.Orientation;
 
 @Entity
 (name = "T_SAMPLING")
 public class RunnerDashboardSampler extends RunnerDashboardItem {
+
+	private static final long serialVersionUID = 6026696206314302405L;
+
 	public enum Window {
 
 		MINUTE("Minute"), HOUR("Hour"), DAY("Day"), WEEK("Week"),MONTH("Month"),YEAR("Year");
@@ -26,10 +32,11 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 		}
 
 	}
-
+	private Orientation orientation;
+	private boolean gridLines;
 	@Override
 	public ItemType getItemType() {
-		return ItemType.Sampling;
+		return ItemType.Sampler;
 	}
 
 	private String yAxisLabel;
@@ -37,7 +44,7 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 	
 	private Window window;
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
 	private Collection<SamplingData> data;
 
 	public Window getWindow() {
@@ -70,6 +77,34 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 
 	public void setValueColumn(String valueColumn) {
 		this.valueColumn = valueColumn;
+	}
+
+	public Orientation getOrientation() {
+		return orientation;
+	}
+
+	public void setOrientation(Orientation orientation) {
+		this.orientation = orientation;
+	}
+
+	public boolean isGridLines() {
+		return gridLines;
+	}
+
+	public void setGridLines(boolean gridLines) {
+		this.gridLines = gridLines;
+	}
+
+	public String getyAxisLabel() {
+		return yAxisLabel;
+	}
+
+	public void setyAxisLabel(String yAxisLabel) {
+		this.yAxisLabel = yAxisLabel;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 	
 }

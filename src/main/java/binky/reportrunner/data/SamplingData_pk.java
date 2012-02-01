@@ -3,11 +3,16 @@ package binky.reportrunner.data;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
+import javax.persistence.ManyToOne;
 
 @Embeddable
 public class SamplingData_pk implements Serializable {
 
+
+	private static final long serialVersionUID = 9140271137183927058L;
+	@ManyToOne(cascade=CascadeType.ALL)
 	private RunnerDashboardSampler sampler;
 	private Date sampleTime;
 	public RunnerDashboardSampler getSampler() {
@@ -26,7 +31,6 @@ public class SamplingData_pk implements Serializable {
 		
 	}
 	public SamplingData_pk(RunnerDashboardSampler sampler, Date sampleTime) {
-		super();
 		this.sampler = sampler;
 		this.sampleTime = sampleTime;
 	}

@@ -104,7 +104,7 @@ public class RunnerJobListener implements JobListener {
 			// stuff for the dashboards
 			Integer itemId = Integer.parseInt(ctx.getJobDetail().getName());
 			RunnerDashboardItem item = dashboardDao.get(itemId);
-			ctx.getJobDetail().getJobDataMap().put("item", item);
+			ctx.getJobDetail().getJobDataMap().put("itemId", itemId);
 			DataSource ds;
 			try {
 				ds = datasourceService.getJDBCDataSource(item.getDatasource());

@@ -3,10 +3,15 @@ package binky.reportrunner.dao.impl;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
 
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+import binky.reportrunner.dao.NoSessionException;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.DatabaseObject;
 
@@ -29,7 +34,9 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 	}
 
 	public T get(ID id) {
-		return	(T)sessionFactory.getCurrentSession().get(clazz, id);
+		T o = (T)sessionFactory.getCurrentSession().get(clazz, id);
+		
+		return	o;
 	}
 
 	public List<T> getAll() {
@@ -75,5 +82,22 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
+
+	
+	
+	@Override
+	public Session openSession() {		
+		return sessionFactory.openSession();
+	}
+
+	@Override
+	public T getInSession(ID id,Session session) throws NoSessionException {
+		if (session!=null && session.isOpen()&& session.isConnected()) {
+			return  (T)session.get(clazz, id);
+		} else {
+			throw new NoSessionException();
+		}
+	}
+
 
 }

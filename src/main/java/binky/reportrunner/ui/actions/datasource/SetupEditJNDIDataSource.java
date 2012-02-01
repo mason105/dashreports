@@ -37,6 +37,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
+import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
@@ -46,6 +47,7 @@ public class SetupEditJNDIDataSource extends StandardRunnerAction implements Pre
 	private static final long serialVersionUID = 1L;
 	private String dataSourceName;
 	private RunnerDataSource dataSource;
+	private DatasourceService dataSourceService;
 	private List<String> dataSourceGroups;
 	private List<String> jndiNames;
 	private static final Logger logger = Logger.getLogger(SetupEditJNDIDataSource.class);
@@ -54,7 +56,7 @@ public class SetupEditJNDIDataSource extends StandardRunnerAction implements Pre
 	public String execute() throws Exception {
 		this.dataSourceGroups=new LinkedList<String>();
 		if ((dataSourceName !=null) && (!dataSourceName.isEmpty())){
-			dataSource=dataSourceDao.get(dataSourceName);
+			dataSource=dataSourceService.getDataSource(dataSourceName);
 		
 			if (dataSource!=null) {
 				for (RunnerGroup g: dataSource.getGroups()) {
@@ -111,17 +113,14 @@ public class SetupEditJNDIDataSource extends StandardRunnerAction implements Pre
 	}
 	private List<RunnerGroup> groups;
 	private ReportRunnerDao<RunnerGroup,String> groupDao;
-	private  ReportRunnerDao<RunnerDataSource,String> dataSourceDao;
-
+	
 	public void setDataSourceName(String dataSourceName) {
 		this.dataSourceName = dataSourceName;
 	}
 	public RunnerDataSource getDataSource() {
 		return dataSource;
 	}
-	public void setDataSourceDao( ReportRunnerDao<RunnerDataSource,String> dataSourceDao) {
-		this.dataSourceDao = dataSourceDao;
-	}
+
 	public List<String> getJndiNames() {
 		return jndiNames;
 	}
@@ -151,6 +150,14 @@ public class SetupEditJNDIDataSource extends StandardRunnerAction implements Pre
 
 	public void setDataSourceGroups(List<String> dataSourceGroups) {
 		this.dataSourceGroups = dataSourceGroups;
+	}
+
+	public DatasourceService getDataSourceService() {
+		return dataSourceService;
+	}
+
+	public void setDataSourceService(DatasourceService dataSourceService) {
+		this.dataSourceService = dataSourceService;
 	}
 
 	

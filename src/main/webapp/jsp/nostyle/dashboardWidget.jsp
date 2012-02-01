@@ -89,3 +89,42 @@
 			</table>
 		</div>								
 	</s:if>
+	
+	<s:if test="(item.itemType.name=='Sampler')">	
+		
+		<s:if test="(item.width.name=='Small')">			
+			<s:set var="x" value="'S'"/>				       		 	       		 
+		</s:if><s:else>
+			<s:if test="(item.width.name=='Medium')">
+					<s:set var="x" value="'M'"/>			
+			</s:if><s:else>
+				<s:set var="x" value="'L'"/>
+			</s:else>
+		</s:else>		
+	   
+	   <s:if test="(item.height.name=='Small')">			
+			<s:set var="y" value="'S'"/>															       		 	       		 
+		</s:if><s:else>
+			<s:if test="(item.height.name=='Medium')">
+					<s:set var="y" value="'M'"/>						
+			</s:if><s:else>
+				<s:set var="y" value="'L'"/>	
+			</s:else>
+		</s:else>								        
+		<div id="alert_<s:property value="%{item.itemId}"/>" class="alertBox_<s:property value="%{item.width}"/>_<s:property value="%{item.height}"/>">		
+			<div class="widgetLabel">
+				
+				<s:property value="%{item.itemName}"/>
+				<div class="widgetToolbar">
+	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
+	 					 <s:a href="setupEditSampler.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/v2/icons/edit.png'/>" align="absmiddle" title="Edit" /></s:a>
+						 <s:a href="invokeItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/v2/icons/execute.png'/>" title="Invoke Now" align="absmiddle" /></s:a> 					 
+	 					 <s:a href="deleteItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}" onclick="return confirm('Really delete this item?');"><img src="<s:url value='/images/v2/icons/delete.png'/>" title="Delete" align="absmiddle" /></s:a>	
+	 				</s:if>		
+				</div>	
+			</div>
+			<img src="<s:url value="getSamplerChart%{#x}%{#y}.action?itemId=%{itemId}"/>"/>
+			<!--<o:graph id="chart_%{itemId}" width="%{x}" height="%{y}" dataUrl="/getDashboardChartData.action?itemId=%{item.itemId}" />-->											
+		</div>
+
+	</s:if>	

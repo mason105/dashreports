@@ -45,6 +45,14 @@
 		</property>
 	</bean>
 
+	<bean id="getSamplerChartAction"
+		class="binky.reportrunner.ui.actions.dashboard.GetSamplerChart"
+		scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>
+	</bean>
+
 
 	<bean id="dashboardWidgetAction"
 		class="binky.reportrunner.ui.actions.dashboard.DashboardWidgetAction"
@@ -274,9 +282,6 @@
 	<bean id="setupEditDataSourceAction"
 		class="binky.reportrunner.ui.actions.datasource.SetupEditDataSource"
 		scope="prototype">
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
-		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
@@ -288,8 +293,8 @@
 	<bean id="setupEditJNDIDataSourceAction"
 		class="binky.reportrunner.ui.actions.datasource.SetupEditJNDIDataSource"
 		scope="prototype">
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
 		</property>
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
@@ -367,9 +372,6 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
-		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
@@ -380,9 +382,6 @@
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
 		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
@@ -395,8 +394,27 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
+	</bean>
+
+	<bean id="setupEditSamplerAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.SetupEditSampler"
+		scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
+	</bean>
+
+	<bean id="saveSamplerAction"
+		class="binky.reportrunner.ui.actions.dashboard.edit.SaveSampler"
+		scope="prototype">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
 		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
@@ -409,9 +427,6 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
-		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
@@ -423,9 +438,6 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
-		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
@@ -436,9 +448,6 @@
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
-		</property>
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
 		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />

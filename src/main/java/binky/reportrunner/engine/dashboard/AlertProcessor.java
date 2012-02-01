@@ -23,18 +23,23 @@
 package binky.reportrunner.engine.dashboard;
 
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
 import org.quartz.InterruptableJob;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -61,9 +66,8 @@ public class AlertProcessor implements Job, InterruptableJob {
 			throws JobExecutionException {
 
 		// Grab the elements of the job from the context to pass on
-		RunnerDashboardItem item = (RunnerDashboardItem) context.getJobDetail()
-				.getJobDataMap().get("item");
-
+		Integer itemId = (Integer)context.getJobDetail()
+				.getJobDataMap().get("itemId");
 		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get(
 				"dataSource");
 
@@ -78,7 +82,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 		
 		
 		try {
-			if (item == null) {
+			if (itemId == null) {
 				logger.fatal("item is null!");
 				throw new Exception("item is null!");
 			}
@@ -90,19 +94,27 @@ public class AlertProcessor implements Job, InterruptableJob {
 				logger.fatal("dao is null!");
 				throw new Exception("dao is null!");
 			}
-			if (item.getItemType() != ItemType.Sampling) {
-				processQueryItem(item);
-			} else {
-				processSampler(item);
+			//in the land of the hack here - all to do with collections, lazy initialising and 
+			Session session=dashboardDao.openSession();
+			RunnerDashboardItem item = dashboardDao.getInSession(itemId,session);
+			try {
+				if (item.getItemType() != ItemType.Sampler) {
+					processQueryItem(item);
+				} else {
+					processSampler(item,session);
+					
+				}
+			} finally{
+				session.close();
 			}
-
+			
 		} catch (Exception e) {
 			throw new JobExecutionException(e);
-		}
+		} 
 
 	}
 
-	private void processSampler(RunnerDashboardItem item) throws SQLException {
+	private void processSampler(RunnerDashboardItem item, Session session) throws SQLException {
 
 		String sql = item.getAlertQuery();
 		conn = ds.getConnection();
@@ -139,21 +151,36 @@ public class AlertProcessor implements Job, InterruptableJob {
 			Date now = cal.getTime();
 			cal.add(period, amount);
 			Date cutoff= cal.getTime();
+			logger.trace("deleting entries older than " + cutoff);
 			//first of all we need to clean out any that now fall outside of our window
+			List<SamplingData> old = new LinkedList<SamplingData>();
+			logger.trace("current sample size is :" + sampler.getData().size());
 			for (SamplingData d: sampler.getData()) {
+				logger.trace("testing entry for : " + d.getPk().getSampleTime());
 				if (d.getPk().getSampleTime().getTime()<cutoff.getTime()) {
-					sampler.getData().remove(d);
+					old.add(d);
 				}
 			}
+			for (SamplingData d:old) {
+				logger.trace("deleting entry for : " + d.getPk().getSampleTime());
+				sampler.getData().remove(d);
+			}	
+			
+			
 			//get the value - as this is a sampler we only grab the first row
 			if (rs.next()) {
-				Number val = rs.getBigDecimal(sampler.getValueColumn());				
+				BigDecimal val = rs.getBigDecimal(sampler.getValueColumn());				
 				sampler.getData().add(new SamplingData(sampler,now,val));
 			} else {
 				//no rows returned so add a 0 value for this time
-				sampler.getData().add(new SamplingData(sampler,now,0));
+				sampler.getData().add(new SamplingData(sampler,now,new BigDecimal(0)));
 			}
-			dashboardDao.saveOrUpdate(item);
+			dashboardDao.saveOrUpdate(sampler);
+			session.flush();
+			for (SamplingData d:old) {
+				session.delete(d);
+			}
+			session.flush();
 			rs.close();
 		} finally {
 			if (!conn.isClosed())

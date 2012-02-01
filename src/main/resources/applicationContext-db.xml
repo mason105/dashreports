@@ -75,6 +75,12 @@
 					binky.reportrunner.data.RunnerDashboardThreshold
 				</value>
 				<value>
+					binky.reportrunner.data.RunnerDashboardSampler
+				</value>
+				<value>
+					binky.reportrunner.data.SamplingData
+				</value>				
+				<value>
 					binky.reportrunner.data.RunnerHistoryEvent
 				</value>
 				<value>binky.reportrunner.data.RunnerJob</value>

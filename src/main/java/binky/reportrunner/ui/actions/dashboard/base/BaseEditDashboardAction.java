@@ -8,12 +8,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardChart.ChartType;
 import binky.reportrunner.data.RunnerDashboardChart.Orientation;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerDashboardItem.Height;
 import binky.reportrunner.data.RunnerDashboardItem.Width;
+import binky.reportrunner.data.RunnerDashboardSampler.Window;
 import binky.reportrunner.data.RunnerDashboardThreshold.ThresholdType;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
@@ -25,10 +25,9 @@ import binky.reportrunner.ui.util.QuartzCronSchedule;
 public abstract class BaseEditDashboardAction extends BaseDashboardAction
 		{
 	private static final long serialVersionUID = 1L;
-	private ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
 	protected DatasourceService dataSourceService;
 	protected List<RunnerDataSource> runnerDataSources;
-	protected QuartzCronSchedule simpleCron;
+	protected QuartzCronSchedule simpleCron = new QuartzCronSchedule("0 * * ? * *");
 	private String itemQuery;
 	private String dataSourceName;
 
@@ -74,7 +73,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 			group.setGroupName(groupName);
 			item.setGroup(group);
 
-			item.setDatasource(dataSourceDao.get(dataSourceName));
+			item.setDatasource(dataSourceService.getDataSource(dataSourceName));										
 			item.setAlertQuery(itemQuery);
 
 			item.setCronTab(simpleCron.toString());
@@ -107,9 +106,8 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 			List<RunnerDataSource> runnerDataSources) {
 		this.runnerDataSources = runnerDataSources;
 	}
-
-	public final void setDataSourceDao(ReportRunnerDao<RunnerDataSource, String> dataSourceDao) {
-		this.dataSourceDao = dataSourceDao;
+	public final List<Window> getWindows() {
+		return Arrays.asList(Window.values());
 	}
 
 	public final List<ChartType> getChartTypes() {

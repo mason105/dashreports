@@ -51,7 +51,7 @@ public class SetupEditDataSource extends StandardRunnerAction implements Prepara
 	public String execute() throws Exception {	
 		this.dataSourceGroups=new LinkedList<String>();
 		if ((dataSourceName !=null) && (!dataSourceName.isEmpty())){
-			dataSource=dataSourceDao.get(dataSourceName);
+			dataSource=dataSourceService.getDataSource(dataSourceName);
 			if (dataSource!=null) {
 				dataSource.setPassword(null);			
 				//hacky as hacky mchackerson of the clan mchackerson
@@ -84,16 +84,13 @@ public class SetupEditDataSource extends StandardRunnerAction implements Prepara
 	private List<RunnerGroup> groups;
 	private ReportRunnerDao<RunnerGroup,String> groupDao;
 	
-	private  ReportRunnerDao<RunnerDataSource,String> dataSourceDao;
+
 
 	public void setDataSourceName(String dataSourceName) {
 		this.dataSourceName = dataSourceName;
 	}
 	public RunnerDataSource getDataSource() {
 		return dataSource;
-	}
-	public void setDataSourceDao( ReportRunnerDao<RunnerDataSource,String> dataSourceDao) {
-		this.dataSourceDao = dataSourceDao;
 	}
 
 	public Collection<JDBCDriverDefinition> getDrivers() {

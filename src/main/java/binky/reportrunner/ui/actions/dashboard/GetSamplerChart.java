@@ -2,6 +2,7 @@ package binky.reportrunner.ui.actions.dashboard;
 
 import java.awt.Color;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import org.jfree.util.Rotation;
 import binky.reportrunner.data.RunnerDashboardChart;
 import binky.reportrunner.data.RunnerDashboardChart.Orientation;
 import binky.reportrunner.data.RunnerDashboardSampler;
+import binky.reportrunner.data.RunnerDashboardSampler.Window;
 import binky.reportrunner.data.SamplingData;
 import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 
@@ -60,19 +62,12 @@ public class GetSamplerChart extends BaseDashboardAction {
 				lower=yValue.doubleValue();
 			}
 			if (yValue.doubleValue()>upper) upper=yValue.doubleValue();
-			String formatted=d.getPk().getSampleTime().toString();
-			switch (item.getWindow()) {
-			case MINUTE:
-			case HOUR:
-				SimpleDateFormat sdfSecond = new SimpleDateFormat("hh:mm:ss");
-				formatted=sdfSecond.format(d.getPk().getSampleTime());
-				break;
-			default:
-				SimpleDateFormat sdfDay = new SimpleDateFormat("dd/mm/yyyy hh:mm:ss");
-				formatted=sdfDay.format(d.getPk().getSampleTime());				
-			}
 			
-			Comparable xValue = formatted;
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy HH:mm:ss");
+			if (item.getWindow()==Window.MINUTE|| item.getWindow()==Window.HOUR) {
+				sdf = new SimpleDateFormat("HH:mm:ss");	
+			}
+			String xValue=sdf.format(new Date(d.getPk().getSampleTime()));
 			dataSet.addValue(yValue, item.getValueColumn(), xValue);
 			
 		}

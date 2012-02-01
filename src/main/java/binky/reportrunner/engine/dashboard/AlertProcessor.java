@@ -121,6 +121,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 		conn = ds.getConnection();
 
 		try {
+			long start = item.getLastUpdated()!=null?item.getLastUpdated().getTime():0;
 			logger.debug("running SQL for sampler");
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
@@ -159,7 +160,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 			Transaction trans = session.beginTransaction();
 			for (SamplingData d: sampler.getData()) {
 				logger.trace("testing entry for : " + d.getPk().getSampleTime());
-				if (d.getPk().getSampleTime().getTime()<cutoff.getTime()) {
+				if (d.getPk().getSampleTime()<cutoff.getTime()) {
 					old.add(d);
 				}
 			}
@@ -172,18 +173,22 @@ public class AlertProcessor implements Job, InterruptableJob {
 			//get the value - as this is a sampler we only grab the first row
 			if (rs.next()) {
 				BigDecimal val = rs.getBigDecimal(sampler.getValueColumn());				
-				sampler.getData().add(new SamplingData(sampler,now,val));
+				sampler.getData().add(new SamplingData(sampler,now.getTime(),val));
 			} else {
 				//no rows returned so add a 0 value for this time
-				sampler.getData().add(new SamplingData(sampler,now,new BigDecimal(0)));
+				sampler.getData().add(new SamplingData(sampler,now.getTime(),new BigDecimal(0)));
 			}
-			dashboardDao.saveOrUpdate(sampler);
-			session.flush();
+			if (start >0) {							
+				sampler.setVisualRefreshTime(now.getTime()-start);
+			}
+			sampler.setLastUpdated(now);
+			session.saveOrUpdate(sampler);			
 			for (SamplingData d:old) {
 				session.delete(d);
 			}
-			session.flush();
+			
 			trans.commit();
+			session.flush();
 			rs.close();
 		} finally {
 			if (!conn.isClosed())

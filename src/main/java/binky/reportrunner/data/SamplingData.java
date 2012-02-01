@@ -41,7 +41,7 @@ public class SamplingData extends DatabaseObject<SamplingData_pk> {
 	public SamplingData() {
 		
 	}
-	public SamplingData(RunnerDashboardSampler sampler, Date sampleDate, BigDecimal value) {
+	public SamplingData(RunnerDashboardSampler sampler, Long sampleDate, BigDecimal value) {
 		this.pk = new SamplingData_pk(sampler,sampleDate);
 		this.value = value;
 	}
@@ -51,7 +51,7 @@ public class SamplingData extends DatabaseObject<SamplingData_pk> {
 		if(obj instanceof SamplingData && obj!=null && this.pk!=null && ((SamplingData)obj).getPk()!=null) {
 			SamplingData comp = (SamplingData)obj;
 			if (this.pk.getSampleTime()!=null&&comp.getPk().getSampleTime()!=null &&this.getPk().getSampler()!=null && comp.getPk().getSampler()!=null) {
-				return (this.getPk().getSampler().getItemId().equals(comp.getPk().getSampler().getItemId())&&this.getPk().getSampleTime().getTime()==comp.getPk().getSampleTime().getTime());
+				return (this.getPk().getSampler().getItemId().equals(comp.getPk().getSampler().getItemId())&&this.getPk().getSampleTime().equals(comp.getPk().getSampleTime()));
 			} else {
 				return false;
 			}

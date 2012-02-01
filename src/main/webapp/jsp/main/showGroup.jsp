@@ -33,8 +33,9 @@
 							<div class="clearFix"></div>
 							<s:set name="currentRow" value="%{displayRow}"/>							
 						</s:if>						
+					
 						<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}" updateFreq="%{visualRefreshTime}">
-							<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}"/>										
+							<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}" />										
 						</sx:div>	
 					</s:iterator>
 				</div>

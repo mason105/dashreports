@@ -117,8 +117,7 @@
 				<s:property value="%{item.itemName}"/>
 				<div class="widgetToolbar">
 	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
-	 					 <s:a href="setupEditSampler.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/v2/icons/edit.png'/>" align="absmiddle" title="Edit" /></s:a>
-						 <s:a href="invokeItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/v2/icons/execute.png'/>" title="Invoke Now" align="absmiddle" /></s:a> 					 
+	 					 <s:a href="setupEditSampler.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/v2/icons/edit.png'/>" align="absmiddle" title="Edit" /></s:a>						 					 
 	 					 <s:a href="deleteItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}" onclick="return confirm('Really delete this item?');"><img src="<s:url value='/images/v2/icons/delete.png'/>" title="Delete" align="absmiddle" /></s:a>	
 	 				</s:if>		
 				</div>	

@@ -78,10 +78,10 @@ public class GetSamplerChart extends BaseDashboardAction {
 		}
 		
 		chart = ChartFactory
-				.createLineChart(
+				.createLineChart(						
+						"",						
 						"",
 						item.getYAxisLabel(),
-						"",
 						dataSet,
 						item.getOrientation() == Orientation.VERTICAL ? PlotOrientation.VERTICAL
 								: PlotOrientation.HORIZONTAL, true, false,

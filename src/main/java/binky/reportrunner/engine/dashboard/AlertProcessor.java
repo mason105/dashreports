@@ -40,6 +40,7 @@ import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.quartz.InterruptableJob;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -155,6 +156,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 			//first of all we need to clean out any that now fall outside of our window
 			List<SamplingData> old = new LinkedList<SamplingData>();
 			logger.trace("current sample size is :" + sampler.getData().size());
+			Transaction trans = session.beginTransaction();
 			for (SamplingData d: sampler.getData()) {
 				logger.trace("testing entry for : " + d.getPk().getSampleTime());
 				if (d.getPk().getSampleTime().getTime()<cutoff.getTime()) {
@@ -181,6 +183,7 @@ public class AlertProcessor implements Job, InterruptableJob {
 				session.delete(d);
 			}
 			session.flush();
+			trans.commit();
 			rs.close();
 		} finally {
 			if (!conn.isClosed())

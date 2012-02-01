@@ -73,7 +73,7 @@ public class GetChart extends BaseDashboardAction {
 
 			} else {
 				seriesName = (String) b.get(item.getSeriesNameColumn());
-				logger.debug("found series" + seriesName);
+				logger.trace("found series" + seriesName);
 			}
 			if (!series.contains(seriesName)) {
 				series.add(seriesName);
@@ -160,7 +160,7 @@ public class GetChart extends BaseDashboardAction {
 			}
 			switch (item.getChartType()) {
 			case BAR_STACKED_3D:
-				chart = ChartFactory.createStackedBarChart3D("",item.getYLabel(), "",dataSet, PlotOrientation.VERTICAL, true,false,false);								
+				chart = ChartFactory.createStackedBarChart3D("","",item.getYLabel(),dataSet, PlotOrientation.VERTICAL, true,false,false);								
 				CategoryPlot barPlotStack3D = (CategoryPlot)chart.getPlot();
 				barPlotStack3D.setDomainGridlinesVisible(item.isGridLines());
 				barPlotStack3D.setRangeGridlinesVisible(item.isGridLines());
@@ -171,7 +171,7 @@ public class GetChart extends BaseDashboardAction {
 				barPlotStack3D.setBackgroundPaint(Color.decode(item.getBackGroundColour()));
 				break;				
 			case BAR_STACKED:
-				chart = ChartFactory.createStackedBarChart("",item.getYLabel(), "",dataSet, item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
+				chart = ChartFactory.createStackedBarChart("","",item.getYLabel(),dataSet, item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
 				CategoryPlot barPlotStack = (CategoryPlot)chart.getPlot();
 				BarRenderer brStack = (BarRenderer)barPlotStack.getRenderer();
 				brStack.setItemMargin(0.0d);
@@ -183,7 +183,7 @@ public class GetChart extends BaseDashboardAction {
 
 				break;				
 			case BAR_3D:
-				chart = ChartFactory.createBarChart3D("",item.getYLabel(), "",dataSet, item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
+				chart = ChartFactory.createBarChart3D("","",item.getYLabel(),dataSet, item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
 				CategoryPlot barPlot3D = (CategoryPlot)chart.getPlot();
 				BarRenderer3D br3D = (BarRenderer3D)barPlot3D.getRenderer();
 				br3D.setItemMargin(0.0d);
@@ -194,7 +194,7 @@ public class GetChart extends BaseDashboardAction {
 				barPlot3D.setDomainGridlinePaint(Color.black);
 				break;
 			case BAR:
-				chart = ChartFactory.createBarChart("",item.getYLabel(), "",dataSet, item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
+				chart = ChartFactory.createBarChart("","",item.getYLabel(),dataSet, item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
 				CategoryPlot barPlot = (CategoryPlot)chart.getPlot();
 				BarRenderer br = (BarRenderer)barPlot.getRenderer();
 				br.setItemMargin(0.0d);
@@ -205,7 +205,7 @@ public class GetChart extends BaseDashboardAction {
 				barPlot.setBackgroundPaint(Color.decode(item.getBackGroundColour()));
 				break;
 			case AREA:
-				chart = ChartFactory.createAreaChart("",item.getYLabel(), "",dataSet, item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
+				chart = ChartFactory.createAreaChart("","",item.getYLabel(),dataSet, item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
 				CategoryPlot areaPlot = (CategoryPlot)chart.getPlot();			
 				areaPlot.setBackgroundPaint(Color.decode(item.getBackGroundColour()));
 				areaPlot.setDomainGridlinesVisible(item.isGridLines());
@@ -214,7 +214,7 @@ public class GetChart extends BaseDashboardAction {
 				areaPlot.setDomainGridlinePaint(Color.black);
 				break;
 			case LINE_3D:
-				chart = ChartFactory.createLineChart3D("",item.getYLabel(), "",dataSet, item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
+				chart = ChartFactory.createLineChart3D("","",item.getYLabel(),dataSet, item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
 				CategoryPlot linePlot3D = (CategoryPlot)chart.getPlot();			
 				linePlot3D.setBackgroundPaint(Color.decode(item.getBackGroundColour()));
 				linePlot3D.setDomainGridlinesVisible(item.isGridLines());
@@ -223,7 +223,7 @@ public class GetChart extends BaseDashboardAction {
 				linePlot3D.setDomainGridlinePaint(Color.black);
 				break;				
 			case LINE:
-				chart = ChartFactory.createLineChart("",item.getYLabel(), "",dataSet,item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
+				chart = ChartFactory.createLineChart("","",item.getYLabel(),dataSet,item.getOrientation()==Orientation.VERTICAL? PlotOrientation.VERTICAL:PlotOrientation.HORIZONTAL, true,false,false);								
 				CategoryPlot linePlot = (CategoryPlot)chart.getPlot();			
 				linePlot.setBackgroundPaint(Color.decode(item.getBackGroundColour()));
 				linePlot.setDomainGridlinesVisible(item.isGridLines());

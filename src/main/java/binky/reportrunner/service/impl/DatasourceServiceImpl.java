@@ -51,6 +51,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+import com.googlecode.ehcache.annotations.TriggersRemove;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
@@ -222,6 +225,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 		this.dataSourceDao = dataSourceDao;
 	}
 
+	@TriggersRemove(cacheName="dataSourceCache")
 	public void deleteDataSource(String dataSourceName) {
 		if (dataSources.get(dataSourceName) != null) {
 			dataSources.remove(dataSourceName);
@@ -230,11 +234,13 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	}
 
+	@Cacheable(cacheName="dataSourceCache")
 	public RunnerDataSource getDataSource(String dataSourceName) {
 		RunnerDataSource ds = dataSourceDao.get(dataSourceName);
 		return ds;
 	}
 
+	@Cacheable(cacheName="dataSourceCache")
 	public List<RunnerDataSource> listDataSources() {
 		return dataSourceDao.getAll();
 	}

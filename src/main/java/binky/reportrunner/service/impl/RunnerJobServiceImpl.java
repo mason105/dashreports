@@ -40,6 +40,8 @@ import javax.sql.DataSource;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
@@ -102,11 +104,13 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 		}
 	}
 
+	@Cacheable(cacheName="jobCache")
 	public RunnerJob getJob(String jobName, String groupName) {
 		logger.debug("get job: " + groupName + "." + jobName);
 		return runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
 	}
 
+	@Cacheable(cacheName="jobCache")
 	public List<RunnerJob> listJobs(String groupName) {
 		return runnerJobDao.findByNamedQuery("getJobsByGroup", new String[]{groupName});
 	}

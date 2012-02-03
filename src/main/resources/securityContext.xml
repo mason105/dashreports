@@ -18,6 +18,7 @@
 	<!-- security filter -->
 	<bean id="authIntercept" class=" binky.reportrunner.security.RRAuthenticationProcessingFilter">
 		<property name="userService" ref="userService"/>
+		<property name="auditService" ref="auditService"/>
 		<property name="authenticationManager" ref="authenticationManager" />
 		<property name="authenticationFailureHandler" ref="failureHandler"/>
 		<property name="authenticationSuccessHandler" ref="successHandler"/>

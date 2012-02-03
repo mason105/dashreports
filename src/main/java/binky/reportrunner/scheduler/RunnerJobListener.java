@@ -38,13 +38,14 @@ import org.quartz.JobListener;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerGroup;
-import binky.reportrunner.data.RunnerHistoryEvent;
+import binky.reportrunner.data.RunnerHistoryEvent.Module;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJob_pk;
 import binky.reportrunner.engine.RunnerEngine;
 import binky.reportrunner.engine.dashboard.AlertProcessor;
 import binky.reportrunner.engine.utils.EmailHandler;
 import binky.reportrunner.engine.utils.impl.EmailHandlerImpl;
+import binky.reportrunner.service.AuditService;
 import binky.reportrunner.service.DatasourceService;
 
 public class RunnerJobListener implements JobListener {
@@ -56,7 +57,7 @@ public class RunnerJobListener implements JobListener {
 
 	private String fromAddress;
 
-	private ReportRunnerDao<RunnerHistoryEvent,Long> runnerHistoryDao;
+	private AuditService auditService;
 
 	private ReportRunnerDao<RunnerJob,RunnerJob_pk> runnerJobDao;
 
@@ -65,13 +66,7 @@ public class RunnerJobListener implements JobListener {
 	private ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao;
 	
 	public void jobExecutionVetoed(JobExecutionContext ctx) {
-		RunnerHistoryEvent event = new RunnerHistoryEvent();
-		event.setGroupName(ctx.getJobDetail().getGroup());
-		event.setJobName(ctx.getJobDetail().getName());
-		event.setMessage("Job Execution Vetoed");
-		event.setTimestamp(Calendar.getInstance().getTime());
-
-		runnerHistoryDao.saveOrUpdate(event);
+		auditService.logAuditEvent(Module.CORE_SCHEDULER, "Job Execution Vetoed", "", false, 0, ctx.getJobDetail().getName(), ctx.getJobDetail().getGroup());
 		logger.warn("Job Execution Vetoed: " + ctx.getJobDetail().getName()
 				+ "/" + ctx.getJobDetail().getGroup());
 	}
@@ -124,18 +119,18 @@ public class RunnerJobListener implements JobListener {
 		Boolean success = (ex == null);
 		String jobName = ctx.getJobDetail().getName();
 		String groupName = ctx.getJobDetail().getGroup();
-		RunnerHistoryEvent event = new RunnerHistoryEvent();
-		event.setGroupName(groupName);
-		event.setJobName(jobName);
 		
-		event.setMessage(success ? "Scheduler Execution Success"
-				: "Scheduler Execution Failure: " + getCustomStackTrace(ex));
+		String message=success ? "Scheduler Execution Success"
+				: "Scheduler Execution Failure: " + getCustomStackTrace(ex);
 		
-		Date finishTime = Calendar.getInstance().getTime();
-		event.setTimestamp(finishTime);
-		event.setSuccess(success);
-		event.setRunTime(ctx.getJobRunTime());
-		runnerHistoryDao.saveOrUpdate(event);
+		if (ctx.getJobDetail().getJobClass().equals(RunnerEngine.class)) {
+			
+			auditService.logAuditEvent(Module.REPORT_SCHEDULER, message, "", success, ctx.getJobRunTime(), jobName, groupName);
+		} else if (ctx.getJobDetail().getJobClass()
+				.equals(AlertProcessor.class)) {
+			auditService.logAuditEvent(Module.DASHBOARD_SCHEDULER, message, "", success, ctx.getJobRunTime(), jobName, groupName);			
+		}
+		
 
 		
 		if (ctx.getJobDetail().getJobClass().equals(RunnerEngine.class)) {
@@ -145,7 +140,7 @@ public class RunnerJobListener implements JobListener {
 			if ((job.getAlertEmailAddress() != null)
 					&& !job.getAlertEmailAddress().isEmpty()) {
 				sendEmailAlert(jobName, groupName, job.getAlertEmailAddress(),
-						finishTime, success);
+						Calendar.getInstance().getTime(), success);
 			}
 		}
 
@@ -188,8 +183,8 @@ public class RunnerJobListener implements JobListener {
 	}
 
 
-	public void setRunnerHistoryDao(ReportRunnerDao<RunnerHistoryEvent,Long> runnerHistoryDao) {
-		this.runnerHistoryDao = runnerHistoryDao;
+	public void setAuditService(AuditService auditService) {
+		this.auditService = auditService;
 	}
 
 	public void setRunnerJobDao(ReportRunnerDao<RunnerJob,RunnerJob_pk> runnerJobDao) {

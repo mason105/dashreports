@@ -134,9 +134,7 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
-		<property name="historyDao">
-			<ref bean="runnerHistoryDao" />
-		</property>
+		<property name="auditService" ref="auditService" />
 	</bean>
 	
 	<bean id="invokeJobAction"
@@ -191,9 +189,7 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
-		<property name="historyDao">
-			<ref bean="runnerHistoryDao" />
-		</property>
+		<property name="auditService" ref="auditService" />
 	</bean>
 
 	<bean id="deleteDataSourceAction"
@@ -497,10 +493,7 @@
 	<bean id="setupJobStatsAction"
 		class="binky.reportrunner.ui.actions.admin.SetupJobStatsAction"
 		scope="prototype">
-		<property name="historyDao">
-			<ref bean="runnerHistoryDao" />
-		</property>
-
+		<property name="auditService" ref="auditService" />
 	</bean>
 
 </beans>

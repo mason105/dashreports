@@ -24,6 +24,7 @@ package binky.reportrunner.ui.actions.dashboard.edit;
 
 import binky.reportrunner.data.RunnerDashboardSampler;
 import binky.reportrunner.ui.actions.dashboard.base.BaseEditDashboardAction;
+import binky.reportrunner.ui.util.QuartzCronSchedule;
 
 public class SaveSampler extends BaseEditDashboardAction {
 
@@ -33,6 +34,27 @@ public class SaveSampler extends BaseEditDashboardAction {
 
 	@Override
 	public String execute() throws Exception {
+		switch (item.getInterval()) {
+		case DAY:
+			super.simpleCron=new QuartzCronSchedule("0 0 0 ? * *");
+		 break;
+		case MINUTE:
+			super.simpleCron=new QuartzCronSchedule("0 * * ? * *");
+			break;
+		case MONTH:
+			super.simpleCron=new QuartzCronSchedule("0 0 0 1 * ?");
+			break;
+		case SECOND:
+			super.simpleCron=new QuartzCronSchedule("* * * ? * *");
+			break;
+		case WEEK:
+			super.simpleCron=new QuartzCronSchedule("0 * * ? * 1");
+			break;			
+		case HOUR:
+		default:
+			super.simpleCron=new QuartzCronSchedule("0 0 * ? * *");
+		}
+		
 		return super.saveItem(this.item);
 	}
 

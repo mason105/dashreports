@@ -36,10 +36,10 @@ import javax.persistence.NamedQuery;
 		@NamedQuery(name = "getEventsByJob", query = "from T_EVENT e where e.jobName = ? and e.groupName = ?"),		
 		@NamedQuery(name = "getEventsByModule", query = "from T_EVENT e where e.module = ?"),
 		@NamedQuery(name = "getEventsByUserName", query = "from T_EVENT e where e.userName = ?"),
-		@NamedQuery(name = "getFailedEvents", query = "from T_EVENT e where e.success=false order by timestamp desc"),
+		@NamedQuery(name = "getFailedEvents", query = "from T_EVENT e where e.success=false order by timeStamp desc"),
 		@NamedQuery(name = "getLongestRunningEvents", query = "from T_EVENT e order by runTime desc"),
-		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.success=true order by timestamp desc"),
-		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timestamp < ?")		
+		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.success=true order by timeStamp desc"),
+		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timeStamp < ?")		
 })
 public class RunnerHistoryEvent extends DatabaseObject<Long> {
 
@@ -54,49 +54,53 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 
 	public RunnerHistoryEvent() {}
 	
+	public enum Module {
 
+		REPORT_VIEWER("Report Viewer"),DASHBOARD_SCHEDULER("Dashboard Scheduler"),SECURITY("Security"),REPORT_SCHEDULER("Report Scheduler"),DATASOURCE_SERVICE("Datasource Service"),CORE_SCHEDULER("Core Scheduler");
+		private String displayName;
+
+		Module(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long eventId;
-	private Date timestamp;
+	private long eventId;
+	private Date timeStamp;
 	private String jobName;
 	private String groupName;
 	private String message;
-	private Boolean success;
-	private Long runTime;
+	private boolean success;
+	private long runTime;
 	private String userName;
-	private String module;
+	private Module module;
 
-	public Long getRunTime() {
-		return runTime;
-	}
 
-	public void setRunTime(Long runTime) {
-		this.runTime = runTime;
-	}
-
-	public Boolean getSuccess() {
-		return success;
-	}
-
-	public void setSuccess(Boolean success) {
-		this.success = success;
-	}
-
-	public Long getEventId() {
+	
+	
+	public long getEventId() {
 		return eventId;
 	}
 
-	public void setEventId(Long eventId) {
+	public void setEventId(long eventId) {
 		this.eventId = eventId;
 	}
 
-	public Date getTimestamp() {
-		return timestamp;
+	public Date getTimeStamp() {
+		return timeStamp;
 	}
 
-	public void setTimestamp(Date timestamp) {
-		this.timestamp = timestamp;
+	public void setTimeStamp(Date timeStamp) {
+		this.timeStamp = timeStamp;
 	}
 
 	public String getJobName() {
@@ -123,6 +127,22 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		this.message = message;
 	}
 
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+
+	public long getRunTime() {
+		return runTime;
+	}
+
+	public void setRunTime(long runTime) {
+		this.runTime = runTime;
+	}
+
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
 
@@ -133,7 +153,7 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		ret.append(groupName);
 		ret.append(" ");
 		ret.append("Timestamp=");
-		ret.append(timestamp);
+		ret.append(timeStamp);
 		ret.append(" ");
 		ret.append("Elapsed Time=");
 		ret.append(runTime);
@@ -157,18 +177,18 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		this.userName = userName;
 	}
 
-	public String getModule() {
+	public Module getModule() {
 		return module;
 	}
 
-	public void setModule(String module) {
+	public void setModule(Module module) {
 		this.module = module;
 	}
 
 	public RunnerHistoryEvent(Date timestamp, String jobName,
 			String groupName, String message, Boolean success, Long runTime,
-			String userName, String module) {		
-		this.timestamp = timestamp;
+			String userName, Module module) {		
+		this.timeStamp = timestamp;
 		this.jobName = jobName;
 		this.groupName = groupName;
 		this.message = message;

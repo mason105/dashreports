@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 
 import binky.reportrunner.data.RunnerDashboardItem;
+import binky.reportrunner.data.RunnerDashboardSampler.Interval;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerDashboardChart.ChartType;
@@ -109,7 +110,9 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 	public final List<Window> getWindows() {
 		return Arrays.asList(Window.values());
 	}
-
+	public final List<Interval> getIntervals() {
+		return Arrays.asList(Interval.values());
+	}
 	public final List<ChartType> getChartTypes() {
 		return Arrays.asList(ChartType.values());
 	}

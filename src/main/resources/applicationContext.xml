@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-                    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+                    http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+                    http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
+     			    http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
 	<import resource="applicationContext-db.xml" />
 	<import resource="applicationContext-ui.xml" />
 
-
+	<ehcache:annotation-driven cache-manager="ehCacheManager" create-missing-caches="true" />
+    
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
+    
 	<!--  properties file -->
-	<bean id="placeholderConfig"
+	<bean id="myPlaceholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
@@ -167,7 +173,7 @@
 
 	<bean id="runnerJobListener"
 		class="binky.reportrunner.scheduler.RunnerJobListener">
-		<property name="runnerHistoryDao" ref="runnerHistoryDao" />
+		<property name="auditService" ref="auditService" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
 		<property name="smtpServer" value="${reportrunner.smtpServer}" />
 		<property name="fromAddress"

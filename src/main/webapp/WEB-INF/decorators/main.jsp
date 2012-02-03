@@ -61,7 +61,7 @@
 	<div class="navItemSecTop"><div class="navIcon"><img src="<s:url value='/images/v2/nav/users.png'/>" /></div><s:a href="listUsers.action">Users</s:a></div>
 	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/managegroups.png'/>" /></div><s:a href="listGroups.action">Groups</s:a></div>
 	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/datasource.png'/>" /></div><s:a href="listDataSources.action">Datasources</s:a></div>
-	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/executingJobs.png'/>" /></div><s:a href="listCurrentExecutingJobs.action">Current Executing Jobs</s:a></div>
+	<!-- <div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/executingJobs.png'/>" /></div><s:a href="listCurrentExecutingJobs.action">Current Executing Jobs</s:a></div> -->
 	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/stats.png'/>" /></div><s:a href="jobStatistics.action">Statistics and Warnings</s:a></div>
 	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/scheduler.png'/>" /></div><s:a href="schedulerAdmin.action">Scheduler</s:a></div>
 </div>

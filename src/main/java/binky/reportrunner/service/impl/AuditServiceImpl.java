@@ -6,8 +6,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+import com.googlecode.ehcache.annotations.TriggersRemove;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
+import binky.reportrunner.data.RunnerHistoryEvent.Module;
 import binky.reportrunner.service.AuditService;
 
 public class AuditServiceImpl implements AuditService {
@@ -17,9 +21,10 @@ public class AuditServiceImpl implements AuditService {
 	private ReportRunnerDao<RunnerHistoryEvent, Long> historyDao;
 	
 	@Override
+	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getEventsByJob(String jobName,
 			String groupName, int count) {
-		if (count > 0) {
+		if (count == 0) {
 			return historyDao.findByNamedQuery("getEventsByJob", new String[]{jobName,groupName});
 		} else {
 			return historyDao.findByNamedQuery("getEventsByJob", new String[]{jobName,groupName},count);
@@ -27,17 +32,19 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	public List<RunnerHistoryEvent> getEventsByModule(String moduleName, int count) {
-		if (count > 0) {
-			return historyDao.findByNamedQuery("getEventsByModule", new String[]{moduleName});
+	@Cacheable(cacheName="auditCache")
+	public List<RunnerHistoryEvent> getEventsByModule(Module module, int count) {
+		if (count == 0) {
+			return historyDao.findByNamedQuery("getEventsByModule", new Module[]{module});
 		} else {
-			return historyDao.findByNamedQuery("getEventsByModule", new String[]{moduleName},count);
+			return historyDao.findByNamedQuery("getEventsByModule", new Module[]{module},count);
 		}
 	}
 
 	@Override
+	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getEventsByUserName(String userName, int count) {
-		if (count > 0) {
+		if (count == 0) {
 			return historyDao.findByNamedQuery("getEventsByUserName", new String[]{userName});
 		} else {
 			return historyDao.findByNamedQuery("getEventsByUserName", new String[]{userName},count);
@@ -46,8 +53,9 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
+	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getFailedEvents(int count) {
-		if (count > 0) {
+		if (count == 0) {
 			return historyDao.findByNamedQuery("getFailedEvents", null);
 		} else {
 			return historyDao.findByNamedQuery("getFailedEvents", null,count);
@@ -56,8 +64,9 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
+	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getLongestRunningEvents(int count) {
-		if (count > 0) {
+		if (count == 0) {
 			return historyDao.findByNamedQuery("getLongestRunningEvents", null);
 		} else {
 			return historyDao.findByNamedQuery("getLongestRunningEvents", null,count);
@@ -66,6 +75,7 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
+	@TriggersRemove(cacheName="auditCache")
 	public void deleteOldEvents(Date cutOff) {
 		List<RunnerHistoryEvent> events = historyDao.findByNamedQuery("getOldEvents", new Object[]{cutOff});
 		for (RunnerHistoryEvent e: events) {
@@ -74,8 +84,9 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
+	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getSuccessEvents(int count) {
-		if (count > 0) {
+		if (count == 0) {
 			return historyDao.findByNamedQuery("getSuccessEvents", null);
 		} else {
 			return historyDao.findByNamedQuery("getSuccessEvents", null,count);
@@ -84,11 +95,11 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	public void logAuditEvent(String moduleName, String message,
+	public void logAuditEvent(Module module, String message,
 			String userName, boolean success, long runTime, String jobName,
 			String groupName) {
 
-		RunnerHistoryEvent event = new RunnerHistoryEvent(Calendar.getInstance().getTime(), jobName, groupName, message, success, runTime,userName, moduleName);	
+		RunnerHistoryEvent event = new RunnerHistoryEvent(Calendar.getInstance().getTime(), jobName, groupName, message, success, runTime,userName, module);	
 		logger.debug("logging audit message: " + event.toString());
 		historyDao.saveOrUpdate(event);
 		

@@ -3,6 +3,7 @@ package binky.reportrunner.data;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
@@ -32,6 +33,26 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 		}
 
 	}
+	public enum Interval {
+
+		SECOND("Second"), MINUTE("Minute"), HOUR("Hour"), DAY("Day"), WEEK("Week"),MONTH("Month");
+		private String displayName;
+
+		Interval(String displayName) {
+			this.displayName = displayName;
+		}
+
+		public String getName() {
+			return name();
+		}
+
+		public String getDisplayName() {
+			return displayName;
+		}
+
+	}
+	@Column(name="refreshInterval")
+	private Interval interval;
 	private Orientation orientation;
 	private boolean gridLines;
 	@Override
@@ -105,6 +126,14 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public Interval getInterval() {
+		return interval;
+	}
+
+	public void setInterval(Interval interval) {
+		this.interval = interval;
 	}
 	
 }

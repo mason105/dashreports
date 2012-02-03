@@ -29,7 +29,7 @@ public class DashboardWidgetAction extends BaseDashboardAction {
 	private Map<String, ThresholdItem> thresholdData;
 	private Integer itemId;
 	private RunnerDashboardItem item;
-	
+	private long random;
 	@Override
 	public String execute() throws Exception {
 		
@@ -73,7 +73,7 @@ public class DashboardWidgetAction extends BaseDashboardAction {
 			this.thresholdData=data;
 		}
 		
-		
+		this.random=Math.round(Math.random()*100000);
 		return SUCCESS;
 	}
 	public Map<String, ThresholdItem> getThresholdData() {
@@ -97,6 +97,9 @@ public class DashboardWidgetAction extends BaseDashboardAction {
 
 	public void setItem(RunnerDashboardItem item) {
 		this.item = item;
+	}
+	public long getRandom() {
+		return random;
 	}
 
 

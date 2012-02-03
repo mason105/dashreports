@@ -83,7 +83,17 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 	}
 	public final String getSessionUserName() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		return auth.getName();		
+		if (auth!=null) {
+			return auth.getName();
+		} else {
+			RunnerUser user = getSessionUser();
+			if (user!=null) {
+				return user.getUsername();
+			} else {
+				return null;
+			}
+		}
+		
 	}
 	
 	public final String getActionName() {

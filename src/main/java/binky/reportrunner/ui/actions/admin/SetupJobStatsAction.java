@@ -26,14 +26,14 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
+import binky.reportrunner.service.AuditService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class SetupJobStatsAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
-	private ReportRunnerDao<RunnerHistoryEvent,Long> historyDao;
+	private AuditService auditService;
 	private List<RunnerHistoryEvent> longestEvents;
 	private List<RunnerHistoryEvent> latestSuccessEvents;
 	private List<RunnerHistoryEvent> latestFailEvents;
@@ -43,16 +43,23 @@ public class SetupJobStatsAction extends StandardRunnerAction {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 
-		this.longestEvents = historyDao.findByNamedQuery("getLongestRunningEvents",new String[]{} ,20);
-		this.latestSuccessEvents = historyDao.findByNamedQuery("getSuccessEvents",new String[]{} ,20);
-		this.latestFailEvents = historyDao.findByNamedQuery("getFailedEvents",new String[]{} ,20);
+		this.longestEvents = auditService.getLongestRunningEvents(20);
+		this.latestSuccessEvents = auditService.getSuccessEvents(20);
+		this.latestFailEvents = auditService.getFailedEvents(20);
 		
 		return SUCCESS;
 	}
 
-	public void setHistoryDao(ReportRunnerDao<RunnerHistoryEvent,Long> historyDao) {
-		this.historyDao = historyDao;
+
+	
+	
+	public void setAuditService(AuditService auditService) {
+		this.auditService = auditService;
 	}
+
+
+
+
 	public List<RunnerHistoryEvent> getLatestFailEvents() {
 		return latestFailEvents;
 	}

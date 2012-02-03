@@ -99,14 +99,18 @@ public final class QuartzCronSchedule {
 		cron.append(getCronSegment(allMonths, "*", months));
 		cron.append(" ");
 		// day of month
-		cron.append(getCronSegment(allDaysOfWeek, "*", daysOfWeek));
+		if (allDaysOfMonth) {
+			cron.append(getCronSegment(allDaysOfWeek, "*", daysOfWeek));
+		} else {
+			cron.append(getCronSegment(allDaysOfWeek, "?", daysOfWeek));
+		}
 
 		return cron.toString();
 	}
 
 	private String getCronSegment(boolean all, String allString, int[] nums) {
 		StringBuilder cronSegment = new StringBuilder();
-		if (all && (nums == null || nums.length == 0)) {
+		if (all) {
 			cronSegment.append(allString);
 		} else {
 			if ((nums == null) || (nums.length == 0)) {

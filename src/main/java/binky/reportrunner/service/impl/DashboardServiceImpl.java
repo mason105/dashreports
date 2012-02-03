@@ -28,6 +28,9 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+import com.googlecode.ehcache.annotations.Cacheable;
+import com.googlecode.ehcache.annotations.TriggersRemove;
+
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerGroup;
@@ -46,11 +49,12 @@ public class DashboardServiceImpl implements DashboardService {
 	public RunnerDashboardItem getItem(Integer id) {
 		return dashboardDao.get(id);
 	}
+	@TriggersRemove(cacheName="dashboardCache")
 	public void deleteItem(Integer id) throws SchedulerException {
 		dashboardDao.delete(id);
 		scheduler.removedDashboardAlert(id);		
 	}
-
+	@Cacheable(cacheName="dashboardCache")
 	public List<RunnerDashboardItem> getItemsForGroup(String groupName) {
 		List<RunnerDashboardItem> as = dashboardDao.findByNamedQuery("getItemsByGroup", new String[]{groupName});			
 		List<RunnerDashboardItem> alerts=new LinkedList<RunnerDashboardItem>();
@@ -79,6 +83,7 @@ public class DashboardServiceImpl implements DashboardService {
 		
 	}
 
+	@Cacheable(cacheName="dashboardCache")
 	public List<RunnerDashboardItem> getAllItems() {
 		return dashboardDao.getAll();
 	}
@@ -105,7 +110,7 @@ public class DashboardServiceImpl implements DashboardService {
 	public void setScheduler(Scheduler scheduler) {
 		this.scheduler = scheduler;
 	}
-	
+	@Cacheable(cacheName="dashboardCache")
 	public List<RunnerDashboardItem> getRunningItems() {
 		List<String> runningJobs = scheduler.getCurrentRunningJobs();
 		List<RunnerDashboardItem> alerts = new LinkedList<RunnerDashboardItem>();

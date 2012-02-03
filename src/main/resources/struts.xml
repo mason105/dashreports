@@ -4,64 +4,51 @@
     "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
     "http://struts.apache.org/dtds/struts-2.0.dtd">
 
-<!--
-  Copyright (c) 2009 Daniel Grout.
-  
-  GNU GENERAL PUBLIC LICENSE - Version 3
-  
-  This file is part of Report Runner (http://code.google.com/p/reportrunner).
-  
-  Report Runner is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-  
-  Report Runner is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with Report Runner. If not, see <http://www.gnu.org/licenses/>.
-  
-  Module: struts.xml
--->    
-    
+<!-- Copyright (c) 2009 Daniel Grout. GNU GENERAL PUBLIC LICENSE - Version 
+	3 This file is part of Report Runner (http://code.google.com/p/reportrunner). 
+	Report Runner is free software: you can redistribute it and/or modify it 
+	under the terms of the GNU General Public License as published by the Free 
+	Software Foundation, either version 3 of the License, or (at your option) 
+	any later version. Report Runner is distributed in the hope that it will 
+	be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of 
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General 
+	Public License for more details. You should have received a copy of the GNU 
+	General Public License along with Report Runner. If not, see <http://www.gnu.org/licenses/>. 
+	Module: struts.xml -->
+
 <struts>
 	<package name="reportRunner" extends="struts-default">
 		<interceptors>
 			<interceptor name="noCache" class="noCacheInterceptor" />
 		</interceptors>
-		<!--
-			Make the defaultLoginStack the default one used for all actions
-			unless otherwise configured.
-		-->
+		<!-- Make the defaultLoginStack the default one used for all actions unless 
+			otherwise configured. -->
 		<default-interceptor-ref name="defaultStack" />
-		
-		<default-action-ref name="index" />		
-		
+
+		<default-action-ref name="index" />
+
 		<action name="index" class="indexAction">
 			<result>/jsp/main/index.jsp</result>
 		</action>
-		
+
 		<action name="schedulerAdmin" class="schedulerAdminAction">
 			<result>/jsp/main/schedulerAdmin.jsp</result>
 		</action>
-		
+
 		<action name="testDataSource" class="testDataSourceAction">
 			<result>/jsp/nostyle/testDataSource.jsp</result>
 		</action>
-		
+
 		<action name="driverDetail" class="driverDetailAction">
 			<result>/jsp/nostyle/driverDetail.jsp</result>
 		</action>
-		
+
 		<action name="schedulerStateChange" class="schedulerStateChangeAction">
 			<result type="redirectAction">
 				<param name="actionName">schedulerAdmin</param>
 			</result>
 		</action>
-				
+
 		<action name="listGroups" class="listGroupsAction">
 			<result>/jsp/main/listGroups.jsp</result>
 		</action>
@@ -69,28 +56,28 @@
 		<action name="deleteJob" class="deleteJobAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>
-        		<param name="activeTab">reports</param>				
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">reports</param>
 			</result>
 		</action>
 
 		<action name="editJob" class="editJobAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>
-				<param name="activeTab">reports</param>        						
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">reports</param>
 			</result>
-			<result name="input">/jsp/main/editJob.jsp</result>			
-		</action>		
-		
+			<result name="input">/jsp/main/editJob.jsp</result>
+		</action>
+
 		<action name="setJobStatus" class="setJobStatusAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>
-				<param name="activeTab">reports</param>        						        						
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">reports</param>
 			</result>
 		</action>
 
@@ -102,7 +89,7 @@
 			<result>/jsp/main/viewJobDetail.jsp
 			</result>
 		</action>
-		
+
 		<action name="changeAllGroupJobStatus" class="changeAllGroupJobStatusAction">
 			<result type="redirectAction">
 				<param name="actionName">listGroups</param>
@@ -119,7 +106,7 @@
 			<result type="redirectAction">
 				<param name="actionName">listGroups</param>
 			</result>
-			<result name="input">/jsp/main/editGroup.jsp</result>			
+			<result name="input">/jsp/main/editGroup.jsp</result>
 		</action>
 
 		<action name="setupEditGroup" class="setupEditGroupAction">
@@ -130,18 +117,18 @@
 			<result name="PARAMS">/jsp/main/jobViewerSetup.jsp</result>
 			<result name="NOPARAMS" type="redirectAction">
 				<param name="actionName">viewJobOutput</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>
-        		<param name="jobName">${jobName}</param>			
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="jobName">${jobName}</param>
 			</result>
 		</action>
-		
+
 		<action name="viewJobOutput" class="viewJobOutputAction">
-   			 <interceptor-ref name="defaultStack"/>
-   			 <interceptor-ref name="execAndWait"/>
-   			 <result name="wait">/jsp/main/jobViewerWait.jsp</result>
-    		 <result name="DOWNLOAD">/jsp/main/jobViewer.jsp</result>
-    		 <result name="GRID">/jsp/main/viewJobGrid.jsp</result>
+			<interceptor-ref name="defaultStack" />
+			<interceptor-ref name="execAndWait" />
+			<result name="wait">/jsp/main/jobViewerWait.jsp</result>
+			<result name="DOWNLOAD">/jsp/main/jobViewer.jsp</result>
+			<result name="GRID">/jsp/main/viewJobGrid.jsp</result>
 		</action>
 
 		<action name="deleteDataSource" class="deleteDataSourceAction">
@@ -152,13 +139,13 @@
 		</action>
 
 		<action name="purgeConnections" class="purgeConnectionsAction">
-		
+
 			<result type="redirectAction">
 				<param name="actionName">listDataSources</param>
 			</result>
 
 		</action>
-		
+
 		<action name="listDataSources" class="listDataSourcesAction">
 			<result>/jsp/main/listDataSources.jsp
 			</result>
@@ -176,9 +163,9 @@
 		<action name="invokeJob" class="invokeJobAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>
-				<param name="activeTab">reports</param>        						        						
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">reports</param>
 			</result>
 		</action>
 
@@ -193,110 +180,110 @@
 		<action name="itemAddDispatcher" class="itemAddDispatcherAction">
 			<result name="Chart" type="redirectAction">
 				<param name="actionName">setupEditChart</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>	
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
 			</result>
 		</action>
 
 		<action name="itemAddDispatcher" class="itemAddDispatcherAction">
 			<result name="Chart" type="redirectAction">
 				<param name="actionName">setupEditChart</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>	
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
 			</result>
 			<result name="Grid" type="redirectAction">
 				<param name="actionName">setupEditGrid</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>	
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
 			</result>
 			<result name="Threshold" type="redirectAction">
 				<param name="actionName">setupEditThreshold</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>	
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
 			</result>
 			<result name="Sampler" type="redirectAction">
 				<param name="actionName">setupEditSampler</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>	
-			</result>			
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+			</result>
 		</action>
 
 		<action name="setupEditChart" class="setupEditChartAction">
 			<result>/jsp/main/editChart.jsp</result>
 		</action>
-		
+
 		<action name="saveChart" class="saveChartAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>
-				<param name="activeTab">dashboard</param>        						
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">dashboard</param>
 			</result>
-			<result  name="input">/jsp/main/editChart.jsp</result>
+			<result name="input">/jsp/main/editChart.jsp</result>
 		</action>
 
 		<action name="setupEditGrid" class="setupEditGridAction">
 			<result>/jsp/main/editGrid.jsp</result>
 		</action>
-		
+
 		<action name="setupEditSampler" class="setupEditSamplerAction">
 			<result>/jsp/main/editSampler.jsp</result>
 		</action>
-				
+
 		<action name="showGroup" class="showGroupAction">
 			<result>/jsp/main/showGroup.jsp</result>
 		</action>
-		
+
 		<action name="saveSampler" class="saveSamplerAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>
-        		<param name="activeTab">dashboard</param>				
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">dashboard</param>
 			</result>
-			<result  name="input">/jsp/main/editSampler.jsp</result>
-		</action>		
-		
+			<result name="input">/jsp/main/editSampler.jsp</result>
+		</action>
+
 		<action name="saveGrid" class="saveGridAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>
-        		<param name="activeTab">dashboard</param>				
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">dashboard</param>
 			</result>
-			<result  name="input">/jsp/main/editGrid.jsp</result>
+			<result name="input">/jsp/main/editGrid.jsp</result>
 		</action>
 
 		<action name="setupEditThreshold" class="setupEditThresholdAction">
 			<result>/jsp/main/editThreshold.jsp</result>
 		</action>
-		
+
 		<action name="saveThreshold" class="saveThresholdAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>
-        		<param name="activeTab">dashboard</param>				
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">dashboard</param>
 			</result>
-			<result  name="input">/jsp/main/editThreshold.jsp</result>
+			<result name="input">/jsp/main/editThreshold.jsp</result>
 		</action>
 
 
 		<action name="deleteItem" class="deleteItemAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>
-				 <param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>
-        		<param name="activeTab">dashboard</param>
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">dashboard</param>
 			</result>
 		</action>
 
 		<action name="invokeItem" class="invokeItemAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>
-        		<param name="parse">true</param>
-        		<param name="groupName">${groupName}</param>		
-        		<param name="activeTab">dashboard</param>		
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">dashboard</param>
 			</result>
 		</action>
 
@@ -304,9 +291,9 @@
 			<result type="redirectAction">
 				<param name="actionName">index</param>
 			</result>
-			<result name="input">/jsp/main/changePassword.jsp</result>	
+			<result name="input">/jsp/main/changePassword.jsp</result>
 		</action>
-		
+
 		<action name="setupChangePassword" class="setupChangePasswordAction">
 			<result>/jsp/main/changePassword.jsp</result>
 		</action>
@@ -314,7 +301,7 @@
 		<action name="deleteUser" class="deleteUserAction">
 			<result type="redirectAction">
 				<param name="actionName">listUsers</param>
-			</result>	
+			</result>
 		</action>
 
 
@@ -327,7 +314,7 @@
 			<result type="redirectAction">
 				<param name="actionName">listUsers</param>
 			</result>
-			<result name="input">/jsp/main/editUser.jsp</result>	
+			<result name="input">/jsp/main/editUser.jsp</result>
 		</action>
 
 		<action name="setupEditDataSource" class="setupEditDataSourceAction">
@@ -339,15 +326,15 @@
 			<result>/jsp/main/editJNDIDataSource.jsp
 			</result>
 		</action>
-				
-		
-		
+
+
+
 		<action name="downloadReport" class="downloadReportAction">
-		    <result name="sendFile" type="stream">
-		  	  <param name="contentType">application/octet-stream</param>
-  			  <param name="inputName">inputStream</param>
-		  	  <param name="contentDisposition">${contentDisposition}</param>
-			  <param name="bufferSize">1024</param>
+			<result name="sendFile" type="stream">
+				<param name="contentType">application/octet-stream</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">${contentDisposition}</param>
+				<param name="bufferSize">1024</param>
 			</result>
 		</action>
 
@@ -372,21 +359,21 @@
 		</action>
 
 		<action name="dashboardWidget" class="dashboardWidgetAction">
-			<interceptor-ref name="defaultStack"/>		
+			<interceptor-ref name="defaultStack" />
 			<result>/jsp/nostyle/dashboardWidget.jsp</result>
 		</action>
-	
+
 		<action name="dashboard" class="dashboardAction">
 			<result>/jsp/nostyle/dashboard.jsp</result>
 		</action>
-		
-		
+
+
 		<action name="about" class="aboutAction">
 			<result>/jsp/main/about.jsp
 			</result>
 		</action>
-		
-		<!--  SQL Validation Stuff -->
+
+		<!-- SQL Validation Stuff -->
 		<action name="validateItemQuery" class="validateItemQueryAction">
 			<result>/jsp/nostyle/validateQuery.jsp</result>
 		</action>
@@ -394,11 +381,11 @@
 		<action name="validateBurstQuery" class="validateBurstQueryAction">
 			<result>/jsp/nostyle/validateQuery.jsp</result>
 		</action>
-		
+
 		<action name="validateJobQuery" class="validateJobQueryAction">
 			<result>/jsp/nostyle/validateQuery.jsp</result>
 		</action>
-					
+
 		<action name="getChartColumns" class="getQueryColumnsAction">
 			<result>/jsp/nostyle/chartFieldDropdowns.jsp</result>
 		</action>
@@ -410,152 +397,163 @@
 		<action name="getSamplerColumns" class="getQueryColumnsAction">
 			<result>/jsp/nostyle/samplerFieldDropdowns.jsp</result>
 		</action>
-		
+
 	</package>
 	<package name="charts" extends="jfreechart-default">
+
+		<interceptors>
+			<interceptor name="noCache" class="noCacheInterceptor" />
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="noCache" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="myStack" />
+
 		<!-- normal chart -->
 		<action name="getChart" class="getChartAction">
 			<result name="success" type="chart">
-			    <param name="width">353</param>
-			    <param name="height">295</param> 
-  			</result>
+				<param name="width">353</param>
+				<param name="height">295</param>
+			</result>
 		</action>
-	
+
 		<action name="getChartSS" class="getChartAction">
 			<result name="success" type="chart">
-			    <param name="width">353</param>
-			    <param name="height">295</param> 
-  			</result>
+				<param name="width">353</param>
+				<param name="height">295</param>
+			</result>
 		</action>
-	
+
 		<action name="getChartSM" class="getChartAction">
 			<result name="success" type="chart">
-			    <param name="width">353</param>
-			    <param name="height">295</param> 
-  			</result>
+				<param name="width">353</param>
+				<param name="height">295</param>
+			</result>
 		</action>
-	
+
 		<action name="getChartSL" class="getChartAction">
 			<result name="success" type="chart">
-			    <param name="width">353</param>
-			    <param name="height">895</param> 
-  			</result>
+				<param name="width">353</param>
+				<param name="height">895</param>
+			</result>
 		</action>
-	
+
 		<action name="getChartMS" class="getChartAction">
 			<result name="success" type="chart">
-			    <param name="width">714</param>
-			    <param name="height">295</param> 
-  			</result>
+				<param name="width">714</param>
+				<param name="height">295</param>
+			</result>
 		</action>
-	
+
 		<action name="getChartMM" class="getChartAction">
 			<result name="success" type="chart">
-			    <param name="width">714</param>
-			    <param name="height">594</param> 
-  			</result>
+				<param name="width">714</param>
+				<param name="height">594</param>
+			</result>
 		</action>
-	
+
 		<action name="getChartML" class="getChartAction">
 			<result name="success" type="chart">
-			    <param name="width">714</param>
-			    <param name="height">895</param> 
-  			</result>
+				<param name="width">714</param>
+				<param name="height">895</param>
+			</result>
 		</action>
-	
+
 		<action name="getChartLS" class="getChartAction">
 			<result name="success" type="chart">
-			    <param name="width">925</param>
-			    <param name="height">295</param> 
-  			</result>
+				<param name="width">925</param>
+				<param name="height">295</param>
+			</result>
 		</action>
-	
+
 		<action name="getChartLM" class="getChartAction">
 			<result name="success" type="chart">
-			    <param name="width">925</param>
-			    <param name="height">594</param> 
-  			</result>
+				<param name="width">925</param>
+				<param name="height">594</param>
+			</result>
 		</action>
-	
+
 		<action name="getChartLL" class="getChartAction">
 			<result name="success" type="chart">
-			    <param name="width">925</param>
-			    <param name="height">895</param> 
-  			</result>
-		</action>	
+				<param name="width">925</param>
+				<param name="height">895</param>
+			</result>
+		</action>
 
-	<!-- sampler charts -->
-	
+		<!-- sampler charts -->
+
 		<action name="getSamplerChart" class="getSamplerChartAction">
 			<result name="success" type="chart">
-			    <param name="width">353</param>
-			    <param name="height">295</param> 
-  			</result>
+				<param name="width">353</param>
+				<param name="height">295</param>
+			</result>
 		</action>
-	
+
 		<action name="getSamplerChartSS" class="getSamplerChartAction">
 			<result name="success" type="chart">
-			    <param name="width">353</param>
-			    <param name="height">295</param> 
-  			</result>
+				<param name="width">353</param>
+				<param name="height">295</param>
+			</result>
 		</action>
-	
+
 		<action name="getSamplerChartSM" class="getSamplerChartAction">
 			<result name="success" type="chart">
-			    <param name="width">353</param>
-			    <param name="height">295</param> 
-  			</result>
+				<param name="width">353</param>
+				<param name="height">295</param>
+			</result>
 		</action>
-	
+
 		<action name="getSamplerChartSL" class="getSamplerChartAction">
 			<result name="success" type="chart">
-			    <param name="width">353</param>
-			    <param name="height">895</param> 
-  			</result>
+				<param name="width">353</param>
+				<param name="height">895</param>
+			</result>
 		</action>
-	
+
 		<action name="getSamplerChartMS" class="getSamplerChartAction">
 			<result name="success" type="chart">
-			    <param name="width">714</param>
-			    <param name="height">295</param> 
-  			</result>
+				<param name="width">714</param>
+				<param name="height">295</param>
+			</result>
 		</action>
-	
+
 		<action name="getSamplerChartMM" class="getSamplerChartAction">
 			<result name="success" type="chart">
-			    <param name="width">714</param>
-			    <param name="height">594</param> 
-  			</result>
+				<param name="width">714</param>
+				<param name="height">594</param>
+			</result>
 		</action>
-	
+
 		<action name="getSamplerChartML" class="getSamplerChartAction">
 			<result name="success" type="chart">
-			    <param name="width">714</param>
-			    <param name="height">895</param> 
-  			</result>
+				<param name="width">714</param>
+				<param name="height">895</param>
+			</result>
 		</action>
-	
+
 		<action name="getSamplerChartLS" class="getSamplerChartAction">
 			<result name="success" type="chart">
-			    <param name="width">925</param>
-			    <param name="height">295</param> 
-  			</result>
+				<param name="width">925</param>
+				<param name="height">295</param>
+			</result>
 		</action>
-	
+
 		<action name="getSamplerChartLM" class="getSamplerChartAction">
 			<result name="success" type="chart">
-			    <param name="width">925</param>
-			    <param name="height">594</param> 
-  			</result>
+				<param name="width">925</param>
+				<param name="height">594</param>
+			</result>
 		</action>
-	
+
 		<action name="getSamplerChartLL" class="getSamplerChartAction">
 			<result name="success" type="chart">
-			    <param name="width">925</param>
-			    <param name="height">895</param> 
-  			</result>
-		</action>	
-		
-	
+				<param name="width">925</param>
+				<param name="height">895</param>
+			</result>
+		</action>
+
+
 	</package>
 </struts>

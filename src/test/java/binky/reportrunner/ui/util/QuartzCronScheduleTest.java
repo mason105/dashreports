@@ -32,7 +32,7 @@ public class QuartzCronScheduleTest extends TestCase {
 		c.setDaysOfWeek(new int[] { 1, 2, 3 });
 
 		check(c);
-
+		c.setAllDaysOfWeek(true);
 		c.setAllDaysOfMonth(false);
 		c.setDaysOfMonth(new int[] { 1, 2, 3 });
 
@@ -53,11 +53,20 @@ public class QuartzCronScheduleTest extends TestCase {
 
 		String[] schedules = { "* * * ? * *", "0 * * ? * *",
 				"0,1,2,3,4 * * ? * *", "0,1,2,3,4 * * ? * 1,2,3",
-				"0,1,2,3,4 * * 1,2,3 * 1,2,3",
-				"0,1,2,3,4 15,30,45 * 1,2,3 * 1,2,3",
-				"0,1,2,3,4 15,30,45 8,16,22 1,2,3 * 1,2,3",
-				"0,1,2,3,4 15,30,45 8,16,22 1,2,3 1,3,4,5,6,7,8,9,10 1,2,3", };
+				"0,1,2,3,4 * * 1,2,3 * ?",
+				"0,1,2,3,4 15,30,45 * 1,2,3 * ?",
+				"0,1,2,3,4 15,30,45 8,16,22 ? * 1,2,3",
+				"0,1,2,3,4 15,30,45 * ? 1,3,4,5,6,7,8,9,10 1,2,3", 
+				"0 0 0 ? * *",
+				"0 * * ? * *",
+				"0 0 0 1 * ?",
+				"* * * ? * *",
+				"0 * * ? * 1",
+				"0 0 * ? * *"
+				
+		};
 
+		
 		for (String s:schedules) {
 			QuartzCronSchedule q = new QuartzCronSchedule(s);
 			System.out.println(s+ "    :   " + q.toString());			
@@ -75,7 +84,8 @@ public class QuartzCronScheduleTest extends TestCase {
 
 		try {
 			new CronTrigger("test", "test", c.toString());
-		} catch (ParseException e) {
+		} catch (ParseException e) {	
+			System.out.println("x="+c.toString());
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

@@ -29,12 +29,12 @@ import java.util.Map;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.ReportRunnerDao;
-import binky.reportrunner.data.RunnerHistoryEvent;
+import binky.reportrunner.data.RunnerHistoryEvent.Module;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.exceptions.SecurityException;
+import binky.reportrunner.service.AuditService;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -46,7 +46,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 	private Map<String, ViewerResults> downloadResults;
 	private Map<String, List<String>> columns;
-	private ReportRunnerDao<RunnerHistoryEvent, Long> historyDao;
+	private AuditService auditService;
 	private List<RunnerJobParameter> parameters;
 	private Map<String,RowSetDynaClass> gridResults;
 
@@ -102,17 +102,8 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 			long endTime = (new Date()).getTime();
 
 			// create an event for this so we can track performance of bad
-			// queries
-			RunnerHistoryEvent event = new RunnerHistoryEvent();
-			event.setGroupName(groupName);
-			event.setJobName(jobName);
-			String message = "User:" + super.getSessionUser().getUserName()
-					+ " ran job viewer";
-			event.setMessage(message);
-			event.setRunTime(endTime - startTime);
-			event.setTimestamp(new Date());
-			event.setSuccess(true);
-			historyDao.saveOrUpdate(event);
+			// queries			
+			auditService.logAuditEvent(Module.REPORT_VIEWER, "report viewer ran", super.getSessionUserName(), true, (endTime - startTime), jobName, groupName);
 			logger.debug("redirecting to grid");
 			return "GRID";			
 		
@@ -148,17 +139,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 			// create an event for this so we can track performance of bad
 			// queries
-			RunnerHistoryEvent event = new RunnerHistoryEvent();
-			event.setGroupName(groupName);
-			event.setJobName(jobName);
-			String message = "User:" + super.getSessionUser().getUserName()
-					+ " ran job viewer";
-			event.setMessage(message);
-			event.setRunTime(endTime - startTime);
-			event.setTimestamp(new Date());
-			event.setSuccess(true);
-			historyDao.saveOrUpdate(event);
-
+			auditService.logAuditEvent(Module.REPORT_VIEWER, "report viewer ran", super.getSessionUserName(), true, (endTime - startTime), jobName, groupName);
 			return "DOWNLOAD";
 		}
 	}
@@ -185,11 +166,6 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 	public void setParameters(List<RunnerJobParameter> parameters) {
 		this.parameters = parameters;
-	}
-
-	public void setHistoryDao(
-			ReportRunnerDao<RunnerHistoryEvent, Long> historyDao) {
-		this.historyDao = historyDao;
 	}
 
 	public Map<String, ViewerResults> getDownloadResults() {
@@ -223,8 +199,13 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		return serialVersionUID;
 	}
 
-	public ReportRunnerDao<RunnerHistoryEvent, Long> getHistoryDao() {
-		return historyDao;
+	public AuditService getAuditService() {
+		return auditService;
 	}
+
+	public void setAuditService(AuditService auditService) {
+		this.auditService = auditService;
+	}
+
 
 }

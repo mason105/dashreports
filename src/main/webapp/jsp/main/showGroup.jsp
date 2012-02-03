@@ -2,13 +2,30 @@
 	"-//W3C//DTD XHTML 1.1 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <html>
 <head>
  	<sj:head locale="en" jqueryui="true" jquerytheme="smoothness"/>
-	<sx:head parseContent="false" />
+ 	<script type="text/javascript">
+ 	jQuery(document).ready(function () { 
+ 		<s:iterator value="items" status="rowstatus">
+ 		
+ 		 var refreshDiv<s:property value="%{itemId}"/> = 0;
+ 			
+	 	    $.subscribe('completediv<s:property value="%{itemId}"/>', function(event,data) {
+	        if(event.originalEvent.status == "success")
+	        {
+	        	$('#counter2').html(++refreshDiv<s:property value="%{itemId}"/>);
+	        	setTimeout( function() {
+					$.publish('reloaddiv<s:property value="%{itemId}"/>');	
+				}, <s:property value="%{visualRefreshTime}"/> );
+	        }
+	    	});
+	 	</s:iterator>
+ 	});
+ 	</script>
 </head>
+<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 <body>
 
 <div id="groupPanel">
@@ -34,9 +51,12 @@
 							<s:set name="currentRow" value="%{displayRow}"/>							
 						</s:if>						
 					
-						<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}" updateFreq="%{visualRefreshTime}">
-							<sx:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}" />										
-						</sx:div>	
+						<sj:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}"  id="div%{itemId}" 
+						indicator="indicator%{itemId}" 
+    					reloadTopics="reloaddiv%{itemId}" 
+    					onCompleteTopics="completediv%{itemId}" >
+															
+						</sj:div>	
 					</s:iterator>
 				</div>
 			</s:if>

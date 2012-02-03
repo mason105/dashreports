@@ -54,14 +54,15 @@ public class SchedulerImpl implements Scheduler {
 	}
 
 	public int getJobCount() throws org.quartz.SchedulerException {
-		int i = 0;
+		/*int i = 0;
 		for (String groupName : this.quartzScheduler.getJobGroupNames()) {
 			for (String jobName : this.quartzScheduler.getJobNames(groupName)) {
 				logger.debug("found " + jobName + "/" + groupName);
 				i++;
 			}
 		}
-		return i;
+		return i;*/
+		return this.quartzScheduler.getJobGroupNames().length;
 	}
 
 	public void addJob(String jobName, String groupName, String cronString,

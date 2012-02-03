@@ -26,8 +26,8 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
+import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ListDataSources extends StandardRunnerAction {
@@ -38,7 +38,7 @@ public class ListDataSources extends StandardRunnerAction {
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
-		dataSources = dataSourceDao.getAll();
+		dataSources = dataSourceService.listDataSources();
 		return SUCCESS;
 	}
 
@@ -47,10 +47,11 @@ public class ListDataSources extends StandardRunnerAction {
 	}
 
 
-	private ReportRunnerDao<RunnerDataSource,String> dataSourceDao;
+	private DatasourceService dataSourceService;
 
-	public void setDataSourceDao(ReportRunnerDao<RunnerDataSource,String> dataSourceDao) {
-		this.dataSourceDao = dataSourceDao;
+	public void setDataSourceService(DatasourceService dataSourceService) {
+		this.dataSourceService = dataSourceService;
 	}
 
+	
 }

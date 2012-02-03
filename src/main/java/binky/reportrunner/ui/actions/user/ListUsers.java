@@ -26,8 +26,8 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerUser;
+import binky.reportrunner.service.UserService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ListUsers extends StandardRunnerAction{
@@ -37,22 +37,24 @@ public class ListUsers extends StandardRunnerAction{
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
-		this.users=userDao.getAll();
+		this.users=userService.getAll();
 		return SUCCESS;
 	}
 
-	private ReportRunnerDao<RunnerUser,String> userDao;
 
-	public void setUserDao(ReportRunnerDao<RunnerUser,String> userDao) {
-		this.userDao = userDao;
-	}
+	private UserService userService;
 
+	
 	public List<RunnerUser> getUsers() {
 		return users;
 	}
 
 	public void setUsers(List<RunnerUser> users) {
 		this.users = users;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 	
 	

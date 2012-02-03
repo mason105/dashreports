@@ -37,6 +37,7 @@ import javax.sql.DataSource;
 import org.xml.sax.SAXException;
 
 import binky.reportrunner.data.RunnerDataSource;
+import binky.reportrunner.service.misc.JDBCDrivers;
 
 public interface DatasourceService {
 

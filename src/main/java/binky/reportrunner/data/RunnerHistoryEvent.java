@@ -33,11 +33,13 @@ import javax.persistence.NamedQuery;
 
 @Entity(name = "T_EVENT")
 @NamedQueries( {
-		@NamedQuery(name = "getEventsByJob", query = "from T_EVENT e where e.jobName = ? and e.groupName = ?"),
+		@NamedQuery(name = "getEventsByJob", query = "from T_EVENT e where e.jobName = ? and e.groupName = ?"),		
+		@NamedQuery(name = "getEventsByModule", query = "from T_EVENT e where e.module = ?"),
+		@NamedQuery(name = "getEventsByUserName", query = "from T_EVENT e where e.userName = ?"),
 		@NamedQuery(name = "getFailedEvents", query = "from T_EVENT e where e.success=false order by timestamp desc"),
 		@NamedQuery(name = "getLongestRunningEvents", query = "from T_EVENT e order by runTime desc"),
 		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.success=true order by timestamp desc"),
-		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timestamp < ?")	
+		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timestamp < ?")		
 })
 public class RunnerHistoryEvent extends DatabaseObject<Long> {
 
@@ -50,6 +52,8 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		return eventId;
 	}
 
+	public RunnerHistoryEvent() {}
+	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -161,4 +165,19 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		this.module = module;
 	}
 
+	public RunnerHistoryEvent(Date timestamp, String jobName,
+			String groupName, String message, Boolean success, Long runTime,
+			String userName, String module) {		
+		this.timestamp = timestamp;
+		this.jobName = jobName;
+		this.groupName = groupName;
+		this.message = message;
+		this.success = success;
+		this.runTime = runTime;
+		this.userName = userName;
+		this.module = module;
+	}
+
+	
+	
 }

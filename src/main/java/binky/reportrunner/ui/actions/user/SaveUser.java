@@ -29,9 +29,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
+import binky.reportrunner.service.GroupService;
+import binky.reportrunner.service.UserService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 import binky.reportrunner.util.EncryptionUtil;
 
@@ -41,8 +42,8 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
-	private ReportRunnerDao<RunnerUser,String> userDao;
-	private ReportRunnerDao<RunnerGroup,String> groupDao;
+	private UserService userService;
+	private GroupService groupService;
 	private RunnerUser runnerUser;
 	private String[] groupNames;
 	private List<RunnerGroup> groups;
@@ -62,7 +63,7 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 			} else {
 				if (StringUtils.isBlank(runnerUser.getPassword())||StringUtils.isEmpty(runnerUser.getPassword())) {
 				
-					RunnerUser userCompare = userDao.get(runnerUser.getUserName());
+					RunnerUser userCompare = userService.getUser(runnerUser.getUserName());
 					if (userCompare==null) {
 						valid = false;
 						super.addActionError("Please enter a password");
@@ -83,7 +84,7 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 				List<RunnerGroup> groups = new LinkedList<RunnerGroup>();
 				for (String g: userGroups) {
 					logger.debug("user now has group: " + g);
-					RunnerGroup group = groupDao.get(g);
+					RunnerGroup group = groupService.getGroup(g);
 					groups.add(group);
 				}
 				runnerUser.setGroups(groups);
@@ -92,7 +93,7 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 			
 			
 			if (valid) {
-				userDao.saveOrUpdate(runnerUser);
+				userService.saveOrUpdate(runnerUser);
 				return SUCCESS;
 			} else {
 				return INPUT;
@@ -103,17 +104,11 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 	}
 
 	public void prepare() throws Exception {
-		this.groups=groupDao.getAll();
+		this.groups=groupService.getAll();
 	}
 
 	
-	public void setGroupDao(ReportRunnerDao<RunnerGroup,String> groupDao) {
-		this.groupDao = groupDao;
-	}
-
-	public void setUserDao(ReportRunnerDao<RunnerUser,String> userDao) {
-		this.userDao = userDao;
-	}
+	
 
 	public String[] getGroupNames() {
 		return groupNames;
@@ -148,7 +143,12 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 		this.userGroups = userGroups;
 	}
 
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
-
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
 
 }

@@ -28,9 +28,10 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerUser;
+import binky.reportrunner.service.GroupService;
+import binky.reportrunner.service.UserService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
@@ -53,7 +54,7 @@ public class SetupEditUser extends StandardRunnerAction implements Preparable {
 		if ((userName != null) && (!userName.isEmpty())) {
 			logger.debug("editing user: " + userName);
 			userGroups = new LinkedList<String>();
-			this.runnerUser = userDao.get(userName);
+			this.runnerUser = userService.getUser(userName);
 			for (RunnerGroup group:runnerUser.getGroups()) {
 				userGroups.add(group.getGroupName());
 				logger.debug("found group: " + group.getGroupName());
@@ -66,21 +67,20 @@ public class SetupEditUser extends StandardRunnerAction implements Preparable {
 	}
 
 	public void prepare() throws Exception {
-		this.groups = groupDao.getAll();
+		this.groups = groupService.getAll();
 	}
 
-	private ReportRunnerDao<RunnerUser,String> userDao;
+
+	private UserService userService;
+	private GroupService groupService;
 
 	
-	private ReportRunnerDao<RunnerGroup,String> groupDao;
-
-	
-	public void setUserDao(ReportRunnerDao<RunnerUser, String> userDao) {
-		this.userDao = userDao;
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
-	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
-		this.groupDao = groupDao;
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
 	}
 
 	public void setUserName(String userName) {

@@ -26,15 +26,21 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
+import binky.reportrunner.service.GroupService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ListGroupsAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = -1335751757190312426L;
 	private static final Logger logger = Logger.getLogger(ListGroupsAction.class);
-	private ReportRunnerDao<RunnerGroup,String> groupDao;
+	private GroupService groupService;
+	
+
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
+
 	private List<RunnerGroup> groups;
 	@Override
 	public String execute() throws Exception{
@@ -42,7 +48,7 @@ public class ListGroupsAction extends StandardRunnerAction {
 		logger.debug("is admin is null = " + super.getSessionUser().getIsAdmin()==null);
 		if (super.getSessionUser().getIsAdmin()) {
 			logger.debug("is admin - allowing all groups");
-			 this.groups=groupDao.getAll();
+			 this.groups=groupService.getAll();
 		} else {
 			logger.debug("is not admin - restricting groups");
 			this.groups = super.getSessionUser().getGroups();
@@ -55,9 +61,6 @@ public class ListGroupsAction extends StandardRunnerAction {
 		return groups;
 	}
 
-	public final void setGroupDao(ReportRunnerDao<RunnerGroup,String> groupDao) {
-		this.groupDao = groupDao;
-	}	
 	
 	
 }

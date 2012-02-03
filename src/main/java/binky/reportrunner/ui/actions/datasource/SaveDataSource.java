@@ -29,14 +29,14 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import com.opensymphony.xwork2.Preparable;
-
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.service.JDBCDriverDefinition;
+import binky.reportrunner.service.GroupService;
+import binky.reportrunner.service.misc.JDBCDriverDefinition;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+
+import com.opensymphony.xwork2.Preparable;
 
 public class SaveDataSource extends StandardRunnerAction implements Preparable {
 
@@ -59,7 +59,7 @@ public class SaveDataSource extends StandardRunnerAction implements Preparable {
 			if (dataSourceGroups!=null) {
 				List<RunnerGroup> groups = new LinkedList<RunnerGroup>();
 				for (String g: dataSourceGroups) {
-					RunnerGroup group = groupDao.get(g);
+					RunnerGroup group = groupService.getGroup(g);
 					groups.add(group);
 				}
 				dataSource.setGroups(groups);
@@ -77,10 +77,16 @@ public class SaveDataSource extends StandardRunnerAction implements Preparable {
 
 		this.drivers=dataSourceService.getJDBCDriverDefinitions().getDefinitions().values();
 		
-		this.groups = groupDao.getAll();
+		this.groups = groupService.getAll();
 	}
 	private List<RunnerGroup> groups;
-	private ReportRunnerDao<RunnerGroup,String> groupDao;
+	private GroupService groupService;
+	
+
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
+
 	private DatasourceService dataSourceService;
 
 
@@ -112,12 +118,7 @@ public class SaveDataSource extends StandardRunnerAction implements Preparable {
 	public void setGroups(List<RunnerGroup> groups) {
 		this.groups = groups;
 	}
-	public ReportRunnerDao<RunnerGroup, String> getGroupDao() {
-		return groupDao;
-	}
-	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
-		this.groupDao = groupDao;
-	}
+
 	public List<String> getDataSourceGroups() {
 		return dataSourceGroups;
 	}

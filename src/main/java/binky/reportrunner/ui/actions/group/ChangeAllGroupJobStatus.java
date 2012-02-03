@@ -24,16 +24,22 @@ package binky.reportrunner.ui.actions.group;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
+import binky.reportrunner.service.GroupService;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 
-	private ReportRunnerDao<RunnerGroup,String> groupDao;
+	private GroupService groupService;
+	
+
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
+
 	private RunnerJobService jobService;
 	private Boolean status;
 
@@ -49,7 +55,7 @@ public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 		if (super.getSessionUser().getGroups().contains(groupName)
 				|| super.getSessionUser().getIsAdmin()) {
 
-			RunnerGroup group = groupDao.get(groupName);
+			RunnerGroup group = groupService.getGroup(groupName);
 			if (super.getSessionUser().getGroups().contains(group)) {
 				for (RunnerJob job : group.getRunnerJobs()) {
 					if (status) {
@@ -76,10 +82,6 @@ public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 		return SUCCESS;
 	}
 
-
-	public void setGroupDao(ReportRunnerDao<RunnerGroup,String>  groupDao) {
-		this.groupDao = groupDao;
-	}
 
 	public RunnerJobService getJobService() {
 		return jobService;

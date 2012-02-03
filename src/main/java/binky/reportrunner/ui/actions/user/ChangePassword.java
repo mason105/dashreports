@@ -22,30 +22,30 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.user;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerUser;
+import binky.reportrunner.service.UserService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 import binky.reportrunner.util.EncryptionUtil;
 
-public class ChangePassword  extends StandardRunnerAction {
+public class ChangePassword extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private String oldPassword;
 	private String newPassword1;
 	private String newPassword2;
-	private ReportRunnerDao<RunnerUser,String> userDao;
-	
+	private UserService userService;
+
 	@Override
 	public String execute() throws Exception {
 		EncryptionUtil enc = new EncryptionUtil();
-		oldPassword=enc.hashString(oldPassword);
-		
+		oldPassword = enc.hashString(oldPassword);
+
 		if (newPassword1.equals(newPassword2)) {
 			if (oldPassword.equals(getSessionUser().getPassword())) {
 				RunnerUser currentUser = this.getSessionUser();
-				//hash the password
-				currentUser.setPassword(enc.hashString(newPassword1));				
-				userDao.saveOrUpdate(currentUser);
+				// hash the password
+				currentUser.setPassword(enc.hashString(newPassword1));
+				userService.saveOrUpdate(currentUser);
 				return SUCCESS;
 			} else {
 				super.addActionError("Old password invalid!");
@@ -55,32 +55,39 @@ public class ChangePassword  extends StandardRunnerAction {
 			super.addActionError("Passwords do not match!");
 			return INPUT;
 		}
-		
+
 	}
+
 	public String getOldPassword() {
 		return oldPassword;
 	}
+
 	public void setOldPassword(String oldPassword) {
 		this.oldPassword = oldPassword;
 	}
+
 	public String getNewPassword1() {
 		return newPassword1;
 	}
+
 	public void setNewPassword1(String newPassword1) {
 		this.newPassword1 = newPassword1;
 	}
+
 	public String getNewPassword2() {
 		return newPassword2;
 	}
+
 	public void setNewPassword2(String newPassword2) {
 		this.newPassword2 = newPassword2;
 	}
-	
-	public void setUserDao(ReportRunnerDao<RunnerUser,String>  userDao) {
-		this.userDao = userDao;
+
+	public UserService getUserService() {
+		return userService;
 	}
 
-
-
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 
 }

@@ -55,8 +55,8 @@ import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.service.JDBCDriverDefinition;
-import binky.reportrunner.service.JDBCDrivers;
+import binky.reportrunner.service.misc.JDBCDriverDefinition;
+import binky.reportrunner.service.misc.JDBCDrivers;
 import binky.reportrunner.util.EncryptionUtil;
 
 public class DatasourceServiceImpl implements DatasourceService {

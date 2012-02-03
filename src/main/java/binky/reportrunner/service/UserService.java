@@ -13,6 +13,8 @@ public interface UserService {
 
 	public RunnerUser getUser(String userName);
 
+	public List<RunnerUser> getAll();
+	
 	public List<RunnerGroup> getGroupsForUser(String userName);
 
 }

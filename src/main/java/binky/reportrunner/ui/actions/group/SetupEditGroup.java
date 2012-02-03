@@ -24,14 +24,20 @@ package binky.reportrunner.ui.actions.group;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.exceptions.SecurityException;
+import binky.reportrunner.service.GroupService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class SetupEditGroup extends StandardRunnerAction {
 
-	private ReportRunnerDao<RunnerGroup,String> groupDao;
+	private GroupService groupService;
+	
+
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
+
 	private RunnerGroup group;
 
 	private static final long serialVersionUID = 1L;
@@ -44,7 +50,7 @@ public class SetupEditGroup extends StandardRunnerAction {
 				|| super.getSessionUser().getIsAdmin()) {
 
 			if (groupName != null) {
-				this.group = groupDao.get(groupName);
+				this.group = groupService.getGroup(groupName);
 			} else {
 				this.group = new RunnerGroup();
 			}
@@ -57,14 +63,6 @@ public class SetupEditGroup extends StandardRunnerAction {
 
 		return SUCCESS;
 	}
-
-
-
-	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
-		this.groupDao = groupDao;
-	}
-
-
 
 	public void setGroup(RunnerGroup group) {
 		this.group = group;

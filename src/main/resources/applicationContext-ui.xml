@@ -69,15 +69,15 @@
 	<bean id="listGroupsAction"
 		class="binky.reportrunner.ui.actions.group.ListGroupsAction"
 		scope="prototype">
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
+		<property name="groupService">
+			<ref bean="groupService" />
 		</property>
 	</bean>
 	<bean id="changeAllGroupJobStatusAction"
 		class="binky.reportrunner.ui.actions.group.ChangeAllGroupJobStatus"
 		scope="prototype">
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
+		<property name="groupService">
+			<ref bean="groupService" />
 		</property>
 		<property name="jobService">
 			<ref bean="runnerJobService" />
@@ -87,8 +87,8 @@
 	<bean id="deleteGroupAction"
 		class="binky.reportrunner.ui.actions.group.DeleteGroup"
 		scope="prototype">
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
+		<property name="groupService">
+			<ref bean="groupService" />
 		</property>
 		<property name="jobService">
 			<ref bean="runnerJobService" />
@@ -100,15 +100,15 @@
 	<bean id="saveGroupAction"
 		class="binky.reportrunner.ui.actions.group.SaveGroup"
 		scope="prototype">
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
+		<property name="groupService">
+			<ref bean="groupService" />
 		</property>
 	</bean>
 	<bean id="setupEditGroupAction"
 		class="binky.reportrunner.ui.actions.group.SetupEditGroup"
 		scope="prototype">
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
+		<property name="groupService">
+			<ref bean="groupService" />
 		</property>
 	</bean>
 
@@ -263,8 +263,8 @@
 	<bean id="listDataSourcesAction"
 		class="binky.reportrunner.ui.actions.datasource.ListDataSources"
 		scope="prototype">
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
+		<property name="dataSourceService">
+			<ref bean="runnerDatasourceService" />
 		</property>
 	</bean>
 
@@ -274,8 +274,8 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
+		<property name="groupService">
+			<ref bean="groupService" />
 		</property>
 	</bean>
 
@@ -285,8 +285,8 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
+		<property name="groupService">
+			<ref bean="groupService" />
 		</property>
 	</bean>
 
@@ -296,28 +296,29 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
+		<property name="groupService">
+			<ref bean="groupService" />
 		</property>
 	</bean>
 
 	<bean id="setupEditUserAction"
 		class="binky.reportrunner.ui.actions.user.SetupEditUser"
 		scope="prototype">
-		<property name="userDao">
-			<ref bean="runnerUserDao" />
+		<property name="userService">
+			<ref bean="userService" />
 		</property>
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
+		<property name="groupService">
+			<ref bean="groupService" />
 		</property>
 	</bean>
 
 	<bean id="changePasswordAction"
 		class="binky.reportrunner.ui.actions.user.ChangePassword"
 		scope="prototype">
-		<property name="userDao">
-			<ref bean="runnerUserDao" />
+		<property name="userService">
+			<ref bean="userService" />
 		</property>
+
 	</bean>
 	<bean id="setupChangePasswordAction"
 		class="binky.reportrunner.ui.actions.user.SetupChangePassword"
@@ -326,27 +327,27 @@
 	<bean id="deleteUserAction"
 		class="binky.reportrunner.ui.actions.user.DeleteUser"
 		scope="prototype">
-		<property name="userDao">
-			<ref bean="runnerUserDao" />
+		<property name="userService">
+			<ref bean="userService" />
 		</property>
 	</bean>
 
 	<bean id="listUsersAction"
 		class="binky.reportrunner.ui.actions.user.ListUsers"
 		scope="prototype">
-		<property name="userDao">
-			<ref bean="runnerUserDao" />
+		<property name="userService">
+			<ref bean="userService" />
 		</property>
 	</bean>
 
 	<bean id="saveUserAction"
 		class="binky.reportrunner.ui.actions.user.SaveUser"
 		scope="prototype">
-		<property name="userDao">
-			<ref bean="runnerUserDao" />
+		<property name="userService">
+			<ref bean="userService" />
 		</property>
-		<property name="groupDao">
-			<ref bean="runnerGroupDao" />
+		<property name="groupService">
+			<ref bean="groupService" />
 		</property>
 	</bean>
 

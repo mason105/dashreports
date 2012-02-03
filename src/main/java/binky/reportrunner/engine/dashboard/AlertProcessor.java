@@ -38,7 +38,6 @@ import javax.sql.DataSource;
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.quartz.InterruptableJob;
@@ -52,7 +51,6 @@ import binky.reportrunner.data.RunnerDashboardGrid;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerDashboardSampler;
 import binky.reportrunner.data.SamplingData;
-import binky.reportrunner.data.SamplingData_pk;
 import binky.reportrunner.data.RunnerDashboardItem.ItemType;
 
 public class AlertProcessor implements Job, InterruptableJob {

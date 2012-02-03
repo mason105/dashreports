@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.xml.sax.SAXException;
 
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.service.JDBCDriverDefinition;
+import binky.reportrunner.service.misc.JDBCDriverDefinition;
 
 public class DatasourceServiceImplTest extends TestCase {
 

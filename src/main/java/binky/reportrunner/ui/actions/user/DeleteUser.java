@@ -24,8 +24,7 @@ package binky.reportrunner.ui.actions.user;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
-import binky.reportrunner.data.RunnerUser;
+import binky.reportrunner.service.UserService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class DeleteUser extends StandardRunnerAction {
@@ -33,23 +32,26 @@ public class DeleteUser extends StandardRunnerAction {
 	private static final long serialVersionUID = 1L;
 	private String userName;
 
-	private ReportRunnerDao<RunnerUser,String> userDao;
+
+	private UserService userService;
 	
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
-		userDao.delete(userName);
+		userService.deleteUser(userName);
 		return SUCCESS;
-	}
-
-
-
-	public void setUserDao(ReportRunnerDao<RunnerUser,String>  userDao) {
-		this.userDao = userDao;
 	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public UserService getUserService() {
+		return userService;
+	}
+
+	public void setUserService(UserService userService) {
+		this.userService = userService;
 	}
 
 }

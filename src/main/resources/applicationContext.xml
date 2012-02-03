@@ -149,11 +149,21 @@
 		</property>
 	</bean>
 
+	<bean id="groupService"
+		class="binky.reportrunner.service.impl.GroupServiceImpl">
+		<property name="groupDao">
+			<ref bean="runnerGroupDao" />
+		</property>
+	</bean>
+
 
 	<bean id="noCacheInterceptor"
 		class="binky.reportrunner.interceptors.NoCache" scope="singleton">
 	</bean>
 
+	<bean id="auditService" class="binky.reportrunner.service.impl.AuditServiceImpl">
+			<property name="historyDao" ref="runnerHistoryDao" />
+	</bean>
 
 	<bean id="runnerJobListener"
 		class="binky.reportrunner.scheduler.RunnerJobListener">

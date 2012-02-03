@@ -17,8 +17,6 @@
  */
 package binky.reportrunner.ui.actions;
 
-import org.apache.log4j.Logger;
-
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 /**
@@ -27,12 +25,10 @@ import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 public class IndexAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 9093344521097271797L;
-	private static final Logger logger = Logger.getLogger(IndexAction.class);
+
 	public String execute() throws Exception {
-	
-	
+
 		return SUCCESS;
 	}
 
-	
 }

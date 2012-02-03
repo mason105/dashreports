@@ -26,18 +26,23 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardItem;
-import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
+import binky.reportrunner.service.GroupService;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class DeleteGroup extends StandardRunnerAction {
 
-	private ReportRunnerDao<RunnerGroup,String> groupDao;
+	private GroupService groupService;
+	
+
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
+
 	private DashboardService dashboardService;
 	private RunnerJobService jobService;
 	private static final long serialVersionUID = 1L;
@@ -64,7 +69,7 @@ public class DeleteGroup extends StandardRunnerAction {
 				}
 			}
 			
-			groupDao.delete(groupName);
+			groupService.delete(groupName);
 		} else {
 			SecurityException se = new SecurityException("Group " + groupName
 					+ " not valid for user " + super.getSessionUser().getUserName());
@@ -72,12 +77,6 @@ public class DeleteGroup extends StandardRunnerAction {
 		}
 		return SUCCESS;
 	}
-
-
-	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
-		this.groupDao = groupDao;
-	}
-
 
 	public RunnerJobService getJobService() {
 		return jobService;

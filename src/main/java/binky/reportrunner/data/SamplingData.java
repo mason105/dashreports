@@ -1,7 +1,6 @@
 package binky.reportrunner.data;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

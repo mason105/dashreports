@@ -1,4 +1,4 @@
-package binky.reportrunner.service;
+package binky.reportrunner.service.misc;
 
 public class JDBCDriverDefinition {
 	public JDBCDriverDefinition() {

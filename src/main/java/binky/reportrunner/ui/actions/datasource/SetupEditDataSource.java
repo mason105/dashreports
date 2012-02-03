@@ -28,11 +28,11 @@ import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.service.JDBCDriverDefinition;
+import binky.reportrunner.service.GroupService;
+import binky.reportrunner.service.misc.JDBCDriverDefinition;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 import com.opensymphony.xwork2.Preparable;
@@ -79,12 +79,15 @@ public class SetupEditDataSource extends StandardRunnerAction implements Prepara
 	public void prepare() throws Exception {
 
 		this.drivers=dataSourceService.getJDBCDriverDefinitions().getDefinitions().values();
-		this.groups = groupDao.getAll();
+		this.groups = groupService.getAll();
 	}
 	private List<RunnerGroup> groups;
-	private ReportRunnerDao<RunnerGroup,String> groupDao;
+	private GroupService groupService;
 	
 
+	public void setGroupService(GroupService groupService) {
+		this.groupService = groupService;
+	}
 
 	public void setDataSourceName(String dataSourceName) {
 		this.dataSourceName = dataSourceName;
@@ -117,13 +120,7 @@ public class SetupEditDataSource extends StandardRunnerAction implements Prepara
 		this.groups = groups;
 	}
 
-	public ReportRunnerDao<RunnerGroup, String> getGroupDao() {
-		return groupDao;
-	}
 
-	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
-		this.groupDao = groupDao;
-	}
 
 	public List<String> getDataSourceGroups() {
 		return dataSourceGroups;

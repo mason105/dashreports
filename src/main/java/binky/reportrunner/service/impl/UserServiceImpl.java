@@ -42,7 +42,11 @@ public class UserServiceImpl implements UserService {
 		}
 		
 	}
-	
+	@Override
+	public List<RunnerUser> getAll() {
+		return userDao.getAll();
+	}
+
 	public void setUserDao(ReportRunnerDao<RunnerUser, String> userDao) {
 		this.userDao = userDao;
 	}
@@ -50,6 +54,7 @@ public class UserServiceImpl implements UserService {
 	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
 		this.groupDao = groupDao;
 	}
+
 
 
 }

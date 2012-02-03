@@ -3,30 +3,19 @@ package binky.reportrunner.ui.actions.dashboard;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 
-import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.beanutils.RowSetDynaClass;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.BarRenderer3D;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.util.Rotation;
 
-import binky.reportrunner.data.RunnerDashboardChart;
-import binky.reportrunner.data.RunnerDashboardChart.Orientation;
 import binky.reportrunner.data.RunnerDashboardSampler;
-import binky.reportrunner.data.RunnerDashboardSampler.Window;
 import binky.reportrunner.data.SamplingData;
+import binky.reportrunner.data.RunnerDashboardChart.Orientation;
+import binky.reportrunner.data.RunnerDashboardSampler.Window;
 import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
 
 public class GetSamplerChart extends BaseDashboardAction {

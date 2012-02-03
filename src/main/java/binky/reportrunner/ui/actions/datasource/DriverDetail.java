@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.service.JDBCDriverDefinition;
+import binky.reportrunner.service.misc.JDBCDriverDefinition;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class DriverDetail extends StandardRunnerAction {

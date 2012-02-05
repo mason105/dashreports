@@ -22,30 +22,48 @@
  ******************************************************************************/
 package binky.reportrunner.service.impl;
 
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.sql.DataSource;
+
+import org.apache.commons.beanutils.DynaProperty;
+import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+
+import binky.reportrunner.dao.ReportRunnerDao;
+import binky.reportrunner.data.RunnerDashboardGrid;
+import binky.reportrunner.data.RunnerDashboardItem;
+import binky.reportrunner.data.RunnerDashboardItem.ItemType;
+import binky.reportrunner.data.RunnerDashboardSampler;
+import binky.reportrunner.data.RunnerGroup;
+import binky.reportrunner.data.sampling.SamplingData;
+import binky.reportrunner.data.sampling.SamplingData_pk;
+import binky.reportrunner.data.sampling.TrendData;
+import binky.reportrunner.data.sampling.TrendData_pk;
+import binky.reportrunner.scheduler.Scheduler;
+import binky.reportrunner.scheduler.SchedulerException;
+import binky.reportrunner.service.DashboardService;
+import binky.reportrunner.service.DatasourceService;
 
 import com.googlecode.ehcache.annotations.Cacheable;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 
-import binky.reportrunner.dao.ReportRunnerDao;
-import binky.reportrunner.data.RunnerDashboardItem;
-import binky.reportrunner.data.RunnerDashboardItem.ItemType;
-import binky.reportrunner.data.sampling.TrendData;
-import binky.reportrunner.data.RunnerDashboardSampler;
-import binky.reportrunner.data.RunnerGroup;
-import binky.reportrunner.scheduler.Scheduler;
-import binky.reportrunner.scheduler.SchedulerException;
-import binky.reportrunner.service.DashboardService;
-
 public class DashboardServiceImpl implements DashboardService {
 	
 	private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
+	
+	private ReportRunnerDao<TrendData,TrendData_pk> trendDataDao;
+	private ReportRunnerDao<SamplingData,SamplingData_pk> samplingDataDao;
+	private DatasourceService datasourceService;
 	
 	private ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao;
 	private ReportRunnerDao<RunnerGroup,String> groupDao;
@@ -114,13 +132,11 @@ public class DashboardServiceImpl implements DashboardService {
 						//hackamundo
 						TrendData[] ts = (TrendData[])s.getTrendData().toArray();
 						s.getTrendData().clear();
-						Session sess = dashboardDao.openSession();
-						Transaction trans=sess.beginTransaction();
+						
 						for (TrendData t:ts) {
-							sess.delete(t);
+							trendDataDao.delete(t.getPk());
 						}
-						trans.commit();
-						sess.close();
+						
 					}
 				}
 			}
@@ -165,10 +181,202 @@ public class DashboardServiceImpl implements DashboardService {
 		
 	}
 
-	public void setGroupDao(ReportRunnerDao<RunnerGroup,String> groupDao) {
+	public void setGroupDao(ReportRunnerDao<RunnerGroup,String> groupDao)  {
 		this.groupDao = groupDao;
 	}
+	@Override
+	public void processDashboardItem(int itemId)throws SQLException {
+		RunnerDashboardItem item = dashboardDao.get(itemId);
+		switch (item.getItemType()) {
+		case Sampler:
+			processSampler(item);
+			break;
+		default:
+			processQueryItem(item);
+		}
+		
+	}
 	
+	private void processSampler(RunnerDashboardItem item) throws SQLException {
+		DataSource ds = datasourceService.getJDBCDataSource(item.getDatasource()); 
+		String sql = item.getAlertQuery();
+		Connection conn = ds.getConnection();
 
+		try {
+			long start = item.getLastUpdated()!=null?item.getLastUpdated().getTime():0;
+			logger.debug("running SQL for sampler");
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			RunnerDashboardSampler sampler = (RunnerDashboardSampler)item;
+			int period = Calendar.MINUTE;
+			int amount=-1;
+			
+			//calculate the start of the window 
+			switch (sampler.getWindow()) {
+			case YEAR:
+				period = Calendar.YEAR;
+				break;
+			case MONTH:
+				period = Calendar.MONTH;
+				break;
+			case WEEK:
+				period = Calendar.DAY_OF_YEAR;
+				amount=-7;
+				break;
+			case DAY:
+				period = Calendar.DAY_OF_YEAR;
+				break;
+			case HOUR:
+				period = Calendar.HOUR;
+				break;				
+			}
+			
+			Calendar cal=Calendar.getInstance();
+			Date now = cal.getTime();
+			cal.add(period, amount);
+			Date cutoff= cal.getTime();
+			logger.trace("deleting entries older than " + cutoff);
+			//first of all we need to clean out any that now fall outside of our window
+			List<SamplingData> old = new LinkedList<SamplingData>();
+			logger.trace("current sample size is :" + sampler.getData().size());
+		
+			for (SamplingData d: sampler.getData()) {
+				logger.trace("testing entry for : " + d.getPk().getSampleTime());
+				if (d.getPk().getSampleTime()<cutoff.getTime()) {
+					old.add(d);
+				}
+			}
+			for (SamplingData d:old) {
+				logger.trace("deleting entry for : " + d.getPk().getSampleTime());
+				sampler.getData().remove(d);
+			}	
+			
+			
+			//get the value - as this is a sampler we only grab the first row
+			BigDecimal val= new BigDecimal(0);
+			if (rs.next()) {
+				val = rs.getBigDecimal(sampler.getValueColumn());							
+			}
+			sampler.getData().add(new SamplingData(sampler,now.getTime(),val));
+			
+			if (sampler.isRecordTrendData()) {
+
+				//record trending data 
+				SimpleDateFormat sdf;
+				switch (sampler.getInterval()) {
+				case DAY:				
+					sdf = new SimpleDateFormat("EEEEE");
+					break;
+				case HOUR:					
+					sdf = new SimpleDateFormat("HH");
+					break;
+				case MINUTE:
+					sdf = new SimpleDateFormat("mm");
+					break;
+				case MONTH:
+					sdf = new SimpleDateFormat("MMMMM");
+					break;
+				case SECOND:
+				default:
+					sdf = new SimpleDateFormat("ss");
+				}
+			
+				String timeString = sdf.format(now);
+				boolean found=false;
+				TrendData t = new TrendData(sampler, timeString);
+				for (TrendData d: sampler.getTrendData()) {
+					if  (d.getPk().getTimeString().equals(timeString)) {
+						t=d;
+						found = true;
+						break;
+					}
+				}
+				
+				
+				
+				if (found) {
+					sampler.getTrendData().remove(t);
+					BigDecimal newVal = new BigDecimal(((t.getMeanValue().doubleValue()* t.getSampleSize())+val.doubleValue()) /(t.getSampleSize()+1));
+					t.setMeanValue(newVal);
+					t.setSampleSize(t.getSampleSize()+1);
+					if (val.doubleValue()>t.getMaxValue().doubleValue()) t.setMaxValue(val);
+					if (val.doubleValue()<t.getMinValue().doubleValue()) t.setMinValue(val);					
+				}else {					
+					//create new entry					
+					t.setMaxValue(val);
+					t.setMeanValue(val);
+					t.setMinValue(val);
+					t.setSampleSize(1);
+					if (sampler.getTrendData()==null) sampler.setTrendData(new LinkedList<TrendData>());					
+				}
+				sampler.getTrendData().add(t);
+			}
+		
+			
+		
+			
+			if (start >0) {							
+				sampler.setVisualRefreshTime(now.getTime()-start);
+			}
+			sampler.setLastUpdated(now);
+					
+			for (SamplingData d:old) {
+				samplingDataDao.delete(d.getPk());
+			}
+			dashboardDao.saveOrUpdate(sampler);
+			rs.close();
+		} finally {
+			if (!conn.isClosed())
+				conn.close();
+		}
+	}
+
+	private void processQueryItem(RunnerDashboardItem item) throws SQLException {
+
+		DataSource ds = datasourceService.getJDBCDataSource(item.getDatasource()); 
+		String sql = item.getAlertQuery();
+		Connection conn = ds.getConnection();
+
+		try {
+			logger.debug("running SQL for item");
+			Statement stmt = conn.createStatement();
+			if (item.getItemType() == ItemType.Grid) {
+				int rows = ((RunnerDashboardGrid) item).getRowsToDisplay();
+				if (rows > 0) {
+					logger.debug("limiting grid result to " + rows + " rows");
+					stmt.setFetchSize(rows);
+					stmt.setMaxRows(rows);
+				}
+			}
+			ResultSet rs = stmt.executeQuery(sql);
+			RowSetDynaClass rsdc = new RowSetDynaClass(rs, false);
+			if (logger.isDebugEnabled()) {
+				logger.debug("record set size: " + rsdc.getRows().size());
+				for (DynaProperty col : rsdc.getDynaProperties()) {
+					logger.debug("found column: " + col.getName() + " of type "
+							+ col.getType().getName());
+				}
+			}
+			item.setCurrentDataset(rsdc);
+			item.setLastUpdated(Calendar.getInstance().getTime());
+			dashboardDao.saveOrUpdate(item);
+			rs.close();
+		} finally {
+			if (!conn.isClosed())
+				conn.close();
+		}
+
+	}
+	public void setTrendDataDao(
+			ReportRunnerDao<TrendData, TrendData_pk> trendDataDao) {
+		this.trendDataDao = trendDataDao;
+	}
+	public void setSamplingDataDao(
+			ReportRunnerDao<SamplingData, SamplingData_pk> samplingDataDao) {
+		this.samplingDataDao = samplingDataDao;
+	}
+	public void setDatasourceService(DatasourceService datasourceService) {
+		this.datasourceService = datasourceService;
+	}
 
 }

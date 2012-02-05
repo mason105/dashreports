@@ -35,18 +35,16 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
-import binky.reportrunner.dao.ReportRunnerDao;
-import binky.reportrunner.data.RunnerDashboardItem;
-import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerHistoryEvent.Module;
 import binky.reportrunner.data.RunnerJob;
-import binky.reportrunner.data.RunnerJob_pk;
 import binky.reportrunner.engine.RunnerEngine;
 import binky.reportrunner.engine.dashboard.AlertProcessor;
 import binky.reportrunner.engine.utils.EmailHandler;
 import binky.reportrunner.engine.utils.impl.EmailHandlerImpl;
 import binky.reportrunner.service.AuditService;
+import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.service.DatasourceService;
+import binky.reportrunner.service.RunnerJobService;
 
 public class RunnerJobListener implements JobListener {
 
@@ -59,11 +57,11 @@ public class RunnerJobListener implements JobListener {
 
 	private AuditService auditService;
 
-	private ReportRunnerDao<RunnerJob,RunnerJob_pk> runnerJobDao;
+	private RunnerJobService jobService;
 
 	private DatasourceService datasourceService;
 
-	private ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao;
+	private DashboardService dashboardService;
 	
 	public void jobExecutionVetoed(JobExecutionContext ctx) {
 		auditService.logAuditEvent(Module.CORE_SCHEDULER, "Job Execution Vetoed", "", false, 0, ctx.getJobDetail().getName(), ctx.getJobDetail().getGroup());
@@ -78,7 +76,7 @@ public class RunnerJobListener implements JobListener {
 			String jobName = ctx.getJobDetail().getName();
 			String groupName = ctx.getJobDetail().getGroup();
 
-			RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
+			RunnerJob job = jobService.getJob(jobName, groupName);
 			ctx.getJobDetail().getJobDataMap().put("runnerJob", job);
 
 			ctx.getJobDetail().getJobDataMap().put("smtpServer",
@@ -98,17 +96,8 @@ public class RunnerJobListener implements JobListener {
 				.equals(AlertProcessor.class)) {
 			// stuff for the dashboards
 			Integer itemId = Integer.parseInt(ctx.getJobDetail().getName());
-			RunnerDashboardItem item = dashboardDao.get(itemId);
-			ctx.getJobDetail().getJobDataMap().put("itemId", itemId);
-			DataSource ds;
-			try {
-				ds = datasourceService.getJDBCDataSource(item.getDatasource());
-				ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
-			} catch (SQLException e) {
-				logger.error(e.getMessage(),e);
-			}
-			
-			ctx.getJobDetail().getJobDataMap().put("dashboardDao", dashboardDao);
+			ctx.getJobDetail().getJobDataMap().put("itemId", itemId);	
+			ctx.getJobDetail().getJobDataMap().put("dashboardService", dashboardService);
 		}
 		logger.info("Scheduled task to be executed: " + ctx.getJobDetail().getName()
 				+ "/" + ctx.getJobDetail().getGroup());
@@ -135,7 +124,7 @@ public class RunnerJobListener implements JobListener {
 		
 		if (ctx.getJobDetail().getJobClass().equals(RunnerEngine.class)) {
 
-			RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));		
+			RunnerJob job =jobService.getJob(jobName, groupName);
 
 			if ((job.getAlertEmailAddress() != null)
 					&& !job.getAlertEmailAddress().isEmpty()) {
@@ -187,10 +176,6 @@ public class RunnerJobListener implements JobListener {
 		this.auditService = auditService;
 	}
 
-	public void setRunnerJobDao(ReportRunnerDao<RunnerJob,RunnerJob_pk> runnerJobDao) {
-		this.runnerJobDao = runnerJobDao;
-	}
-
 	public String getSmtpServer() {
 		return smtpServer;
 	}
@@ -220,9 +205,12 @@ public class RunnerJobListener implements JobListener {
 		this.datasourceService = datasourceService;
 	}
 
-	public void setDashboardDao(
-			ReportRunnerDao<RunnerDashboardItem, Integer> dashboardDao) {
-		this.dashboardDao = dashboardDao;
+	public void setJobService(RunnerJobService jobService) {
+		this.jobService = jobService;
+	}
+
+	public void setDashboardService(DashboardService dashboardService) {
+		this.dashboardService = dashboardService;
 	}
 
 

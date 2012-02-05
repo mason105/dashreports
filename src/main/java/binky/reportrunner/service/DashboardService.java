@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import binky.reportrunner.data.RunnerDashboardItem;
@@ -37,5 +38,5 @@ public interface DashboardService {
 	public List<RunnerDashboardItem> getRunningItems() throws SchedulerException;
 	public void interruptRunningDashboardItem(Integer alertId) throws SchedulerException;
 	public void invokeDashboardItem(Integer alertId) throws SchedulerException;
-	
+	public void processDashboardItem(int itemId) throws SQLException;
 }

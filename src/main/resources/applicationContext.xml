@@ -5,7 +5,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
                     http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
                     http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
-     			    http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
+     			    http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd"  default-autowire="no" default-lazy-init="true">
 	<import resource="applicationContext-db.xml" />
 	<import resource="applicationContext-ui.xml" />
 
@@ -27,7 +27,7 @@
 
 
 	<bean id="quartzFactory"
-		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
 		<property name="triggers">
 			<list>
 				<ref bean="pruneEventHistoryTrigger" />
@@ -118,11 +118,18 @@
 	</bean>
 
 
+	 <bean id="schedulerProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+	   <property name="targetSource">
+	     <bean class="org.springframework.aop.target.LazyInitTargetSource">
+	       <property name="targetBeanName"><idref local="scheduler"/></property>
+	     </bean>
+	   </property>
+	 </bean>
 
 
 	<bean id="runnerJobService"
 		class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
-		<property name="scheduler" ref="scheduler" />
+		<property name="scheduler" ref="schedulerProxy"  />
 		<property name="runnerJobDao" ref="runnerJobDao" />
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
@@ -130,13 +137,17 @@
 	</bean>
 	<bean id="dashboardService"
 		class="binky.reportrunner.service.impl.DashboardServiceImpl"
-		scope="prototype">
+		 lazy-init="true" >
 		<property name="dashboardDao">
 			<ref bean="dashboardDao" />
 		</property>
-
-		<property name="scheduler" ref="scheduler" />
+		<property name="datasourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
+		<property name="scheduler" ref="schedulerProxy" />
 		<property name="groupDao" ref="runnerGroupDao" />
+		<property name="trendDataDao" ref="trendDataDao" />
+		<property name="samplingDataDao" ref="samplingDataDao" />
 	</bean>
 
 	<bean id="authenticationService"
@@ -173,17 +184,17 @@
 	</bean>
 
 	<bean id="runnerJobListener"
-		class="binky.reportrunner.scheduler.RunnerJobListener">
+		class="binky.reportrunner.scheduler.RunnerJobListener" lazy-init="true">
 		<property name="auditService" ref="auditService" />
-		<property name="runnerJobDao" ref="runnerJobDao" />
+		<property name="jobService" ref="runnerJobService" />
 		<property name="smtpServer" value="${reportrunner.smtpServer}" />
 		<property name="fromAddress"
 			value="${reportrunner.fromAddress}" />
 		<property name="datasourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
-		<property name="dashboardDao">
-			<ref bean="dashboardDao" />
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
 		</property>
 	</bean>
 

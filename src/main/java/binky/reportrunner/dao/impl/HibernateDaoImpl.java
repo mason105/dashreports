@@ -8,7 +8,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
-import binky.reportrunner.dao.NoSessionException;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.DatabaseObject;
 
@@ -18,6 +17,8 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 
 	private SessionFactory sessionFactory;
 	
+	private Session session;
+	
 	private Class<T> clazz;
 	
 	public HibernateDaoImpl(Class<T> clazz) {
@@ -25,24 +26,32 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 	}
 	
 	public void delete(ID id) {
+		T o = (T)getSession().get(clazz, id);
+		if (o!=null)
+		getSession().delete(o);
 		
-		sessionFactory.getCurrentSession().delete(sessionFactory.getCurrentSession().get(clazz, id));
-		
+	}
+	
+	private Session getSession()  {
+		if (this.session==null||!this.session.isOpen()) {
+			session = sessionFactory.openSession();
+		}
+		return this.session;
 	}
 
 	public T get(ID id) {
-		T o = (T)sessionFactory.getCurrentSession().get(clazz, id);
+		T o = (T)getSession().get(clazz, id);
 		
 		return	o;
 	}
 
 	public List<T> getAll() {
-		return (List<T>)sessionFactory.getCurrentSession().createCriteria(clazz).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+		return (List<T>)getSession().createCriteria(clazz).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<T> findByNamedQuery(String queryName, Object[] values) {
-		Query q = sessionFactory.getCurrentSession().getNamedQuery(queryName);
+		Query q = getSession().getNamedQuery(queryName);
 		if (values!=null) {
 			for (int i=0;i<values.length;i++) {
 				q.setParameter(i, values[i]);
@@ -55,9 +64,9 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 	public void saveOrUpdate(T entity) {
 		//dealing with the caching while using the hibernate session in view filter
 		if (entity.getId()!=null&&this.get(entity.getId()) != null) {
-			sessionFactory.getCurrentSession().merge(entity);
+			getSession().merge(entity);
 		} else {
-			sessionFactory.getCurrentSession().saveOrUpdate(entity);
+			getSession().saveOrUpdate(entity);
 		}
 	}
 
@@ -66,7 +75,7 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 	public List<T> findByNamedQuery(String queryName, Object[] values,
 			int maxResults) {
 		
-		Query q = sessionFactory.getCurrentSession().getNamedQuery(queryName);
+		Query q = getSession().getNamedQuery(queryName);
 		if (values!=null) {
 			for (int i=0;i<values.length;i++) {
 				q.setParameter(i, values[i]);
@@ -78,22 +87,6 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>,ID extends Serializab
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
-	}
-
-	
-	
-	@Override
-	public Session openSession() {		
-		return sessionFactory.openSession();
-	}
-
-	@Override
-	public T getInSession(ID id,Session session) throws NoSessionException {
-		if (session!=null && session.isOpen()&& session.isConnected()) {
-			return  (T)session.get(clazz, id);
-		} else {
-			throw new NoSessionException();
-		}
 	}
 
 

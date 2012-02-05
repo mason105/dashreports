@@ -1,10 +1,12 @@
-package binky.reportrunner.data;
+package binky.reportrunner.data.sampling;
 
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
+
+import binky.reportrunner.data.RunnerDashboardSampler;
 
 @Embeddable
 public class SamplingData_pk implements Serializable {

@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.data.RunnerDataSource;
+import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.service.impl.DatasourceServiceImpl;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -24,7 +25,7 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 
 	private String itemQuery;
 	private String dataSourceName;
-	private DatasourceServiceImpl dataSourceService;
+	private DatasourceService dataSourceService;
 	private List<String> columnNames;
 	private String valueColumnValue;
 	private String xaxisColumnValue;
@@ -127,11 +128,11 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 		this.columnNames = columnNames;
 	}
 
-	public DatasourceServiceImpl getDataSourceService() {
+	public DatasourceService getDataSourceService() {
 		return dataSourceService;
 	}
 
-	public void setDataSourceService(DatasourceServiceImpl dataSourceService) {
+	public void setDataSourceService(DatasourceService dataSourceService) {
 		this.dataSourceService = dataSourceService;
 	}
 

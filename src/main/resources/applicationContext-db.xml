@@ -78,7 +78,10 @@
 					binky.reportrunner.data.RunnerDashboardSampler
 				</value>
 				<value>
-					binky.reportrunner.data.SamplingData
+					binky.reportrunner.data.sampling.SamplingData
+				</value>				
+				<value>
+					binky.reportrunner.data.sampling.TrendData
 				</value>				
 				<value>
 					binky.reportrunner.data.RunnerHistoryEvent

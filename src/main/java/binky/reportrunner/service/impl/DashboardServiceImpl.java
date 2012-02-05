@@ -27,12 +27,17 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import com.googlecode.ehcache.annotations.Cacheable;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardItem;
+import binky.reportrunner.data.RunnerDashboardItem.ItemType;
+import binky.reportrunner.data.sampling.TrendData;
+import binky.reportrunner.data.RunnerDashboardSampler;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
@@ -97,6 +102,29 @@ public class DashboardServiceImpl implements DashboardService {
 		//hack to try to fix a batch update error		
 		RunnerGroup group = groupDao.get(alert.getGroup().getGroupName());
 		alert.setGroup(group);
+		
+		//hack to deal with interval change
+		if (alert.getItemType()==ItemType.Sampler) {
+			if (alert.getItemId()!=null) {
+				RunnerDashboardSampler s=(RunnerDashboardSampler)alert;
+				//need to do a compare
+				if (s.isRecordTrendData()) {
+					RunnerDashboardSampler comp = (RunnerDashboardSampler)dashboardDao.get(alert.getItemId());
+					if (s.getInterval()!=comp.getInterval()&& s.getTrendData()!=null) {
+						//hackamundo
+						TrendData[] ts = (TrendData[])s.getTrendData().toArray();
+						s.getTrendData().clear();
+						Session sess = dashboardDao.openSession();
+						Transaction trans=sess.beginTransaction();
+						for (TrendData t:ts) {
+							sess.delete(t);
+						}
+						trans.commit();
+						sess.close();
+					}
+				}
+			}
+		}
 		
 		dashboardDao.saveOrUpdate(alert);
 		scheduler.addDashboardAlert(alert.getItemId(),alert.getCronTab());		

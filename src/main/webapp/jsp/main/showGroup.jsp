@@ -15,7 +15,7 @@
 	 	    $.subscribe('completediv<s:property value="%{itemId}"/>', function(event,data) {
 	        if(event.originalEvent.status == "success")
 	        {
-	        	$('#counter2').html(++refreshDiv<s:property value="%{itemId}"/>);
+	        	$('#counter%{itemId}').html(++refreshDiv<s:property value="%{itemId}"/>);
 	        	setTimeout( function() {
 					$.publish('reloaddiv<s:property value="%{itemId}"/>');	
 				}, <s:property value="%{visualRefreshTime}"/> );
@@ -51,8 +51,7 @@
 							<s:set name="currentRow" value="%{displayRow}"/>							
 						</s:if>						
 					
-						<sj:div theme="ajax" href="dashboardWidget.action?itemId=%{itemId}"  id="div%{itemId}" 
-						indicator="indicator%{itemId}" 
+						<sj:div href="dashboardWidget.action?itemId=%{itemId}"  id="div%{itemId}" 
     					reloadTopics="reloaddiv%{itemId}" 
     					onCompleteTopics="completediv%{itemId}" >
 															

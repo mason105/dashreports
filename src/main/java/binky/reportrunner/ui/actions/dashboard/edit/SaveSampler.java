@@ -47,9 +47,6 @@ public class SaveSampler extends BaseEditDashboardAction {
 		case SECOND:
 			super.simpleCron=new QuartzCronSchedule("* * * ? * *");
 			break;
-		case WEEK:
-			super.simpleCron=new QuartzCronSchedule("0 * * ? * 1");
-			break;			
 		case HOUR:
 		default:
 			super.simpleCron=new QuartzCronSchedule("0 0 * ? * *");

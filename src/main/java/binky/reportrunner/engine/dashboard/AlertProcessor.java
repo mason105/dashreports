@@ -28,6 +28,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -37,6 +38,7 @@ import javax.sql.DataSource;
 
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.RowSetDynaClass;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -49,9 +51,10 @@ import org.quartz.UnableToInterruptJobException;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDashboardGrid;
 import binky.reportrunner.data.RunnerDashboardItem;
-import binky.reportrunner.data.RunnerDashboardSampler;
-import binky.reportrunner.data.SamplingData;
 import binky.reportrunner.data.RunnerDashboardItem.ItemType;
+import binky.reportrunner.data.RunnerDashboardSampler;
+import binky.reportrunner.data.sampling.SamplingData;
+import binky.reportrunner.data.sampling.TrendData;
 
 public class AlertProcessor implements Job, InterruptableJob {
 
@@ -169,13 +172,68 @@ public class AlertProcessor implements Job, InterruptableJob {
 			
 			
 			//get the value - as this is a sampler we only grab the first row
+			BigDecimal val= new BigDecimal(0);
 			if (rs.next()) {
-				BigDecimal val = rs.getBigDecimal(sampler.getValueColumn());				
-				sampler.getData().add(new SamplingData(sampler,now.getTime(),val));
-			} else {
-				//no rows returned so add a 0 value for this time
-				sampler.getData().add(new SamplingData(sampler,now.getTime(),new BigDecimal(0)));
+				val = rs.getBigDecimal(sampler.getValueColumn());							
 			}
+			sampler.getData().add(new SamplingData(sampler,now.getTime(),val));
+			
+			if (sampler.isRecordTrendData()) {
+
+				//record trending data 
+				SimpleDateFormat sdf;
+				switch (sampler.getInterval()) {
+				case DAY:				
+					sdf = new SimpleDateFormat("EEEEE");
+					break;
+				case HOUR:					
+					sdf = new SimpleDateFormat("HH");
+					break;
+				case MINUTE:
+					sdf = new SimpleDateFormat("mm");
+					break;
+				case MONTH:
+					sdf = new SimpleDateFormat("MMMMM");
+					break;
+				case SECOND:
+				default:
+					sdf = new SimpleDateFormat("ss");
+				}
+			
+				String timeString = sdf.format(now);
+				boolean found=false;
+				TrendData t = new TrendData(sampler, timeString);
+				for (TrendData d: sampler.getTrendData()) {
+					if  (d.getPk().getTimeString().equals(timeString)) {
+						t=d;
+						found = true;
+						break;
+					}
+				}
+				
+				
+				
+				if (found) {
+					sampler.getTrendData().remove(t);
+					BigDecimal newVal = new BigDecimal(((t.getMeanValue().doubleValue()* t.getSampleSize())+val.doubleValue()) /(t.getSampleSize()+1));
+					t.setMeanValue(newVal);
+					t.setSampleSize(t.getSampleSize()+1);
+					if (val.doubleValue()>t.getMaxValue().doubleValue()) t.setMaxValue(val);
+					if (val.doubleValue()<t.getMinValue().doubleValue()) t.setMinValue(val);					
+				}else {					
+					//create new entry					
+					t.setMaxValue(val);
+					t.setMeanValue(val);
+					t.setMinValue(val);
+					t.setSampleSize(1);
+					if (sampler.getTrendData()==null) sampler.setTrendData(new LinkedList<TrendData>());					
+				}
+				sampler.getTrendData().add(t);
+			}
+		
+			
+		
+			
 			if (start >0) {							
 				sampler.setVisualRefreshTime(now.getTime()-start);
 			}

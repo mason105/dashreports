@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
 import binky.reportrunner.data.RunnerDashboardChart.Orientation;
+import binky.reportrunner.data.sampling.SamplingData;
+import binky.reportrunner.data.sampling.TrendData;
 
 @Entity
 (name = "T_SAMPLING")
@@ -35,7 +37,7 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 	}
 	public enum Interval {
 
-		SECOND("Second"), MINUTE("Minute"), HOUR("Hour"), DAY("Day"), WEEK("Week"),MONTH("Month");
+		SECOND("Second"), MINUTE("Minute"), HOUR("Hour"), DAY("Day"),MONTH("Month");
 		private String displayName;
 
 		Interval(String displayName) {
@@ -55,6 +57,10 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 	private Interval interval;
 	private Orientation orientation;
 	private boolean gridLines;
+	private boolean recordTrendData;
+	@OneToMany(cascade=CascadeType.ALL)
+	private Collection<TrendData> trendData;
+	
 	@Override
 	public ItemType getItemType() {
 		return ItemType.Sampler;
@@ -135,5 +141,22 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 	public void setInterval(Interval interval) {
 		this.interval = interval;
 	}
-	
+
+	public boolean isRecordTrendData() {
+		return recordTrendData;
+	}
+
+	public void setRecordTrendData(boolean recordTrendData) {
+		this.recordTrendData = recordTrendData;
+	}
+
+	public Collection<TrendData> getTrendData() {
+		return trendData;
+	}
+
+	public void setTrendData(Collection<TrendData> trendData) {
+		this.trendData = trendData;
+	}
+
+
 }

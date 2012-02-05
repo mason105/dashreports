@@ -272,11 +272,6 @@
 			<version>3.2.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.jgeppert.struts2.jquery</groupId>
-			<artifactId>struts2-jquery-grid-plugin</artifactId>
-			<version>3.2.0</version>
-		</dependency>
-		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.17</version>

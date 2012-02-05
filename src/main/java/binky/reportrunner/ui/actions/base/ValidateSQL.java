@@ -10,8 +10,7 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.data.RunnerDataSource;
-import binky.reportrunner.service.impl.DatasourceServiceImpl;
-import binky.reportrunner.ui.actions.base.StandardRunnerAction;
+import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.ui.actions.dashboard.edit.GetColumnNamesForQuery;
 
 public abstract class ValidateSQL extends StandardRunnerAction {
@@ -21,7 +20,7 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 	private static final Logger logger = Logger
 			.getLogger(GetColumnNamesForQuery.class);
 
-	private DatasourceServiceImpl dataSourceService;
+	private DatasourceService dataSourceService;
 
 	private boolean isValid;
 	
@@ -93,11 +92,11 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 
 	
 
-	public DatasourceServiceImpl getDataSourceService() {
+	public DatasourceService getDataSourceService() {
 		return dataSourceService;
 	}
 
-	public void setDataSourceService(DatasourceServiceImpl dataSourceService) {
+	public void setDataSourceService(DatasourceService dataSourceService) {
 		this.dataSourceService = dataSourceService;
 	}
 

@@ -134,6 +134,7 @@
 		<property name="dashboardDao">
 			<ref bean="dashboardDao" />
 		</property>
+
 		<property name="scheduler" ref="scheduler" />
 		<property name="groupDao" ref="runnerGroupDao" />
 	</bean>

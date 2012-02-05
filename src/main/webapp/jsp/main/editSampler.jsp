@@ -24,8 +24,6 @@
 			<sj:tabbedpanel id="report" animate="true"
 				useSelectedTabCookie="true">
 
-
-
 				<s:hidden name="item.itemId" value="%{item.itemId}" />
 				<sj:tab id="detailsTab" target="detailsDiv" label="Details" />
 				<div id="detailsDiv">
@@ -71,6 +69,8 @@
 							listenTopics="refresh_fields" formId="saveSampler">
 						</sx:div>
 
+						<s:checkbox name="item.recordTrendData" label="Record Trend Data" />
+
 					</div>
 					<div class="formBottomEmpty"></div>
 				</div>
@@ -107,7 +107,7 @@
 							list="orientations" listKey="name" listValue="displayName"
 							cssClass="textbox"></s:select>
 
-						<s:checkbox name="item.gridLines" label="Show Grid Lines" />
+						<s:checkbox name="item.gridLines" label="Show Grid Lines" />							
 
 						<s:select label="Chart Background Colour"
 							name="item.backGroundColour"

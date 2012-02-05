@@ -1,9 +1,12 @@
-package binky.reportrunner.data;
+package binky.reportrunner.data.sampling;
 
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+import binky.reportrunner.data.DatabaseObject;
+import binky.reportrunner.data.RunnerDashboardSampler;
 
 @Entity(name = "T_S_DATA")
 public class SamplingData extends DatabaseObject<SamplingData_pk> {

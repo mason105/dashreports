@@ -66,19 +66,19 @@ public class GetSamplerChart extends BaseDashboardAction {
 				break;
 			case MINUTE:
 				sdf = new SimpleDateFormat("HH:mm:ss");
-				timeVal= (new SimpleDateFormat("HH")).format(d.getPk().getSampleTime());
+				timeVal= (new SimpleDateFormat("HH")).format(d.getSampleTime());
 				break;
 			case MONTH:
 				sdf = new SimpleDateFormat("MMMMM");
 				break;
 			case SECOND:
 			default:
-				timeVal= (new SimpleDateFormat("HH:mm")).format(d.getPk().getSampleTime());
+				timeVal= (new SimpleDateFormat("HH:mm")).format(d.getSampleTime());
 				sdf = new SimpleDateFormat("HH:mm:ss");
 			}
 			
 			
-			String xValue=sdf.format(new Date(d.getPk().getSampleTime()));
+			String xValue=sdf.format(new Date(d.getSampleTime()));
 			dataSet.addValue(yValue, "actual", xValue);
 			
 			if (item.isRecordTrendData()&&item.getTrendData()!=null) {
@@ -101,12 +101,12 @@ public class GetSamplerChart extends BaseDashboardAction {
 					sdf = new SimpleDateFormat("ss");
 				}
 				
-				String timeStringCompare = sdf.format(new Date(d.getPk().getSampleTime()));
+				String timeStringCompare = sdf.format(new Date(d.getSampleTime()));
 				if (item.isRecordTrendData()&&item.getTrendData()!=null) {		
 				//hack - needs work				
 				for (TrendData t: item.getTrendData()) {
-					if (t.getPk().getTimeString().equals(timeStringCompare)) {
-						String timeString=t.getPk().getTimeString();
+					if (t.getTimeString().equals(timeStringCompare)) {
+						String timeString=t.getTimeString();
 						switch (item.getInterval()) {
 							case HOUR:
 								timeString=timeString+":00:00";

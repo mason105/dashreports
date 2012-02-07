@@ -159,6 +159,8 @@ public class RunnerJobListener implements JobListener {
 	 * Defines a custom format for the stack trace as String.
 	 */
 	private String getCustomStackTrace(Throwable aThrowable) {
+		//temp
+		aThrowable.printStackTrace();
 		// add the class name and any message passed to constructor
 		final StringBuilder result = new StringBuilder();
 		result.append(aThrowable.toString());

@@ -2,31 +2,33 @@ package binky.reportrunner.data.sampling;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import binky.reportrunner.data.DatabaseObject;
 import binky.reportrunner.data.RunnerDashboardSampler;
 
 @Entity(name="T_T_DATA")
-public class TrendData extends  DatabaseObject<TrendData_pk>  {
+public class TrendData extends  DatabaseObject<Long>  {
 
 	private static final long serialVersionUID = 396314789157070381L;
 
 	public TrendData() {}
 	public TrendData(RunnerDashboardSampler sampler, String timeString) {
-		this.pk=new TrendData_pk(sampler,timeString);
+		this.sampler=sampler;
+		this.timeString=timeString;
 	}
 	
 	@Id
-	private TrendData_pk pk;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-	@Override
-	public TrendData_pk getId() {
-		return pk;
-	}
-	
+
 	
 	private int sampleSize;
 	
@@ -34,13 +36,22 @@ public class TrendData extends  DatabaseObject<TrendData_pk>  {
 	@Column(name="maximumValue")
 	private BigDecimal maxValue;
 	private BigDecimal minValue;
-
-	public TrendData_pk getPk() {
-		return pk;
+	@ManyToOne(cascade=CascadeType.ALL)
+	private RunnerDashboardSampler sampler;
+	private String timeString;
+	public RunnerDashboardSampler getSampler() {
+		return sampler;
 	}
-	public void setPk(TrendData_pk pk) {
-		this.pk = pk;
+	public void setSampler(RunnerDashboardSampler sampler) {
+		this.sampler = sampler;
 	}
+	public String getTimeString() {
+		return timeString;
+	}
+	public void setTimeString(String timeString) {
+		this.timeString = timeString;
+	} 
+	
 	public int getSampleSize() {
 		return sampleSize;
 	}
@@ -64,6 +75,12 @@ public class TrendData extends  DatabaseObject<TrendData_pk>  {
 	}
 	public void setMinValue(BigDecimal minValue) {
 		this.minValue = minValue;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	

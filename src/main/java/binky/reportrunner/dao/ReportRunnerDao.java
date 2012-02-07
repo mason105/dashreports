@@ -3,8 +3,6 @@ package binky.reportrunner.dao;
 import java.io.Serializable;
 import java.util.List;
 
-import org.hibernate.Session;
-
 import binky.reportrunner.data.DatabaseObject;
 
 /**

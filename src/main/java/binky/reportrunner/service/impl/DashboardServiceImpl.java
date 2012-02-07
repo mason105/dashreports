@@ -32,6 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeSet;
 
 import javax.sql.DataSource;
 
@@ -46,9 +47,7 @@ import binky.reportrunner.data.RunnerDashboardItem.ItemType;
 import binky.reportrunner.data.RunnerDashboardSampler;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.sampling.SamplingData;
-import binky.reportrunner.data.sampling.SamplingData_pk;
 import binky.reportrunner.data.sampling.TrendData;
-import binky.reportrunner.data.sampling.TrendData_pk;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DashboardService;
@@ -61,8 +60,8 @@ public class DashboardServiceImpl implements DashboardService {
 	
 	private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
 	
-	private ReportRunnerDao<TrendData,TrendData_pk> trendDataDao;
-	private ReportRunnerDao<SamplingData,SamplingData_pk> samplingDataDao;
+	private ReportRunnerDao<TrendData,Long> trendDataDao;
+	private ReportRunnerDao<SamplingData,Long> samplingDataDao;
 	private DatasourceService datasourceService;
 	
 	private ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao;
@@ -134,7 +133,7 @@ public class DashboardServiceImpl implements DashboardService {
 						s.getTrendData().clear();
 						
 						for (TrendData t:ts) {
-							trendDataDao.delete(t.getPk());
+							trendDataDao.delete(t.getId());
 						}
 						
 					}
@@ -241,13 +240,13 @@ public class DashboardServiceImpl implements DashboardService {
 			logger.trace("current sample size is :" + sampler.getData().size());
 		
 			for (SamplingData d: sampler.getData()) {
-				logger.trace("testing entry for : " + d.getPk().getSampleTime());
-				if (d.getPk().getSampleTime()<cutoff.getTime()) {
+				logger.trace("testing entry for : " + d.getSampleTime());
+				if (d.getSampleTime()<cutoff.getTime()) {
 					old.add(d);
 				}
 			}
 			for (SamplingData d:old) {
-				logger.trace("deleting entry for : " + d.getPk().getSampleTime());
+				logger.trace("deleting entry for : " + d.getSampleTime());
 				sampler.getData().remove(d);
 			}	
 			
@@ -285,7 +284,7 @@ public class DashboardServiceImpl implements DashboardService {
 				boolean found=false;
 				TrendData t = new TrendData(sampler, timeString);
 				for (TrendData d: sampler.getTrendData()) {
-					if  (d.getPk().getTimeString().equals(timeString)) {
+					if  (d.getTimeString().equals(timeString)) {
 						t=d;
 						found = true;
 						break;
@@ -307,7 +306,7 @@ public class DashboardServiceImpl implements DashboardService {
 					t.setMeanValue(val);
 					t.setMinValue(val);
 					t.setSampleSize(1);
-					if (sampler.getTrendData()==null) sampler.setTrendData(new LinkedList<TrendData>());					
+					if (sampler.getTrendData()==null) sampler.setTrendData(new TreeSet<TrendData>());					
 				}
 				sampler.getTrendData().add(t);
 			}
@@ -319,11 +318,11 @@ public class DashboardServiceImpl implements DashboardService {
 				sampler.setVisualRefreshTime(now.getTime()-start);
 			}
 			sampler.setLastUpdated(now);
-					
+			dashboardDao.saveOrUpdate(sampler);	
 			for (SamplingData d:old) {
-				samplingDataDao.delete(d.getPk());
+				samplingDataDao.delete(d.getId());
 			}
-			dashboardDao.saveOrUpdate(sampler);
+			
 			rs.close();
 		} finally {
 			if (!conn.isClosed())
@@ -368,11 +367,11 @@ public class DashboardServiceImpl implements DashboardService {
 
 	}
 	public void setTrendDataDao(
-			ReportRunnerDao<TrendData, TrendData_pk> trendDataDao) {
+			ReportRunnerDao<TrendData, Long> trendDataDao) {
 		this.trendDataDao = trendDataDao;
 	}
 	public void setSamplingDataDao(
-			ReportRunnerDao<SamplingData, SamplingData_pk> samplingDataDao) {
+			ReportRunnerDao<SamplingData, Long> samplingDataDao) {
 		this.samplingDataDao = samplingDataDao;
 	}
 	public void setDatasourceService(DatasourceService datasourceService) {

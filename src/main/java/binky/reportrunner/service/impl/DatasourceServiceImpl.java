@@ -190,7 +190,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	public DataSource getJDBCDataSource(RunnerDataSource runnerDs)
 			throws SQLException {
-
+		if (dataSources==null) dataSources=new HashMap<String, DataSource>();
 		DataSource ds = dataSources.get(runnerDs.getDataSourceName());
 		if (ds == null) {
 			try {

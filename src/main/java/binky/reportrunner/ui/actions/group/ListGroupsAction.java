@@ -25,6 +25,7 @@ package binky.reportrunner.ui.actions.group;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.service.GroupService;
@@ -43,17 +44,9 @@ public class ListGroupsAction extends StandardRunnerAction {
 
 	private List<RunnerGroup> groups;
 	@Override
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception{
-		logger.debug("listing groups for: " + super.getSessionUser().getUserName());
-		logger.debug("is admin is null = " + super.getSessionUser().getIsAdmin()==null);
-		if (super.getSessionUser().getIsAdmin()) {
-			logger.debug("is admin - allowing all groups");
-			 this.groups=groupService.getAll();
-		} else {
-			logger.debug("is not admin - restricting groups");
-			this.groups = super.getSessionUser().getGroups();
-		}
-		
+		this.groups=groupService.getAll();
 		return SUCCESS;		
 	}
 

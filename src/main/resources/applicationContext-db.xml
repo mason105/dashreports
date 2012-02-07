@@ -29,6 +29,12 @@
 		<property name="maxIdle">
 			<value>2</value>
 		</property>
+		<property name="validationQuery">
+			<value>${jdbc.validation.query}</value>
+		</property>		
+		<property name="validationQueryTimeout">
+			<value>${jdbc.validation.timeout}</value>
+		</property>		
 	</bean>
 
 
@@ -46,18 +52,30 @@
 				<prop key="hibernate.hbm2ddl.auto">
 					${hibernate.hbm2ddl.auto}
 				</prop>
-				<prop key="hibernate.cache.region.factory_class">
-					org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
-				</prop>
-				<prop key="hibernate.cache.use_second_level_cache">
-					true
-				</prop>
+				
 				<prop key="hibernate.connection.autoReconnect">
 					${hibernate.connection.autoReconnect}
 				</prop>
 				<prop key="hibernate.show.sql">
 					${hibernate.showSql}
 				</prop>
+				
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.use_sql_comments">false</prop>
+                <prop key="hibernate.max_fetch_depth">1</prop>
+
+                <prop key="hibernate.cache.use_structured_entries">false</prop>
+                <prop key="hibernate.bytecode.use_reflection_optimizer">false</prop>
+                <prop key="hibernate.jdbc.batch_size">100</prop>
+                <prop key="hibernate.generate_statistics">false</prop>
+
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_minimal_puts">true</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+                <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
+      			<prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
 			</props>
 		</property>
 		<property name="annotatedClasses">
@@ -105,6 +123,7 @@
 
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="hibernateManagedSession" value="false" />
 		<property name="sessionFactory">
 			<ref local="sessionFactory" />
 		</property>

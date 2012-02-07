@@ -20,7 +20,6 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	@Cacheable(cacheName="groupCache")
 	public List<RunnerGroup> getAll() {
 		return groupDao.getAll();
 	}

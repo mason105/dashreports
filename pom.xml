@@ -114,6 +114,11 @@
 			<artifactId>commons-beanutils</artifactId>
 			<version>1.8.3</version>
 		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2.2</version>
+		</dependency>
 
 
 		<!-- Struts 2 -->
@@ -320,7 +325,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-expression</artifactId>
 			<version>${springVersion}</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-email</artifactId>

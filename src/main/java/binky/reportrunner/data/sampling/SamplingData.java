@@ -2,36 +2,29 @@ package binky.reportrunner.data.sampling;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import binky.reportrunner.data.DatabaseObject;
 import binky.reportrunner.data.RunnerDashboardSampler;
 
 @Entity(name = "T_S_DATA")
-public class SamplingData extends DatabaseObject<SamplingData_pk> {
+public class SamplingData extends DatabaseObject<Long> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7337434800918457411L;
 	@Id
-	private SamplingData_pk pk;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
 
-	@Override
-	public SamplingData_pk getId() {
-		return pk;
-	}
 
 	private BigDecimal  value;
-
-	public SamplingData_pk getPk() {
-		return pk;
-	}
-
-	public void setPk(SamplingData_pk pk) {
-		this.pk = pk;
-	}
 
 	public BigDecimal getValue() {
 		return value;
@@ -44,23 +37,34 @@ public class SamplingData extends DatabaseObject<SamplingData_pk> {
 		
 	}
 	public SamplingData(RunnerDashboardSampler sampler, Long sampleDate, BigDecimal value) {
-		this.pk = new SamplingData_pk(sampler,sampleDate);
+		this.sampler=sampler;
+		this.sampleTime=sampleDate;
 		this.value = value;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if(obj instanceof SamplingData && obj!=null && this.pk!=null && ((SamplingData)obj).getPk()!=null) {
-			SamplingData comp = (SamplingData)obj;
-			if (this.pk.getSampleTime()!=null&&comp.getPk().getSampleTime()!=null &&this.getPk().getSampler()!=null && comp.getPk().getSampler()!=null) {
-				return (this.getPk().getSampler().getItemId().equals(comp.getPk().getSampler().getItemId())&&this.getPk().getSampleTime().equals(comp.getPk().getSampleTime()));
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-		
+	@ManyToOne(cascade=CascadeType.ALL)
+	private RunnerDashboardSampler sampler;
+	private Long sampleTime;
+	public RunnerDashboardSampler getSampler() {
+		return sampler;
 	}
+	public void setSampler(RunnerDashboardSampler sampler) {
+		this.sampler = sampler;
+	}
+	public Long getSampleTime() {
+		return sampleTime;
+	}
+	public void setSampleTime(Long sampleTime) {
+		this.sampleTime = sampleTime;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 
 }

@@ -1,10 +1,11 @@
 package binky.reportrunner.data;
 
-import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import binky.reportrunner.data.RunnerDashboardChart.Orientation;
@@ -58,8 +59,8 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 	private Orientation orientation;
 	private boolean gridLines;
 	private boolean recordTrendData;
-	@OneToMany(cascade=CascadeType.ALL)
-	private Collection<TrendData> trendData;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<TrendData> trendData;
 	
 	@Override
 	public ItemType getItemType() {
@@ -71,8 +72,8 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 	
 	private Window window;
 	
-	@OneToMany(cascade=CascadeType.ALL)
-	private Collection<SamplingData> data;
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private Set<SamplingData> data;
 
 	public Window getWindow() {
 		return window;
@@ -82,11 +83,11 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 		this.window = window;
 	}
 
-	public Collection<SamplingData> getData() {
+	public Set<SamplingData> getData() {
 		return data;
 	}
 
-	public void setData(Collection<SamplingData> data) {
+	public void setData(Set<SamplingData> data) {
 		this.data = data;
 	}
 
@@ -150,11 +151,11 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 		this.recordTrendData = recordTrendData;
 	}
 
-	public Collection<TrendData> getTrendData() {
+	public Set<TrendData> getTrendData() {
 		return trendData;
 	}
 
-	public void setTrendData(Collection<TrendData> trendData) {
+	public void setTrendData(Set<TrendData> trendData) {
 		this.trendData = trendData;
 	}
 

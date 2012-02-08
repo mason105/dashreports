@@ -19,10 +19,7 @@
 		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
 	<cache name="jobCache" eternal="false" maxElementsInMemory="100"
 		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
-	<cache name="auditCache" eternal="false" maxElementsInMemory="100"
-		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />
+		timeToLiveSeconds="300" memoryStoreEvictionPolicy="LRU" />				
 	<cache name="datasourceCache" eternal="false"
 		maxElementsInMemory="100" overflowToDisk="false" diskPersistent="false"
 		timeToIdleSeconds="0" timeToLiveSeconds="300"

@@ -240,7 +240,6 @@ public class DatasourceServiceImpl implements DatasourceService {
 		return ds;
 	}
 
-	@Cacheable(cacheName="dataSourceCache")
 	public List<RunnerDataSource> listDataSources() {
 		return dataSourceDao.getAll();
 	}

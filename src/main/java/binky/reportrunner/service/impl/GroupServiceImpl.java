@@ -12,9 +12,9 @@ import binky.reportrunner.service.GroupService;
 public class GroupServiceImpl implements GroupService {
 
 	private ReportRunnerDao<RunnerGroup, String> groupDao;
-	
+
 	@Override
-	@TriggersRemove(cacheName="groupCache")
+	@TriggersRemove(cacheName = "groupCache")
 	public void delete(String groupName) {
 		groupDao.delete(groupName);
 	}
@@ -25,11 +25,13 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
+	@Cacheable(cacheName = "groupCache")
 	public void saveOrUpdate(RunnerGroup group) {
 		groupDao.saveOrUpdate(group);
 	}
+
 	@Override
-	@Cacheable(cacheName="groupCache")
+	@Cacheable(cacheName = "groupCache")
 	public RunnerGroup getGroup(String groupName) {
 		return groupDao.get(groupName);
 	}
@@ -38,5 +40,4 @@ public class GroupServiceImpl implements GroupService {
 		this.groupDao = groupDao;
 	}
 
-	
 }

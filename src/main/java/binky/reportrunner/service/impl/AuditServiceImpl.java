@@ -6,9 +6,6 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.googlecode.ehcache.annotations.Cacheable;
-import com.googlecode.ehcache.annotations.TriggersRemove;
-
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerHistoryEvent.Module;
@@ -21,7 +18,6 @@ public class AuditServiceImpl implements AuditService {
 	private ReportRunnerDao<RunnerHistoryEvent, Long> historyDao;
 	
 	@Override
-	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getEventsByJob(String jobName,
 			String groupName, int count) {
 		if (count == 0) {
@@ -32,7 +28,6 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getEventsByModule(Module module, int count) {
 		if (count == 0) {
 			return historyDao.findByNamedQuery("getEventsByModule", new Module[]{module});
@@ -42,7 +37,6 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getEventsByUserName(String userName, int count) {
 		if (count == 0) {
 			return historyDao.findByNamedQuery("getEventsByUserName", new String[]{userName});
@@ -53,7 +47,6 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getFailedEvents(int count) {
 		if (count == 0) {
 			return historyDao.findByNamedQuery("getFailedEvents", null);
@@ -64,7 +57,6 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getLongestRunningEvents(int count) {
 		if (count == 0) {
 			return historyDao.findByNamedQuery("getLongestRunningEvents", null);
@@ -75,7 +67,6 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	@TriggersRemove(cacheName="auditCache")
 	public void deleteOldEvents(Date cutOff) {
 		List<RunnerHistoryEvent> events = historyDao.findByNamedQuery("getOldEvents", new Object[]{cutOff});
 		for (RunnerHistoryEvent e: events) {
@@ -84,7 +75,6 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	@Cacheable(cacheName="auditCache")
 	public List<RunnerHistoryEvent> getSuccessEvents(int count) {
 		if (count == 0) {
 			return historyDao.findByNamedQuery("getSuccessEvents", null);

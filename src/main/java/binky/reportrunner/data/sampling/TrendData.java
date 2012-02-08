@@ -2,7 +2,6 @@ package binky.reportrunner.data.sampling;
 
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -36,7 +35,7 @@ public class TrendData extends  DatabaseObject<Long>  {
 	@Column(name="maximumValue")
 	private BigDecimal maxValue;
 	private BigDecimal minValue;
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	private RunnerDashboardSampler sampler;
 	private String timeString;
 	public RunnerDashboardSampler getSampler() {

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -63,7 +64,8 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 	private Orientation orientation;
 	private boolean gridLines;
 	private boolean recordTrendData;
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="sampler" ,orphanRemoval=true)
+	@OrderBy("timeString")
 	private Set<TrendData> trendData;
 	
 	@Override
@@ -76,7 +78,8 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 	
 	private Window window;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="sampler" ,orphanRemoval=true)
+	@OrderBy("sampleTime")
 	private Set<SamplingData> data;
 
 	public Window getWindow() {

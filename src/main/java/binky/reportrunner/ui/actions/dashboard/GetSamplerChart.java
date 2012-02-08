@@ -1,6 +1,5 @@
 package binky.reportrunner.ui.actions.dashboard;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +11,6 @@ import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.MinMaxCategoryRenderer;
-import org.jfree.chart.renderer.xy.XYDifferenceRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import binky.reportrunner.data.RunnerDashboardChart.Orientation;
@@ -155,9 +153,8 @@ public class GetSamplerChart extends BaseDashboardAction {
 		if (item.isRecordTrendData()) {
 			
 	        MinMaxCategoryRenderer renderer = new MinMaxCategoryRenderer();
-	        renderer.setDrawLines(false);
-		        
-		        linePlot.setRenderer(renderer);
+	        renderer.setDrawLines(true);		        
+		    linePlot.setRenderer(renderer);
 		}
 		
 		chart.setAntiAlias(true);
@@ -165,12 +162,7 @@ public class GetSamplerChart extends BaseDashboardAction {
 		return SUCCESS;
 	}
 	
-	private void doTrendChart(RunnerDashboardSampler sampler){
-		
-	}
-	private void doLineChart(RunnerDashboardSampler sampler) {
-		
-	}
+
 
 	public JFreeChart getChart() {
 		return chart;

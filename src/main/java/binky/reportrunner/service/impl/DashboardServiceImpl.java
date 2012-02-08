@@ -30,6 +30,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeSet;
@@ -60,8 +61,7 @@ public class DashboardServiceImpl implements DashboardService {
 	
 	private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
 	
-	private ReportRunnerDao<TrendData,Long> trendDataDao;
-	private ReportRunnerDao<SamplingData,Long> samplingDataDao;
+
 	private DatasourceService datasourceService;
 	
 	private ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao;
@@ -122,26 +122,25 @@ public class DashboardServiceImpl implements DashboardService {
 		
 		//hack to deal with interval change
 		if (alert.getItemType()==ItemType.Sampler) {
-			if (alert.getItemId()!=null) {
-				RunnerDashboardSampler s=(RunnerDashboardSampler)alert;
+			RunnerDashboardSampler s=(RunnerDashboardSampler)alert;
+			RunnerDashboardSampler comp = (RunnerDashboardSampler)dashboardDao.get(alert.getItemId());
+			s.setData(comp.getData());
+			s.setTrendData(comp.getTrendData());
+			if (alert.getItemId()!=null) {			
 				//need to do a compare
 				if (s.isRecordTrendData()) {
-					RunnerDashboardSampler comp = (RunnerDashboardSampler)dashboardDao.get(alert.getItemId());
-					if (s.getInterval()!=comp.getInterval()&& s.getTrendData()!=null) {
-						//hackamundo
-						TrendData[] ts = (TrendData[])s.getTrendData().toArray();
-						s.getTrendData().clear();
-						
-						for (TrendData t:ts) {
-							trendDataDao.delete(t.getId());
-						}
-						
+					
+					if (!s.getInterval().equals(comp.getInterval())&& s.getTrendData()!=null) {
+						s.getTrendData().clear();																		
 					}
 				}
 			}
+			dashboardDao.saveOrUpdate(s);
+		} else {
+			dashboardDao.saveOrUpdate(alert);
 		}
 		
-		dashboardDao.saveOrUpdate(alert);
+		
 		scheduler.addDashboardAlert(alert.getItemId(),alert.getCronTab());		
 	}
 	public void setDashboardDao(ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao) {
@@ -186,12 +185,17 @@ public class DashboardServiceImpl implements DashboardService {
 	@Override
 	public void processDashboardItem(int itemId)throws SQLException {
 		RunnerDashboardItem item = dashboardDao.get(itemId);
+		if (item!=null) {
 		switch (item.getItemType()) {
 		case Sampler:
 			processSampler(item);
 			break;
 		default:
 			processQueryItem(item);
+		}
+		}
+		else {
+		logger.warn("null item found for item id: " + itemId);	
 		}
 		
 	}
@@ -234,29 +238,18 @@ public class DashboardServiceImpl implements DashboardService {
 			Date now = cal.getTime();
 			cal.add(period, amount);
 			Date cutoff= cal.getTime();
-			logger.trace("deleting entries older than " + cutoff);
-			//first of all we need to clean out any that now fall outside of our window
-			List<SamplingData> old = new LinkedList<SamplingData>();
-			logger.trace("current sample size is :" + sampler.getData().size());
-		
-			for (SamplingData d: sampler.getData()) {
-				logger.trace("testing entry for : " + d.getSampleTime());
-				if (d.getSampleTime()<cutoff.getTime()) {
-					old.add(d);
-				}
-			}
-			for (SamplingData d:old) {
-				logger.trace("deleting entry for : " + d.getSampleTime());
-				sampler.getData().remove(d);
-			}	
-			
 			
 			//get the value - as this is a sampler we only grab the first row
 			BigDecimal val= new BigDecimal(0);
 			if (rs.next()) {
 				val = rs.getBigDecimal(sampler.getValueColumn());							
 			}
+			rs.close();
+
 			sampler.getData().add(new SamplingData(sampler,now.getTime(),val));
+			
+						
+			
 			
 			if (sampler.isRecordTrendData()) {
 
@@ -318,12 +311,19 @@ public class DashboardServiceImpl implements DashboardService {
 				sampler.setVisualRefreshTime(now.getTime()-start);
 			}
 			sampler.setLastUpdated(now);
-			dashboardDao.saveOrUpdate(sampler);	
-			for (SamplingData d:old) {
-				samplingDataDao.delete(d.getId());
+		
+			logger.trace("deleting entries older than " + cutoff);
+			//first of all we need to clean out any that now fall outside of our window
+			logger.trace("current sample size is :" + sampler.getData().size());
+			
+			for (Iterator<SamplingData> it=sampler.getData().iterator();it.hasNext();) {
+				SamplingData d = it.next();
+				if (d.getSampleTime()<cutoff.getTime()) it.remove();
 			}
 			
-			rs.close();
+			dashboardDao.saveOrUpdate(sampler);	
+
+			
 		} finally {
 			if (!conn.isClosed())
 				conn.close();
@@ -366,14 +366,7 @@ public class DashboardServiceImpl implements DashboardService {
 		}
 
 	}
-	public void setTrendDataDao(
-			ReportRunnerDao<TrendData, Long> trendDataDao) {
-		this.trendDataDao = trendDataDao;
-	}
-	public void setSamplingDataDao(
-			ReportRunnerDao<SamplingData, Long> samplingDataDao) {
-		this.samplingDataDao = samplingDataDao;
-	}
+
 	public void setDatasourceService(DatasourceService datasourceService) {
 		this.datasourceService = datasourceService;
 	}

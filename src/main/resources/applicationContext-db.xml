@@ -267,41 +267,5 @@
 			</props>
 		</property>
 	</bean>
-	
-	<bean id="trendDataDaoTarget"
-		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
-		autowire="byName">
-		<constructor-arg>
-			<value>binky.reportrunner.data.sampling.TrendData</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="trendDataDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="transactionManager" ref="transactionManager" />
-		<property name="target" ref="trendDataDaoTarget" />
-		<property name="transactionAttributes">
-			<props>
-				<prop key="*">PROPAGATION_REQUIRED</prop>
-			</props>
-		</property>
-	</bean>
-	<bean id="samplingDataDaoTarget"
-		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
-		autowire="byName">
-		<constructor-arg>
-			<value>binky.reportrunner.data.sampling.SamplingData</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	<bean id="samplingDataDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
-		<property name="transactionManager" ref="transactionManager" />
-		<property name="target" ref="samplingDataDaoTarget" />
-		<property name="transactionAttributes">
-			<props>
-				<prop key="*">PROPAGATION_REQUIRED</prop>
-			</props>
-		</property>
-	</bean>	
+
 </beans>

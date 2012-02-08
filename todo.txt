@@ -1,12 +1,21 @@
-Jobs:
-Upgrade quartz to 2.1 - can't be done without refactoring loads of stuff as it is not supported by spring - went to 1.8.6 instead - to be tested - seems OK
-Assess Hibernate 4 - implemented - required Spring 3.1 and a bit of faffing but i'm happy with it.
-URL builder - sort of done.
-Parameters populate field from the burst query - putting on back burner as this is going to be hard hard
-Remove jquery grid - display tag - done
-change password feature - done
+To Do:
+Clear trend data option
+Enhance the stats/warning page with ajax dropdown goodness.
 Validation!!
-Rethink dashboard toolbar - done - looks loads better - might use that style else where for adds
 new schema scripts - MySQL, Postgres and Oracle
 close down all outstanding bugs
 Make a Derby/Tomcat package
+Make a test data package for MySQL
+Soak testing
+
+Completed:
+Assess Hibernate 4 - implemented - required Spring 3.1 and a bit of faffing but i'm happy with it.
+URL builder - sort of done.
+Remove jquery grid - display tag - done
+change password feature - done
+Rethink dashboard toolbar - done - looks loads better - might use that style else where for adds
+Caching and performance.
+
+Postponed:
+Parameters populate field from the burst query - putting on back burner as this is going to be hard hard
+Upgrade quartz to 2.1 - can't be done without refactoring loads of stuff as it is not supported by spring - went to 1.8.6 instead - to be tested - seems OK

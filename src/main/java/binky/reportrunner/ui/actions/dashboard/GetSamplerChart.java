@@ -77,10 +77,10 @@ public class GetSamplerChart extends BaseDashboardAction {
 			
 			
 			String xValue=sdf.format(new Date(d.getSampleTime()));
-			dataSet.addValue(yValue, "actual", xValue);
+		
 			
 			if (item.isRecordTrendData()&&item.getTrendData()!=null) {
-				
+				dataSet.addValue(yValue, "actual", xValue);
 				switch (item.getInterval()) {
 				case DAY:				
 					sdf = new SimpleDateFormat("EEEEE");
@@ -126,6 +126,8 @@ public class GetSamplerChart extends BaseDashboardAction {
 					}
 				}
 				}
+			} else {
+				dataSet.addValue(yValue, item.getValueColumn(), xValue);
 			}
 			
 		}

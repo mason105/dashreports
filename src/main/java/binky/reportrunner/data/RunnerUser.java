@@ -31,6 +31,8 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,6 +40,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity(name = "T_USER")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerUser extends DatabaseObject<String> implements  UserDetails {
 
 	public String getId() {

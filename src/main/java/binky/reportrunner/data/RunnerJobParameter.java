@@ -27,10 +27,14 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity(name = "T_PARAMETER")
 @NamedQueries( {
 	@NamedQuery(name = "getParmatersByJob", query = "from T_PARAMETER p where p.pk.runnerJob_pk.jobName=? and p.pk.runnerJob_pk.group.groupName=?")
 })
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerJobParameter extends DatabaseObject<RunnerJobParameter_pk> {
 
 	/**

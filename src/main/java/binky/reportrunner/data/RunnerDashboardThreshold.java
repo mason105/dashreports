@@ -2,7 +2,11 @@ package binky.reportrunner.data;
 
 import javax.persistence.Entity;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity(name = "T_THRESHOLD")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerDashboardThreshold extends RunnerDashboardItem {
 
 	/**

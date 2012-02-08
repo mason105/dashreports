@@ -34,12 +34,15 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 import org.apache.commons.beanutils.RowSetDynaClass;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity(name = "T_ITEM")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQueries( {
 	@NamedQuery(name = "getItemsByGroup", query = "from T_ITEM i where i.group.groupName = ?")
 })
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public abstract class RunnerDashboardItem extends DatabaseObject<Integer> {
 
 	public Integer getId() {

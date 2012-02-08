@@ -31,6 +31,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 @Entity(name = "T_EVENT")
 @NamedQueries( {
 		@NamedQuery(name = "getEventsByJob", query = "from T_EVENT e where e.jobName = ? and e.groupName = ?"),		
@@ -41,6 +44,7 @@ import javax.persistence.NamedQuery;
 		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.success=true order by timeStamp desc"),
 		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timeStamp < ?")		
 })
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerHistoryEvent extends DatabaseObject<Long> {
 
 	/**

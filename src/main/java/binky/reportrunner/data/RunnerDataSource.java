@@ -30,12 +30,16 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity(name = "T_DATASOURCE")
 @NamedQueries( {
 	@NamedQuery(name = "findAllForGroup", query = "from T_DATASOURCE d join d.groups g where g.groupName = ?")
 })	
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerDataSource extends DatabaseObject<String> {
 
 	public String getId() {

@@ -8,12 +8,16 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import binky.reportrunner.data.RunnerDashboardChart.Orientation;
 import binky.reportrunner.data.sampling.SamplingData;
 import binky.reportrunner.data.sampling.TrendData;
 
 @Entity
 (name = "T_SAMPLING")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerDashboardSampler extends RunnerDashboardItem {
 
 	private static final long serialVersionUID = 6026696206314302405L;

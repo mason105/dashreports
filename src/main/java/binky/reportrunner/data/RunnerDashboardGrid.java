@@ -2,8 +2,11 @@ package binky.reportrunner.data;
 
 import javax.persistence.Entity;
 
-@Entity
-(name = "T_GRID")
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+@Entity(name = "T_GRID")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerDashboardGrid extends RunnerDashboardItem {
 
 

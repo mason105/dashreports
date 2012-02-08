@@ -29,9 +29,13 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 
 @Entity(name = "T_GROUP")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerGroup extends DatabaseObject<String> {
 
 	public String getId() {

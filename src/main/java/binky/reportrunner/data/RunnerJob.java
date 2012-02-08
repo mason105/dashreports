@@ -33,6 +33,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 
@@ -40,6 +43,7 @@ import com.opensymphony.xwork2.validator.annotations.UrlValidator;
 @NamedQueries( {
 	@NamedQuery(name = "getJobsByGroup", query = "from T_JOB j where j.pk.group.groupName = ?")
 })
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 
 	public RunnerJob_pk getId() {

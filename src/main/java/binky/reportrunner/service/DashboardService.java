@@ -39,4 +39,5 @@ public interface DashboardService {
 	public void interruptRunningDashboardItem(Integer alertId) throws SchedulerException;
 	public void invokeDashboardItem(Integer alertId) throws SchedulerException;
 	public void processDashboardItem(int itemId) throws SQLException;
+	public void clearTrendData(int itemId);
 }

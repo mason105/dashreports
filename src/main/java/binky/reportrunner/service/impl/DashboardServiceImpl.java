@@ -370,5 +370,19 @@ public class DashboardServiceImpl implements DashboardService {
 	public void setDatasourceService(DatasourceService datasourceService) {
 		this.datasourceService = datasourceService;
 	}
+	@Override
+	public void clearTrendData(int itemId) {
+		
+		RunnerDashboardItem item = dashboardDao.get(itemId);
+		
+		if (item!=null&&item.getItemType()==ItemType.Sampler) {
+			RunnerDashboardSampler s = (RunnerDashboardSampler)item;
+			if (s.isRecordTrendData()) {
+				s.getTrendData().clear();
+				dashboardDao.saveOrUpdate(s);
+			}
+		}
+		
+	}
 
 }

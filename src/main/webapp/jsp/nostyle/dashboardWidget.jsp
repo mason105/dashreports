@@ -118,6 +118,9 @@
 				<div class="widgetToolbar">
 	 				<s:if test="!sessionUser.isReadOnly||sessionUser.isAdmin">
 	 					 <s:a href="setupEditSampler.action?itemId=%{itemId}&groupName=%{item.group.groupName}"><img src="<s:url value='/images/v2/icons/edit.png'/>" align="absmiddle" title="Edit" /></s:a>						 					 
+	 					 <s:if test="item.recordTrendData">
+	 					 <s:a href="clearTrendData.action?itemId=%{itemId}&groupName=%{item.group.groupName}" onclick="return confirm('Really clear trend data?');"><img src="<s:url value='/images/v2/icons/clear.png'/>" title="Clear Trend Data" align="absmiddle" /></s:a>
+	 					 </s:if>
 	 					 <s:a href="deleteItem.action?itemId=%{itemId}&groupName=%{item.group.groupName}" onclick="return confirm('Really delete this item?');"><img src="<s:url value='/images/v2/icons/delete.png'/>" title="Delete" align="absmiddle" /></s:a>	
 	 				</s:if>		
 				</div>	

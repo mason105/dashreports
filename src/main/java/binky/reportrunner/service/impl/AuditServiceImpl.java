@@ -90,7 +90,7 @@ public class AuditServiceImpl implements AuditService {
 			String groupName) {
 
 		RunnerHistoryEvent event = new RunnerHistoryEvent(Calendar.getInstance().getTime(), jobName, groupName, message, success, runTime,userName, module);	
-		logger.debug("logging audit message: " + event.toString());
+		logger.trace("logging audit message: " + event.toString());
 		historyDao.saveOrUpdate(event);
 		
 	}

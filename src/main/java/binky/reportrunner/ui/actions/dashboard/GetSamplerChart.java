@@ -46,7 +46,7 @@ public class GetSamplerChart extends BaseDashboardAction {
 		double upper=0d;
 		boolean first=true;
 		String timeVal="";
-		for (SamplingData d : item.getData()) {
+		for (SamplingData d : item.getSamplingData()) {
 			Number yValue = d.getValue();
 			if (first) {
 				first=false;

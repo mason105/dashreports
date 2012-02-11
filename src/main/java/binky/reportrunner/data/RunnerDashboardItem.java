@@ -22,9 +22,13 @@
  ******************************************************************************/
 package binky.reportrunner.data;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -32,8 +36,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
-import org.apache.commons.beanutils.RowSetDynaClass;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -74,10 +79,13 @@ public abstract class RunnerDashboardItem extends DatabaseObject<Integer> {
 	@ManyToOne
 	private RunnerDataSource datasource;
 
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="item" ,orphanRemoval=true)
+	@OrderBy("rowNumber")
+	private Set<DashboardData> data;
+	
 	private Integer displayRow = 1;
 	private Integer displayColumn = 1;
-	private RowSetDynaClass currentDataset;
-
+	
 	private String numberFormat = "###0.000";
 
 	private String backGroundColour = "#FFFFFF";
@@ -106,14 +114,6 @@ public abstract class RunnerDashboardItem extends DatabaseObject<Integer> {
 
 	public void setCronTab(String cronTab) {
 		this.cronTab = cronTab;
-	}
-
-	public RowSetDynaClass getCurrentDataset() {
-		return currentDataset;
-	}
-
-	public void setCurrentDataset(RowSetDynaClass currentDataset) {
-		this.currentDataset = currentDataset;
 	}
 
 	public RunnerDataSource getDatasource() {
@@ -275,6 +275,14 @@ public abstract class RunnerDashboardItem extends DatabaseObject<Integer> {
 	}
 
 	public abstract ItemType getItemType();
+
+	public Set<DashboardData> getData() {
+		return data;
+	}
+
+	public void setData(Set<DashboardData> data) {
+		this.data = data;
+	}
 		
 
 }

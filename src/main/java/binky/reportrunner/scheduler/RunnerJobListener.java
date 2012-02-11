@@ -99,7 +99,7 @@ public class RunnerJobListener implements JobListener {
 			ctx.getJobDetail().getJobDataMap().put("itemId", itemId);	
 			ctx.getJobDetail().getJobDataMap().put("dashboardService", dashboardService);
 		}
-		logger.info("Scheduled task to be executed: " + ctx.getJobDetail().getName()
+		logger.trace("Scheduled task to be executed: " + ctx.getJobDetail().getName()
 				+ "/" + ctx.getJobDetail().getGroup());
 	}
 
@@ -134,7 +134,7 @@ public class RunnerJobListener implements JobListener {
 		}
 
 		if (success) {
-			logger.info("Job was executed: " + ctx.getJobDetail().getName()
+			logger.trace("Job was executed: " + ctx.getJobDetail().getName()
 					+ "/" + ctx.getJobDetail().getGroup());
 		} else {
 			logger.error("Job Failed : " + ctx.getJobDetail().getName()

@@ -25,23 +25,26 @@ package binky.reportrunner.service.impl;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.beanutils.DynaProperty;
-import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.ReportRunnerDao;
+import binky.reportrunner.data.DashboardData;
 import binky.reportrunner.data.RunnerDashboardGrid;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerDashboardItem.ItemType;
@@ -207,7 +210,7 @@ public class DashboardServiceImpl implements DashboardService {
 
 		try {
 			long start = item.getLastUpdated()!=null?item.getLastUpdated().getTime():0;
-			logger.debug("running SQL for sampler");
+			logger.trace("running SQL for sampler");
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			RunnerDashboardSampler sampler = (RunnerDashboardSampler)item;
@@ -246,7 +249,7 @@ public class DashboardServiceImpl implements DashboardService {
 			}
 			rs.close();
 
-			sampler.getData().add(new SamplingData(sampler,now.getTime(),val));
+			sampler.getSamplingData().add(new SamplingData(sampler,now.getTime(),val));
 			
 						
 			
@@ -316,7 +319,7 @@ public class DashboardServiceImpl implements DashboardService {
 			//first of all we need to clean out any that now fall outside of our window
 			logger.trace("current sample size is :" + sampler.getData().size());
 			
-			for (Iterator<SamplingData> it=sampler.getData().iterator();it.hasNext();) {
+			for (Iterator<SamplingData> it=sampler.getSamplingData().iterator();it.hasNext();) {
 				SamplingData d = it.next();
 				if (d.getSampleTime()<cutoff.getTime()) it.remove();
 			}
@@ -337,29 +340,42 @@ public class DashboardServiceImpl implements DashboardService {
 		Connection conn = ds.getConnection();
 
 		try {
-			logger.debug("running SQL for item");
+			logger.trace("running SQL for item");
 			Statement stmt = conn.createStatement();
 			if (item.getItemType() == ItemType.Grid) {
 				int rows = ((RunnerDashboardGrid) item).getRowsToDisplay();
 				if (rows > 0) {
-					logger.debug("limiting grid result to " + rows + " rows");
+					logger.trace("limiting grid result to " + rows + " rows");
 					stmt.setFetchSize(rows);
 					stmt.setMaxRows(rows);
 				}
 			}
 			ResultSet rs = stmt.executeQuery(sql);
-			RowSetDynaClass rsdc = new RowSetDynaClass(rs, false);
-			if (logger.isDebugEnabled()) {
-				logger.debug("record set size: " + rsdc.getRows().size());
-				for (DynaProperty col : rsdc.getDynaProperties()) {
-					logger.debug("found column: " + col.getName() + " of type "
-							+ col.getType().getName());
+			Set<DashboardData> data = new LinkedHashSet<DashboardData>();
+			int colCount=rs.getMetaData().getColumnCount();
+			ResultSetMetaData meta=rs.getMetaData();
+			Date now = Calendar.getInstance().getTime();
+			int rowNumber=0;
+			while (rs.next()) {
+				rowNumber++;
+				for (int i=1;i<=colCount;i++) {					
+					Object value;
+					switch (meta.getColumnType(i)) {
+					case Types.TIME:
+					case Types.TIMESTAMP:
+					case Types.DATE:
+						value=new Long(rs.getDate(i).getTime());
+						break;	
+					default:
+						value=rs.getObject(i);
+					}
+					data.add(new DashboardData(item, now, meta.getColumnName(i), value.toString(), meta.getColumnType(i),rowNumber));
 				}
 			}
-			item.setCurrentDataset(rsdc);
-			item.setLastUpdated(Calendar.getInstance().getTime());
-			dashboardDao.saveOrUpdate(item);
 			rs.close();
+			item.setData(data);			
+			item.setLastUpdated(now);
+			dashboardDao.saveOrUpdate(item);			
 		} finally {
 			if (!conn.isClosed())
 				conn.close();

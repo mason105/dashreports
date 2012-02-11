@@ -87,10 +87,6 @@
 					SELECT * FROM {0}LOCKS UPDLOCK WHERE LOCK_NAME = ?
 				</prop>
 
-				<!-- history plugin -->
-				<prop key="org.quartz.plugin.triggHistory.class">
-					org.quartz.plugins.history.LoggingJobHistoryPlugin
-				</prop>
 
 				<!--  clustering -->
 				<prop key="org.quartz.jobStore.isClustered">

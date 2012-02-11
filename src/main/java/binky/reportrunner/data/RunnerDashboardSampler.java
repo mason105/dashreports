@@ -80,7 +80,7 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="sampler" ,orphanRemoval=true)
 	@OrderBy("sampleTime")
-	private Set<SamplingData> data;
+	private Set<SamplingData> samplingData;
 
 	public Window getWindow() {
 		return window;
@@ -90,12 +90,12 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 		this.window = window;
 	}
 
-	public Set<SamplingData> getData() {
-		return data;
+	public Set<SamplingData> getSamplingData() {
+		return samplingData;
 	}
 
-	public void setData(Set<SamplingData> data) {
-		this.data = data;
+	public void setSamplingData(Set<SamplingData> samplingData) {
+		this.samplingData = samplingData;
 	}
 
 	public String getYAxisLabel() {

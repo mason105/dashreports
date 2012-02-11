@@ -84,6 +84,9 @@
 					binky.reportrunner.data.RunnerDashboardItem
 				</value>
 				<value>
+					binky.reportrunner.data.DashboardData
+				</value>
+				<value>
 					binky.reportrunner.data.RunnerDashboardChart
 				</value>
 				<value>

@@ -67,7 +67,7 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 			if (item.getItemId() != null) {
 				RunnerDashboardItem currentItem = super
 						.getDashboardService().getItem(item.getItemId());
-				item.setCurrentDataset(currentItem.getCurrentDataset());
+				item.setData(currentItem.getData());				
 				item.setLastUpdated(currentItem.getLastUpdated());
 			}
 			RunnerGroup group = new RunnerGroup();

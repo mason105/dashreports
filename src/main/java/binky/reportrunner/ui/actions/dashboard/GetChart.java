@@ -1,11 +1,14 @@
 package binky.reportrunner.ui.actions.dashboard;
 
 import java.awt.Color;
+import java.math.BigInteger;
+import java.sql.Types;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
@@ -19,6 +22,7 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.util.Rotation;
 
+import binky.reportrunner.data.DashboardData;
 import binky.reportrunner.data.RunnerDashboardChart;
 import binky.reportrunner.data.RunnerDashboardChart.Orientation;
 import binky.reportrunner.ui.actions.dashboard.base.BaseDashboardAction;
@@ -44,13 +48,68 @@ public class GetChart extends BaseDashboardAction {
 			throw new SecurityException(
 					"user does not have permission to group: " + groupName);
 		}
+		
+		
+		
+		List<Map<String, Object>> values = new LinkedList<Map<String, Object>>();
 
-		RowSetDynaClass data = item.getCurrentDataset();
+		// populate the values
+				if (item.getData() != null && item.getData().size()>0) {
+					int currentRowNumber = 0;
+
+					Map<String, Object> currentRow = new HashMap<String, Object>();
+					for (DashboardData d : item.getData()) {
+						if (d.getRowNumber() > currentRowNumber) {
+							if (currentRowNumber>0) {
+								if (logger.isTraceEnabled()) {
+									for (String s: currentRow.keySet()) {
+										logger.trace("current row " + currentRowNumber
+												+ " has column " + s + " with value of " + currentRow.get(s) + " key has hash value of " + s.hashCode());
+									}
+								}
+								values.add(currentRow);
+								currentRow = new HashMap<String, Object>();
+							}
+							currentRowNumber = d.getRowNumber();
+						}
+						Object value;
+						switch (d.getDataType()) {
+						case Types.BIGINT:
+						case Types.DECIMAL:
+						case Types.FLOAT:
+						case Types.DOUBLE:
+						case Types.INTEGER:
+						case Types.REAL:
+						case Types.SMALLINT:
+						case Types.TINYINT:
+							value = new BigInteger(d.getValue());
+							break;
+						case Types.DATE:
+						case Types.TIME:
+						case Types.TIMESTAMP:
+							value = new Date(Long.parseLong(d.getValue()));
+							break;
+						default:
+							value = d.getValue();
+						}
+						currentRow.put(d.getColumnName(), value);
+					
+					}
+				} else {
+					throw new Exception("Empty dataset for item: " + itemId);
+				}
 		
 		List<String> xLabels = new LinkedList<String>();
-		for (Object o : data.getRows()) {
-			DynaBean b = (DynaBean) o;
-			String label = b.get(item.getXaxisColumn()).toString();
+		for (Map<String,Object> row : values) {
+			logger.trace("fetching value for column: " + item.getXaxisColumn() + " hashcode of " + item.getXaxisColumn().hashCode());
+			
+			if (logger.isTraceEnabled()) {
+				for (String s: row.keySet()) {
+					logger.trace("current row has column " + s + " with value of " + row.get(s) + " key has hash value of " + s.hashCode());
+				}
+			}
+			
+			String label = row.get(item.getXaxisColumn()).toString();
 			if (!xLabels.contains(label)) {
 				xLabels.add(label);
 			}
@@ -64,15 +123,14 @@ public class GetChart extends BaseDashboardAction {
 		}
 
 		List<Object> series = new LinkedList<Object>();
-		for (Object o : data.getRows()) {
-			DynaBean b = (DynaBean) o;
+		for (Map<String,Object> row : values) {
 			Object seriesName;
 			if ((item.getSeriesNameColumn() == null)
 					|| (item.getSeriesNameColumn().isEmpty())) {
 				seriesName = "VALUE";
 
 			} else {
-				seriesName = (String) b.get(item.getSeriesNameColumn());
+				seriesName = (String) row.get(item.getSeriesNameColumn());
 				logger.trace("found series" + seriesName);
 			}
 			if (!series.contains(seriesName)) {
@@ -98,17 +156,16 @@ public class GetChart extends BaseDashboardAction {
 			if (series != null && series.size() > 0) {
 				Object s = series.get(0);
 				DefaultPieDataset result = new DefaultPieDataset();
-				for (Object o : data.getRows()) {
-					DynaBean b = (DynaBean) o;
+				for (Map<String,Object> row : values) {
 					if (StringUtils.isBlank(item.getSeriesNameColumn())) {
-						Number yValue = (Number) b.get(item.getValueColumn());
-						Object xValue = b.get(item.getXaxisColumn());
+						Number yValue = (Number) row.get(item.getValueColumn());
+						Object xValue = row.get(item.getXaxisColumn());
 						result.setValue(xValue.toString(), yValue);				
 					} else {
-						Object sValue = b.get(item.getSeriesNameColumn());
+						Object sValue = row.get(item.getSeriesNameColumn());
 						
-						Number yValue = (Number) b.get(item.getValueColumn());
-						Object xValue = b.get(item.getXaxisColumn());
+						Number yValue = (Number) row.get(item.getValueColumn());
+						Object xValue = row.get(item.getXaxisColumn());
 						if (sValue.equals(s)) {
 							// find the index of the x label
 							result.setValue(xValue.toString(), yValue);
@@ -136,10 +193,9 @@ public class GetChart extends BaseDashboardAction {
 			
 			if (StringUtils.isBlank(item.getSeriesNameColumn())) {
 				
-				for (Object o : data.getRows()) {
-					DynaBean b = (DynaBean) o;				
-					Number yValue = (Number) b.get(item.getValueColumn());
-					Comparable xValue = (Comparable)b.get(item.getXaxisColumn());
+			for (Map<String,Object> row : values) {						
+					Number yValue = (Number) row.get(item.getValueColumn());
+					Comparable xValue = (Comparable)row.get(item.getXaxisColumn());
 					dataSet.addValue(yValue,"Value" , xValue);
 				}
 								
@@ -147,11 +203,10 @@ public class GetChart extends BaseDashboardAction {
 				for (Object s : series) {
 					
 	
-					for (Object o : data.getRows()) {
-						DynaBean b = (DynaBean) o;				
-						Object sValue = b.get(item.getSeriesNameColumn());
-						Number yValue = (Number) b.get(item.getValueColumn());
-						Comparable xValue = (Comparable)b.get(item.getXaxisColumn());
+					for (Map<String,Object> row : values) {	
+						Object sValue = row.get(item.getSeriesNameColumn());
+						Number yValue = (Number) row.get(item.getValueColumn());
+						Comparable xValue = (Comparable)row.get(item.getXaxisColumn());
 						if (sValue.equals(s)) {							
 							dataSet.addValue(yValue,(Comparable)s , xValue);
 						}

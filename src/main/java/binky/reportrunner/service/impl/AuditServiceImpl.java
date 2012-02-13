@@ -47,21 +47,21 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	public List<RunnerHistoryEvent> getFailedEvents(int count) {
+	public List<RunnerHistoryEvent> getFailedEvents(Module module, int count) {
 		if (count == 0) {
-			return historyDao.findByNamedQuery("getFailedEvents", null);
+			return historyDao.findByNamedQuery("getFailedEvents", new Module[]{module});
 		} else {
-			return historyDao.findByNamedQuery("getFailedEvents", null,count);
+			return historyDao.findByNamedQuery("getFailedEvents", new Module[]{module},count);
 		}
 
 	}
 
 	@Override
-	public List<RunnerHistoryEvent> getLongestRunningEvents(int count) {
+	public List<RunnerHistoryEvent> getLongestRunningEvents(Module module, int count) {
 		if (count == 0) {
-			return historyDao.findByNamedQuery("getLongestRunningEvents", null);
+			return historyDao.findByNamedQuery("getLongestRunningEvents", new Module[]{module});
 		} else {
-			return historyDao.findByNamedQuery("getLongestRunningEvents", null,count);
+			return historyDao.findByNamedQuery("getLongestRunningEvents", new Module[]{module},count);
 		}
 
 	}
@@ -75,11 +75,11 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	public List<RunnerHistoryEvent> getSuccessEvents(int count) {
+	public List<RunnerHistoryEvent> getSuccessEvents(Module module, int count) {
 		if (count == 0) {
-			return historyDao.findByNamedQuery("getSuccessEvents", null);
+			return historyDao.findByNamedQuery("getSuccessEvents", new Module[]{module});
 		} else {
-			return historyDao.findByNamedQuery("getSuccessEvents", null,count);
+			return historyDao.findByNamedQuery("getSuccessEvents", new Module[]{module},count);
 		}
 
 	}

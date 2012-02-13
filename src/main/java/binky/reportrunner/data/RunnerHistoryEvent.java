@@ -39,9 +39,9 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 		@NamedQuery(name = "getEventsByJob", query = "from T_EVENT e where e.jobName = ? and e.groupName = ?"),		
 		@NamedQuery(name = "getEventsByModule", query = "from T_EVENT e where e.module = ?"),
 		@NamedQuery(name = "getEventsByUserName", query = "from T_EVENT e where e.userName = ?"),
-		@NamedQuery(name = "getFailedEvents", query = "from T_EVENT e where e.success=false order by timeStamp desc"),
-		@NamedQuery(name = "getLongestRunningEvents", query = "from T_EVENT e order by runTime desc"),
-		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.success=true order by timeStamp desc"),
+		@NamedQuery(name = "getFailedEvents", query = "from T_EVENT e where e.module = ? and e.success=false order by timeStamp desc"),
+		@NamedQuery(name = "getLongestRunningEvents", query = "from T_EVENT e where e.module = ? order by runTime desc"),
+		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.module = ? and e.success=true order by timeStamp desc"),
 		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timeStamp < ?")		
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)

@@ -353,9 +353,12 @@
 			</result>
 		</action>
 
+		<action name="getAuditHistory" class="getAuditHistoryAction">
+			<result>/jsp/nostyle/getAuditHistory.jsp</result>
+		</action>
 
-		<action name="jobStatistics" class="setupJobStatsAction">
-			<result>/jsp/main/jobStats.jsp</result>
+		<action name="warningStats" class="warningStatsAction">
+			<result>/jsp/main/warningStats.jsp</result>
 		</action>
 
 		<action name="dashboardWidget" class="dashboardWidgetAction">
@@ -411,6 +414,14 @@
 
 		<default-interceptor-ref name="myStack" />
 
+		<!-- audit log chart -->
+		<action name="getAuditChart" class="getAuditChartAction">
+			<result name="success" type="chart">
+				<param name="width">353</param>
+				<param name="height">295</param>
+			</result>
+		</action>
+		
 		<!-- normal chart -->
 		<action name="getChart" class="getChartAction">
 			<result name="success" type="chart">

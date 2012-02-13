@@ -5,11 +5,10 @@
                     http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
 
-	<!--  actions -->
+	<!-- actions -->
 
 
-	<bean id="schedulerAdminAction"
-		class="binky.reportrunner.ui.actions.admin.SchedulerAdmin"
+	<bean id="schedulerAdminAction" class="binky.reportrunner.ui.actions.admin.SchedulerAdmin"
 		scope="prototype">
 		<property name="scheduler" ref="scheduler" />
 	</bean>
@@ -35,18 +34,16 @@
 
 	<bean id="itemAddDispatcherAction"
 		class="binky.reportrunner.ui.actions.dashboard.ItemAddDispatcher"
-		scope="prototype"/>
-		
-	<bean id="getChartAction"
-		class="binky.reportrunner.ui.actions.dashboard.GetChart"
+		scope="prototype" />
+
+	<bean id="getChartAction" class="binky.reportrunner.ui.actions.dashboard.GetChart"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
 	</bean>
 
-	<bean id="getSamplerChartAction"
-		class="binky.reportrunner.ui.actions.dashboard.GetSamplerChart"
+	<bean id="getSamplerChartAction" class="binky.reportrunner.ui.actions.dashboard.GetSamplerChart"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
@@ -62,12 +59,11 @@
 		</property>
 	</bean>
 
-	<bean id="indexAction"
-		class="binky.reportrunner.ui.actions.IndexAction" scope="prototype">
+	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction"
+		scope="prototype">
 	</bean>
 
-	<bean id="listGroupsAction"
-		class="binky.reportrunner.ui.actions.group.ListGroupsAction"
+	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.group.ListGroupsAction"
 		scope="prototype">
 		<property name="groupService">
 			<ref bean="groupService" />
@@ -84,8 +80,7 @@
 		</property>
 	</bean>
 
-	<bean id="deleteGroupAction"
-		class="binky.reportrunner.ui.actions.group.DeleteGroup"
+	<bean id="deleteGroupAction" class="binky.reportrunner.ui.actions.group.DeleteGroup"
 		scope="prototype">
 		<property name="groupService">
 			<ref bean="groupService" />
@@ -97,23 +92,20 @@
 			<ref bean="dashboardService" />
 		</property>
 	</bean>
-	<bean id="saveGroupAction"
-		class="binky.reportrunner.ui.actions.group.SaveGroup"
+	<bean id="saveGroupAction" class="binky.reportrunner.ui.actions.group.SaveGroup"
 		scope="prototype">
 		<property name="groupService">
 			<ref bean="groupService" />
 		</property>
 	</bean>
-	<bean id="setupEditGroupAction"
-		class="binky.reportrunner.ui.actions.group.SetupEditGroup"
+	<bean id="setupEditGroupAction" class="binky.reportrunner.ui.actions.group.SetupEditGroup"
 		scope="prototype">
 		<property name="groupService">
 			<ref bean="groupService" />
 		</property>
 	</bean>
 
-	<bean id="deleteJobAction"
-		class="binky.reportrunner.ui.actions.job.DeleteJob"
+	<bean id="deleteJobAction" class="binky.reportrunner.ui.actions.job.DeleteJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
@@ -136,17 +128,15 @@
 		</property>
 		<property name="auditService" ref="auditService" />
 	</bean>
-	
-	<bean id="invokeJobAction"
-		class="binky.reportrunner.ui.actions.job.InvokeJob"
+
+	<bean id="invokeJobAction" class="binky.reportrunner.ui.actions.job.InvokeJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
 	</bean>
 
-	<bean id="editJobAction"
-		class="binky.reportrunner.ui.actions.job.edit.EditJob"
+	<bean id="editJobAction" class="binky.reportrunner.ui.actions.job.edit.EditJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
@@ -161,8 +151,7 @@
 			<ref bean="runnerDatasourceService" />
 		</property>
 	</bean>
-	<bean id="setupEditJobAction"
-		class="binky.reportrunner.ui.actions.job.edit.SetupEditJob"
+	<bean id="setupEditJobAction" class="binky.reportrunner.ui.actions.job.edit.SetupEditJob"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
@@ -176,15 +165,13 @@
 	</bean>
 
 
-	<bean id="setJobStatusAction"
-		class="binky.reportrunner.ui.actions.job.SetJobStatus"
+	<bean id="setJobStatusAction" class="binky.reportrunner.ui.actions.job.SetJobStatus"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
 	</bean>
-	<bean id="viewJobDetailAction"
-		class="binky.reportrunner.ui.actions.job.ViewJobDetail"
+	<bean id="viewJobDetailAction" class="binky.reportrunner.ui.actions.job.ViewJobDetail"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
@@ -200,16 +187,14 @@
 		</property>
 	</bean>
 
-	<bean id="testDataSourceAction"
-		class="binky.reportrunner.ui.actions.datasource.TestDataSource"
+	<bean id="testDataSourceAction" class="binky.reportrunner.ui.actions.datasource.TestDataSource"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
 	</bean>
 
-	<bean id="driverDetailAction"
-		class="binky.reportrunner.ui.actions.datasource.DriverDetail"
+	<bean id="driverDetailAction" class="binky.reportrunner.ui.actions.datasource.DriverDetail"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
@@ -224,16 +209,14 @@
 		</property>
 	</bean>
 
-	<bean id="validateJobQueryAction"
-		class="binky.reportrunner.ui.actions.job.ValidateJobSQL"
+	<bean id="validateJobQueryAction" class="binky.reportrunner.ui.actions.job.ValidateJobSQL"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
 	</bean>
 
-	<bean id="validateBurstQueryAction"
-		class="binky.reportrunner.ui.actions.job.ValidateBurstSQL"
+	<bean id="validateBurstQueryAction" class="binky.reportrunner.ui.actions.job.ValidateBurstSQL"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
@@ -264,8 +247,7 @@
 		</property>
 	</bean>
 
-	<bean id="saveDataSourceAction"
-		class="binky.reportrunner.ui.actions.datasource.SaveDataSource"
+	<bean id="saveDataSourceAction" class="binky.reportrunner.ui.actions.datasource.SaveDataSource"
 		scope="prototype">
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
@@ -297,8 +279,7 @@
 		</property>
 	</bean>
 
-	<bean id="setupEditUserAction"
-		class="binky.reportrunner.ui.actions.user.SetupEditUser"
+	<bean id="setupEditUserAction" class="binky.reportrunner.ui.actions.user.SetupEditUser"
 		scope="prototype">
 		<property name="userService">
 			<ref bean="userService" />
@@ -308,36 +289,31 @@
 		</property>
 	</bean>
 
-	<bean id="changePasswordAction"
-		class="binky.reportrunner.ui.actions.user.ChangePassword"
+	<bean id="changePasswordAction" class="binky.reportrunner.ui.actions.user.ChangePassword"
 		scope="prototype">
 		<property name="userService">
 			<ref bean="userService" />
 		</property>
 
 	</bean>
-	<bean id="setupChangePasswordAction"
-		class="binky.reportrunner.ui.actions.user.SetupChangePassword"
+	<bean id="setupChangePasswordAction" class="binky.reportrunner.ui.actions.user.SetupChangePassword"
 		scope="prototype" />
 
-	<bean id="deleteUserAction"
-		class="binky.reportrunner.ui.actions.user.DeleteUser"
+	<bean id="deleteUserAction" class="binky.reportrunner.ui.actions.user.DeleteUser"
 		scope="prototype">
 		<property name="userService">
 			<ref bean="userService" />
 		</property>
 	</bean>
 
-	<bean id="listUsersAction"
-		class="binky.reportrunner.ui.actions.user.ListUsers"
+	<bean id="listUsersAction" class="binky.reportrunner.ui.actions.user.ListUsers"
 		scope="prototype">
 		<property name="userService">
 			<ref bean="userService" />
 		</property>
 	</bean>
 
-	<bean id="saveUserAction"
-		class="binky.reportrunner.ui.actions.user.SaveUser"
+	<bean id="saveUserAction" class="binky.reportrunner.ui.actions.user.SaveUser"
 		scope="prototype">
 		<property name="userService">
 			<ref bean="userService" />
@@ -347,16 +323,14 @@
 		</property>
 	</bean>
 
-	<bean id="deleteItemAction"
-		class="binky.reportrunner.ui.actions.dashboard.edit.DeleteItem"
+	<bean id="deleteItemAction" class="binky.reportrunner.ui.actions.dashboard.edit.DeleteItem"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
 	</bean>
 
-	<bean id="invokeItemAction"
-		class="binky.reportrunner.ui.actions.dashboard.InvokeItem"
+	<bean id="invokeItemAction" class="binky.reportrunner.ui.actions.dashboard.InvokeItem"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
@@ -374,8 +348,7 @@
 		</property>
 	</bean>
 
-	<bean id="saveChartAction"
-		class="binky.reportrunner.ui.actions.dashboard.edit.SaveChart"
+	<bean id="saveChartAction" class="binky.reportrunner.ui.actions.dashboard.edit.SaveChart"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
@@ -418,8 +391,7 @@
 		</property>
 	</bean>
 
-	<bean id="saveGridAction"
-		class="binky.reportrunner.ui.actions.dashboard.edit.SaveGrid"
+	<bean id="saveGridAction" class="binky.reportrunner.ui.actions.dashboard.edit.SaveGrid"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
@@ -479,8 +451,7 @@
 		</property>
 	</bean>
 
-	<bean id="showGroupAction"
-		class="binky.reportrunner.ui.actions.group.ShowGroup"
+	<bean id="showGroupAction" class="binky.reportrunner.ui.actions.group.ShowGroup"
 		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
@@ -490,10 +461,19 @@
 		</property>
 	</bean>
 
-	<bean id="setupJobStatsAction"
-		class="binky.reportrunner.ui.actions.admin.SetupJobStatsAction"
+	<bean id="getAuditHistoryAction"
+		class="binky.reportrunner.ui.actions.admin.GetAuditHistoryAction"
 		scope="prototype">
 		<property name="auditService" ref="auditService" />
+	</bean>
+
+	<bean id="getAuditChartAction" class="binky.reportrunner.ui.actions.admin.GetAuditChartAction"
+		scope="prototype">
+		<property name="auditService" ref="auditService" />
+	</bean>
+
+	<bean id="warningStatsAction" class="binky.reportrunner.ui.actions.admin.WarningsStats"
+		scope="prototype">
 	</bean>
 
 </beans>

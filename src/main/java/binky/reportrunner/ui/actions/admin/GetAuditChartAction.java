@@ -22,61 +22,48 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.admin;
 
+import java.util.Arrays;
 import java.util.List;
 
+import org.jfree.chart.JFreeChart;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.data.RunnerHistoryEvent;
+import binky.reportrunner.data.RunnerHistoryEvent.Module;
 import binky.reportrunner.service.AuditService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
-public class SetupJobStatsAction extends StandardRunnerAction {
+public class GetAuditChartAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private AuditService auditService;
-	private List<RunnerHistoryEvent> longestEvents;
-	private List<RunnerHistoryEvent> latestSuccessEvents;
-	private List<RunnerHistoryEvent> latestFailEvents;
 	
+	private JFreeChart chart;
 	
+	private Module module;
+	
+
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
-
-		this.longestEvents = auditService.getLongestRunningEvents(20);
-		this.latestSuccessEvents = auditService.getSuccessEvents(20);
-		this.latestFailEvents = auditService.getFailedEvents(20);
+		
+		//do some stuff and get a chart going
 		
 		return SUCCESS;
 	}
 
-
-	
-	
 	public void setAuditService(AuditService auditService) {
 		this.auditService = auditService;
 	}
 
 
-
-
-	public List<RunnerHistoryEvent> getLatestFailEvents() {
-		return latestFailEvents;
-	}
-	public List<RunnerHistoryEvent> getLatestSuccessEvents() {
-		return latestSuccessEvents;
-	}
-	public List<RunnerHistoryEvent> getLongestEvents() {
-		return longestEvents;
-	}
-	public void setLatestFailEvents(List<RunnerHistoryEvent> latestFailEvents) {
-		this.latestFailEvents = latestFailEvents;
-	}
-	public void setLatestSuccessEvents(List<RunnerHistoryEvent> latestSuccessEvents) {
-		this.latestSuccessEvents = latestSuccessEvents;
-	}
-	public void setLongestEvents(List<RunnerHistoryEvent> longestEvents) {
-		this.longestEvents = longestEvents;
+	public JFreeChart getChart() {
+		return chart;
 	}
 
+	public void setModule(Module module) {
+		this.module = module;
+	}
+	public final List<Module> getModules() {
+		return Arrays.asList(Module.values());
+	}
 }

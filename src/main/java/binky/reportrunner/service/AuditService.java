@@ -13,9 +13,9 @@ public interface AuditService {
 	public List<RunnerHistoryEvent> getEventsByUserName(String userName, int count); 
 	public List<RunnerHistoryEvent> getEventsByModule(Module module, int count); 
 	public List<RunnerHistoryEvent> getEventsByJob(String jobName, String groupName, int count);	
-	public List<RunnerHistoryEvent> getFailedEvents(int count);
-	public List<RunnerHistoryEvent> getLongestRunningEvents(int count);
-	public List<RunnerHistoryEvent> getSuccessEvents(int count);
+	public List<RunnerHistoryEvent> getFailedEvents(Module module, int count);
+	public List<RunnerHistoryEvent> getLongestRunningEvents(Module module, int count);
+	public List<RunnerHistoryEvent> getSuccessEvents(Module module, int count);
 	public void deleteOldEvents(Date cutOff);
 	
 	

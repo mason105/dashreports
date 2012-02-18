@@ -32,7 +32,7 @@ import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ViewJobOutputAction extends StandardRunnerAction {
@@ -46,7 +46,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 	private List<RunnerJobParameter> parameters;
 	private Map<String,RowSetDynaClass> gridResults;
 
-	private RunnerJobService jobService;
+	private ReportService jobService;
 
 	 private static final Logger logger = Logger.getLogger(ViewJobOutputAction.class);
 	@Override
@@ -136,11 +136,11 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		}
 	}
 
-	public RunnerJobService getJobService() {
+	public ReportService getJobService() {
 		return jobService;
 	}
 
-	public void setJobService(RunnerJobService jobService) {
+	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

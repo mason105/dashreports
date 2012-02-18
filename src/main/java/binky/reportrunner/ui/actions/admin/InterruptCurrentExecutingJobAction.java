@@ -24,13 +24,13 @@ package binky.reportrunner.ui.actions.admin;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class InterruptCurrentExecutingJobAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
-	private RunnerJobService jobService;
+	private ReportService jobService;
 	private String jobName;
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -39,11 +39,11 @@ public class InterruptCurrentExecutingJobAction extends StandardRunnerAction {
 		return SUCCESS;
 	}
 
-	public RunnerJobService getJobService() {
+	public ReportService getJobService() {
 		return jobService;
 	}
 
-	public void setJobService(RunnerJobService jobService) {
+	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

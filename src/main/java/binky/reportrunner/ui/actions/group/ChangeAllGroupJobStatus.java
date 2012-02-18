@@ -28,7 +28,7 @@ import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.GroupService;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ChangeAllGroupJobStatus extends StandardRunnerAction {
@@ -40,7 +40,7 @@ public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 		this.groupService = groupService;
 	}
 
-	private RunnerJobService jobService;
+	private ReportService jobService;
 	private Boolean status;
 
 	public void setStatus(Boolean status) {
@@ -83,11 +83,11 @@ public class ChangeAllGroupJobStatus extends StandardRunnerAction {
 	}
 
 
-	public RunnerJobService getJobService() {
+	public ReportService getJobService() {
 		return jobService;
 	}
 
-	public void setJobService(RunnerJobService jobService) {
+	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

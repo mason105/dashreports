@@ -14,33 +14,35 @@
 <body>
 
 
-	<div class="formGroup">
-		<div class="formGroupHeader">
+	<div class="formGroupWide">
+		<div class="formGroupWideHeader">
 			<img src="<s:url value='/images/v2/nav/groupsblue.png'/>"
 				align="absmiddle" />&nbsp;Audit Log
 		</div>
 		<s:form name="getAuditInfo" id="getAuditInfo">
 
-			<s:select label="Module" name="module" list="modules" listKey="name"
-				listValue="displayName" cssClass="textbox"
+			<s:select label="Module" name="module" list="modules"
+				cssClass="textbox"
 				onchange="dojo.event.topic.publish('refresh_info');" />
-			<sj:spinner name="returnCount" id="returnCount" min="10" max="500"
-				step="10" value="20" label="Count"
-				onchange="dojo.event.topic.publish('refresh_info');" />
+			
+			<sj:datepicker name="fromDate" showAnim="slideDown"  displayFormat="dd/mm/yy" timepicker="true" onchange="dojo.event.topic.publish('refresh_info');"></sj:datepicker>
+			<sj:datepicker name="toDate" showAnim="slideDown"  displayFormat="dd/mm/yy" timepicker="true" onchange="dojo.event.topic.publish('refresh_info');"></sj:datepicker>
+
+			<input type="button" class="auditRefreshButton" value="Refresh" onclick="dojo.event.topic.publish('refresh_info');"/>
+
 		</s:form>
 	</div>
 
-	<div class="formGroup">
-	<div class="formGroupHeader">Chart</div>
-	</div>
-	
-	<div class="formGroup">
-	<div class="formGroupHeader">Log</div>
-	<s:url id="logUrl" action="getAuditHistory" />
-	<sx:div showLoadingText="true" loadingText="Loading data..."
-		id="logData" href="%{logUrl}" theme="ajax" listenTopics="refresh_info"
-		formId="getAuditInfo" executeScripts="true">
-	</sx:div>
+
+
+	<div class="formGroupWide">
+		<div class="formGroupWideHeader">Log</div>
+		<s:url id="logUrl" action="getAuditHistory" />
+		<sx:div showLoadingText="true" loadingText="Loading data..."
+			id="logData" href="%{logUrl}" theme="ajax"
+			listenTopics="refresh_info" formId="getAuditInfo"
+			executeScripts="true">
+		</sx:div>
 	</div>
 	<div class="formBottomEmpty"></div>
 </body>

@@ -40,8 +40,6 @@ import javax.sql.DataSource;
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 
-import com.googlecode.ehcache.annotations.Cacheable;
-
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
@@ -56,9 +54,11 @@ import binky.reportrunner.exceptions.RenderException;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 
-public class RunnerJobServiceImpl implements RunnerJobService {
+import com.googlecode.ehcache.annotations.Cacheable;
+
+public class ReportServiceImpl implements ReportService {
 	private Scheduler scheduler;
 
 	private ReportRunnerDao<RunnerJob,RunnerJob_pk> runnerJobDao;
@@ -66,7 +66,7 @@ public class RunnerJobServiceImpl implements RunnerJobService {
 	private DatasourceService dataSourceService;
 
 	private static final Logger logger = Logger
-			.getLogger(RunnerJobServiceImpl.class);
+			.getLogger(ReportServiceImpl.class);
 
 
 	public void setReportRunnerDao(ReportRunnerDao<RunnerJob,RunnerJob_pk>  runnerJobDao) {

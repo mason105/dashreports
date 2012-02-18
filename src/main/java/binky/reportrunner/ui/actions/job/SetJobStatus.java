@@ -25,14 +25,14 @@ package binky.reportrunner.ui.actions.job;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class SetJobStatus extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(SetJobStatus.class);
-	private RunnerJobService jobService;
+	private ReportService jobService;
 	private String jobName;
 	private Boolean jobStatus;
 
@@ -74,11 +74,11 @@ public class SetJobStatus extends StandardRunnerAction {
 		return SUCCESS;
 	}
 
-	public final RunnerJobService getJobService() {
+	public final ReportService getJobService() {
 		return jobService;
 	}
 
-	public final void setJobService(RunnerJobService jobService) {
+	public final void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

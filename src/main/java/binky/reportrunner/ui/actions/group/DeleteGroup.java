@@ -31,7 +31,7 @@ import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.service.GroupService;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class DeleteGroup extends StandardRunnerAction {
@@ -44,7 +44,7 @@ public class DeleteGroup extends StandardRunnerAction {
 	}
 
 	private DashboardService dashboardService;
-	private RunnerJobService jobService;
+	private ReportService jobService;
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -78,11 +78,11 @@ public class DeleteGroup extends StandardRunnerAction {
 		return SUCCESS;
 	}
 
-	public RunnerJobService getJobService() {
+	public ReportService getJobService() {
 		return jobService;
 	}
 
-	public void setJobService(RunnerJobService jobService) {
+	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

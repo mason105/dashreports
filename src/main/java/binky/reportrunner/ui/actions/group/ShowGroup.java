@@ -12,7 +12,7 @@ import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerDashboardItem.ItemType;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 import binky.reportrunner.ui.actions.job.beans.DisplayJob;
 
@@ -23,7 +23,7 @@ public class ShowGroup extends StandardRunnerAction {
 	private DashboardService dashboardService;
 	private Logger logger = Logger.getLogger(ShowGroup.class);
 	private List<DisplayJob> jobs;
-	private RunnerJobService jobService;
+	private ReportService jobService;
 
 	@Override
 	public String execute() throws Exception {
@@ -89,7 +89,7 @@ public class ShowGroup extends StandardRunnerAction {
 		this.dashboardService = dashboardService;
 	}
 
-	public void setJobService(RunnerJobService jobService) {
+	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 	public final List<ItemType> getItemTypes() {

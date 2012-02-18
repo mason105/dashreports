@@ -26,14 +26,14 @@ import org.apache.log4j.Logger;
 
 import binky.reportrunner.exceptions.InvalidParameterException;
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class DeleteJob extends StandardRunnerAction {
 	private static final Logger logger = Logger.getLogger(DeleteJob.class);
 	private static final long serialVersionUID = 1L;
 
-	private RunnerJobService jobService;
+	private ReportService jobService;
 	private String jobName;
 	
 	@Override
@@ -59,11 +59,11 @@ public class DeleteJob extends StandardRunnerAction {
 		return SUCCESS;
 	}
 
-	public final RunnerJobService getJobService() {
+	public final ReportService getJobService() {
 		return jobService;
 	}
 
-	public final void setJobService(RunnerJobService jobService) {
+	public final void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

@@ -31,7 +31,7 @@ import org.apache.log4j.Logger;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 import binky.reportrunner.ui.actions.job.beans.DisplayJob;
 
@@ -45,7 +45,7 @@ public class ViewJobDetail extends StandardRunnerAction {
 	private DisplayJob job;
 	private List<RunnerHistoryEvent> events;
 	private static final Logger logger = Logger.getLogger(ViewJobDetail.class);
-	private RunnerJobService jobService;
+	private ReportService jobService;
 
 	@Override
 	public String execute() throws Exception {
@@ -85,11 +85,11 @@ public class ViewJobDetail extends StandardRunnerAction {
 		return SUCCESS;
 	}
 
-	public final RunnerJobService getJobService() {
+	public final ReportService getJobService() {
 		return jobService;
 	}
 
-	public final void setJobService(RunnerJobService jobService) {
+	public final void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

@@ -27,7 +27,7 @@ import java.io.InputStream;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.engine.utils.FileSystemHandler;
 import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class DownloadReportAction extends StandardRunnerAction {
@@ -38,7 +38,7 @@ public class DownloadReportAction extends StandardRunnerAction {
 	private String contentDisposition;
 	private String id;
 	private String jobName;
-	private RunnerJobService jobService;
+	private ReportService jobService;
 	private InputStream inputStream;
 	@Override
 	public String execute() throws Exception {
@@ -68,11 +68,11 @@ public class DownloadReportAction extends StandardRunnerAction {
 	}
 
 
-	public RunnerJobService getJobService() {
+	public ReportService getJobService() {
 		return jobService;
 	}
 
-	public void setJobService(RunnerJobService jobService) {
+	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

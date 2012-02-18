@@ -1,5 +1,6 @@
 package binky.reportrunner.service.impl;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -22,22 +23,18 @@ public class AuditServiceImpl implements AuditService {
 
 
 	@Override
-	public List<RunnerHistoryEvent> getFailedEvents(String module, int count) {
-		if (count == 0) {
-			return historyDao.findByNamedQuery("getFailedEvents", new String[]{module});
-		} else {
-			return historyDao.findByNamedQuery("getFailedEvents", new String[]{module},count);
-		}
+	public List<RunnerHistoryEvent> getFailedEvents(String module, Date from, Date to) {
+		
+			return historyDao.findByNamedQuery("getFailedEvents", new Object[]{module,from,to});
+		
 
 	}
 
 	@Override
-	public List<RunnerHistoryEvent> getLongestRunningEvents(String module, int count) {
-		if (count == 0) {
-			return historyDao.findByNamedQuery("getLongestRunningEvents", new String[]{module});
-		} else {
-			return historyDao.findByNamedQuery("getLongestRunningEvents", new String[]{module},count);
-		}
+	public List<RunnerHistoryEvent> getLongestRunningEvents(String module,Date from, Date to) {
+		
+			return historyDao.findByNamedQuery("getLongestRunningEvents", new Object[]{module,from,to},50);
+		
 
 	}
 
@@ -50,12 +47,10 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	public List<RunnerHistoryEvent> getSuccessEvents(String module, int count) {
-		if (count == 0) {
-			return historyDao.findByNamedQuery("getSuccessEvents", new String[]{module});
-		} else {
-			return historyDao.findByNamedQuery("getSuccessEvents", new String[]{module},count);
-		}
+	public List<RunnerHistoryEvent> getSuccessEvents(String module, Date from, Date to) {
+		
+			return historyDao.findByNamedQuery("getSuccessEvents", new Object[]{module,from,to});
+		
 
 	}
 
@@ -78,8 +73,7 @@ public class AuditServiceImpl implements AuditService {
 	@Override
 	@Cacheable(cacheName="auditCache")
 	public List<String> getModuleNames() {
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList(new String[]{"Scheduler","UserService","GroupService","DashboardService","DatasourceService","ReportService","GroupService","UserDetailsService"});
 	}
 
 }

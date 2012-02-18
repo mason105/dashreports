@@ -130,7 +130,7 @@
 	</bean>
 
 
-	<bean id="runnerJobService" class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
+	<bean id="runnerJobService" class="binky.reportrunner.service.impl.ReportServiceImpl">
 		<property name="scheduler" ref="schedulerProxy" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
 		<property name="dataSourceService">

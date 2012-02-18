@@ -15,14 +15,13 @@ public class AuditAspect {
 	private AuditService auditService;
 	
 	private static final Logger logger = Logger.getLogger(AuditAspect.class);
-	
-	//@Around("execution(* binky.reportrunner.service.Auditable.*(..))")
-	//@Around("execution(* binky.reportrunner.service.*.*(..))")
+
 	@Around("this(binky.reportrunner.service.Auditable)")
 	public Object logExecution(ProceedingJoinPoint pjp) throws Throwable{
 		
 		long start = Calendar.getInstance().getTimeInMillis();
 		String module=pjp.getSignature().getDeclaringType().getName();
+		module = module.substring(module.lastIndexOf(".")+1);
 		Object[] args = pjp.getArgs();
 		String method = pjp.getSignature().getName();
 		StringBuilder arguments = new StringBuilder();
@@ -35,7 +34,7 @@ public class AuditAspect {
 			arguments.append('}');
 		}
 		//bit of a hack to prevent exposing password
-		if (module.equals(" binky.reportrunner.service.UserService") && method.equals("changePassword")) {
+		if (module.equals("binky.reportrunner.service.UserService") && method.equals("changePassword")) {
 			arguments=new StringBuilder("blocked");
 		}
 		
@@ -53,7 +52,7 @@ public class AuditAspect {
 			long runTime = Calendar.getInstance().getTimeInMillis()-start;
 			if (logger.isTraceEnabled()) logger.trace("logging a message for:" + module);
 			//hack to cut down on logging
-			if (!method.startsWith("get"))auditService.logAuditEvent(module, success, runTime, arguments.toString(), method,errorText);
+			if (!method.startsWith("get")&&!method.startsWith("is"))auditService.logAuditEvent(module, success, runTime, arguments.toString(), method,errorText);
 		}
 	}
 	

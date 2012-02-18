@@ -29,14 +29,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class ListCurrentExecutingJobsAction extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private RunnerJobService jobService;
+	private ReportService jobService;
 	private DashboardService dashboardService;
 	private List<RunnerJob> jobs;
 	private List<RunnerDashboardItem> items;
@@ -49,11 +49,11 @@ public class ListCurrentExecutingJobsAction extends StandardRunnerAction {
 		return SUCCESS;
 	}
 
-	public RunnerJobService getJobService() {
+	public ReportService getJobService() {
 		return jobService;
 	}
 
-	public void setJobService(RunnerJobService jobService) {
+	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

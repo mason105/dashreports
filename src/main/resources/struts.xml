@@ -425,8 +425,8 @@
 		<!-- audit log chart -->
 		<action name="getAuditChart" class="getAuditChartAction">
 			<result name="success" type="chart">
-				<param name="width">353</param>
-				<param name="height">295</param>
+				<param name="width">800</param>
+				<param name="height">300</param>
 			</result>
 		</action>
 		

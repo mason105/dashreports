@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.admin;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -36,11 +37,12 @@ public class GetAuditHistoryAction extends StandardRunnerAction {
 	private static final long serialVersionUID = 1L;
 	private AuditService auditService;
 	private List<RunnerHistoryEvent> longestEvents;
-	private List<RunnerHistoryEvent> latestSuccessEvents;
 	private List<RunnerHistoryEvent> latestFailEvents;
 	private String module;
-	private int returnCount;
+	private Date fromDate;
+	private Date toDate;
 	private boolean showLongest;
+	private long random;
 	private static final Logger logger = Logger
 			.getLogger(GetAuditHistoryAction.class);
 
@@ -48,18 +50,22 @@ public class GetAuditHistoryAction extends StandardRunnerAction {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 
-		logger.trace("return count: " + returnCount);
+		try {
 		logger.trace("module: " + module);
 
 		this.longestEvents = auditService.getLongestRunningEvents(module,
-				returnCount);
-		this.latestSuccessEvents = auditService.getSuccessEvents(module,
-				returnCount);
+				fromDate,toDate);
+
 
 		this.latestFailEvents = auditService.getFailedEvents(module,
-				returnCount);
+				fromDate,toDate);
 		showLongest = true;
-
+		random = Math.round(Math.random()*1000000);
+		} catch (Throwable t) {
+			//effing struts eating up exceptions
+			logger.fatal("error in ajax call to get log data",t);
+			if (t instanceof Exception) throw (Exception)t;
+		}
 		return SUCCESS;
 	}
 
@@ -71,9 +77,7 @@ public class GetAuditHistoryAction extends StandardRunnerAction {
 		return latestFailEvents;
 	}
 
-	public List<RunnerHistoryEvent> getLatestSuccessEvents() {
-		return latestSuccessEvents;
-	}
+
 
 	public List<RunnerHistoryEvent> getLongestEvents() {
 		return longestEvents;
@@ -83,18 +87,10 @@ public class GetAuditHistoryAction extends StandardRunnerAction {
 		this.latestFailEvents = latestFailEvents;
 	}
 
-	public void setLatestSuccessEvents(
-			List<RunnerHistoryEvent> latestSuccessEvents) {
-		this.latestSuccessEvents = latestSuccessEvents;
-	}
-
 	public void setLongestEvents(List<RunnerHistoryEvent> longestEvents) {
 		this.longestEvents = longestEvents;
 	}
 
-	public void setReturnCount(int returnCount) {
-		this.returnCount = returnCount;
-	}
 
 	public void setModule(String module) {
 		this.module = module;
@@ -108,12 +104,30 @@ public class GetAuditHistoryAction extends StandardRunnerAction {
 		return module;
 	}
 
-	public int getReturnCount() {
-		return returnCount;
-	}
 
 	public boolean isShowLongest() {
 		return showLongest;
 	}
+
+	public long getRandom() {
+		return random;
+	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
 
 }

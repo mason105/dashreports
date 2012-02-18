@@ -11,7 +11,7 @@ import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJobParameter.DataType;
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 import binky.reportrunner.ui.util.QuartzCronSchedule;
 
@@ -22,7 +22,7 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 	private static final long serialVersionUID = 1L;
 	protected String jobName;
 	protected RunnerJob job;
-	protected RunnerJobService jobService;
+	protected ReportService jobService;
 	protected ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
 	protected DatasourceService dataSourceService;
 	protected String outputUrl;
@@ -63,11 +63,11 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 		this.dataSources = dataSources;
 	}
 
-	public RunnerJobService getJobService() {
+	public ReportService getJobService() {
 		return jobService;
 	}
 
-	public void setJobService(RunnerJobService jobService) {
+	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

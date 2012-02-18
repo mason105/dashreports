@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import binky.reportrunner.data.RunnerJobParameter;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class SetupViewJobAction extends StandardRunnerAction {
@@ -35,7 +35,7 @@ public class SetupViewJobAction extends StandardRunnerAction {
 
 	private String jobName;
 	private Map<RunnerJobParameter, List<Object>> parameters;
-	private RunnerJobService jobService;
+	private ReportService jobService;
 	
 	@Override
 	public String execute() throws Exception {
@@ -49,11 +49,11 @@ public class SetupViewJobAction extends StandardRunnerAction {
 		
 	}
 
-	public RunnerJobService getJobService() {
+	public ReportService getJobService() {
 		return jobService;
 	}
 
-	public void setJobService(RunnerJobService jobService) {
+	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

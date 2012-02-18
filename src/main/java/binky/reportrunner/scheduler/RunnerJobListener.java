@@ -35,16 +35,14 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
-import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.engine.RunnerEngine;
 import binky.reportrunner.engine.dashboard.AlertProcessor;
 import binky.reportrunner.engine.utils.EmailHandler;
 import binky.reportrunner.engine.utils.impl.EmailHandlerImpl;
-import binky.reportrunner.service.AuditService;
 import binky.reportrunner.service.DashboardService;
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.service.RunnerJobService;
+import binky.reportrunner.service.ReportService;
 
 public class RunnerJobListener implements JobListener {
 
@@ -56,7 +54,7 @@ public class RunnerJobListener implements JobListener {
 	private String fromAddress;
 
 
-	private RunnerJobService jobService;
+	private ReportService jobService;
 
 	private DatasourceService datasourceService;
 
@@ -172,7 +170,7 @@ public class RunnerJobListener implements JobListener {
 		this.datasourceService = datasourceService;
 	}
 
-	public void setJobService(RunnerJobService jobService) {
+	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 

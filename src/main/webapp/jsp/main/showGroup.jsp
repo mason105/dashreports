@@ -24,8 +24,9 @@
 	 	</s:iterator>
  	});
  	</script>
+ 	<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
 </head>
-<META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
+
 <body>
 
 <div id="groupPanel">

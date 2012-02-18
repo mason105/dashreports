@@ -25,7 +25,9 @@ package binky.reportrunner.scheduler;
 import java.util.Date;
 import java.util.List;
 
-public interface Scheduler {
+import binky.reportrunner.service.Auditable;
+
+public interface Scheduler extends Auditable {
 	public static final String dashboardSchedulerGroup="RR3DASHBOARDS";
 	public void startScheduler() throws SchedulerException;
 

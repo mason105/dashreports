@@ -125,8 +125,7 @@
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
-		</property>
-		<property name="auditService" ref="auditService" />
+		</property>		
 	</bean>
 
 	<bean id="invokeJobAction" class="binky.reportrunner.ui.actions.job.InvokeJob"
@@ -176,7 +175,7 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
-		<property name="auditService" ref="auditService" />
+		
 	</bean>
 
 	<bean id="deleteDataSourceAction"
@@ -474,6 +473,7 @@
 
 	<bean id="warningStatsAction" class="binky.reportrunner.ui.actions.admin.WarningsStats"
 		scope="prototype">
+			<property name="auditService" ref="auditService" />
 	</bean>
 
 </beans>

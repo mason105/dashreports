@@ -37,7 +37,7 @@ import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.exceptions.RenderException;
 import binky.reportrunner.scheduler.SchedulerException;
 
-public interface RunnerJobService {
+public interface RunnerJobService extends Auditable {
 	
 	public void addUpdateJob(RunnerJob job) throws SchedulerException;
 	public void deleteJob(String jobName, String groupName) throws SchedulerException;

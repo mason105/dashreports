@@ -5,10 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import com.googlecode.ehcache.annotations.Cacheable;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
-import binky.reportrunner.data.RunnerHistoryEvent.Module;
 import binky.reportrunner.service.AuditService;
 
 public class AuditServiceImpl implements AuditService {
@@ -16,52 +19,24 @@ public class AuditServiceImpl implements AuditService {
 	private static final Logger logger = Logger.getLogger(AuditServiceImpl.class); 
 	
 	private ReportRunnerDao<RunnerHistoryEvent, Long> historyDao;
-	
-	@Override
-	public List<RunnerHistoryEvent> getEventsByJob(String jobName,
-			String groupName, int count) {
-		if (count == 0) {
-			return historyDao.findByNamedQuery("getEventsByJob", new String[]{jobName,groupName});
-		} else {
-			return historyDao.findByNamedQuery("getEventsByJob", new String[]{jobName,groupName},count);
-		}
-	}
+
 
 	@Override
-	public List<RunnerHistoryEvent> getEventsByModule(Module module, int count) {
+	public List<RunnerHistoryEvent> getFailedEvents(String module, int count) {
 		if (count == 0) {
-			return historyDao.findByNamedQuery("getEventsByModule", new Module[]{module});
+			return historyDao.findByNamedQuery("getFailedEvents", new String[]{module});
 		} else {
-			return historyDao.findByNamedQuery("getEventsByModule", new Module[]{module},count);
-		}
-	}
-
-	@Override
-	public List<RunnerHistoryEvent> getEventsByUserName(String userName, int count) {
-		if (count == 0) {
-			return historyDao.findByNamedQuery("getEventsByUserName", new String[]{userName});
-		} else {
-			return historyDao.findByNamedQuery("getEventsByUserName", new String[]{userName},count);
+			return historyDao.findByNamedQuery("getFailedEvents", new String[]{module},count);
 		}
 
 	}
 
 	@Override
-	public List<RunnerHistoryEvent> getFailedEvents(Module module, int count) {
+	public List<RunnerHistoryEvent> getLongestRunningEvents(String module, int count) {
 		if (count == 0) {
-			return historyDao.findByNamedQuery("getFailedEvents", new Module[]{module});
+			return historyDao.findByNamedQuery("getLongestRunningEvents", new String[]{module});
 		} else {
-			return historyDao.findByNamedQuery("getFailedEvents", new Module[]{module},count);
-		}
-
-	}
-
-	@Override
-	public List<RunnerHistoryEvent> getLongestRunningEvents(Module module, int count) {
-		if (count == 0) {
-			return historyDao.findByNamedQuery("getLongestRunningEvents", new Module[]{module});
-		} else {
-			return historyDao.findByNamedQuery("getLongestRunningEvents", new Module[]{module},count);
+			return historyDao.findByNamedQuery("getLongestRunningEvents", new String[]{module},count);
 		}
 
 	}
@@ -75,28 +50,36 @@ public class AuditServiceImpl implements AuditService {
 	}
 
 	@Override
-	public List<RunnerHistoryEvent> getSuccessEvents(Module module, int count) {
+	public List<RunnerHistoryEvent> getSuccessEvents(String module, int count) {
 		if (count == 0) {
-			return historyDao.findByNamedQuery("getSuccessEvents", new Module[]{module});
+			return historyDao.findByNamedQuery("getSuccessEvents", new String[]{module});
 		} else {
-			return historyDao.findByNamedQuery("getSuccessEvents", new Module[]{module},count);
+			return historyDao.findByNamedQuery("getSuccessEvents", new String[]{module},count);
 		}
 
 	}
 
 	@Override
-	public void logAuditEvent(Module module, String message,
-			String userName, boolean success, long runTime, String jobName,
-			String groupName) {
-
-		RunnerHistoryEvent event = new RunnerHistoryEvent(Calendar.getInstance().getTime(), jobName, groupName, message, success, runTime,userName, module);	
+	public void logAuditEvent(String module, boolean success, long runTime,String arguments, String method,String errorText) {
+	
+			String userName="";
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth!=null) userName=auth.getName();
+	
+		RunnerHistoryEvent event = new RunnerHistoryEvent(Calendar.getInstance().getTime(), success, runTime, userName, module, arguments, method,errorText);
 		logger.trace("logging audit message: " + event.toString());
 		historyDao.saveOrUpdate(event);
-		
 	}
-
 	public void setHistoryDao(ReportRunnerDao<RunnerHistoryEvent, Long> historyDao) {
 		this.historyDao = historyDao;
+	}
+
+	@Override
+	@Cacheable(cacheName="auditCache")
+	public List<String> getModuleNames() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

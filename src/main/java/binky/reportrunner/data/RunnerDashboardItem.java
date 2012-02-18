@@ -22,7 +22,6 @@
  ******************************************************************************/
 package binky.reportrunner.data;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 

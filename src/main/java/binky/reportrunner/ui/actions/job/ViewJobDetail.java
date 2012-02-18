@@ -31,7 +31,6 @@ import org.apache.log4j.Logger;
 import binky.reportrunner.data.RunnerHistoryEvent;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.service.AuditService;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 import binky.reportrunner.ui.actions.job.beans.DisplayJob;
@@ -40,7 +39,6 @@ public class ViewJobDetail extends StandardRunnerAction {
 
 	private static final long serialVersionUID = 1L;
 
-	private AuditService auditService;
 
 
 	private String jobName;
@@ -72,7 +70,7 @@ public class ViewJobDetail extends StandardRunnerAction {
 					}
 				}
 				this.job.setIsScheduleActive(jobService.isJobActive(jobName, groupName));
-				events = auditService.getEventsByJob(jobName, jobName, 20);
+				
 			} else {
 				SecurityException se = new SecurityException("Group "
 						+ groupName + " not valid for user "
@@ -115,9 +113,7 @@ public class ViewJobDetail extends StandardRunnerAction {
 		return events;
 	}
 
-	public void setAuditService(AuditService auditService) {
-		this.auditService = auditService;
-	}
+
 	
 	
 

@@ -35,15 +35,11 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity(name = "T_EVENT")
-@NamedQueries( {
-		@NamedQuery(name = "getEventsByJob", query = "from T_EVENT e where e.jobName = ? and e.groupName = ?"),		
-		@NamedQuery(name = "getEventsByModule", query = "from T_EVENT e where e.module = ?"),
-		@NamedQuery(name = "getEventsByUserName", query = "from T_EVENT e where e.userName = ?"),
+@NamedQueries({
 		@NamedQuery(name = "getFailedEvents", query = "from T_EVENT e where e.module = ? and e.success=false order by timeStamp desc"),
 		@NamedQuery(name = "getLongestRunningEvents", query = "from T_EVENT e where e.module = ? order by runTime desc"),
 		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.module = ? and e.success=true order by timeStamp desc"),
-		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timeStamp < ?")		
-})
+		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timeStamp < ?") })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerHistoryEvent extends DatabaseObject<Long> {
 
@@ -56,41 +52,21 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		return eventId;
 	}
 
-	public RunnerHistoryEvent() {}
-	
-	public enum Module {
-
-		REPORT_VIEWER("Report Viewer"),DASHBOARD_SCHEDULER("Dashboard Scheduler"),SECURITY("Security"),REPORT_SCHEDULER("Report Scheduler"),DATASOURCE_SERVICE("Datasource Service"),CORE_SCHEDULER("Core Scheduler");
-		private String displayName;
-
-		Module(String displayName) {
-			this.displayName = displayName;
-		}
-
-		public String getName() {
-			return name();
-		}
-
-		public String getDisplayName() {
-			return displayName;
-		}
-
+	public RunnerHistoryEvent() {
 	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long eventId;
 	private Date timeStamp;
-	private String jobName;
-	private String groupName;
-	private String message;
 	private boolean success;
 	private long runTime;
 	private String userName;
-	private Module module;
+	private String module;
+	private String arguments;
+	private String method;
+	private String errorText;
 
-
-	
-	
 	public long getEventId() {
 		return eventId;
 	}
@@ -105,30 +81,6 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 
 	public void setTimeStamp(Date timeStamp) {
 		this.timeStamp = timeStamp;
-	}
-
-	public String getJobName() {
-		return jobName;
-	}
-
-	public void setJobName(String jobName) {
-		this.jobName = jobName;
-	}
-
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
 	}
 
 	public boolean isSuccess() {
@@ -150,11 +102,8 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
 
-		ret.append("Job Name=");
-		ret.append(jobName);
-		ret.append(" ");
-		ret.append("Group Name=");
-		ret.append(groupName);
+		ret.append("Arguments=");
+		ret.append(arguments);
 		ret.append(" ");
 		ret.append("Timestamp=");
 		ret.append(timeStamp);
@@ -162,8 +111,8 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		ret.append("Elapsed Time=");
 		ret.append(runTime);
 		ret.append(" ");
-		ret.append("Message=");
-		ret.append(message);
+		ret.append("Method=");
+		ret.append(method);
 		ret.append(" ");
 		ret.append("User Name=");
 		ret.append(userName);
@@ -181,27 +130,49 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		this.userName = userName;
 	}
 
-	public Module getModule() {
+	public String getModule() {
 		return module;
 	}
 
-	public void setModule(Module module) {
+	public void setModule(String module) {
 		this.module = module;
 	}
 
-	public RunnerHistoryEvent(Date timestamp, String jobName,
-			String groupName, String message, Boolean success, Long runTime,
-			String userName, Module module) {		
-		this.timeStamp = timestamp;
-		this.jobName = jobName;
-		this.groupName = groupName;
-		this.message = message;
+	public String getArguments() {
+		return arguments;
+	}
+
+	public void setArguments(String arguments) {
+		this.arguments = arguments;
+	}
+
+	public String getMethod() {
+		return method;
+	}
+
+	public void setMethod(String method) {
+		this.method = method;
+	}
+
+	public RunnerHistoryEvent(Date timeStamp, boolean success, long runTime,
+			String userName, String module, String arguments, String method,String errorText) {
+		super();
+		this.timeStamp = timeStamp;
 		this.success = success;
 		this.runTime = runTime;
 		this.userName = userName;
 		this.module = module;
+		this.arguments = arguments;
+		this.method = method;
+		this.errorText=errorText;
 	}
 
-	
-	
+	public String getErrorText() {
+		return errorText;
+	}
+
+	public void setErrorText(String errorText) {
+		this.errorText = errorText;
+	}
+
 }

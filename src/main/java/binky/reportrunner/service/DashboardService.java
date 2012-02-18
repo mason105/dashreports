@@ -28,7 +28,7 @@ import java.util.List;
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.scheduler.SchedulerException;
 
-public interface DashboardService {
+public interface DashboardService extends Auditable {
 
 	public List<RunnerDashboardItem> getItemsForGroup(String groupName);
 	public List<RunnerDashboardItem> getAllItems();

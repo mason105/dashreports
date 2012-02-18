@@ -13,7 +13,6 @@ import org.apache.log4j.Logger;
 
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.service.DatasourceService;
-import binky.reportrunner.service.impl.DatasourceServiceImpl;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class GetColumnNamesForQuery extends StandardRunnerAction {

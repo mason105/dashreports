@@ -22,14 +22,12 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.admin;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 import binky.reportrunner.data.RunnerHistoryEvent;
-import binky.reportrunner.data.RunnerHistoryEvent.Module;
 import binky.reportrunner.service.AuditService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -40,34 +38,28 @@ public class GetAuditHistoryAction extends StandardRunnerAction {
 	private List<RunnerHistoryEvent> longestEvents;
 	private List<RunnerHistoryEvent> latestSuccessEvents;
 	private List<RunnerHistoryEvent> latestFailEvents;
-	private Module module;
+	private String module;
 	private int returnCount;
 	private boolean showLongest;
-	private static final Logger logger = Logger.getLogger(GetAuditHistoryAction.class);
-	
+	private static final Logger logger = Logger
+			.getLogger(GetAuditHistoryAction.class);
+
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
-		
+
 		logger.trace("return count: " + returnCount);
-		logger.trace("module: "+ module.getDisplayName());
-		
-		this.longestEvents = auditService.getLongestRunningEvents(module, returnCount);
-		this.latestSuccessEvents = auditService.getSuccessEvents(module, returnCount);
-		
-		
-		switch (module) {
-		
-		case DASHBOARD_SCHEDULER:
-		case REPORT_SCHEDULER:
-		case REPORT_VIEWER:
-			this.latestFailEvents = auditService.getFailedEvents(module, returnCount);	
-			showLongest=true;
-			break;
-		default:
-			showLongest=false;
-		}
-		
+		logger.trace("module: " + module);
+
+		this.longestEvents = auditService.getLongestRunningEvents(module,
+				returnCount);
+		this.latestSuccessEvents = auditService.getSuccessEvents(module,
+				returnCount);
+
+		this.latestFailEvents = auditService.getFailedEvents(module,
+				returnCount);
+		showLongest = true;
+
 		return SUCCESS;
 	}
 
@@ -100,20 +92,19 @@ public class GetAuditHistoryAction extends StandardRunnerAction {
 		this.longestEvents = longestEvents;
 	}
 
-
-
 	public void setReturnCount(int returnCount) {
 		this.returnCount = returnCount;
 	}
 
-	public void setModule(Module module) {
+	public void setModule(String module) {
 		this.module = module;
 	}
-	public final List<Module> getModules() {
-		return Arrays.asList(Module.values());
+
+	public final List<String> getModules() {
+		return auditService.getModuleNames();
 	}
 
-	public Module getModule() {
+	public String getModule() {
 		return module;
 	}
 
@@ -124,6 +115,5 @@ public class GetAuditHistoryAction extends StandardRunnerAction {
 	public boolean isShowLongest() {
 		return showLongest;
 	}
-	
-	
+
 }

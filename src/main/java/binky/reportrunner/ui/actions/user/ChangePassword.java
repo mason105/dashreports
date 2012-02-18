@@ -22,10 +22,8 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.user;
 
-import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.service.UserService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
-import binky.reportrunner.util.EncryptionUtil;
 
 public class ChangePassword extends StandardRunnerAction {
 
@@ -37,18 +35,13 @@ public class ChangePassword extends StandardRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
-		EncryptionUtil enc = new EncryptionUtil();
-		oldPassword = enc.hashString(oldPassword);
 
 		if (newPassword1.equals(newPassword2)) {
-			if (oldPassword.equals(getSessionUser().getPassword())) {
-				RunnerUser currentUser = this.getSessionUser();
-				// hash the password
-				currentUser.setPassword(enc.hashString(newPassword1));
-				userService.saveOrUpdate(currentUser);
+			if (userService.changePassword(getSessionUserName(), oldPassword,
+					newPassword1)) {
 				return SUCCESS;
 			} else {
-				super.addActionError("Old password invalid!");
+				super.addActionError("Invalid current password!");
 				return INPUT;
 			}
 		} else {

@@ -39,7 +39,7 @@ import org.xml.sax.SAXException;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.service.misc.JDBCDrivers;
 
-public interface DatasourceService {
+public interface DatasourceService extends Auditable {
 
 	public DataSource getJDBCDataSource(RunnerDataSource runnerDs)
 			throws SQLException;

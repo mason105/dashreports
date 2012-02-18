@@ -25,5 +25,5 @@ package binky.reportrunner.service;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface AuthenticationService extends AuthenticationProvider, UserDetailsService {
+public interface AuthenticationService extends AuthenticationProvider, UserDetailsService, Auditable {
 }

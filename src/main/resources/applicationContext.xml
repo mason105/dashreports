@@ -2,18 +2,30 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
                     http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
                     http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
-     			    http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd"  default-autowire="no" default-lazy-init="true">
+     			    http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd
+     			    http://www.springframework.org/schema/aop 
+     			    http://www.springframework.org/schema/aop/spring-aop-3.1.xsd"
+	default-autowire="no" default-lazy-init="true">
 	<import resource="applicationContext-db.xml" />
 	<import resource="applicationContext-ui.xml" />
 
-	<ehcache:annotation-driven cache-manager="ehCacheManager" create-missing-caches="true" />
-    
-    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"/>
-    
-	<!--  properties file -->
+	<ehcache:annotation-driven cache-manager="ehCacheManager"
+		create-missing-caches="true" />
+	<!--Enables AspectJ auto-proxying -->
+	<aop:aspectj-autoproxy />
+
+	<bean name="auditAspect" class="binky.reportrunner.aspects.AuditAspect">
+		<property name="auditService" ref="auditService" />
+	</bean>
+
+	<bean id="ehCacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
+
+	<!-- properties file -->
 	<bean id="myPlaceholderConfig"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -21,13 +33,12 @@
 				<value>classpath:dashreports.properties</value>
 			</list>
 		</property>
-		<property name="systemPropertiesModeName"
-			value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
 	</bean>
 
 
 	<bean id="quartzFactory"
-		class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 		<property name="triggers">
 			<list>
 				<ref bean="pruneEventHistoryTrigger" />
@@ -73,10 +84,7 @@
 				<prop key="org.quartz.jobStore.class">
 					org.springframework.scheduling.quartz.LocalDataSourceJobStore
 				</prop>
-				<!--
-					<prop
-					key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop>
-				-->
+				<!-- <prop key="org.quartz.jobStore.driverDelegateClass">org.quartz.impl.jdbcjobstore.StdJDBCDelegate</prop> -->
 				<prop key="org.quartz.jobStore.driverDelegateClass">
 					${quartz.JDBCDelegate}
 				</prop>
@@ -88,12 +96,11 @@
 				</prop>
 
 
-				<!--  clustering -->
+				<!-- clustering -->
 				<prop key="org.quartz.jobStore.isClustered">
 					${org.quartz.jobStore.isClustered}
 				</prop>
-				<prop
-					key="org.quartz.jobStore.clusterCheckinInterval">
+				<prop key="org.quartz.jobStore.clusterCheckinInterval">
 					${org.quartz.jobStore.clusterCheckinInterval}
 				</prop>
 				<prop key="org.quartz.scheduler.instanceId">
@@ -103,37 +110,35 @@
 		</property>
 	</bean>
 
-	<!--  setup our scheduler singleton and the quartz bean -->
-	<bean id="scheduler"
-		class="binky.reportrunner.scheduler.impl.SchedulerImpl"
+	<!-- setup our scheduler singleton and the quartz bean -->
+	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
 		scope="singleton">
 		<property name="quartzScheduler" ref="quartzFactory" />
-		<property name="clustered"
-			value="${org.quartz.jobStore.isClustered}" />
+		<property name="clustered" value="${org.quartz.jobStore.isClustered}" />
 
 	</bean>
 
 
-	 <bean id="schedulerProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
-	   <property name="targetSource">
-	     <bean class="org.springframework.aop.target.LazyInitTargetSource">
-	       <property name="targetBeanName"><idref local="scheduler"/></property>
-	     </bean>
-	   </property>
-	 </bean>
+	<bean id="schedulerProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="targetSource">
+			<bean class="org.springframework.aop.target.LazyInitTargetSource">
+				<property name="targetBeanName">
+					<idref local="scheduler" />
+				</property>
+			</bean>
+		</property>
+	</bean>
 
 
-	<bean id="runnerJobService"
-		class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
-		<property name="scheduler" ref="schedulerProxy"  />
+	<bean id="runnerJobService" class="binky.reportrunner.service.impl.RunnerJobServiceImpl">
+		<property name="scheduler" ref="schedulerProxy" />
 		<property name="runnerJobDao" ref="runnerJobDao" />
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
 	</bean>
-	<bean id="dashboardService"
-		class="binky.reportrunner.service.impl.DashboardServiceImpl"
-		 lazy-init="true" >
+	<bean id="dashboardService" class="binky.reportrunner.service.impl.DashboardServiceImpl"
+		lazy-init="true">
 		<property name="dashboardDao">
 			<ref bean="dashboardDao" />
 		</property>
@@ -149,41 +154,41 @@
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
 		</property>
+		<property name="auditService" ref="auditService" />
 	</bean>
 
-	<bean id="userService"
-		class="binky.reportrunner.service.impl.UserServiceImpl">
+	<bean id="userService" class="binky.reportrunner.service.impl.UserServiceImpl">
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
 		</property>
+
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
 		</property>
 	</bean>
 
-	<bean id="groupService"
-		class="binky.reportrunner.service.impl.GroupServiceImpl">
+	<bean id="groupService" class="binky.reportrunner.service.impl.GroupServiceImpl">
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
 		</property>
+		
 	</bean>
 
 
-	<bean id="noCacheInterceptor"
-		class="binky.reportrunner.interceptors.NoCache" scope="singleton">
+	<bean id="noCacheInterceptor" class="binky.reportrunner.interceptors.NoCache"
+		scope="singleton">
 	</bean>
 
 	<bean id="auditService" class="binky.reportrunner.service.impl.AuditServiceImpl">
-			<property name="historyDao" ref="runnerHistoryDao" />
+		<property name="historyDao" ref="runnerHistoryDao" />
 	</bean>
 
-	<bean id="runnerJobListener"
-		class="binky.reportrunner.scheduler.RunnerJobListener" lazy-init="true">
+	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener"
+		lazy-init="true">
 		<property name="auditService" ref="auditService" />
 		<property name="jobService" ref="runnerJobService" />
 		<property name="smtpServer" value="${reportrunner.smtpServer}" />
-		<property name="fromAddress"
-			value="${reportrunner.fromAddress}" />
+		<property name="fromAddress" value="${reportrunner.fromAddress}" />
 		<property name="datasourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
@@ -192,8 +197,7 @@
 		</property>
 	</bean>
 
-	<bean id="runnerDatasourceService"
-		class="binky.reportrunner.service.impl.DatasourceServiceImpl"
+	<bean id="runnerDatasourceService" class="binky.reportrunner.service.impl.DatasourceServiceImpl"
 		scope="singleton">
 		<property name="dataSourceDao">
 			<ref bean="runnerDataSourceDao" />
@@ -204,20 +208,16 @@
 		<property name="secureKey" value="${reportrunner.secureKey}" />
 	</bean>
 
-	<bean name="pruneEventHistoryJob"
-		class="org.springframework.scheduling.quartz.JobDetailBean">
-		<property name="jobClass"
-			value="binky.reportrunner.util.PruneEventHistory" />
+	<bean name="pruneEventHistoryJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+		<property name="jobClass" value="binky.reportrunner.util.PruneEventHistory" />
 		<property name="jobDataAsMap">
 			<map>
-				<entry key="daysToKeep"
-					value="${reportrunner.daysToKeep}" />
+				<entry key="daysToKeep" value="${reportrunner.daysToKeep}" />
 			</map>
 		</property>
 	</bean>
 
-	<bean id="pruneEventHistoryTrigger"
-		class="org.springframework.scheduling.quartz.CronTriggerBean">
+	<bean id="pruneEventHistoryTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="pruneEventHistoryJob" />
 		<!-- run every morning at 6 AM -->
 		<property name="cronExpression" value="0 0 6 * * ?" />

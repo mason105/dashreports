@@ -22,19 +22,16 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.job.viewer;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 
-import binky.reportrunner.data.RunnerHistoryEvent.Module;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.exceptions.SecurityException;
-import binky.reportrunner.service.AuditService;
 import binky.reportrunner.service.RunnerJobService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -46,7 +43,6 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 	private Map<String, ViewerResults> downloadResults;
 	private Map<String, List<String>> columns;
-	private AuditService auditService;
 	private List<RunnerJobParameter> parameters;
 	private Map<String,RowSetDynaClass> gridResults;
 
@@ -65,7 +61,6 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		if (jobService.getJob(jobName, groupName)!=null && jobService.getJob(jobName, groupName).getTemplateType()
 				.equals(RunnerJob.Template.NONE)) {
 			logger.debug("populating grid");
-			long startTime = (new Date()).getTime();
 			Map<String,RowSetDynaClass> dynaSets;
 		
 			if ((this.parameters != null) && (this.parameters.size() > 0)) {
@@ -99,17 +94,15 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 			this.gridResults= dynaSets;		
 						
-			long endTime = (new Date()).getTime();
 
 			// create an event for this so we can track performance of bad
 			// queries			
-			auditService.logAuditEvent(Module.REPORT_VIEWER, "report viewer ran", super.getSessionUserName(), true, (endTime - startTime), jobName, groupName);
+		
 			logger.debug("redirecting to grid");
 			return "GRID";			
 		
 		} else {
 			logger.debug("doing file download");
-			long startTime = (new Date()).getTime();
 			// TODO: NASTY HACK ALERT
 			if ((this.parameters != null) && (this.parameters.size() > 0)) {
 				RunnerJob job = jobService.getJob(jobName, groupName);
@@ -135,11 +128,10 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 						groupName);
 			}
 
-			long endTime = (new Date()).getTime();
 
 			// create an event for this so we can track performance of bad
 			// queries
-			auditService.logAuditEvent(Module.REPORT_VIEWER, "report viewer ran", super.getSessionUserName(), true, (endTime - startTime), jobName, groupName);
+			
 			return "DOWNLOAD";
 		}
 	}
@@ -199,13 +191,7 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		return serialVersionUID;
 	}
 
-	public AuditService getAuditService() {
-		return auditService;
-	}
 
-	public void setAuditService(AuditService auditService) {
-		this.auditService = auditService;
-	}
 
 
 }

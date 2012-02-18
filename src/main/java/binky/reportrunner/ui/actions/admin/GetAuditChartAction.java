@@ -22,13 +22,11 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.admin;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.jfree.chart.JFreeChart;
 import org.springframework.security.access.prepost.PreAuthorize;
 
-import binky.reportrunner.data.RunnerHistoryEvent.Module;
 import binky.reportrunner.service.AuditService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -39,7 +37,7 @@ public class GetAuditChartAction extends StandardRunnerAction {
 	
 	private JFreeChart chart;
 	
-	private Module module;
+	private String module;
 	
 
 	@Override
@@ -60,10 +58,11 @@ public class GetAuditChartAction extends StandardRunnerAction {
 		return chart;
 	}
 
-	public void setModule(Module module) {
+	public void setModule(String module) {
 		this.module = module;
 	}
-	public final List<Module> getModules() {
-		return Arrays.asList(Module.values());
+
+	public final List<String> getModules() {
+		return auditService.getModuleNames();
 	}
 }

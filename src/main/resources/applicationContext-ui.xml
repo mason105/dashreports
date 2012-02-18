@@ -7,6 +7,11 @@
 
 	<!-- actions -->
 
+	<bean id="clearTrendDataAction" class="binky.reportrunner.ui.actions.dashboard.ClearTrendData">
+		<property name="dashboardService">
+			<ref bean="dashboardService" />
+		</property>
+	</bean>
 
 	<bean id="schedulerAdminAction" class="binky.reportrunner.ui.actions.admin.SchedulerAdmin"
 		scope="prototype">

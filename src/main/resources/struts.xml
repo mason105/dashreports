@@ -277,6 +277,14 @@
 				<param name="activeTab">dashboard</param>
 			</result>
 		</action>
+		<action name="clearTrendData" class="clearTrendDataAction">
+			<result type="redirectAction">
+				<param name="actionName">showGroup</param>
+				<param name="parse">true</param>
+				<param name="groupName">${groupName}</param>
+				<param name="activeTab">dashboard</param>
+			</result>
+		</action>
 
 		<action name="invokeItem" class="invokeItemAction">
 			<result type="redirectAction">

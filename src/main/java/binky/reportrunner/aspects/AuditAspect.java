@@ -52,8 +52,8 @@ public class AuditAspect {
 		} finally {
 			long runTime = Calendar.getInstance().getTimeInMillis()-start;
 			if (logger.isTraceEnabled()) logger.trace("logging a message for:" + module);
-			
-			auditService.logAuditEvent(module, success, runTime, arguments.toString(), method,errorText);
+			//hack to cut down on logging
+			if (!method.startsWith("get"))auditService.logAuditEvent(module, success, runTime, arguments.toString(), method,errorText);
 		}
 	}
 	

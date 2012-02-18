@@ -171,7 +171,7 @@
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
 		</property>
-		
+
 	</bean>
 
 
@@ -185,7 +185,6 @@
 
 	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener"
 		lazy-init="true">
-		<property name="auditService" ref="auditService" />
 		<property name="jobService" ref="runnerJobService" />
 		<property name="smtpServer" value="${reportrunner.smtpServer}" />
 		<property name="fromAddress" value="${reportrunner.fromAddress}" />

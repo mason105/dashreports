@@ -83,7 +83,7 @@ public class RunnerEngine implements StatefulJob {
 		
 		ApplicationContext ctx =ApplicationContextProvider.getApplicationContext();
 		ReportService jobService = (ReportService)ctx.getBean("runnerJobService");
-		DatasourceService dsService = (DatasourceService)ctx.getBean("dataSourceService");
+		DatasourceService dsService = (DatasourceService)ctx.getBean("runnerDatasourceService");
 		String jobName=(String)context.getJobDetail()
 				.getJobDataMap().get("jobName");
 		String groupName=(String)context.getJobDetail()

@@ -21,13 +21,13 @@
 			<value>${jdbc.password}</value>
 		</property>
 		<property name="initialSize">
-			<value>2</value>
+			<value>5</value>
 		</property>
 		<property name="maxActive">
-			<value>15</value>
+			<value>25</value>
 		</property>
 		<property name="maxIdle">
-			<value>2</value>
+			<value>5</value>
 		</property>
 		<property name="validationQuery">
 			<value>${jdbc.validation.query}</value>

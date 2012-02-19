@@ -22,13 +22,14 @@
  ******************************************************************************/
 package binky.reportrunner.service;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
 import binky.reportrunner.data.RunnerDashboardItem;
 import binky.reportrunner.scheduler.SchedulerException;
 
-public interface DashboardService extends Auditable {
+public interface DashboardService extends Auditable, Serializable {
 
 	public List<RunnerDashboardItem> getItemsForGroup(String groupName);
 	public List<RunnerDashboardItem> getAllItems();

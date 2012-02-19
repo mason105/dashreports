@@ -173,5 +173,92 @@ public class RunnerDataSource extends DatabaseObject<String> {
 	public void setGroups(List<RunnerGroup> groups) {
 		this.groups = groups;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((dataSourceName == null) ? 0 : dataSourceName.hashCode());
+		
+		result = prime * result
+				+ ((initialPoolSize == null) ? 0 : initialPoolSize.hashCode());
+		result = prime * result
+				+ ((jdbcClass == null) ? 0 : jdbcClass.hashCode());
+		result = prime * result + ((jdbcUrl == null) ? 0 : jdbcUrl.hashCode());
+		result = prime * result
+				+ ((jndiName == null) ? 0 : jndiName.hashCode());
+		result = prime * result
+				+ ((maxPoolSize == null) ? 0 : maxPoolSize.hashCode());
+		result = prime * result
+				+ ((minPoolSize == null) ? 0 : minPoolSize.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RunnerDataSource other = (RunnerDataSource) obj;
+		if (dataSourceName == null) {
+			if (other.dataSourceName != null)
+				return false;
+		} else if (!dataSourceName.equals(other.dataSourceName))
+			return false;
+		if (groups == null) {
+			if (other.groups != null)
+				return false;
+		} else if (!groups.equals(other.groups))
+			return false;
+		if (initialPoolSize == null) {
+			if (other.initialPoolSize != null)
+				return false;
+		} else if (!initialPoolSize.equals(other.initialPoolSize))
+			return false;
+		if (jdbcClass == null) {
+			if (other.jdbcClass != null)
+				return false;
+		} else if (!jdbcClass.equals(other.jdbcClass))
+			return false;
+		if (jdbcUrl == null) {
+			if (other.jdbcUrl != null)
+				return false;
+		} else if (!jdbcUrl.equals(other.jdbcUrl))
+			return false;
+		if (jndiName == null) {
+			if (other.jndiName != null)
+				return false;
+		} else if (!jndiName.equals(other.jndiName))
+			return false;
+		if (maxPoolSize == null) {
+			if (other.maxPoolSize != null)
+				return false;
+		} else if (!maxPoolSize.equals(other.maxPoolSize))
+			return false;
+		if (minPoolSize == null) {
+			if (other.minPoolSize != null)
+				return false;
+		} else if (!minPoolSize.equals(other.minPoolSize))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
 	
 }

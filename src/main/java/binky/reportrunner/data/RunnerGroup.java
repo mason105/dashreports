@@ -107,4 +107,54 @@ public class RunnerGroup extends DatabaseObject<String> {
 		this.dashboardItems = dashboardItems;
 	}
 
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((dashboardItems == null) ? 0 : dashboardItems.hashCode());
+		result = prime
+				* result
+				+ ((groupDescription == null) ? 0 : groupDescription.hashCode());
+		result = prime * result
+				+ ((groupName == null) ? 0 : groupName.hashCode());
+		result = prime * result
+				+ ((runnerJobs == null) ? 0 : runnerJobs.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RunnerGroup other = (RunnerGroup) obj;
+		if (dashboardItems == null) {
+			if (other.dashboardItems != null)
+				return false;
+		} else if (!dashboardItems.equals(other.dashboardItems))
+			return false;
+		if (groupDescription == null) {
+			if (other.groupDescription != null)
+				return false;
+		} else if (!groupDescription.equals(other.groupDescription))
+			return false;
+		if (groupName == null) {
+			if (other.groupName != null)
+				return false;
+		} else if (!groupName.equals(other.groupName))
+			return false;
+		if (runnerJobs == null) {
+			if (other.runnerJobs != null)
+				return false;
+		} else if (!runnerJobs.equals(other.runnerJobs))
+			return false;
+		return true;
+	}
+
 }

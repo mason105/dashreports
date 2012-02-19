@@ -9,12 +9,15 @@
      			    http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd
      			    http://www.springframework.org/schema/aop 
      			    http://www.springframework.org/schema/aop/spring-aop-3.1.xsd"
-	default-autowire="no" default-lazy-init="true">
+	default-lazy-init="true">
 	<import resource="applicationContext-db.xml" />
 	<import resource="applicationContext-ui.xml" />
-
+	
+	<bean id="contextApplicationContextProvider" class="binky.reportrunner.util.ApplicationContextProvider"  lazy-init="false"/>  
+	
 	<ehcache:annotation-driven cache-manager="ehCacheManager"
 		create-missing-caches="true" />
+	
 	<!--Enables AspectJ auto-proxying -->
 	<aop:aspectj-autoproxy />
 
@@ -188,12 +191,6 @@
 		<property name="jobService" ref="runnerJobService" />
 		<property name="smtpServer" value="${reportrunner.smtpServer}" />
 		<property name="fromAddress" value="${reportrunner.fromAddress}" />
-		<property name="datasourceService">
-			<ref bean="runnerDatasourceService" />
-		</property>
-		<property name="dashboardService">
-			<ref bean="dashboardService" />
-		</property>
 	</bean>
 
 	<bean id="runnerDatasourceService" class="binky.reportrunner.service.impl.DatasourceServiceImpl"

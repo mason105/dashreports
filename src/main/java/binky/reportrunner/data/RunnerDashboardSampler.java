@@ -166,5 +166,65 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 		this.trendData = trendData;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (gridLines ? 1231 : 1237);
+		result = prime * result
+				+ ((interval == null) ? 0 : interval.hashCode());
+		result = prime * result
+				+ ((orientation == null) ? 0 : orientation.hashCode());
+		result = prime * result + (recordTrendData ? 1231 : 1237);
+		result = prime * result
+				+ ((valueColumn == null) ? 0 : valueColumn.hashCode());
+		result = prime * result + ((window == null) ? 0 : window.hashCode());
+		result = prime * result
+				+ ((yAxisLabel == null) ? 0 : yAxisLabel.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RunnerDashboardSampler other = (RunnerDashboardSampler) obj;
+		if (gridLines != other.gridLines)
+			return false;
+		if (interval != other.interval)
+			return false;
+		if (orientation != other.orientation)
+			return false;
+		if (recordTrendData != other.recordTrendData)
+			return false;
+		if (samplingData == null) {
+			if (other.samplingData != null)
+				return false;
+		} else if (!samplingData.equals(other.samplingData))
+			return false;
+		if (trendData == null) {
+			if (other.trendData != null)
+				return false;
+		} else if (!trendData.equals(other.trendData))
+			return false;
+		if (valueColumn == null) {
+			if (other.valueColumn != null)
+				return false;
+		} else if (!valueColumn.equals(other.valueColumn))
+			return false;
+		if (window != other.window)
+			return false;
+		if (yAxisLabel == null) {
+			if (other.yAxisLabel != null)
+				return false;
+		} else if (!yAxisLabel.equals(other.yAxisLabel))
+			return false;
+		return true;
+	}
+
 
 }

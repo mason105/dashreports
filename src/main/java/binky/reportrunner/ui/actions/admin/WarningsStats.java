@@ -22,7 +22,7 @@ public class WarningsStats extends StandardRunnerAction {
 		Calendar c = Calendar.getInstance();
 		toDate=c.getTime();
 		c = Calendar.getInstance();
-		c.add(Calendar.MINUTE, -1);
+		c.add(Calendar.DAY_OF_YEAR, -1);
 		fromDate=c.getTime();		
 		return SUCCESS;
 	}

@@ -23,11 +23,8 @@
 package binky.reportrunner.scheduler;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
-
-import javax.sql.DataSource;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Logger;
@@ -40,8 +37,6 @@ import binky.reportrunner.engine.RunnerEngine;
 import binky.reportrunner.engine.dashboard.AlertProcessor;
 import binky.reportrunner.engine.utils.EmailHandler;
 import binky.reportrunner.engine.utils.impl.EmailHandlerImpl;
-import binky.reportrunner.service.DashboardService;
-import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.service.ReportService;
 
 public class RunnerJobListener implements JobListener {
@@ -56,9 +51,7 @@ public class RunnerJobListener implements JobListener {
 
 	private ReportService jobService;
 
-	private DatasourceService datasourceService;
 
-	private DashboardService dashboardService;
 
 	public void jobExecutionVetoed(JobExecutionContext ctx) {
 			logger.warn("Job Execution Vetoed: " + ctx.getJobDetail().getName()
@@ -72,28 +65,19 @@ public class RunnerJobListener implements JobListener {
 			String jobName = ctx.getJobDetail().getName();
 			String groupName = ctx.getJobDetail().getGroup();
 
-			RunnerJob job = jobService.getJob(jobName, groupName);
-			ctx.getJobDetail().getJobDataMap().put("runnerJob", job);
-
+			ctx.getJobDetail().getJobDataMap().put("jobName", jobName);
+			ctx.getJobDetail().getJobDataMap().put("groupName", groupName);
 			ctx.getJobDetail().getJobDataMap()
 					.put("smtpServer", this.smtpServer);
 			ctx.getJobDetail().getJobDataMap()
 					.put("fromAddress", this.fromAddress);
-			DataSource ds;
-			try {
-				ds = datasourceService.getJDBCDataSource(job.getDatasource());
-				ctx.getJobDetail().getJobDataMap().put("dataSource", ds);
-			} catch (SQLException e) {
-				logger.error(e.getMessage(), e);
-			}
 
 		} else if (ctx.getJobDetail().getJobClass()
 				.equals(AlertProcessor.class)) {
 			// stuff for the dashboards
 			Integer itemId = Integer.parseInt(ctx.getJobDetail().getName());
 			ctx.getJobDetail().getJobDataMap().put("itemId", itemId);
-			ctx.getJobDetail().getJobDataMap()
-					.put("dashboardService", dashboardService);
+
 		}
 		logger.trace("Scheduled task to be executed: "
 				+ ctx.getJobDetail().getName() + "/"
@@ -162,20 +146,12 @@ public class RunnerJobListener implements JobListener {
 		return "ReportRunnerCoreJobListener";
 	}
 
-	public DatasourceService getDatasourceService() {
-		return datasourceService;
-	}
 
-	public void setDatasourceService(DatasourceService datasourceService) {
-		this.datasourceService = datasourceService;
-	}
 
 	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
 	}
 
-	public void setDashboardService(DashboardService dashboardService) {
-		this.dashboardService = dashboardService;
-	}
+
 
 }

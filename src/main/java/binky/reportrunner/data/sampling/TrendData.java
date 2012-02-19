@@ -81,6 +81,66 @@ public class TrendData extends  DatabaseObject<Long>  {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((maxValue == null) ? 0 : maxValue.hashCode());
+		result = prime * result
+				+ ((meanValue == null) ? 0 : meanValue.hashCode());
+		result = prime * result
+				+ ((minValue == null) ? 0 : minValue.hashCode());
+		result = prime * result + sampleSize;
+		result = prime * result + ((sampler == null) ? 0 : sampler.hashCode());
+		result = prime * result
+				+ ((timeString == null) ? 0 : timeString.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TrendData other = (TrendData) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (maxValue == null) {
+			if (other.maxValue != null)
+				return false;
+		} else if (!maxValue.equals(other.maxValue))
+			return false;
+		if (meanValue == null) {
+			if (other.meanValue != null)
+				return false;
+		} else if (!meanValue.equals(other.meanValue))
+			return false;
+		if (minValue == null) {
+			if (other.minValue != null)
+				return false;
+		} else if (!minValue.equals(other.minValue))
+			return false;
+		if (sampleSize != other.sampleSize)
+			return false;
+		if (sampler == null) {
+			if (other.sampler != null)
+				return false;
+		} else if (!sampler.equals(other.sampler))
+			return false;
+		if (timeString == null) {
+			if (other.timeString != null)
+				return false;
+		} else if (!timeString.equals(other.timeString))
+			return false;
+		return true;
+	}
 	
 	
 	//mean calc when adding - new = ((mean*sampleSize)+val)/(sampleSize+1)

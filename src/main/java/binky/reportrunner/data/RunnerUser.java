@@ -167,5 +167,71 @@ public class RunnerUser extends DatabaseObject<String> implements  UserDetails {
 	public String getUsername() {
 		return getUserName();
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((fullName == null) ? 0 : fullName.hashCode());
+
+		result = prime * result + ((isAdmin == null) ? 0 : isAdmin.hashCode());
+		result = prime * result
+				+ ((isLocked == null) ? 0 : isLocked.hashCode());
+		result = prime * result
+				+ ((isReadOnly == null) ? 0 : isReadOnly.hashCode());
+		result = prime * result
+				+ ((password == null) ? 0 : password.hashCode());
+		result = prime * result
+				+ ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RunnerUser other = (RunnerUser) obj;
+		if (fullName == null) {
+			if (other.fullName != null)
+				return false;
+		} else if (!fullName.equals(other.fullName))
+			return false;
+		if (groups == null) {
+			if (other.groups != null)
+				return false;
+		} else if (!groups.equals(other.groups))
+			return false;
+		if (isAdmin == null) {
+			if (other.isAdmin != null)
+				return false;
+		} else if (!isAdmin.equals(other.isAdmin))
+			return false;
+		if (isLocked == null) {
+			if (other.isLocked != null)
+				return false;
+		} else if (!isLocked.equals(other.isLocked))
+			return false;
+		if (isReadOnly == null) {
+			if (other.isReadOnly != null)
+				return false;
+		} else if (!isReadOnly.equals(other.isReadOnly))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
+		return true;
+	}
 	
 }

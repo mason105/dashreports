@@ -23,15 +23,15 @@
 package binky.reportrunner.engine.dashboard;
 
 import org.apache.log4j.Logger;
-import org.quartz.InterruptableJob;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.UnableToInterruptJobException;
+import org.quartz.StatefulJob;
+import org.springframework.context.ApplicationContext;
 
 import binky.reportrunner.service.DashboardService;
+import binky.reportrunner.util.ApplicationContextProvider;
 
-public class AlertProcessor implements Job, InterruptableJob {
+public class AlertProcessor implements StatefulJob  {
 
 	
 
@@ -45,8 +45,9 @@ public class AlertProcessor implements Job, InterruptableJob {
 		// Grab the elements of the job from the context to pass on
 		Integer itemId = (Integer)context.getJobDetail()
 				.getJobDataMap().get("itemId");
-	
-		this.dashboardService = (DashboardService)context.getJobDetail().getJobDataMap().get("dashboardService");
+		ApplicationContext ctx = ApplicationContextProvider.getApplicationContext();
+		
+		this.dashboardService = (DashboardService)ctx.getBean("dashboardService");
 		
 		
 		try {
@@ -68,10 +69,6 @@ public class AlertProcessor implements Job, InterruptableJob {
 
 	}
 
-	
 
-	public void interrupt() throws UnableToInterruptJobException {
-		throw new UnableToInterruptJobException("not implemented");
-	}
 
 }

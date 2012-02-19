@@ -62,6 +62,12 @@ import com.googlecode.ehcache.annotations.TriggersRemove;
 
 public class DashboardServiceImpl implements DashboardService {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8560022031641311268L;
+
+
 	private static final Logger logger = Logger.getLogger(DashboardServiceImpl.class);
 	
 

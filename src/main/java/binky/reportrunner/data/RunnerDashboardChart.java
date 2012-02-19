@@ -133,6 +133,64 @@ public class RunnerDashboardChart extends RunnerDashboardItem {
 	public void setyLabel(String yLabel) {
 		this.yLabel = yLabel;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((chartType == null) ? 0 : chartType.hashCode());
+		result = prime * result + (gridLines ? 1231 : 1237);
+		result = prime * result
+				+ ((orientation == null) ? 0 : orientation.hashCode());
+		result = prime
+				* result
+				+ ((seriesNameColumn == null) ? 0 : seriesNameColumn.hashCode());
+		result = prime * result
+				+ ((valueColumn == null) ? 0 : valueColumn.hashCode());
+		result = prime * result
+				+ ((xaxisColumn == null) ? 0 : xaxisColumn.hashCode());
+		result = prime * result + ((yLabel == null) ? 0 : yLabel.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RunnerDashboardChart other = (RunnerDashboardChart) obj;
+		if (chartType != other.chartType)
+			return false;
+		if (gridLines != other.gridLines)
+			return false;
+		if (orientation != other.orientation)
+			return false;
+		if (seriesNameColumn == null) {
+			if (other.seriesNameColumn != null)
+				return false;
+		} else if (!seriesNameColumn.equals(other.seriesNameColumn))
+			return false;
+		if (valueColumn == null) {
+			if (other.valueColumn != null)
+				return false;
+		} else if (!valueColumn.equals(other.valueColumn))
+			return false;
+		if (xaxisColumn == null) {
+			if (other.xaxisColumn != null)
+				return false;
+		} else if (!xaxisColumn.equals(other.xaxisColumn))
+			return false;
+		if (yLabel == null) {
+			if (other.yLabel != null)
+				return false;
+		} else if (!yLabel.equals(other.yLabel))
+			return false;
+		return true;
+	}
 	
 	
 }

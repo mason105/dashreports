@@ -175,4 +175,72 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		this.errorText = errorText;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((arguments == null) ? 0 : arguments.hashCode());
+		result = prime * result
+				+ ((errorText == null) ? 0 : errorText.hashCode());
+		result = prime * result + (int) (eventId ^ (eventId >>> 32));
+		result = prime * result + ((method == null) ? 0 : method.hashCode());
+		result = prime * result + ((module == null) ? 0 : module.hashCode());
+		result = prime * result + (int) (runTime ^ (runTime >>> 32));
+		result = prime * result + (success ? 1231 : 1237);
+		result = prime * result
+				+ ((timeStamp == null) ? 0 : timeStamp.hashCode());
+		result = prime * result
+				+ ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RunnerHistoryEvent other = (RunnerHistoryEvent) obj;
+		if (arguments == null) {
+			if (other.arguments != null)
+				return false;
+		} else if (!arguments.equals(other.arguments))
+			return false;
+		if (errorText == null) {
+			if (other.errorText != null)
+				return false;
+		} else if (!errorText.equals(other.errorText))
+			return false;
+		if (eventId != other.eventId)
+			return false;
+		if (method == null) {
+			if (other.method != null)
+				return false;
+		} else if (!method.equals(other.method))
+			return false;
+		if (module == null) {
+			if (other.module != null)
+				return false;
+		} else if (!module.equals(other.module))
+			return false;
+		if (runTime != other.runTime)
+			return false;
+		if (success != other.success)
+			return false;
+		if (timeStamp == null) {
+			if (other.timeStamp != null)
+				return false;
+		} else if (!timeStamp.equals(other.timeStamp))
+			return false;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
+		return true;
+	}
+
 }

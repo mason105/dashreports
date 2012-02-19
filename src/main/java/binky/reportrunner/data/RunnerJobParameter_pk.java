@@ -53,5 +53,36 @@ public class RunnerJobParameter_pk implements Serializable {
 	public String toString() {
 		return this.runnerJob_pk.getGroup().getGroupName() + "." + this.runnerJob_pk.getJobName() +" - " + this.parameterIdx;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((parameterIdx == null) ? 0 : parameterIdx.hashCode());
+		result = prime * result
+				+ ((runnerJob_pk == null) ? 0 : runnerJob_pk.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RunnerJobParameter_pk other = (RunnerJobParameter_pk) obj;
+		if (parameterIdx == null) {
+			if (other.parameterIdx != null)
+				return false;
+		} else if (!parameterIdx.equals(other.parameterIdx))
+			return false;
+		if (runnerJob_pk == null) {
+			if (other.runnerJob_pk != null)
+				return false;
+		} else if (!runnerJob_pk.equals(other.runnerJob_pk))
+			return false;
+		return true;
+	}
 	
 }

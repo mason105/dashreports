@@ -37,11 +37,10 @@ import javax.sql.DataSource;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Logger;
-import org.quartz.InterruptableJob;
-import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.UnableToInterruptJobException;
+import org.quartz.StatefulJob;
+import org.springframework.context.ApplicationContext;
 
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.engine.impl.RunnerResultGeneratorImpl;
@@ -52,12 +51,15 @@ import binky.reportrunner.engine.utils.impl.EmailHandlerImpl;
 import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
 import binky.reportrunner.engine.utils.impl.SQLProcessorImpl;
 import binky.reportrunner.exceptions.RenderException;
+import binky.reportrunner.service.DatasourceService;
+import binky.reportrunner.service.ReportService;
+import binky.reportrunner.util.ApplicationContextProvider;
 
 /**
  * @author Daniel Grout
  */
 
-public class RunnerEngine implements Job, InterruptableJob {
+public class RunnerEngine implements StatefulJob {
 
 	SQLProcessor sqlProcessor;
 
@@ -78,21 +80,26 @@ public class RunnerEngine implements Job, InterruptableJob {
 
 	public final void execute(JobExecutionContext context)
 			throws JobExecutionException {
-
+		
+		ApplicationContext ctx =ApplicationContextProvider.getApplicationContext();
+		ReportService jobService = (ReportService)ctx.getBean("runnerJobService");
+		DatasourceService dsService = (DatasourceService)ctx.getBean("dataSourceService");
+		String jobName=(String)context.getJobDetail()
+				.getJobDataMap().get("jobName");
+		String groupName=(String)context.getJobDetail()
+				.getJobDataMap().get("groupName");
 		// Grab the elements of the job from the context to pass on
-		RunnerJob job = (RunnerJob) context.getJobDetail().getJobDataMap().get(
-				"runnerJob");
+		RunnerJob job = jobService.getJob(jobName, groupName);
 		this.smtpServer = (String) context.getJobDetail().getJobDataMap().get(
 				"smtpServer");
 		this.fromAddress = (String) context.getJobDetail().getJobDataMap().get(
 				"fromAddress");
-		this.ds = (DataSource) context.getJobDetail().getJobDataMap().get(
-				"dataSource");
 		try {
-			if (job == null) {
-				logger.fatal("job is null!");
-				throw new Exception("job is null!");
-			}
+			this.ds = dsService.getJDBCDataSource(job.getDatasource());
+		} catch (SQLException e1) {
+			throw new JobExecutionException(e1);
+		}
+		try {
 			if (ds == null) {
 				logger.fatal("datasource is null!");
 				throw new Exception("datasource is null!");
@@ -200,13 +207,5 @@ public class RunnerEngine implements Job, InterruptableJob {
 		return outUrl;
 	}
 
-	public void interrupt() throws UnableToInterruptJobException {
-		try {
-
-			conn.close();
-		} catch (SQLException e) {
-			throw new UnableToInterruptJobException(e);
-		}
-	}
 
 }

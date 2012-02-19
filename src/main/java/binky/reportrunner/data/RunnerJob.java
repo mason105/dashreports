@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.data;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -312,6 +313,139 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 
 	public void setScheduled(boolean scheduled) {
 		this.scheduled = scheduled;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((alertEmailAddress == null) ? 0 : alertEmailAddress
+						.hashCode());
+		result = prime * result + (alertOnSuccess ? 1231 : 1237);
+		result = prime * result
+				+ ((burstQuery == null) ? 0 : burstQuery.hashCode());
+		result = prime * result
+				+ ((cronString == null) ? 0 : cronString.hashCode());
+		result = prime * result
+				+ ((datasource == null) ? 0 : datasource.hashCode());
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+		result = prime * result
+				+ ((fileFormat == null) ? 0 : fileFormat.hashCode());
+		result = prime * result + ((isBurst == null) ? 0 : isBurst.hashCode());
+		result = prime * result
+				+ ((outputUrl == null) ? 0 : outputUrl.hashCode());
+		result = prime * result + ((pk == null) ? 0 : pk.hashCode());
+		result = prime * result + ((query == null) ? 0 : query.hashCode());
+		result = prime * result + (scheduled ? 1231 : 1237);
+		result = prime * result
+				+ ((startDate == null) ? 0 : startDate.hashCode());
+		result = prime
+				* result
+				+ ((targetEmailAddress == null) ? 0 : targetEmailAddress
+						.hashCode());
+		result = prime * result + Arrays.hashCode(templateFile);
+		result = prime
+				* result
+				+ ((templateFileName == null) ? 0 : templateFileName.hashCode());
+		result = prime * result
+				+ ((templateType == null) ? 0 : templateType.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RunnerJob other = (RunnerJob) obj;
+		if (alertEmailAddress == null) {
+			if (other.alertEmailAddress != null)
+				return false;
+		} else if (!alertEmailAddress.equals(other.alertEmailAddress))
+			return false;
+		if (alertOnSuccess != other.alertOnSuccess)
+			return false;
+		if (burstQuery == null) {
+			if (other.burstQuery != null)
+				return false;
+		} else if (!burstQuery.equals(other.burstQuery))
+			return false;
+		if (cronString == null) {
+			if (other.cronString != null)
+				return false;
+		} else if (!cronString.equals(other.cronString))
+			return false;
+		if (datasource == null) {
+			if (other.datasource != null)
+				return false;
+		} else if (!datasource.equals(other.datasource))
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (endDate == null) {
+			if (other.endDate != null)
+				return false;
+		} else if (!endDate.equals(other.endDate))
+			return false;
+		if (fileFormat != other.fileFormat)
+			return false;
+		if (isBurst == null) {
+			if (other.isBurst != null)
+				return false;
+		} else if (!isBurst.equals(other.isBurst))
+			return false;
+		if (outputUrl == null) {
+			if (other.outputUrl != null)
+				return false;
+		} else if (!outputUrl.equals(other.outputUrl))
+			return false;
+		if (parameters == null) {
+			if (other.parameters != null)
+				return false;
+		} else if (!parameters.equals(other.parameters))
+			return false;
+		if (pk == null) {
+			if (other.pk != null)
+				return false;
+		} else if (!pk.equals(other.pk))
+			return false;
+		if (query == null) {
+			if (other.query != null)
+				return false;
+		} else if (!query.equals(other.query))
+			return false;
+		if (scheduled != other.scheduled)
+			return false;
+		if (startDate == null) {
+			if (other.startDate != null)
+				return false;
+		} else if (!startDate.equals(other.startDate))
+			return false;
+		if (targetEmailAddress == null) {
+			if (other.targetEmailAddress != null)
+				return false;
+		} else if (!targetEmailAddress.equals(other.targetEmailAddress))
+			return false;
+		if (!Arrays.equals(templateFile, other.templateFile))
+			return false;
+		if (templateFileName == null) {
+			if (other.templateFileName != null)
+				return false;
+		} else if (!templateFileName.equals(other.templateFileName))
+			return false;
+		if (templateType != other.templateType)
+			return false;
+		return true;
 	}
 
 }

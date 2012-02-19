@@ -113,4 +113,56 @@ public class RunnerJobParameter extends DatabaseObject<RunnerJobParameter_pk> {
 		this.description = description;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime
+				* result
+				+ ((parameterBurstColumn == null) ? 0 : parameterBurstColumn
+						.hashCode());
+		result = prime * result
+				+ ((parameterType == null) ? 0 : parameterType.hashCode());
+		result = prime * result
+				+ ((parameterValue == null) ? 0 : parameterValue.hashCode());
+		result = prime * result + ((pk == null) ? 0 : pk.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RunnerJobParameter other = (RunnerJobParameter) obj;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (parameterBurstColumn == null) {
+			if (other.parameterBurstColumn != null)
+				return false;
+		} else if (!parameterBurstColumn.equals(other.parameterBurstColumn))
+			return false;
+		if (parameterType != other.parameterType)
+			return false;
+		if (parameterValue == null) {
+			if (other.parameterValue != null)
+				return false;
+		} else if (!parameterValue.equals(other.parameterValue))
+			return false;
+		if (pk == null) {
+			if (other.pk != null)
+				return false;
+		} else if (!pk.equals(other.pk))
+			return false;
+		return true;
+	}
+
 }

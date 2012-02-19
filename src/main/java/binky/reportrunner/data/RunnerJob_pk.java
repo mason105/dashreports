@@ -58,6 +58,35 @@ public class RunnerJob_pk implements Serializable {
 		this.jobName = jobName;
 		this.group = group;
 	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((group == null) ? 0 : group.hashCode());
+		result = prime * result + ((jobName == null) ? 0 : jobName.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RunnerJob_pk other = (RunnerJob_pk) obj;
+		if (group == null) {
+			if (other.group != null)
+				return false;
+		} else if (!group.equals(other.group))
+			return false;
+		if (jobName == null) {
+			if (other.jobName != null)
+				return false;
+		} else if (!jobName.equals(other.jobName))
+			return false;
+		return true;
+	}
 	
 	
 }

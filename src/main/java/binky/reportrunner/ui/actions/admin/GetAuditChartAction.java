@@ -34,6 +34,8 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.DateAxis;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYItemRenderer;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.chart.title.TextTitle;
 import org.jfree.data.time.Millisecond;
 import org.jfree.data.time.TimeSeries;
@@ -96,6 +98,13 @@ public class GetAuditChartAction extends StandardRunnerAction {
 		DateAxis axis = (DateAxis) linePlot.getDomainAxis();
 		axis.setDateFormatOverride(new SimpleDateFormat("hh:mm:ss dd-MM-yyyy"));
 
+		XYItemRenderer r = linePlot.getRenderer();
+		if (r instanceof XYLineAndShapeRenderer) {
+		}
+		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) r;
+		renderer.setBaseShapesVisible(true);
+		renderer.setBaseShapesFilled(true);
+		
 		chart.setAntiAlias(true);
 		chart.setTextAntiAlias(true);
 		return SUCCESS;

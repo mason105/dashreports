@@ -28,8 +28,6 @@
 			<sj:datepicker name="fromDate" showAnim="slideDown"  displayFormat="dd/mm/yy" timepicker="true" onchange="dojo.event.topic.publish('refresh_info');"></sj:datepicker>
 			<sj:datepicker name="toDate" showAnim="slideDown"  displayFormat="dd/mm/yy" timepicker="true" onchange="dojo.event.topic.publish('refresh_info');"></sj:datepicker>
 
-			<input type="button" class="auditRefreshButton" value="Refresh" onclick="dojo.event.topic.publish('refresh_info');"/>
-
 		</s:form>
 	</div>
 

@@ -205,6 +205,17 @@
 		</property>
 	</bean>
 
+	<bean id="changeEncryptionKeyAction" class="binky.reportrunner.ui.actions.admin.encryption.ChangeEncryptionKey"
+		scope="prototype">
+		<property name="datasourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
+	</bean>
+
+	<bean id="setupChangeEncryptionKeyAction" class="binky.reportrunner.ui.actions.admin.encryption.SetupChangeEncryptionKey"/>
+	<bean id="generateEncryptionKeyAction" class="binky.reportrunner.ui.actions.admin.encryption.GenerateEncryptionKey"/>
+	
+
 	<bean id="validateItemQueryAction"
 		class="binky.reportrunner.ui.actions.dashboard.edit.ValidateItemSQL"
 		scope="prototype">

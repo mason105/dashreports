@@ -13,7 +13,7 @@
 	</div>
 	<div class="listingHeader"> 	
 		<div class="listingIcon"><img src="<s:url value='/images/v2/icons/add.png'/>" align="absmiddle" /></div>Add a <s:a href="setupEditDataSource.action">JDBC</s:a> or 
-		<s:a href="setupEditJNDIDataSource.action">JNDI</s:a> Data Source
+		<s:a href="setupEditJNDIDataSource.action">JNDI</s:a> Data Source | <s:a href="setupChangeEncryptionKey.action">Change Encryption Key</s:a>
 	</div>
 
 	<div class="listing">

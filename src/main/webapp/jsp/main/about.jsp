@@ -74,7 +74,7 @@
 	</tr>
 	<tr>
 	<td align="center"><a href="http://jquery.com/" target="_blank"><img src="<s:url value="/images/vendor/jquery.png"/>" border="0" align="middle"/></a></td>
-	<td align="center"><a href="http://www.trirand.com/blog/" target="_blank">JQuery Grid</a></td>
+	<td align="center"></td>
 	
 	</tr>
 </table>	

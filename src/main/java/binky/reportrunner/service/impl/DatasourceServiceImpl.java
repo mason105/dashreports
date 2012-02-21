@@ -81,8 +81,9 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 		final String jndiDataSource = runnerDs.getJndiName();
 
-		EncryptionUtil enc = new EncryptionUtil();
+		
 		if (StringUtils.isBlank(jndiDataSource)) {
+			EncryptionUtil enc = new EncryptionUtil();
 			logger.info("using dbcp pooled connection for: "
 					+ runnerDs.getDataSourceName());
 
@@ -107,26 +108,17 @@ public class DatasourceServiceImpl implements DatasourceService {
 			ds1.setRemoveAbandoned(true);
 			ds1.setRemoveAbandonedTimeout(600);
 
+			//do not want anything updating anything
 			ds1.setDefaultReadOnly(true);
+			
 			ds1.setLogAbandoned(true);
 			ds1.setTestOnBorrow(true);
 			ds1.setTestOnReturn(true);
-
-			// org.apache.commons.dbcp.datasources.SharedPoolDataSource
-
-			/*
-			 * (ComboPooledDataSource ds = new ComboPooledDataSource();
-			 * ds.setConnectionCustomizerClassName
-			 * (connectionCustomizerClassName)
-			 * ds.setDriverClass(databaseDriver); ds.setJdbcUrl(jdbcUrl);
-			 * ds.setUser(jdbcUser); ds.setPassword(jdbcPassword);
-			 * ds.setInitialPoolSize(runnerDs.getInitialPoolSize());
-			 * ds.setMaxPoolSize(runnerDs.getMaxPoolSize());
-			 * ds.setMinPoolSize(runnerDs.getMinPoolSize());
-			 * ds.setDescription(runnerDs.getDataSourceName());
-			 * ds.setIdleConnectionTestPeriod(600); ds.setNumHelperThreads(5);
-			 * ds.setMaxStatements(5);
-			 */
+			ds1.setTestWhileIdle(true);
+			
+			//does this work across all RBMS?
+			ds1.setValidationQuery("select 1");
+			ds1.setValidationQueryTimeout(300);
 
 			return ds1;
 		} else {
@@ -203,12 +195,14 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 				dumpLogInfo(runnerDs.getDataSourceName());
 
+				
 			} catch (Exception e) {
 				logger.fatal(
 						"Unable to create datasource: "
 								+ runnerDs.getDataSourceName(), e);
 			}
 		}
+			
 		return ds;
 	}
 
@@ -309,6 +303,27 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
 		this.groupDao = groupDao;
+	}
+
+	@Override
+	public void reEncryptPasswords(String newKey) throws SecurityException,
+			InvalidKeyException, NoSuchAlgorithmException,
+			NoSuchPaddingException, InvalidKeySpecException,
+			IllegalBlockSizeException, BadPaddingException {
+		EncryptionUtil enc = new EncryptionUtil();
+		
+		logger.warn("re-encrypting the datasource passwords.  I hope you copied the key from the UI as instructed!!");
+		
+		for (RunnerDataSource ds : dataSourceDao.getAll()) {
+			if (!StringUtils.isEmpty(ds.getPassword())) {
+				String pw = enc.decrpyt(secureKey, ds.getPassword());
+				ds.setPassword(enc.encrpyt(newKey, pw));
+				dataSourceDao.saveOrUpdate(ds);
+				logger.debug("updated ds: " + ds.getDataSourceName());
+			}			
+		}
+		
+		logger.warn("re-encryption complete.  Please ensure you update the properties file with the new key and restart the server");
 	}
 	
 

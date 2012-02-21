@@ -10,10 +10,7 @@ body {
 	position: relative;
 }
 #TopLinks {
-
 	position:absolute;
-
-
 	right:0px;
 	height:35px;
 }
@@ -25,14 +22,7 @@ body {
 	width:100%;
 	border-bottom: 1px solid #aaa;
 }
-#FooterBar {
-	position:absolute;
-	border-top: 1px solid #666666;
-	width:100%;
-	height:25px;
-	bottom:0px;
-	background-color:#eee;
-}
+
 #LogoWrapper {
 	margin-left: auto;
 	margin-right: auto;
@@ -63,6 +53,11 @@ body {
 	text-decoration:none;
 	color:#eee;
 }
+
+#NavBar  .Button  A.selected{ 
+	text-decoration:none;
+	color:#11b7f0;
+}
 #NavBar  .Button  A:hover{
 color: #11b7f0;
 }
@@ -85,4 +80,59 @@ color: #11b7f0;
 }
 #TopLinks  .TopLink  A:hover{
 	color: #11b7f0;
+}
+
+#textContentWrapper {
+	margin-left: auto;
+	margin-right: auto;
+	width:1236px;
+}
+div.textContent #header ,div.textContentWide #header{
+	border-bottom: 1px solid #666666;
+	font-size:12px;
+	font-weight:bold;
+	padding:5px;
+	margin-bottom:5px;
+	background-color:#ccc;
+}
+div.textContent span,div.textContentWide span  {
+	padding:5px;
+}
+div.textContent, div.textContentWide {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	background-color:#eee;
+	float:left;
+	height:300px;
+	margin-top:5px;
+	margin-left:10px;
+	border: 1px solid #666666;
+}
+div.textContent {
+	width:400px;
+}
+div.textContentWide {
+	width:1224px;
+}
+#gallery {
+	margin-left: auto;
+	margin-right: auto;
+	clear:both;
+	width:1048px;
+}
+#gallery .item, #gallery  .itemWide {
+	border: 1px solid #666666;
+	float:left;
+	
+}
+#gallery  .itemWide {
+	width:500px;
+	margin-top:5px;
+	margin-bottom:5px;
+	margin-left:11px;
+	margin-right:11px;
+}
+#gallery .item {
+	width:250px;
+	margin:5px;
 }

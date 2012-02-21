@@ -1,5 +1,5 @@
 To Do:
-Enhance the stats/warning page with ajax dropdown goodness.
+Zoom on dashboards
 Validation!!
 Clean up the one-to-many relationships to reduce the amount of tables.
 close down all outstanding bugs
@@ -9,6 +9,7 @@ Make a test data package for MySQL
 Soak testing
 
 Completed:
+Enhance the stats/warning page with ajax dropdown goodness. - done
 Refactor the dashboard items not to use the DynaSet in a blob solution - it is ugly - want a new table to record the actual data. - Done!! Really happy with the new solution
 Clear trend data option - done!
 Assess Hibernate 4 - implemented - required Spring 3.1 and a bit of faffing but i'm happy with it.

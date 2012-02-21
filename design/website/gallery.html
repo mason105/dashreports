@@ -1,0 +1,123 @@
+<html>
+<head>
+	<link href="css/website.css" rel="stylesheet" type="text/css" media="all" />
+	<link type="text/css" href="css/smoothness/jquery-ui-1.8.17.custom.css" rel="stylesheet" />	
+	<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+		<script type="text/javascript">
+		$(function(){
+
+			$('#img1').dialog({
+					autoOpen: false,
+					width: 1235					
+				});
+		
+			$('#img2').dialog({
+					autoOpen: false,
+					width: 1235
+				});
+		
+			$('#img3').dialog({
+					autoOpen: false,
+					width: 1235
+				});
+		
+			$('#img4').dialog({
+					autoOpen: false,
+					width: 1235
+				});
+		
+			$('#img5').dialog({
+					autoOpen: false,
+					width: 1235
+				});
+		
+			$('#img6').dialog({
+					autoOpen: false,
+					width: 1235
+				});
+		
+			$('#img7').dialog({
+					autoOpen: false,
+					width: 1235
+				});
+		});
+		</script>
+		<script type="text/javascript">
+			function showPopUp(divName) {
+				$('#'+divName).dialog('open');
+			}
+	</script>
+	
+	<title>Dash Reports</title>
+</head>
+<body>
+<div id="MainBar">
+	<div id="TopLinks">
+		<div class="TopLink"><img src="images/download.png"/><a href="http://code.google.com/p/reportrunner/downloads/list">Download</a></div>
+		<div class="TopLink"><img src="images/mail.png"/><a href="contact.html">Contact</a></div>
+	</div>
+	<div id="LogoWrapper">
+		<div id="Logo"></div>
+	</div>
+</div>
+<div id="ShadeBar">
+	<div id="NavBar">
+		<div class="Button">
+			<a href="index.html">About</a>
+		</div>
+		<div class="Button">
+			<a href="gallery.html" class="selected">Gallery</a>
+		</div>
+		<div class="Button">
+			<a href="features.html">Features</a>
+		</div>
+		<div class="Button">
+			<a href="demo.html">Demo</a>
+		</div>
+		<div class="Button">
+			<a href="faq.html">FAQ</a>
+		</div>
+		<div class="Button">
+			<a href="help.html">Help</a>
+		</div>
+	</div>
+</div>
+<div id="BottomBar">
+	<div id="gallery">
+		<div class="itemWide">
+			<a href="#"  onclick="showPopUp('img1')" ><img src="images/screenshots/dashboard_thumb.png"/></a>
+		</div>
+		<div class="item">
+			<a href="#"  onclick="showPopUp('img2')" ><img src="images/screenshots/dashboard_edit_thumb.png" /></a>
+		</div>
+		<div class="item">
+			<a href="#"  onclick="showPopUp('img3')" ><img src="images/screenshots/audit_thumb.png"/></a>
+		</div>
+	</div>
+	<div id="gallery">
+		<div class="item">
+			<a href="#"  onclick="showPopUp('img4')" ><img src="images/screenshots/datasource_thumb.png"/></a>
+		</div>
+		<div class="item">
+			<a href="#"  onclick="showPopUp('img5')" ><img src="images/screenshots/reports_thumb.png"/></a>
+		</div>
+		<div class="item">
+			<a href="#"  onclick="showPopUp('img6')" ><img src="images/screenshots/reports_edit_thumb.png"/></a>
+		</div>
+		<div class="item">
+			<a href="#"  onclick="showPopUp('img7')" ><img src="images/screenshots/user_thumb.png"/></a>
+		</div>
+	</div>
+</div>
+
+<!--pop ups -->
+<div id="img1" title="Dashboard"><img src="images/screenshots/dashboard.png"/></div>
+<div id="img2" title="Dashboard Edit"><img src="images/screenshots/dashboard_edit.png"/></div>
+<div id="img3" title="Audit Viewer"><img src="images/screenshots/audit.png"/></div>
+<div id="img4" title="Datasource"><img src="images/screenshots/datasource.png"/></div>
+<div id="img5" title="Reports"><img src="images/screenshots/reports.png"/></div>
+<div id="img6" title="Report Edit"><img src="images/screenshots/reports_edit.png"/></div>
+<div id="img7" title="User Edit"><img src="images/screenshots/user.png"/></div>
+</body>
+</html>

@@ -42,18 +42,11 @@ public class GetSamplerChart extends BaseDashboardAction {
 		}
 
 		DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
-		double lower=0d;
-		double upper=0d;
-		boolean first=true;
+
 		String timeVal="";
 		for (SamplingData d : item.getSamplingData()) {
 			Number yValue = d.getValue();
-			if (first) {
-				first=false;
-				lower=yValue.doubleValue();
-			}
-			if (yValue.doubleValue()>upper) upper=yValue.doubleValue();
-			
+
 			SimpleDateFormat sdf;
 			switch (item.getInterval()) {
 			case DAY:				
@@ -118,10 +111,6 @@ public class GetSamplerChart extends BaseDashboardAction {
 						dataSet.addValue(t.getMeanValue(), "mean", timeString);
 						dataSet.addValue(t.getMaxValue(), "maximum", timeString);
 						dataSet.addValue(t.getMinValue(), "minimum", timeString);	
-						if (t.getMinValue().doubleValue()<lower)lower=t.getMinValue().doubleValue();
-						if (t.getMeanValue().doubleValue()<lower)lower=t.getMeanValue().doubleValue();
-						if (t.getMeanValue().doubleValue()>upper)upper=t.getMeanValue().doubleValue();
-						if (t.getMaxValue().doubleValue()>upper)upper=t.getMaxValue().doubleValue();
 						break;
 					}
 				}
@@ -144,7 +133,7 @@ public class GetSamplerChart extends BaseDashboardAction {
 		
 		
 		CategoryPlot  linePlot = (CategoryPlot) chart.getPlot();
-		linePlot.getRangeAxis().setRange(lower, upper);
+		linePlot.getRangeAxis().setAutoRange(true);
 		linePlot.setBackgroundPaint(Color.decode(item.getBackGroundColour()));
 		linePlot.setDomainGridlinesVisible(item.isGridLines());
 		linePlot.setRangeGridlinesVisible(item.isGridLines());

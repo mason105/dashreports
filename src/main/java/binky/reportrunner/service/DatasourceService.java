@@ -55,4 +55,7 @@ public interface DatasourceService extends Auditable {
 	public void purgeConnections(String dataSourceName) throws SQLException;
 	public String testDataSource(RunnerDataSource runnerDs) ;
 	public JDBCDrivers getJDBCDriverDefinitions() throws IOException, SAXException;
+	
+	public void reEncryptPasswords(String newKey) throws SecurityException,InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException;;
+	
 }

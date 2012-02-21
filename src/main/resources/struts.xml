@@ -160,6 +160,21 @@
 		</action>
 
 
+		<action name="setupChangeEncryptionKey" class="setupChangeEncryptionKeyAction">
+			<result>/jsp/main/changeEncryptionKey.jsp</result>
+		</action>
+
+		<action name="changeEncryptionKey" class="changeEncryptionKeyAction">
+			<result>/jsp/main/changeEncryptionKeySuccess.jsp</result>
+			<result name="input">/jsp/main/changeEncryptionKey.jsp</result>
+		</action>
+
+		<action name="generateEncryptionKey" class="generateEncryptionKeyAction">
+			<result>/jsp/nostyle/encryptionKey.jsp</result>
+		</action>
+
+
+
 		<action name="invokeJob" class="invokeJobAction">
 			<result type="redirectAction">
 				<param name="actionName">showGroup</param>

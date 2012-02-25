@@ -3,4 +3,4 @@
 		<s:actionerror theme="jquery"/>
 		<s:actionmessage theme="jquery"/>
 
-	<s:text name="newKey" value="%{encryptionKey}" readonly="true"  />			
+	<s:textfield  name="newKey" value="%{encryptionKey}" readonly="true"  cssClass="textbox" />			

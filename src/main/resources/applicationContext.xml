@@ -165,7 +165,6 @@
 		<property name="userDao">
 			<ref bean="runnerUserDao" />
 		</property>
-		<property name="auditService" ref="auditService" />
 	</bean>
 
 	<bean id="userService" class="binky.reportrunner.service.impl.UserServiceImpl">

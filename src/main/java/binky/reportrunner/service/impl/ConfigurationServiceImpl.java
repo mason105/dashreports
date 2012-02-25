@@ -3,8 +3,6 @@ package binky.reportrunner.service.impl;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import org.apache.log4j.Logger;
-
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.Configuration;
 import binky.reportrunner.data.Configuration.ConfigurationType;
@@ -14,9 +12,6 @@ import com.googlecode.ehcache.annotations.Cacheable;
 import com.googlecode.ehcache.annotations.TriggersRemove;
 
 public class ConfigurationServiceImpl implements ConfigurationService {
-
-	private static final Logger logger = Logger
-			.getLogger(ConfigurationServiceImpl.class);
 
 	private ReportRunnerDao<Configuration, ConfigurationType> configurationDao;
 

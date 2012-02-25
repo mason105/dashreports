@@ -25,7 +25,6 @@ package binky.reportrunner.ui.actions.base;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -48,8 +47,6 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 	}
 
 	private static final long serialVersionUID = -5701712982967708713L;
-	private static final Logger logger = Logger
-			.getLogger(StandardRunnerAction.class);
 
 	public abstract String execute() throws Exception;
 

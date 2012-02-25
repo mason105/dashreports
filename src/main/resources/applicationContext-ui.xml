@@ -9,25 +9,25 @@
 
 
 
-	<bean id="getLogoAction" class="binky.reportrunner.ui.actions.general.GetLogo">
+	<bean id="getLogoAction" class="binky.reportrunner.ui.actions.general.GetLogo" scope="prototype">
 		<property name="configurationService">
 			<ref bean="configurationService" />
 		</property>
 	</bean>
 
-	<bean id="setupEditConfigAction" class="binky.reportrunner.ui.actions.admin.config.SetupEditConfig">
+	<bean id="setupEditConfigAction" class="binky.reportrunner.ui.actions.admin.config.SetupEditConfig" scope="prototype">
 		<property name="configurationService">
 			<ref bean="configurationService" />
 		</property>
 	</bean>
 	
-	<bean id="saveConfigAction" class="binky.reportrunner.ui.actions.admin.config.SaveConfig">
+	<bean id="saveConfigAction" class="binky.reportrunner.ui.actions.admin.config.SaveConfig" scope="prototype">
 		<property name="configurationService">
 			<ref bean="configurationService" />
 		</property>
 	</bean>
 	
-	<bean id="clearTrendDataAction" class="binky.reportrunner.ui.actions.dashboard.ClearTrendData">
+	<bean id="clearTrendDataAction" class="binky.reportrunner.ui.actions.dashboard.ClearTrendData" scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
@@ -232,8 +232,8 @@
 		</property>
 	</bean>
 
-	<bean id="setupChangeEncryptionKeyAction" class="binky.reportrunner.ui.actions.admin.encryption.SetupChangeEncryptionKey"/>
-	<bean id="generateEncryptionKeyAction" class="binky.reportrunner.ui.actions.admin.encryption.GenerateEncryptionKey"/>
+	<bean id="setupChangeEncryptionKeyAction" class="binky.reportrunner.ui.actions.admin.encryption.SetupChangeEncryptionKey"  scope="prototype"/>
+	<bean id="generateEncryptionKeyAction" class="binky.reportrunner.ui.actions.admin.encryption.GenerateEncryptionKey"  scope="prototype"/>
 	
 
 	<bean id="validateItemQueryAction"

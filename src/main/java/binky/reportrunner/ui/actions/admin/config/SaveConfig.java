@@ -28,15 +28,22 @@ public class SaveConfig extends StandardRunnerAction {
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
 		int x=0;
-				
-		super.clearErrorsAndMessages();
-		if (configurations!=null) logger.debug("config size  "+ configurations.size());
+		logger.debug("saving config");
+	
+		super.clearMessages();
+	
+		if (configurations!=null) { logger.debug("config size  "+ configurations.size());
+		
+		} else {
+			logger.warn("configurations is null");
+		}
 		
 		//hack to force image size.
 		for (Configuration c: configurations) {
 			if (files!=null&& files.size()>x) {
 				if (c.getType()==ConfigurationType.LOGO) {
 					try {
+						logger.debug(files.get(x).getAbsolutePath());
 						int height=ImageIO.read(files.get(x)).getHeight();
 						if (height > 50) {
 							super.addActionError("Image must be no more than 50px high - this is " + height + "px");

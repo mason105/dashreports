@@ -89,18 +89,19 @@ color: #11b7f0;
 }
 div.textContent #header ,div.textContentWide #header{
 	border-bottom: 1px solid #666666;
-	font-size:12px;
+	font-size:13px;
 	font-weight:bold;
 	padding:5px;
 	margin-bottom:5px;
 	background-color:#ccc;
+	background-image: url(../images/boxheader.jpg);
 }
 div.textContent span,div.textContentWide span  {
 	padding:5px;
 }
 div.textContent, div.textContentWide {
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
-	font-size:11px;
+	font-size:12px;
 	background-color:#eee;
 	float:left;
 	height:300px;
@@ -108,6 +109,11 @@ div.textContent, div.textContentWide {
 	margin-left:10px;
 	border: 1px solid #666666;
 }
+div.textContent #content, div.textContentWide #content {
+	margin-left:5px;
+	margin-right:5px;
+}
+
 div.textContent {
 	width:400px;
 }

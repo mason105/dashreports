@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.log4j.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -27,7 +26,6 @@ public class GetSamplerChart extends BaseDashboardAction {
 
 	private Integer itemId;
 
-	private static final Logger logger = Logger.getLogger(GetChart.class);
 
 	@Override
 	public String execute() throws Exception {

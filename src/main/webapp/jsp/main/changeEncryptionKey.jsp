@@ -21,10 +21,18 @@
 
 			<p>This function will re-encrypt the data-source passwords stored
 				in the Dash Reports database. Please use it with care.</p>
-			<p>WARNING: Please copy the key before clicking save. You will
-				then need to add this to the properties file and restart the server.
-				If you do not follow these steps, the passwords for the data-sources
-				will be encrypted under a different key and will be unusable.</p>
+			<div class="ui-state-error ui-corner-all"
+				style="padding: 0.3em 0.7em; margin-top: 20px;">
+				<p>
+					<span class="ui-icon ui-icon-alert"
+						style="float: left; margin-right: 0.3em;"></span> <span>WARNING:
+						Please copy the key before clicking save. You will then need to
+						add this to the properties file and restart the server. If you do
+						not follow these steps, the passwords for the data-sources will be
+						encrypted under a different key and will be unusable.</span>
+				</p>
+			</div>
+
 
 			<input type="button" value="Generate Key" class="testButton"
 				onclick="dojo.event.topic.publish('generateButton');">

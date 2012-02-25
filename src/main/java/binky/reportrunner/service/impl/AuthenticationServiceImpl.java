@@ -40,7 +40,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerUser;
-import binky.reportrunner.service.AuditService;
 import binky.reportrunner.service.AuthenticationService;
 import binky.reportrunner.util.EncryptionUtil;
 
@@ -49,7 +48,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	private ReportRunnerDao<RunnerUser, String> userDao;
 	private static final Logger logger = Logger
 			.getLogger(AuthenticationServiceImpl.class);
-	private AuditService auditService;
 	public void setUserDao(ReportRunnerDao<RunnerUser, String> userDao) {
 		this.userDao = userDao;
 	}
@@ -119,8 +117,5 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
 	}
 
-	public void setAuditService(AuditService auditService) {
-		this.auditService = auditService;
-	}
 
 }

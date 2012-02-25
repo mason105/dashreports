@@ -16,7 +16,9 @@ public class SetupEditConfig extends StandardRunnerAction {
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
-
+		super.clearActionErrors();
+		super.clearMessages();
+		super.clearErrors();
 		this.configurations=configurationService.getConfigurationItems();
 		
 		return SUCCESS;

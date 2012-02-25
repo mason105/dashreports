@@ -32,11 +32,13 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 
+import binky.reportrunner.data.Configuration.ConfigurationType;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.engine.RunnerEngine;
 import binky.reportrunner.engine.dashboard.AlertProcessor;
 import binky.reportrunner.engine.utils.EmailHandler;
 import binky.reportrunner.engine.utils.impl.EmailHandlerImpl;
+import binky.reportrunner.service.ConfigurationService;
 import binky.reportrunner.service.ReportService;
 
 public class RunnerJobListener implements JobListener {
@@ -44,14 +46,10 @@ public class RunnerJobListener implements JobListener {
 	private static final Logger logger = Logger
 			.getLogger(RunnerJobListener.class);
 
-	private String smtpServer;
-
-	private String fromAddress;
-
 
 	private ReportService jobService;
 
-
+	private ConfigurationService configurationService;
 
 	public void jobExecutionVetoed(JobExecutionContext ctx) {
 			logger.warn("Job Execution Vetoed: " + ctx.getJobDetail().getName()
@@ -68,9 +66,9 @@ public class RunnerJobListener implements JobListener {
 			ctx.getJobDetail().getJobDataMap().put("jobName", jobName);
 			ctx.getJobDetail().getJobDataMap().put("groupName", groupName);
 			ctx.getJobDetail().getJobDataMap()
-					.put("smtpServer", this.smtpServer);
+					.put("smtpServer", configurationService.getConfigurationItem(ConfigurationType.EMAIL_SERVER).getValue());
 			ctx.getJobDetail().getJobDataMap()
-					.put("fromAddress", this.fromAddress);
+					.put("fromAddress", configurationService.getConfigurationItem(ConfigurationType.EMAIL_FROM_ADDRESS).getValue());
 
 		} else if (ctx.getJobDetail().getJobClass()
 				.equals(AlertProcessor.class)) {
@@ -115,7 +113,7 @@ public class RunnerJobListener implements JobListener {
 			String targetEmail, Date finishTime, boolean success) {
 		EmailHandler email = new EmailHandlerImpl();
 		try {
-			email.sendAlertEmail(targetEmail, fromAddress, smtpServer, jobName,
+			email.sendAlertEmail(targetEmail, configurationService.getConfigurationItem(ConfigurationType.EMAIL_FROM_ADDRESS).getValue(), configurationService.getConfigurationItem(ConfigurationType.EMAIL_SERVER).getValue(), jobName,
 					groupName, success, finishTime);
 		} catch (EmailException e) {
 			logger.error("Failed to send alert email!", e);
@@ -124,23 +122,6 @@ public class RunnerJobListener implements JobListener {
 		}
 	}
 
-	
-
-	public String getSmtpServer() {
-		return smtpServer;
-	}
-
-	public void setSmtpServer(String smtpServer) {
-		this.smtpServer = smtpServer;
-	}
-
-	public String getFromAddress() {
-		return fromAddress;
-	}
-
-	public void setFromAddress(String fromAddress) {
-		this.fromAddress = fromAddress;
-	}
 
 	public String getName() {
 		return "ReportRunnerCoreJobListener";
@@ -150,6 +131,10 @@ public class RunnerJobListener implements JobListener {
 
 	public void setJobService(ReportService jobService) {
 		this.jobService = jobService;
+	}
+
+	public void setConfigurationService(ConfigurationService configurationService) {
+		this.configurationService = configurationService;
 	}
 
 

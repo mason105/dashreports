@@ -5,63 +5,35 @@ import java.util.Date;
 
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.SchedulerException;
-import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import binky.reportrunner.dao.ReportRunnerDao;
+import binky.reportrunner.data.Configuration.ConfigurationType;
 import binky.reportrunner.data.RunnerHistoryEvent;
+import binky.reportrunner.service.ConfigurationService;
 
 public class PruneEventHistory extends QuartzJobBean {
 
-	private int daysToKeep;
-	private ReportRunnerDao<RunnerHistoryEvent,Long> historyDao;
-	private static final String APPLICATION_CONTEXT_KEY = "applicationContext";
-
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void executeInternal(JobExecutionContext context)
 			throws JobExecutionException {
-		
-		 ApplicationContext appCtx;
-		try {
-			appCtx = getApplicationContext(context);
-		} catch (SchedulerException e) {
-			throw new JobExecutionException(e);
-		}        
-		 historyDao = ( ReportRunnerDao<RunnerHistoryEvent,Long> ) appCtx.getBean("runnerHistoryDao");
-		
+
+		ReportRunnerDao<RunnerHistoryEvent, Long> historyDao = (ReportRunnerDao<RunnerHistoryEvent, Long>) ApplicationContextProvider
+				.getApplicationContext().getBean("runnerHistoryDao");
+		ConfigurationService configurationService = (ConfigurationService) ApplicationContextProvider
+				.getApplicationContext().getBean("configurationService");
+		int daysToKeep = Integer.parseInt(configurationService
+				.getConfigurationItem(ConfigurationType.AUDIT_PURGE_DAYS)
+				.getValue());
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_YEAR, 0 - daysToKeep);
 		Date oldest = cal.getTime();
-		//TODO:refactor
-		for (RunnerHistoryEvent e:  historyDao.findByNamedQuery("getOldEvents", new Object[]{oldest})) {
+		// TODO:refactor
+		for (RunnerHistoryEvent e : historyDao.findByNamedQuery("getOldEvents",
+				new Object[] { oldest })) {
 			historyDao.delete(e.getEventId());
 		}
-	}
-
-	private ApplicationContext getApplicationContext(JobExecutionContext context)
-			throws JobExecutionException,SchedulerException {
-		ApplicationContext appCtx = null;
-		appCtx = (ApplicationContext) context.getScheduler().getContext().get(
-				APPLICATION_CONTEXT_KEY);
-		if (appCtx == null) {
-			throw new JobExecutionException(
-					"No application context available in scheduler context for key \""
-							+ APPLICATION_CONTEXT_KEY + "\"");
-		}
-		return appCtx;
-	}
-
-	public int getDaysToKeep() {
-		return daysToKeep;
-	}
-
-	public void setDaysToKeep(int daysToKeep) {
-		this.daysToKeep = daysToKeep;
-	}
-
-	public void setHistoryDao( ReportRunnerDao<RunnerHistoryEvent,Long>  historyDao) {
-		this.historyDao = historyDao;
 	}
 
 }

@@ -12,18 +12,20 @@
 	default-lazy-init="true">
 	<import resource="applicationContext-db.xml" />
 	<import resource="applicationContext-ui.xml" />
-	
-	<bean id="contextApplicationContextProvider" class="binky.reportrunner.util.ApplicationContextProvider"  lazy-init="false"/>  
-	
+
+	<bean id="contextApplicationContextProvider" class="binky.reportrunner.util.ApplicationContextProvider"
+		lazy-init="false" />
+
 	<ehcache:annotation-driven cache-manager="ehCacheManager"
 		create-missing-caches="true" />
-	
+
 	<!--Enables AspectJ auto-proxying -->
 	<aop:aspectj-autoproxy />
 
 	<bean name="auditAspect" class="binky.reportrunner.aspects.AuditAspect">
 		<property name="auditService" ref="auditService" />
 	</bean>
+
 
 	<bean id="ehCacheManager"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" />
@@ -122,6 +124,12 @@
 	</bean>
 
 
+	<bean name="configurationService"
+		class="binky.reportrunner.service.impl.ConfigurationServiceImpl">
+		<property name="configurationDao" ref="configurationDao" />
+	</bean>
+
+
 	<bean id="schedulerProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
 		<property name="targetSource">
 			<bean class="org.springframework.aop.target.LazyInitTargetSource">
@@ -189,8 +197,7 @@
 	<bean id="runnerJobListener" class="binky.reportrunner.scheduler.RunnerJobListener"
 		lazy-init="true">
 		<property name="jobService" ref="runnerJobService" />
-		<property name="smtpServer" value="${reportrunner.smtpServer}" />
-		<property name="fromAddress" value="${reportrunner.fromAddress}" />
+		<property name="configurationService" ref="configurationService" />
 	</bean>
 
 	<bean id="runnerDatasourceService" class="binky.reportrunner.service.impl.DatasourceServiceImpl"
@@ -206,11 +213,6 @@
 
 	<bean name="pruneEventHistoryJob" class="org.springframework.scheduling.quartz.JobDetailBean">
 		<property name="jobClass" value="binky.reportrunner.util.PruneEventHistory" />
-		<property name="jobDataAsMap">
-			<map>
-				<entry key="daysToKeep" value="${reportrunner.daysToKeep}" />
-			</map>
-		</property>
 	</bean>
 
 	<bean id="pruneEventHistoryTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">

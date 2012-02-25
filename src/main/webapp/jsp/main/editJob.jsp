@@ -99,16 +99,14 @@
 				<s:textfield
 					label="Value" name="parameters[%{#rowstatus.index}].parameterValue"
 					value="%{parameterValue}" tooltip="please enter a value to pass to the query - this is overidden if using burst"
-					onfocus="document.getElementById('jobValueTip%{#rowstatus.index}').style.visibility='visible';" 
-					onblur="document.getElementById('jobValueTip%{#rowstatus.index}').style.visibility='hidden';" cssClass="textbox">
+					 cssClass="textbox">
 
 				</s:textfield> 
 			
 				<s:textfield label="Burst Column"
 					name="parameters[%{#rowstatus.index}].parameterBurstColumn" tooltip="Please enter a name referenced in the burst query (if being used)"
 					value="%{parameterBurstColumn}"	
-					onfocus="document.getElementById('jobBurstColTip%{#rowstatus.index}').style.visibility='visible';" 
-					onblur="document.getElementById('jobBurstColTip%{#rowstatus.index}').style.visibility='hidden';" cssClass="textbox">
+					 cssClass="textbox">
 
 				</s:textfield>
 

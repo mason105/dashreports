@@ -96,6 +96,10 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 		
 	}
 	
+	public long getRandomNumber() {
+		return Math.round(Math.random()*100000000);
+	}
+	
 	public final String getActionName() {
 		return this.getClass().getName();
 	}

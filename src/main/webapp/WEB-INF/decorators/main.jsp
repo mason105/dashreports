@@ -8,7 +8,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html lang="en">
 <head>
 <title><decorator:title default="Dash Reports" /></title>
 <script language="JavaScript" type="text/javascript">
@@ -35,7 +35,7 @@
 </head>
 <body id="page-home">
 <div id="top">
-		<div class="appLogo"><img src="<s:url value='/images/v2/top_bar_logo.png'/>" /></div>
+		<div class="appLogo"><img src="<s:url value='/images/v2/top_bar_logo.png'/>" /><div class="vendorLogo"><img src="<s:url value='getLogo.action?rand=%{randomNumber}'/>" /></div></div>
 		<div id="userName"><img src="<s:url value='/images/v2/nav/user.png'/>" align="absmiddle" style="padding-right:5px;"/><s:property value="sessionUser.fullName"/></div>
 </div>
 <div id="container">
@@ -58,7 +58,8 @@
 </div>
 </div>
 <div id="manageNavPane" class="navPaneSec" onclick="hideAllNav();">
-	<div class="navItemSecTop"><div class="navIcon"><img src="<s:url value='/images/v2/nav/users.png'/>" /></div><s:a href="listUsers.action">Users</s:a></div>
+	<div class="navItemSecTop"><div class="navIcon"><img src="<s:url value='/images/v2/nav/config.png'/>" /></div><s:a href="editConfiguration.action">Configuration</s:a></div>
+	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/users.png'/>" /></div><s:a href="listUsers.action">Users</s:a></div>
 	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/managegroups.png'/>" /></div><s:a href="listGroups.action">Groups</s:a></div>
 	<div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/datasource.png'/>" /></div><s:a href="listDataSources.action">Datasources</s:a></div>
 	<!-- <div class="navItemSec"><div class="navIcon"><img src="<s:url value='/images/v2/nav/executingJobs.png'/>" /></div><s:a href="listCurrentExecutingJobs.action">Current Executing Jobs</s:a></div> -->

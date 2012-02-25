@@ -7,6 +7,26 @@
 
 	<!-- actions -->
 
+
+
+	<bean id="getLogoAction" class="binky.reportrunner.ui.actions.general.GetLogo">
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+	</bean>
+
+	<bean id="setupEditConfigAction" class="binky.reportrunner.ui.actions.admin.config.SetupEditConfig">
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+	</bean>
+	
+	<bean id="saveConfigAction" class="binky.reportrunner.ui.actions.admin.config.SaveConfig">
+		<property name="configurationService">
+			<ref bean="configurationService" />
+		</property>
+	</bean>
+	
 	<bean id="clearTrendDataAction" class="binky.reportrunner.ui.actions.dashboard.ClearTrendData">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />

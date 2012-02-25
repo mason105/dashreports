@@ -81,6 +81,9 @@
 		<property name="annotatedClasses">
 			<list>
 				<value>
+					binky.reportrunner.data.Configuration
+				</value>
+				<value>
 					binky.reportrunner.data.RunnerDashboardItem
 				</value>
 				<value>
@@ -250,6 +253,24 @@
 		</property>
 	</bean>
 
+	<bean id="configurationDaoTarget"
+		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
+		autowire="byName">
+		<constructor-arg>
+			<value>binky.reportrunner.data.Configuration</value>
+		</constructor-arg>
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="configurationDao"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="target" ref="configurationDaoTarget" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
 
 
 	<bean id="runnerDataSourceDaoTarget"

@@ -424,6 +424,24 @@
 			<result>/jsp/nostyle/samplerFieldDropdowns.jsp</result>
 		</action>
 
+		<action name="editConfiguration" class="setupEditConfigAction">
+			<result>/jsp/main/editConfiguration.jsp</result>
+		</action>
+
+		<action name="saveConfiguration" class="saveConfigAction">
+			<result name="success">/jsp/main/editConfiguration.jsp</result>
+			<result name="input">/jsp/main/editConfiguration.jsp</result>
+		</action>
+
+		<action name="getLogo" class="getLogoAction">
+			<result name="success" type="stream">
+				<param name="contentType">image/jpeg</param>
+				<param name="inputName">inputStream</param>
+				<param name="contentDisposition">attachment;filename="logo.jpg"</param>
+				<param name="bufferSize">1024</param>
+			</result>
+		</action>
+
 	</package>
 	<package name="charts" extends="jfreechart-default">
 
@@ -444,7 +462,7 @@
 				<param name="height">300</param>
 			</result>
 		</action>
-		
+
 		<!-- normal chart -->
 		<action name="getChart" class="getChartAction">
 			<result name="success" type="chart">

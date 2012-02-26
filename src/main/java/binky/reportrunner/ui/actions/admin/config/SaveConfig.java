@@ -38,7 +38,7 @@ public class SaveConfig extends StandardRunnerAction {
 			logger.warn("configurations is null");
 		}
 		
-		//hack to force image size.
+		//hack to force image size for the logo
 		for (Configuration c: configurations) {
 			if (files!=null&& files.size()>x) {
 				if (c.getType()==ConfigurationType.LOGO) {
@@ -63,10 +63,10 @@ public class SaveConfig extends StandardRunnerAction {
 		for (Configuration c: configurations) {
 			if (c==null) logger.warn("null config item?");
 			logger.debug(c.getType());
-			if (c.getType()==ConfigurationType.LOGO) {
+			//if binary data then get it loaded in
+			if (c.getType().getDataType()==3) {
 				if (files!=null&& files.size()>x) {
 					c.setBinaryValue(getBytesFromFile(files.get(x)));
-					logger.debug("saving new logo");
 					configurationService.saveOrUpdate(c);
 				}
 			} else {

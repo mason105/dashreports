@@ -19,13 +19,24 @@
 			<s:actionerror theme="jquery" />
 			<s:actionmessage theme="jquery" />
 
-			<p>This function will re-encrypt the data-source passwords stored
-				in the Dash Reports database. Please use it with care.</p>
+			<div id="saveConfiguration_" class="ui-widget actionMessage">
+				<div class="ui-state-highlight ui-corner-all"
+					style="padding: 0.3em 0.7em; margin-top: 20px;">
+					<p>
+						<span class="ui-icon ui-icon-info"
+							style="float: left; margin-right: 0.3em;"></span> <span>This
+							function will re-encrypt the data-source passwords stored in the
+							Dash Reports database. Please use it with care. </span>
+					</p>
+				</div>
+			</div>
+
+
 			<div class="ui-state-error ui-corner-all"
 				style="padding: 0.3em 0.7em; margin-top: 20px;">
 				<p>
 					<span class="ui-icon ui-icon-alert"
-						style="float: left; margin-right: 0.3em;"></span> <span>WARNING:
+						style="float: left; margin-right: 0.3em;"></span> <span><strong>WARNING:</strong>
 						Please copy the key before clicking save. You will then need to
 						add this to the properties file and restart the server. If you do
 						not follow these steps, the passwords for the data-sources will be
@@ -43,13 +54,13 @@
 				preload="false">
 		Please generate a key
 		</sx:div>
-		</div>
+		
 
 		<div class="formBottom">
 
-			<s:submit value="Save" align="left" />
+			<s:submit value="Save" align="left" onClick="return confirm('Are you absolutely sure you wish to proceed with re-encryption of the datasource passwords?');"/>
 		</div>
-
+</div>
 	</s:form>
 </body>
 

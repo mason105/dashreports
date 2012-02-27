@@ -1,6 +1,34 @@
 <html>
 <head>
-<link href="css/website.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-29515629-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+<link href="css/website.css" rel="stylesheet" type="text/css"
+	media="all" />
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.17.custom.css"
+	rel="stylesheet" />
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+
+		$("#accordion").accordion({
+			header : "h3"
+		});
+
+	});
+</script>
+
 <title>Dash Reports</title>
 </head>
 <body>
@@ -16,7 +44,7 @@
 <div id="ShadeBar">
 	<div id="NavBar">
 		<div class="Button">
-			<a href="index.html" class="selected">About</a>
+			<a href="index.html">About</a>
 		</div>
 		<div class="Button">
 			<a href="gallery.html">Gallery</a>
@@ -36,28 +64,41 @@
 	</div>
 </div>
 <div id="BottomBar">
-	<div id="textContentWrapper">
-		<div class="textContent">
-			<div id="header">Header Text</div>
-			<span>Lots of bunf about Dash Reports.  Lalalala yeh I'll write something.</span>
+
+		<div id="textContentWrapper">
+
+			<div class="textContentWide">
+				<div id="header">Contact Options</div>
+				<div id="content">
+					<div id="accordion">
+						<div>
+							<h3>
+								<a href="#"><strong>E-Mail</strong></a>
+							</h3>
+							<div>
+								<p>Please email <a href="mailto:info@dashreports.org">info@dashreports.org</a></p>
+							</div>
+						</div>
+						<div>
+							<h3>
+								<a href="#"><strong>Raising and Issue or Suggestion</strong></a>
+							</h3>
+							<div>
+								<p>To raise an issue or make a suggestion, please use the <strong><a href="http://code.google.com/p/reportrunner/issues/list" target="_blank">Google Code site</a></strong></p>
+							</div>
+						</div>
+						<div>
+							<h3>
+								<a href="#"><strong>User Group</strong></a>
+							</h3>
+							<div>
+								<p>The user group is located <strong><a href="http://groups.google.com/group/dash-reports" target="_blank">here</a></strong>.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="textContent">
-			<div id="header">Header Text</div>
-			<span>More stuff. Sajdlkajns as.d as.</span>
-		</div>
-		<div class="textContent">
-			<div id="header">Header Text</div>
-			<span>More stuff. Sajdlkajns as.d as.</span>
-		</div>		
 	</div>
-<div id="textContentWrapper">
-
-		<div class="textContentWide">
-			<div id="header">Header Text</div>
-			<span>More stuff. Sajdlkajns as.d as.</span>
-		</div>
-	</div>	
-</div>
-
 </body>
 </html>

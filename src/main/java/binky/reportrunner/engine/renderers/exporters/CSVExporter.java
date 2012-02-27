@@ -35,9 +35,10 @@ import binky.reportrunner.exceptions.ExportException;
 
 public class CSVExporter  extends AbstractExporter{
 
+
 	private static final String delimeter=",";
 	private static final Logger logger = Logger.getLogger(CSVExporter.class);
-	public void export(ResultSet resultSet, OutputStream outputStream) throws ExportException {
+	public void export(ResultSet resultSet,String label, OutputStream outputStream) throws ExportException {
 		try {
 			ResultSetMetaData metaData = resultSet.getMetaData();
 			

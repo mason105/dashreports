@@ -35,6 +35,8 @@ import java.util.Map;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import net.sf.jasperreports.engine.JRException;
+
 import org.apache.commons.mail.EmailException;
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
@@ -44,6 +46,9 @@ import org.springframework.context.ApplicationContext;
 
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.engine.impl.RunnerResultGeneratorImpl;
+import binky.reportrunner.engine.renderers.AbstractRenderer;
+import binky.reportrunner.engine.renderers.JasperRenderer;
+import binky.reportrunner.engine.renderers.StandardRenderer;
 import binky.reportrunner.engine.utils.EmailHandler;
 import binky.reportrunner.engine.utils.FileSystemHandler;
 import binky.reportrunner.engine.utils.SQLProcessor;
@@ -124,6 +129,22 @@ public class RunnerEngine implements StatefulJob {
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
 
+		AbstractRenderer renderer;
+		switch (job.getTemplateType()) {
+		case JASPER:
+			try {
+				renderer = new JasperRenderer(job.getTemplateFile(),job.getFileFormat());
+			} catch (JRException e) {
+				logger.error(e.getMessage(), e);
+				throw new RenderException(e.getMessage(), e);
+			}
+			break;
+		default:
+			renderer = new StandardRenderer(job.getFileFormat());
+		}
+		
+
+		
 		conn = ds.getConnection();
 
 		RunnerResultGenerator resultGenerator = new RunnerResultGeneratorImpl(
@@ -132,7 +153,7 @@ public class RunnerEngine implements StatefulJob {
 		Map<String, ResultSet> results = new HashMap<String, ResultSet>();
 
 		resultGenerator.getResultsForJob(job, results);
-
+		try {
 		for (String fileNameValue : results.keySet()) {
 			ResultSet rs = results.get(fileNameValue);
 			// if we are not outputting this anywhere (must be emailing) then
@@ -143,14 +164,15 @@ public class RunnerEngine implements StatefulJob {
 
 			logger.info("bursted file being output to: " + outUrl);
 
-			resultGenerator.renderReport(rs, outUrl, job.getTemplateFile(), job
-					.getTemplateType(), job.getFileFormat().toString());
+			resultGenerator.renderReport(rs,fileNameValue, outUrl, renderer);
 
 			fileUrls.add(outUrl);
 
 		}
-		conn.close();
-
+		} finally {
+			renderer.closeOutputStream();
+			conn.close();
+		}
 		// send email if need be
 		if ((job.getTargetEmailAddress() != null)
 				&& (!job.getTargetEmailAddress().isEmpty())) {
@@ -179,6 +201,20 @@ public class RunnerEngine implements StatefulJob {
 		logger.debug("running single report for:" + groupName + "." + jobName);
 		RunnerResultGenerator resultGenerator = new RunnerResultGeneratorImpl(
 				conn);
+		AbstractRenderer renderer;
+		switch (job.getTemplateType()) {
+		case JASPER:
+			try {
+				renderer = new JasperRenderer(job.getTemplateFile(),job.getFileFormat());
+			} catch (JRException e) {
+				logger.error(e.getMessage(), e);
+				throw new RenderException(e.getMessage(), e);
+			}
+			break;
+		default:
+			renderer = new StandardRenderer(job.getFileFormat());
+		}
+		
 
 		Map<String, ResultSet> results = new HashMap<String, ResultSet>();
 		resultGenerator.getResultsForJob(job, results);
@@ -187,10 +223,13 @@ public class RunnerEngine implements StatefulJob {
 		// dump this as a temp file
 		String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName, groupName,
 				job.getFileFormat().toString().toLowerCase());
-		resultGenerator.renderReport(results.get("Results"), outUrl, job
-				.getTemplateFile(), job.getTemplateType(), job.getFileFormat()
-				.toString());
-		conn.close();
+		try {
+		resultGenerator.renderReport(results.get("Results"),"Results", outUrl, renderer);
+		} finally {
+			renderer.closeOutputStream();
+			conn.close();			
+		}
+
 		logger.info("writing report to: " + outUrl);
 		// send email if need be
 		if ((job.getTargetEmailAddress() != null)
@@ -204,6 +243,7 @@ public class RunnerEngine implements StatefulJob {
 		if ((job.getOutputUrl() == null) || (job.getOutputUrl().isEmpty())) {
 			fs.deleteFile(outUrl);
 		}
+		
 		return outUrl;
 	}
 

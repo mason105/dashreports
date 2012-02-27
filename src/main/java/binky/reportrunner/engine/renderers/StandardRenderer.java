@@ -22,56 +22,65 @@
  ******************************************************************************/
 package binky.reportrunner.engine.renderers;
 
-import java.io.OutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
+import binky.reportrunner.data.RunnerJob.FileFormat;
 import binky.reportrunner.engine.renderers.exporters.AbstractExporter;
-import binky.reportrunner.exceptions.ExportException;
+import binky.reportrunner.engine.renderers.exporters.CSVExporter;
+import binky.reportrunner.engine.renderers.exporters.HTMLExporter;
+import binky.reportrunner.engine.renderers.exporters.PDFExporter;
+import binky.reportrunner.engine.renderers.exporters.RTFExporter;
+import binky.reportrunner.engine.renderers.exporters.TabbedXLSExporter;
+import binky.reportrunner.engine.renderers.exporters.XLSExporter;
 import binky.reportrunner.exceptions.RenderException;
 
 public class StandardRenderer extends AbstractRenderer {
-	protected Map<String, String> fileFormats;
 
-	public StandardRenderer() {
-		this.fileFormats = new HashMap<String, String>();
-		// TODO: this lot needs sticking in an xml config file
+	FileFormat format;
 
-		// CSV Renderer
-		fileFormats.put("CSV",
-				"binky.reportrunner.engine.renderers.exporters.CSVExporter");
-		// excel renderer
-		fileFormats.put("XLS",
-				"binky.reportrunner.engine.renderers.exporters.XLSExporter");
-		// pdf renderer
-		fileFormats.put("PDF",
-				"binky.reportrunner.engine.renderers.exporters.PDFExporter");
-		// rtf renderer
-		fileFormats.put("RTF",
-				"binky.reportrunner.engine.renderers.exporters.RTFExporter");
-		// html renderer
-		fileFormats.put("HTML",
-				"binky.reportrunner.engine.renderers.exporters.HTMLExporter");
+	AbstractExporter exporter;
+
+	public StandardRenderer(FileFormat format) {
+		super(format);
+		switch (format) {
+		case CSV:
+			this.exporter = new CSVExporter();
+			break;
+		case HTML:
+			this.exporter = new HTMLExporter();
+			break;
+		case RTF:
+			this.exporter = new RTFExporter();
+			break;
+		case XLS:
+			this.exporter = new XLSExporter();
+			break;
+		case TABBED_XLS: 
+			this.exporter = new TabbedXLSExporter();
+			break;
+		case PDF:
+		default:
+			this.exporter = new PDFExporter();
+		}
 	}
 
-	public void generateReport(ResultSet resultSet, OutputStream outputStream,
-			String extension) throws RenderException, SQLException {
+	@Override
+	public void generateReport(ResultSet resultSet, String label,String url) throws RenderException, SQLException {
+	
 		try {
-			AbstractExporter exporter = (AbstractExporter) Class.forName(
-					fileFormats.get(extension)).newInstance();
-			exporter.export(resultSet, outputStream);
-		} catch (InstantiationException e) {
-			throw new RenderException(e.getMessage(), e);
-		} catch (IllegalAccessException e) {
-			throw new RenderException(e.getMessage(), e);
-		} catch (ClassNotFoundException e) {
-			throw new RenderException(e.getMessage(), e);
-		} catch (ExportException e) {
+			this.exporter.export(resultSet,label,  super.getOutputStream(url));
+		}catch (IOException e) {
 			throw new RenderException(e.getMessage(), e);
 		} finally {
 			resultSet.close();
 		}
+
+	}
+
+	@Override
+	protected void doFinal() throws IOException {
+		if (format==FileFormat.TABBED_XLS) ((TabbedXLSExporter)exporter).writeData();
 	}
 }

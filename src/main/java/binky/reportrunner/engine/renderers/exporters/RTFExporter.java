@@ -40,7 +40,7 @@ import com.lowagie.text.rtf.RtfWriter2;
 public class RTFExporter extends AbstractExporter {
 
 	@Override
-	public void export(ResultSet resultSet, OutputStream outputStream)
+	public void export(ResultSet resultSet,String label, OutputStream outputStream)
 			throws ExportException {
 		try {
 			Document document = new Document();

@@ -22,7 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.exceptions;
 
-public class ExportException extends Exception {
+public class ExportException extends RenderException {
 
 	private static final long serialVersionUID = -8598613745537792061L;
 

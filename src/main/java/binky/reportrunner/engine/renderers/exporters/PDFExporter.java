@@ -40,7 +40,7 @@ import com.lowagie.text.pdf.PdfWriter;
 public class PDFExporter extends AbstractExporter {
 
 	@Override
-	public void export(ResultSet resultSet, OutputStream outputStream)
+	public void export(ResultSet resultSet,String label, OutputStream outputStream)
 			throws ExportException {
 		try {
 			Document document = new Document();

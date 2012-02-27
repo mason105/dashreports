@@ -23,15 +23,11 @@
 package binky.reportrunner.engine.renderers;
 
 import java.io.ByteArrayInputStream;
-import java.io.OutputStream;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.log4j.Logger;
-
-import binky.reportrunner.exceptions.RenderException;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
@@ -42,46 +38,61 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.export.JRCsvExporter;
+import net.sf.jasperreports.engine.export.JRHtmlExporter;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.export.JRRtfExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
+
+import org.apache.log4j.Logger;
+
+import binky.reportrunner.data.RunnerJob.FileFormat;
+import binky.reportrunner.exceptions.RenderException;
 
 public class JasperRenderer extends AbstractRenderer {
 
 	protected Map<String, String> fileFormats;
 	private JasperReport report;
-
+	JRExporter exporter;
 	private Logger logger = Logger.getLogger(JasperRenderer.class);
-	
-	public JasperRenderer(byte[] templateFile) throws JRException {
-		this.fileFormats = new HashMap<String, String>();
-		// TODO: this lot needs sticking in an xml config file
 
-		// CSV Renderer
-		fileFormats.put("CSV",
-				"net.sf.jasperreports.engine.export.JRCsvExporter");
-		// excel renderer
-		fileFormats.put("XLS",
-				"net.sf.jasperreports.engine.export.JRXlsExporter");
-		// pdf renderer
-		fileFormats.put("PDF",
-				"net.sf.jasperreports.engine.export.JRPdfExporter");
-		// rtf renderer
-		fileFormats.put("RTF",
-				"net.sf.jasperreports.engine.export.JRRtfExporter");
-		// html renderer
-		fileFormats.put("HTML",
-				"net.sf.jasperreports.engine.export.JRHtmlExporter");
+	public JasperRenderer(byte[] templateFile, FileFormat format) throws JRException {
+
+		super(format);
 		
-		JasperDesign jasperDesign = JRXmlLoader.load(new ByteArrayInputStream(templateFile));
-		JasperReport report = JasperCompileManager
-				.compileReport(jasperDesign);
-	
-		
+		JasperDesign jasperDesign = JRXmlLoader.load(new ByteArrayInputStream(
+				templateFile));
+		JasperReport report = JasperCompileManager.compileReport(jasperDesign);
+
 		this.report = report;
+		
+		switch (format) {
+		case CSV:
+			exporter = new JRCsvExporter();
+			break;
+		case HTML:
+			exporter = new JRHtmlExporter();
+			break;
+		case RTF:
+			exporter = new JRRtfExporter();
+			break;
+		case XLS:
+			exporter = new JRXlsExporter();
+			break;
+		case PDF:
+		default:
+			exporter = new JRPdfExporter();
+		}
+
+		
+		
 	}
 
-	public void generateReport(ResultSet resultSet, OutputStream outputStream,
-			String extension) throws RenderException, SQLException {
-
+	@Override
+	public void generateReport(ResultSet resultSet, String label, String url) throws RenderException, SQLException {
+		
+		
 		logger.debug("creating datasource from result set");
 		JRResultSetDataSource jrDs = new JRResultSetDataSource(resultSet);
 
@@ -93,26 +104,23 @@ public class JasperRenderer extends AbstractRenderer {
 
 			logger.debug("finished filling report");
 
-			JRExporter exporter = (JRExporter) Class.forName(
-					fileFormats.get(extension)).newInstance();
-
 			logger.debug("exporting report");
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
-					outputStream);
+					super.getOutputStream(url));
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
 			exporter.exportReport();
 		} catch (JRException e) {
 			throw new RenderException(e.getMessage(), e);
-		} catch (InstantiationException e) {
-			throw new RenderException(e.getMessage(), e);
-		} catch (IllegalAccessException e) {
-			throw new RenderException(e.getMessage(), e);
-		} catch (ClassNotFoundException e) {
+		} catch (IOException e) {
 			throw new RenderException(e.getMessage(), e);
 		} finally {
-			resultSet.close();	
+			resultSet.close();
 		}
+	}
 
+	@Override
+	protected void doFinal() {
+		//nothing to do I believe
 	}
 
 }

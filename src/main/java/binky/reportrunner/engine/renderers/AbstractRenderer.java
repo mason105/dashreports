@@ -22,13 +22,47 @@
  ******************************************************************************/
 package binky.reportrunner.engine.renderers;
 
+import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import binky.reportrunner.data.RunnerJob.FileFormat;
+import binky.reportrunner.engine.utils.FileSystemHandler;
+import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
 import binky.reportrunner.exceptions.RenderException;
 
 public abstract class AbstractRenderer {
-	public abstract void generateReport(ResultSet resultSet, OutputStream outputStream,
-			String extension) throws RenderException, SQLException;
+
+	protected FileFormat format;
+	public AbstractRenderer(FileFormat format) {
+		this.format=format;
+	}
+	
+	private OutputStream outputStream;
+	private String url;
+	protected OutputStream getOutputStream(String url) throws IOException {
+		FileSystemHandler fs = new FileSystemHandlerImpl();
+		if (outputStream==null) {
+			this.outputStream= fs.getOutputStreamForUrl(url);	
+		} else {
+			if (!url.equals(this.url)) { 
+				this.outputStream.close();
+				this.outputStream= fs.getOutputStreamForUrl(url);								
+			}
+		}
+		return this.outputStream;
+	}
+	
+	public  void closeOutputStream() throws IOException {
+		if (this.outputStream!=null) {
+			this.doFinal();
+			this.outputStream.close();
+		}
+	}
+	
+	protected abstract void doFinal()throws IOException;
+	
+	public abstract void generateReport(ResultSet resultSet, String label, String url) throws RenderException, SQLException;
+	
 }

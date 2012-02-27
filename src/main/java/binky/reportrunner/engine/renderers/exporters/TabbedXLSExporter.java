@@ -37,17 +37,30 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import binky.reportrunner.exceptions.ExportException;
 
-public class XLSExporter extends AbstractExporter {
+public class TabbedXLSExporter extends AbstractExporter {
 
+	private OutputStream outputStream;
 
+	private HSSFWorkbook wb;
+
+	public void writeData() throws IOException {
+		// Write the output to the stream file
+		wb.write(outputStream);
+		outputStream.flush();
+	}
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public void export(ResultSet resultSet,String label, OutputStream outputStream)
-			throws ExportException {
+	public void export(ResultSet resultSet, String label,
+			OutputStream outputStream) throws ExportException {
+
+		if (this.outputStream == null)
+			this.outputStream = outputStream;
+
 		try {
-			HSSFWorkbook wb = new HSSFWorkbook();
-			HSSFSheet sheet = wb.createSheet("Report");
+			if (wb == null)
+				wb = new HSSFWorkbook();
+			HSSFSheet sheet = wb.createSheet(label);
 			ResultSetMetaData metaData;
 
 			metaData = resultSet.getMetaData();
@@ -56,10 +69,10 @@ public class XLSExporter extends AbstractExporter {
 			// logger.debug("writing header");
 			HSSFRow headerRow = sheet.createRow(rowCount);
 			for (int i = 1; i <= metaData.getColumnCount(); i++) {
-				//TODO:fix
+				// TODO:fix
 				HSSFCell cell = headerRow.createCell((short) (i - 1));
-				HSSFRichTextString string = new HSSFRichTextString(metaData
-						.getColumnName(i));
+				HSSFRichTextString string = new HSSFRichTextString(
+						metaData.getColumnName(i));
 				string.applyFont(HSSFFont.BOLDWEIGHT_BOLD);
 				cell.setCellValue(string);
 			}
@@ -68,7 +81,7 @@ public class XLSExporter extends AbstractExporter {
 				rowCount++;
 				HSSFRow row = sheet.createRow(rowCount);
 				for (int i = 1; i <= metaData.getColumnCount(); i++) {
-					//TODO:fix
+					// TODO:fix
 					HSSFCell cell = row.createCell((short) (i - 1));
 
 					// TODO:make this better by using types
@@ -79,13 +92,7 @@ public class XLSExporter extends AbstractExporter {
 				}
 			}
 
-			// Write the output to the stream file
-			wb.write(outputStream);
-			outputStream.flush();
-			
 		} catch (SQLException e) {
-			throw new ExportException(e.getMessage(), e);
-		} catch (IOException e) {
 			throw new ExportException(e.getMessage(), e);
 		}
 	}

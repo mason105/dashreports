@@ -37,6 +37,8 @@ import java.util.UUID;
 
 import javax.sql.DataSource;
 
+import net.sf.jasperreports.engine.JRException;
+
 import org.apache.commons.beanutils.RowSetDynaClass;
 import org.apache.log4j.Logger;
 
@@ -48,6 +50,9 @@ import binky.reportrunner.data.RunnerJob_pk;
 import binky.reportrunner.engine.RunnerResultGenerator;
 import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.engine.impl.RunnerResultGeneratorImpl;
+import binky.reportrunner.engine.renderers.AbstractRenderer;
+import binky.reportrunner.engine.renderers.JasperRenderer;
+import binky.reportrunner.engine.renderers.StandardRenderer;
 import binky.reportrunner.engine.utils.SQLProcessor;
 import binky.reportrunner.engine.utils.impl.SQLProcessorImpl;
 import binky.reportrunner.exceptions.RenderException;
@@ -267,8 +272,26 @@ public class ReportServiceImpl implements ReportService {
 	public Map<String, ViewerResults> getResultsForJob(String jobName,
 			String groupName, List<RunnerJobParameter> parameters)
 			throws SQLException, NumberFormatException, ParseException, RenderException, IOException {
+		
 		Map<String, ViewerResults> results = new HashMap<String, ViewerResults>();
 		RunnerJob job = getJobHelper(jobName, groupName);
+
+		AbstractRenderer renderer;
+		switch (job.getTemplateType()) {
+		case JASPER:
+			try {
+				renderer = new JasperRenderer(job.getTemplateFile(),job.getFileFormat());
+			} catch (JRException e) {
+				logger.error(e.getMessage(), e);
+				throw new RenderException(e.getMessage(), e);
+			}
+			break;
+		default:
+			renderer = new StandardRenderer(job.getFileFormat());
+		}
+		
+
+		
 		DataSource ds = dataSourceService.getJDBCDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 		try{
@@ -293,7 +316,7 @@ public class ReportServiceImpl implements ReportService {
 				// result.first();
 				
 				String id =UUID.randomUUID().toString();
-				res.renderReport(result,"tmp://"+id+".tmp",job.getTemplateFile(),job.getTemplateType(),job.getFileFormat().toString());
+				res.renderReport(result,key,"tmp://"+id+".tmp",renderer);
 				results.put(key, new ViewerResults(id));
 
 			}
@@ -302,6 +325,7 @@ public class ReportServiceImpl implements ReportService {
 		
 		return results;
 		}finally {
+			renderer.closeOutputStream();
 			conn.close();
 		}
 	}

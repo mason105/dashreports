@@ -7,7 +7,7 @@ import java.text.ParseException;
 import java.util.Map;
 
 import binky.reportrunner.data.RunnerJob;
-import binky.reportrunner.data.RunnerJob.Template;
+import binky.reportrunner.engine.renderers.AbstractRenderer;
 import binky.reportrunner.exceptions.RenderException;
 
 public interface RunnerResultGenerator {
@@ -16,8 +16,8 @@ public interface RunnerResultGenerator {
 			Map<String, ResultSet> results) throws SQLException,
 			NumberFormatException, ParseException;
 
-	public abstract void renderReport(ResultSet results, String url,
-			byte[] templateFile, Template templateType, String fileFormat)
+	public abstract void renderReport(ResultSet results, String label, String url,
+			AbstractRenderer renderer)
 			throws RenderException, IOException, SQLException;
 
 }

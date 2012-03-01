@@ -68,21 +68,24 @@ public class JasperRenderer extends AbstractRenderer {
 		this.report = report;
 		
 		switch (format) {
-		case CSV:
-			exporter = new JRCsvExporter();
-			break;
-		case HTML:
-			exporter = new JRHtmlExporter();
-			break;
-		case RTF:
-			exporter = new JRRtfExporter();
-			break;
-		case XLS:
-			exporter = new JRXlsExporter();
-			break;
-		case PDF:
-		default:
-			exporter = new JRPdfExporter();
+			case CSV:
+				exporter = new JRCsvExporter();
+				break;
+			case HTML:
+				exporter = new JRHtmlExporter();
+				break;
+			case RTF:
+				exporter = new JRRtfExporter();
+				break;
+			case XLS:
+				exporter = new JRXlsExporter();
+				break;
+			case TABBED_XLS:
+				exporter = new JRXlsExporter();
+				break;
+			case PDF:
+			default:
+				exporter = new JRPdfExporter();
 		}
 
 		

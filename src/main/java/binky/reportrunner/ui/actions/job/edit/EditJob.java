@@ -49,7 +49,12 @@ public class EditJob extends BaseEditJob {
 			return addParameter();
 		} else {
 			logger.debug("save job");
-			return saveJob();
+			try{
+				return saveJob();
+			}catch (Exception e) {
+				super.addActionError(e.getMessage());
+				return INPUT;
+			}
 		}
 	}
 

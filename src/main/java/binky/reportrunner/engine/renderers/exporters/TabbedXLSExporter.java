@@ -28,6 +28,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
@@ -45,21 +46,26 @@ public class TabbedXLSExporter extends AbstractExporter {
 
 	public void writeData() throws IOException {
 		// Write the output to the stream file
+		logger.debug("flusing xls data");
 		wb.write(outputStream);
 		outputStream.flush();
 	}
-
+	private static final Logger logger = Logger.getLogger(TabbedXLSExporter.class);
 	@SuppressWarnings("deprecation")
 	@Override
 	public void export(ResultSet resultSet, String label,
 			OutputStream outputStream) throws ExportException {
-
+		
 		if (this.outputStream == null)
 			this.outputStream = outputStream;
 
 		try {
-			if (wb == null)
+			if (wb == null) {
+				logger.trace("creating new workbook");
 				wb = new HSSFWorkbook();
+			}
+	
+			logger.trace("creaing worksheet " + label);
 			HSSFSheet sheet = wb.createSheet(label);
 			ResultSetMetaData metaData;
 

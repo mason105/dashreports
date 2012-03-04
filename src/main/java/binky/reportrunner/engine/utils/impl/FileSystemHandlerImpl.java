@@ -129,18 +129,18 @@ public class FileSystemHandlerImpl implements FileSystemHandler {
 			int start = returnUrl.indexOf("@", 0);
 			start++;
 			int end = returnUrl.indexOf("@", start);
-			logger.debug("start " + start + " end " + end);
+			logger.trace("start " + start + " end " + end);
 			if ((start >= 1) && (end > start)) {
 				String format = returnUrl.substring((start), (end));
-				logger.debug("format: " + format);
+				logger.trace("format: " + format);
 				SimpleDateFormat df = new SimpleDateFormat(format);
 				Calendar calen = Calendar.getInstance();
 				// ***
 				String formatted = df.format(calen.getTime());
-				logger.debug("date formatted: " + formatted.toUpperCase());
+				logger.trace("date formatted: " + formatted.toUpperCase());
 				returnUrl = returnUrl.replaceAll("@" + format + "@", formatted
 						.toUpperCase());
-				logger.debug("fileName: " + returnUrl);
+				logger.trace("fileName: " + returnUrl);
 			}
 
 		}

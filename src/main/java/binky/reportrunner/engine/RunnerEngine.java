@@ -154,21 +154,24 @@ public class RunnerEngine implements StatefulJob {
 
 		resultGenerator.getResultsForJob(job, results);
 		try {
-		for (String fileNameValue : results.keySet()) {
-			ResultSet rs = results.get(fileNameValue);
-			// if we are not outputting this anywhere (must be emailing) then
-			// dump this as a temp file
-			String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName,
-					groupName, job.getFileFormat().toString().toLowerCase(),
-					fileNameValue);
-
-			logger.info("bursted file being output to: " + outUrl);
-
-			resultGenerator.renderReport(rs,fileNameValue, outUrl, renderer);
-
-			fileUrls.add(outUrl);
-
-		}
+			String lastUrl="";
+			for (String fileNameValue : results.keySet()) {
+				ResultSet rs = results.get(fileNameValue);
+				// if we are not outputting this anywhere (must be emailing) then
+				// dump this as a temp file
+				String outUrl = fs.getFinalUrl(job.getOutputUrl(), jobName,
+						groupName, job.getFileFormat().toString().toLowerCase(),
+						fileNameValue);
+	
+				logger.debug("bursted file being output to: " + outUrl);
+	
+				resultGenerator.renderReport(rs,fileNameValue, outUrl, renderer);
+				if (!lastUrl.equals(outUrl)) {
+					fileUrls.add(outUrl);
+					lastUrl=outUrl;
+				}
+	
+			}
 		} finally {
 			renderer.closeOutputStream();
 			conn.close();

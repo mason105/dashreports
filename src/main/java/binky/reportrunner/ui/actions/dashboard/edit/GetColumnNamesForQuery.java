@@ -95,7 +95,9 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 					+ sqle.getMessage());
 			conn.close();
 			return SUCCESS;
-
+		} catch (Throwable t) {
+			logger.error(t.getMessage(),t);
+			throw t;
 		} finally {
 			if (conn != null)
 				conn.close();

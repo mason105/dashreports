@@ -27,6 +27,8 @@ import java.io.OutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.data.RunnerJob.FileFormat;
 import binky.reportrunner.engine.utils.FileSystemHandler;
 import binky.reportrunner.engine.utils.impl.FileSystemHandlerImpl;
@@ -43,18 +45,27 @@ public abstract class AbstractRenderer {
 	private String url;
 	protected OutputStream getOutputStream(String url) throws IOException {
 		FileSystemHandler fs = new FileSystemHandlerImpl();
-		if (outputStream==null) {
+		//only retain the output stream if tabbed xls
+		if (this.outputStream==null) {
+			logger.debug("getting a first time outputstream for url " + url);			
 			this.outputStream= fs.getOutputStreamForUrl(url);	
+			this.url=url;			
 		} else {
-			if (!url.equals(this.url)) { 
+			if (!url.equals(this.url)||format!=FileFormat.TABBED_XLS) {
+				logger.debug("closing output stream for url: "+ url + " and getting an outputstream for url " + url);
+				this.outputStream.flush();
 				this.outputStream.close();
-				this.outputStream= fs.getOutputStreamForUrl(url);								
-			}
+				this.outputStream= fs.getOutputStreamForUrl(url);
+				this.url=url;
+			}			
 		}
 		return this.outputStream;
 	}
 	
+	private static final Logger logger = Logger.getLogger(AbstractRenderer.class);
+	
 	public  void closeOutputStream() throws IOException {
+		logger.debug("closing the output stream");
 		if (this.outputStream!=null) {
 			this.doFinal();
 			this.outputStream.close();

@@ -144,8 +144,10 @@ public class DashboardServiceImpl implements DashboardService {
 					}
 				}
 			}
+			logger.debug("saving sampler");
 			dashboardDao.saveOrUpdate(s);
 		} else {
+			logger.debug("saving alert");
 			dashboardDao.saveOrUpdate(alert);
 		}
 		

@@ -16,28 +16,40 @@ go
 /* Clear all tables: */
 /*==============================================================================*/
 
+IF OBJECT_ID('QRTZ_JOB_LISTENERS') IS NOT NULL 
 delete from QRTZ_JOB_LISTENERS
 go
+IF OBJECT_ID('QRTZ_TRIGGER_LISTENERS') IS NOT NULL 
 delete from QRTZ_TRIGGER_LISTENERS
 go
+IF OBJECT_ID('QRTZ_FIRED_TRIGGERS') IS NOT NULL 
 delete from QRTZ_FIRED_TRIGGERS
 go
+IF OBJECT_ID('QRTZ_PAUSED_TRIGGER_GRPS') IS NOT NULL 
 delete from QRTZ_PAUSED_TRIGGER_GRPS
 go
+IF OBJECT_ID('QRTZ_SCHEDULER_STATE') IS NOT NULL 
 delete from QRTZ_SCHEDULER_STATE
 go
+IF OBJECT_ID('QRTZ_LOCKS') IS NOT NULL 
 delete from QRTZ_LOCKS
 go
+IF OBJECT_ID('QRTZ_SIMPLE_TRIGGERS') IS NOT NULL 
 delete from QRTZ_SIMPLE_TRIGGERS
 go
+IF OBJECT_ID('QRTZ_CRON_TRIGGERS') IS NOT NULL 
 delete from QRTZ_CRON_TRIGGERS
 go
+IF OBJECT_ID('QRTZ_BLOB_TRIGGERS') IS NOT NULL 
 delete from QRTZ_BLOB_TRIGGERS
 go
+IF OBJECT_ID('QRTZ_TRIGGERS') IS NOT NULL 
 delete from QRTZ_TRIGGERS
 go
+IF OBJECT_ID('QRTZ_JOB_DETAILS') IS NOT NULL 
 delete from QRTZ_JOB_DETAILS
 go
+IF OBJECT_ID('QRTZ_CALENDARS') IS NOT NULL 
 delete from QRTZ_CALENDARS
 go
 
@@ -111,7 +123,7 @@ go
 create table QRTZ_CRON_TRIGGERS (
 TRIGGER_NAME varchar(80) not null,
 TRIGGER_GROUP varchar(80) not null,
-CRON_EXPRESSION varchar(80) not null,
+CRON_EXPRESSION varchar(120) not null,
 TIME_ZONE_ID varchar(80) null,
 )
 go
@@ -128,6 +140,7 @@ TRIGGER_GROUP varchar(80) not null,
 IS_VOLATILE bit not null,
 INSTANCE_NAME varchar(80) not null,
 FIRED_TIME numeric(13,0) not null,
+PRIORITY int not null,
 STATE varchar(16) not null,
 JOB_NAME varchar(80) null,
 JOB_GROUP varchar(80) null,
@@ -140,7 +153,6 @@ create table QRTZ_SCHEDULER_STATE (
 INSTANCE_NAME varchar(80) not null,
 LAST_CHECKIN_TIME numeric(13,0) not null,
 CHECKIN_INTERVAL numeric(13,0) not null,
-RECOVERER varchar(80) null,
 )
 go
 
@@ -211,12 +223,13 @@ IS_VOLATILE bit not null,
 DESCRIPTION varchar(120) null,
 NEXT_FIRE_TIME numeric(13,0) null,
 PREV_FIRE_TIME numeric(13,0) null,
+PRIORITY int null,
 TRIGGER_STATE varchar(16) not null,
 TRIGGER_TYPE varchar(8) not null,
 START_TIME numeric(13,0) not null,
 END_TIME numeric(13,0) null,
 CALENDAR_NAME varchar(80) null,
-MISFIRE_INSTR smallint null
+MISFIRE_INSTR smallint null,
 JOB_DATA image null
 )
 go

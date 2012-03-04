@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.data.RunnerJob.FileFormat;
 import binky.reportrunner.engine.renderers.exporters.AbstractExporter;
 import binky.reportrunner.engine.renderers.exporters.CSVExporter;
@@ -37,8 +39,6 @@ import binky.reportrunner.engine.renderers.exporters.XLSExporter;
 import binky.reportrunner.exceptions.RenderException;
 
 public class StandardRenderer extends AbstractRenderer {
-
-	FileFormat format;
 
 	AbstractExporter exporter;
 
@@ -64,11 +64,12 @@ public class StandardRenderer extends AbstractRenderer {
 		default:
 			this.exporter = new PDFExporter();
 		}
+		logger.debug("setup standard renderer for format: "+format);
 	}
 
 	@Override
 	public void generateReport(ResultSet resultSet, String label,String url) throws RenderException, SQLException {
-	
+		logger.debug("generating report");
 		try {
 			this.exporter.export(resultSet,label,  super.getOutputStream(url));
 		}catch (IOException e) {
@@ -78,9 +79,10 @@ public class StandardRenderer extends AbstractRenderer {
 		}
 
 	}
-
+	private static final Logger logger = Logger.getLogger(StandardRenderer.class);
 	@Override
 	protected void doFinal() throws IOException {
+		logger.trace("trigging write data");
 		if (format==FileFormat.TABBED_XLS) ((TabbedXLSExporter)exporter).writeData();
 	}
 }

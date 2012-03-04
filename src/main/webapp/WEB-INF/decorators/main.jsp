@@ -35,7 +35,7 @@
 </head>
 <body id="page-home">
 <div id="top">
-		<div class="appLogo"><img src="<s:url value='/images/v2/top_bar_logo.png'/>" /><div class="vendorLogo"><img src="<s:url value='getLogo.action?rand=%{randomNumber}'/>" /></div></div>
+		<div class="appLogo"><img src="<s:url value='/images/v2/top_bar_logo.png'/>" /><div class="vendorLogo"><img src="<s:url value='getLogo.action?rand=%{randomNumber}'/>" onerror="this.style.display='none'"/></div></div>
 		<div id="userName"><img src="<s:url value='/images/v2/nav/user.png'/>" align="absmiddle" style="padding-right:5px;"/><s:property value="sessionUser.fullName"/></div>
 </div>
 <div id="container">

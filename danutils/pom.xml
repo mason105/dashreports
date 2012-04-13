@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>uk.co.binkysoftware</groupId>
+	<artifactId>danutils</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>Dan Utils</name>
+	<url>http://matthewsgrout.blogspot.com</url>
+
+	<properties>
+		<compileSource>1.6</compileSource>
+		<springVersion>3.1.0.RELEASE</springVersion>
+	</properties>
+
+	<licenses>
+		<license>
+			<name>GNU General Public License (GPL) v3</name>
+			<url>http://www.gnu.org/licenses/gpl.txt</url>
+		</license>
+	</licenses>
+
+
+	<!-- <repositories> <repository> <id>apachesnap</id> <name>Apache Snapshots</name> 
+		<layout>default</layout> <url>http://people.apache.org/repo/m2-snapshot-repository</url> 
+		<snapshots> <enabled>true</enabled> </snapshots> </repository> <repository> 
+		<id>sonatypesnap</id> <name>Sonatype Snapshots</name> <layout>default</layout> 
+		<url>http://oss.sonatype.org/content/repositories/opensymphony-snapshots</url> 
+		<snapshots> <enabled>true</enabled> </snapshots> </repository> </repositories> -->
+	<repositories>
+		<repository>
+			<id>maven2-repository.dev.java.net</id>
+			<name>Java.net Repository for Maven</name>
+			<url>http://download.java.net/maven/2/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+
+	<description>Dan Utils</description>
+
+	<developers>
+		<developer>
+			<name>Daniel Matthews-Grout</name>
+			<id>dangrout</id>
+			<email>dangrout@googlemail.com</email>
+		</developer>
+	</developers>
+
+	<organization>
+		<name>Binky Software</name>
+		<url>http://www.binkysoftware.co.uk</url>
+	</organization>
+
+	<dependencies>
+	
+		<!-- Junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+	
+	</dependencies>
+
+	<build>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${compileSource}</source>
+					<target>${compileSource}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>javancss-maven-plugin</artifactId>
+				<version>2.0-beta-2</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.4.1</version>
+			</plugin>
+			<plugin>
+				<groupId>com.atlassian.maven.plugins</groupId>
+				<artifactId>maven-clover2-plugin</artifactId>
+				<configuration>
+					<generateXml>true</generateXml>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<configuration>
+					<xmlOutput>true</xmlOutput>
+					<effort>Max</effort>
+					<threshold>Normal</threshold>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jdepend-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
+</project>

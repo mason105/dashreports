@@ -378,6 +378,13 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.6.12</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>uk.co.binkysoftware</groupId>
+			<artifactId>danutils</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

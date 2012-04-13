@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Map;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
@@ -52,7 +51,6 @@ import binky.reportrunner.exceptions.RenderException;
 
 public class JasperRenderer extends AbstractRenderer {
 
-	protected Map<String, String> fileFormats;
 	private JasperReport report;
 	JRExporter exporter;
 	private Logger logger = Logger.getLogger(JasperRenderer.class);

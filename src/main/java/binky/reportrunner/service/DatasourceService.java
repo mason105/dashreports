@@ -23,19 +23,14 @@
 package binky.reportrunner.service;
 
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.sql.DataSource;
 
 import org.xml.sax.SAXException;
 
+import binky.dan.utils.encryption.EncryptionException;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.service.misc.JDBCDrivers;
 
@@ -44,7 +39,7 @@ public interface DatasourceService extends Auditable {
 	public DataSource getJDBCDataSource(RunnerDataSource runnerDs)
 			throws SQLException;
 
-	public void saveUpdateDataSource(RunnerDataSource dataSource) throws SecurityException,InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException;
+	public void saveUpdateDataSource(RunnerDataSource dataSource) throws EncryptionException;
 
 	public void deleteDataSource(String dataSourceName);
 
@@ -56,6 +51,6 @@ public interface DatasourceService extends Auditable {
 	public String testDataSource(RunnerDataSource runnerDs) ;
 	public JDBCDrivers getJDBCDriverDefinitions() throws IOException, SAXException;
 	
-	public void reEncryptPasswords(String newKey) throws SecurityException,InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeySpecException, IllegalBlockSizeException, BadPaddingException;;
+	public void reEncryptPasswords(String newKey) throws EncryptionException;
 	
 }

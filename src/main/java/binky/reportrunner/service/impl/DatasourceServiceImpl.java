@@ -25,9 +25,6 @@ package binky.reportrunner.service.impl;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -37,9 +34,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -51,9 +45,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
-import com.googlecode.ehcache.annotations.Cacheable;
-import com.googlecode.ehcache.annotations.TriggersRemove;
-
+import binky.dan.utils.encryption.EncryptionException;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerGroup;
@@ -61,6 +53,9 @@ import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.service.misc.JDBCDriverDefinition;
 import binky.reportrunner.service.misc.JDBCDrivers;
 import binky.reportrunner.util.EncryptionUtil;
+
+import com.googlecode.ehcache.annotations.Cacheable;
+import com.googlecode.ehcache.annotations.TriggersRemove;
 
 public class DatasourceServiceImpl implements DatasourceService {
 
@@ -74,10 +69,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 	private DataSource getDs(RunnerDataSource runnerDs)
 			throws SecurityException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException,
-			PropertyVetoException, NamingException, InvalidKeyException,
-			NoSuchAlgorithmException, NoSuchPaddingException,
-			InvalidKeySpecException, IllegalBlockSizeException,
-			BadPaddingException {
+			PropertyVetoException, NamingException, EncryptionException {
 
 		final String jndiDataSource = runnerDs.getJndiName();
 
@@ -239,9 +231,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 	}
 
 	public void saveUpdateDataSource(RunnerDataSource dataSource)
-			throws InvalidKeyException, NoSuchAlgorithmException,
-			NoSuchPaddingException, InvalidKeySpecException,
-			IllegalBlockSizeException, BadPaddingException {
+			throws  EncryptionException {
 		if (dataSources.get(dataSource.getDataSourceName()) != null) {
 			dataSources.remove(dataSource.getDataSourceName());
 		}
@@ -306,10 +296,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 	}
 
 	@Override
-	public void reEncryptPasswords(String newKey) throws SecurityException,
-			InvalidKeyException, NoSuchAlgorithmException,
-			NoSuchPaddingException, InvalidKeySpecException,
-			IllegalBlockSizeException, BadPaddingException {
+	public void reEncryptPasswords(String newKey) throws EncryptionException {
 		EncryptionUtil enc = new EncryptionUtil();
 		
 		logger.warn("re-encrypting the datasource passwords.  I hope you copied the key from the UI as instructed!!");

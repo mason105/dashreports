@@ -19,6 +19,8 @@ public class GetLogo extends StandardRunnerAction {
 		byte[] imageData = configurationService.getConfigurationItem(ConfigurationType.LOGO).getBinaryValue();
 		if (imageData!=null) {
 			this.inputStream=new ByteArrayInputStream(imageData);
+		} else {
+			this.inputStream = new ByteArrayInputStream(new byte[0]);
 		}
 		
 		return SUCCESS;

@@ -64,7 +64,7 @@ public abstract class AbstractRenderer {
 	
 	private static final Logger logger = Logger.getLogger(AbstractRenderer.class);
 	
-	public  void closeOutputStream() throws IOException {
+	public  void closeOutputStream() throws IOException,RenderException {
 		logger.debug("closing the output stream");
 		if (this.outputStream!=null) {
 			this.doFinal();
@@ -72,7 +72,7 @@ public abstract class AbstractRenderer {
 		}
 	}
 	
-	protected abstract void doFinal()throws IOException;
+	protected abstract void doFinal() throws IOException, RenderException ;
 	
 	public abstract void generateReport(ResultSet resultSet, String label, String url) throws RenderException, SQLException;
 	

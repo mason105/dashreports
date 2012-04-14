@@ -81,7 +81,7 @@ public class StandardRenderer extends AbstractRenderer {
 	}
 	private static final Logger logger = Logger.getLogger(StandardRenderer.class);
 	@Override
-	protected void doFinal() throws IOException {
+	protected void doFinal() throws IOException ,RenderException{
 		logger.trace("trigging write data");
 		if (format==FileFormat.TABBED_XLS) ((TabbedXLSExporter)exporter).writeData();
 	}

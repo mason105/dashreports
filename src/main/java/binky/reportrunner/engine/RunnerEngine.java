@@ -125,11 +125,15 @@ public class RunnerEngine implements StatefulJob {
 			RenderException, EmailException, InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException,
 			NamingException, NumberFormatException, ParseException {
+		
+		
 		List<String> fileUrls = new LinkedList<String>();
+		
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
 
 		AbstractRenderer renderer;
+		
 		switch (job.getTemplateType()) {
 		case JASPER:
 			try {
@@ -142,9 +146,7 @@ public class RunnerEngine implements StatefulJob {
 		default:
 			renderer = new StandardRenderer(job.getFileFormat());
 		}
-		
-
-		
+				
 		conn = ds.getConnection();
 
 		RunnerResultGenerator resultGenerator = new RunnerResultGeneratorImpl(

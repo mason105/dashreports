@@ -26,11 +26,14 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JRPrintPage;
 import net.sf.jasperreports.engine.JRResultSetDataSource;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -42,6 +45,8 @@ import net.sf.jasperreports.engine.export.JRHtmlExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRRtfExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
+import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 
 import org.apache.log4j.Logger;
@@ -54,7 +59,12 @@ public class JasperRenderer extends AbstractRenderer {
 	private JasperReport report;
 	JRExporter exporter;
 	private Logger logger = Logger.getLogger(JasperRenderer.class);
-
+	
+	private boolean tabbedXLS;
+	private String url;
+	
+	private JasperPrint print;
+	
 	public JasperRenderer(byte[] templateFile, FileFormat format) throws JRException {
 
 		super(format);
@@ -79,7 +89,8 @@ public class JasperRenderer extends AbstractRenderer {
 				exporter = new JRXlsExporter();
 				break;
 			case TABBED_XLS:
-				exporter = new JRXlsExporter();
+				exporter = new JRXlsxExporter();
+				this.tabbedXLS=true;
 				break;
 			case PDF:
 			default:
@@ -90,38 +101,80 @@ public class JasperRenderer extends AbstractRenderer {
 		
 	}
 
-	@Override
-	public void generateReport(ResultSet resultSet, String label, String url) throws RenderException, SQLException {
-		
-		
-		logger.debug("creating datasource from result set");
-		JRResultSetDataSource jrDs = new JRResultSetDataSource(resultSet);
+	private JasperPrint generateSinglePage(ResultSet rs, String label) throws RenderException, SQLException {
 
+		logger.debug("creating datasource from result set");
+		JRResultSetDataSource jrDs = new JRResultSetDataSource(rs);
+		
 		JasperPrint jp;
 		try {
-			logger.debug("filling report");
+			logger.debug("filling report");					
 			jp = JasperFillManager.fillReport(report,
 					new HashMap<String, Object>(), jrDs);
-
+			
 			logger.debug("finished filling report");
-
-			logger.debug("exporting report");
-			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
-					super.getOutputStream(url));
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, jp);
-			exporter.exportReport();
+			
+			return jp;
+		
 		} catch (JRException e) {
-			throw new RenderException(e.getMessage(), e);
-		} catch (IOException e) {
-			throw new RenderException(e.getMessage(), e);
+			throw new RenderException(e.getMessage(), e);		
 		} finally {
-			resultSet.close();
+			rs.close();
+		}
+
+		
+	}
+	
+	@Override
+	public void generateReport(ResultSet resultSet, String label, String url) throws RenderException, SQLException {
+		JasperPrint jp = generateSinglePage(resultSet, label);
+		if (tabbedXLS) {
+			
+			//thanks to: http://stackoverflow.com/questions/3977658/how-do-you-export-a-jasperreport-to-an-excel-file-with-multiple-worksheets/3979026#3979026
+			
+			this.url=url;
+			if (this.print==null) {
+				this.print=jp;
+			} else {
+				List<JRPrintPage> pages = new ArrayList<JRPrintPage>(jp.getPages());
+				int i = this.print.getPages().size();
+				for (int count = 0; count < pages.size(); count++) {
+					this.print.addPage(i, (JRPrintPage) pages.get(count));
+				    i++;
+				}
+			}
+		} else {
+			try {
+						logger.debug("exporting report");
+					exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
+					super.getOutputStream(url));
+					exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+					exporter.exportReport();
+			} catch (IOException e) {
+				throw new RenderException(e.getMessage(), e);
+			} catch (JRException e) {
+				throw new RenderException(e.getMessage(), e);					
+			}
 		}
 	}
 
 	@Override
-	protected void doFinal() {
-		//nothing to do I believe
+	protected void doFinal() throws RenderException {
+		if (tabbedXLS) {
+			try {
+					logger.debug("exporting report");
+					exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
+					super.getOutputStream(this.url));
+					this.print.setProperty("isIgnorePagination", "true");
+					exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, true);
+					exporter.setParameter(JRExporterParameter.JASPER_PRINT, this.print);					
+					exporter.exportReport();			
+			} catch (IOException e) {
+				throw new RenderException(e.getMessage(), e);
+			} catch (JRException e) {
+				throw new RenderException(e.getMessage(), e);					
+			}
+		}
 	}
 
 }

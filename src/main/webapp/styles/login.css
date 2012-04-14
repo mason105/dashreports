@@ -21,6 +21,7 @@ body {
 	height:35px;
 	width:100%;
 	border-bottom: 1px solid #aaa;
+	margin-bottom:10px;
 }
 
 #LogoWrapper {
@@ -33,14 +34,14 @@ body {
 
 	width:800px;
 	height:200px;
-	background-image: url(../images/logo.png);
+	background-image: url(../images/login/logo.png);
 	position: absolute; 
 	bottom: 0px;
 }
 #NavBar {
 	margin-left: auto;
 	margin-right: auto;
-		width:800px;
+	width:800px;
 }
 #NavBar  .Button {
 	padding:7px;
@@ -142,3 +143,58 @@ div.textContentWide {
 	width:250px;
 	margin:5px;
 }
+.errorText {
+		padding-top:13px;
+		float:right;
+		font-weight:bold;
+		font-style:italic;
+		color:#ff0000;
+	}
+	.loginBox {
+		width:440px;
+	}
+	.loginBoxTop {
+		background-color:#333333;
+		border-right: 1px solid gray;
+		border-left: 1px solid gray;
+		border-top: 1px solid gray;
+		padding-top:5px;
+		padding-left:15px;
+		padding-bottom:5px;
+		color:#ffffff;
+		font-weight:bold;
+		height:35px;
+		line-height:35px;
+		font-size:12px;
+	}
+	.loginBoxMiddle {
+		background-color:#ffffff;
+		border: 1px solid gray;
+		padding:10px;
+	}
+	.loginBoxBottom {
+		background-color:#eeeeee;
+		border-right: 1px solid gray;
+		border-left: 1px solid gray;
+		border-bottom: 1px solid gray;		
+		padding-left:15px;
+		padding-top:10px;
+		padding-bottom:10px;
+		padding-right:15px;
+	}
+	body {
+		background-image: url(<s:url value="/images/v2/background.png"/>);
+		text-align: center;
+}
+
+div#container
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 440px;
+	text-align: left;
+
+}
+input.textbox {
+	width:400px;
+}		

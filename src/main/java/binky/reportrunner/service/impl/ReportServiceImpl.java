@@ -134,7 +134,12 @@ public class ReportServiceImpl implements ReportService {
 		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
 		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			if (scheduler.isScheduled(jobName, groupName)) {
-				return this.scheduler.isJobActive(jobName, groupName);
+				if (job.getEndDate().getTime()<Calendar.getInstance().getTimeInMillis()) {
+					//issue 84 - jobs showing as scheduled when the schedule has ended.
+					return false;
+				} else {
+					return this.scheduler.isJobActive(jobName, groupName);
+				}
 			} else {
 				return false;
 			}

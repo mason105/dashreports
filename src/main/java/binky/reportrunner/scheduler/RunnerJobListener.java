@@ -34,7 +34,7 @@ import org.quartz.JobListener;
 
 import binky.reportrunner.data.Configuration.ConfigurationType;
 import binky.reportrunner.data.RunnerJob;
-import binky.reportrunner.engine.RunnerEngine;
+import binky.reportrunner.engine.ReportGenerationJob;
 import binky.reportrunner.engine.dashboard.AlertProcessor;
 import binky.reportrunner.engine.utils.EmailHandler;
 import binky.reportrunner.engine.utils.impl.EmailHandlerImpl;
@@ -58,7 +58,7 @@ public class RunnerJobListener implements JobListener {
 
 	public void jobToBeExecuted(JobExecutionContext ctx) {
 
-		if (ctx.getJobDetail().getJobClass().equals(RunnerEngine.class)) {
+		if (ctx.getJobDetail().getJobClass().equals(ReportGenerationJob.class)) {
 
 			String jobName = ctx.getJobDetail().getName();
 			String groupName = ctx.getJobDetail().getGroup();
@@ -89,7 +89,7 @@ public class RunnerJobListener implements JobListener {
 		String groupName = ctx.getJobDetail().getGroup();
 	
 		
-		if (ctx.getJobDetail().getJobClass().equals(RunnerEngine.class)) {
+		if (ctx.getJobDetail().getJobClass().equals(ReportGenerationJob.class)) {
 
 			RunnerJob job = jobService.getJob(jobName, groupName);
 

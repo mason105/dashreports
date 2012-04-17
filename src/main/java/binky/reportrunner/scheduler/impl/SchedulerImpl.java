@@ -34,7 +34,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.Trigger;
 import org.quartz.impl.StdScheduler;
 
-import binky.reportrunner.engine.RunnerEngine;
+import binky.reportrunner.engine.ReportGenerationJob;
 import binky.reportrunner.engine.dashboard.AlertProcessor;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
@@ -74,7 +74,7 @@ public class SchedulerImpl implements Scheduler {
 			if (this.quartzScheduler.getJobDetail(jobName, groupName) != null) {
 				removeJob(jobName, groupName);
 			}
-			jobDetail = new JobDetail(jobName, groupName, RunnerEngine.class);
+			jobDetail = new JobDetail(jobName, groupName, ReportGenerationJob.class);
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error with scheduler", e);
 		}

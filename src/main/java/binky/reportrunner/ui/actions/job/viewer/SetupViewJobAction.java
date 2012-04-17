@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import binky.reportrunner.data.RunnerJobParameter;
+import binky.reportrunner.service.ReportGenerationService;
 import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -36,11 +37,11 @@ public class SetupViewJobAction extends StandardRunnerAction {
 	private String jobName;
 	private Map<RunnerJobParameter, List<Object>> parameters;
 	private ReportService jobService;
-	
+	private ReportGenerationService reportGenerationService;
 	@Override
 	public String execute() throws Exception {
 		
-		parameters = jobService.getPossibleParameterValues(jobName, groupName);		
+		parameters = reportGenerationService.getPossibleParameterValues(jobName, groupName);		
 		if (parameters==null||parameters.isEmpty()) {
 			return "NOPARAMS";
 		} else {
@@ -72,6 +73,11 @@ public class SetupViewJobAction extends StandardRunnerAction {
 
 	public void setParameters(Map<RunnerJobParameter, List<Object>> parameters) {
 		this.parameters = parameters;
+	}
+
+	public void setReportGenerationService(
+			ReportGenerationService reportGenerationService) {
+		this.reportGenerationService = reportGenerationService;
 	}
 	
 }

@@ -184,6 +184,15 @@
 
 	</bean>
 
+	<bean id="reportGenerationService" class="binky.reportrunner.service.impl.ReportGenerationService">
+		<property name="datasourceService">
+			<ref bean="runnerDatasourceService" />
+		</property>
+		<property name="reportService">
+			<ref bean="runnerJobService" />
+		</property>
+		<property name="configurationService" ref="configurationService" />
+	</bean>
 
 	<bean id="noCacheInterceptor" class="binky.reportrunner.interceptors.NoCache"
 		scope="singleton">

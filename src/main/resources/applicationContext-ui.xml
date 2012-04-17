@@ -143,6 +143,9 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
+		<property name="reportGenerationService">
+			<ref bean="reportGenerationService" />
+		</property>
 	</bean>
 
 	<bean id="viewJobOutputAction"
@@ -151,6 +154,9 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>		
+		<property name="reportGenerationService">
+			<ref bean="reportGenerationService" />
+		</property>
 	</bean>
 
 	<bean id="invokeJobAction" class="binky.reportrunner.ui.actions.job.InvokeJob"

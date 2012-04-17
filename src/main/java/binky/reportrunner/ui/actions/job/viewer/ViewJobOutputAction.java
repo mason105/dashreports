@@ -32,6 +32,7 @@ import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.exceptions.SecurityException;
+import binky.reportrunner.service.ReportGenerationService;
 import binky.reportrunner.service.ReportService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
@@ -46,6 +47,9 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 	private List<RunnerJobParameter> parameters;
 	private Map<String,RowSetDynaClass> gridResults;
 
+		
+	private ReportGenerationService reportGenerationService;
+	
 	private ReportService jobService;
 
 	 private static final Logger logger = Logger.getLogger(ViewJobOutputAction.class);
@@ -83,12 +87,12 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 						}
 					}
 				}
-				dynaSets = jobService.getResultSet(groupName, jobName,
+				dynaSets = reportGenerationService.getResultSet(groupName, jobName,
 						jobParameters);
 
 			} else {
 				logger.debug("not using parameters");
-				dynaSets = jobService.getResultSet(groupName, jobName);
+				dynaSets = reportGenerationService.getResultSet(groupName, jobName);
 			}
 
 
@@ -121,10 +125,10 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 				}
 
-				downloadResults = jobService.getResultsForJob(jobName,
+				downloadResults = reportGenerationService.getResultsForJob(jobName,
 						groupName, jobParameters);
 			} else {
-				downloadResults = jobService.getResultsForJob(jobName,
+				downloadResults = reportGenerationService.getResultsForJob(jobName,
 						groupName);
 			}
 
@@ -189,6 +193,11 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public void setReportGenerationService(
+			ReportGenerationService reportGenerationService) {
+		this.reportGenerationService = reportGenerationService;
 	}
 
 

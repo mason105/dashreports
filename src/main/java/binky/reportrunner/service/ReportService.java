@@ -22,19 +22,10 @@
  ******************************************************************************/
 package binky.reportrunner.service;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.beanutils.RowSetDynaClass;
 
 import binky.reportrunner.data.RunnerJob;
-import binky.reportrunner.data.RunnerJobParameter;
-import binky.reportrunner.engine.beans.ViewerResults;
-import binky.reportrunner.exceptions.RenderException;
 import binky.reportrunner.scheduler.SchedulerException;
 
 public interface ReportService extends Auditable {
@@ -58,14 +49,10 @@ public interface ReportService extends Auditable {
 			throws SchedulerException;
 
 	public void invokeJob(String jobName, String groupName) throws SchedulerException;
+	
 	public Date getNextRunTime(String jobName, String groupName) throws SchedulerException;
 	public Date getPreviousRunTime(String jobName, String groupName) throws SchedulerException;
 	
-	public Map<String, ViewerResults> getResultsForJob(String jobName, String groupName, List<RunnerJobParameter> parameters) throws SQLException, NumberFormatException, ParseException,RenderException, IOException;
-	public Map<String, ViewerResults> getResultsForJob(String jobName, String groupName) throws SQLException, NumberFormatException, ParseException,RenderException, IOException;
-
-	public Map<RunnerJobParameter, List<Object>> getPossibleParameterValues(String jobName, String groupName) throws SQLException,NumberFormatException, ParseException;
 	
-	public Map<String, RowSetDynaClass > getResultSet(String groupName,String jobName,List<RunnerJobParameter> parameters) throws NumberFormatException, SQLException, ParseException;
-	public Map<String, RowSetDynaClass > getResultSet(String groupName,String jobName) throws NumberFormatException, SQLException, ParseException;
+
 }

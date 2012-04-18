@@ -20,7 +20,7 @@
 	<url>http://www.reportrunner.org</url>
 
 	<properties>
-		<compileSource>1.7</compileSource>
+		<compileSource>1.6</compileSource>
 		<springVersion>3.1.0.RELEASE</springVersion>
 		<hibernateVersion>4.0.1.Final</hibernateVersion>
 		<strutsVersion>2.3.1.1</strutsVersion>

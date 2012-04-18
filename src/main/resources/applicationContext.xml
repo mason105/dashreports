@@ -184,7 +184,7 @@
 
 	</bean>
 
-	<bean id="reportGenerationService" class="binky.reportrunner.service.impl.ReportGenerationService">
+	<bean id="reportGenerationService" class="binky.reportrunner.service.impl.ReportGenerationServiceImpl">
 		<property name="datasourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>

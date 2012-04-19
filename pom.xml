@@ -18,7 +18,13 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>Dash Reports</name>
 	<url>http://www.reportrunner.org</url>
-
+    <distributionManagement>
+        <site>
+            <id>dashreports</id>
+            <url>file:///var/www/dashreports/mvn</url>
+        </site>
+    </distributionManagement>
+    
 	<properties>
 		<compileSource>1.6</compileSource>
 		<springVersion>3.1.0.RELEASE</springVersion>
@@ -378,7 +384,7 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.6.12</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>uk.co.binkysoftware</groupId>
 			<artifactId>danutils</artifactId>
@@ -412,55 +418,85 @@
 				<configuration></configuration> <executions> <execution> <phase>pre-site</phase> 
 				<goals> <goal>instrument</goal> </goals> </execution> </executions> </plugin> -->
 
-		</plugins>
-	</build>
-	<reporting>
-		<plugins>
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>changelog-maven-plugin 
-				</artifactId> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>dashboard-maven-plugin 
-				</artifactId> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>cobertura-maven-plugin 
-				</artifactId> </plugin> -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>javancss-maven-plugin</artifactId>
-				<version>2.0-beta-2</version>
-			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId> 
-				</plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>jxr-maven-plugin</artifactId> 
-				</plugin> -->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-report-plugin</artifactId>
-				<version>2.4.1</version>
-			</plugin>
-			<plugin>
-				<groupId>com.atlassian.maven.plugins</groupId>
-				<artifactId>maven-clover2-plugin</artifactId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.0-beta-3</version>
 				<configuration>
-					<generateXml>true</generateXml>
+					<reportPlugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-project-info-reports-plugin</artifactId>
+							<version>2.2</version>
+							<reports>
+								<report>index</report>
+								<report>project-team</report>
+								<report>license</report>
+								<report>mailing-list</report>
+								<report>plugin-management</report>
+								<report>issue-tracking</report>
+								<report>scm</report>
+								<report>summary</report>
+							</reports>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-report-plugin</artifactId>
+							<version>2.6</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-javadoc-plugin</artifactId>
+							<version>2.7</version>
+						</plugin>
+						<!-- <plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-checkstyle-plugin</artifactId>
+							<version>2.6</version>
+
+						</plugin>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>findbugs-maven-plugin</artifactId>
+							<version>2.3.1</version>
+							<configuration>
+								<argLine>-Xmx256m</argLine>
+								<argLine>-XX:MaxPermSize=256m</argLine>
+							</configuration>
+						</plugin>-->
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>jdepend-maven-plugin</artifactId>
+							<version>2.0-beta-2</version>
+						</plugin>
+						<plugin>
+							<groupId>org.codehaus.mojo</groupId>
+							<artifactId>cobertura-maven-plugin</artifactId>
+							<version>2.4</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-jxr-plugin</artifactId>
+							<version>2.1</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-pmd-plugin</artifactId>
+							<version>2.5</version>
+							<configuration>
+								<linkXref>true</linkXref>
+								<minimumTokens>100</minimumTokens>
+								<minimumPriority>3</minimumPriority>
+								<!-- Change minimum priority to see more or less messages -->
+								<targetJdk>1.6</targetJdk>
+							</configuration>
+						</plugin>
+					</reportPlugins>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-				<version>1.1.1</version>
-				<configuration>
-					<xmlOutput>true</xmlOutput>
-					<effort>Max</effort>
-					<threshold>Normal</threshold>
-				</configuration>
-			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-pmd-plugin</artifactId> 
-				<configuration> <targetJdk>${compileSource}</targetJdk> </configuration> 
-				</plugin> -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>jdepend-maven-plugin</artifactId>
-			</plugin>
-
 		</plugins>
-	</reporting>
+	</build>
+
 
 </project>

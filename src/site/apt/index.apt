@@ -1,3 +1,0 @@
-Report Runner
-
-	ReportRunner is a system to schedule the invocation of reports. By default it can run SQL (via JDBC) and can be formatted with Jasper Reports . It is configured and managed using a GUI interface. 

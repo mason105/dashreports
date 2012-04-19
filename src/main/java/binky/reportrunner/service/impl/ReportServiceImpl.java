@@ -84,10 +84,13 @@ public class ReportServiceImpl implements ReportService {
 		logger.debug("delete job: " + groupName + "." + jobName);
 		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName,
 				new RunnerGroup(groupName)));
-		runnerJobDao.delete(new RunnerJob_pk(jobName,
-				new RunnerGroup(groupName)));
-		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
-			scheduler.removeJob(jobName, groupName);
+		if (job!=null) {
+			if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+				scheduler.removeJob(jobName, groupName);
+			
+			runnerJobDao.delete(new RunnerJob_pk(jobName,
+					new RunnerGroup(groupName)));
+			}
 		}
 	}
 
@@ -115,11 +118,12 @@ public class ReportServiceImpl implements ReportService {
 	public Boolean isJobActive(String jobName, String groupName)
 			throws SchedulerException {
 		logger.debug("is job active: " + groupName + "." + jobName);
-		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName,
-				new RunnerGroup(groupName)));
-		if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+		
+		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
+		
+		if (job!=null && (job.getCronString() != null) && !job.getCronString().isEmpty()) {
 			if (scheduler.isScheduled(jobName, groupName)) {
-				if (job.getEndDate().getTime() < Calendar.getInstance()
+				if (job.getEndDate()!=null && job.getEndDate().getTime() < Calendar.getInstance()
 						.getTimeInMillis()) {
 					// issue 84 - jobs showing as scheduled when the schedule
 					// has ended.

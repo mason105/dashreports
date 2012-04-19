@@ -35,6 +35,7 @@ public class ConfigurationServiceImpl implements ConfigurationService {
 	}
 
 	@Override
+	@Cacheable(cacheName = "configCache")
 	public void saveOrUpdate(Configuration configuration) {
 		configurationDao.saveOrUpdate(configuration);
 	}

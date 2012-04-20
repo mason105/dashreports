@@ -50,8 +50,8 @@ public class DatasourceServiceImplTest extends TestCase {
 
 		//per environment
 		ds.setJdbcClass("com.mysql.jdbc.Driver");
-		ds.setJdbcUrl("jdbc:mysql://localhost:3306/dashreports"); //dashtest
-		ds.setUsername("root");  //dashtest
+		ds.setJdbcUrl("jdbc:mysql://localhost:3306/dashtest"); //dashtest
+		ds.setUsername("dashtest");  //dashtest
 		ds.setPassword("password"); 
 		currentKey="BAD0858CD6A7161901AE9BCB195EFD5E9D6BE0FE7643A7E9";
 		

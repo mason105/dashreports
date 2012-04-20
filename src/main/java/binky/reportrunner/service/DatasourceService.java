@@ -52,5 +52,6 @@ public interface DatasourceService extends Auditable {
 	public JDBCDrivers getJDBCDriverDefinitions() throws IOException, SAXException;
 	
 	public void reEncryptPasswords(String newKey) throws EncryptionException;
-	
+	public void setSecureKey(String secureKey);
+
 }

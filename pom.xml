@@ -18,18 +18,19 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>Dash Reports</name>
 	<url>http://www.dashreports.org</url>
-    <distributionManagement>
-        <site>
-            <id>dashreports</id>
-            <url>file:///var/www/dashreports/mvn</url>
-        </site>
-    </distributionManagement>
-    
+	<distributionManagement>
+		<site>
+			<id>dashreports</id>
+			<url>file:///var/www/dashreports/mvn</url>
+		</site>
+	</distributionManagement>
+
 	<properties>
 		<compileSource>1.6</compileSource>
 		<springVersion>3.1.0.RELEASE</springVersion>
 		<hibernateVersion>4.0.1.Final</hibernateVersion>
 		<strutsVersion>2.3.1.1</strutsVersion>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<issueManagement>
@@ -450,21 +451,11 @@
 							<artifactId>maven-javadoc-plugin</artifactId>
 							<version>2.7</version>
 						</plugin>
-						<!-- <plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-checkstyle-plugin</artifactId>
-							<version>2.6</version>
-
-						</plugin>
-						<plugin>
-							<groupId>org.codehaus.mojo</groupId>
-							<artifactId>findbugs-maven-plugin</artifactId>
-							<version>2.3.1</version>
-							<configuration>
-								<argLine>-Xmx256m</argLine>
-								<argLine>-XX:MaxPermSize=256m</argLine>
-							</configuration>
-						</plugin>-->
+						<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId> 
+							<version>2.6</version> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> 
+							<artifactId>findbugs-maven-plugin</artifactId> <version>2.3.1</version> <configuration> 
+							<argLine>-Xmx256m</argLine> <argLine>-XX:MaxPermSize=256m</argLine> </configuration> 
+							</plugin> -->
 						<plugin>
 							<groupId>org.codehaus.mojo</groupId>
 							<artifactId>jdepend-maven-plugin</artifactId>

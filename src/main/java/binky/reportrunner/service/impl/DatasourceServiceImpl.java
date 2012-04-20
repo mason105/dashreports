@@ -73,7 +73,6 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 		final String jndiDataSource = runnerDs.getJndiName();
 
-		
 		if (StringUtils.isBlank(jndiDataSource)) {
 			EncryptionUtil enc = new EncryptionUtil();
 			logger.info("using dbcp pooled connection for: "
@@ -84,6 +83,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 				throw new SecurityException("password is empty");
 			String jdbcPassword = enc
 					.decrpyt(secureKey, runnerDs.getPassword());
+
 			String jdbcUrl = runnerDs.getJdbcUrl();
 			String databaseDriver = runnerDs.getJdbcClass();
 
@@ -100,15 +100,15 @@ public class DatasourceServiceImpl implements DatasourceService {
 			ds1.setRemoveAbandoned(true);
 			ds1.setRemoveAbandonedTimeout(600);
 
-			//do not want anything updating anything
+			// do not want anything updating anything
 			ds1.setDefaultReadOnly(true);
-			
+
 			ds1.setLogAbandoned(true);
 			ds1.setTestOnBorrow(true);
 			ds1.setTestOnReturn(true);
 			ds1.setTestWhileIdle(true);
-			
-			//does this work across all RBMS?
+
+			// does this work across all RBMS?
 			ds1.setValidationQuery("select 1");
 			ds1.setValidationQueryTimeout(300);
 
@@ -125,10 +125,10 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	public void purgeConnections(String dataSourceName) throws SQLException {
 		DataSource ds = dataSources.get(dataSourceName);
-		if (ds != null && ds instanceof BasicDataSource) {			 
+		if (ds != null && ds instanceof BasicDataSource) {
 			dumpLogInfo(dataSourceName);
 			// reset the datasource
-			((BasicDataSource)ds).close();
+			((BasicDataSource) ds).close();
 		}
 	}
 
@@ -150,7 +150,8 @@ public class DatasourceServiceImpl implements DatasourceService {
 				}
 			} else {
 				EncryptionUtil enc = new EncryptionUtil();
-				runnerDs.setPassword(enc.encrpyt(this.secureKey,runnerDs.getPassword()));
+				runnerDs.setPassword(enc.encrpyt(this.secureKey,
+						runnerDs.getPassword()));
 			}
 
 			DataSource ds = this.getDs(runnerDs);
@@ -159,22 +160,24 @@ public class DatasourceServiceImpl implements DatasourceService {
 			String information = meta.getDatabaseProductName() + ", "
 					+ meta.getDatabaseProductVersion();
 			conn.close();
-			if (ds instanceof BasicDataSource) {			 
-				((BasicDataSource)ds).close();
+			if (ds instanceof BasicDataSource) {
+				((BasicDataSource) ds).close();
 			}
 			return information;
 		} catch (Exception e) {
 			if (e instanceof NullPointerException) {
-				logger.fatal(e.getMessage(),e);
+				logger.fatal(e.getMessage(), e);
 			}
 			logger.debug(e.getMessage());
-			return "ERROR - " +e.getClass().getSimpleName() + ": " + e.getMessage();
+			return "ERROR - " + e.getClass().getSimpleName() + ": "
+					+ e.getMessage();
 		}
 	}
 
 	public DataSource getJDBCDataSource(RunnerDataSource runnerDs)
 			throws SQLException {
-		if (dataSources==null) dataSources=new HashMap<String, DataSource>();
+		if (dataSources == null)
+			dataSources = new HashMap<String, DataSource>();
 		DataSource ds = dataSources.get(runnerDs.getDataSourceName());
 		if (ds == null) {
 			try {
@@ -187,23 +190,14 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 				dumpLogInfo(runnerDs.getDataSourceName());
 
-				
 			} catch (Exception e) {
 				logger.fatal(
 						"Unable to create datasource: "
 								+ runnerDs.getDataSourceName(), e);
 			}
 		}
-			
+
 		return ds;
-	}
-
-	public Map<String, DataSource> getDataSources() {
-		return dataSources;
-	}
-
-	public void setDataSources(Map<String, DataSource> dataSources) {
-		this.dataSources = dataSources;
 	}
 
 	public void setDataSourceDao(
@@ -211,7 +205,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 		this.dataSourceDao = dataSourceDao;
 	}
 
-	@TriggersRemove(cacheName="dataSourceCache")
+	@TriggersRemove(cacheName = "dataSourceCache")
 	public void deleteDataSource(String dataSourceName) {
 		if (dataSources.get(dataSourceName) != null) {
 			dataSources.remove(dataSourceName);
@@ -220,18 +214,19 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	}
 
-	@Cacheable(cacheName="dataSourceCache")
 	public RunnerDataSource getDataSource(String dataSourceName) {
 		RunnerDataSource ds = dataSourceDao.get(dataSourceName);
 		return ds;
 	}
-
+	@Cacheable(cacheName = "dataSourceCache")
 	public List<RunnerDataSource> listDataSources() {
 		return dataSourceDao.getAll();
 	}
-
+	
+	
+	@TriggersRemove(cacheName="dataSourceCache", removeAll=true)
 	public void saveUpdateDataSource(RunnerDataSource dataSource)
-			throws  EncryptionException {
+			throws EncryptionException {
 		if (dataSources.get(dataSource.getDataSourceName()) != null) {
 			dataSources.remove(dataSource.getDataSourceName());
 		}
@@ -240,8 +235,10 @@ public class DatasourceServiceImpl implements DatasourceService {
 			dataSource.setPassword(enc.encrpyt(secureKey,
 					dataSource.getPassword()));
 		} else {
-			RunnerDataSource ds = dataSourceDao.get(dataSource.getDataSourceName());
-			if (ds!=null) dataSource.setPassword(ds.getPassword());
+			RunnerDataSource ds = dataSourceDao.get(dataSource
+					.getDataSourceName());
+			if (ds != null)
+				dataSource.setPassword(ds.getPassword());
 		}
 
 		dataSourceDao.saveOrUpdate(dataSource);
@@ -251,39 +248,48 @@ public class DatasourceServiceImpl implements DatasourceService {
 		this.secureKey = secureKey;
 	}
 
-	public JDBCDrivers getJDBCDriverDefinitions() throws IOException, SAXException {
-		
-		InputStream in =DatasourceServiceImpl.class.getResourceAsStream("/jdbcDrivers.xml");
-		
-        Digester digester = new Digester();
-        digester.setValidating(false);
-        digester.addObjectCreate("jdbcDrivers",JDBCDrivers.class);
-        digester.addObjectCreate("jdbcDrivers/driver", JDBCDriverDefinition.class);
-        digester.addBeanPropertySetter("jdbcDrivers/driver/label", "label");
-        digester.addBeanPropertySetter("jdbcDrivers/driver/url", "url");
-        digester.addBeanPropertySetter("jdbcDrivers/driver/driverName", "driverName");
-        digester.addSetNext("jdbcDrivers/driver", "addDefinition");      
-		
-        JDBCDrivers drivers = (JDBCDrivers)digester.parse(in);
-        
+	public JDBCDrivers getJDBCDriverDefinitions() throws IOException,
+			SAXException {
+
+		InputStream in = DatasourceServiceImpl.class
+				.getResourceAsStream("/jdbcDrivers.xml");
+
+		Digester digester = new Digester();
+		digester.setValidating(false);
+		digester.addObjectCreate("jdbcDrivers", JDBCDrivers.class);
+		digester.addObjectCreate("jdbcDrivers/driver",
+				JDBCDriverDefinition.class);
+		digester.addBeanPropertySetter("jdbcDrivers/driver/label", "label");
+		digester.addBeanPropertySetter("jdbcDrivers/driver/url", "url");
+		digester.addBeanPropertySetter("jdbcDrivers/driver/driverName",
+				"driverName");
+		digester.addSetNext("jdbcDrivers/driver", "addDefinition");
+
+		JDBCDrivers drivers = (JDBCDrivers) digester.parse(in);
+
 		return drivers;
 	}
 
 	@Override
 	public List<RunnerDataSource> getDataSourcesForGroup(String groupName) {
 		logger.debug("getting datasources for group: " + groupName);
-		//List<RunnerDataSource> dsList = groupDao.get(groupName).getDataSources();
+		// List<RunnerDataSource> dsList =
+		// groupDao.get(groupName).getDataSources();
 
-		//some crazy ass shit going down here - the join returns an array for each row that would be returned by the db
-		//if i try prefixing the names query with select d (which makes sense to me) then it won't run
-		List<RunnerDataSource> dsList = new LinkedList<RunnerDataSource>(); 
-		Object holder = dataSourceDao.findByNamedQuery("findAllForGroup", new String[]{groupName});
-		for (Object[] o : (ArrayList<Object[]>)holder ) {
-			RunnerDataSource d = (RunnerDataSource)o[0];
+		// some crazy ass shit going down here - the join returns an array for
+		// each row that would be returned by the db
+		// if i try prefixing the names query with select d (which makes sense
+		// to me) then it won't run
+		List<RunnerDataSource> dsList = new LinkedList<RunnerDataSource>();
+		Object holder = dataSourceDao.findByNamedQuery("findAllForGroup",
+				new String[] { groupName });
+		for (Object[] o : (ArrayList<Object[]>) holder) {
+			RunnerDataSource d = (RunnerDataSource) o[0];
 			logger.debug(d.getDataSourceName());
 			dsList.add(d);
 		}
-		logger.debug("got : " + dsList.size() + " data sources for group: " + groupName);
+		logger.debug("got : " + dsList.size() + " data sources for group: "
+				+ groupName);
 		return dsList;
 	}
 
@@ -298,22 +304,21 @@ public class DatasourceServiceImpl implements DatasourceService {
 	@Override
 	public void reEncryptPasswords(String newKey) throws EncryptionException {
 		EncryptionUtil enc = new EncryptionUtil();
-		
+
 		logger.warn("re-encrypting the datasource passwords.  I hope you copied the key from the UI as instructed!!");
-		
+
 		for (RunnerDataSource ds : dataSourceDao.getAll()) {
 			if (!StringUtils.isEmpty(ds.getPassword())) {
 				String pw = enc.decrpyt(secureKey, ds.getPassword());
 				ds.setPassword(enc.encrpyt(newKey, pw));
 				dataSourceDao.saveOrUpdate(ds);
 				logger.debug("updated ds: " + ds.getDataSourceName());
-			}			
+			}
 		}
-		
+
 		logger.warn("re-encryption complete.  Please ensure you update the properties file with the new key and restart the server");
 	}
-	
 
 
-	
+
 }

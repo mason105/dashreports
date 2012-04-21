@@ -65,17 +65,21 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>, ID extends Serializa
 		return (List<T>) q.list();
 	}
 
-	public void saveOrUpdate(T entity) {
+	public ID saveOrUpdate(T entity) {
 		Session session = getSession();
+		ID ret;
 		logger.trace("saving object with ID: " +entity.getId()+ " for class " + clazz.getName());
 		// dealing with the caching while using the hibernate session in view
 		// filter
 		if (entity.getId() != null && this.get(entity.getId()) != null) {
 			session.merge(entity);
+			ret=entity.getId();
 		} else {
-			session.saveOrUpdate(entity);
+			//session.saveOrUpdate(entity);
+			ret=(ID)session.save(entity);
 		}
 		logger.trace("done saving object with ID: " +entity.getId()+ " for class " + clazz.getName());
+		return ret;
 	}
 
 	@SuppressWarnings("unchecked")

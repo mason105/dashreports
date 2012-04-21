@@ -119,40 +119,41 @@ public class DashboardServiceImpl implements DashboardService {
 		return dashboardDao.getAll();
 	}
 
-	public void saveUpdateItem(RunnerDashboardItem alert) throws SchedulerException {
+	public Integer saveUpdateItem(RunnerDashboardItem alert) throws SchedulerException {
 		logger.debug("alert is null=" + (alert==null));
 		if (alert.getItemId()!=null){
 			scheduler.removedDashboardAlert(alert.getItemId());
 		}
-		
+		Integer ret;
 		//hack to try to fix a batch update error		
 		RunnerGroup group = groupDao.get(alert.getGroup().getGroupName());
 		alert.setGroup(group);
 		
 		//hack to deal with interval change
-		if (alert.getItemType()==ItemType.Sampler) {
-			RunnerDashboardSampler s=(RunnerDashboardSampler)alert;
-			RunnerDashboardSampler comp = (RunnerDashboardSampler)dashboardDao.get(alert.getItemId());
-			s.setData(comp.getData());
-			s.setTrendData(comp.getTrendData());
-			if (alert.getItemId()!=null) {			
+		if ((alert.getItemType()==ItemType.Sampler) && (alert.getItemId()!=null)) {
+			
+				RunnerDashboardSampler s=(RunnerDashboardSampler)alert;		
+
+				RunnerDashboardSampler comp = (RunnerDashboardSampler)dashboardDao.get(alert.getItemId());
+				s.setData(comp.getData());
+				s.setTrendData(comp.getTrendData());
+
 				//need to do a compare
 				if (s.isRecordTrendData()) {
 					
 					if (!s.getInterval().equals(comp.getInterval())&& s.getTrendData()!=null) {
 						s.getTrendData().clear();																		
 					}
-				}
-			}
+				}			
 			logger.debug("saving sampler");
-			dashboardDao.saveOrUpdate(s);
+			ret=dashboardDao.saveOrUpdate(s);
 		} else {
 			logger.debug("saving alert");
-			dashboardDao.saveOrUpdate(alert);
+			ret=dashboardDao.saveOrUpdate(alert);
 		}
-		
-		
-		scheduler.addDashboardAlert(alert.getItemId(),alert.getCronTab());		
+					
+		scheduler.addDashboardAlert(alert.getItemId(),alert.getCronTab());
+		return ret;
 	}
 	public void setDashboardDao(ReportRunnerDao<RunnerDashboardItem,Integer> dashboardDao) {
 		this.dashboardDao = dashboardDao;

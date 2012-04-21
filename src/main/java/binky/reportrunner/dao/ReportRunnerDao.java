@@ -18,6 +18,6 @@ public interface ReportRunnerDao<T extends DatabaseObject<ID>, ID extends Serial
 	public List<T> getAll();
 	public List<T> findByNamedQuery(String queryName, Object[] values);
 	public List<T> findByNamedQuery(String queryName, Object[] values,int maxResults);
-	public void saveOrUpdate(T entity);
+	public ID saveOrUpdate(T entity);
 	
 }

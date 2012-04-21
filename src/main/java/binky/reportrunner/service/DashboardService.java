@@ -33,7 +33,7 @@ public interface DashboardService extends Auditable, Serializable {
 
 	public List<RunnerDashboardItem> getItemsForGroup(String groupName);
 	public List<RunnerDashboardItem> getAllItems();
-	public void saveUpdateItem(RunnerDashboardItem item) throws SchedulerException;
+	public Integer saveUpdateItem(RunnerDashboardItem item) throws SchedulerException;
 	public void deleteItem(Integer id) throws SchedulerException;
 	public RunnerDashboardItem getItem(Integer id);
 	public List<RunnerDashboardItem> getRunningItems() throws SchedulerException;

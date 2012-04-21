@@ -10,7 +10,7 @@ import binky.reportrunner.data.DatabaseObject;
  * Rather nifty Generic DAO, if I do say so myself
  *
  **/
-public interface ReportRunnerDao<T extends DatabaseObject<ID>, ID extends Serializable> {
+public interface ReportRunnerDao<T extends DatabaseObject<ID>, ID extends Serializable> extends Serializable  {
 
 	public void delete(ID id);
 	public T get(ID id);

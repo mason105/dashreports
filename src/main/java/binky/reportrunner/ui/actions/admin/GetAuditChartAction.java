@@ -100,11 +100,10 @@ public class GetAuditChartAction extends StandardRunnerAction {
 
 		XYItemRenderer r = linePlot.getRenderer();
 		if (r instanceof XYLineAndShapeRenderer) {
+			XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) r;
+			renderer.setBaseShapesVisible(true);
+			renderer.setBaseShapesFilled(true);
 		}
-		XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) r;
-		renderer.setBaseShapesVisible(true);
-		renderer.setBaseShapesFilled(true);
-		
 		chart.setAntiAlias(true);
 		chart.setTextAntiAlias(true);
 		return SUCCESS;

@@ -15,6 +15,8 @@ import binky.reportrunner.data.DatabaseObject;
 public class HibernateDaoImpl<T extends DatabaseObject<ID>, ID extends Serializable>
 		implements ReportRunnerDao<T, ID> {
 
+	private static final long serialVersionUID = 8003679043292862356L;
+
 	private SessionFactory sessionFactory;
 
 	private Class<T> clazz;
@@ -54,9 +56,10 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>, ID extends Serializa
 
 	@SuppressWarnings("unchecked")
 	public List<T> findByNamedQuery(String queryName, Object[] values) {
-		logger.trace("find by query: " + queryName+ " for class " + clazz.getName() + " param count " + values.length);
+	
 		Query q = getSession().getNamedQuery(queryName);
 		if (values != null) {
+			logger.trace("find by query: " + queryName+ " for class " + clazz.getName() + " param count " + values.length);
 			for (int i = 0; i < values.length; i++) {
 				q.setParameter(i, values[i]);
 			}
@@ -86,9 +89,10 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>, ID extends Serializa
 	@Override
 	public List<T> findByNamedQuery(String queryName, Object[] values,
 			int maxResults) {
-		logger.trace("find by query: " + queryName+ " for class " + clazz.getName() + " param count " + values.length + " max results " + maxResults);
+		
 		Query q = getSession().getNamedQuery(queryName);
 		if (values != null) {
+			logger.trace("find by query: " + queryName+ " for class " + clazz.getName() + " param count " + values.length + " max results " + maxResults);
 			for (int i = 0; i < values.length; i++) {
 				q.setParameter(i, values[i]);
 			}

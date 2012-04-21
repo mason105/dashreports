@@ -120,7 +120,6 @@ public class DashboardServiceImpl implements DashboardService {
 	}
 
 	public Integer saveUpdateItem(RunnerDashboardItem alert) throws SchedulerException {
-		logger.debug("alert is null=" + (alert==null));
 		if (alert.getItemId()!=null){
 			scheduler.removedDashboardAlert(alert.getItemId());
 		}
@@ -373,7 +372,7 @@ public class DashboardServiceImpl implements DashboardService {
 					case Types.TIME:
 					case Types.TIMESTAMP:
 					case Types.DATE:
-						value=new Long(rs.getDate(i).getTime());
+						value=Long.valueOf(rs.getDate(i).getTime());
 						break;	
 					default:
 						value=rs.getObject(i);

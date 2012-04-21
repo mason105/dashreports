@@ -90,8 +90,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				authorities.add(new GrantedAuthorityImpl("ROLE_USER"));
 			} else {
 				logger.warn("login fail for user: " + userName);
-				logger.debug("hash got: " + enc.hashString(password)
-						+ " hash expected: " + user.getPassword());
+			
 				throw new BadCredentialsException("Invalid username/password");
 			}
 		} catch (Exception e) {

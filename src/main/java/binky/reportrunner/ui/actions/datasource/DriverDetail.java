@@ -28,6 +28,8 @@ public class DriverDetail extends StandardRunnerAction {
 			logger.debug("datasource name: " + dataSource.getDataSourceName());
 		} else {
 			logger.debug("dataSource is null");
+			super.addActionError("somehow the datasource object is null - this shouldn't happpen");
+			return INPUT;
 		}
 		JDBCDriverDefinition def= dataSourceService.getJDBCDriverDefinitions().getDefinitions().get(jdbcDriver);
 		this.jdbcClass=def.getDriverName();

@@ -20,4 +20,6 @@ public interface UserService extends Auditable {
 
 	public boolean changePassword(String userName,String oldPasswordHash,String newPassword) throws NoSuchAlgorithmException ;
 	
+	public RunnerUser createUser(String userName, String password, String fullName, boolean readOnly, boolean administrator,boolean locked, List<RunnerGroup> groups) throws NoSuchAlgorithmException; 
+	
 }

@@ -79,4 +79,21 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+	@Override
+	public RunnerUser createUser(String userName, String password,
+			String fullName, boolean readOnly, boolean administrator, boolean locked,
+			List<RunnerGroup> groups)  throws NoSuchAlgorithmException{
+		EncryptionUtil e = new EncryptionUtil();
+		RunnerUser user = new RunnerUser();
+		user.setUserName(userName);
+		user.setFullName(fullName);
+		user.setPassword(e.hashString(password));
+		user.setIsReadOnly(readOnly);
+		user.setIsLocked(locked);
+		user.setIsAdmin(administrator);
+		user.setGroups(groups);
+		userDao.saveOrUpdate(user);
+		return user;
+	}
+
 }

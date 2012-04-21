@@ -23,7 +23,7 @@ import binky.reportrunner.service.misc.JDBCDriverDefinition;
 import binky.reportrunner.util.EncryptionUtil;
 
 public class DatasourceServiceImplTest extends TestCase {
-	//sneakliy grab the old key via the backdoor
+
 	String currentKey;
 	
 	DatasourceService dss;

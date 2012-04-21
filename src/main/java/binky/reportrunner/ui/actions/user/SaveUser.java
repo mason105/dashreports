@@ -34,7 +34,6 @@ import binky.reportrunner.data.RunnerUser;
 import binky.reportrunner.service.GroupService;
 import binky.reportrunner.service.UserService;
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
-import binky.reportrunner.util.EncryptionUtil;
 
 import com.opensymphony.xwork2.Preparable;
 
@@ -71,10 +70,7 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 						//put the old password back in
 						runnerUser.setPassword(userCompare.getPassword());
 					}
-				} else {
-					//hash the password
-					EncryptionUtil enc = new EncryptionUtil();
-					runnerUser.setPassword(enc.hashString(runnerUser.getPassword()));
+				
 					
 				}
 			}
@@ -93,7 +89,11 @@ public class SaveUser extends StandardRunnerAction  implements Preparable {
 			
 			
 			if (valid) {
-				userService.saveOrUpdate(runnerUser);
+				if (userService.getUser(runnerUser.getUserName())!=null) {
+					userService.saveOrUpdate(runnerUser);
+				}else {
+					runnerUser=userService.createUser(runnerUser.getUsername(), runnerUser.getPassword(), runnerUser.getFullName(), runnerUser.getIsReadOnly(), runnerUser.getIsAdmin(), runnerUser.getIsLocked(),runnerUser.getGroups());
+				}
 				return SUCCESS;
 			} else {
 				return INPUT;

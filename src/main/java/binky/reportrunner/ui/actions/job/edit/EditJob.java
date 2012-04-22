@@ -138,7 +138,7 @@ public class EditJob extends BaseEditJob {
 			super.addActionError("Error with job definition - name and group were not set!");
 			valid = false;
 		}
-		;
+		
 		if ((job.getPk().getJobName() == null)
 				|| (job.getPk().getJobName().trim().isEmpty())) {
 			logger.debug("Job name not set");

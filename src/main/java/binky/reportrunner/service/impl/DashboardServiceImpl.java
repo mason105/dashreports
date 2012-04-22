@@ -138,12 +138,10 @@ public class DashboardServiceImpl implements DashboardService {
 				s.setTrendData(comp.getTrendData());
 
 				//need to do a compare
-				if (s.isRecordTrendData()) {
-					
-					if (!s.getInterval().equals(comp.getInterval())&& s.getTrendData()!=null) {
+				if (s.isRecordTrendData() && !s.getInterval().equals(comp.getInterval())&& s.getTrendData()!=null) {
 						s.getTrendData().clear();																		
-					}
-				}			
+				}
+						
 			logger.debug("saving sampler");
 			ret=dashboardDao.saveOrUpdate(s);
 		} else {
@@ -251,7 +249,7 @@ public class DashboardServiceImpl implements DashboardService {
 			Date cutoff= cal.getTime();
 			
 			//get the value - as this is a sampler we only grab the first row
-			BigDecimal val= new BigDecimal(0);
+			BigDecimal val= BigDecimal.ZERO;
 			if (rs.next()) {
 				val = rs.getBigDecimal(sampler.getValueColumn());							
 			}

@@ -68,12 +68,11 @@ public class ReportServiceImpl implements ReportService {
 			scheduler.removeJob(jobName, groupName);
 		}
 
-		if (job.isScheduled()) {
-			if ((job.getCronString() != null) && !job.getCronString().isEmpty()
-					&& !scheduler.isScheduled(jobName, groupName)) {
-				scheduler.addJob(jobName, groupName, job.getCronString(),
-						job.getStartDate(), job.getEndDate());
-			}
+		if (job.isScheduled() && (job.getCronString() != null)
+				&& !job.getCronString().isEmpty()
+				&& !scheduler.isScheduled(jobName, groupName)) {
+			scheduler.addJob(jobName, groupName, job.getCronString(),
+					job.getStartDate(), job.getEndDate());
 		}
 		runnerJobDao.saveOrUpdate(job);
 
@@ -84,13 +83,12 @@ public class ReportServiceImpl implements ReportService {
 		logger.debug("delete job: " + groupName + "." + jobName);
 		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName,
 				new RunnerGroup(groupName)));
-		if (job!=null) {
-			if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
-				scheduler.removeJob(jobName, groupName);
-			
-			runnerJobDao.delete(new RunnerJob_pk(jobName,
-					new RunnerGroup(groupName)));
-			}
+		if (job != null && (job.getCronString() != null)
+				&& !job.getCronString().isEmpty()) {
+			scheduler.removeJob(jobName, groupName);
+
+			runnerJobDao.delete(new RunnerJob_pk(jobName, new RunnerGroup(
+					groupName)));
 		}
 	}
 
@@ -118,13 +116,16 @@ public class ReportServiceImpl implements ReportService {
 	public Boolean isJobActive(String jobName, String groupName)
 			throws SchedulerException {
 		logger.debug("is job active: " + groupName + "." + jobName);
-		
-		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(groupName)));
-		
-		if (job!=null && (job.getCronString() != null) && !job.getCronString().isEmpty()) {
+
+		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName,
+				new RunnerGroup(groupName)));
+
+		if (job != null && (job.getCronString() != null)
+				&& !job.getCronString().isEmpty()) {
 			if (scheduler.isScheduled(jobName, groupName)) {
-				if (job.getEndDate()!=null && job.getEndDate().getTime() < Calendar.getInstance()
-						.getTimeInMillis()) {
+				if (job.getEndDate() != null
+						&& job.getEndDate().getTime() < Calendar.getInstance()
+								.getTimeInMillis()) {
 					// issue 84 - jobs showing as scheduled when the schedule
 					// has ended.
 					return false;

@@ -47,7 +47,7 @@ public final class QuartzCronSchedule {
 			try {
 				i=Integer.parseInt(s);
 			} catch (NumberFormatException e) {
-				
+				i=0;
 			}
 			ret[x++]=i;
 		}		

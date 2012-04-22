@@ -42,20 +42,18 @@ public class SaveConfig extends StandardRunnerAction {
 		
 		//hack to force image size for the logo
 		for (Configuration c: configurations) {
-			if (files!=null&& files.size()>x) {
-				if (c.getType()==ConfigurationType.LOGO) {
-					try {
-						logger.debug(files.get(x).getAbsolutePath());
-						int height=ImageIO.read(files.get(x)).getHeight();
-						if (height > 50) {
-							super.addActionError("Image must be no more than 50px high - this is " + height + "px");
-							return INPUT;					
-						}
-					} catch (Throwable t) {
-						super.addActionError(t.getMessage());
-						return INPUT;
+			if (files!=null&& files.size()>x&&c.getType()==ConfigurationType.LOGO) {
+				try {
+					logger.debug(files.get(x).getAbsolutePath());
+					int height=ImageIO.read(files.get(x)).getHeight();
+					if (height > 50) {
+						super.addActionError("Image must be no more than 50px high - this is " + height + "px");
+						return INPUT;					
 					}
-				}
+				} catch (Throwable t) {
+					super.addActionError(t.getMessage());
+					return INPUT;
+				}				
 			}		
 			x++;
 		}

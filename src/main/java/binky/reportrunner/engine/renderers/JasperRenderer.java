@@ -111,7 +111,7 @@ public class JasperRenderer extends AbstractRenderer {
 			logger.debug("filling report");					
 			jp = JasperFillManager.fillReport(report,
 					new HashMap<String, Object>(), jrDs);
-			
+			jp.setName(label);
 			logger.debug("finished filling report");
 			
 			return jp;

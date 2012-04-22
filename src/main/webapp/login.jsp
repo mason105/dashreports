@@ -14,8 +14,22 @@
 
 <title>Dash Reports</title>
 
+<script type="text/javascript">
+//hacky as feck hack to force ajax divs to reload.
+var pageName = window.location.pathname.substring(window.location.pathname.lastIndexOf('/') + 1);
+
+if (pageName!='login.jsp') {
+	location.reload(true);
+}
+
+</script>
+
+
 </head>
 <body>
+
+
+
 <div id="MainBar">
 	<div id="TopLinks">
 	</div>

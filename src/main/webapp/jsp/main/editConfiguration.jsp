@@ -32,7 +32,7 @@
 				</s:if>
 				<s:if test="type.dataType==2">
 					<sj:spinner label="%{type.displayName}"
-						name="configurations[%{#rowstatus.index}].value" value="%{value}"
+						name="configurations[%{#rowstatus.index}].value" value="%{value}" id="configurations[%{#rowstatus.index}].value"
 						step="1" />
 
 				</s:if>

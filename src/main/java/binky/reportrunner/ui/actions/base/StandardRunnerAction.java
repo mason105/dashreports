@@ -23,8 +23,12 @@
 package binky.reportrunner.ui.actions.base;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.interceptor.ServletRequestAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -36,7 +40,7 @@ import binky.reportrunner.ui.Statics;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
-public abstract class StandardRunnerAction extends ActionSupport implements
+public abstract class StandardRunnerAction extends ActionSupport implements ServletRequestAware,
 		SessionAware {
 
 	protected Map<String, Object> sessionData;
@@ -51,7 +55,13 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 	public abstract String execute() throws Exception;
 
 
-
+	 private HttpServletRequest request;
+	 
+	 
+	protected Locale getRequestLocale() {		
+		return request.getLocale();
+	}
+	
 	public final RunnerUser getSessionUser() {
 		// hack to deal with thread local issues
 		RunnerUser user;
@@ -154,5 +164,12 @@ public abstract class StandardRunnerAction extends ActionSupport implements
 		this.groupName = groupName;
 	}
 	
+	 public void setServletRequest(HttpServletRequest request){
+		  this.request = request;
+		  }
+
+		  public HttpServletRequest getServletRequest(){
+		  return request;
+		  }
 
 }

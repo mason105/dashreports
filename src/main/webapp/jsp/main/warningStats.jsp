@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC 
 	"-//W3C//DTD XHTML 1.1 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%> 
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
@@ -25,8 +26,8 @@
 				cssClass="textbox"
 				onchange="dojo.event.topic.publish('refresh_info');" />
 			
-			<sj:datepicker name="fromDate" showAnim="slideDown"  displayFormat="dd/mm/yy" timepicker="true" onchange="dojo.event.topic.publish('refresh_info');"></sj:datepicker>
-			<sj:datepicker name="toDate" showAnim="slideDown"  displayFormat="dd/mm/yy" timepicker="true" onchange="dojo.event.topic.publish('refresh_info');"></sj:datepicker>
+			<sj:datepicker name="fromDate" showAnim="slideDown" displayFormat="dd/mm/yy"  timepickerFormat="hh:mm:ss" timepicker="true" onchange="dojo.event.topic.publish('refresh_info');"></sj:datepicker>
+			<sj:datepicker name="toDate" showAnim="slideDown"  displayFormat="dd/mm/yy"  timepickerFormat="hh:mm:ss" timepicker="true" onchange="dojo.event.topic.publish('refresh_info');"></sj:datepicker>
 
 		</s:form>
 	</div>

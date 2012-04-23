@@ -323,8 +323,7 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 			NumberFormatException, ParseException {
 		Map<RunnerJobParameter, List<Object>> paramValues = new HashMap<RunnerJobParameter, List<Object>>();
 		RunnerJob job = reportService.getJob(jobName, groupName);
-		DataSource ds = datasourceService
-				.getJDBCDataSource(job.getDatasource());
+		DataSource ds = datasourceService.getJDBCDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 
 		SQLProcessor sqlProcessor = new SQLProcessorImpl();
@@ -348,7 +347,7 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 					// rs.beforeFirst();
 					logger.debug("getting values for parameter: "
 							+ p.getDescription());
-					rs.first();
+				
 					while (rs.next()) {
 						Object value = rs
 								.getObject(p.getParameterBurstColumn());

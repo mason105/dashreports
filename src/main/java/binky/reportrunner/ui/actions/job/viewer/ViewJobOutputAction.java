@@ -22,6 +22,7 @@
  ******************************************************************************/
 package binky.reportrunner.ui.actions.job.viewer;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -45,28 +46,28 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 	private Map<String, ViewerResults> downloadResults;
 	private Map<String, List<String>> columns;
 	private List<RunnerJobParameter> parameters;
-	private Map<String,RowSetDynaClass> gridResults;
+	private Map<String, RowSetDynaClass> gridResults;
 
-		
 	private ReportGenerationService reportGenerationService;
-	
+
 	private ReportService jobService;
 
-	 private static final Logger logger = Logger.getLogger(ViewJobOutputAction.class);
+	private static final Logger logger = Logger
+			.getLogger(ViewJobOutputAction.class);
+
 	@Override
 	public String execute() throws Exception {
 
 		if (!super.doesUserHaveGroup(groupName))
 			throw new SecurityException(
 					"User does not have permissions for group: " + groupName);
-		
 
-		
-		if (jobService.getJob(jobName, groupName)!=null && jobService.getJob(jobName, groupName).getTemplateType()
-				.equals(RunnerJob.Template.NONE)) {
+		if (jobService.getJob(jobName, groupName) != null
+				&& jobService.getJob(jobName, groupName).getTemplateType()
+						.equals(RunnerJob.Template.NONE)) {
 			logger.debug("populating grid");
-			Map<String,RowSetDynaClass> dynaSets;
-		
+			Map<String, RowSetDynaClass> dynaSets;
+
 			if ((this.parameters != null) && (this.parameters.size() > 0)) {
 				logger.debug("using parameters");
 				RunnerJob job = jobService.getJob(jobName, groupName);
@@ -78,33 +79,56 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 					for (RunnerJobParameter jp : jobParameters) {
 						if (jp.getPk().getParameterIdx()
 								.equals(p.getPk().getParameterIdx())) {
-							logger.debug(p.getParameterValue() + " " + p.getParameterValue().equals("**********"));
-							if (!p.getParameterValue().equals("**********"))  {
-								logger.debug("setting parameter value for + " +  p.getPk().getParameterIdx() + " to: " + p.getParameterValue());
+							logger.debug(p.getParameterValue()
+									+ " "
+									+ p.getParameterValue()
+											.equals("**********"));
+							if (!p.getParameterValue().equals("**********")) {
+								logger.debug("setting parameter value for + "
+										+ p.getPk().getParameterIdx() + " to: "
+										+ p.getParameterValue());
+								if (p.getParameterValue() == null
+										|| p.getParameterValue().isEmpty()) {
+									super.addActionError("Parameter idx "
+											+ p.getPk().getParameterIdx()
+											+ " has no value");
+									return INPUT;
+								}
 								jp.setParameterValue(p.getParameterValue());
 							}
 							break;
 						}
 					}
 				}
-				dynaSets = reportGenerationService.getResultSet(groupName, jobName,
-						jobParameters);
 
+				try {
+					dynaSets = reportGenerationService.getResultSet(groupName,
+							jobName, jobParameters);
+				} catch (SQLException e) {
+					logger.warn(e.getMessage(),e);
+					super.addActionError(e.getMessage());
+					return INPUT;
+				}
 			} else {
-				logger.debug("not using parameters");
-				dynaSets = reportGenerationService.getResultSet(groupName, jobName);
+				try {
+					logger.debug("not using parameters");
+					dynaSets = reportGenerationService.getResultSet(groupName,
+							jobName);
+				} catch (SQLException e) {
+					logger.warn(e.getMessage(),e);
+					super.addActionError(e.getMessage());
+					return INPUT;
+				}
 			}
 
-
-			this.gridResults= dynaSets;		
-						
+			this.gridResults = dynaSets;
 
 			// create an event for this so we can track performance of bad
-			// queries			
-		
+			// queries
+
 			logger.debug("redirecting to grid");
-			return "GRID";			
-		
+			return "GRID";
+
 		} else {
 			logger.debug("doing file download");
 			// TODO: NASTY HACK ALERT
@@ -125,17 +149,16 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 
 				}
 
-				downloadResults = reportGenerationService.getResultsForJob(jobName,
-						groupName, jobParameters);
+				downloadResults = reportGenerationService.getResultsForJob(
+						jobName, groupName, jobParameters);
 			} else {
-				downloadResults = reportGenerationService.getResultsForJob(jobName,
-						groupName);
+				downloadResults = reportGenerationService.getResultsForJob(
+						jobName, groupName);
 			}
-
 
 			// create an event for this so we can track performance of bad
 			// queries
-			
+
 			return "DOWNLOAD";
 		}
 	}
@@ -180,9 +203,6 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 		this.columns = columns;
 	}
 
-
-
-
 	public Map<String, RowSetDynaClass> getGridResults() {
 		return gridResults;
 	}
@@ -199,8 +219,5 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 			ReportGenerationService reportGenerationService) {
 		this.reportGenerationService = reportGenerationService;
 	}
-
-
-
 
 }

@@ -1,7 +1,7 @@
 /********************************************/
 /* Dash Reports (http://www.dashreports.org)*/
 /*                                          */
-/* Schema creation scripts  v1.0            */
+/* Schema creation scripts  v1.0   MYSQL    */
 /*                                          */
 /********************************************/
 

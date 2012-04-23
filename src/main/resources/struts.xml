@@ -129,6 +129,7 @@
 			<result name="wait">/jsp/main/jobViewerWait.jsp</result>
 			<result name="DOWNLOAD">/jsp/main/jobViewer.jsp</result>
 			<result name="GRID">/jsp/main/viewJobGrid.jsp</result>
+			<result name="input">/jsp/main/jobViewerError.jsp</result>
 		</action>
 
 		<action name="deleteDataSource" class="deleteDataSourceAction">

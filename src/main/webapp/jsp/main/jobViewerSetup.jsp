@@ -31,9 +31,8 @@
 			</div>
 
 			<s:iterator value="parameters" status="rowstatus">
-
 				<s:if
-					test="(key.parameterBurstColumn == null)||(key.parameterBurstColumn.isEmpty())">
+					test="((key.parameterBurstColumn == null)||(key.parameterBurstColumn.isEmpty()))||!burst">
 					<s:textfield label="%{key.description}"
 						name="parameters[%{#rowstatus.index}].parameterValue"
 						value="%{key.parameterValue}">

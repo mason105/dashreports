@@ -112,9 +112,11 @@
 
 				 <s:select label="Data Type"
 					name="parameters[%{#rowstatus.index}].parameterType" list="dataTypes"
-					listKey="name" listValue="displayName">
-		
+					listKey="name" listValue="displayName" value="%{parameterType}"	>
 					</s:select> 				
+				
+				
+					
 				<input type="radio" name="parameterId" value="<s:property value="%{#rowstatus.index}"/>" checked="unchecked"/>	Select				
 			</div>
 		</s:iterator>

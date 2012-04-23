@@ -38,9 +38,10 @@ public class SetupViewJobAction extends StandardRunnerAction {
 	private Map<RunnerJobParameter, List<Object>> parameters;
 	private ReportService jobService;
 	private ReportGenerationService reportGenerationService;
+	private boolean burst;
 	@Override
 	public String execute() throws Exception {
-		
+		burst=jobService.getJob(jobName, groupName).getIsBurst();
 		parameters = reportGenerationService.getPossibleParameterValues(jobName, groupName);		
 		if (parameters==null||parameters.isEmpty()) {
 			return "NOPARAMS";
@@ -78,6 +79,10 @@ public class SetupViewJobAction extends StandardRunnerAction {
 	public void setReportGenerationService(
 			ReportGenerationService reportGenerationService) {
 		this.reportGenerationService = reportGenerationService;
+	}
+
+	public boolean isBurst() {
+		return burst;
 	}
 	
 }

@@ -16,8 +16,11 @@
 	<bean id="contextApplicationContextProvider" class="binky.reportrunner.util.ApplicationContextProvider"
 		lazy-init="false" />
 
-	<ehcache:annotation-driven cache-manager="ehCacheManager"
-		create-missing-caches="true" />
+	<!-- <ehcache:annotation-driven cache-manager="ehCacheManager" create-missing-caches="true" 
+		/> <ehcache:config cache-manager="ehCacheManager"> <ehcache:evict-expired-elements 
+		interval="10" /> </ehcache:config> -->
+
+
 
 	<!--Enables AspectJ auto-proxying -->
 	<aop:aspectj-autoproxy />
@@ -184,7 +187,8 @@
 
 	</bean>
 
-	<bean id="reportGenerationService" class="binky.reportrunner.service.impl.ReportGenerationServiceImpl">
+	<bean id="reportGenerationService"
+		class="binky.reportrunner.service.impl.ReportGenerationServiceImpl">
 		<property name="datasourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>

@@ -1,6 +1,7 @@
 package binky.reportrunner.ui.actions.dashboard;
 
 import java.awt.Color;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Types;
 import java.util.Date;
@@ -82,7 +83,7 @@ public class GetChart extends BaseDashboardAction {
 						case Types.REAL:
 						case Types.SMALLINT:
 						case Types.TINYINT:
-							value = new BigInteger(d.getValue());
+							value = new BigDecimal(d.getValue());
 							break;
 						case Types.DATE:
 						case Types.TIME:

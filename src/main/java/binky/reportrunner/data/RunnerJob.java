@@ -317,43 +317,8 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime
-				* result
-				+ ((alertEmailAddress == null) ? 0 : alertEmailAddress
-						.hashCode());
-		result = prime * result + (alertOnSuccess ? 1231 : 1237);
-		result = prime * result
-				+ ((burstQuery == null) ? 0 : burstQuery.hashCode());
-		result = prime * result
-				+ ((cronString == null) ? 0 : cronString.hashCode());
-		result = prime * result
-				+ ((datasource == null) ? 0 : datasource.hashCode());
-		result = prime * result
-				+ ((description == null) ? 0 : description.hashCode());
-		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
-		result = prime * result
-				+ ((fileFormat == null) ? 0 : fileFormat.hashCode());
-		result = prime * result + ((isBurst == null) ? 0 : isBurst.hashCode());
-		result = prime * result
-				+ ((outputUrl == null) ? 0 : outputUrl.hashCode());
-		result = prime * result + ((pk == null) ? 0 : pk.hashCode());
-		result = prime * result + ((query == null) ? 0 : query.hashCode());
-		result = prime * result + (scheduled ? 1231 : 1237);
-		result = prime * result
-				+ ((startDate == null) ? 0 : startDate.hashCode());
-		result = prime
-				* result
-				+ ((targetEmailAddress == null) ? 0 : targetEmailAddress
-						.hashCode());
-		result = prime * result + Arrays.hashCode(templateFile);
-		result = prime
-				* result
-				+ ((templateFileName == null) ? 0 : templateFileName.hashCode());
-		result = prime * result
-				+ ((templateType == null) ? 0 : templateType.hashCode());
-		return result;
+		
+		return this.pk.hashCode();
 	}
 
 	@Override

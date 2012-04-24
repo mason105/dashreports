@@ -15,7 +15,7 @@ import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.engine.beans.ViewerResults;
 import binky.reportrunner.exceptions.RenderException;
 
-public interface ReportGenerationService {
+public interface ReportGenerationService extends Auditable {
 
 	public void processReport(String jobName, String groupName)
 			throws IOException, RenderException, EmailException,

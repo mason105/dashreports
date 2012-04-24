@@ -46,7 +46,7 @@
 
 	<bean id="aboutAction" class="binky.reportrunner.ui.actions.About"
 		scope="prototype">
-		<property name="versionId" value="${reportrunner.versionId}" />
+		<property name="versionId" value="${dashreports.versionId}" />
 	</bean>
 
 	<bean id="downloadReportAction"
@@ -67,15 +67,6 @@
 			<ref bean="dashboardService" />
 		</property>
 	</bean>
-
-	<bean id="getSamplerChartAction" class="binky.reportrunner.ui.actions.dashboard.GetSamplerChart"
-		scope="prototype">
-		<property name="dashboardService">
-			<ref bean="dashboardService" />
-		</property>
-	</bean>
-
-
 	<bean id="dashboardWidgetAction"
 		class="binky.reportrunner.ui.actions.dashboard.DashboardWidgetAction"
 		scope="prototype">

@@ -13,7 +13,7 @@ import binky.reportrunner.service.AuditService;
 public class AuditAspect {
 
 	private AuditService auditService;
-	
+	private boolean logGets=false;
 	private static final Logger logger = Logger.getLogger(AuditAspect.class);
 
 	@Around("this(binky.reportrunner.service.Auditable)")
@@ -52,12 +52,17 @@ public class AuditAspect {
 			long runTime = Calendar.getInstance().getTimeInMillis()-start;
 			if (logger.isTraceEnabled()) logger.trace("logging a message for:" + module);
 			//hack to cut down on logging
-			if (!method.startsWith("get")&&!method.startsWith("is"))auditService.logAuditEvent(module, success, runTime, arguments.toString(), method,errorText);
+			if ((!method.startsWith("get")&&!method.startsWith("is")) || logGets)
+				auditService.logAuditEvent(module, success, runTime, arguments.toString(), method,errorText);
 		}
 	}
 	
 	public void setAuditService(AuditService auditService) {
 		this.auditService = auditService;
+	}
+
+	public void setLogGets(boolean logGets) {
+		this.logGets = logGets;
 	}
 	
 }

@@ -37,7 +37,7 @@
 	 				</s:if>		
 				</div>	
 			</div>
-			<img src="<s:url value="getChart%{#x}%{#y}.action?itemId=%{itemId}&rand=%{random}"/>"/>
+			<img src="<s:url value="getChart.action?itemId=%{itemId}&rand=%{random}"/>"/>
 			<!--<o:graph id="chart_%{itemId}" width="%{x}" height="%{y}" dataUrl="/getDashboardChartData.action?itemId=%{item.itemId}" />-->											
 		</div>
 
@@ -125,7 +125,7 @@
 	 				</s:if>		
 				</div>	
 			</div>
-			<img src="<s:url value="getSamplerChart%{#x}%{#y}.action?itemId=%{itemId}&rand=%{random}"/>"/>
+			<img src="<s:url value="getChart.action?itemId=%{itemId}&rand=%{random}"/>"/>
 			<!--<o:graph id="chart_%{itemId}" width="%{x}" height="%{y}" dataUrl="/getDashboardChartData.action?itemId=%{item.itemId}" />-->											
 		</div>
 

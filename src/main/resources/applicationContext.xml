@@ -27,6 +27,7 @@
 
 	<bean name="auditAspect" class="binky.reportrunner.aspects.AuditAspect">
 		<property name="auditService" ref="auditService" />
+		<property name="logGets" value="${dashreports.auditGets}" />
 	</bean>
 
 
@@ -220,7 +221,7 @@
 		<property name="groupDao">
 			<ref bean="runnerGroupDao" />
 		</property>
-		<property name="secureKey" value="${reportrunner.secureKey}" />
+		<property name="secureKey" value="${dashreports.secureKey}" />
 	</bean>
 
 	<bean name="pruneEventHistoryJob" class="org.springframework.scheduling.quartz.JobDetailBean">

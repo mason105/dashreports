@@ -135,6 +135,7 @@ public class DashboardServiceImpl implements DashboardService {
 
 				RunnerDashboardSampler comp = (RunnerDashboardSampler)dashboardDao.get(alert.getItemId());
 				s.setData(comp.getData());
+				s.setSamplingData(comp.getSamplingData());
 				s.setTrendData(comp.getTrendData());
 
 				//need to do a compare

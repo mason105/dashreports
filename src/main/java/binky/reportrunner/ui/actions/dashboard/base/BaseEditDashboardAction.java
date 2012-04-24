@@ -29,8 +29,8 @@ public abstract class BaseEditDashboardAction extends BaseDashboardAction
 	protected DatasourceService dataSourceService;
 	protected List<RunnerDataSource> runnerDataSources;
 	protected QuartzCronSchedule simpleCron = new QuartzCronSchedule("0 * * ? * *");
-	private String itemQuery;
-	private String dataSourceName;
+	protected String itemQuery;
+	protected String dataSourceName;
 
 	private static final Logger logger = Logger
 			.getLogger(BaseEditDashboardAction.class);

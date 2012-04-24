@@ -73,7 +73,7 @@ public class AuditServiceImpl implements AuditService {
 	@Override
 	@Cacheable(cacheName="auditCache")
 	public List<String> getModuleNames() {
-		return Arrays.asList(new String[]{"Scheduler","UserService","GroupService","DashboardService","DatasourceService","ReportService","GroupService","UserDetailsService","ConfigurationService"});
+		return Arrays.asList(new String[]{"Scheduler","UserService","GroupService","DashboardService","DatasourceService","ReportService","GroupService","UserDetailsService","ConfigurationService","ReportGenerationService"});
 	}
 
 }

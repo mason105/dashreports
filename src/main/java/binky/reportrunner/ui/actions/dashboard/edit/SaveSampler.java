@@ -52,6 +52,15 @@ public class SaveSampler extends BaseEditDashboardAction {
 			super.simpleCron=new QuartzCronSchedule("0 0 * ? * *");
 		}
 		
+		if (item.getValueColumn()==null || item.getValueColumn().equals("-")) {
+			super.addActionError("Please select a value column");
+			super.setGroupName(item.getGroup().getGroupName());
+			item.setAlertQuery(itemQuery);
+			item.setDatasource(dataSourceService.getDataSource(dataSourceName));
+			runnerDataSources = this.dataSourceService.getDataSourcesForGroup(item.getGroup().getGroupName());
+			return INPUT;
+		}
+		
 		return super.saveItem(this.item);
 	}
 

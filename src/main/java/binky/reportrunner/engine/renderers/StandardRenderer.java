@@ -33,7 +33,6 @@ import binky.reportrunner.engine.renderers.exporters.AbstractExporter;
 import binky.reportrunner.engine.renderers.exporters.CSVExporter;
 import binky.reportrunner.engine.renderers.exporters.HTMLExporter;
 import binky.reportrunner.engine.renderers.exporters.PDFExporter;
-import binky.reportrunner.engine.renderers.exporters.RTFExporter;
 import binky.reportrunner.engine.renderers.exporters.TabbedXLSExporter;
 import binky.reportrunner.engine.renderers.exporters.XLSExporter;
 import binky.reportrunner.exceptions.RenderException;
@@ -51,9 +50,7 @@ public class StandardRenderer extends AbstractRenderer {
 		case HTML:
 			this.exporter = new HTMLExporter();
 			break;
-		case RTF:
-			this.exporter = new RTFExporter();
-			break;
+		
 		case XLS:
 			this.exporter = new XLSExporter();
 			break;

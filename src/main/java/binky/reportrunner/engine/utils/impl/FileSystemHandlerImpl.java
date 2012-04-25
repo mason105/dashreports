@@ -28,10 +28,10 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import org.apache.commons.vfs.FileObject;
-import org.apache.commons.vfs.FileSystemManager;
-import org.apache.commons.vfs.Selectors;
-import org.apache.commons.vfs.VFS;
+import org.apache.commons.vfs2.FileObject;
+import org.apache.commons.vfs2.FileSystemManager;
+import org.apache.commons.vfs2.Selectors;
+import org.apache.commons.vfs2.VFS;
 import org.apache.log4j.Logger;
 
 import binky.reportrunner.engine.utils.FileSystemHandler;

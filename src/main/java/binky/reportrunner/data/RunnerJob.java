@@ -72,7 +72,7 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 	}
 
 	public enum FileFormat {
-		PDF("PDF"), XLS("Excel"), RTF("RTF"), HTML("HTML"), CSV("CSV"), TABBED_XLS("Tabbed Excel (Bursted)");
+		PDF("PDF"), XLS("Excel"), HTML("HTML"), CSV("CSV"), TABBED_XLS("Tabbed Excel (Bursted)");
 		private String displayName;
 
 		FileFormat(String displayName) {

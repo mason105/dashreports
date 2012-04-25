@@ -65,9 +65,9 @@ public abstract class AbstractRenderer {
 	private static final Logger logger = Logger.getLogger(AbstractRenderer.class);
 	
 	public  void closeOutputStream() throws IOException,RenderException {
+		this.doFinal();
 		logger.debug("closing the output stream");
-		if (this.outputStream!=null) {
-			this.doFinal();
+		if (this.outputStream!=null) {			
 			this.outputStream.close();
 		}
 	}

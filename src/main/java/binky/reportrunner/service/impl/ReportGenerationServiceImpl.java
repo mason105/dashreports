@@ -288,22 +288,31 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 
 			logger.debug("converting to dynasets");
 
+			//hack to fix excel tabbed issues (i hate excel tabs)
+			StringBuilder combinedName=new StringBuilder();
+			String latestId="";
+			boolean first=true;
 			for (String key : rs.keySet()) {
 				ResultSet result = rs.get(key);
-				int lastRow = 0;
+			
 				if ((result != null)) {
-					// &&(result.last())){
-					// lastRow=result.getRow();
-					// result.first();
 
 					String id = UUID.randomUUID().toString();
 					renderReport(result, key, "tmp://" + id + ".tmp", renderer);
-					results.put(key, new ViewerResults(id));
-
+					latestId=id;
+					if (job.getFileFormat()!=RunnerJob.FileFormat.TABBED_XLS) {
+						results.put(key, new ViewerResults(id));
+					} else {
+						if (!first)combinedName.append("_");
+						combinedName.append(key);
+						first=false;
+					}
 				}
-				logger.debug("Tab name=" + key + " rows=" + lastRow);
-			}
 
+			}
+			if (job.getFileFormat()==RunnerJob.FileFormat.TABBED_XLS) {
+				results.put(combinedName.toString(), new ViewerResults(latestId));
+			}
 			return results;
 		} finally {
 			renderer.closeOutputStream();

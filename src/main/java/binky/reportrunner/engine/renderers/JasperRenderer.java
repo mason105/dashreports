@@ -28,6 +28,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.sf.jasperreports.engine.JRException;
@@ -43,7 +44,6 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRCsvExporter;
 import net.sf.jasperreports.engine.export.JRHtmlExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.export.JRRtfExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporter;
 import net.sf.jasperreports.engine.export.JRXlsExporterParameter;
 import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
@@ -62,7 +62,7 @@ public class JasperRenderer extends AbstractRenderer {
 	
 	private boolean tabbedXLS;
 	private String url;
-	
+	private List<String> sheetNames=new LinkedList<String>();
 	private JasperPrint print;
 	
 	public JasperRenderer(byte[] templateFile, FileFormat format) throws JRException {
@@ -82,9 +82,7 @@ public class JasperRenderer extends AbstractRenderer {
 			case HTML:
 				exporter = new JRHtmlExporter();
 				break;
-			case RTF:
-				exporter = new JRRtfExporter();
-				break;
+			
 			case XLS:
 				exporter = new JRXlsExporter();
 				break;
@@ -129,7 +127,9 @@ public class JasperRenderer extends AbstractRenderer {
 	public void generateReport(ResultSet resultSet, String label, String url) throws RenderException, SQLException {
 		JasperPrint jp = generateSinglePage(resultSet, label);
 		if (tabbedXLS) {
-			
+			jp.setProperty("isIgnorePagination", "true");	
+			jp.setName(label);
+			this.sheetNames.add(label);
 			//thanks to: http://stackoverflow.com/questions/3977658/how-do-you-export-a-jasperreport-to-an-excel-file-with-multiple-worksheets/3979026#3979026
 			
 			this.url=url;
@@ -145,7 +145,8 @@ public class JasperRenderer extends AbstractRenderer {
 			}
 		} else {
 			try {
-						logger.debug("exporting report");
+					this.print=jp;
+					logger.debug("exporting report");
 					exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
 					super.getOutputStream(url));
 					exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
@@ -164,10 +165,10 @@ public class JasperRenderer extends AbstractRenderer {
 			try {
 					logger.debug("exporting report");
 					exporter.setParameter(JRExporterParameter.OUTPUT_STREAM,
-					super.getOutputStream(this.url));
-					this.print.setProperty("isIgnorePagination", "true");
+					super.getOutputStream(this.url));								
 					exporter.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET, true);
 					exporter.setParameter(JRExporterParameter.JASPER_PRINT, this.print);					
+					exporter.setParameter(JRXlsExporterParameter.SHEET_NAMES, this.sheetNames.toArray(new String[0]));
 					exporter.exportReport();			
 			} catch (IOException e) {
 				throw new RenderException(e.getMessage(), e);

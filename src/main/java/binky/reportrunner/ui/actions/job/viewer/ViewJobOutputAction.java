@@ -136,24 +136,51 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 				RunnerJob job = jobService.getJob(jobName, groupName);
 
 				List<RunnerJobParameter> jobParameters = job.getParameters();
-
 				for (RunnerJobParameter p : this.parameters) {
 
 					for (RunnerJobParameter jp : jobParameters) {
 						if (jp.getPk().getParameterIdx()
 								.equals(p.getPk().getParameterIdx())) {
-							jp.setParameterValue(p.getParameterValue());
+							logger.debug(p.getParameterValue()
+									+ " "
+									+ p.getParameterValue()
+											.equals("**********"));
+							if (!p.getParameterValue().equals("**********")) {
+								logger.debug("setting parameter value for + "
+										+ p.getPk().getParameterIdx() + " to: "
+										+ p.getParameterValue());
+								if (p.getParameterValue() == null
+										|| p.getParameterValue().isEmpty()) {
+									super.addActionError("Parameter idx "
+											+ p.getPk().getParameterIdx()
+											+ " has no value");
+									return INPUT;
+								}
+								jp.setParameterValue(p.getParameterValue());
+							}
 							break;
 						}
 					}
-
+				}
+				
+				try {
+					downloadResults = reportGenerationService.getResultsForJob(
+						jobName, groupName, jobParameters);
+				} catch (Throwable e) {
+					logger.warn(e.getMessage(),e);
+					super.addActionError(e.getMessage());
+					return INPUT;
 				}
 
-				downloadResults = reportGenerationService.getResultsForJob(
-						jobName, groupName, jobParameters);
 			} else {
-				downloadResults = reportGenerationService.getResultsForJob(
-						jobName, groupName);
+				try {
+					downloadResults = reportGenerationService.getResultsForJob(
+							jobName, groupName);
+				} catch (Throwable e) {
+					logger.warn(e.getMessage(),e);
+					super.addActionError(e.getMessage());
+					return INPUT;
+				}
 			}
 
 			// create an event for this so we can track performance of bad

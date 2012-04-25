@@ -67,7 +67,9 @@ public class SetupEditJob extends BaseEditJob {
 				if (StringUtils.isNotEmpty(job.getOutputUrl())){
 					String[] outSplit = job.getOutputUrl().split("://");
 					outputPrefix=outSplit[0];
-					outputUrl=outSplit[1];
+					if (outSplit.length>1) {
+						outputUrl=outSplit[1];
+					}
 				}
 				exists=true;
 			} else {

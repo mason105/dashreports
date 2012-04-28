@@ -32,7 +32,7 @@ public class EditJob extends BaseEditJob {
 	private String deleteParameters;
 	private String addParameter;
 	private String saveJob;
-
+	private int tab=0;
 	@Override
 	public String execute() throws Exception {
 		
@@ -43,9 +43,11 @@ public class EditJob extends BaseEditJob {
 		logger.debug("execute called");
 		if (isStringPopulated(deleteParameters)) {
 			logger.debug("delete parameter");
+			tab=3;
 			return deleteParameter();
 		} else if (isStringPopulated(addParameter)) {
 			logger.debug("add parameter");
+			tab=3;
 			return addParameter();
 		} else {
 			logger.debug("save job");
@@ -339,6 +341,10 @@ public class EditJob extends BaseEditJob {
 
 	public void setSaveJob(String saveJob) {
 		this.saveJob = saveJob;
+	}
+
+	public int getTab() {
+		return tab;
 	}
 
 }

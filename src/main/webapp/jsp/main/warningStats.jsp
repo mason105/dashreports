@@ -8,7 +8,7 @@
 <html>
 <head>
 <sx:head />
-<sj:head locale="en" jqueryui="true" jquerytheme="smoothness" />
+ 	<sj:head locale="en" jqueryui="true" jquerytheme="%{themeName}"/>
 <link href="<s:url value='/styles/displaytag.css'/>" rel="stylesheet"
 	type="text/css" media="all" />
 </head>

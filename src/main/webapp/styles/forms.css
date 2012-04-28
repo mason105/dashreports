@@ -1,36 +1,4 @@
 
-.tipText {
-	color:#0000ff;
-	font-size:10px;
-	float:right;
-	margin-top:15px;
-	margin-right:5px;
-	visibility:hidden;
-	width:250px;
-}
-
-.formFooterText {
-	margin:5px;
-	padding-top:5px;
-	padding-right:5px;
-	font-style:italic;
-	font-size:9px;
-	color:#FF0000;
-	float:right;
-}
-.formGroup {width:600px;}
-
-.jobList { width:800px;}
-.formGroup, .jobList, .formGroupWide {
-	clear:both;
-	
-	background-color:#fff;
-	padding:0px;
-	border-top: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	padding-bottom:1px;
-}
 pre {
 overflow: auto;
 padding-left: 15px;
@@ -44,73 +12,8 @@ color: #000000;
 max-height: 300px;
 
 }
-.groupHeader img{
-	padding-left:5px; 
-}
-.groupHeader{
-	background-color:#333333;
-	border-bottom: 1px solid #666;
-	padding-left:0px;
-	color:#ffffff;
-	font-weight:bold;
-	height:35px;
-	padding-top:5px;
-	padding-bottom:5px;
-	line-height:35px;
-	font-size:12px;
-	width:100%;
-	right:-5px;
-}
-.jobHeader, .jobViewHeader {
-	background-color:#333333;
-	border-bottom: 1px solid #666;
-	color:#ffffff;
-	font-weight:bold;
-	height:35px;
-	line-height:35px;
-	font-size:12px;
-	}
-.jobHeader {
-	width:640px;
-	padding:5px;
 
-}
-.jobViewHeader img {
-	padding-left:5px;
-}
-.jobViewHeader {
-	padding-top:5px;
-	width:100%;
-	padding-bottom:5px;
-}
-.jobHeader  A, .jobViewHeader A, .formGroupWideHeader A{
-	color:#ffffff;
-}
-.jobHeader  A:hover, .jobViewHeader A:hover, .formGroupWideHeader A:hover{
-	color: #11b7f0;
-}
-.formGroupHeader  A{
-	color:#ffffff;
-}
-.formGroupHeader  A:hover{
-	color: #11b7f0;
-}
-.formGroupHeader {width:590px;}
-.formGroupWide {width:900px;}
-.formGroupWideHeader {width:890px;}
-.jobListHeader  {width:790px;}
 
-.formGroupHeader, .jobListHeader, .formGroupWideHeader {
-	background-color:#333333;
-	border-bottom: 1px solid #666;
-	padding-left:0px;
-	color:#ffffff;
-	font-weight:bold;
-	height:35px;
-	padding:5px;
-	line-height:35px;
-	font-size:12px;	
-}
 
 
  form br {
@@ -154,16 +57,21 @@ max-height: 300px;
 		font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 		vertical-align:middle;		
 	}
-	.formGroup select, textarea.textbox,input.textbox {	
+
+	.formGroup select, textarea.textbox,input.textbox, input.readOnly {	
 		-moz-border-radius: 5px;
 		-webkit-border-radius: 5px;
 		-khtml-border-radius: 5px;
 		border-radius: 5px;
 		font-size:12px;
 		margin-top:4px;	
-		width:585px;
+		width:640px;
 		color:#666;		
 	}
+		select.jq {
+		width:600px;
+	}
+	
 	input.checkbox {
 		width:20px;
 		float:left;
@@ -211,18 +119,5 @@ max-height: 300px;
 		top:1px;
 	}
 	
-	.formBottom {
-		background-color:#eeeeee;
-		border-top: 1px solid #ccc;		
-		padding-left:5px;
-		padding-top:10px;
-		padding-bottom:10px;		
-		border-bottom: 1px solid #ccc;
-	}
-	.formBottomEmpty {
-		border-top: 1px solid #ccc;
-		width:602px;
-	background-color:#fff;
-	padding:0px;
-	}
+	
 /* END FORM ELEMENTS */

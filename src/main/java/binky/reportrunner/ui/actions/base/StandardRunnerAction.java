@@ -45,7 +45,7 @@ public abstract class StandardRunnerAction extends ActionSupport implements Serv
 
 	protected Map<String, Object> sessionData;
 	protected String groupName;
-
+	private String themeName;
 	public void setSession(Map<String, Object> sessionData) {
 		this.sessionData = sessionData;
 	}
@@ -172,4 +172,14 @@ public abstract class StandardRunnerAction extends ActionSupport implements Serv
 		  return request;
 		  }
 
+	public String getThemeName() {
+		return themeName;
+	}
+
+	public void setThemeName(String themeName) {
+		this.themeName = themeName;
+	}
+
+	
+		  
 }

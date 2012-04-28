@@ -7,7 +7,7 @@
 <html>
 <head>
     <sx:head/>
- 	<sj:head locale="en" jqueryui="true" jquerytheme="smoothness"/>
+ 	<sj:head locale="en" jqueryui="true" jquerytheme="%{themeName}"/>
 </head>
 <body>
 <s:form action="saveChart"  method="post"  id="saveChart"  validate="true">

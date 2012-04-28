@@ -1,11 +1,20 @@
 package binky.reportrunner.ui.actions;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.apache.log4j.Logger;
+
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class About extends StandardRunnerAction {
 
 	private String versionId;
-	
+	private static final Logger logger=Logger.getLogger(About.class);
 	private static final long serialVersionUID = -2445708209232186033L;
 
 	private float totalMem;
@@ -13,7 +22,9 @@ public class About extends StandardRunnerAction {
 	private int processors;
 	private float maxMem;
 	private String javaVersion;
-	
+	private String databaseSchemaName;
+	private DataSource dataSource;
+	private Map<String,String> databaseProperties;
 	@Override
 	public String execute() throws Exception {
 		
@@ -24,6 +35,20 @@ public class About extends StandardRunnerAction {
 		processors=runTime.availableProcessors();
 		maxMem=runTime.maxMemory()/mb;
 		javaVersion=System.getProperty("java.version")  + " (" + System.getProperty("java.vendor") + ")";
+		Connection conn=dataSource.getConnection();
+		try {
+			databaseSchemaName=conn.getSchema();
+		} catch (AbstractMethodError e) {
+			databaseSchemaName=conn.getCatalog();
+		}
+		
+		DatabaseMetaData meta= conn.getMetaData();
+		
+		databaseProperties=new HashMap<String, String>();
+		
+		databaseProperties.put("JDBC Driver", meta.getDriverName()+ " (" + meta.getJDBCMajorVersion() + "." + meta.getJDBCMinorVersion()+")");
+		databaseProperties.put("Database URL", meta.getURL());
+		databaseProperties.put("Database Server:", meta.getDatabaseProductName() + " (" + meta.getDatabaseProductVersion()+ ")");		
 		
 		return SUCCESS;
 	}
@@ -74,6 +99,18 @@ public class About extends StandardRunnerAction {
 
 	public void setJavaVersion(String javaVersion) {
 		this.javaVersion = javaVersion;
+	}
+
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+
+	public String getDatabaseSchemaName() {
+		return databaseSchemaName;
+	}
+
+	public Map<String,String> getDatabaseProperties() {
+		return databaseProperties;
 	}
 
 

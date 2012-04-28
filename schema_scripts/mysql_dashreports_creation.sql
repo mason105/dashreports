@@ -5,12 +5,13 @@
 /*                                          */
 /********************************************/
 
-/* create the dashreports user and schema */
-
 /* please feel free to change the username/password/host values */
 
 /* WARNING: running this on top of an existing Dash Reports database will probably destroy the data therein */
 
+/*******************************************************************************/
+/* comment this section out if you intent on creating your own user and schema */
+/*******************************************************************************/
 use mysql;
 
 create database dashtest2;
@@ -26,11 +27,14 @@ update user set PASSWORD=PASSWORD('password') where user='dashtest2';
 FLUSH PRIVILEGES;
 
 commit;
+/*******************************************************************************/
 
+/* if not using the above script then change this to your schema */
 use dashtest2;
+
 SET FOREIGN_KEY_CHECKS = 0;
 
-/*create the quartz tables - scripts from the Quartz distribution: http://quartz-scheduler.org/*/
+/* create the quartz tables - scripts from the Quartz distribution: http://quartz-scheduler.org/ */
 
 DROP TABLE IF EXISTS QRTZ_JOB_LISTENERS;
 DROP TABLE IF EXISTS QRTZ_TRIGGER_LISTENERS;
@@ -191,10 +195,9 @@ INSERT INTO QRTZ_LOCKS values('STATE_ACCESS');
 INSERT INTO QRTZ_LOCKS values('MISFIRE_ACCESS');
 
 commit;
-
+/**************************************/
 /* create the tables for Dash Reports */
-
-
+/**************************************/
 
 
 /* populate the default configuration data */
@@ -217,5 +220,7 @@ insert into T_CONFIG values(1,null,'smtp.yourdomain.com');
 insert into T_CONFIG values(2,null,'7');
 insert into T_CONFIG values(3,null,'Dash Reports User');
 insert into T_CONFIG values(4,null,'admin@yourdomain.com');
+
+commit;
 
 SET FOREIGN_KEY_CHECKS = 1;

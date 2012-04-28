@@ -5,7 +5,7 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <html>
 <head>
- 	<sj:head locale="en" jqueryui="true" jquerytheme="smoothness"/>
+ 	<sj:head locale="en" jqueryui="true" jquerytheme="%{themeName}"/>
  	<script type="text/javascript">
  	jQuery(document).ready(function () { 
  		<s:iterator value="items" status="rowstatus">

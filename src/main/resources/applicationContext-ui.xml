@@ -9,44 +9,57 @@
 
 
 
-	<bean id="getLogoAction" class="binky.reportrunner.ui.actions.general.GetLogo" scope="prototype">
+	<bean id="getLogoAction" class="binky.reportrunner.ui.actions.general.GetLogo"
+		scope="prototype">
 		<property name="configurationService">
 			<ref bean="configurationService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
-	<bean id="setupEditConfigAction" class="binky.reportrunner.ui.actions.admin.config.SetupEditConfig" scope="prototype">
+	<bean id="setupEditConfigAction"
+		class="binky.reportrunner.ui.actions.admin.config.SetupEditConfig"
+		scope="prototype">
 		<property name="configurationService">
 			<ref bean="configurationService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
-	
-	<bean id="saveConfigAction" class="binky.reportrunner.ui.actions.admin.config.SaveConfig" scope="prototype">
+
+	<bean id="saveConfigAction" class="binky.reportrunner.ui.actions.admin.config.SaveConfig"
+		scope="prototype">
 		<property name="configurationService">
 			<ref bean="configurationService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
-	
-	<bean id="clearTrendDataAction" class="binky.reportrunner.ui.actions.dashboard.ClearTrendData" scope="prototype">
+
+	<bean id="clearTrendDataAction" class="binky.reportrunner.ui.actions.dashboard.ClearTrendData"
+		scope="prototype">
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="schedulerAdminAction" class="binky.reportrunner.ui.actions.admin.SchedulerAdmin"
 		scope="prototype">
 		<property name="scheduler" ref="scheduler" />
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="schedulerStateChangeAction"
 		class="binky.reportrunner.ui.actions.admin.SchedulerStateChange"
 		scope="prototype">
 		<property name="scheduler" ref="scheduler" />
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="aboutAction" class="binky.reportrunner.ui.actions.About"
 		scope="prototype">
 		<property name="versionId" value="${dashreports.versionId}" />
+		<property name="dataSource" ref="dataSource"/>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="downloadReportAction"
@@ -55,6 +68,7 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="itemAddDispatcherAction"
@@ -66,6 +80,7 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 	<bean id="dashboardWidgetAction"
 		class="binky.reportrunner.ui.actions.dashboard.DashboardWidgetAction"
@@ -73,10 +88,12 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="indexAction" class="binky.reportrunner.ui.actions.IndexAction"
 		scope="prototype">
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="listGroupsAction" class="binky.reportrunner.ui.actions.group.ListGroupsAction"
@@ -84,6 +101,7 @@
 		<property name="groupService">
 			<ref bean="groupService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 	<bean id="changeAllGroupJobStatusAction"
 		class="binky.reportrunner.ui.actions.group.ChangeAllGroupJobStatus"
@@ -94,6 +112,7 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="deleteGroupAction" class="binky.reportrunner.ui.actions.group.DeleteGroup"
@@ -107,18 +126,21 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 	<bean id="saveGroupAction" class="binky.reportrunner.ui.actions.group.SaveGroup"
 		scope="prototype">
 		<property name="groupService">
 			<ref bean="groupService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 	<bean id="setupEditGroupAction" class="binky.reportrunner.ui.actions.group.SetupEditGroup"
 		scope="prototype">
 		<property name="groupService">
 			<ref bean="groupService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="deleteJobAction" class="binky.reportrunner.ui.actions.job.DeleteJob"
@@ -126,6 +148,7 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="setupViewJobAction"
@@ -137,6 +160,7 @@
 		<property name="reportGenerationService">
 			<ref bean="reportGenerationService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="viewJobOutputAction"
@@ -144,10 +168,11 @@
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
-		</property>		
+		</property>
 		<property name="reportGenerationService">
 			<ref bean="reportGenerationService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="invokeJobAction" class="binky.reportrunner.ui.actions.job.InvokeJob"
@@ -155,6 +180,7 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="editJobAction" class="binky.reportrunner.ui.actions.job.edit.EditJob"
@@ -171,6 +197,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 	<bean id="setupEditJobAction" class="binky.reportrunner.ui.actions.job.edit.SetupEditJob"
 		scope="prototype">
@@ -183,6 +210,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 
@@ -191,13 +219,15 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 	<bean id="viewJobDetailAction" class="binky.reportrunner.ui.actions.job.ViewJobDetail"
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
-		
+
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="deleteDataSourceAction"
@@ -206,6 +236,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="testDataSourceAction" class="binky.reportrunner.ui.actions.datasource.TestDataSource"
@@ -213,6 +244,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="driverDetailAction" class="binky.reportrunner.ui.actions.datasource.DriverDetail"
@@ -220,18 +252,25 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
-	<bean id="changeEncryptionKeyAction" class="binky.reportrunner.ui.actions.admin.encryption.ChangeEncryptionKey"
+	<bean id="changeEncryptionKeyAction"
+		class="binky.reportrunner.ui.actions.admin.encryption.ChangeEncryptionKey"
 		scope="prototype">
 		<property name="datasourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
-	<bean id="setupChangeEncryptionKeyAction" class="binky.reportrunner.ui.actions.admin.encryption.SetupChangeEncryptionKey"  scope="prototype"/>
-	<bean id="generateEncryptionKeyAction" class="binky.reportrunner.ui.actions.admin.encryption.GenerateEncryptionKey"  scope="prototype"/>
-	
+	<bean id="setupChangeEncryptionKeyAction"
+		class="binky.reportrunner.ui.actions.admin.encryption.SetupChangeEncryptionKey"
+		scope="prototype" />
+	<bean id="generateEncryptionKeyAction"
+		class="binky.reportrunner.ui.actions.admin.encryption.GenerateEncryptionKey"
+		scope="prototype" />
+
 
 	<bean id="validateItemQueryAction"
 		class="binky.reportrunner.ui.actions.dashboard.edit.ValidateItemSQL"
@@ -239,6 +278,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="validateJobQueryAction" class="binky.reportrunner.ui.actions.job.ValidateJobSQL"
@@ -246,6 +286,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="validateBurstQueryAction" class="binky.reportrunner.ui.actions.job.ValidateBurstSQL"
@@ -253,6 +294,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="getQueryColumnsAction"
@@ -261,6 +303,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 
@@ -270,6 +313,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 	<bean id="listDataSourcesAction"
 		class="binky.reportrunner.ui.actions.datasource.ListDataSources"
@@ -277,6 +321,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="saveDataSourceAction" class="binky.reportrunner.ui.actions.datasource.SaveDataSource"
@@ -287,6 +332,7 @@
 		<property name="groupService">
 			<ref bean="groupService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="setupEditDataSourceAction"
@@ -298,6 +344,7 @@
 		<property name="groupService">
 			<ref bean="groupService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="setupEditJNDIDataSourceAction"
@@ -309,6 +356,7 @@
 		<property name="groupService">
 			<ref bean="groupService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="setupEditUserAction" class="binky.reportrunner.ui.actions.user.SetupEditUser"
@@ -319,6 +367,7 @@
 		<property name="groupService">
 			<ref bean="groupService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="changePasswordAction" class="binky.reportrunner.ui.actions.user.ChangePassword"
@@ -327,6 +376,7 @@
 			<ref bean="userService" />
 		</property>
 
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 	<bean id="setupChangePasswordAction" class="binky.reportrunner.ui.actions.user.SetupChangePassword"
 		scope="prototype" />
@@ -336,6 +386,7 @@
 		<property name="userService">
 			<ref bean="userService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="listUsersAction" class="binky.reportrunner.ui.actions.user.ListUsers"
@@ -343,6 +394,7 @@
 		<property name="userService">
 			<ref bean="userService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="saveUserAction" class="binky.reportrunner.ui.actions.user.SaveUser"
@@ -353,6 +405,7 @@
 		<property name="groupService">
 			<ref bean="groupService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="deleteItemAction" class="binky.reportrunner.ui.actions.dashboard.edit.DeleteItem"
@@ -360,6 +413,7 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="invokeItemAction" class="binky.reportrunner.ui.actions.dashboard.InvokeItem"
@@ -367,6 +421,7 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="setupEditChartAction"
@@ -378,6 +433,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="saveChartAction" class="binky.reportrunner.ui.actions.dashboard.edit.SaveChart"
@@ -388,6 +444,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="setupEditGridAction"
@@ -399,6 +456,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="setupEditSamplerAction"
@@ -410,6 +468,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="saveSamplerAction"
@@ -421,6 +480,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="saveGridAction" class="binky.reportrunner.ui.actions.dashboard.edit.SaveGrid"
@@ -431,6 +491,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="setupEditThresholdAction"
@@ -442,6 +503,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="saveThresholdAction"
@@ -453,6 +515,7 @@
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="listCurrentExecutingJobsAction"
@@ -464,6 +527,7 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="interruptCurrentExecutingJobAction"
@@ -473,6 +537,7 @@
 			<ref bean="runnerJobService" />
 		</property>
 
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="interruptCurrentExecutingDashboardItemAction"
@@ -481,6 +546,7 @@
 		<property name="dashboardService">
 			<ref bean="dashboardService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="showGroupAction" class="binky.reportrunner.ui.actions.group.ShowGroup"
@@ -491,22 +557,26 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="getAuditHistoryAction"
 		class="binky.reportrunner.ui.actions.admin.GetAuditHistoryAction"
 		scope="prototype">
 		<property name="auditService" ref="auditService" />
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="getAuditChartAction" class="binky.reportrunner.ui.actions.admin.GetAuditChartAction"
 		scope="prototype">
 		<property name="auditService" ref="auditService" />
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 	<bean id="warningStatsAction" class="binky.reportrunner.ui.actions.admin.WarningsStats"
 		scope="prototype">
-			<property name="auditService" ref="auditService" />
+		<property name="auditService" ref="auditService" />
+		<property name="themeName" value="${jQuery.themeName}" />
 	</bean>
 
 </beans>

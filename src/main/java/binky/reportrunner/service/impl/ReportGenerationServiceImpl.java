@@ -115,7 +115,7 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 						job.getFileFormat().toString().toLowerCase(),
 						fileNameValue);
 
-				logger.debug("bursted file being output to: " + outUrl);
+				logger.info("bursted file being output to: " + outUrl);
 
 				renderReport(rs, fileNameValue, outUrl, renderer);
 

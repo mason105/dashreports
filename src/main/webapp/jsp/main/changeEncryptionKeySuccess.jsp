@@ -6,8 +6,7 @@
 <html>
 <head>
 <sx:head parseContent="true" />
-
-<sj:head locale="en" jqueryui="true" jquerytheme="smoothness" />
+ 	<sj:head locale="en" jqueryui="true" jquerytheme="%{themeName}"/>
 
 </head>
 <body>

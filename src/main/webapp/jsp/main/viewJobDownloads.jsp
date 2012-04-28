@@ -7,7 +7,7 @@
 <head>
 <link href="<s:url value='/styles/displaytag.css'/>" rel="stylesheet"
 	type="text/css" media="all" />
-<sj:head jquerytheme="smoothness" />
+ 	<sj:head locale="en" jqueryui="true" jquerytheme="%{themeName}"/>
 </head>
 <body>
 <div class="formGroupWide">

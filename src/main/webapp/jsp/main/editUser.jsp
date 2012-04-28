@@ -3,7 +3,7 @@
 <%@ taglib prefix="sj" uri="/struts-jquery-tags"%>
 <html>
 <head>
-	<sj:head locale="en" jqueryui="true" jquerytheme="smoothness"/>
+ 	<sj:head locale="en" jqueryui="true" jquerytheme="%{themeName}"/>
 </head>
 <body>
 

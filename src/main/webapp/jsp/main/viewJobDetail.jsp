@@ -9,8 +9,8 @@
 </head>
 <body>
 <div class="formGroupWide">
-<div class="formGroupWideHeader"><img src="<s:url value='/images/v2/icons/jobhistory.png'/>" title="View Execution Detail/History" align="absmiddle" />&nbsp;<s:a href="showGroup.action?groupName=%{groupName}"><s:property value="groupName"/></s:a> > Job Detail - 
-			<s:property  value="jobName"/>		</div>
+<div class="formGroupWideHeader"><span><img src="<s:url value='/images/v2/icons/jobhistory.png'/>" title="View Execution Detail/History" align="absmiddle" />&nbsp;<s:a href="showGroup.action?groupName=%{groupName}"><s:property value="groupName"/></s:a> > Job Detail - 
+			<s:property  value="jobName"/></span></div>
 
 <div class="listing">
 	<div class="listingRow">
@@ -32,7 +32,7 @@
 	</div>
 	<div class="listingRow">
 		<div class="listingCell"><b>Next Run Time</b></div>
-		<div class="listingCell"><s:property value="%{job.nexdiv>unTime}" /></div>
+		<div class="listingCell"><s:property value="%{job.nextRunTime}" /></div>
 	</div>
 	<div class="listingRow">
 		<div class="listingCell"><b>Schedule Active</b></div>
@@ -42,7 +42,7 @@
 
 </div>
 <div class="formGroupWide">
-<div class="formGroupWideHeader">Job History</div>
+<div class="formGroupWideHeader"><span>Job History</span></div>
 <display:table name="events"  pagesize="25" requestURI="viewJobDetail.action" export="false">    
 	<display:column property="eventId" title="ID"  sortable="div>ue" headerClass="sortable" />
 	<display:column property="runTime" title="Time (ms)"  sortable="div>ue" headerClass="sortable" />	

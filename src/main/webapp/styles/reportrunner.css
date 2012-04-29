@@ -567,7 +567,7 @@ width:16px;
 
 .formGroup {width:800px;}
 
-.formGroupHeader span {
+.formGroupHeader span, .formGroupWideHeader span{
 	padding:5px;
 }
 .formGroupHeader  A{
@@ -635,7 +635,7 @@ width:16px;
 }
 
 .formGroupWide {width:900px;}
-.formGroupWideHeader {width:890px;}
+.formGroupWideHeader {width:100%;}
 .jobListHeader  {width:800px;}
 
 .formGroupHeader, .jobListHeader, .formGroupWideHeader {

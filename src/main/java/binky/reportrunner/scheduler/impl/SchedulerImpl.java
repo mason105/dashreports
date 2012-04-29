@@ -123,9 +123,12 @@ public class SchedulerImpl implements Scheduler {
 	public Date getNextRunTime(String jobName, String groupName)
 			throws SchedulerException {
 		try {
-			return this.quartzScheduler.getTrigger(
-					jobName + ":" + groupName + ":trigger", "RunnerTriggers")
-					.getNextFireTime();
+			
+			Trigger trig =this.quartzScheduler.getTrigger(
+					jobName + ":" + groupName + ":trigger", "RunnerTriggers"); 
+			Date next= trig.getNextFireTime();
+			return next;
+					
 		} catch (org.quartz.SchedulerException e) {
 			throw new SchedulerException("Error next run time for " + jobName
 					+ "/" + groupName, e);

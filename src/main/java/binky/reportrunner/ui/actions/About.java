@@ -7,14 +7,11 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
-
 import binky.reportrunner.ui.actions.base.StandardRunnerAction;
 
 public class About extends StandardRunnerAction {
 
 	private String versionId;
-	private static final Logger logger=Logger.getLogger(About.class);
 	private static final long serialVersionUID = -2445708209232186033L;
 
 	private float totalMem;
@@ -36,11 +33,7 @@ public class About extends StandardRunnerAction {
 		maxMem=runTime.maxMemory()/mb;
 		javaVersion=System.getProperty("java.version")  + " (" + System.getProperty("java.vendor") + ")";
 		Connection conn=dataSource.getConnection();
-		try {
-			databaseSchemaName=conn.getSchema();
-		} catch (AbstractMethodError e) {
-			databaseSchemaName=conn.getCatalog();
-		}
+		databaseSchemaName=conn.getCatalog();
 		
 		DatabaseMetaData meta= conn.getMetaData();
 		
@@ -49,7 +42,7 @@ public class About extends StandardRunnerAction {
 		databaseProperties.put("JDBC Driver", meta.getDriverName()+ " (" + meta.getJDBCMajorVersion() + "." + meta.getJDBCMinorVersion()+")");
 		databaseProperties.put("Database URL", meta.getURL());
 		databaseProperties.put("Database Server:", meta.getDatabaseProductName() + " (" + meta.getDatabaseProductVersion()+ ")");		
-		
+		conn.close();
 		return SUCCESS;
 	}
 

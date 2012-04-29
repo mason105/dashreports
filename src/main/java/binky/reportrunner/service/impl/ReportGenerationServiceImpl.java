@@ -368,7 +368,7 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 
 				}
 				paramValues.put(p, values);
-
+				rs.close(); //trying to fix issue 100
 			}
 		} finally {
 			conn.close();

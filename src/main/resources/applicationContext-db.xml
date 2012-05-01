@@ -36,6 +36,28 @@
 			<value>${jdbc.validation.timeout}</value>
 		</property>		
 	</bean>
+<!-- 
+   This will execute SQL scripts to recreate the quartz tables at
+   appserver boot time.
+-->
+<bean id="quartzDbInitializer" class="org.springframework.jdbc.datasource.init.DataSourceInitializer">
+  <property name="dataSource" ref="dataSource"/>
+  <property name="enabled" value="${quartz.autocreate}"/>
+  <property name="databasePopulator">
+    <bean class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
+      <property name="continueOnError" value="true"/>
+      <property name="ignoreFailedDrops" value="true"/>
+      <property name="sqlScriptEncoding" value="UTF-8"/>
+      <property name="scripts">
+        <array>
+          <value type="org.springframework.core.io.Resource">
+            classpath:META-INF/quartz/tables_${quartz.dbtype}.sql
+          </value>
+        </array>
+      </property>
+    </bean>
+  </property>
+</bean>
 
 
 	<!--  hibernate plumbing -->
@@ -70,10 +92,10 @@
                 <prop key="hibernate.generate_statistics">false</prop>
 
                 <prop key="hibernate.cache.use_query_cache">true</prop>
-                <prop key="hibernate.cache.use_second_level_cache">false</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
                 <prop key="hibernate.cache.use_minimal_puts">true</prop>
                 <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</prop>
-                <!--  <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>-->
+                <prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
                 <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate4.SpringSessionContext</prop>
       			<prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
 			</props>

@@ -76,7 +76,8 @@ public class RunnerDashboardSampler extends RunnerDashboardItem {
 	private String yAxisLabel;
 	private String valueColumn;
 	
-	private Window window;
+	@Column(name="refresh_window")
+	private Window window=Window.MINUTE;
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="sampler" ,orphanRemoval=true)
 	@OrderBy("sampleTime")

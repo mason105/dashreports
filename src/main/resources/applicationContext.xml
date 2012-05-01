@@ -16,9 +16,12 @@
 	<bean id="contextApplicationContextProvider" class="binky.reportrunner.util.ApplicationContextProvider"
 		lazy-init="false" />
 
-	<!-- <ehcache:annotation-driven cache-manager="ehCacheManager" create-missing-caches="true" 
-		/> <ehcache:config cache-manager="ehCacheManager"> <ehcache:evict-expired-elements 
-		interval="10" /> </ehcache:config> -->
+	<ehcache:annotation-driven cache-manager="ehCacheManager"
+		create-missing-caches="true" />
+	<ehcache:config cache-manager="ehCacheManager">
+		<ehcache:evict-expired-elements
+			interval="10" />
+	</ehcache:config>
 
 
 
@@ -120,7 +123,7 @@
 	</bean>
 
 	<!-- setup our scheduler singleton and the quartz bean -->
-	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl"
+	<bean id="scheduler" class="binky.reportrunner.scheduler.impl.SchedulerImpl" depends-on="quartzDbInitializer" 
 		scope="singleton">
 		<property name="quartzScheduler" ref="quartzFactory" />
 		<property name="clustered" value="${org.quartz.jobStore.isClustered}" />
@@ -233,5 +236,8 @@
 		<!-- run every morning at 6 AM -->
 		<property name="cronExpression" value="0 0 6 * * ?" />
 	</bean>
+
+
+
 
 </beans>

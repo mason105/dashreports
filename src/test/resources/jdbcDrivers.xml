@@ -1,6 +1,11 @@
 <!--  thanks to : http://www.devx.com/tips/Tip/28818 -->
 <jdbcDrivers>
 	<driver>
+		<label>Apache Derby</label>
+		<url>jdbc:derby:database</url>
+		<driverName>org.apache.derby.jdbc.EmbeddedDriver</driverName>
+	</driver>
+	<driver>
 		<label>IBM DB2</label>
 		<url>jdbc:db2://HOST:PORT/DB</url>
 		<driverName>COM.ibm.db2.jdbc.app.DB2Driver</driverName>
@@ -110,4 +115,9 @@
 		<url>jdbc:sybase:Tds:HOST:PORT</url>
 		<driverName>com.sybase.jdbc2.jdbc.SybDriver</driverName>
 	</driver>	
+	<driver>
+		<label>Other</label>
+		<url>JDBC URL</url>
+		<driverName>Please enter a valid class name</driverName>
+	</driver>		
 </jdbcDrivers>

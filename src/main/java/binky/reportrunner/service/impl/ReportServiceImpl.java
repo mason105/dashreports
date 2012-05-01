@@ -38,9 +38,6 @@ import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DatasourceService;
 import binky.reportrunner.service.ReportService;
 
-import com.googlecode.ehcache.annotations.Cacheable;
-import com.googlecode.ehcache.annotations.TriggersRemove;
-
 public class ReportServiceImpl implements ReportService {
 	private Scheduler scheduler;
 
@@ -56,8 +53,7 @@ public class ReportServiceImpl implements ReportService {
 		this.runnerJobDao = runnerJobDao;
 	}
 	
-	
-	 @TriggersRemove(cacheName = "jobCache")
+
 	public void addUpdateJob(RunnerJob job) throws SchedulerException {
 		String groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
@@ -80,7 +76,7 @@ public class ReportServiceImpl implements ReportService {
 		runnerJobDao.saveOrUpdate(job);
 
 	}
-	 @TriggersRemove(cacheName = "jobCache")
+
 	public void deleteJob(String jobName, String groupName)
 			throws SchedulerException {
 		logger.debug("delete job: " + groupName + "." + jobName);
@@ -95,14 +91,14 @@ public class ReportServiceImpl implements ReportService {
 		}
 	}
 
-	@Cacheable(cacheName = "jobCache")
+
 	public RunnerJob getJob(String jobName, String groupName) {
 		logger.debug("get job: " + groupName + "." + jobName);
 		return runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(
 				groupName)));
 	}
 
-	@Cacheable(cacheName = "jobCache")
+
 	public List<RunnerJob> listJobs(String groupName) {
 		return runnerJobDao.findByNamedQuery("getJobsByGroup",
 				new String[] { groupName });

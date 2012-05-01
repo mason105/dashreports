@@ -33,6 +33,7 @@
 		<quartzVersion>1.8.6</quartzVersion>
 		<jasperVersion>4.5.1</jasperVersion>
 		<groovyVersion>1.8.6</groovyVersion>
+		<derbyVersion>10.8.2.2</derbyVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -89,6 +90,18 @@
 	</organization>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<version>${derbyVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derbyclient</artifactId>
+			<version>${derbyVersion}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -285,11 +298,6 @@
 			<version>2.1</version>
 		</dependency>
 		<dependency>
-			<groupId>postgresql</groupId>
-			<artifactId>postgresql</artifactId>
-			<version>9.0-801.jdbc4</version>
-		</dependency>
-		<dependency>
 			<groupId>javax.transaction</groupId>
 			<artifactId>jta</artifactId>
 			<version>1.0.1B</version>
@@ -297,7 +305,7 @@
 		<dependency>
 			<groupId>com.jgeppert.struts2.jquery</groupId>
 			<artifactId>struts2-jquery-plugin</artifactId>
-			<version>3.2.0</version>
+			<version>3.3.0</version>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>

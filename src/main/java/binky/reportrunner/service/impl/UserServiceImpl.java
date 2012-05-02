@@ -1,7 +1,10 @@
 package binky.reportrunner.service.impl;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.apache.log4j.Logger;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
@@ -15,6 +18,8 @@ public class UserServiceImpl implements UserService {
 
 	private ReportRunnerDao<RunnerGroup, String> groupDao;
 
+	private static Logger logger = Logger.getLogger(UserServiceImpl.class);
+	
 
 	@Override
 	public void saveOrUpdate(RunnerUser user) {
@@ -56,6 +61,8 @@ public class UserServiceImpl implements UserService {
 
 	public void setUserDao(ReportRunnerDao<RunnerUser, String> userDao) {
 		this.userDao = userDao;
+		//if no admin user then create one
+		checkForAnyUsers();
 	}
 
 	public void setGroupDao(ReportRunnerDao<RunnerGroup, String> groupDao) {
@@ -96,4 +103,16 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 
+	private void checkForAnyUsers() {
+		List<RunnerUser> us = this.userDao.getAll();
+		if (us==null || us.size()<1) {
+			try {
+				logger.warn("creating admin user as there are no users!");
+				createUser("admin","password","Administrator",false,true,false,new LinkedList<RunnerGroup>());
+			} catch (NoSuchAlgorithmException e) {
+				logger.fatal(e,e);
+			}
+		}
+	}
+	
 }

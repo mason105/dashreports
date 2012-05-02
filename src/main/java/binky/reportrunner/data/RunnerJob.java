@@ -36,6 +36,7 @@ import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.UrlValidator;
@@ -130,6 +131,7 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 
 	private String description;
 
+	@Type(type="org.hibernate.type.TextType")
 	private String query;
 
 	private Date startDate;
@@ -140,6 +142,7 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 
 	private Boolean isBurst;
 
+	@Type(type="org.hibernate.type.TextType")
 	private String burstQuery;
 
 
@@ -147,6 +150,7 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 
 	private String alertEmailAddress;
 
+	@Type(type="org.hibernate.type.MaterializedBlobType")
 	private byte[] templateFile;
 	
 	private Template templateType;

@@ -38,7 +38,7 @@
 	</bean>
 <!-- 
    This will execute SQL scripts to recreate the quartz tables at
-   appserver boot time.
+   appserver boot time. http://caffeineinduced.wordpress.com/2010/04/05/auto-create-quartz-tables-at-startup/
 -->
 <bean id="quartzDbInitializer" class="org.springframework.jdbc.datasource.init.DataSourceInitializer">
   <property name="dataSource" ref="dataSource"/>

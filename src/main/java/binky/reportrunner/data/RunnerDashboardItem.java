@@ -40,6 +40,7 @@ import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 
 @Entity(name = "T_ITEM")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -66,6 +67,7 @@ public abstract class RunnerDashboardItem extends DatabaseObject<Integer> {
 
 	private Date lastUpdated;
 
+	@Type(type="org.hibernate.type.TextType")
 	private String alertQuery;
 
 	private String cronTab="0 0 12 * * ?";

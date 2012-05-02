@@ -51,10 +51,23 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 			return SUCCESS;
 		}
 
+		if (dataSourceName==null || dataSourceName.isEmpty()) {
+			super.addActionError("no datasource selected!");
+			return SUCCESS;
+
+		}
+		
 		RunnerDataSource rds = dataSourceService.getDataSource(dataSourceName);
 
+		if (rds==null) {
+			super.addActionError("invalid datasource name!");
+			return SUCCESS;
+		}
+
+		
 		DataSource ds = dataSourceService.getJDBCDataSource(rds);
 
+	
 		try {
 
 			logger.debug("getting a jdbc connection open");
@@ -88,9 +101,7 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 
 				return SUCCESS;
 			}
-		} catch (SQLException sqle) {
-
-			logger.warn("query failed with exception", sqle);
+		} catch (SQLException sqle) {		
 			super.addActionError("query failed with exception - "
 					+ sqle.getMessage());
 			conn.close();

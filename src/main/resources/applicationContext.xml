@@ -16,12 +16,12 @@
 	<bean id="contextApplicationContextProvider" class="binky.reportrunner.util.ApplicationContextProvider"
 		lazy-init="false" />
 
-	<ehcache:annotation-driven cache-manager="ehCacheManager"
+	<!-- <ehcache:annotation-driven cache-manager="ehCacheManager"
 		create-missing-caches="true" />
 	<ehcache:config cache-manager="ehCacheManager">
 		<ehcache:evict-expired-elements
 			interval="10" />
-	</ehcache:config>
+	</ehcache:config> -->
 
 
 

@@ -33,6 +33,7 @@ import javax.persistence.NamedQuery;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Type;
 
 @Entity(name = "T_EVENT")
 @NamedQueries({
@@ -62,9 +63,14 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 	private boolean success;
 	private long runTime;
 	private String userName;
+	
 	private String module;
+	
+	@Type(type="org.hibernate.type.TextType")
 	private String arguments;
 	private String method;
+	
+	@Type(type="org.hibernate.type.TextType")
 	private String errorText;
 
 	public long getEventId() {

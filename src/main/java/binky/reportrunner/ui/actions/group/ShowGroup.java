@@ -24,7 +24,6 @@ public class ShowGroup extends StandardRunnerAction {
 	private Logger logger = Logger.getLogger(ShowGroup.class);
 	private List<DisplayJob> jobs;
 	private ReportService jobService;
-
 	@Override
 	public String execute() throws Exception {
 
@@ -34,8 +33,8 @@ public class ShowGroup extends StandardRunnerAction {
 				&& !super.doesUserHaveGroup(groupName)) {
 			return ERROR;
 		} else {
-			items = dashboardService.getItemsForGroup(this.groupName);
-
+			items = dashboardService.getItemsForGroup(this.groupName);			
+			
 			if (logger.isDebugEnabled()) {
 
 				if (items != null) {
@@ -48,6 +47,7 @@ public class ShowGroup extends StandardRunnerAction {
 			}
 			List<DisplayJob> jobs = new LinkedList<DisplayJob>();
 			for (RunnerJob job : jobService.listJobs(groupName)) {
+				if (logger.isDebugEnabled()) logger.debug("found job " + job.getPk().getJobName());
 				DisplayJob dJob = new DisplayJob();
 				String jobName = job.getPk().getJobName();
 				String groupName = job.getPk().getGroup().getGroupName();

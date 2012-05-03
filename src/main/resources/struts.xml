@@ -9,11 +9,13 @@
 		<interceptors>
 			<interceptor name="noCache" class="noCacheInterceptor" />
 		</interceptors>
-		<!-- Make the defaultLoginStack the default one used for all actions unless 
-			otherwise configured. -->
 		<default-interceptor-ref name="defaultStack" />
 
 		<default-action-ref name="index" />
+
+		<global-results>
+			<result name="error">/jsp/main/errorPage.jsp</result>
+		</global-results>
 
 		<action name="index" class="indexAction">
 			<result>/jsp/main/index.jsp</result>
@@ -121,6 +123,7 @@
 		</action>
 
 		<action name="deleteDataSource" class="deleteDataSourceAction">
+		
 			<result type="redirectAction">
 				<param name="actionName">listDataSources</param>
 			</result>

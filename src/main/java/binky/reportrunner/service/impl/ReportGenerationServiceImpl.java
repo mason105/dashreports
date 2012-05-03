@@ -396,7 +396,7 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 				for (RunnerJobParameter param : params) {
 					RunnerJobParameter paramNew = new RunnerJobParameter();
 					// copy the parameter
-					paramNew.setPk(param.getPk());
+					paramNew.setRunnerJob(job);
 					paramNew.setParameterBurstColumn(param
 							.getParameterBurstColumn());
 					paramNew.setParameterType(param.getParameterType());
@@ -416,7 +416,7 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 							populatedParams.add(paramNew);
 
 							logger.trace("added populated param"
-									+ param.getPk().getParameterIdx()
+									+ param.getParameterIdx()
 									+ " - value - " + param.getParameterValue());
 						} else {
 							// value already assigned so carry on using that.

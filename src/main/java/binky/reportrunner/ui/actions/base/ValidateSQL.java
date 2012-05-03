@@ -2,7 +2,6 @@ package binky.reportrunner.ui.actions.base;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.sql.DataSource;
@@ -37,8 +36,8 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 		}
 
 		logger.debug("item.dataSourceName is null = " + (dsName) == null);
-		if (dsName==null) {
-			super.addActionError("Item's datasource passed was null");
+		if (dsName==null||dsName.isEmpty()) {
+			super.addActionError("No datasource selected");
 			this.isValid=false;
 			return;
 		}
@@ -76,10 +75,10 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 				this.isValid=true;
 				return;
 			}
-		} catch (SQLException sqle) {
-			logger.warn("query failed with exception" + sqle.getMessage());
+		} catch (Exception e) {
+			logger.warn("query failed with exception" + e.getMessage());
 			super.addActionError("query failed with exception - "
-					+ sqle.getMessage());
+					+ e.getMessage());
 			this.isValid=false;
 			return;
 

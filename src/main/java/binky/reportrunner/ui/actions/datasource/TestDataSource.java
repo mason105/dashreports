@@ -18,6 +18,7 @@ public class TestDataSource extends StandardRunnerAction {
 	public String execute() throws Exception {
 		
 		logger.debug("testing datasource  "+ dataSource.getDataSourceName());
+
 		this.information=dataSourceService.testDataSource(dataSource);
 		
 		return SUCCESS;

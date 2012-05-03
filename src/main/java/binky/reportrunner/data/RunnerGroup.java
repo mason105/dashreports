@@ -67,7 +67,7 @@ public class RunnerGroup extends DatabaseObject<String> {
 	@OneToMany
 	private Collection<RunnerDashboardItem> dashboardItems;
 
-	@OneToMany()
+	@OneToMany
 	private Collection<RunnerJob> runnerJobs;
 
 	@RequiredStringValidator

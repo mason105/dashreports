@@ -117,7 +117,7 @@
  				<div class="formGroupHeader"><span>Parameter Index <s:property value="%{#rowstatus.index}" /></span></div>
 				
 				<s:hidden value="%{#rowstatus.index}"
-					name="parameters[%{#rowstatus.index}].pk.parameterIdx" />
+					name="parameters[%{#rowstatus.index}].parameterIdx" />
 				
 				<s:textfield
 					label="Description" name="parameters[%{#rowstatus.index}].description"

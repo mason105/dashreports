@@ -169,7 +169,7 @@
 	</bean>
 
 	<bean id="runnerJobParameterDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" depends-on="sessionFactory" >
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="target" ref="runnerJobParameterDaoTarget" />
 		<property name="transactionAttributes">
@@ -190,7 +190,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<bean id="runnerHistoryDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" depends-on="sessionFactory">
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="target" ref="runnerHistoryDaoTarget" />
 		<property name="transactionAttributes">
@@ -208,7 +208,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<bean id="runnerJobDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" depends-on="sessionFactory">
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="target" ref="runnerJobDaoTarget" />
 		<property name="transactionAttributes">
@@ -226,7 +226,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<bean id="runnerGroupDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" depends-on="sessionFactory">
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="target" ref="runnerGroupDaoTarget" />
 		<property name="transactionAttributes">
@@ -245,7 +245,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<bean id="runnerUserDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" depends-on="sessionFactory">
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="target" ref="runnerUserDaoTarget" />
 		<property name="transactionAttributes">
@@ -265,7 +265,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<bean id="dashboardDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" depends-on="sessionFactory">
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="target" ref="dashboardDaoTarget" />
 		<property name="transactionAttributes">
@@ -284,7 +284,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<bean id="configurationDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" depends-on="sessionFactory">
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="target" ref="configurationDaoTarget" />
 		<property name="transactionAttributes">
@@ -304,7 +304,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	<bean id="runnerDataSourceDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" depends-on="sessionFactory">
 		<property name="transactionManager" ref="transactionManager" />
 		<property name="target" ref="runnerDataSourceDaoTarget" />
 		<property name="transactionAttributes">

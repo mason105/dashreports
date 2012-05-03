@@ -77,20 +77,20 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 				for (RunnerJobParameter p : this.parameters) {
 
 					for (RunnerJobParameter jp : jobParameters) {
-						if (jp.getPk().getParameterIdx()
-								.equals(p.getPk().getParameterIdx())) {
+						if (jp.getParameterIdx()
+								.equals(p.getParameterIdx())) {
 							logger.debug(p.getParameterValue()
 									+ " "
 									+ p.getParameterValue()
 											.equals("**********"));
 							if (!p.getParameterValue().equals("**********")) {
 								logger.debug("setting parameter value for + "
-										+ p.getPk().getParameterIdx() + " to: "
+										+ p.getParameterIdx() + " to: "
 										+ p.getParameterValue());
 								if (p.getParameterValue() == null
 										|| p.getParameterValue().isEmpty()) {
 									super.addActionError("Parameter idx "
-											+ p.getPk().getParameterIdx()
+											+ p.getParameterIdx()
 											+ " has no value");
 									return INPUT;
 								}
@@ -139,20 +139,20 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 				for (RunnerJobParameter p : this.parameters) {
 
 					for (RunnerJobParameter jp : jobParameters) {
-						if (jp.getPk().getParameterIdx()
-								.equals(p.getPk().getParameterIdx())) {
+						if (jp.getParameterIdx()
+								.equals(p.getParameterIdx())) {
 							logger.debug(p.getParameterValue()
 									+ " "
 									+ p.getParameterValue()
 											.equals("**********"));
 							if (!p.getParameterValue().equals("**********")) {
 								logger.debug("setting parameter value for + "
-										+ p.getPk().getParameterIdx() + " to: "
+										+ p.getParameterIdx() + " to: "
 										+ p.getParameterValue());
 								if (p.getParameterValue() == null
 										|| p.getParameterValue().isEmpty()) {
 									super.addActionError("Parameter idx "
-											+ p.getPk().getParameterIdx()
+											+ p.getParameterIdx()
 											+ " has no value");
 									return INPUT;
 								}

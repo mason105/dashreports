@@ -23,9 +23,11 @@ public class PruneEventHistory extends QuartzJobBean {
 				.getApplicationContext().getBean("runnerHistoryDao");
 		ConfigurationService configurationService = (ConfigurationService) ApplicationContextProvider
 				.getApplicationContext().getBean("configurationService");
-		int daysToKeep = Integer.parseInt(configurationService
-				.getConfigurationItem(ConfigurationType.AUDIT_PURGE_DAYS)
-				.getValue());
+		String val=configurationService
+		.getConfigurationItem(ConfigurationType.AUDIT_PURGE_DAYS)
+		.getValue();
+		if (val==null) val="7";
+		int daysToKeep = Integer.parseInt(val);
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DAY_OF_YEAR, 0 - daysToKeep);
 		Date oldest = cal.getTime();

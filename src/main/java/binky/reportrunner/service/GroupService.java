@@ -8,7 +8,7 @@ public interface GroupService extends Auditable {
 
 	public List<RunnerGroup> getAll();
 	public void saveOrUpdate(RunnerGroup group);
-	public void delete(String groupName);
+	public void delete(String groupName) throws Exception;
 	public RunnerGroup getGroup(String groupName);
 	
 }

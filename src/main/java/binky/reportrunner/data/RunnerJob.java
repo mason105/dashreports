@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -33,6 +34,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -161,7 +163,8 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 
 	private boolean alertOnSuccess;
 
-	@OneToMany(mappedBy = "pk.runnerJob_pk", fetch = FetchType.EAGER)
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER, mappedBy="runnerJob" ,orphanRemoval=true)
+	@OrderBy("parameterIdx")
 	private List<RunnerJobParameter> parameters;
 
 	public boolean isAlertOnSuccess() {

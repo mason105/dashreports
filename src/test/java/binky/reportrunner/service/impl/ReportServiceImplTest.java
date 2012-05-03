@@ -2,6 +2,8 @@ package binky.reportrunner.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import junit.framework.TestCase;
@@ -11,6 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJob_pk;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.GroupService;
@@ -58,7 +61,12 @@ public class ReportServiceImplTest extends TestCase {
 		j.setScheduled(true);
 		j.setStartDate(Calendar.getInstance().getTime());
 		j.setCronString("0 0 * ? * *");
-		
+		RunnerJobParameter p = new RunnerJobParameter();
+		p.setRunnerJob(j);
+		p.setParameterIdx(1);
+		List<RunnerJobParameter> ps = new LinkedList<RunnerJobParameter>();
+		ps.add(p);
+		j.setParameters(ps);
 		return j;
 	}
 	
@@ -67,6 +75,7 @@ public class ReportServiceImplTest extends TestCase {
 
 			RunnerJob c = reportService.getJob(j.getPk().getJobName(), group.getGroupName());
 		
+			
 			assertNotNull(c);
 			
 			

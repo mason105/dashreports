@@ -24,6 +24,7 @@ package binky.reportrunner.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,7 +33,9 @@ import org.apache.log4j.Logger;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
+import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJob_pk;
+import binky.reportrunner.data.sampling.SamplingData;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DatasourceService;
@@ -52,7 +55,6 @@ public class ReportServiceImpl implements ReportService {
 			ReportRunnerDao<RunnerJob, RunnerJob_pk> runnerJobDao) {
 		this.runnerJobDao = runnerJobDao;
 	}
-	
 
 	public void addUpdateJob(RunnerJob job) throws SchedulerException {
 		String groupName = job.getPk().getGroup().getGroupName();
@@ -82,22 +84,20 @@ public class ReportServiceImpl implements ReportService {
 		logger.debug("delete job: " + groupName + "." + jobName);
 		RunnerJob job = runnerJobDao.get(new RunnerJob_pk(jobName,
 				new RunnerGroup(groupName)));
-		if (job != null && (job.getCronString() != null)
-				&& !job.getCronString().isEmpty()) {
-			scheduler.removeJob(jobName, groupName);
-
+		if (job != null) {
+			if ((job.getCronString() != null) && !job.getCronString().isEmpty()) {
+				scheduler.removeJob(jobName, groupName);
+			}
 			runnerJobDao.delete(new RunnerJob_pk(jobName, new RunnerGroup(
 					groupName)));
 		}
 	}
-
 
 	public RunnerJob getJob(String jobName, String groupName) {
 		logger.debug("get job: " + groupName + "." + jobName);
 		return runnerJobDao.get(new RunnerJob_pk(jobName, new RunnerGroup(
 				groupName)));
 	}
-
 
 	public List<RunnerJob> listJobs(String groupName) {
 		return runnerJobDao.findByNamedQuery("getJobsByGroup",

@@ -137,10 +137,12 @@ public class DatasourceServiceImpl implements DatasourceService {
 		logger.debug("Datasource info for " + dsName);
 	}
 
+	@Override
 	public String testDataSource(RunnerDataSource runnerDs) {
 
 		try {
-			if (StringUtils.isBlank(runnerDs.getPassword())) {
+			//fix for issue 105 - when not editing password but just testing
+			if (runnerDs.getPassword()==null||runnerDs.getPassword().trim().isEmpty()) {
 				// see if ds already exists but we are hiding the password
 				RunnerDataSource pwget = this.dataSourceDao.get(runnerDs
 						.getDataSourceName());
@@ -318,7 +320,6 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 		logger.warn("re-encryption complete.  Please ensure you update the properties file with the new key and restart the server");
 	}
-
 
 
 }

@@ -25,6 +25,7 @@ package binky.reportrunner.data;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -85,7 +86,7 @@ public class RunnerDataSource extends DatabaseObject<String> {
 
 	private Integer maxPoolSize=5;
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<RunnerGroup> groups;
 	
 	@RequiredStringValidator

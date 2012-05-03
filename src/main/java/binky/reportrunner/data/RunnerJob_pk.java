@@ -36,6 +36,7 @@ public class RunnerJob_pk implements Serializable {
 	
 	
 	private String jobName;
+	
 	@ManyToOne
 	private RunnerGroup group;
 	

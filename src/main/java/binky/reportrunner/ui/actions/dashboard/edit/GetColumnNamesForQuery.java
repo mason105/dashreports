@@ -2,7 +2,6 @@ package binky.reportrunner.ui.actions.dashboard.edit;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,42 +32,36 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 
 	@Override
 	public String execute() throws Exception {
+
 		Connection conn = null;
-		columnNames = new LinkedList<String>();
-		columnNames.add("-");
-
-		logger.debug("getting column names for query");
-
-		logger.debug("item query is null = " + (itemQuery == null));
-		if (itemQuery == null) {
-			super.addActionError("Query passed was null");
-			return SUCCESS;
-		}
-
-		logger.debug("item.dataSourceName is null = " + (dataSourceName) == null);
-		if (dataSourceName == null) {
-			super.addActionError("Item's datasource passed was null");
-			return SUCCESS;
-		}
-
-		if (dataSourceName==null || dataSourceName.isEmpty()) {
-			super.addActionError("no datasource selected!");
-			return SUCCESS;
-
-		}
-		
-		RunnerDataSource rds = dataSourceService.getDataSource(dataSourceName);
-
-		if (rds==null) {
-			super.addActionError("invalid datasource name!");
-			return SUCCESS;
-		}
-
-		
-		DataSource ds = dataSourceService.getJDBCDataSource(rds);
-
-	
 		try {
+			columnNames = new LinkedList<String>();
+			columnNames.add("-");
+
+			logger.debug("getting column names for query");
+
+			logger.debug("item query is null = " + (itemQuery == null));
+			if (itemQuery == null) {
+				super.addActionError("Query passed was null");
+				return SUCCESS;
+			}
+
+			logger.debug("item.dataSourceName is null = " + (dataSourceName == null));
+			if (dataSourceName == null || dataSourceName.isEmpty()) {
+				super.addActionError("no datasource selected!");
+				return SUCCESS;
+
+			}
+
+			RunnerDataSource rds = dataSourceService
+					.getDataSource(dataSourceName);
+
+			if (rds == null) {
+				super.addActionError("invalid datasource name!");
+				return SUCCESS;
+			}
+
+			DataSource ds = dataSourceService.getJDBCDataSource(rds);
 
 			logger.debug("getting a jdbc connection open");
 			conn = ds.getConnection();
@@ -79,11 +72,9 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 			ResultSet rs = stmt.executeQuery(itemQuery);
 
 			logger.debug("rs is null = " + (rs == null));
-			logger.debug("rs meta data is null = "
-							+ (rs.getMetaData() == null));
+			logger.debug("rs meta data is null = " + (rs.getMetaData() == null));
 
-			if ((rs == null) 
-					|| (rs.getMetaData().getColumnCount() == 0)) {
+			if ((rs == null) || (rs.getMetaData().getColumnCount() == 0)) {
 				logger.warn("query failed to return any data");
 				super.addActionError("query failed to return any data");
 				return SUCCESS;
@@ -101,14 +92,10 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 
 				return SUCCESS;
 			}
-		} catch (SQLException sqle) {		
-			super.addActionError("query failed with exception - "
-					+ sqle.getMessage());
-			conn.close();
-			return SUCCESS;
 		} catch (Throwable t) {
-			logger.error(t.getMessage(),t);
-			throw new Exception(t);
+			super.addActionError("query failed with exception - "
+					+ t.getMessage());
+			return SUCCESS;
 		} finally {
 			if (conn != null)
 				conn.close();
@@ -155,8 +142,6 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 	public void setValueColumnValue(String valueColumnValue) {
 		this.valueColumnValue = valueColumnValue;
 	}
-
-
 
 	public String getXaxisColumnValue() {
 		return xaxisColumnValue;

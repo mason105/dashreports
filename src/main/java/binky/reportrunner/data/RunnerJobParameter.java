@@ -23,26 +23,30 @@
 package binky.reportrunner.data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Index;
 
 @Entity(name = "T_PARAMETER")
 @NamedQueries( {
-	@NamedQuery(name = "getParmatersByJob", query = "from T_PARAMETER p where p.pk.runnerJob_pk.jobName=? and p.pk.runnerJob_pk.group.groupName=?")
+	@NamedQuery(name = "getParmatersByJob", query = "from T_PARAMETER p where p.runnerJob.pk.jobName=? and p.runnerJob.pk.group.groupName=?")
 })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class RunnerJobParameter extends DatabaseObject<RunnerJobParameter_pk> {
+public class RunnerJobParameter extends DatabaseObject<Integer> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5963262941328410080L;
-	public RunnerJobParameter_pk getId() {
-		return pk;
+	public Integer getId() {
+		return id;
 	}
 
 	public enum DataType {
@@ -63,8 +67,18 @@ public class RunnerJobParameter extends DatabaseObject<RunnerJobParameter_pk> {
 		}
 	};
 
-	@Id
-	private RunnerJobParameter_pk pk;
+	@Id 	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	//private RunnerJobParameter_pk pk;
+
+	
+	@ManyToOne
+	@Index(name="paramJobIndex")
+	private RunnerJob runnerJob;
+	
+	private Integer parameterIdx;
+
+	
 	private String parameterValue;
 	private String parameterBurstColumn;
 	private String description;
@@ -89,12 +103,18 @@ public class RunnerJobParameter extends DatabaseObject<RunnerJobParameter_pk> {
 	
 	
 	
-	public RunnerJobParameter_pk getPk() {
-		return pk;
+
+
+	public Integer getParameterIdx() {
+		return parameterIdx;
 	}
 
-	public void setPk(RunnerJobParameter_pk pk) {
-		this.pk = pk;
+	public void setParameterIdx(Integer parameterIdx) {
+		this.parameterIdx = parameterIdx;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getParameterValue() {
@@ -127,7 +147,7 @@ public class RunnerJobParameter extends DatabaseObject<RunnerJobParameter_pk> {
 				+ ((parameterType == null) ? 0 : parameterType.hashCode());
 		result = prime * result
 				+ ((parameterValue == null) ? 0 : parameterValue.hashCode());
-		result = prime * result + ((pk == null) ? 0 : pk.hashCode());
+		
 		return result;
 	}
 
@@ -157,12 +177,16 @@ public class RunnerJobParameter extends DatabaseObject<RunnerJobParameter_pk> {
 				return false;
 		} else if (!parameterValue.equals(other.parameterValue))
 			return false;
-		if (pk == null) {
-			if (other.pk != null)
-				return false;
-		} else if (!pk.equals(other.pk))
-			return false;
+
 		return true;
+	}
+
+	public RunnerJob getRunnerJob() {
+		return runnerJob;
+	}
+
+	public void setRunnerJob(RunnerJob runnerJob) {
+		this.runnerJob = runnerJob;
 	}
 
 }

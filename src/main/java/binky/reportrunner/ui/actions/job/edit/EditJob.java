@@ -17,7 +17,6 @@ import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
-import binky.reportrunner.data.RunnerJobParameter_pk;
 import binky.reportrunner.exceptions.SecurityException;
 import binky.reportrunner.scheduler.SchedulerException;
 
@@ -26,7 +25,7 @@ public class EditJob extends BaseEditJob {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(EditJob.class);
 
-	private ReportRunnerDao<RunnerJobParameter, RunnerJobParameter_pk> parameterDao;
+	private ReportRunnerDao<RunnerJobParameter, Integer> parameterDao;
 
 	private int parameterId;
 	private String deleteParameters;
@@ -69,11 +68,11 @@ public class EditJob extends BaseEditJob {
 		}
 
 		RunnerJobParameter parameter = new RunnerJobParameter();
-		RunnerJobParameter_pk pk = new RunnerJobParameter_pk();
+		
 
 		// pk.setParameterIdx(maxIdx);
-		pk.setParameterIdx(parameters.size() + 1);
-		parameter.setPk(pk);
+		parameter.setParameterIdx(parameters.size() + 1);
+		parameter.setRunnerJob(job);
 		logger.debug("created new parameter with index of: "
 				+ (parameters.size() + 1));
 		parameters.add(parameter);
@@ -220,7 +219,7 @@ public class EditJob extends BaseEditJob {
 			for (RunnerJobParameter p : this.parameters) {
 				if (p != null) {
 					logger.debug(p.getParameterValue());
-					p.getPk().setRunnerJob_pk(job.getPk());
+					p.setRunnerJob(job);
 					logger.debug("parameter type : " + p.getParameterType());
 				} else {
 					logger.warn("null parameter");
@@ -243,11 +242,11 @@ public class EditJob extends BaseEditJob {
 		if (params.size() > 0) {
 			// TODO:refactor
 			for (RunnerJobParameter p : parameters) {
-				parameterDao.delete(p.getPk());
+				parameterDao.delete(p.getId());
 			}
 		}
 		for (RunnerJobParameter p : parameters) {
-			logger.debug("saving parameter idx:" + p.getPk());
+			logger.debug("saving parameter idx:" + p.getParameterIdx());
 			parameterDao.saveOrUpdate(p);
 		}
 
@@ -305,7 +304,7 @@ public class EditJob extends BaseEditJob {
 	 */
 
 	public void setParameterDao(
-			ReportRunnerDao<RunnerJobParameter, RunnerJobParameter_pk> parameterDao) {
+			ReportRunnerDao<RunnerJobParameter, Integer> parameterDao) {
 		this.parameterDao = parameterDao;
 	}
 

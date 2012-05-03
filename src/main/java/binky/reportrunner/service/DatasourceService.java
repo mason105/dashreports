@@ -42,13 +42,13 @@ public interface DatasourceService extends Auditable {
 	public void saveUpdateDataSource(RunnerDataSource dataSource) throws EncryptionException;
 
 	public void deleteDataSource(String dataSourceName);
-
 	public RunnerDataSource getDataSource(String dataSourceName);
 
 	public List<RunnerDataSource> listDataSources();
 	public List<RunnerDataSource> getDataSourcesForGroup(String groupName);
 	public void purgeConnections(String dataSourceName) throws SQLException;
-	public String testDataSource(RunnerDataSource runnerDs) ;
+	public String testDataSource(RunnerDataSource runnerDs);
+	
 	public JDBCDrivers getJDBCDriverDefinitions() throws IOException, SAXException;
 	
 	public void reEncryptPasswords(String newKey) throws EncryptionException;

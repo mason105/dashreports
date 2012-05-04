@@ -37,9 +37,9 @@ import org.hibernate.annotations.Type;
 
 @Entity(name = "T_EVENT")
 @NamedQueries({
-		@NamedQuery(name = "getFailedEvents", query = "from T_EVENT e where e.module = ? and timeStamp > ? and timeStamp < ? and e.success=false order by timeStamp desc"),
+		@NamedQuery(name = "getFailedEvents", query = "from T_EVENT e where e.module = ? and timeStamp > ? and timeStamp < ? and e.status=1 order by timeStamp desc"),
 		@NamedQuery(name = "getLongestRunningEvents", query = "from T_EVENT e where e.module = ?  and timeStamp > ? and timeStamp < ? order by runTime desc"),
-		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.module = ?  and timeStamp > ? and timeStamp < ? and e.success=true order by timeStamp desc"),
+		@NamedQuery(name = "getSuccessEvents", query = "from T_EVENT e where e.module = ?  and timeStamp > ? and timeStamp < ? and e.status=0 order by timeStamp desc"),
 		@NamedQuery(name = "getOldEvents", query = "from T_EVENT e where e.timeStamp < ?") })
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class RunnerHistoryEvent extends DatabaseObject<Long> {
@@ -49,6 +49,8 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 	 */
 	private static final long serialVersionUID = 8583408359341993933L;
 
+	public enum Status {SUCCESS,FAILURE};
+	
 	public Long getId() {
 		return eventId;
 	}
@@ -60,7 +62,7 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long eventId;
 	private Date timeStamp;
-	private boolean success;
+	private Status status;
 	private long runTime;
 	private String userName;
 	
@@ -89,13 +91,7 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		this.timeStamp = timeStamp;
 	}
 
-	public boolean isSuccess() {
-		return success;
-	}
-
-	public void setSuccess(boolean success) {
-		this.success = success;
-	}
+	
 
 	public long getRunTime() {
 		return runTime;
@@ -160,11 +156,11 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		this.method = method;
 	}
 
-	public RunnerHistoryEvent(Date timeStamp, boolean success, long runTime,
+	public RunnerHistoryEvent(Date timeStamp, Status status, long runTime,
 			String userName, String module, String arguments, String method,String errorText) {
 		super();
 		this.timeStamp = timeStamp;
-		this.success = success;
+		this.status = status;
 		this.runTime = runTime;
 		this.userName = userName;
 		this.module = module;
@@ -193,7 +189,6 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		result = prime * result + ((method == null) ? 0 : method.hashCode());
 		result = prime * result + ((module == null) ? 0 : module.hashCode());
 		result = prime * result + (int) (runTime ^ (runTime >>> 32));
-		result = prime * result + (success ? 1231 : 1237);
 		result = prime * result
 				+ ((timeStamp == null) ? 0 : timeStamp.hashCode());
 		result = prime * result
@@ -234,8 +229,6 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 			return false;
 		if (runTime != other.runTime)
 			return false;
-		if (success != other.success)
-			return false;
 		if (timeStamp == null) {
 			if (other.timeStamp != null)
 				return false;
@@ -247,6 +240,14 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 		} else if (!userName.equals(other.userName))
 			return false;
 		return true;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 
 }

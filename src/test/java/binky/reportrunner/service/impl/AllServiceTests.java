@@ -13,6 +13,7 @@ public class AllServiceTests {
 		suite.addTestSuite(GroupServiceImplTest.class);
 		suite.addTestSuite(ReportServiceImplTest.class);
 		suite.addTestSuite(UserServiceImplTest.class);
+		suite.addTestSuite(AuditServiceImplTest.class);
 		//$JUnit-END$
 		return suite;
 	}

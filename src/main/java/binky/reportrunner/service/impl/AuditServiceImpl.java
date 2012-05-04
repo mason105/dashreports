@@ -13,6 +13,7 @@ import com.googlecode.ehcache.annotations.Cacheable;
 
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerHistoryEvent;
+import binky.reportrunner.data.RunnerHistoryEvent.Status;
 import binky.reportrunner.service.AuditService;
 
 public class AuditServiceImpl implements AuditService {
@@ -61,8 +62,7 @@ public class AuditServiceImpl implements AuditService {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth!=null) userName=auth.getName();
-	
-		RunnerHistoryEvent event = new RunnerHistoryEvent(Calendar.getInstance().getTime(), success, runTime, userName, module, arguments, method,errorText);
+		RunnerHistoryEvent event = new RunnerHistoryEvent(Calendar.getInstance().getTime(), success?Status.SUCCESS:Status.FAILURE, runTime, userName, module, arguments, method,errorText);
 		logger.trace("logging audit message: " + event.toString());
 		historyDao.saveOrUpdate(event);
 	}

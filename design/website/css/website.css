@@ -31,15 +31,17 @@ div {
 #ShadeBar {
 	border-top: 1px solid #444;
 	background-image: linear-gradient(bottom, rgb(51, 51, 51) 20%,
-		rgb(102, 102, 102) 100% ); background-image : -o-linear-gradient(
-	bottom, rgb( 51, 51, 51) 20%, rgb( 102, 102, 102) 100%);
-	background-image : -moz-linear-gradient( bottom, rgb( 51, 51, 51) 20%,
-	rgb( 102, 102, 102) 100%); background-image : -webkit-linear-gradient(
-	bottom, rgb( 51, 51, 51) 20%, rgb( 102, 102, 102) 100%);
-	background-image : -ms-linear-gradient( bottom, rgb( 51, 51, 51) 20%,
-	rgb( 102, 102, 102) 100%); background-image : -webkit-gradient( linear,
-	left bottom, left top, color-stop( 0.2, rgb( 51, 51, 51)), color-stop(
-	1, rgb( 102, 102, 102)));
+		rgb(102, 102, 102) 100% );
+	background-image: -o-linear-gradient(bottom, rgb(51, 51, 51) 20%,
+		rgb(102, 102, 102) 100% );
+	background-image: -moz-linear-gradient(bottom, rgb(51, 51, 51) 20%,
+		rgb(102, 102, 102) 100% );
+	background-image: -webkit-linear-gradient(bottom, rgb(51, 51, 51) 20%,
+		rgb(102, 102, 102) 100% );
+	background-image: -ms-linear-gradient(bottom, rgb(51, 51, 51) 20%,
+		rgb(102, 102, 102) 100% );
+	background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.2, rgb(51,
+		51, 51) ), color-stop(1, rgb(102, 102, 102) ) );
 	height: 35px;
 	width: 100%;
 	border-bottom: 1px solid #aaa;
@@ -199,4 +201,22 @@ div.textContentWide {
 
 img {
 	border: 0px;
+}
+
+#newsHeadlineDate {
+	display: block;
+	height:16px;
+	font-weight: bold;
+	
+}
+
+#newsHeadline {
+	color:#666666;
+	display: block;
+	font-weight: bold;
+	font-size: 16px;
+}
+#newsItem {
+	border-bottom: 1px dashed #666666;
+	margin-bottom:5px;
 }

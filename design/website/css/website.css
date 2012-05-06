@@ -2,22 +2,46 @@ body {
 	background-color:#ccc;
 	margin:0px;
 	padding:0px;
+	
 }
+div {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+
 #MainBar{
 	background-color:#333;
 	height:250px;
 	width:100%;
 	position: relative;
 }
+#BottomBar {
+	position:absolute;
+	width:100%;
+	bottom:0;
+	top: 285px;
+
+}
 #TopLinks {
 	position:absolute;
-	right:0px;
+	right:0px;333
 	height:35px;
 }
 
 #ShadeBar{
 	border-top: 1px solid #444;
-	background-color:#666;
+background-image: linear-gradient(bottom, rgb(51,51,51) 20%, rgb(102,102,102) 100%);
+background-image: -o-linear-gradient(bottom, rgb(51,51,51) 20%, rgb(102,102,102) 100%);
+background-image: -moz-linear-gradient(bottom, rgb(51,51,51) 20%, rgb(102,102,102) 100%);
+background-image: -webkit-linear-gradient(bottom, rgb(51,51,51) 20%, rgb(102,102,102) 100%);
+background-image: -ms-linear-gradient(bottom, rgb(51,51,51) 20%, rgb(102,102,102) 100%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.2, rgb(51,51,51)),
+	color-stop(1, rgb(102,102,102))
+);
 	height:35px;
 	width:100%;
 	border-bottom: 1px solid #aaa;
@@ -40,12 +64,11 @@ body {
 #NavBar {
 	margin-left: auto;
 	margin-right: auto;
-		width:800px;
+	width:500px;
 }
 #NavBar  .Button {
 	padding:7px;
 	float:left;
-	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size:16px;
 	font-weight:bold;	
 }
@@ -95,7 +118,19 @@ div.textContent #header ,div.textContentWide #header{
 	padding:5px;
 	margin-bottom:5px;
 	background-color:#ccc;
-	background-image: url(../images/boxheader.jpg);
+background-image: linear-gradient(bottom, rgb(204,204,204) 20%, rgb(238,238,238) 68%);
+background-image: -o-linear-gradient(bottom, rgb(204,204,204) 20%, rgb(238,238,238) 68%);
+background-image: -moz-linear-gradient(bottom, rgb(204,204,204) 20%, rgb(238,238,238) 68%);
+background-image: -webkit-linear-gradient(bottom, rgb(204,204,204) 20%, rgb(238,238,238) 68%);
+background-image: -ms-linear-gradient(bottom, rgb(204,204,204) 20%, rgb(238,238,238) 68%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.2, rgb(204,204,204)),
+	color-stop(0.68, rgb(238,238,238))
+);
 }
 
 div.textContent, div.textContentWide {
@@ -111,6 +146,7 @@ div.textContent, div.textContentWide {
 div.textContent #content, div.textContentWide #content {
 	margin-left:5px;
 	margin-right:5px;
+	padding:5px;
 }
 
 div.textContent {

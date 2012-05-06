@@ -65,12 +65,13 @@
 							</tr>
 							<s:iterator value="longestEvents">
 								<tr>
-									<td><s:if test="success">
+									<td><s:if test="status.toString()=='SUCCESS'">
 											<img src="<s:url value="/images/v2/icons/flag_green.png"/>" />
 										</s:if>
 										<s:else>
 											<img src="<s:url value="/images/v2/icons/flag_red.png"/>" />
-										</s:else></td>
+										</s:else>								
+									</td>
 									<td><s:property value="method" /></td>
 									<td><s:property value="timeStamp" /></td>
 									<td><s:property value="arguments" /></td>

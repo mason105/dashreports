@@ -62,6 +62,7 @@ public class AuditServiceImpl implements AuditService {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		if (auth!=null) userName=auth.getName();
+
 		RunnerHistoryEvent event = new RunnerHistoryEvent(Calendar.getInstance().getTime(), success?Status.SUCCESS:Status.FAILURE, runTime, userName, module, arguments, method,errorText);
 		logger.trace("logging audit message: " + event.toString());
 		historyDao.saveOrUpdate(event);

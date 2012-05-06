@@ -49,7 +49,7 @@ public class RunnerHistoryEvent extends DatabaseObject<Long> {
 	 */
 	private static final long serialVersionUID = 8583408359341993933L;
 
-	public enum Status {SUCCESS,FAILURE};
+	public enum Status {SUCCESS,FAILURE} ;
 	
 	public Long getId() {
 		return eventId;

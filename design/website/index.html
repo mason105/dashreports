@@ -1,114 +1,73 @@
 <html>
 <head>
-<link href="css/website.css" rel="stylesheet" type="text/css" media="all" />
+<link href="css/website.css" rel="stylesheet" type="text/css"
+	media="all" />
 <title>Dash Reports</title>
 <script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-29515629-1' ]);
+	_gaq.push([ '_trackPageview' ]);
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-29515629-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
 </script>
 </head>
 <body>
-<div id="MainBar">
-	<div id="TopLinks">
-		<div class="TopLink"><a href="http://code.google.com/p/reportrunner/downloads/list"><img src="images/download.png"/>Download</a></div>
-		<div class="TopLink"><a href="contact.html"><img src="images/mail.png"/>Contact</a></div>
-	</div>
-	<div id="LogoWrapper">
-		<div id="Logo"></div>
-	</div>
-</div>
-<div id="ShadeBar">
-	<div id="NavBar">
-		<div class="Button">
-			<a href="index.html" class="selected">News</a>
-		</div>
-		<div class="Button">
-			<a href="about.htm">About</a>
-		</div>
-		<div class="Button">
-			<a href="gallery.html">Gallery</a>
-		</div>
-		<div class="Button">
-			<a href="features.html">Features</a>
-		</div>
-		<div class="Button">
-			<a href="demo.html">Demo</a>
-		</div>
-		<div class="Button">
-			<a href="faq.html">FAQ</a>
-		</div>
-		<div class="Button">
-			<a href="help.html">Help</a>
-		</div>
-	</div>
-</div>
-<div id="BottomBar">
-
-<div id="textContentWrapper">
-
-		<div class="textContentWide">
-			<div id="header">What is it?</div>
-			<div id="content">
-			<p>Dash Reports is a versatile and light weight reporting solution.  It allows users and administrators to create a large range of reports driven by SQL databases.</p>
-			<p>It also supports the creation of complex and powerful dash-boards; caching the results locally to reduce load on the source data.</p>
-			<p>Various report output formats are supported and the results can be styled using templates.</p>
-			<p>The system allows for scheduled or user invoked reports, delivered via browser, file, FTP/SFTP or email.</p>				
+	<div id="MainBar">
+		<div id="TopLinks">
+			<div class="TopLink">
+				<a href="http://code.google.com/p/reportrunner/downloads/list"><img
+					src="images/download.png" />Download</a>
+			</div>
+			<div class="TopLink">
+				<a href="contact.html"><img src="images/mail.png" />Contact</a>
 			</div>
 		</div>
-	</div>	
-
-	<div id="textContentWrapper">
-		<div class="textContent">
-			
-			<div id="header">Ease of Use</div>
-			<div id="content">
-			<p>Dash Reports is designed to be simple.  It is based around the principle that the SQL query is designed in another tool and then inserted into the report or dash-board definition.</p>
-			<p>It has easy to navigate menus and a simple and clean user-interface.  Administration is entirely UI based (with the exception of the server parameters) and is fully secured.</p>
-			<p>Access to reports and dash-boards is based on group membership.  Users can also be created as read-only, with no permissions to change reports or dash-board items.  Groups are managed by the system administrator through the administration UI.</p>
-			</div>
+		<div id="LogoWrapper">
+			<div id="Logo"></div>
 		</div>
-		<div class="textContent">
-			<div id="header">Key Features</div>
-			<div id="content">
-				<ul>
-					<li>Secure</li>
-					<li>Flexible</li>
-					<li>Templatable output</li>
-					<li>Multiple Delivery Options</li>
-					<li>Powerful dash-boards</li>
-					<li>Full auditing</li>
-					<li>Output and parameter bursting</li>
-					<li>Fully open-source (GPL v3)</li>
-				</ul>
-			</div>
-		</div>
-		<div class="textContent">
-			<div id="header">Technology</div>
-			<div id="content"><p>
-			Dash Reports is based on industry standard technologies and is simple to support and deploy.  Some of the technologies are listed below.</p>
-			<ul>
-				<li>Java</li>
-				<li>Spring</li>
-				<li>Hibernate</li>
-				<li>Quartz</li>
-				<li>Jasper Reports</li>
-				<li>jFree Charts</li>
-				<li>jQuery</li>
-			</ul>
-			</div>
-		</div>		
 	</div>
+	<div id="ShadeBar">
+		<div id="NavBar">
+			<div class="Button">
+				<a href="index.html" class="selected">News</a>
+			</div>
+			<div class="Button">
+				<a href="about.html">About</a>
+			</div>
+			<div class="Button">
+				<a href="gallery.html">Gallery</a>
+			</div>
+			<div class="Button">
+				<a href="features.html">Features</a>
+			</div>
+			<div class="Button">
+				<a href="demo.html">Demo</a>
+			</div>
+			<div class="Button">
+				<a href="faq.html">FAQ</a>
+			</div>
+			<div class="Button">
+				<a href="help.html">Help</a>
+			</div>
+		</div>
+	</div>
+	<div id="BottomBar">
 
-</div>
-
+		<div id="textContentWrapper">
+			<div class="textContentWide">
+				<div id="header">News</div>
+				Stuff
+			</div>
+		</div>
+	</div>
 </body>
 </html>

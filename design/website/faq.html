@@ -122,10 +122,10 @@
 						</div>
 						<div>
 							<h3>
-								<a href="#"><strong>How are the passwords of the datasources and users protected??</strong></a>
+								<a href="#"><strong>How are the passwords of the datasources and users protected?</strong></a>
 							</h3>
-							<div><p>The user passwords are one-way hashed and therefore unrecoverable (without brute-force).</p>
-							<p>Datasource passwords are encrypted under 3-DES.  The key is stored in the server's properties file, not in the database - therefore separating the concerns of encrypted data storage and the encryption key into different layers of the system.  The key can be regenerated and the passwords re-encrypted via a UI function; this also requires editing the properties file.</p><p>  To compromise the datasource passwords, the attacker would need to compromise both the server running Dash Reports and the database hosting it's data.  Therefore it is highly recommended that they are on separate machines/OS zones.</p>
+							<div><p>The user passwords are one-way hashed and subsequently unrecoverable (without brute-force).</p>
+							<p>Datasource passwords are encrypted under 3-DES.  The key is stored in the server's properties file, not in the database - separating the concerns of encrypted data storage and the encryption key into different layers of the system.  The key can be regenerated and the passwords re-encrypted via a UI function; this also requires editing the properties file.</p><p>  To compromise the datasource passwords, the attacker would need to compromise both the server running Dash Reports and the database hosting it's data.  It is therefore highly recommended that they are on separate machines/OS zones.</p>
 							</div>
 						</div>	
 						<div>
@@ -141,7 +141,7 @@
 								<a href="#"><strong>Is it possible to template the report output?</strong></a>
 							</h3>
 							<div>
-							<p>Yes!  Jasper Reports is supported.  Simply upload a JRXML file when editing the report definition.  The JRXML needs to reference the fields as their are named in the SQL.  The result set from Dash Reports will be injected into the Jasper renderer.</p>																	
+							<p>Yes!  Jasper Reports is supported.  Simply upload a JRXML file when editing the report definition and select Jasper as the template type.  The JRXML needs to reference the fields as they are named in the SQL.  The result set from Dash Reports executing the report's SQL will be injected into the Jasper renderer.</p>																	
 							</div>
 						</div>	
 						<div>

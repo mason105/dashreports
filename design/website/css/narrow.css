@@ -1,0 +1,27 @@
+#textContentWrapper {
+	margin-left: auto;
+	margin-right: auto;
+	width: 738px;
+}
+
+div.textContent {
+	width: 234px;
+	height: 400px;
+}
+
+div.textContentWide {
+	width: 726px;
+}
+
+#LogoWrapper {
+	width: 740px;
+}
+
+#Logo {
+	width: 740px;
+}
+
+div.textContent,div.textContentWide {
+	margin-left: 10px;
+	border: 1px solid #666666;
+}

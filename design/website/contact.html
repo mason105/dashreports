@@ -1,4 +1,143 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+<html lang="en" dir="ltr" version="HTML+RDFa 1.1" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:og="http://ogp.me/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+<head>
+<link href="css/website.css" rel="stylesheet" type="text/css" media="all" />
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
+<!--[if (lt IE 9)&(!IEMobile)]>
+<style type="text/css" media="all">
+	@import url("css/normal.css");
+</style>
+<![endif]-->
+
+<!--[if gte IE 9]><!-->
+<style type="text/css" media="all and (min-width: 740px) and (min-device-width: 740px), (max-device-width: 800px) and (min-width: 740px) and (orientation:landscape)">
+	@import url("css/narrow.css");
+</style>
+<!--<![endif]-->
+
+<!--[if gte IE 9]><!-->
+<style type="text/css" media="all and (min-width: 980px) and (min-device-width: 980px), all and (max-device-width: 1024px) and (min-width: 1024px) and (orientation:landscape)">
+	@import url("css/normal.css");
+</style>
+<!--<![endif]-->
+
+<!--[if gte IE 9]><!-->
+<style type="text/css" media="all and (min-width: 1220px)">
+	@import url("css/wide.css");
+</style>
+<!--<![endif]-->
+
+<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>	
+<title>Dash Reports</title>
+<link rel="shortcut icon" href="images/favicon.png" type="image/png">
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-29515629-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+
+<script type="text/javascript">
+	$(function() {
+
+		$("#accordion").accordion({
+			header : "h3"
+		});
+
+	});
+</script>
+
+<script type="text/javascript" src="js/social.js"></script>
+</head>
+<body>
+
+	<header id="MainBar">
+		<div id="TopLinks">
+			<div class="TopLink">
+				<a href="http://code.google.com/p/reportrunner/downloads/list"><img
+					src="images/download.png" />Download</a>
+			</div>
+			<div class="TopLink">
+				<a href="contact.html" class="selected"><img src="images/mail.png" />Contact</a>
+			</div>
+		</div>
+		<div id="LogoWrapper">
+			<img  class="Logo" src="images/logo.png" alt="Dash Reports" />
+			<h2 class="Logo">Dash Reports</h2>
+		</div>
+	</header>
+	<div id="ShadeBar">
+		<nav id="NavBar">
+			<div class="Button">
+				<a href="index.html">News</a>
+			</div>
+			<div class="Button">
+				<a href="about.html">About</a>
+			</div>
+			<div class="Button">
+				<a href="gallery.html">Gallery</a>
+			</div>
+			<div class="Button">
+				<a href="features.html">Features</a>
+			</div>
+			<div class="Button">
+				<a href="demo.html">Demo</a>
+			</div>
+			<div class="Button">
+				<a href="faq.html">FAQ</a>
+			</div>
+			<div class="Button">
+				<a href="help.html">Help</a>
+			</div>
+		</nav>
+	</div>
+	<div id="BottomBar">
+		<div id="textContentWrapper">
+			<div class="textContentWide">
+				<div id="header">Contact Options</div>
+				<div id="content">
+					<div id="accordion">
+						<div>
+							<h3><a href="#">E-Mail</a></h3>
+							<div>
+								<p>Please email <a href="mailto:info@dashreports.org">info@dashreports.org</a></p>
+							</div>
+						</div>
+						<div>
+							<h3><a href="#">Raising and Issue or Suggestion</a></h3>
+							<div>
+								<p>To raise an issue or make a suggestion, please use the <a href="http://code.google.com/p/reportrunner/issues/list" target="_blank">Google Code site</a></p>
+							</div>
+						</div>
+						<div>
+							<h3><a href="#">User Group</a></h3>
+							<div>
+								<p>The user group is located <a href="http://groups.google.com/group/dash-reports" target="_blank">here</a>.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer id="footerBar">
+		<div id="social"><div id="social_target"></div></div>		
+	</footer>
+</body>
+
+</html>
+<!--  html>
 <head>
 <script type="text/javascript">
 
@@ -110,4 +249,4 @@
 		<div id="social"><div id="social_target"></div></div>		
 	</div>
 </body>
-</html>
+</html -->

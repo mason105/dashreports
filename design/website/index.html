@@ -1,9 +1,33 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+<html lang="en" dir="ltr" version="HTML+RDFa 1.1" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:og="http://ogp.me/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 <head>
-<link href="css/website.css" rel="stylesheet" type="text/css"
-	media="all" />
-<link type="text/css" href="css/smoothness/jquery-ui-1.8.17.custom.css"
-	rel="stylesheet" />
+<link href="css/website.css" rel="stylesheet" type="text/css" media="all" />
+<link type="text/css" href="css/smoothness/jquery-ui-1.8.17.custom.css"	rel="stylesheet" />
+
+<!--[if (lt IE 9)&(!IEMobile)]>
+<style type="text/css" media="all">
+	@import url("css/normal.css");
+</style>
+<![endif]-->
+
+<!--[if gte IE 9]><!-->
+<style type="text/css" media="all and (min-width: 740px) and (min-device-width: 740px), (max-device-width: 800px) and (min-width: 740px) and (orientation:landscape)">
+	@import url("css/narrow.css");
+</style>
+<!--<![endif]-->
+
+<!--[if gte IE 9]><!-->
+<style type="text/css" media="all and (min-width: 980px) and (min-device-width: 980px), all and (max-device-width: 1024px) and (min-width: 1024px) and (orientation:landscape)">
+	@import url("css/normal.css");
+</style>
+<!--<![endif]-->
+
+<!--[if gte IE 9]><!-->
+<style type="text/css" media="all and (min-width: 1220px)">
+	@import url("css/wide.css");
+</style>
+<!--<![endif]-->
+
 <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>	
 <title>Dash Reports</title>
@@ -40,7 +64,8 @@
 			</div>
 		</div>
 		<div id="LogoWrapper">
-			<h2 id="Logo">Dash Reports</h2>
+			<img  class="Logo" src="images/logo.png" alt="Dash Reports" />
+			<h2 class="Logo">Dash Reports</h2>
 		</div>
 	</header>
 	<div id="ShadeBar">

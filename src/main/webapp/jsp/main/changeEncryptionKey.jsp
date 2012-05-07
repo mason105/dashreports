@@ -25,7 +25,7 @@
 						<span class="ui-icon ui-icon-info"
 							style="float: left; margin-right: 0.3em;"></span> <span>This
 							function will re-encrypt the data-source passwords stored in the
-							Dash Reports database. Please use it with care. </span>
+							Dash Reports database. Please use it with care. </span><span><strong>DO NOT use this function if you are using and embedded version, unless you are willing to explode the WAR file and change the properties file.</strong></span>
 					</p>
 				</div>
 			</div>

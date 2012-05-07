@@ -458,7 +458,19 @@ div.formSectionInner div.smallLabel {
 	line-height:25px;
 	padding-left:4px;
 	border-bottom: 1px solid #ccc;
-	background-image:url(../images/v2/listheader.jpg);
+	background-image: linear-gradient(bottom, rgb(204,204,204) 20%, rgb(238,238,238) 68%);
+background-image: -o-linear-gradient(bottom, rgb(204,204,204) 20%, rgb(238,238,238) 68%);
+background-image: -moz-linear-gradient(bottom, rgb(204,204,204) 20%, rgb(238,238,238) 68%);
+background-image: -webkit-linear-gradient(bottom, rgb(204,204,204) 20%, rgb(238,238,238) 68%);
+background-image: -ms-linear-gradient(bottom, rgb(204,204,204) 20%, rgb(238,238,238) 68%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.2, rgb(204,204,204)),
+	color-stop(0.68, rgb(238,238,238))
+);
 	background-repeat: repeat-x; 	
 }
 

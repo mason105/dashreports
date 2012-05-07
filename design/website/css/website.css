@@ -118,6 +118,11 @@ div {
 	width: 1236px;
 }
 
+h1#header {
+		margin:0px;
+		padding: 0px;
+}
+
 div.textContent #header,div.textContentWide #header {
 	border-bottom: 1px solid #666666;
 	font-size: 13px;

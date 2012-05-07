@@ -18,13 +18,14 @@ div {
 #BottomBar {
 	position: absolute;
 	width: 100%;
-	bottom: 0;
+	bottom: 20px;
 	top: 285px;
+	overflow:auto;
 }
 
 #TopLinks {
 	position: absolute;
-	right: 0px; 333
+	right: 0px; 
 	height: 35px;
 }
 
@@ -205,18 +206,45 @@ img {
 
 #newsHeadlineDate {
 	display: block;
-	height:16px;
+	height: 16px;
 	font-weight: bold;
-	
 }
 
 #newsHeadline {
-	color:#666666;
+	color: #666666;
 	display: block;
 	font-weight: bold;
 	font-size: 16px;
 }
+
 #newsItem {
 	border-bottom: 1px dashed #666666;
-	margin-bottom:5px;
+	margin-bottom: 5px;
+}
+
+ul.socialbuttons {
+	height: 25px;
+	padding: 0 !important;
+	margin: 0 auto;
+}
+
+ul.socialbuttons li {
+	padding: 0 9px 0 0 !important;
+	float: left;
+	list-style: none !important;
+}
+
+#footerBar {
+	position: absolute;
+	bottom: 0px;
+	height: 25px;
+	padding-top:5px;
+	background-color: #666;
+	border-top: 1px solid #aaa;
+	width:100%;
+}
+#social {
+	margin-left:auto;
+	margin-right:auto;
+	width:350px;
 }

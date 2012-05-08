@@ -1,7 +1,25 @@
-body {
+html, body {
 	background: #ccc url('../images/background.png');
 	margin: 0px;
 	padding: 0px;
+	height: 100%;
+}
+
+body {
+	display: table;
+	table-layout: fixed;
+	height: 100%;
+	width: 100%;
+}
+
+#MainBar, #ShadeBar, #footerBar {
+	display: table-row;
+	height: 1px;
+}
+
+#BottomBar {
+	display: table-row;
+	height: 100%;
 }
 
 div {
@@ -14,26 +32,22 @@ h3 a {
 
 #MainBar {
 	background-color: #333;
-	/*height: 250px;*/
 	width: 100%;
 	position: relative;
 }
 
 #BottomBar {
+	padding-bottom: 5px;
 	width: 100%;
 	overflow:auto;
-	padding-bottom: 35px;
 }
 
 #TopLinks {
-	position: absolute;
-	right: 0px; 
-	height: 35px;
+	text-align: right;
 }
 
 #ShadeBar {
 	border-top: 1px solid #444;
-	height: 35px;
 	width: 100%;
 	border-bottom: 1px solid #aaa;
 	background: #666;
@@ -66,14 +80,13 @@ img.Logo {
 }
 
 #NavBar {
-	margin-left: auto;
-	margin-right: auto;
-	width: 500px;
+	width: 100%;
+	text-align: center;
 }
 
 #NavBar  .Button {
+	display: inline-block;
 	padding: 7px;
-	float: left;
 	font-size: 16px;
 	font-weight: bold;
 }
@@ -93,8 +106,8 @@ img.Logo {
 }
 
 #TopLinks  .TopLink {
+	display: inline-block;
 	padding: 5px;
-	float: left;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	font-weight: bold;
@@ -131,6 +144,10 @@ h1#header {
 		padding: 0px;
 }
 
+h3 {
+	margin: 0;
+}
+
 div.textContent #header,div.textContentWide #header {
 	border-bottom: 1px solid #666666;
 	font-size: 13px;
@@ -154,11 +171,11 @@ div.textContent #header,div.textContentWide #header {
 }
 
 div.textContent,div.textContentWide {
+	float: left;
 	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 	font-size: 12px;
 	background-color: #eee;
-	float: left;
-	margin-top: 5px;
+	margin: 5px 0;
 	border: 1px solid #666666;
 	border-left: none;
 	border-right: none;'
@@ -170,29 +187,38 @@ div.textContent #content,div.textContentWide #content {
 	padding: 5px;
 }
 
-#gallery {
-	margin-left: auto;
-	margin-right: auto;
-	clear: both;
-	width: 1048px;
+.gallery {
+	text-align: center;
 }
 
-#gallery .item,#gallery  .itemWide {
+.gallery .item, .gallery .itemWide {
 	border: 1px solid #666666;
-	float: left;
-}
-
-#gallery  .itemWide {
-	width: 500px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	margin-left: 11px;
-	margin-right: 11px;
-}
-
-#gallery .item {
-	width: 250px;
+	display: inline-block;
+	max-width: 95%;
+	overflow: hidden;
 	margin: 5px;
+	height: 270px;
+}
+
+.gallery .item a, .gallery .itemWide a {
+	display: block;
+	width: 100%;
+}
+
+.gallery  .itemWide {
+	width: 518px;
+}
+
+.gallery .item {
+	width: 250px;
+}
+
+.gallery .item img {
+	min-width: 250px;
+}
+
+.gallery .itemWide img {
+	min-width: 518px;
 }
 
 img {
@@ -212,38 +238,45 @@ img {
 	font-size: 16px;
 }
 
-#newsItem {
+.newsItem {
 	border-bottom: 1px dashed #666666;
 	margin-bottom: 5px;
 }
 
+.newsItem.first {
+	border: none;
+	margin-bottom: 0px;
+}
+
 ul.socialbuttons {
-	height: 25px;
 	padding: 0 !important;
-	margin: 0 auto;
+	margin: 0;
+	text-align: center;
 }
 
 ul.socialbuttons li {
-	padding: 0 9px 0 0 !important;
-	float: left;
+	padding: 0 5px 0 0 !important;
 	list-style: none !important;
+	display: inline-block;
 }
 
 #footerBar {
-	position: fixed;
-	bottom: 0px;
-	height: 25px;
-	padding-top:5px;
 	background-color: #666;
 	border-top: 1px solid #aaa;
 	width:100%;
 }
+
 #social {
-	margin-left:auto;
-	margin-right:auto;
-	width:400px;
+	margin-top: 5px;
+	text-align: center;
+	width: 100%;
 }
 
 #accordion p a {
 	font-weight: bold;
+}
+
+code a {
+	word-break: break-all;
+	word-wrap: break-word;
 }

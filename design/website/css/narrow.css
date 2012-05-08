@@ -1,3 +1,8 @@
+body, #MainBar, #ShadeBar, #footerBar, #BottomBar {
+	display: block;
+	height: auto;
+}
+
 #textContentWrapper {
 	margin-left: auto;
 	margin-right: auto;
@@ -14,7 +19,8 @@ div.textContentWide {
 }
 
 #LogoWrapper {
-	width: 740px;
+	width: 100%;
+	max-width: 740px;
 }
 
 #Logo {
@@ -22,6 +28,20 @@ div.textContentWide {
 }
 
 div.textContent,div.textContentWide {
-	margin-left: 10px;
+	margin: 5px;
 	border: 1px solid #666666;
+}
+
+#TopLinks {
+	position: absolute;
+	right: 0px; 
+}
+
+#BottomBar {
+	padding-bottom: 30px;
+}
+
+#footerBar {
+	position: fixed;
+	bottom: 0px;
 }

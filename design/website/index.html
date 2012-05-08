@@ -30,7 +30,7 @@
 
 <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>	
-<title>Dash Reports</title>
+<title>Dash Reports: News</title>
 <link rel="shortcut icon" href="images/favicon.png" type="image/png">
 <script type="text/javascript">
 	var _gaq = _gaq || [];
@@ -98,11 +98,20 @@
 			<div class="textContentWide">
 				<h1 id="header">News</h1>
 				<article id="content">
-					<div id="newsItem">
-					<span id="newsHeadlineDate">Monday, 7th May 2012</span>
-					<span id="newsHeadline">Dash Reports v1.0 to be Released Soon</span>
-					<p>Dash Reports version 1.0 will be released very soon.</p>
-					<p>It is currently undergoing the final stages of testing and the various release packages are being assembled</p>
+					<!-- News Template -->
+					<!-- 
+					<div class="newsItem">
+						<h3 id="newsHeadline">{HEADLINE}</h3>
+						<span id="newsHeadlineDate">{DATE 'l, jS F Y'}</span>
+						<p>Dash Reports version 1.0 will be released very soon.</p>
+						<p>{TEXT}</p>
+					</div>
+					-->
+					<div class="newsItem first">
+						<h3 id="newsHeadline">Dash Reports v1.0 to be Released Soon</h3>
+						<span id="newsHeadlineDate">Monday, 7th May 2012</span>
+						<p>Dash Reports version 1.0 will be released very soon.</p>
+						<p>It is currently undergoing the final stages of testing and the various release packages are being assembled</p>
 					</div>
 				</article>
 			</div>

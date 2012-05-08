@@ -34,6 +34,7 @@
       //load twitter
       $.getScript('http://platform.twitter.com/widgets.js', function() {
         $twitter_li.show(); //show it
+        $twitter_li.removeAttr('style');
       });
      
       //add google+1 HTML
@@ -45,6 +46,7 @@
       // Load Google Plus
       $.getScript('https://apis.google.com/js/plusone.js', function() {
         $google_li.show();
+        $google_li.removeAttr('style');
       });
      
          
@@ -56,6 +58,7 @@
       // Load LinkedIn
       $.getScript('http://platform.linkedin.com/in.js', function() {
         $linked_li.show();
+        $linked_li.removeAttr('style');
       });
     });
    

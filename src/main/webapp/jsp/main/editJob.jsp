@@ -88,7 +88,7 @@
 		
 		<sj:accordionItem title="Bursting Configuration" >
 			<s:checkbox label="Is Bursted Report" value="%{job.isBurst}"
-				name="job.isBurst" cssClass="checkbox"   onClick="showHideDetail(this,'burstDetail')">
+				name="job.isBurst" cssClass="checkbox"   onClick="showHideDetail(this,'burstDetail');showHideDetail(this,'burstColDetail')">
 			</s:checkbox>		
 			
 			<s:if test="job.isBurst">
@@ -131,14 +131,18 @@
 					 cssClass="textbox">
 
 				</s:textfield> 
-			
-				<s:textfield label="Burst Column"
-					name="parameters[%{#rowstatus.index}].parameterBurstColumn" tooltip="Please enter a name referenced in the burst query (if being used)"
-					value="%{parameterBurstColumn}"	
-					 cssClass="textbox">
-
-				</s:textfield>
-
+				<s:if test="job.isBurst">
+					<div id="burstColDetail">
+				</s:if>
+				<s:else>
+					<div class="hiddenElement" id="burstColDetail">
+				</s:else>
+					<s:textfield label="Burst Column"
+						name="parameters[%{#rowstatus.index}].parameterBurstColumn" tooltip="Please enter a name referenced in the burst query (if being used)"
+						value="%{parameterBurstColumn}"	
+						 cssClass="textbox">	
+					</s:textfield>
+					</div>
 				 <s:select label="Data Type"
 					name="parameters[%{#rowstatus.index}].parameterType" list="dataTypes"
 					listKey="name" listValue="displayName" value="%{parameterType}"	>

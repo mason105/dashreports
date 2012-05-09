@@ -19,7 +19,7 @@
      
       //add facebook HTML
       var $facebook_li = $('<li/>')
-       .append('<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.dashreports.org&amp;send=false&amp;layout=button_count&amp;width=450&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>')
+       .append('<iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.dashreports.org&amp;send=false&amp;layout=button_count&amp;width=120&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:120px; height:21px;" allowTransparency="true"></iframe>')
        .appendTo($ul);
      
       var tweet = 'Dash Reports - An open-source and light-weight reporting solution';

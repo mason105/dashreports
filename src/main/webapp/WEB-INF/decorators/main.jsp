@@ -1,6 +1,5 @@
-<!DOCTYPE html PUBLIC 
-	"-//W3C//DTD XHTML 1.1 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">
+
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="decorator"
 	uri="http://www.opensymphony.com/sitemesh/decorator"%>
@@ -8,8 +7,10 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 
-<html lang="en">
+<html lang="en" dir="ltr" version="HTML+RDFa 1.1" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:og="http://ogp.me/ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:sioc="http://rdfs.org/sioc/ns#" xmlns:sioct="http://rdfs.org/sioc/types#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+
 <head>
+
 <title><decorator:title default="Dash Reports" /></title>
 <script language="JavaScript" type="text/javascript">
 
@@ -31,7 +32,7 @@
 <decorator:head />
 <link href="<s:url value='/styles/main.css'/>" rel="stylesheet"
 	type="text/css" media="all" />
-
+<link rel="shortcut icon" href="/images/favicon.png" type="image/png">
 </head>
 <body id="page-home">
 <div id="top">
@@ -48,7 +49,7 @@
 				<a href="#" onclick="showNav('manageNavPane');">Manage</a></div>
 			</s:if>
 			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/about.png'/>" /></div><s:a href="about.action">About</s:a></div>
-			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/help.png'/>" /></div><s:a href="index.action">Help</s:a></div>
+			<!-- <div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/help.png'/>" /></div><s:a href="index.action">Help</s:a></div> -->
 			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/password.png'/>" /></div><s:a href="setupChangePassword.action">Password</s:a></div>
 			<div class="navItem"><div class="navIcon"><img src="<s:url value='/images/v2/nav/logout.png'/>" /></div><s:a href="j_spring_security_logout">Logout</s:a></div>
 		</div>

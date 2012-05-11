@@ -94,38 +94,16 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 	public RunnerJob() {
 	}
 
-	public RunnerJob(RunnerJob_pk pk, String outputUrl,
-			RunnerDataSource datasource, String description, String query,
-			Date startDate, Date endDate, String cronString, Boolean isBurst,
-			String burstQuery,
-			String targetEmailAddress, String alertEmailAddress,
-			byte[] templateFile, Template templateType, FileFormat fileFormat,
-			boolean alertOnSuccess, List<RunnerJobParameter> parameters) {
-		super();
-		this.pk = pk;
-		this.outputUrl = outputUrl;
-		this.datasource = datasource;
-		this.description = description;
-		this.query = query;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.cronString = cronString;
-		this.isBurst = isBurst;
-		this.burstQuery = burstQuery;	
-		this.targetEmailAddress = targetEmailAddress;
-		this.alertEmailAddress = alertEmailAddress;
-		this.templateFile=templateFile;
-		this.templateType=templateType;
-		this.fileFormat = fileFormat;
-		this.alertOnSuccess = alertOnSuccess;
-		this.parameters = parameters;
-		
-	}
-	private boolean scheduled;
+private boolean scheduled;
 
 	@Id
 	private RunnerJob_pk pk;
-
+	
+	private Boolean outputToFile;
+	
+	private Boolean sendViaEmail;
+	
+	
 	private String outputUrl;
 
 	@ManyToOne
@@ -418,6 +396,22 @@ public class RunnerJob extends DatabaseObject<RunnerJob_pk> {
 		if (templateType != other.templateType)
 			return false;
 		return true;
+	}
+
+	public Boolean getOutputToFile() {
+		return outputToFile;
+	}
+
+	public void setOutputToFile(Boolean outputToFile) {
+		this.outputToFile = outputToFile;
+	}
+
+	public Boolean getSendViaEmail() {
+		return sendViaEmail;
+	}
+
+	public void setSendViaEmail(Boolean sendViaEmail) {
+		this.sendViaEmail = sendViaEmail;
 	}
 
 }

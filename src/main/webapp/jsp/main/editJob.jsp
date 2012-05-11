@@ -176,7 +176,7 @@
 		<div class="formGroup">
 			<div class="formGroupHeader"><span>Scheduling</span></div>	
 					
-			<s:checkbox label="Schedule Report" name="job.scheduled" cssClass="checkbox" onClick="showHideDetail(this,'scheduleDetail')">
+			<s:checkbox label="Schedule Report" name="job.scheduled"  cssClass="checkbox" onClick="showHideDetail(this,'scheduleDetail')">
 			</s:checkbox>		
 			
 			<s:if test="job.scheduled">
@@ -296,15 +296,27 @@
 	<sj:tab id="output" label="Output" target="outputDiv"/>
 	<div id="outputDiv">	
 		<div class="formGroup">
-		<div class="formGroupHeader"><span>File</span></div>		
-			<s:select name="outputPrefix" style="width:75px;float:left;margin-left:2px;margin-top:20px;margin-right:5px;height:25px;" list="{'file://','sftp://','ftp://'}" value="outputPrefix" />
-			<s:textfield label="Output URL" value="%{outputUrl}" name="outputUrl" tooltip="please enter the path.  Insert !VALUE! within the path to include the combination of any bursted parameters.  You can also add date information between two @ symbols - in the java date format - e.g. @ddmmyyyy@" cssClass="textbox" style="width:500px;">			
-			</s:textfield>
-			<s:select label="File Format" name="job.fileFormat" list="fileFormats"
-			listKey="name" listValue="displayName"></s:select>
+		<div class="formGroupHeader"><span>File</span></div>	
+			<s:checkbox name="outputToFile" label="Output to File" cssClass="checkbox" onClick="showHideDetail(this,'fileOutputDetail')"/>
+			<s:if test="job.outputToFile">
+				<div id="fileOutputDetail">
+			</s:if>
+			<s:else>
+				<div class="hiddenElement" id="fileOutputDetail">
+			</s:else>	
+				<s:select name="outputPrefix" style="width:75px;float:left;margin-left:2px;margin-top:20px;margin-right:5px;height:25px;" list="{'file://','sftp://','ftp://'}" value="outputPrefix" />
+				<s:textfield label="Output URL" value="%{outputUrl}" name="outputUrl" tooltip="please enter the path.  Insert !VALUE! within the path to include the combination of any bursted parameters.  You can also add date information between two @ symbols - in the java date format - e.g. @ddmmyyyy@" cssClass="textbox" style="width:500px;">			
+				</s:textfield>			
+			</div>
 		</div>
 		<div class="formGroup">
-			<div class="formGroupHeader">Template</div>				
+			<div class="formGroupHeader">Formatting</div>
+			
+			<p style="font-weight:bold;">This section is relevant for file output, email output and viewing via web</p>
+			
+			<s:select label="Output Format" name="job.fileFormat" list="fileFormats"
+			listKey="name" listValue="displayName"></s:select>
+							
 			<s:select label="Template Type" name="job.templateType" list="templateTypes"
 			listKey="name" listValue="displayName"></s:select>
 			
@@ -318,10 +330,20 @@
 		</div>
 		
 		<div class="formGroup">
-			<div class="formGroupHeader"><span>Email Distribution</span></div>				
+			<div class="formGroupHeader"><span>Email Distribution</span></div>		
+			<s:checkbox name="sendViaEmail" label="Send via Email" cssClass="checkbox" onClick="showHideDetail(this,'emailOutputDetail')"/>
+			
+			<s:if test="job.sendViaEmail">
+				<div id="emailOutputDetail">
+			</s:if>
+			<s:else>
+				<div class="hiddenElement" id="emailOutputDetail">
+			</s:else>	
+					
 			<s:textarea label="Distribution Email Address(es)" cols="30" rows="20"
 				value="%{job.targetEmailAddress}" name="job.targetEmailAddress" cssClass="textbox">							
 			</s:textarea>
+			</div>
 		</div>
 		<div class="formBottomEmpty"></div>
 	</div>

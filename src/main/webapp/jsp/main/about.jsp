@@ -21,7 +21,7 @@
 		<strong>Lead Developer</strong>   
 	</td>
 	<td>    
-		<a href="mailto:dangrout@googlemail.com">Daniel Matthews-Grout</a>
+		<a href="http://www.matthews-grout.co.uk" target="_blank">Daniel Matthews-Grout</a>
 	</td>
 </tr>
 <tr>

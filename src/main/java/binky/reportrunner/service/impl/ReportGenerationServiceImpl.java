@@ -134,7 +134,7 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 		String smtpServer = configurationService.getConfigurationItem(ConfigurationType.EMAIL_SERVER).getValue();
 		
 		// send email if need be
-		if ((job.getTargetEmailAddress() != null)
+		if (job.getSendViaEmail()&&(job.getTargetEmailAddress() != null)
 				&& (!job.getTargetEmailAddress().isEmpty())) {
 			EmailHandler email = new EmailHandlerImpl();
 			email.sendEmail(job.getTargetEmailAddress(), fromAddress,

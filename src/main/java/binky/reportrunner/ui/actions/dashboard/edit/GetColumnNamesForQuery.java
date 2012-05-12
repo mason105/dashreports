@@ -75,7 +75,7 @@ public class GetColumnNamesForQuery extends StandardRunnerAction {
 			logger.debug("rs meta data is null = " + (rs.getMetaData() == null));
 
 			if ((rs == null) || (rs.getMetaData().getColumnCount() == 0)) {
-				logger.warn("query failed to return any data");
+				logger.debug("query failed to return any data");
 				super.addActionError("query failed to return any data");
 				return SUCCESS;
 			} else {

@@ -61,7 +61,16 @@ public class SaveSampler extends BaseEditDashboardAction {
 			return INPUT;
 		}
 		
-		return super.saveItem(this.item);
+		String status=super.saveItem(this.item);
+		
+		if (status.equals(INPUT)) {
+			super.setGroupName(item.getGroup().getGroupName());
+			item.setAlertQuery(itemQuery);
+			item.setDatasource(dataSourceService.getDataSource(dataSourceName));
+			runnerDataSources = this.dataSourceService.getDataSourcesForGroup(item.getGroup().getGroupName());			
+		}
+		
+		return status;
 	}
 
 	public RunnerDashboardSampler getItem() {

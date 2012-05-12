@@ -166,11 +166,10 @@
 			<div class="formBottomEmpty"></div>
 	</div>
 	<div class="formBottom">
-	<div class="formFooterText">* required field
+	<div class="formFooterText">* required field</div>
 
 	<s:actionerror  theme="jquery" />
-		<s:actionmessage  theme="jquery"/>
-		</div>
+		<s:actionmessage  theme="jquery"/>		
 	<s:submit value="Save" align="left" /></div>
 	
 </sj:tabbedpanel>

@@ -62,7 +62,7 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 							+ (rs.getMetaData() == null));
 
 			if ((rs == null) || (rs.getMetaData().getColumnCount() == 0)) {
-				logger.warn("query failed to return any data");
+				logger.debug("query failed to return any data");
 				super.addActionError("query failed to return any data");
 				this.isValid=false;
 				return;
@@ -76,7 +76,7 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 				return;
 			}
 		} catch (Exception e) {
-			logger.warn("query failed with exception" + e.getMessage());
+			logger.debug("query failed with exception" + e.getMessage());
 			super.addActionError("query failed with exception - "
 					+ e.getMessage());
 			this.isValid=false;

@@ -8,5 +8,6 @@
 <s:else>
 <img src="<s:url value="/images/v2/icons/cross.png"/>"/>
 </s:else>
+Time to Execute: <s:property value="runTime"/> (ms)
 		<s:actionerror theme="jquery"/>
 		<s:actionmessage theme="jquery"/>

@@ -3,6 +3,7 @@ package binky.reportrunner.ui.actions.base;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Calendar;
 
 import javax.sql.DataSource;
 
@@ -21,6 +22,7 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 
 	private DatasourceService dataSourceService;
 
+	private long runTime;
 	private boolean isValid;
 	
 	public void validateSql(String sql, String dsName) throws Exception {
@@ -34,7 +36,7 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 			this.isValid=false;
 			return;
 		}
-
+		
 		logger.debug("item.dataSourceName is null = " + (dsName) == null);
 		if (dsName==null||dsName.isEmpty()) {
 			super.addActionError("No datasource selected");
@@ -54,12 +56,15 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 			Statement stmt = conn.createStatement();
 
 			logger.debug("running sql: " + sql);
+			
+			long startTime = Calendar.getInstance().getTimeInMillis();
+			
 			ResultSet rs = stmt.executeQuery(sql);
-
+			
+			this.runTime= Calendar.getInstance().getTimeInMillis()-startTime;
+			
 			logger.debug("rs is null = " + (rs == null));
-			logger
-					.debug("rs meta data is null = "
-							+ (rs.getMetaData() == null));
+			logger.debug("rs meta data is null = " + (rs.getMetaData() == null));
 
 			if ((rs == null) || (rs.getMetaData().getColumnCount() == 0)) {
 				logger.debug("query failed to return any data");
@@ -105,6 +110,12 @@ public abstract class ValidateSQL extends StandardRunnerAction {
 
 	public void setIsValid(Boolean isValid) {
 		this.isValid = isValid;
+	}
+
+
+
+	public long getRunTime() {
+		return runTime;
 	}
 
 }

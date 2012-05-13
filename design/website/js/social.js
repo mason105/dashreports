@@ -9,7 +9,7 @@
       var facebook_app_id = '232402360199709';
      
       var $target = $("#social_target");
-     -2+45*/`	
+
       //add loading class
       $target.addClass("socprog_loading");
      

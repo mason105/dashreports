@@ -60,6 +60,15 @@
 	})();
 </script>
 
+<script type="text/javascript">
+	$(function() {
+
+		$("#accordion").accordion({
+			header : "h3"
+		});
+
+	});
+</script>
 <script type="text/javascript" src="js/social.js"></script>
 </head>
 <body>
@@ -70,8 +79,7 @@
 			<a href="download.html"><img src="images/download.png" />Download</a>
 		</div>
 		<div class="TopLink">
-			<a href="contact.html"><img
-				src="images/mail.png" />Contact</a>
+			<a href="contact.html"><img src="images/mail.png" />Contact</a>
 		</div>
 	</div>
 	<div id="LogoWrapper">
@@ -107,15 +115,23 @@
 	<div id="BottomBar">
 		<div id="textContentWrapper">
 			<div class="textContentWide">
-				<h1 id="header">Help Pages and Wiki</h1>
-				<article id="content">
-				<p>
-					<a href="http://www.binkyit.com/mediawiki/index.php/Dash_Reports">Dash
-						Reports Wiki</a>
-				</p>
-				</article>
+				<h1 id="header">Help</h1>
+				<div id="content">
+					<div id="accordion">
+						<div>
+							<h3>
+								<a href="#">Getting Help</a>
+							</h3>
+							<article>
+								<p>	Detailed instructions are available on the <a href="http://www.binkyit.com/mediawiki/index.php/Dash_Reports">Dash Reports Wiki</a></p>
+								<p>If you have a bug report, request or other issue - please visit the contact page for options on how to get hold of us.</p>
+							</article>
+						</div>
+						
+					</div>
+				</div>
 			</div>
-		</div>
+		</div>	
 	</div>
 	<footer id="footerBar">
 	<div id="social">

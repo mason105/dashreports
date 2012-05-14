@@ -95,3 +95,52 @@ div.textContent,div.textContentWide {
 	border: none;
 	margin-bottom: 5px;
 }
+
+ul.socialbuttons {
+	padding: 0 !important;
+	margin: 0;
+	text-align: center;
+		margin-left: auto;
+	margin-right: auto;
+	width:350px;
+}
+
+ul.socialbuttons li {
+	padding: 0 5px 0 0;
+	list-style: none ;
+	display: inline-block;
+	float:left;
+}
+
+.gallery .item, .gallery .itemWide {
+	border: 1px solid #666666;
+	display: inline-block;
+	max-width: 95%;
+	overflow: hidden;
+	margin: 5px;
+	height: 270px;
+	float:left;
+}
+
+.gallery .item a, .gallery .itemWide a {
+	display: block;
+	width: 100%;
+}
+
+.gallery  .itemWide {
+	width: 518px;
+}
+
+.gallery .item {
+	width: 250px;
+}
+
+.gallery .item img {
+	min-width: 250px;
+	border:0px;
+}
+
+.gallery .itemWide img {
+	min-width: 518px;
+	border:0px;
+}

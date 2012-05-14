@@ -116,6 +116,7 @@ img.Logo {
 #TopLinks  .TopLink img {
 	padding-right: 5px;
 	vertical-align: middle;
+	border: 0px;
 }
 
 #TopLinks  .TopLink  A {

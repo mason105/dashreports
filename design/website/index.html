@@ -9,17 +9,29 @@
 	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 <head>
+
+
+
 <link href="css/website.css" rel="stylesheet" type="text/css"
 	media="all" />
+	
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.17.custom.css"
 	rel="stylesheet" />
 
-<!--[if (lt IE 9)&(!IEMobile)]>
+ <!--[if IE]>
+    	<script type="text/javascript" src="js/html5.js"></script>
+<![endif]-->
+
+<!--[if lt IE 8]>
+<style type="text/css" media="all">
+	@import url("css/ie7.css");
+</style>
+<![endif]-->
+<!--[if IE 8]>
 <style type="text/css" media="all">
 	@import url("css/normal.css");
 </style>
 <![endif]-->
-
 <!--[if gte IE 9]><!-->
 <style type="text/css"
 	media="all and (min-width: 740px) and (min-device-width: 740px), (max-device-width: 800px) and (min-width: 740px) and (orientation:landscape)">
@@ -72,11 +84,11 @@
 		</div>
 		<div class="TopLink">
 			<a href="contact.html"><img
-				src="images/mail.png" />Contact</a>
+				src="images/mail.png" border="0"/>Contact</a>
 		</div>
 	</div>
 	<div id="LogoWrapper">
-		<img class="Logo" src="images/logo.png" alt="Dash Reports" />
+		<img class="Logo" src="images/logo.png" alt="Dash Reports"/>
 		<h2 class="Logo">Dash Reports</h2>
 	</div>
 	</header>

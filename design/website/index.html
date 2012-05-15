@@ -52,6 +52,7 @@
 </style>
 <!--<![endif]-->
 
+
 <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-ui-1.8.17.custom.min.js"></script>
 <title>Dash Reports: News</title>
@@ -72,7 +73,15 @@
 		s.parentNode.insertBefore(ga, s);
 	})();
 </script>
+<script type="text/javascript">
+	$(function() {
 
+		$("#accordion").accordion({
+			header : "h3"
+		});
+
+	});
+</script>
 <script type="text/javascript" src="js/social.js"></script>
 </head>
 <body>
@@ -121,7 +130,7 @@
 		<div id="textContentWrapper">
 			<div class="textContentWide">
 				<h1 id="header">News</h1>
-				<article id="content"> <!-- News Template --> <!-- 
+				<div id="content"> <!-- News Template --> <!-- 
 					<div class="newsItem">
 						<h3 id="newsHeadline">{HEADLINE}</h3>
 						<span id="newsHeadlineDate">{DATE 'l, jS F Y'}</span>
@@ -129,20 +138,25 @@
 						<p>{TEXT}</p>
 					</div>
 					-->
-				<div class="newsItem">
-					<h3 id="newsHeadline">Dash Reports Integration Builds</h3>
-					<span id="newsHeadlineDate">Sunday, 13th May 2012</span>
-					<p>Integration builds are available to download - please see the download page.</p>
-					<p>We are aiming to have the documentation and full release done by the end of the week</p>
-				</div>					
-				<div class="newsItem first">
-					<h3 id="newsHeadline">Dash Reports v1.0 to be Released Soon</h3>
-					<span id="newsHeadlineDate">Monday, 7th May 2012</span>
-					<p>Dash Reports version 1.0 will be released very soon.</p>
-					<p>It is currently undergoing the final stages of testing and
-						the various release packages are being assembled</p>
+				<div id="accordion">
+					<div>
+						<h3><a href="#">Dash Reports Integration Builds - Sunday, 13th May 2012</a></h3>
+						<article>
+							<p>Integration builds are available to download - please see the download page.</p>
+							<p>We are aiming to have the documentation and full release done by the end of the week</p>
+						</article>
+					</div>					
+					<div>
+						<h3 ><a href="#">Dash Reports v1.0 to be Released Soon - Monday, 7th May 2012</a></h3>
+						<article>
+						
+							<p>Dash Reports version 1.0 will be released very soon.</p>
+							<p>It is currently undergoing the final stages of testing and
+								the various release packages are being assembled</p>
+						</article>
+					</div>
 				</div>
-				</article>
+				</div>
 			</div>
 		</div>
 	</div>

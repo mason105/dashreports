@@ -7,30 +7,30 @@
 #####
 
 #JDBC Driver - if not MYSQL or Postgress then it will need to be on the classpath (e.g. tomcat/lib)
-#jdbc.driver=com.mysql.jdbc.Driver
-jdbc.driver=org.apache.derby.jdbc.ClientDriver
+jdbc.driver=com.mysql.jdbc.Driver
+#jdbc.driver=org.apache.derby.jdbc.ClientDriver
 
 #URL of the database
-#jdbc.url=jdbc:mysql://localhost:3306/dashreports
+jdbc.url=jdbc:mysql://localhost:3306/dashreports
 #jdbc.url==jdbc:postgresql://localhost/reportrunner
-jdbc.url=jdbc:derby:databases/dashtest;create=true
+#jdbc.url=jdbc:derby:databases/dashtest;create=true
 
 #credentials
 jdbc.username=dashreports
 jdbc.password=password
 
 #Set the Hibernate dialect - options are listed here: http://docs.jboss.org/hibernate/core/3.3/reference/en/html/session-configuration.html#configuration-optional-dialects
-#hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
 #hibernate.dialect=org.hibernate.dialect.ProgressDialect
 
 #For derby use this version as it fixes an issue with boolean mappings
-hibernate.dialect=binky.reportrunner.util.DerbyDialect
+#hibernate.dialect=binky.reportrunner.util.DerbyDialect
 
 #Validate connections
 #mysql etc
-#jdbc.validation.query=select 1 from dual 
+jdbc.validation.query=select 1 from dual 
 #derby
-jdbc.validation.query=values(1)
+#jdbc.validation.query=values(1)
  
 jdbc.validation.timeout=3
 
@@ -40,7 +40,7 @@ jdbc.validation.timeout=3
 #quartz creation scripts
 quartz.autocreate=true
 #options: cloudscape,db2_v72,db2_v8,db2,derby_previous,derby,firebird,h2,hsqldb_old,hsqldb,informix,mysql_innodb,mysql,oracle,pointbase,postgres,postgres7,sapdb,solid,sqlServer,sybase
-quartz.dbtype=derby
+quartz.dbtype=mysql
 
 
 #validate checks the schema and update will build it - only use update if no schema script is available or using Derby
@@ -51,7 +51,7 @@ hibernate.hbm2ddl.auto=update
 ### end of DB settings ###
 
 #Version label - nominally the name of the release - only used in about page
-dashreports.versionId=2.0-final
+dashreports.versionId=1.0-final
 
 #######################################
 #theme of the UI elements - from jQuery

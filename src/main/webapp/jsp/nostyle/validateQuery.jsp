@@ -1,7 +1,4 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
-
-
-
 <s:if test="isValid">
 <img src="<s:url value="/images/v2/icons/tick.png"/>"/>
 </s:if>

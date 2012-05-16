@@ -149,6 +149,7 @@
 				<param name="actionName">listDataSources</param>
 			</result>
 			<result name="input">/jsp/main/editDataSource.jsp</result>
+			<result name="inputJNDI">/jsp/main/editJNDIDataSource.jsp</result>
 		</action>
 
 

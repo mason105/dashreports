@@ -14,7 +14,8 @@
 <s:form action="saveDataSource">
 	<div class="formGroup">
 	<div class="formGroupHeader">Data Source Details</div>
-			<s:actionerror theme="jquery"/>
+		<s:hidden name="jndi" value="true"/>
+		<s:actionerror theme="jquery"/>
 		<s:actionmessage theme="jquery"/><s:if
 		test="dataSource.dataSourceName != null">
 		<s:textfield label="Data Source Name" size="32"

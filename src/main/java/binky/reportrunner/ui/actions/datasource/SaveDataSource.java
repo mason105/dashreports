@@ -26,6 +26,12 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.naming.Binding;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -41,17 +47,22 @@ import com.opensymphony.xwork2.Preparable;
 public class SaveDataSource extends StandardRunnerAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
-
+	private boolean jndi;
 	private RunnerDataSource dataSource;
 	private Collection<JDBCDriverDefinition> drivers;
 	private List<String> dataSourceGroups;
+	private List<String> jndiNames;
 	@Override
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String execute() throws Exception {
-		
+		populateJNDINames();
 		if (StringUtils.isBlank(dataSource.getDataSourceName())) {
 			super.addActionError("Please complete the datasource name field");
-			return INPUT;
+			if (jndi) {
+				return INPUT+"JNDI";
+			} else {
+				return INPUT;
+			}
 		}
 		
 		try {
@@ -68,10 +79,43 @@ public class SaveDataSource extends StandardRunnerAction implements Preparable {
 			dataSourceService.saveUpdateDataSource(dataSource);
 		} catch (Exception e) {
 			super.addActionError(e.getMessage());
-			return INPUT;
+			if (jndi) {
+				return INPUT+"JNDI";
+			} else {
+				return INPUT;
+			}
 		}
 		return SUCCESS;
 	}
+	
+	private void populateJNDINames() throws NamingException {
+		String ident="";
+		Context ctx = (Context)new InitialContext().lookup("java:comp/env");
+		this.jndiNames=this.listJNDINames(ctx,ident);		
+	}
+	
+	//http://denistek.blogspot.com/2008/08/list-jndi-names.html
+	private List<String> listJNDINames(Context ctx,String ident) throws NamingException {
+		List<String> names = new LinkedList<String>();
+	
+		 NamingEnumeration<Binding> list = ctx.listBindings("");
+		   while (list.hasMore()) {
+		       Binding item = (Binding) list.next();
+		  
+		       String name = item.getName();		  
+     
+		       Object o = item.getObject();
+		       if (o instanceof javax.naming.Context) {
+		    	   names.addAll(listJNDINames((Context) o, name));
+		       } else {
+		    	   names.add(ident+"/" +name);   
+		       }
+		   }
+		
+		return names;
+	}
+	
+	
 	@Override
 	public void prepare() throws Exception {
 
@@ -125,7 +169,12 @@ public class SaveDataSource extends StandardRunnerAction implements Preparable {
 	public void setDataSourceGroups(List<String> dataSourceGroups) {
 		this.dataSourceGroups = dataSourceGroups;
 	}
+	public void setJndi(boolean jndi) {
+		this.jndi = jndi;
+	}
 
-	
-	
+	public List<String> getJndiNames() {
+		return jndiNames;
+	}
+
 }

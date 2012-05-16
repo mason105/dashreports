@@ -335,15 +335,16 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 		DataSource ds = datasourceService.getJDBCDataSource(job.getDatasource());
 		Connection conn = ds.getConnection();
 
-		SQLProcessor sqlProcessor = new SQLProcessorImpl();
-		if ((job.getIsBurst() == null) || (!job.getIsBurst())) {
-			for (RunnerJobParameter p : job.getParameters()) {
-				paramValues.put(p, null);
-			}
-			return paramValues;
-		}
-		logger.debug("getting burst result for " + jobName + "/" + groupName);
+		
 		try {
+			SQLProcessor sqlProcessor = new SQLProcessorImpl();
+			if ((job.getIsBurst() == null) || (!job.getIsBurst())) {
+				for (RunnerJobParameter p : job.getParameters()) {
+					paramValues.put(p, null);
+				}
+				return paramValues;
+			}
+			logger.debug("getting burst result for " + jobName + "/" + groupName);
 			ResultSet rs = sqlProcessor.getResults(conn, job.getBurstQuery());
 
 			for (RunnerJobParameter p : job.getParameters()) {

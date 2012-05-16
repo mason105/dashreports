@@ -15,7 +15,7 @@
 	<groupId>uk.co.binkysoftware</groupId>
 	<artifactId>dashreports</artifactId>
 	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<name>Dash Reports</name>
 	<url>http://www.dashreports.org</url>
 	<distributionManagement>

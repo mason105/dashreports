@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
@@ -23,7 +22,6 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 	protected String jobName;
 	protected RunnerJob job;
 	protected ReportService jobService;
-	protected ReportRunnerDao<RunnerDataSource, String> dataSourceDao;
 	protected DatasourceService dataSourceService;
 	protected String outputUrl;
 	protected String outputPrefix;
@@ -87,10 +85,6 @@ public abstract class BaseEditJob extends StandardRunnerAction {
 		this.parameters = parameters;
 	}
 
-	public void setDataSourceDao(
-			ReportRunnerDao<RunnerDataSource, String> dataSourceDao) {
-		this.dataSourceDao = dataSourceDao;
-	}
 
 	public List<RunnerJob.FileFormat> getFileFormats() {
 		return Arrays.asList(RunnerJob.FileFormat.values());

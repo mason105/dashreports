@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
-import java.util.Collection;
 import java.util.LinkedList;
 
 import net.sf.jasperreports.engine.JRException;
@@ -13,7 +12,6 @@ import net.sf.jasperreports.engine.JRException;
 import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 
-import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerDataSource;
 import binky.reportrunner.data.RunnerJob;
 import binky.reportrunner.data.RunnerJobParameter;
@@ -24,8 +22,6 @@ public class EditJob extends BaseEditJob {
 
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(EditJob.class);
-
-	private ReportRunnerDao<RunnerJobParameter, Integer> parameterDao;
 
 	private int parameterId;
 	private String deleteParameters;
@@ -95,7 +91,8 @@ public class EditJob extends BaseEditJob {
 		this.groupName = job.getPk().getGroup().getGroupName();
 		String jobName = job.getPk().getJobName();
 
-		RunnerDataSource ds = dataSourceDao.get(dsName);
+		RunnerDataSource ds = dataSourceService.getDataSource(dsName);
+		
 		job.setDatasource(ds);
 
 		if (groupName != null && !groupName.isEmpty()
@@ -208,9 +205,7 @@ public class EditJob extends BaseEditJob {
 				job.setTemplateFile(job2.getTemplateFile().clone());
 			}
 		}
-		// part of my hack work :(
-		job.setParameters(null);
-		jobService.addUpdateJob(job);
+		
 		// hack to do the tabular stuff with parameters
 		if (parameters != null) {
 
@@ -218,38 +213,16 @@ public class EditJob extends BaseEditJob {
 
 			for (RunnerJobParameter p : this.parameters) {
 				if (p != null) {
-					logger.debug(p.getParameterValue());
 					p.setRunnerJob(job);
-					logger.debug("parameter type : " + p.getParameterType());
 				} else {
 					logger.warn("null parameter");
 				}
 			}
-			this.updateParametersForJob(jobName, groupName, parameters);
+				
 		}
+		job.setParameters(parameters);
+		jobService.addUpdateJob(job);	
 		return true;
-	}
-
-	private void updateParametersForJob(String jobName, String groupName,
-			Collection<RunnerJobParameter> parameters) {
-		logger.debug("updating parameters for job/group:" + jobName + "/"
-				+ groupName);
-		// delete any parameters first
-
-		logger.debug("deleting existing parameters");
-		Collection<RunnerJobParameter> params = parameterDao.findByNamedQuery(
-				"getParmatersByJob", new String[] { jobName, groupName });
-		if (params.size() > 0) {
-			// TODO:refactor
-			for (RunnerJobParameter p : parameters) {
-				parameterDao.delete(p.getParameterIdx());
-			}
-		}
-		for (RunnerJobParameter p : parameters) {
-			logger.debug("saving parameter idx:" + p.getParameterIdx());
-			parameterDao.saveOrUpdate(p);
-		}
-
 	}
 
 	// Returns the contents of the file in a byte array.
@@ -302,13 +275,6 @@ public class EditJob extends BaseEditJob {
 	 * public void setSimpleCron(QuartzCronSchedule simpleCron) {
 	 * this.simpleCron = simpleCron; }
 	 */
-
-	public void setParameterDao(
-			ReportRunnerDao<RunnerJobParameter, Integer> parameterDao) {
-		this.parameterDao = parameterDao;
-	}
-
-
 
 	public int getParameterId() {
 		return parameterId;

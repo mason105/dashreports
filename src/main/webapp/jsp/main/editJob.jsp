@@ -115,6 +115,8 @@
 
 			<div class="formGroup">
  				<div class="formGroupHeader"><span>Parameter Index <s:property value="%{#rowstatus.index}" /></span></div>
+			
+				<s:hidden value="%{uniqueId}" name="parameters[%{#rowstatus.index}].uniqueId" />
 				
 				<s:hidden value="%{#rowstatus.index}"
 					name="parameters[%{#rowstatus.index}].parameterIdx" />

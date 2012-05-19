@@ -49,6 +49,16 @@ public class RunnerJobParameter extends DatabaseObject<Integer> {
 		return id;
 	}
 
+	//hack for struts 2 as the id part is from the generic typed abstract class and it is throwing an NPE when trying to deal with it.
+	public Integer getUniqueId() {
+		return id;
+	}
+	
+	public void setUniqueId(Integer id) {
+		this.id=id;
+	}
+	/**/
+	
 	public enum DataType {
 		STRING("String"), DATE("Date"), BOOLEAN("Boolean"),INTEGER("Integer"),LONG("Long"),DOUBLE("Double");
 		

@@ -157,30 +157,6 @@
 		</property>
 	</bean>
 
-
-
-	<bean id="runnerJobParameterDaoTarget"
-		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
-		autowire="byName">
-		<constructor-arg>
-			<value>binky.reportrunner.data.RunnerJobParameter</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<bean id="runnerJobParameterDao"
-		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean" depends-on="sessionFactory" >
-		<property name="transactionManager" ref="transactionManager" />
-		<property name="target" ref="runnerJobParameterDaoTarget" />
-		<property name="transactionAttributes">
-			<props>
-				<prop key="*">PROPAGATION_REQUIRED</prop>
-			</props>
-		</property>
-	</bean>
-
-
-
 	<bean id="runnerHistoryDaoTarget"
 		class="binky.reportrunner.dao.impl.HibernateDaoImpl"
 		autowire="byName">

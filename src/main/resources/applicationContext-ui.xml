@@ -188,12 +188,6 @@
 		<property name="jobService">
 			<ref bean="runnerJobService" />
 		</property>
-		<property name="parameterDao">
-			<ref bean="runnerJobParameterDao" />
-		</property>
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
-		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />
 		</property>
@@ -203,9 +197,6 @@
 		scope="prototype">
 		<property name="jobService">
 			<ref bean="runnerJobService" />
-		</property>
-		<property name="dataSourceDao">
-			<ref bean="runnerDataSourceDao" />
 		</property>
 		<property name="dataSourceService">
 			<ref bean="runnerDatasourceService" />

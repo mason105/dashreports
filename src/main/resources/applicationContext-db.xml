@@ -7,7 +7,7 @@
 	<!--  our main data source -->
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
+		destroy-method="close" scope="singleton">
 		<property name="driverClassName">
 			<value>${jdbc.driver}</value>
 		</property>
@@ -82,7 +82,7 @@
 					${hibernate.showSql}
 				</prop>
 				
-                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
                 <prop key="hibernate.use_sql_comments">false</prop>
                 <prop key="hibernate.max_fetch_depth">1</prop>
 

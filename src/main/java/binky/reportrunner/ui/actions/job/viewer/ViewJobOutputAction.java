@@ -77,26 +77,20 @@ public class ViewJobOutputAction extends StandardRunnerAction {
 				for (RunnerJobParameter p : this.parameters) {
 
 					for (RunnerJobParameter jp : jobParameters) {
-						if (jp.getParameterIdx()
-								.equals(p.getParameterIdx())) {
-							logger.debug(p.getParameterValue()
-									+ " "
-									+ p.getParameterValue()
-											.equals("**********"));
+						if (jp.getParameterIdx().equals(p.getParameterIdx())) {
+							
+							if (p.getParameterValue() == null
+									|| p.getParameterValue().isEmpty()) {
+								super.addActionError("Parameter idx "
+										+ p.getParameterIdx()
+										+ " has no value");
+								return INPUT;
+							}
 							if (!p.getParameterValue().equals("**********")) {
-								logger.debug("setting parameter value for + "
-										+ p.getParameterIdx() + " to: "
-										+ p.getParameterValue());
-								if (p.getParameterValue() == null
-										|| p.getParameterValue().isEmpty()) {
-									super.addActionError("Parameter idx "
-											+ p.getParameterIdx()
-											+ " has no value");
-									return INPUT;
-								}
 								jp.setParameterValue(p.getParameterValue());
 							}
 							break;
+							
 						}
 					}
 				}

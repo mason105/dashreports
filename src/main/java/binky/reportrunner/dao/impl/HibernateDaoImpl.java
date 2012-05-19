@@ -78,7 +78,6 @@ public class HibernateDaoImpl<T extends DatabaseObject<ID>, ID extends Serializa
 			session.merge(entity);
 			ret=entity.getId();
 		} else {
-			//session.saveOrUpdate(entity);
 			ret=(ID)session.save(entity);
 		}
 		logger.trace("done saving object with ID: " +entity.getId()+ " for class " + clazz.getName());

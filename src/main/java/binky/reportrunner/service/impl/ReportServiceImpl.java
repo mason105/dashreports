@@ -24,7 +24,6 @@ package binky.reportrunner.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,9 +32,7 @@ import org.apache.log4j.Logger;
 import binky.reportrunner.dao.ReportRunnerDao;
 import binky.reportrunner.data.RunnerGroup;
 import binky.reportrunner.data.RunnerJob;
-import binky.reportrunner.data.RunnerJobParameter;
 import binky.reportrunner.data.RunnerJob_pk;
-import binky.reportrunner.data.sampling.SamplingData;
 import binky.reportrunner.scheduler.Scheduler;
 import binky.reportrunner.scheduler.SchedulerException;
 import binky.reportrunner.service.DatasourceService;

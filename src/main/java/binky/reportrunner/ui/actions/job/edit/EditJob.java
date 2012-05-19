@@ -242,7 +242,7 @@ public class EditJob extends BaseEditJob {
 		if (params.size() > 0) {
 			// TODO:refactor
 			for (RunnerJobParameter p : parameters) {
-				parameterDao.delete(p.getId());
+				parameterDao.delete(p.getParameterIdx());
 			}
 		}
 		for (RunnerJobParameter p : parameters) {

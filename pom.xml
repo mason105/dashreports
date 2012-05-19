@@ -15,7 +15,7 @@
 	<groupId>uk.co.binkysoftware</groupId>
 	<artifactId>dashreports</artifactId>
 	<packaging>war</packaging>
-	<version>1.0.1</version>
+	<version>1.0.2</version>
 	<name>Dash Reports</name>
 	<url>http://www.dashreports.org</url>
 	<distributionManagement>
@@ -419,8 +419,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>dashreports</finalName>
-
 		<plugins>
 			<plugin>
 				<groupId>org.simplericity.jettyconsole</groupId>

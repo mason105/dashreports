@@ -397,6 +397,7 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 				for (RunnerJobParameter param : params) {
 					RunnerJobParameter paramNew = new RunnerJobParameter();
 					// copy the parameter
+					paramNew.setParameterIdx(param.getParameterIdx());
 					paramNew.setRunnerJob(job);
 					paramNew.setParameterBurstColumn(param
 							.getParameterBurstColumn());
@@ -447,7 +448,7 @@ public class ReportGenerationServiceImpl implements ReportGenerationService {
 						rs.beforeFirst();
 						results.put(name, rs);
 					}
-					processed.add(name);
+					processed.add(name);					
 				}
 
 			}

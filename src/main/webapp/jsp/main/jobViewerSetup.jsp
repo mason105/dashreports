@@ -48,8 +48,8 @@
 					</s:select>
 				</s:else>
 
-				<s:hidden value="%{key.pk.parameterIdx}"
-					name="parameters[%{#rowstatus.index}].pk.parameterIdx" />
+				<s:hidden value="%{key.parameterIdx}"
+					name="parameters[%{#rowstatus.index}].parameterIdx" />
 
 				<s:hidden
 					name="parameters[%{#rowstatus.index}].parameterBurstColumn"

@@ -9,14 +9,16 @@
 	xmlns:skos="http://www.w3.org/2004/02/skos/core#"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
 <head>
-<meta name="description" content="Dash Reports is a versatile and lightweight reporting solution.">
-<meta name="keywords" content="lightweight, reporting, sql, dashboards,reports,output,scheduling,dashreports,dash reports">
+<meta name="description"
+	content="Dash Reports is a versatile and lightweight reporting solution.">
+<meta name="keywords"
+	content="lightweight, reporting, sql, dashboards,reports,output,scheduling,dashreports,dash reports">
 <link href="css/website.css" rel="stylesheet" type="text/css"
 	media="all" />
 <link type="text/css" href="css/smoothness/jquery-ui-1.8.17.custom.css"
 	rel="stylesheet" />
 
- <!--[if IE]>
+<!--[if IE]>
     	<script type="text/javascript" src="js/html5.js"></script>
 <![endif]-->
 
@@ -73,6 +75,15 @@
 </script>
 
 <script type="text/javascript" src="js/social.js"></script>
+<script type="text/javascript">
+	$(function() {
+
+		$("#accordion").accordion({
+			header : "h3"
+		});
+
+	});
+</script>
 </head>
 <body>
 
@@ -82,8 +93,7 @@
 			<a href="download.html"><img src="images/download.png" />Download</a>
 		</div>
 		<div class="TopLink">
-			<a href="contact.html"><img
-				src="images/mail.png" />Contact</a>
+			<a href="contact.html"><img src="images/mail.png" />Contact</a>
 		</div>
 	</div>
 	<div id="LogoWrapper">
@@ -120,9 +130,34 @@
 		<div id="textContentWrapper">
 			<div class="textContentWide">
 				<h1 id="header">Online Demonstration</h1>
-				<article id="content">
-				<p>Coming soon...</p>
-				</article>
+				<div id="content">
+					<div id="accordion">
+						<div>
+							<h3>
+								<a href="#">Dash Reports Demo</a>
+							</h3>
+							<article>
+							<p>
+								The demonstration site is available <a
+									href="http://www.dashreports.org:8080/dashreports"
+									target="_blank">here</a>
+							</p>
+							<p>Username and Password combinations:</p>
+							<ul>
+								<li /> admin/admin : adminsistrator
+								<li /> test/test : test standard user
+								<li /> testro/testro : test readonly
+							</ul>
+							<p>
+								Please feel free to do what ever - however <strong>the
+									database will be restored on the hour</strong> and this will undo any
+								changes made, there will also be a brief outage as it resets.
+							</p>
+							</article>
+						</div>
+
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

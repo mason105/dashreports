@@ -1,0 +1,94 @@
+##########################
+# Dash Reports Settings #
+##########################
+
+#####
+##Database Settings for Dash Reports' schema
+#####
+
+#JDBC Driver - if not MYSQL or Postgress then it will need to be on the classpath (e.g. tomcat/lib)
+jdbc.driver=com.mysql.jdbc.Driver
+#jdbc.driver=org.apache.derby.jdbc.ClientDriver
+
+#URL of the database
+jdbc.url=jdbc:mysql://localhost:3306/dashreports
+#jdbc.url==jdbc:postgresql://localhost/reportrunner
+#jdbc.url=jdbc:derby:databases/dashtest;create=true
+
+#credentials
+jdbc.username=dashreports
+jdbc.password=password
+
+#Set the Hibernate dialect - options are listed here: http://docs.jboss.org/hibernate/core/3.3/reference/en/html/session-configuration.html#configuration-optional-dialects
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+#hibernate.dialect=org.hibernate.dialect.ProgressDialect
+
+#For derby use this version as it fixes an issue with boolean mappings
+#hibernate.dialect=binky.reportrunner.util.DerbyDialect
+
+#Validate connections
+#mysql etc
+jdbc.validation.query=select 1 from dual 
+#derby
+#jdbc.validation.query=values(1)
+ 
+jdbc.validation.timeout=3
+
+#######################
+#Schema Creation      #
+#######################
+#quartz creation scripts
+quartz.autocreate=true
+#options: cloudscape,db2_v72,db2_v8,db2,derby_previous,derby,firebird,h2,hsqldb_old,hsqldb,informix,mysql_innodb,mysql,oracle,pointbase,postgres,postgres7,sapdb,solid,sqlServer,sybase
+quartz.dbtype=mysql
+
+
+#validate checks the schema and update will build it - only use update if no schema script is available or using Derby
+#doesn't work well with MySQL
+hibernate.hbm2ddl.auto=update
+
+
+### end of DB settings ###
+
+#Version label - nominally the name of the release - only used in about page
+dashreports.versionId=1.0-final
+
+#######################################
+#theme of the UI elements - from jQuery
+#
+#Available Themes:
+#black-tie, blitzer, cupertino, dark-hive, dot-luv, eggplant, excite-bike, flick, hot-sneaks, humanity, le-frog, mint-choc, overcast, pepper-grinder, redmond, smoothness, south-street, start, sunny, swanky-purse, trontastic, ui-darkness, ui-lightness, vader
+#
+#Default is smoothness
+#######################################
+jQuery.themeName=smoothness
+
+#key to secure the database passwords with - see wiki on how to generate a key
+dashreports.secureKey=BAD0858CD6A7161901AE9BCB195EFD5E9D6BE0FE7643A7E9
+
+
+###########################################################
+##Do not change unless you know what these parameters do!##
+###########################################################
+##Hibernate options
+#enable debugging of sql
+hibernate.showSql=true
+hibernate.connection.autoReconnect=true
+
+################
+#Quartz options#
+################
+#DB options
+quartz.JDBCDelegate=org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+org.quartz.threadPool.threadCount=10
+org.quartz.threadPool.threadPriority=5
+org.quartz.jobStore.misfireThreshold=60000
+#Clustering Options
+org.quartz.jobStore.isClustered = false
+org.quartz.jobStore.clusterCheckinInterval = 5000
+org.quartz.scheduler.instanceId = AUTO
+
+##Dash Reports Debugging
+#can generate a lot of audit information if enabled - audits everything on the service layer if enabled - only use for trouble shooting
+dashreports.auditGets=false
+
